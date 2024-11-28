@@ -1,1 +1,41 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"smartcare-app-8a32a","appId":"1:651753091974:android:dfb4461688c23dcaf77207","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"smartcare-app-8a32a","appId":"1:651753091974:ios:68b281404b79d43cf77207","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"smartcare-app-8a32a","appId":"1:651753091974:ios:68b281404b79d43cf77207","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"smartcare-app-8a32a","configurations":{"android":"1:651753091974:android:dfb4461688c23dcaf77207","ios":"1:651753091974:ios:68b281404b79d43cf77207","macos":"1:651753091974:ios:68b281404b79d43cf77207","web":"1:651753091974:web:e6671a228a5806aaf77207","windows":"1:651753091974:web:d64eb9899a61c8d5f77207"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "smartcare-app-8a32a",
+          "appId": "1:651753091974:android:dfb4461688c23dcaf77207",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "smartcare-app-8a32a",
+          "appId": "1:651753091974:ios:68b281404b79d43cf77207",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "smartcare-app-8a32a",
+          "appId": "1:651753091974:ios:68b281404b79d43cf77207",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "smartcare-app-8a32a",
+          "configurations": {
+            "android": "1:651753091974:android:dfb4461688c23dcaf77207",
+            "ios": "1:651753091974:ios:68b281404b79d43cf77207",
+            "macos": "1:651753091974:ios:68b281404b79d43cf77207",
+            "web": "1:651753091974:web:e6671a228a5806aaf77207",
+            "windows": "1:651753091974:web:d64eb9899a61c8d5f77207"
+          }
+        }
+      }
+    }
+  }
+}
