@@ -12,14 +12,16 @@ dependencies:
     sdk: flutter
   firebase_core:
   # firebase_auth:
-  cupertino_icons: ^1.0.8
+  cupertino_icons:
+  connectivity_plus:
+  flutter_dotenv:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-
-
+  very_good_analysis:
+  flutter_lints:
+  
 flutter:
   uses-material-design: true
 
