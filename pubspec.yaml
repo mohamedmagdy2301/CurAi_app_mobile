@@ -5,11 +5,13 @@ version: 1.0.0+1
 environment:
   sdk: ^3.5.4
 
+
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
-
+  firebase_core:
+  # firebase_auth:
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
@@ -22,14 +24,17 @@ flutter:
   uses-material-design: true
 
 
-  # assets:
-    # - assets/images/
+  assets:
+    - assets/images/
 
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo/Cairo-Regular.ttf
+        
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter_18pt-Regular.ttf
 
 
 
