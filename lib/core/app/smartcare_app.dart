@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SmartCareApp extends StatelessWidget {
-  const SmartCareApp({super.key, required this.environment});
+  const SmartCareApp({required this.environment, super.key});
   final bool environment;
 
   @override
@@ -18,7 +18,7 @@ class SmartCareApp extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.green,
+          backgroundColor: environment ? Colors.green : Colors.amberAccent,
         ),
         body: const Center(
           child: Text(
