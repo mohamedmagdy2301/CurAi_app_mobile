@@ -8,13 +8,9 @@ class TestOne extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber,
       appBar: AppBar(
         title: const Text(
           'Smart Care',
-          style: TextStyle(
-            color: Colors.black,
-          ),
         ),
         centerTitle: true,
       ),
@@ -26,7 +22,6 @@ class TestOne extends StatelessWidget {
           child: const Text(
             'Smart Care',
             style: TextStyle(
-              color: Colors.white,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
