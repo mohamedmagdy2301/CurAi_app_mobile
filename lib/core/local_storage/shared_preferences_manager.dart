@@ -2,7 +2,7 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencesManager {
+class SharedPrefManager {
   static late SharedPreferences _sharedPreferences;
   static Future<void> sharedPreferencesInitialize() async {
     _sharedPreferences = await SharedPreferences.getInstance();
@@ -26,6 +26,11 @@ class SharedPreferencesManager {
       return true;
     }
     return false;
+  }
+
+  ///Below method is to get the boolean value from the SharedPreferences.
+  static bool? getBoolean(String key) {
+    return _sharedPreferences.getBool(key);
   }
 
   static dynamic getData({required String key}) {

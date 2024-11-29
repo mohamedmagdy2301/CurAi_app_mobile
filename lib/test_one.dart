@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smartcare_app_mobile/core/app/cubit/app_cubit.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
@@ -17,27 +19,39 @@ class TestOne extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: InkWell(
-          onTap: () {
-            context.pushNamed(Routes.testtwo);
-            showMessage(
-              context,
-              type: SnackBarType.error,
-              message: 'Operation was successful!',
-              isIconVisible: true,
-              labelAction: 'OK',
-              onPressedAction: () {
-                hideMessage(context);
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            BlocBuilder(
+              bloc: context.read<AppCubit>(),
+              builder: (context, state) {
+                return ElevatedButton(
+                  onPressed: context.read<AppCubit>().changeTheme,
+                  child: context.read<AppCubit>().isDark
+                      ? const Text('Light Theme')
+                      : const Text('Dark Theme'),
+                );
               },
-            );
-          },
-          child: const Text(
-            'Smart Care',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
             ),
-          ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                context.pushNamed(Routes.testtwo);
+                showMessage(
+                  context,
+                  type: SnackBarType.error,
+                  message: 'Operation was successful!',
+                  isIconVisible: true,
+                  labelAction: 'OK',
+                  onPressedAction: () {
+                    hideMessage(context);
+                  },
+                );
+              },
+              child: const Text('Go to Test Two'),
+            ),
+          ],
         ),
       ),
     );

@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = SimpleBlocObserver();
   await Future.wait([
-    SharedPreferencesManager.sharedPreferencesInitialize(),
+    SharedPrefManager.sharedPreferencesInitialize(),
   ]);
   await EnvVariables.instance.init(envType: EnvTypeEnum.dev);
   await Firebase.initializeApp(
