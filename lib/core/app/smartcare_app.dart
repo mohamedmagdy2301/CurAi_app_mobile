@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/app/connectivity_controller.dart';
 import 'package:smartcare_app_mobile/core/common/screens/no_internet_connection.dart';
+import 'package:smartcare_app_mobile/core/routes/app_routes.dart';
+import 'package:smartcare_app_mobile/test_one.dart';
 
 class SmartCareApp extends StatelessWidget {
   const SmartCareApp({required this.environment, super.key});
@@ -25,30 +27,8 @@ class SmartCareApp extends StatelessWidget {
                 ),
               );
             },
-            home: Scaffold(
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                title: const Text(
-                  'Smart Care',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                centerTitle: true,
-                backgroundColor:
-                    environment ? Colors.green : Colors.amberAccent,
-              ),
-              body: const Center(
-                child: Text(
-                  'Smart Care',
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            home: const TestOne(),
           );
         }
         return const NoInternetConnection();
