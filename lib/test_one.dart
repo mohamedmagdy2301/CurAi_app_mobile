@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
+import 'package:smartcare_app_mobile/core/routes/routes.dart';
 
 class TestOne extends StatelessWidget {
   const TestOne({super.key});
@@ -20,7 +21,7 @@ class TestOne extends StatelessWidget {
       body: Center(
         child: InkWell(
           onTap: () {
-            context.pushNamed('Routes.testtwo');
+            context.pushNamed(Routes.testtwo);
           },
           child: const Text(
             'Smart Care',

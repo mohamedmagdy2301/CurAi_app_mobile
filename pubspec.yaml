@@ -29,13 +29,14 @@ flutter:
     - .env.dev
 
   fonts:
+    # arabic font
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo/Cairo-Regular.ttf
-        
-    - family: Inter
+    # english font 
+    - family: Poppins
       fonts:
-        - asset: assets/fonts/Inter/Inter_18pt-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
 
 # flutter run --flavor development --target lib/main_development.dart
 # flutter run --flavor production --target lib/main_production.dart
