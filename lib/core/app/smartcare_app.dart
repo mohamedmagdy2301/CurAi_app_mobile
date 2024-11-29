@@ -22,18 +22,21 @@ class SmartCareApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             builder: (context, child) {
-              return Scaffold(
-                body: Builder(
-                  builder: (context) {
-                    ConnectivityController.instance.init();
-                    return child!;
-                  },
+              return GestureDetector(
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                child: Scaffold(
+                  body: Builder(
+                    builder: (context) {
+                      ConnectivityController.instance.init();
+                      return child!;
+                    },
+                  ),
                 ),
               );
             },
             onGenerateRoute: AppRoutes.onGenerateRoute,
             home: const TestOne(),
-            locale: const Locale('ar'),
+            locale: const Locale('en'),
             supportedLocales: AppLocalizationsSetup.supportedLocales,
             localeResolutionCallback:
                 AppLocalizationsSetup.localeResolutionCallback,
