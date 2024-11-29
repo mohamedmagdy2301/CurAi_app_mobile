@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:smartcare_app_mobile/core/language/app_localizations.dart';
 
-class AppLocalizationsSetup {
+class AppLocalSetup {
   static const Iterable<Locale> supportedLocales = [
     Locale('en'),
     Locale('ar'),
   ];
 
-  static const Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      [
+  static const Iterable<LocalizationsDelegate<dynamic>> localesDelegates = [
     AppLocalizations.delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
