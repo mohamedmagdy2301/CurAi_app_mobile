@@ -13,6 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv:
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_lints:
@@ -27,6 +29,8 @@ flutter:
     - assets/images/
     - .env.prod
     - .env.dev
+    - lang/en.json
+    - lang/ar.json
 
   fonts:
     # arabic font
