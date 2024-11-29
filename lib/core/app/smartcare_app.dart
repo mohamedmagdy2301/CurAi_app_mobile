@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/app/connectivity_controller.dart';
 import 'package:smartcare_app_mobile/core/common/screens/no_internet_connection.dart';
+import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/language/app_localizations_setup.dart';
 import 'package:smartcare_app_mobile/core/routes/app_routes.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/app_theme.dart';
@@ -23,7 +24,7 @@ class SmartCareApp extends StatelessWidget {
             darkTheme: AppTheme.darkTheme,
             builder: (context, child) {
               return GestureDetector(
-                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                onTap: hideKeyboard,
                 child: Scaffold(
                   body: Builder(
                     builder: (context) {
