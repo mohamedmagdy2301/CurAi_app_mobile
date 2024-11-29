@@ -1,4 +1,3 @@
-// theme/app_theme.dart
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/styles/colors/colors_dark.dart';
 import 'package:smartcare_app_mobile/core/styles/colors/colors_light.dart';
@@ -7,7 +6,8 @@ import 'package:smartcare_app_mobile/core/styles/themes/assets_extension.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/color_extension.dart';
 
 class AppTheme {
-  static ThemeData lightTheme = _createTheme(
+  // Light Theme
+  static final ThemeData lightTheme = _createTheme(
     colorScheme: const ColorScheme(
       primary: ColorsLight.primaryColor,
       secondary: ColorsLight.accentColor,
@@ -22,7 +22,8 @@ class AppTheme {
     extensions: <ThemeExtension<dynamic>>[MyColors.light, MyAssets.light],
   );
 
-  static ThemeData darkTheme = _createTheme(
+  // Dark Theme
+  static final ThemeData darkTheme = _createTheme(
     colorScheme: const ColorScheme(
       primary: ColorsDark.primaryColor,
       secondary: ColorsDark.accentColor,
@@ -37,6 +38,7 @@ class AppTheme {
     extensions: <ThemeExtension<dynamic>>[MyColors.dark, MyAssets.dark],
   );
 
+  // Base Theme Creator
   static ThemeData _createTheme({
     required ColorScheme colorScheme,
     required Iterable<ThemeExtension<dynamic>> extensions,
@@ -47,67 +49,110 @@ class AppTheme {
       primaryColor: colorScheme.primary,
       scaffoldBackgroundColor: colorScheme.surface,
       useMaterial3: true,
-      textTheme: TextTheme(
-        bodyLarge: TextStyle(color: colorScheme.onSurface),
-        bodySmall: TextStyle(color: colorScheme.onSurface),
-        titleSmall: TextStyle(color: colorScheme.onSurface),
-        titleLarge: TextStyle(
-          color: colorScheme.onSurface,
-          fontWeight: FontWeightHelper.bold,
-        ),
-        bodyMedium: TextStyle(color: colorScheme.onSurface),
-        titleMedium: TextStyle(color: colorScheme.onSurface.withOpacity(0.8)),
-      ),
-      appBarTheme: AppBarTheme(
-        titleTextStyle: TextStyle(
-          color: colorScheme.onPrimary,
-          fontWeight: FontWeightHelper.bold,
-          fontSize: 25,
-        ),
-        color: colorScheme.primary,
-        elevation: 0,
-        iconTheme: IconThemeData(color: colorScheme.onPrimary),
-      ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: colorScheme.secondary,
-        foregroundColor: colorScheme.onSecondary,
-      ),
-      inputDecorationTheme: InputDecorationTheme(
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.secondary, width: 2),
-        ),
-        labelStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.8)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.onSurface.withOpacity(0.5)),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.error),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.error, width: 2),
-        ),
-        errorStyle: TextStyle(color: colorScheme.error),
-      ),
-      cardTheme: CardTheme(
-        color: colorScheme.brightness == Brightness.light
-            ? Colors.white
-            : const Color(0xFF2C2C2C),
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: colorScheme.onSecondary,
-          backgroundColor: colorScheme.secondary,
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        ),
-      ),
+      textTheme: _textTheme(colorScheme),
+      appBarTheme: _appBarTheme(colorScheme),
+      floatingActionButtonTheme: _fabTheme(colorScheme),
+      inputDecorationTheme: _inputDecorationTheme(colorScheme),
+      cardTheme: _cardTheme(colorScheme),
+      elevatedButtonTheme: _buttonTheme(colorScheme),
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      snackBarTheme: _snackBarTheme(colorScheme),
+    );
+  }
+
+  // Text Theme
+  static TextTheme _textTheme(ColorScheme colorScheme) {
+    return TextTheme(
+      bodyLarge: TextStyle(color: colorScheme.onSurface),
+      bodySmall: TextStyle(color: colorScheme.onSurface),
+      titleSmall: TextStyle(color: colorScheme.onSurface),
+      titleLarge: TextStyle(
+        color: colorScheme.onSurface,
+        fontWeight: FontWeightHelper.bold,
+      ),
+      bodyMedium: TextStyle(color: colorScheme.onSurface),
+      titleMedium: TextStyle(color: colorScheme.onSurface.withOpacity(0.8)),
+    );
+  }
+
+  // App Bar Theme
+  static AppBarTheme _appBarTheme(ColorScheme colorScheme) {
+    return AppBarTheme(
+      titleTextStyle: TextStyle(
+        color: colorScheme.onPrimary,
+        fontWeight: FontWeightHelper.bold,
+        fontSize: 25,
+      ),
+      color: colorScheme.primary,
+      elevation: 0,
+      iconTheme: IconThemeData(color: colorScheme.onPrimary),
+    );
+  }
+
+  // Floating Action Button Theme
+  static FloatingActionButtonThemeData _fabTheme(ColorScheme colorScheme) {
+    return FloatingActionButtonThemeData(
+      backgroundColor: colorScheme.secondary,
+      foregroundColor: colorScheme.onSecondary,
+    );
+  }
+
+  // Input Decoration Theme
+  static InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
+    OutlineInputBorder borderStyle({required Color color, double width = 1}) {
+      return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: color, width: width),
+      );
+    }
+
+    return InputDecorationTheme(
+      focusedBorder: borderStyle(color: colorScheme.secondary, width: 2),
+      enabledBorder: borderStyle(color: colorScheme.onSurface.withOpacity(0.5)),
+      errorBorder: borderStyle(color: colorScheme.error),
+      focusedErrorBorder: borderStyle(color: colorScheme.error, width: 2),
+      labelStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.8)),
+      errorStyle: TextStyle(color: colorScheme.error),
+    );
+  }
+
+  // Card Theme
+  static CardTheme _cardTheme(ColorScheme colorScheme) {
+    return CardTheme(
+      color: colorScheme.brightness == Brightness.light
+          ? Colors.white
+          : const Color(0xFF2C2C2C),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    );
+  }
+
+  // Elevated Button Theme
+  static ElevatedButtonThemeData _buttonTheme(ColorScheme colorScheme) {
+    return ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: colorScheme.onSecondary,
+        backgroundColor: colorScheme.secondary,
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
+  }
+
+  // Snack Bar Theme
+  static SnackBarThemeData _snackBarTheme(ColorScheme colorScheme) {
+    return SnackBarThemeData(
+      contentTextStyle: const TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+        fontWeight: FontWeightHelper.medium,
+      ),
+      actionTextColor: Colors.black,
+      elevation: 6,
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
     );
   }
 }

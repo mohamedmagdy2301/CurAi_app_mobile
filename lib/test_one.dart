@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
+import 'package:smartcare_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
 import 'package:smartcare_app_mobile/core/routes/routes.dart';
 
@@ -19,6 +20,16 @@ class TestOne extends StatelessWidget {
         child: InkWell(
           onTap: () {
             context.pushNamed(Routes.testtwo);
+            showMessage(
+              context,
+              type: SnackBarType.error,
+              message: 'Operation was successful!',
+              isIconVisible: true,
+              labelAction: 'OK',
+              onPressedAction: () {
+                hideMessage(context);
+              },
+            );
           },
           child: const Text(
             'Smart Care',
