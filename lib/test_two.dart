@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:smartcare_app_mobile/core/styles/fonts/fonts_family_helper.dart';
 
@@ -11,57 +12,60 @@ class TestTwo extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Smart Care 2',
-          style: TextStyle(
-            color: Colors.black,
-          ),
         ),
       ),
-      backgroundColor: Colors.amberAccent,
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Smart Care ',
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Smart Care ',
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 fontFamily: FontsFamilyHelper.poppinsEn,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'المرحلة الثانية',
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 30,
                 fontWeight: FontWeightHelper.medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'المرحلة الثانية',
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 fontFamily: FontsFamilyHelper.cairoAr,
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            SizedBox(
+              height: 200,
+              width: 200,
+              child: Image.asset(
+                context.assets.testImageTheme!,
+                fit: BoxFit.fill,
               ),
             ),
           ],
