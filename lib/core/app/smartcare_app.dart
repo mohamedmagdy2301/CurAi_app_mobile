@@ -1,36 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:smartcare_app_mobile/core/app/connectivity_controller.dart';
+import 'package:smartcare_app_mobile/core/common/screens/no_internet_connection.dart';
+import 'package:smartcare_app_mobile/core/language/app_localizations_setup.dart';
+import 'package:smartcare_app_mobile/core/routes/app_routes.dart';
+import 'package:smartcare_app_mobile/core/styles/themes/app_theme.dart';
+import 'package:smartcare_app_mobile/test_one.dart';
 
 class SmartCareApp extends StatelessWidget {
-  const SmartCareApp({super.key, required this.environment});
+  const SmartCareApp({required this.environment, super.key});
   final bool environment;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: environment,
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text(
-            'Smart Care',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.green,
-        ),
-        body: const Center(
-          child: Text(
-            'Smart Care',
-            style: TextStyle(
-              color: Colors.green,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+    return ValueListenableBuilder(
+      valueListenable:
+          ConnectivityController.instance.isInternetConnectedNotifier,
+      builder: (_, value, __) {
+        if (value) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: environment,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            builder: (context, child) {
+              return Scaffold(
+                body: Builder(
+                  builder: (context) {
+                    ConnectivityController.instance.init();
+                    return child!;
+                  },
+                ),
+              );
+            },
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            home: const TestOne(),
+            locale: const Locale('ar'),
+            supportedLocales: AppLocalizationsSetup.supportedLocales,
+            localeResolutionCallback:
+                AppLocalizationsSetup.localeResolutionCallback,
+            localizationsDelegates:
+                AppLocalizationsSetup.localizationsDelegates,
+          );
+        }
+        return const NoInternetConnection();
+      },
     );
   }
 }

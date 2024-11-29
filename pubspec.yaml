@@ -5,39 +5,42 @@ version: 1.0.0+1
 environment:
   sdk: ^3.5.4
 
-
 # versions available, run `flutter pub outdated`.
 dependencies:
+  connectivity_plus:
+  cupertino_icons:
+  firebase_core:
   flutter:
     sdk: flutter
-  firebase_core:
-  # firebase_auth:
-  cupertino_icons: ^1.0.8
+  flutter_dotenv:
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
+  flutter_lints:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-
-
+  very_good_analysis:
+  
 flutter:
   uses-material-design: true
 
-
   assets:
     - assets/images/
+    - .env.prod
+    - .env.dev
+    - lang/en.json
+    - lang/ar.json
 
   fonts:
+    # arabic font
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo/Cairo-Regular.ttf
-        
-    - family: Inter
+    # english font 
+    - family: Poppins
       fonts:
-        - asset: assets/fonts/Inter/Inter_18pt-Regular.ttf
-
-
-
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
 
 # flutter run --flavor development --target lib/main_development.dart
 # flutter run --flavor production --target lib/main_production.dart
