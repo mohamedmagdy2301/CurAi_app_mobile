@@ -1,4 +1,7 @@
 PODS:
+  - connectivity_plus (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - Firebase/CoreOnly (11.4.0):
     - FirebaseCore (= 11.4.0)
   - firebase_core (3.8.0):
@@ -21,6 +24,7 @@ PODS:
   - GoogleUtilities/Privacy (8.0.2)
 
 DEPENDENCIES:
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/darwin`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
 
@@ -32,12 +36,15 @@ SPEC REPOS:
     - GoogleUtilities
 
 EXTERNAL SOURCES:
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/darwin"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: Flutter
 
 SPEC CHECKSUMS:
+  connectivity_plus: b21496ab28d1324eb59885d888a4d83b98531f01
   Firebase: cf1b19f21410b029b6786a54e9764a0cacad3c99
   firebase_core: 84a16d041be8bc166b6e00350f89849e06daf9d1
   FirebaseCore: e0510f1523bc0eb21653cac00792e1e2bd6f1771
