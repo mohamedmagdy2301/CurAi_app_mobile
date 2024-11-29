@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/app/connectivity_controller.dart';
 import 'package:smartcare_app_mobile/core/common/screens/no_internet_connection.dart';
+import 'package:smartcare_app_mobile/core/language/app_localizations_setup.dart';
 import 'package:smartcare_app_mobile/core/routes/app_routes.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/app_theme.dart';
 import 'package:smartcare_app_mobile/test_one.dart';
@@ -32,6 +33,12 @@ class SmartCareApp extends StatelessWidget {
             },
             onGenerateRoute: AppRoutes.onGenerateRoute,
             home: const TestOne(),
+            locale: const Locale('ar'),
+            supportedLocales: AppLocalizationsSetup.supportedLocales,
+            localeResolutionCallback:
+                AppLocalizationsSetup.localeResolutionCallback,
+            localizationsDelegates:
+                AppLocalizationsSetup.localizationsDelegates,
           );
         }
         return const NoInternetConnection();

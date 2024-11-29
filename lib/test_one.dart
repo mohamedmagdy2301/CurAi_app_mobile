@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
+import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
 import 'package:smartcare_app_mobile/core/routes/routes.dart';
 
 class TestOne extends StatelessWidget {
@@ -9,8 +10,8 @@ class TestOne extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Smart Care',
+        title: Text(
+          context.translate(LangKeys.appName),
         ),
         centerTitle: true,
       ),

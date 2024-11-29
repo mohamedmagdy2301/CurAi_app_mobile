@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartcare_app_mobile/core/language/app_localizations.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/assets_extension.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/color_extension.dart';
 
@@ -10,6 +11,10 @@ extension ContextExt on BuildContext {
   //! Theme
   MyAssets get assets => Theme.of(this).extension<MyAssets>()!;
   MyColors get colors => Theme.of(this).extension<MyColors>()!;
+
+  //! Localization translation
+  String translate(String langKey) =>
+      AppLocalizations.of(this)!.translate(langKey).toString();
 
   //! Navigation
   Future<dynamic> pushNamed(String routeName, {Object? arguments}) {
