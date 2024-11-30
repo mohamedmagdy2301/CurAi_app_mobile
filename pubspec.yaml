@@ -12,9 +12,11 @@ dependencies:
   firebase_core:
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.6
   flutter_dotenv:
   flutter_localizations:
     sdk: flutter
+  shared_preferences: ^2.3.3
 
 dev_dependencies:
   flutter_lints:

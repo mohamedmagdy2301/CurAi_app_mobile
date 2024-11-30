@@ -1,4 +1,5 @@
 import 'dart:convert' show json;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smartcare_app_mobile/core/language/app_localizations_delegate.dart';
@@ -36,5 +37,5 @@ class AppLocalizations {
   String? translate(String key) => _localizedStrings[key];
 
   // Getter method to check if the current locale is English.
-  bool get isEnLocale => locale.languageCode == 'en';
+  bool get isEnglishLocale => locale.languageCode == 'en';
 }
