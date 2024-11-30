@@ -8,7 +8,7 @@ part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
-  bool isDark = kDefaultThemeIsDark;
+  bool isDark = kDefaultThemeIsLight;
 
   String currentLocale = kDefaultLanguage;
   Future<void> changeTheme({bool? sharedTheme}) async {
