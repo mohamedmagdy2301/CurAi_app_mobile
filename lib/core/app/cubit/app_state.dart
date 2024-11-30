@@ -13,5 +13,5 @@ final class AppThemeChanged extends AppState {
 final class AppLocalizationChanged extends AppState {
   AppLocalizationChanged({required this.locale});
 
-  final String locale;
+  final Locale locale;
 }

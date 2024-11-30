@@ -28,13 +28,24 @@ class SharedPrefManager {
     return false;
   }
 
-  ///Below method is to get the boolean value from the SharedPreferences.
-  static bool? getBoolean(String key) {
+  ///Below method is to get the boolean value from the SharedPreferences.  ///Below method is to get the boolean value from the _sharedPreferences.
+  static bool? getBool(String key) {
     return _sharedPreferences.getBool(key);
   }
 
-  static dynamic getData({required String key}) {
-    return _sharedPreferences.get(key);
+  ///Below method is to get the string value from the _sharedPreferences.
+  static String? getString(String key) {
+    return _sharedPreferences.getString(key);
+  }
+
+  ///Below method is to set the double value from the _sharedPreferences.
+  static double? getDouble(String key) {
+    return _sharedPreferences.getDouble(key);
+  }
+
+  ///Below method is to get the int value from the _sharedPreferences.
+  static int? getInt(String key) {
+    return _sharedPreferences.getInt(key);
   }
 
   static Future<bool> removeData({required String key}) async {
@@ -45,5 +56,14 @@ class SharedPrefManager {
   static Future<bool> clearAllData() async {
     await _sharedPreferences.clear();
     return true;
+  }
+
+  ///Below method is to check the availability of the received preference .
+  static bool containPreference(String key) {
+    if (_sharedPreferences.get(key) == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

@@ -18,8 +18,9 @@ class SmartCareApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => AppCubit()
         ..changeTheme(
-          sharedTheme: SharedPrefManager.getBoolean(SharedPrefKey.isDarkTheme),
-        ),
+          sharedTheme: SharedPrefManager.getBool(SharedPrefKey.isDarkTheme),
+        )
+        ..getLocalesSharedPref(),
       child: BlocBuilder<AppCubit, AppState>(
         buildWhen: (previous, current) => previous != current,
         builder: (context, state) {
@@ -30,7 +31,7 @@ class SmartCareApp extends StatelessWidget {
             builder: (context, child) => buildAppConnectivityController(child),
             onGenerateRoute: AppRoutes.onGenerateRoute,
             home: const TestOne(),
-            locale: const Locale('en'),
+            locale: Locale(cubitApp.currentLocale),
             supportedLocales: AppLocalSetup.supportedLocales,
             localeResolutionCallback: AppLocalSetup.localeResolutionCallback,
             localizationsDelegates: AppLocalSetup.localesDelegates,
