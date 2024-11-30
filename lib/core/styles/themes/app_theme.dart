@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/styles/colors/colors_dark.dart';
 import 'package:smartcare_app_mobile/core/styles/colors/colors_light.dart';
 import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:smartcare_app_mobile/core/styles/fonts/fonts_family_helper.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/assets_extension.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/color_extension.dart';
 
@@ -49,6 +50,7 @@ class AppTheme {
       primaryColor: colorScheme.primary,
       scaffoldBackgroundColor: colorScheme.surface,
       useMaterial3: true,
+      fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
       textTheme: _textTheme(colorScheme),
       appBarTheme: _appBarTheme(colorScheme),
       floatingActionButtonTheme: _fabTheme(colorScheme),
@@ -63,15 +65,31 @@ class AppTheme {
   // Text Theme
   static TextTheme _textTheme(ColorScheme colorScheme) {
     return TextTheme(
-      bodyLarge: TextStyle(color: colorScheme.onSurface),
-      bodySmall: TextStyle(color: colorScheme.onSurface),
-      titleSmall: TextStyle(color: colorScheme.onSurface),
+      bodyLarge: TextStyle(
+        color: colorScheme.onSurface,
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      ),
+      bodySmall: TextStyle(
+        color: colorScheme.onSurface,
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      ),
+      titleSmall: TextStyle(
+        color: colorScheme.onSurface,
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      ),
       titleLarge: TextStyle(
         color: colorScheme.onSurface,
         fontWeight: FontWeightHelper.bold,
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
       ),
-      bodyMedium: TextStyle(color: colorScheme.onSurface),
-      titleMedium: TextStyle(color: colorScheme.onSurface.withOpacity(0.8)),
+      bodyMedium: TextStyle(
+        color: colorScheme.onSurface,
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      ),
+      titleMedium: TextStyle(
+        color: colorScheme.onSurface.withOpacity(0.8),
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      ),
     );
   }
 
@@ -82,6 +100,7 @@ class AppTheme {
         color: colorScheme.onPrimary,
         fontWeight: FontWeightHelper.bold,
         fontSize: 25,
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
       ),
       color: colorScheme.primary,
       elevation: 0,
@@ -111,8 +130,14 @@ class AppTheme {
       enabledBorder: borderStyle(color: colorScheme.onSurface.withOpacity(0.5)),
       errorBorder: borderStyle(color: colorScheme.error),
       focusedErrorBorder: borderStyle(color: colorScheme.error, width: 2),
-      labelStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.8)),
-      errorStyle: TextStyle(color: colorScheme.error),
+      labelStyle: TextStyle(
+        color: colorScheme.onSurface.withOpacity(0.8),
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      ),
+      errorStyle: TextStyle(
+        color: colorScheme.error,
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      ),
     );
   }
 
@@ -142,10 +167,11 @@ class AppTheme {
   // Snack Bar Theme
   static SnackBarThemeData _snackBarTheme(ColorScheme colorScheme) {
     return SnackBarThemeData(
-      contentTextStyle: const TextStyle(
+      contentTextStyle: TextStyle(
         color: Colors.white,
         fontSize: 16,
         fontWeight: FontWeightHelper.medium,
+        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
       ),
       actionTextColor: Colors.black,
       elevation: 6,
