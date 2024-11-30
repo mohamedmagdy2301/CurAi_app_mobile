@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 //   static const Color textColor = Color(0xFFE0E0E0);
 //   static const Color errorColor = Color(0xFFFF5252);
 // }
+// kdfjewsakl
 
 class ColorsDark {
   static const Color primaryColor =
