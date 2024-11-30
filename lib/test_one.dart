@@ -29,7 +29,7 @@ class TestOne extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    if (AppLocalizations.of(context)!.isEnLocale) {
+                    if (AppLocalizations.of(context)!.isEnglishLocale) {
                       context.read<AppCubit>().toArabic();
                     } else {
                       context.read<AppCubit>().toEngilsh();
