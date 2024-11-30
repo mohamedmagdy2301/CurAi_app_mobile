@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartcare_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:smartcare_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:smartcare_app_mobile/core/utils/constants.dart';
 
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
-  bool isDark = false;
+  bool isDark = kDefaultThemeIsDark;
 
-  String currentLocale = 'en';
+  String currentLocale = kDefaultLanguage;
   Future<void> changeTheme({bool? sharedTheme}) async {
     if (sharedTheme != null) {
       isDark = sharedTheme;
@@ -31,7 +32,7 @@ class AppCubit extends Cubit<AppState> {
   void getLocalesSharedPref() {
     final result = SharedPrefManager.containPreference(SharedPrefKey.language)
         ? SharedPrefManager.getString(SharedPrefKey.language)
-        : 'en';
+        : kDefaultLanguage;
     currentLocale = result!;
     emit(AppLocalizationChanged(locale: Locale(currentLocale)));
   }
