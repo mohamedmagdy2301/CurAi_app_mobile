@@ -1,9 +1,11 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class FontSizesHelper {
-  static const double extraSmall = 10;
-  static const double small = 12;
-  static const double medium = 14;
-  static const double large = 16;
-  static const double extraLarge = 18;
-  static const double xxLarge = 22;
-  static const double huge = 28;
+  static double extraSmall = 10.sp;
+  static double small = 12.sp;
+  static double medium = 14.sp;
+  static double large = 16.sp;
+  static double extraLarge = 18.sp;
+  static double xxLarge = 22.sp;
+  static double huge = 28.sp;
 }
