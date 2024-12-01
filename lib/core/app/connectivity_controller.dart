@@ -6,7 +6,7 @@ class ConnectivityController {
   static final ConnectivityController instance = ConnectivityController._();
 
   ValueNotifier<bool> isInternetNotifier = ValueNotifier<bool>(true);
-  Future<void> init() async {
+  Future<void> connectivityControllerInit() async {
     final result = await Connectivity().checkConnectivity();
     isInternetConnected(result);
     Connectivity().onConnectivityChanged.listen(isInternetConnected);

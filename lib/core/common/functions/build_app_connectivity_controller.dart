@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/app/connectivity_controller.dart';
+import 'package:smartcare_app_mobile/core/di/dependency_injection.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 
 GestureDetector buildAppConnectivityController(Widget? child) {
@@ -8,7 +9,7 @@ GestureDetector buildAppConnectivityController(Widget? child) {
     child: Scaffold(
       body: Builder(
         builder: (context) {
-          ConnectivityController.instance.init();
+          sl<ConnectivityController>().connectivityControllerInit();
           return child!;
         },
       ),
