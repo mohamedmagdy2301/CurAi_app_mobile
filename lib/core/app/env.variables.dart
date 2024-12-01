@@ -6,7 +6,7 @@ class EnvVariables {
   EnvVariables._();
   static final EnvVariables instance = EnvVariables._();
   String _envType = '';
-  Future<void> init({required EnvTypeEnum envType}) async {
+  Future<void> envVariablesSetup({required EnvTypeEnum envType}) async {
     switch (envType) {
       case EnvTypeEnum.dev:
         await dotenv.load(fileName: '.env.dev');
