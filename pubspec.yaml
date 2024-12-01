@@ -16,6 +16,7 @@ dependencies:
   flutter_dotenv:
   flutter_localizations:
     sdk: flutter
+  flutter_screenutil: ^5.9.3
   get_it: ^8.0.2
   logger: ^2.5.0
   shared_preferences: ^2.3.3
