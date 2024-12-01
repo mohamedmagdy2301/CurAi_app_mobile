@@ -49,7 +49,7 @@ class TestOne extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    context.pushNamed(Routes.testtwo);
+                    context.pushNamed(Routes.onboarding);
                     showMessage(
                       context,
                       type: SnackBarType.error,

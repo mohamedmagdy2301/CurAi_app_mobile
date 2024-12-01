@@ -4,8 +4,8 @@ import 'package:smartcare_app_mobile/core/common/screens/no_internet_connection.
 import 'package:smartcare_app_mobile/core/di/dependency_injection.dart';
 import 'package:smartcare_app_mobile/smartcare_app.dart';
 
-class ConnectionInternetListener extends StatelessWidget {
-  const ConnectionInternetListener({required this.environment, super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({required this.environment, super.key});
   final bool environment;
 
   @override
