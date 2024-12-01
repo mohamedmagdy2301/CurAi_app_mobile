@@ -13,6 +13,7 @@ extension ContextExt on BuildContext {
   //! Theme
   MyAssets get assets => Theme.of(this).extension<MyAssets>()!;
   MyColors get colors => Theme.of(this).extension<MyColors>()!;
+  TextTheme get textTheme => Theme.of(this).textTheme;
 
   //! Localization translation
   String translate(String langKey) =>
