@@ -18,7 +18,7 @@ void main() async {
   try {
     await Future.wait([
       sl<ConnectivityController>().connectivityControllerInit(),
-      SharedPrefManager.sharedPreferencesInitialize(),
+      sl<SharedPrefManager>().sharedPreferencesInitialize(),
       sl<EnvVariables>().envVariablesSetup(envType: EnvTypeEnum.dev),
       Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
