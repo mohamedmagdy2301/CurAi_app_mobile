@@ -66,7 +66,7 @@
 - [ ] **Payment Integration**
   - [ ] Implement payment gateway integration for appointment fees.
   - [ ] Add support for multiple payment methods (credit card, wallet, etc.).
-  - [ ] 
+ 
 #### **Additional Features**
 - [ ] **Notifications**
   - [ ] Add push notifications for appointment reminders.
