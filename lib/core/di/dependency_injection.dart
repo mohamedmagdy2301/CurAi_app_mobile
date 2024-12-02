@@ -9,9 +9,9 @@ GetIt sl = GetIt.instance;
 void dependencyInjectionSetup() {
   sl
     //! Controllers
-    ..registerLazySingleton(() => ConnectivityController.instance)
-    ..registerLazySingleton(() => EnvVariables.instance)
-    ..registerLazySingleton(() => SharedPrefManager.instance)
+    ..registerLazySingleton<ConnectivityController>(ConnectivityController.new)
+    ..registerLazySingleton<EnvVariables>(EnvVariables.new)
+    ..registerLazySingleton<SharedPrefManager>(SharedPrefManager.new)
 
     //! Services
 

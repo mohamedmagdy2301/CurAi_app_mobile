@@ -2,8 +2,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smartcare_app_mobile/core/helper/logger_helper.dart';
 
 class SharedPrefManager {
-  SharedPrefManager._();
-  static final SharedPrefManager instance = SharedPrefManager._();
   static const String tag = 'Shared Preferences Manager';
   static late SharedPreferences _sharedPreferences;
 
