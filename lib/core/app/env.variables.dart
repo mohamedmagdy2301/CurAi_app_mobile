@@ -3,8 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 enum EnvTypeEnum { dev, prod }
 
 class EnvVariables {
-  EnvVariables._();
-  static final EnvVariables instance = EnvVariables._();
   String _envType = '';
   Future<void> envVariablesSetup({required EnvTypeEnum envType}) async {
     switch (envType) {

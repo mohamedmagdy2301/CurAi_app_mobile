@@ -2,9 +2,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 
 class ConnectivityController {
-  ConnectivityController._();
-  static final ConnectivityController instance = ConnectivityController._();
-
   ValueNotifier<bool> isInternetNotifier = ValueNotifier<bool>(true);
   Future<void> connectivityControllerInit() async {
     final result = await Connectivity().checkConnectivity();
