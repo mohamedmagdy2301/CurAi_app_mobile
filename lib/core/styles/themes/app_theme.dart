@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smartcare_app_mobile/core/styles/colors/colors_dark.dart';
 import 'package:smartcare_app_mobile/core/styles/colors/colors_light.dart';
 import 'package:smartcare_app_mobile/core/styles/fonts/font_style_helper.dart';
@@ -134,8 +135,11 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         foregroundColor: colorScheme.onSecondary,
         backgroundColor: colorScheme.secondary,
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        elevation: 0,
+        fixedSize: Size(800.w, 50.h),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
       ),
     );
   }

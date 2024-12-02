@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartcare_app_mobile/core/app/onboarding/onboarding.dart';
+import 'package:smartcare_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:smartcare_app_mobile/core/common/screens/under_build_screen.dart';
 import 'package:smartcare_app_mobile/core/routes/base_routes.dart';
 import 'package:smartcare_app_mobile/core/routes/routes.dart';
