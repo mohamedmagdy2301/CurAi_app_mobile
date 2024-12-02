@@ -48,7 +48,7 @@ class MyColors extends ThemeExtension<MyColors> {
 
   static MyColors dark = const MyColors(
     primaryColor: ColorsDark.primaryColor,
-    containerBG: Color.fromARGB(255, 45, 45, 45),
+    containerBG: Color.fromARGB(139, 255, 255, 255),
     onboardingBg: Color.fromARGB(223, 42, 42, 42),
     bodyTextOnboarding: ColorsDark.textColor,
   );
