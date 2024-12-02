@@ -43,6 +43,8 @@
   - [x] Implement language selection in the app settings.
   - [x] Dynamically update the app's text and direction (e.g., RTL for Arabic) based on the chosen language.
 
+        
+#### **Key Features**
 - [ ] **User Authentication**
   - [ ] Implement user registration (email/phone, password, OTP verification).
   - [ ] Enable user login/logout functionality.
