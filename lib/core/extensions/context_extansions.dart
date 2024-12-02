@@ -37,5 +37,5 @@ extension ContextExt on BuildContext {
         .pushNamedAndRemoveUntil(routeName, (route) => false);
   }
 
-  void pop() => Navigator.of(this).pop();
+  void pop() => Navigator.of(this).maybePop();
 }

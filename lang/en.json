@@ -1,3 +1,14 @@
 {
-    "app_name":"SmartCare"
-}
+    "app_name": "SmartCare",
+    "skip": "Skip",
+    "titleOnboarding1": "Welcome to the SmartCare App",
+    "titleOnboarding2": "Easily Book Your Medical Appointments",
+    "titleOnboarding3": "Continuously Monitor Your Health",
+    "descraptionOnboarding1": "We are here to help you get medical care anytime, anywhere.",
+    "descraptionOnboarding2": "Our app provides an easy way to book appointments with specialized doctors.",
+    "descraptionOnboarding3": "You can continuously track your health using the tools available in the app.",
+    "next": "Next",
+    "change_language":"Change Language",
+    "change_theme":"Change Theme"
+  }
+  

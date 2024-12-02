@@ -13,7 +13,7 @@ class ColorsLight {
   static const Color accentColor =
       Color(0xFF009688); // Vibrant Teal - Energetic and fresh
   static const Color backgroundColor =
-      Color(0xFFF9FAFB); // Very light grey - Clean and modern
+      Color.fromARGB(255, 236, 236, 236); // Very light grey - Clean and modern
   static const Color textColor =
       Color(0xFF2D2D2D); // Dark neutral - Excellent readability
   static const Color errorColor =
