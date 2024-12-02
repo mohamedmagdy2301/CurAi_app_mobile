@@ -28,8 +28,8 @@ class CustomDotOnboarding extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: currentIndex == index
-                    ? context.colors.bodyOnboarding
-                    : context.colors.bodyOnboarding!.withOpacity(.4),
+                    ? context.colors.bodyTextOnboarding
+                    : context.colors.bodyTextOnboarding!.withOpacity(.4),
               ),
             );
           },

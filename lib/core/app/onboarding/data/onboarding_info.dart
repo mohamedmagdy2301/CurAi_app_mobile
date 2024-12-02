@@ -11,16 +11,22 @@ class OnboardingInfo {
       index: 0,
     ),
     OnboardingModel(
-      image: AppImages.onboardingDoctor1,
+      image: AppImages.onboardingDoctor2,
       title: LangKeys.titleOnboarding2,
       body: LangKeys.descraptionOnboarding2,
       index: 1,
     ),
     OnboardingModel(
-      image: AppImages.onboardingDoctor1,
+      image: AppImages.onboardingDoctor3,
       title: LangKeys.titleOnboarding3,
       body: LangKeys.descraptionOnboarding3,
       index: 2,
+    ),
+    OnboardingModel(
+      image: AppImages.onboardingDoctor4,
+      title: LangKeys.titleOnboarding4,
+      body: LangKeys.descraptionOnboarding4,
+      index: 3,
     ),
   ];
 }

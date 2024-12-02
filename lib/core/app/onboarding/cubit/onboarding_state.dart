@@ -14,5 +14,5 @@ class OnboardingUpdated extends OnboardingState {
 }
 
 class OnboardingFinished extends OnboardingState {
-  OnboardingFinished() : super(2);
+  OnboardingFinished() : super(OnboardingInfo.onboardingInfo.length - 1);
 }

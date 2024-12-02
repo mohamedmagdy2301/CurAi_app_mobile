@@ -32,7 +32,7 @@ class TestOne extends StatelessWidget {
                 children: [
                   spaceHeight(20),
                   CustemButton(
-                    title: LangKeys.change_language,
+                    title: LangKeys.changeLanguage,
                     onPressed: () {
                       if (AppLocalizations.of(context)!.isEnglishLocale) {
                         context.read<AppCubit>().toArabic();
@@ -44,7 +44,7 @@ class TestOne extends StatelessWidget {
                   spaceHeight(20),
                   CustemButton(
                     onPressed: context.read<AppCubit>().changeTheme,
-                    title: LangKeys.change_theme,
+                    title: LangKeys.changeTheme,
                   ),
                   spaceHeight(20),
                   CustemButton(

@@ -6,27 +6,27 @@ class MyColors extends ThemeExtension<MyColors> {
   const MyColors({
     required this.primaryColor,
     required this.containerBG,
-    // required this.titleOnboarding,
-    required this.bodyOnboarding,
+    required this.onboardingBg,
+    required this.bodyTextOnboarding,
   });
 
   final Color? primaryColor;
   final Color? containerBG;
-  // final Color? titleOnboarding;
-  final Color? bodyOnboarding;
+  final Color? onboardingBg;
+  final Color? bodyTextOnboarding;
 
   @override
   ThemeExtension<MyColors> copyWith({
     Color? primaryColor,
     Color? containerBG,
-    // Color? titleOnboarding,
+    Color? onboardingBg,
     Color? bodyOnboarding,
   }) {
     return MyColors(
       primaryColor: primaryColor,
       containerBG: containerBG,
-      // titleOnboarding: titleOnboarding,
-      bodyOnboarding: bodyOnboarding,
+      onboardingBg: onboardingBg,
+      bodyTextOnboarding: bodyOnboarding,
     );
   }
 
@@ -41,22 +41,22 @@ class MyColors extends ThemeExtension<MyColors> {
     return MyColors(
       primaryColor: primaryColor,
       containerBG: containerBG,
-      // titleOnboarding: titleOnboarding,
-      bodyOnboarding: bodyOnboarding,
+      onboardingBg: onboardingBg,
+      bodyTextOnboarding: bodyTextOnboarding,
     );
   }
 
   static MyColors dark = const MyColors(
     primaryColor: ColorsDark.primaryColor,
     containerBG: Color.fromARGB(255, 45, 45, 45),
-    // titleOnboarding: ColorsDark.textColor,
-    bodyOnboarding: ColorsDark.textColor,
+    onboardingBg: Color.fromARGB(223, 42, 42, 42),
+    bodyTextOnboarding: ColorsDark.textColor,
   );
 
   static MyColors light = const MyColors(
     primaryColor: ColorsLight.primaryColor,
-    containerBG: Color.fromARGB(255, 220, 220, 220),
-    // titleOnboarding: ColorsLight.textColor,
-    bodyOnboarding: ColorsLight.textColor,
+    containerBG: Color.fromARGB(255, 255, 255, 255),
+    onboardingBg: Color.fromARGB(158, 210, 210, 210),
+    bodyTextOnboarding: ColorsLight.textColor,
   );
 }

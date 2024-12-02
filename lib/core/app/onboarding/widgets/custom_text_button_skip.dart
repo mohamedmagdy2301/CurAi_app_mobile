@@ -20,7 +20,7 @@ class CustomTextButtonSkip extends StatelessWidget {
       child: Text(
         context.translate(LangKeys.skip),
         style: context.textTheme.bodyLarge!.copyWith(
-          color: context.colors.bodyOnboarding,
+          color: context.colors.bodyTextOnboarding,
         ),
       ),
     );

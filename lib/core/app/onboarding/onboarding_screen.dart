@@ -20,18 +20,31 @@ class Onboarding extends StatelessWidget {
           builder: (context, state) {
             final onboardingInfo = OnboardingInfo.onboardingInfo[state.index];
             return Scaffold(
-              backgroundColor: context.colors.containerBG,
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (state.index == 2)
-                    spaceHeight(48)
-                  else
-                    const CustomTextButtonSkip(),
-                  ImageOnboarding(
-                    image: onboardingInfo.image,
+              // backgroundColor: context.colors.containerBG,
+              body: Container(
+                constraints: const BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(context.assets.onboardingBG!),
+                    fit: BoxFit.fill,
+                    colorFilter: ColorFilter.mode(
+                      context.colors.onboardingBg!,
+                      BlendMode.multiply,
+                    ),
                   ),
-                ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (state.index == OnboardingInfo.onboardingInfo.length - 1)
+                      spaceHeight(48)
+                    else
+                      const CustomTextButtonSkip(),
+                    ImageOnboarding(
+                      image: onboardingInfo.image,
+                    ),
+                  ],
+                ),
               ),
               bottomSheet: BodyOnboarding(
                 title: onboardingInfo.title,
