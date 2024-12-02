@@ -26,7 +26,23 @@
 --- 
 
 ### 📝 TODO List for SmartCare Mobile App 
+
 #### **Core Features**
+- [x] **Core Folder**
+  - [x] Implement project core structure (folder setup, base models, services, and utilities).
+        
+#### **Themes & Localization**
+- [x] **Themes**
+  - [x] Implement **light** and **dark mode** support.
+  - [x] Add an in-app toggle to switch between themes.
+  - [x] Use a theme management library (e.g., `Cubit`) for dynamic theme updates.
+
+- [x] **Localization**
+  - [x] Configure the app to support multiple languages (e.g., English, Arabic, etc.).
+  - [x] Use the Flutter `intl` package for translations.
+  - [x] Implement language selection in the app settings.
+  - [x] Dynamically update the app's text and direction (e.g., RTL for Arabic) based on the chosen language.
+
 - [ ] **User Authentication**
   - [ ] Implement user registration (email/phone, password, OTP verification).
   - [ ] Enable user login/logout functionality.
@@ -41,23 +57,6 @@
   - [ ] Integrate chatbot for symptom-based doctor recommendations.
   - [ ] Implement a conversational UI for the chatbot.
 
-#### **Themes and Localization**
-- [ ] **Themes**
-  - [ ] Implement **light** and **dark mode** support.
-  - [ ] Add an in-app toggle to switch between themes.
-  - [ ] Use a theme management library (e.g., `provider` or `riverpod`) for dynamic theme updates.
-
-- [ ] **Localization**
-  - [ ] Configure the app to support multiple languages (e.g., English, Arabic, etc.).
-  - [ ] Use the Flutter `intl` package for translations.
-  - [ ] Implement language selection in the app settings.
-  - [ ] Dynamically update the app's text and direction (e.g., RTL for Arabic) based on the chosen language.
-
-#### **Additional Features**
-- [ ] **Notifications**
-  - [ ] Add push notifications for appointment reminders.
-  - [ ] Notify users about doctor updates or promotions.
-
 - [ ] **User Profile**
   - [ ] Create a user profile page to manage personal details.
   - [ ] Allow users to view appointment history.
@@ -65,10 +64,25 @@
 - [ ] **Payment Integration**
   - [ ] Implement payment gateway integration for appointment fees.
   - [ ] Add support for multiple payment methods (credit card, wallet, etc.).
+  - [ ] 
+#### **Additional Features**
+- [ ] **Notifications**
+  - [ ] Add push notifications for appointment reminders.
+  - [ ] Notify users about doctor updates or promotions.
 
 #### **UI/UX Enhancements**
-- [ ] Ensure mobile app is fully responsive for various device sizes.
-- [ ] Create smooth transitions and animations.
+- [x] **Styling**
+  - [x] Ensure mobile app is fully responsive for various device sizes.
+  - [x] Create smooth transitions and animations.
+
+- [x] **Onboarding**
+  - [x] Implement onboarding screens to introduce app features.
+  - [x] Add user-friendly navigation through onboarding steps.
+
+#### **Connectivity**
+- [x] **Internet Connection**
+  - [x] Handle offline/online states gracefully.
+  - [x] Display appropriate messages when there is no internet connection.
 
 #### **Testing**
 - [ ] Write and execute unit tests for key functionalities.
@@ -87,3 +101,4 @@
 - [ ] Introduce telemedicine/video consultation features.
 
 --- 
+
