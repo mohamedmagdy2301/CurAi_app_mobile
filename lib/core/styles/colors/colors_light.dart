@@ -18,4 +18,6 @@ class ColorsLight {
       Color(0xFF2D2D2D); // Dark neutral - Excellent readability
   static const Color errorColor =
       Color(0xFFE53935); // Deep red - Serious and noticeable
+
+  static const textColorLight = Color(0xff757575);
 }

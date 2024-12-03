@@ -22,11 +22,15 @@ PODS:
   - "GoogleUtilities/NSData+zlib (8.0.2)":
     - GoogleUtilities/Privacy
   - GoogleUtilities/Privacy (8.0.2)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/darwin`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
@@ -42,6 +46,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
+  shared_preferences_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin
 
 SPEC CHECKSUMS:
   connectivity_plus: b21496ab28d1324eb59885d888a4d83b98531f01
@@ -51,6 +57,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: f47dd28ae7782e6a4738aad3106071a8fe0af604
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
 
 PODFILE CHECKSUM: aa790ec80df8f5bd50cbf3e41a17124beba890df
 
