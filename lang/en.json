@@ -12,5 +12,22 @@
   "next": "Next",
   "get_started": "Get Started",
   "change_language": "Change Language",
-  "change_theme": "Change Theme"
+  "change_theme": "Change Theme",
+  "welcom_back": "Welcome Back",
+  "descraptionLogin": "We're excited to have you back, can't wait to see what you've been up to since you last logged in.",
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "forgot_password": "Forgot Password?",
+  "not_have_account": "Don't have an account?",
+  "create_register": "Create Account",
+  "descraptionRegister": "Sign up now and start exploring all that our app has to offer. We're excited to welcome you to our community!",
+  "your_number": "Your number",
+  "register":"Register",
+  "already_have_account": "Already have an account?",
+  "or_sign_in_with": "Or sign in with",
+  "by_logging": "By logging, you agree to our",
+  "terms_of_use": "Terms & Conditions",
+  "and": "and",
+  "privacy_policy": "PrivacyPolicy"
 }
