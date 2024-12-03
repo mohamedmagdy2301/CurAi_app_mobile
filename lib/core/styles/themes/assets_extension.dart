@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:smartcare_app_mobile/core/styles/images/app_images.dart';
 
 class MyAssets extends ThemeExtension<MyAssets> {
-  const MyAssets({
-    required this.testImageTheme,
-    required this.onboardingBG,
-  });
-
-  final String? testImageTheme;
-  final String? onboardingBG;
+  const MyAssets();
 
   @override
-  ThemeExtension<MyAssets> copyWith({
-    String? testImageTheme,
-    String? onboardingBG,
-  }) {
-    return MyAssets(
-      testImageTheme: testImageTheme,
-      onboardingBG: onboardingBG,
-    );
+  ThemeExtension<MyAssets> copyWith() {
+    return MyAssets.dark;
   }
 
   @override
@@ -29,18 +16,9 @@ class MyAssets extends ThemeExtension<MyAssets> {
     if (other is! MyAssets) {
       return this;
     }
-    return MyAssets(
-      testImageTheme: testImageTheme,
-      onboardingBG: onboardingBG,
-    );
+    return MyAssets.dark;
   }
 
-  static const MyAssets dark = MyAssets(
-    testImageTheme: AppImages.testDark,
-    onboardingBG: AppImages.onboardingBGDark,
-  );
-  static const MyAssets light = MyAssets(
-    testImageTheme: AppImages.testLight,
-    onboardingBG: AppImages.onboardingBGLight,
-  );
+  static const MyAssets dark = MyAssets();
+  static const MyAssets light = MyAssets();
 }
