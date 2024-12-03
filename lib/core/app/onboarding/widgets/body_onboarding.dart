@@ -34,33 +34,40 @@ class BodyOnboarding extends StatelessWidget {
           topRight: Radius.circular(40.r),
         ),
       ),
-      padding: padding(horizontal: 20, vertical: 30),
+      padding: padding(horizontal: 20, vertical: 25),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
             textAlign: TextAlign.center,
             context.translate(title),
+            maxLines: 4,
             style: context.textTheme.headlineMedium!.copyWith(
               fontWeight: FontWeightHelper.black,
             ),
           ),
-          spaceHeight(10),
           Padding(
-            padding: padding(horizontal: 20, vertical: 10),
+            padding: padding(horizontal: isArabic() ? 20 : 15, vertical: 15),
             child: Text(
               textAlign: TextAlign.center,
               context.translate(body),
-              style: context.textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeightHelper.medium,
-                color: context.colors.bodyTextOnboarding!.withOpacity(.5),
-              ),
+              maxLines: 4,
+              style: isArabic()
+                  ? context.textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeightHelper.medium,
+                      color: context.colors.bodyTextOnboarding!.withOpacity(.5),
+                    )
+                  : context.textTheme.labelMedium!.copyWith(
+                      fontWeight: FontWeightHelper.medium,
+                      color: context.colors.bodyTextOnboarding!.withOpacity(.5),
+                    ),
             ),
           ),
           CustomDotOnboarding(
             index: index,
             currentIndex: currentIndex,
           ),
-          const Spacer(),
+          spaceHeight(5),
           CustemButton(
             title: index == OnboardingInfo.onboardingInfo.length - 1
                 ? LangKeys.getStarted
@@ -69,7 +76,7 @@ class BodyOnboarding extends StatelessWidget {
               context.read<OnboardingCubit>().nextPage();
               if (BlocProvider.of<OnboardingCubit>(context).state
                   is OnboardingFinished) {
-                context.pushReplacementNamed(Routes.testone);
+                context.pushReplacementNamed(Routes.loginScreen);
               }
             },
           ),
