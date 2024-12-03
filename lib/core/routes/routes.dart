@@ -1,4 +1,4 @@
 class Routes {
-  static const String testone = '/';
-  static const String testtwo = '/testtwo';
+  static const String testone = '/testone';
+  static const String onboarding = '/onboarding';
 }

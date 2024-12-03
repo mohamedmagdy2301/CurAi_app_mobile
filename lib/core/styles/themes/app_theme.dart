@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smartcare_app_mobile/core/styles/colors/colors_dark.dart';
 import 'package:smartcare_app_mobile/core/styles/colors/colors_light.dart';
-import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:smartcare_app_mobile/core/styles/fonts/font_style_helper.dart';
 import 'package:smartcare_app_mobile/core/styles/fonts/fonts_family_helper.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/assets_extension.dart';
 import 'package:smartcare_app_mobile/core/styles/themes/color_extension.dart';
@@ -14,7 +15,7 @@ class AppTheme {
       secondary: ColorsLight.accentColor,
       surface: ColorsLight.backgroundColor,
       error: ColorsLight.errorColor,
-      onPrimary: Color.fromARGB(255, 198, 198, 198),
+      onPrimary: Colors.white,
       onSecondary: Colors.black,
       onSurface: ColorsLight.textColor,
       onError: Colors.white,
@@ -42,7 +43,7 @@ class AppTheme {
   // Base Theme Creator
   static ThemeData _createTheme({
     required ColorScheme colorScheme,
-    required Iterable<ThemeExtension<dynamic>> extensions,
+    required List<ThemeExtension<dynamic>>? extensions,
   }) {
     return ThemeData(
       extensions: extensions,
@@ -57,51 +58,33 @@ class AppTheme {
       inputDecorationTheme: _inputDecorationTheme(colorScheme),
       cardTheme: _cardTheme(colorScheme),
       elevatedButtonTheme: _buttonTheme(colorScheme),
-      visualDensity: VisualDensity.adaptivePlatformDensity,
       snackBarTheme: _snackBarTheme(colorScheme),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }
 
   // Text Theme
   static TextTheme _textTheme(ColorScheme colorScheme) {
     return TextTheme(
-      bodyLarge: TextStyle(
-        color: colorScheme.onSurface,
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      bodyLarge: AppTextStyles.bodyLarge(color: colorScheme.onSurface),
+      bodyMedium: AppTextStyles.bodyMedium(color: colorScheme.onSurface),
+      bodySmall: AppTextStyles.bodySmall(
+        color: colorScheme.onSurface.withOpacity(0.7),
       ),
-      bodySmall: TextStyle(
-        color: colorScheme.onSurface,
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
-      ),
-      titleSmall: TextStyle(
-        color: colorScheme.onSurface,
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
-      ),
-      titleLarge: TextStyle(
-        color: colorScheme.onSurface,
-        fontWeight: FontWeightHelper.bold,
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
-      ),
-      bodyMedium: TextStyle(
-        color: colorScheme.onSurface,
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
-      ),
-      titleMedium: TextStyle(
+      titleLarge: AppTextStyles.titleLarge(color: colorScheme.onSurface),
+      titleMedium: AppTextStyles.titleMedium(
         color: colorScheme.onSurface.withOpacity(0.8),
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
+      ),
+      titleSmall: AppTextStyles.bodySmall(
+        color: colorScheme.onSurface.withOpacity(0.6),
       ),
     );
   }
 
-  // App Bar Theme
+  // AppBar Theme
   static AppBarTheme _appBarTheme(ColorScheme colorScheme) {
     return AppBarTheme(
-      titleTextStyle: TextStyle(
-        color: colorScheme.onPrimary,
-        fontWeight: FontWeightHelper.bold,
-        fontSize: 25,
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
-      ),
+      titleTextStyle: AppTextStyles.appBarTitle(color: colorScheme.onPrimary),
       color: colorScheme.primary,
       elevation: 0,
       iconTheme: IconThemeData(color: colorScheme.onPrimary),
@@ -118,7 +101,7 @@ class AppTheme {
 
   // Input Decoration Theme
   static InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
-    OutlineInputBorder borderStyle({required Color color, double width = 1}) {
+    OutlineInputBorder buildBorder(Color color, {double width = 1.0}) {
       return OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: color, width: width),
@@ -126,27 +109,21 @@ class AppTheme {
     }
 
     return InputDecorationTheme(
-      focusedBorder: borderStyle(color: colorScheme.secondary, width: 2),
-      enabledBorder: borderStyle(color: colorScheme.onSurface.withOpacity(0.5)),
-      errorBorder: borderStyle(color: colorScheme.error),
-      focusedErrorBorder: borderStyle(color: colorScheme.error, width: 2),
-      labelStyle: TextStyle(
+      focusedBorder: buildBorder(colorScheme.secondary, width: 2),
+      enabledBorder: buildBorder(colorScheme.onSurface.withOpacity(0.5)),
+      errorBorder: buildBorder(colorScheme.error),
+      focusedErrorBorder: buildBorder(colorScheme.error, width: 2),
+      labelStyle: AppTextStyles.bodySmall(
         color: colorScheme.onSurface.withOpacity(0.8),
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
       ),
-      errorStyle: TextStyle(
-        color: colorScheme.error,
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
-      ),
+      errorStyle: AppTextStyles.bodySmall(color: colorScheme.error),
     );
   }
 
   // Card Theme
   static CardTheme _cardTheme(ColorScheme colorScheme) {
     return CardTheme(
-      color: colorScheme.brightness == Brightness.light
-          ? Colors.white
-          : const Color(0xFF2C2C2C),
+      color: colorScheme.surface,
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
@@ -158,8 +135,11 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         foregroundColor: colorScheme.onSecondary,
         backgroundColor: colorScheme.secondary,
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        elevation: 0,
+        fixedSize: Size(800.w, 50.h),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
       ),
     );
   }
@@ -167,14 +147,8 @@ class AppTheme {
   // Snack Bar Theme
   static SnackBarThemeData _snackBarTheme(ColorScheme colorScheme) {
     return SnackBarThemeData(
-      contentTextStyle: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-        fontWeight: FontWeightHelper.medium,
-        fontFamily: FontsFamilyHelper.getLocaledFontFamily(),
-      ),
-      actionTextColor: Colors.black,
-      elevation: 6,
+      contentTextStyle: AppTextStyles.bodySmall(color: Colors.white),
+      backgroundColor: colorScheme.primary,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),

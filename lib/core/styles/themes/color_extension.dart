@@ -4,17 +4,29 @@ import 'package:smartcare_app_mobile/core/styles/colors/colors_light.dart';
 
 class MyColors extends ThemeExtension<MyColors> {
   const MyColors({
-    required this.mainColor,
+    required this.primaryColor,
+    required this.containerBG,
+    required this.onboardingBg,
+    required this.bodyTextOnboarding,
   });
 
-  final Color? mainColor;
+  final Color? primaryColor;
+  final Color? containerBG;
+  final Color? onboardingBg;
+  final Color? bodyTextOnboarding;
 
   @override
   ThemeExtension<MyColors> copyWith({
-    Color? mainColor,
+    Color? primaryColor,
+    Color? containerBG,
+    Color? onboardingBg,
+    Color? bodyOnboarding,
   }) {
     return MyColors(
-      mainColor: mainColor,
+      primaryColor: primaryColor,
+      containerBG: containerBG,
+      onboardingBg: onboardingBg,
+      bodyTextOnboarding: bodyOnboarding,
     );
   }
 
@@ -27,15 +39,24 @@ class MyColors extends ThemeExtension<MyColors> {
       return this;
     }
     return MyColors(
-      mainColor: mainColor,
+      primaryColor: primaryColor,
+      containerBG: containerBG,
+      onboardingBg: onboardingBg,
+      bodyTextOnboarding: bodyTextOnboarding,
     );
   }
 
   static MyColors dark = const MyColors(
-    mainColor: ColorsDark.primaryColor,
+    primaryColor: ColorsDark.primaryColor,
+    containerBG: Color.fromARGB(139, 255, 255, 255),
+    onboardingBg: Color.fromARGB(223, 42, 42, 42),
+    bodyTextOnboarding: ColorsDark.textColor,
   );
 
   static MyColors light = const MyColors(
-    mainColor: ColorsLight.primaryColor,
+    primaryColor: ColorsLight.primaryColor,
+    containerBG: Color.fromARGB(255, 255, 255, 255),
+    onboardingBg: Color.fromARGB(158, 210, 210, 210),
+    bodyTextOnboarding: ColorsLight.textColor,
   );
 }

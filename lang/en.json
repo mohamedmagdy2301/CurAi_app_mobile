@@ -1,3 +1,16 @@
 {
-    "app_name":"SmartCare"
+  "app_name": "SmartCare",
+  "skip": "Skip",
+  "titleOnboarding1": "Welcome to the SmartCare App",
+  "titleOnboarding2": "Easily Book Your Medical Appointments",
+  "titleOnboarding3": "Continuously Monitor Your Health",
+  "titleOnboarding4": "Stay Connected and Access Your Records",
+  "descraptionOnboarding1": "We are here to help you get medical care anytime, and from anywhere. Our app is designed for ease of use, with a modern interface that ensures a smooth experience for accessing healthcare services.",
+  "descraptionOnboarding2": "Our app provides an easy way to book appointments with specialized doctors. You can browse doctors by specialty and location, and choose the one that best suits your needs, all with ease and flexibility.",
+  "descraptionOnboarding3": "You can continuously track your health using the tools available in the app. This includes tracking your schedule, results, and receiving appointment reminders to ensure you never miss an important visit.",
+  "descraptionOnboarding4": "Stay connected with your healthcare providers and access your medical records anytime. Enjoy easy access to your medical history and manage your health data securely and reliably.",
+  "next": "Next",
+  "get_started": "Get Started",
+  "change_language": "Change Language",
+  "change_theme": "Change Theme"
 }

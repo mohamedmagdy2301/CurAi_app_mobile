@@ -13,6 +13,7 @@ extension ContextExt on BuildContext {
   //! Theme
   MyAssets get assets => Theme.of(this).extension<MyAssets>()!;
   MyColors get colors => Theme.of(this).extension<MyColors>()!;
+  TextTheme get textTheme => Theme.of(this).textTheme;
 
   //! Localization translation
   String translate(String langKey) =>
@@ -36,5 +37,5 @@ extension ContextExt on BuildContext {
         .pushNamedAndRemoveUntil(routeName, (route) => false);
   }
 
-  void pop() => Navigator.of(this).pop();
+  void pop() => Navigator.of(this).maybePop();
 }
