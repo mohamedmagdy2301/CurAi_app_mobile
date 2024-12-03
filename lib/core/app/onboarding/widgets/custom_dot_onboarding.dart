@@ -15,7 +15,7 @@ class CustomDotOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding(vertical: 10),
+      padding: isArabic() ? padding(vertical: 20) : padding(vertical: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
@@ -29,7 +29,7 @@ class CustomDotOnboarding extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: currentIndex == index
                     ? context.colors.bodyTextOnboarding
-                    : context.colors.bodyTextOnboarding!.withOpacity(.4),
+                    : context.colors.primaryColor!.withOpacity(.4),
               ),
             );
           },
