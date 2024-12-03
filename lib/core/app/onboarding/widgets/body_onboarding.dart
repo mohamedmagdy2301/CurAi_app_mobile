@@ -76,7 +76,7 @@ class BodyOnboarding extends StatelessWidget {
               context.read<OnboardingCubit>().nextPage();
               if (BlocProvider.of<OnboardingCubit>(context).state
                   is OnboardingFinished) {
-                context.pushReplacementNamed(Routes.testone);
+                context.pushReplacementNamed(Routes.loginScreen);
               }
             },
           ),
