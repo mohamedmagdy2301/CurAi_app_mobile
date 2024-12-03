@@ -44,7 +44,7 @@ class BodyOnboarding extends StatelessWidget {
               fontWeight: FontWeightHelper.black,
             ),
           ),
-          spaceHeight(15),
+          spaceHeight(10),
           Padding(
             padding: padding(horizontal: 20, vertical: 10),
             child: Text(
