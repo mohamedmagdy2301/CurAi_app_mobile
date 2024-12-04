@@ -21,7 +21,7 @@ class AleadyHaveAccount extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () => context.pushNamed(Routes.loginScreen),
+          onPressed: () => context.pushReplacementNamed(Routes.loginScreen),
           child: Text(
             context.translate(LangKeys.login),
             style: context.textTheme.bodyMedium!.copyWith(

@@ -1,2 +1,2 @@
-const String kDefaultLanguage = 'en';
-const bool kDefaultThemeIsLight = false;
+const String kDefaultLanguage = 'ar';
+const bool kDefaultThemeIsLight = true;

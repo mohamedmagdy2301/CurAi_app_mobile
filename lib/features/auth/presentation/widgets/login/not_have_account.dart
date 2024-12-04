@@ -21,7 +21,7 @@ class NotHaveAccount extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () => context.pushNamed(Routes.registerScreen),
+          onPressed: () => context.pushReplacementNamed(Routes.registerScreen),
           child: Text(
             context.translate(LangKeys.register),
             style: context.textTheme.bodyMedium!.copyWith(
