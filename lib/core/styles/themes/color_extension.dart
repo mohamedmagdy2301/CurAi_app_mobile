@@ -6,6 +6,7 @@ class MyColors extends ThemeExtension<MyColors> {
   const MyColors({
     required this.primaryColor,
     required this.textColorLight,
+    required this.iconSocialBG,
     required this.onboardingBg,
     required this.bodyTextOnboarding,
     required this.border,
@@ -14,6 +15,7 @@ class MyColors extends ThemeExtension<MyColors> {
 
   final Color? primaryColor;
   final Color? textColorLight;
+  final Color? iconSocialBG;
   final Color? onboardingBg;
   final Color? bodyTextOnboarding;
   final Color? border;
@@ -26,6 +28,7 @@ class MyColors extends ThemeExtension<MyColors> {
     Color? onboardingBg,
     Color? bodyOnboarding,
     Color? border,
+    Color? iconSocialBG,
     Color? focusedBorder,
   }) {
     return MyColors(
@@ -34,6 +37,7 @@ class MyColors extends ThemeExtension<MyColors> {
       onboardingBg: onboardingBg,
       bodyTextOnboarding: bodyOnboarding,
       border: border,
+      iconSocialBG: iconSocialBG,
       focusedBorder: focusedBorder,
     );
   }
@@ -52,6 +56,7 @@ class MyColors extends ThemeExtension<MyColors> {
       onboardingBg: onboardingBg,
       bodyTextOnboarding: bodyTextOnboarding,
       border: border,
+      iconSocialBG: iconSocialBG,
       focusedBorder: focusedBorder,
     );
   }
@@ -63,6 +68,7 @@ class MyColors extends ThemeExtension<MyColors> {
     bodyTextOnboarding: ColorsDark.textColor,
     border: Color.fromARGB(188, 153, 153, 153),
     focusedBorder: Color.fromARGB(255, 0, 128, 107),
+    iconSocialBG: Color.fromARGB(255, 129, 129, 129),
   );
 
   static MyColors light = const MyColors(
@@ -72,5 +78,6 @@ class MyColors extends ThemeExtension<MyColors> {
     bodyTextOnboarding: ColorsLight.textColor,
     border: Color.fromARGB(183, 156, 156, 156),
     focusedBorder: ColorsLight.primaryColor,
+    iconSocialBG: Color.fromARGB(255, 118, 118, 118),
   );
 }

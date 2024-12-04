@@ -3,6 +3,9 @@ import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/widgets/login/form_login_widget.dart';
+import 'package:smartcare_app_mobile/features/auth/presentation/widgets/login/not_have_account.dart';
+import 'package:smartcare_app_mobile/features/auth/presentation/widgets/login_with_social.dart';
+import 'package:smartcare_app_mobile/features/auth/presentation/widgets/terms_and_conditions_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -22,8 +25,14 @@ class LoginScreen extends StatelessWidget {
                   title: LangKeys.welcomeBack,
                   descraption: LangKeys.descraptionLogin,
                 ),
-                spaceHeight(25),
+                spaceHeight(30),
                 const FormLoginWidget(),
+                spaceHeight(50),
+                const LoginWithSocial(),
+                spaceHeight(40),
+                const TermsAndConditionsWidget(),
+                spaceHeight(30),
+                const NotHaveAccount(),
               ],
             ),
           ),
