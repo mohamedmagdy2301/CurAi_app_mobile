@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
@@ -46,33 +47,24 @@ class LoginWithSocial extends StatelessWidget {
             CircleAvatar(
               backgroundColor: context.colors.iconSocialBG,
               radius: 25.r,
-              child: Image.asset(
-                'assets/images/Logo-Google.png',
-                height: 30.h,
-                width: 30.w,
-                fit: BoxFit.fill,
+              child: SvgPicture.asset(
+                'assets/svg/Logo-Google.svg',
               ),
             ),
             spaceWidth(20),
             CircleAvatar(
               backgroundColor: context.colors.iconSocialBG,
               radius: 25.r,
-              child: Image.asset(
-                'assets/images/Logo-Facebook.png',
-                height: 25.h,
-                width: 25.w,
-                fit: BoxFit.fill,
+              child: SvgPicture.asset(
+                'assets/svg/Logo-Facebook.svg',
               ),
             ),
             spaceWidth(20),
             CircleAvatar(
               backgroundColor: context.colors.iconSocialBG,
               radius: 25.r,
-              child: Image.asset(
-                'assets/images/Logo-Apple.png',
-                height: 30.h,
-                width: 25.w,
-                fit: BoxFit.fill,
+              child: SvgPicture.asset(
+                'assets/svg/Logo-Apple.svg',
               ),
             ),
           ],
