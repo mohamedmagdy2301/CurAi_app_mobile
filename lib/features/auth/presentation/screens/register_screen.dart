@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
+import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
+import 'package:smartcare_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -14,6 +16,12 @@ class RegisterScreen extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HeaderAuthWidger(
+                  title: LangKeys.createRegister,
+                  descraption: LangKeys.descraptionRegister,
+                ),
+              ],
             ),
           ),
         ),
