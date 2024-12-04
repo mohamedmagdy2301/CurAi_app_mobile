@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
+import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
 
 class TermsAndConditionsWidget extends StatelessWidget {
   const TermsAndConditionsWidget({
@@ -25,6 +26,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
             context.translate(LangKeys.termsOfUse),
             style: context.textTheme.bodyMedium!.copyWith(
               color: context.colors.primaryColor,
+              fontWeight: FontWeightHelper.extraBold,
             ),
           ),
           spaceWidth(5),
@@ -39,6 +41,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
             context.translate(LangKeys.privacyPolicy),
             style: context.textTheme.bodyMedium!.copyWith(
               color: context.colors.primaryColor,
+              fontWeight: FontWeightHelper.extraBold,
             ),
           ),
         ],

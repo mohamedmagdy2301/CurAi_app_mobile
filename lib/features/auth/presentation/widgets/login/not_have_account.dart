@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
+import 'package:smartcare_app_mobile/core/routes/routes.dart';
+import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
 
 class NotHaveAccount extends StatelessWidget {
   const NotHaveAccount({
@@ -19,11 +20,14 @@ class NotHaveAccount extends StatelessWidget {
             color: context.colors.textColorLight,
           ),
         ),
-        spaceWidth(5),
-        Text(
-          context.translate(LangKeys.login),
-          style: context.textTheme.bodyMedium!.copyWith(
-            color: context.colors.primaryColor,
+        TextButton(
+          onPressed: () => context.pushNamed(Routes.registerScreen),
+          child: Text(
+            context.translate(LangKeys.register),
+            style: context.textTheme.bodyMedium!.copyWith(
+              color: context.colors.primaryColor,
+              fontWeight: FontWeightHelper.extraBold,
+            ),
           ),
         ),
       ],
