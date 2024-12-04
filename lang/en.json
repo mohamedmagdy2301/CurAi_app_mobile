@@ -29,5 +29,6 @@
   "by_logging": "By logging, you agree to our",
   "terms_of_use": "Terms & Conditions",
   "and": "and",
-  "privacy_policy": "PrivacyPolicy"
+  "privacy_policy": "PrivacyPolicy",
+  "is_required":"is required"
 }

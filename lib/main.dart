@@ -8,6 +8,7 @@ import 'package:smartcare_app_mobile/core/app/env.variables.dart';
 import 'package:smartcare_app_mobile/core/app/my_app.dart';
 import 'package:smartcare_app_mobile/core/di/dependency_injection.dart';
 import 'package:smartcare_app_mobile/core/helper/bolc_observer.dart';
+import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:smartcare_app_mobile/firebase_options.dart';
 
@@ -15,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = SimpleBlocObserver();
   dependencyInjectionSetup(); // Initialize dependencies
+  hideKeyboard();
   try {
     await Future.wait([
       sl<ConnectivityController>().connectivityControllerInit(),

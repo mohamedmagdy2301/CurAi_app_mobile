@@ -103,19 +103,14 @@ class AppTheme {
   static InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
     OutlineInputBorder buildBorder(Color color, {double width = 1.0}) {
       return OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: color, width: width),
+        borderRadius: BorderRadius.all(Radius.circular(15.r)),
+        borderSide: BorderSide(color: color),
       );
     }
 
     return InputDecorationTheme(
-      focusedBorder: buildBorder(colorScheme.secondary, width: 2),
-      enabledBorder: buildBorder(colorScheme.onSurface.withOpacity(0.5)),
       errorBorder: buildBorder(colorScheme.error),
       focusedErrorBorder: buildBorder(colorScheme.error, width: 2),
-      labelStyle: AppTextStyles.bodySmall(
-        color: colorScheme.onSurface.withOpacity(0.8),
-      ),
       errorStyle: AppTextStyles.bodySmall(color: colorScheme.error),
     );
   }

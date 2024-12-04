@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 // kdfjewsakl
 
 class ColorsDark {
-  static const Color primaryColor =
-      Color(0xFF004D40); // Dark teal - Professional and trustworthy
+  static const Color primaryColor = Color.fromARGB(
+      255, 0, 107, 89); // Dark teal - Professional and trustworthy
   static const Color accentColor =
       Color(0xFF00695C); // Deep teal - Strong and calming
   static const Color backgroundColor =
