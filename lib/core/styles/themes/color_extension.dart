@@ -68,7 +68,7 @@ class MyColors extends ThemeExtension<MyColors> {
     bodyTextOnboarding: ColorsDark.textColor,
     border: Color.fromARGB(188, 153, 153, 153),
     focusedBorder: Color.fromARGB(255, 0, 128, 107),
-    iconSocialBG: Color.fromARGB(255, 129, 129, 129),
+    iconSocialBG: Color.fromARGB(206, 53, 53, 53),
   );
 
   static MyColors light = const MyColors(
@@ -78,6 +78,6 @@ class MyColors extends ThemeExtension<MyColors> {
     bodyTextOnboarding: ColorsLight.textColor,
     border: Color.fromARGB(183, 156, 156, 156),
     focusedBorder: ColorsLight.primaryColor,
-    iconSocialBG: Color.fromARGB(255, 118, 118, 118),
+    iconSocialBG: Color.fromARGB(255, 208, 208, 208),
   );
 }
