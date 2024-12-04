@@ -4,6 +4,7 @@ import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/widgets/login_with_social.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/widgets/register/form_register_widget.dart';
+import 'package:smartcare_app_mobile/features/auth/presentation/widgets/terms_and_conditions_widget.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -25,8 +26,10 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 spaceHeight(30),
                 const FormRegisterWidget(),
-                spaceHeight(50),
+                spaceHeight(30),
                 const LoginWithSocial(),
+                spaceHeight(30),
+                const TermsAndConditionsWidget(),
               ],
             ),
           ),
