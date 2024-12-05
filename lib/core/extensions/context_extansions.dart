@@ -9,7 +9,8 @@ extension ContextExt on BuildContext {
   double get height => MediaQuery.sizeOf(this).height;
   bool get isSytemDark =>
       MediaQuery.of(this).platformBrightness == Brightness.dark;
-
+  bool get isLandscape =>
+      MediaQuery.of(this).orientation == Orientation.landscape;
   //! Theme
   MyAssets get assets => Theme.of(this).extension<MyAssets>()!;
   MyColors get colors => Theme.of(this).extension<MyColors>()!;
