@@ -23,7 +23,9 @@ class CustomDotOnboarding extends StatelessWidget {
           (index) {
             return Container(
               height: 8.h,
-              width: currentIndex == index ? 50.w : 20.w,
+              width: currentIndex == index
+                  ? (context.isLandscape ? 30.w : 50.w)
+                  : (context.isLandscape ? 10.w : 20.w),
               margin: const EdgeInsets.only(right: 5),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
