@@ -29,7 +29,7 @@ void showAnimatedSnackBar({
   _currentOverlayEntry = OverlayEntry(
     builder: (context) {
       return Positioned(
-        bottom: 20,
+        bottom: 50,
         left: 16,
         right: 16,
         child: AnimatedSnackBar(
