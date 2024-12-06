@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartcare_app_mobile/core/app/cubit/app_cubit.dart';
-import 'package:smartcare_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/helper/snackbar_helper.dart';
@@ -14,59 +13,109 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isEnglish = AppLocalizations.of(context)!.isEnglishLocale;
+    final isDarkMode = context.read<AppCubit>().isDark;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Setting Screen'),
+        title: Text(
+          isArabic() ? 'الأعـــــدادات' : 'Settings',
+        ),
         centerTitle: true,
-        automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: Padding(
-          padding: padding(horizontal: 50),
-          child: BlocBuilder(
-            bloc: context.read<AppCubit>(),
-            builder: (context, state) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  spaceHeight(20),
-                  CustemButton(
-                    title: LangKeys.changeLanguage,
-                    onPressed: () {
-                      if (AppLocalizations.of(context)!.isEnglishLocale) {
-                        context.read<AppCubit>().toArabic();
-                      } else {
-                        context.read<AppCubit>().toEngilsh();
-                      }
-                    },
-                  ),
-                  spaceHeight(20),
-                  CustemButton(
-                    onPressed: context.read<AppCubit>().changeTheme,
-                    title: LangKeys.changeTheme,
-                  ),
-                  spaceHeight(20),
-                  CustemButton(
-                    onPressed: () {
-                      showMessage(
-                        context,
-                        type: SnackBarType.info,
-                        message: isArabic() ? 'التــــألي' : 'Next',
-                      );
-                    },
-                    title: LangKeys.next,
-                  ),
-                  spaceHeight(20),
-                  CustemButton(
-                    onPressed: () => context.pushNamed(Routes.registerScreen),
-                    title: LangKeys.login,
-                  ),
-                ],
-              );
-            },
-          ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: ListView(
+          children: [
+            // Language Section
+            _buildSectionTitle(
+              context,
+              isArabic() ? 'الاعــدادات العامة' : 'General Settings',
+            ),
+            spaceHeight(10),
+            _buildListTile(
+              context,
+              icon: Icons.language,
+              title: AppLocalizations.of(context)!
+                  .translate(LangKeys.changeLanguage),
+              trailing: Switch(
+                value: isEnglish,
+                onChanged: (value) {
+                  if (value) {
+                    context.read<AppCubit>().toEnglish();
+                  } else {
+                    context.read<AppCubit>().toArabic();
+                  }
+                },
+              ),
+            ),
+            const Divider(thickness: .5),
+            _buildListTile(
+              context,
+              icon: Icons.brightness_6,
+              title:
+                  AppLocalizations.of(context)!.translate(LangKeys.changeTheme),
+              trailing: Switch.adaptive(
+                value: isDarkMode,
+                onChanged: (value) {
+                  context.read<AppCubit>().changeTheme();
+                },
+              ),
+            ),
+            const Divider(thickness: .5),
+            _buildListTile(
+              context,
+              icon: Icons.notifications,
+              title: isArabic() ? 'عـرض الأشعـــارات' : 'Show Notifections',
+              onTap: () {
+                showMessage(
+                  context,
+                  type: SnackBarType.success,
+                  message: isEnglish ? 'Notifecation' : 'اشعــــــار',
+                );
+              },
+            ),
+            const Divider(thickness: .5),
+            _buildListTile(
+              context,
+              icon: Icons.login,
+              title: AppLocalizations.of(context)!.translate(LangKeys.login),
+              onTap: () => context.pushNamed(Routes.registerScreen),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSectionTitle(BuildContext context, String? title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Text(
+        title ?? '',
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium
+            ?.copyWith(fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget _buildListTile(
+    BuildContext context, {
+    required IconData icon,
+    required String? title,
+    Widget? trailing,
+    VoidCallback? onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: Theme.of(context).primaryColor),
+      title: Text(
+        title ?? '',
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
+      trailing: trailing,
+      onTap: onTap,
     );
   }
 }

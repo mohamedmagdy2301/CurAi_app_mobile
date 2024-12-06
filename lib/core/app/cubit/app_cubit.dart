@@ -52,5 +52,5 @@ class AppCubit extends Cubit<AppState> {
 
   void toArabic() => _changeLocales('ar');
 
-  void toEngilsh() => _changeLocales('en');
+  void toEnglish() => _changeLocales('en');
 }
