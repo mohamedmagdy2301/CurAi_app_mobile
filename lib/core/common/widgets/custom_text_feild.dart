@@ -11,11 +11,13 @@ class CustomTextFeild extends StatefulWidget {
     this.controller,
     this.obscureText,
     this.keyboardType,
+    this.autofillHints,
   });
   final String labelText;
   final TextEditingController? controller;
   final bool? obscureText;
   final TextInputType? keyboardType;
+  final Iterable<String>? autofillHints;
 
   @override
   State<CustomTextFeild> createState() => _CustomTextFeildState();
@@ -35,6 +37,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
     return TextFormField(
       keyboardType: widget.keyboardType ?? TextInputType.text,
       controller: widget.controller,
+      autofillHints: widget.autofillHints ?? const [],
       validator: (value) {
         if (value == '') {
           return '${widget.labelText} ${context.translate(LangKeys.isRequired)}';
