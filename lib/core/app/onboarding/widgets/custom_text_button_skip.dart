@@ -15,7 +15,7 @@ class CustomTextButtonSkip extends StatelessWidget {
     return TextButton(
       onPressed: () {
         context.read<OnboardingCubit>().skip();
-        context.pushReplacementNamed(Routes.testone);
+        context.pushReplacementNamed(Routes.mainScaffoldUser);
       },
       child: Text(
         context.translate(LangKeys.skip),

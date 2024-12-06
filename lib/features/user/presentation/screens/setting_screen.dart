@@ -7,17 +7,16 @@ import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:smartcare_app_mobile/core/language/app_localizations.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
+import 'package:smartcare_app_mobile/core/routes/routes.dart';
 
-class TestOne extends StatelessWidget {
-  const TestOne({super.key});
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          context.translate(LangKeys.appName),
-        ),
+        title: const Text('Setting Screen'),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -51,15 +50,16 @@ class TestOne extends StatelessWidget {
                     onPressed: () {
                       showMessage(
                         context,
-                        type: SnackBarType.error,
-                        message: 'Operation was successful!',
-                        labelAction: 'OK',
-                        onPressedAction: () {
-                          hideMessage(context);
-                        },
+                        type: SnackBarType.info,
+                        message: isArabic() ? 'التــــألي' : 'Next',
                       );
                     },
                     title: LangKeys.next,
+                  ),
+                  spaceHeight(20),
+                  CustemButton(
+                    onPressed: () => context.pushNamed(Routes.registerScreen),
+                    title: LangKeys.login,
                   ),
                 ],
               );
