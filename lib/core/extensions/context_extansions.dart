@@ -21,6 +21,14 @@ extension ContextExt on BuildContext {
       AppLocalizations.of(this)!.translate(langKey).toString();
 
   //! Navigation
+
+  Future<dynamic> push(Widget screen, {Object? arguments}) {
+    return Navigator.push(
+      this,
+      MaterialPageRoute(builder: (context) => screen),
+    );
+  }
+
   Future<dynamic> pushNamed(String routeName, {Object? arguments}) {
     return Navigator.of(this).pushNamed(routeName, arguments: arguments);
   }
