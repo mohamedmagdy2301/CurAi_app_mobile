@@ -5,6 +5,7 @@ import 'package:smartcare_app_mobile/core/common/widgets/custom_text_feild.dart'
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
+import 'package:smartcare_app_mobile/core/routes/routes.dart';
 
 class FormRegisterWidget extends StatefulWidget {
   const FormRegisterWidget({super.key});
@@ -51,6 +52,7 @@ class _FormRegisterWidgetState extends State<FormRegisterWidget> {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
+                context.pushNamed(Routes.mainScaffoldUser);
               }
             },
           ),

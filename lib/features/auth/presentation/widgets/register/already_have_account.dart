@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
-import 'package:smartcare_app_mobile/core/routes/routes.dart';
 import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
 
 class AleadyHaveAccount extends StatelessWidget {
@@ -21,7 +20,7 @@ class AleadyHaveAccount extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () => context.pushReplacementNamed(Routes.loginScreen),
+          onPressed: () => context.pop(),
           child: Text(
             context.translate(LangKeys.login),
             style: context.textTheme.bodyMedium!.copyWith(

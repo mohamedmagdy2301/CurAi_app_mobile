@@ -5,6 +5,7 @@ import 'package:smartcare_app_mobile/core/common/widgets/custom_text_feild.dart'
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
+import 'package:smartcare_app_mobile/core/routes/routes.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -17,7 +18,6 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool isPasswordObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +54,11 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
           CustemButton(
             title: LangKeys.login,
             onPressed: () {
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-              }
+              // if (formKey.currentState!.validate()) {
+              //   formKey.currentState!.save();
+              //   context.pushNamed(Routes.mainScaffoldUser);
+              // }
+              context.pushNamed(Routes.mainScaffoldUser);
             },
           ),
         ],
