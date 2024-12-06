@@ -142,11 +142,11 @@ class AppTheme {
   // Snack Bar Theme
   static SnackBarThemeData _snackBarTheme(ColorScheme colorScheme) {
     return SnackBarThemeData(
-      contentTextStyle: AppTextStyles.bodySmall(color: Colors.white),
+      contentTextStyle: AppTextStyles.bodyLarge(color: Colors.white),
       backgroundColor: colorScheme.primary,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
       ),
     );
   }
