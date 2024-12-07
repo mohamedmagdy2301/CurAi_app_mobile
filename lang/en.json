@@ -34,5 +34,8 @@
   "forgot_password_title": "Forgot Password",
   "description_forgot_password": "We prioritize the security of your information. Reset your password safely and quickly.",
   "reset_password": "Reset Password",
+  "otp_verification": "OTP Verification",
+  "pin_description": "Add a PIN number to make your account more secure and easy to sign in.",
+  "submit": "Submit",
   "or": "or"
 }
