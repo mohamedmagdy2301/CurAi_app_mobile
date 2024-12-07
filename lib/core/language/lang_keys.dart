@@ -39,4 +39,5 @@ class LangKeys {
   static const String forgotPassTitle = 'forgot_password_title';
   static const String descriptionForgotPassword = 'description_forgot_password';
   static const String resetPassword = 'reset_password';
+  static const String or = 'or';
 }
