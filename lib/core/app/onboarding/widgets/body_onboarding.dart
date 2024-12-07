@@ -36,14 +36,17 @@ class BodyOnboarding extends StatelessWidget {
       ),
       padding: padding(horizontal: 20, vertical: 25),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            textAlign: TextAlign.center,
-            context.translate(title),
-            maxLines: 4,
-            style: context.textTheme.headlineMedium!.copyWith(
-              fontWeight: FontWeightHelper.black,
+          Padding(
+            padding: padding(horizontal: isArabic() ? 20 : 15),
+            child: Text(
+              textAlign: TextAlign.center,
+              context.translate(title),
+              maxLines: 2,
+              style: context.textTheme.headlineMedium!.copyWith(
+                fontWeight: FontWeightHelper.black,
+              ),
             ),
           ),
           Padding(
@@ -63,6 +66,7 @@ class BodyOnboarding extends StatelessWidget {
                     ),
             ),
           ),
+          spaceHeight(isArabic() ? 0 : 10),
           CustomDotOnboarding(
             index: index,
             currentIndex: currentIndex,
