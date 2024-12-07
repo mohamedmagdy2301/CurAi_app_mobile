@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smartcare_app_mobile/core/common/widgets/custom_button.dart';
@@ -42,14 +41,18 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               controller: passwordController,
               obscureText: true,
             ),
-            spaceHeight(15),
+            spaceHeight(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  context.translate(LangKeys.forgotPassword),
-                  style: context.textTheme.bodyMedium!.copyWith(
-                    color: context.colors.primaryColor,
+                TextButton(
+                  onPressed: () =>
+                      context.pushNamed(Routes.forgetPasswordScreen),
+                  child: Text(
+                    context.translate(LangKeys.forgotPassword),
+                    style: context.textTheme.bodyMedium!.copyWith(
+                      color: context.colors.primaryColor,
+                    ),
                   ),
                 ),
               ],
