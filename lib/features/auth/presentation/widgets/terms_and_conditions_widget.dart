@@ -16,7 +16,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
         alignment: WrapAlignment.center,
         children: [
           Text(
-            context.translate(LangKeys.byLogging),
+            context.translate(LangKeys.byLoggingIn),
             style: context.textTheme.bodyMedium!.copyWith(
               color: context.colors.textColorLight,
             ),

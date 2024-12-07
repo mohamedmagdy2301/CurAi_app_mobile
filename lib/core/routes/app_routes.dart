@@ -3,6 +3,7 @@ import 'package:smartcare_app_mobile/core/app/onboarding/onboarding_screen.dart'
 import 'package:smartcare_app_mobile/core/common/screens/under_build_screen.dart';
 import 'package:smartcare_app_mobile/core/routes/base_routes.dart';
 import 'package:smartcare_app_mobile/core/routes/routes.dart';
+import 'package:smartcare_app_mobile/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:smartcare_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
@@ -19,6 +20,8 @@ class AppRoutes {
         return BaseRoute(page: const LoginScreen());
       case Routes.registerScreen:
         return BaseRoute(page: const RegisterScreen());
+      case Routes.forgetPasswordScreen:
+        return BaseRoute(page: const ForgetPasswordScreen());
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }
