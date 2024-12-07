@@ -25,8 +25,8 @@ class RegisterScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const HeaderAuthWidger(
-                  title: LangKeys.createRegister,
-                  descraption: LangKeys.descraptionRegister,
+                  title: LangKeys.createAccount,
+                  descraption: LangKeys.descriptionRegister,
                 ),
                 spaceHeight(25),
                 const FormRegisterWidget(),

@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const HeaderAuthWidger(
                   title: LangKeys.welcomeBack,
-                  descraption: LangKeys.descraptionLogin,
+                  descraption: LangKeys.descriptionLogin,
                 ),
                 spaceHeight(30),
                 const FormLoginWidget(),
