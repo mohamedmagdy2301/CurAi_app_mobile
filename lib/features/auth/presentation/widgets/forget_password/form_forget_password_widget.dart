@@ -4,6 +4,7 @@ import 'package:smartcare_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:smartcare_app_mobile/core/common/widgets/custom_text_feild.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
+import 'package:smartcare_app_mobile/core/routes/routes.dart';
 
 class FormForgetPasswordWidget extends StatefulWidget {
   const FormForgetPasswordWidget({super.key});
@@ -44,7 +45,7 @@ class _FormForgetPasswordWidgetState extends State<FormForgetPasswordWidget> {
                 if (formKey.currentState!.validate()) {
                   TextInput.finishAutofillContext();
                   formKey.currentState!.save();
-                  // context.pushNamed(Routes.mainScaffoldUser);
+                  context.pushNamed(Routes.otpVerification);
                 }
                 // context.pushNamed(Routes.mainScaffoldUser);
               },

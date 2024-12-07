@@ -31,8 +31,11 @@
   "and": "و",
   "privacy_policy": "سياسة الخصوصية",
   "is_required": "مطلوب",
-  "forgot_password_title": "نسيت كلمة المرور",
+  "forgot_password_title": "نسيت كلمة المرور؟",
   "description_forgot_password": "نحن نأخذ أمان بياناتك الشخصية بجدية. قم بإعادة تعيين كلمة المرور الخاصة بك بسهولة وأمان.",
   "reset_password": "إعادة تعيين كلمة المرور",
+  "otp_verification": "التحقق باستخدام OTP",
+  "pin_description": "أضف رقم PIN لجعل حسابك أكثر أمانًا وأسهل لتسجيل الدخول.",
+  "submit": "إرسال",
   "or": "أو"
 }

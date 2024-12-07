@@ -40,4 +40,9 @@ class LangKeys {
   static const String descriptionForgotPassword = 'description_forgot_password';
   static const String resetPassword = 'reset_password';
   static const String or = 'or';
+
+  //! OTP and PIN
+  static const String otpVerification = 'otp_verification';
+  static const String pinDescription = 'pin_description';
+  static const String submit = 'submit';
 }
