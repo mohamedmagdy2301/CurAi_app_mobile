@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_instance_creation
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartcare_app_mobile/core/app/cubit/app_cubit.dart';
@@ -7,6 +9,7 @@ import 'package:smartcare_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:smartcare_app_mobile/core/language/app_localizations.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
 import 'package:smartcare_app_mobile/core/routes/routes.dart';
+import 'package:smartcare_app_mobile/features/auth/presentation/screens/register_screen.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -78,9 +81,23 @@ class SettingScreen extends StatelessWidget {
             const Divider(thickness: .5),
             _buildListTile(
               context,
+              title: 'Logout',
+              icon: Icons.logout,
+              onTap: () => context.pushNamed(Routes.loginScreen),
+            ),
+            const Divider(thickness: .5),
+            _buildListTile(
+              context,
               icon: Icons.login,
               title: AppLocalizations.of(context)!.translate(LangKeys.login),
-              onTap: () => context.pushNamed(Routes.registerScreen),
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const RegisterScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
             ),
           ],
         ),
