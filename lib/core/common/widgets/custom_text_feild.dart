@@ -12,12 +12,14 @@ class CustomTextFeild extends StatefulWidget {
     this.obscureText,
     this.keyboardType,
     this.autofillHints,
+    this.onChanged,
   });
   final String labelText;
   final TextEditingController? controller;
   final bool? obscureText;
   final TextInputType? keyboardType;
   final Iterable<String>? autofillHints;
+  final void Function(String)? onChanged;
 
   @override
   State<CustomTextFeild> createState() => _CustomTextFeildState();
@@ -44,6 +46,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         }
         return null;
       },
+      onChanged: widget.onChanged,
       obscureText: isPasswordObscure,
       decoration: InputDecoration(
         border: customOutlineInputBorder(context.colors.border!),
