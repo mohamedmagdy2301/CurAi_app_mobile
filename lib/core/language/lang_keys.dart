@@ -49,4 +49,6 @@ class LangKeys {
 //! Home Screen
   static const String hiMohamed = 'hi_mohamed';
   static const String howAreYouToday = 'how_are_you_today';
+  static const String seeAll = 'see_all';
+  static const String doctorSpeciality = 'doctor_speciality';
 }
