@@ -13,7 +13,7 @@ class TitleSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding(horizontal: 20, vertical: 5),
+      padding: padding(horizontal: 20, vertical: 10),
       child: Row(
         children: [
           Text(
