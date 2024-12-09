@@ -26,6 +26,7 @@ class HomeScreen extends StatelessWidget {
               title: context.translate(LangKeys.doctorSpeciality),
             ),
           ),
+          SliverToBoxAdapter(child: spaceHeight(20)),
         ],
       ),
     );
