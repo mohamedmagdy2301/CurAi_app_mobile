@@ -11,19 +11,19 @@ class DoctorSpecialityWidget extends StatelessWidget {
       height: 100.h,
       child: ListView.separated(
         itemCount: 8,
-        padding: padding(horizontal: 20),
+        padding: padding(horizontal: 25),
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => spaceWidth(20),
+        separatorBuilder: (context, index) => spaceWidth(18),
         itemBuilder: (context, index) {
           return Column(
             children: [
               CircleAvatar(
                 backgroundColor: context.colors.iconSocialBG!.withOpacity(.6),
-                radius: 28.r,
+                radius: 26.r,
                 child: Image.asset(
                   'assets/images/Brain.png',
-                  height: 26.h,
-                  width: 26.w,
+                  height: 25.h,
+                  width: 25.w,
                   fit: BoxFit.fill,
                 ),
               ),
