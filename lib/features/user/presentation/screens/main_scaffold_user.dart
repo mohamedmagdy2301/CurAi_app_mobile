@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/features/user/presentation/screens/home.dart';
+import 'package:smartcare_app_mobile/features/user/presentation/screens/home_screen.dart';
 import 'package:smartcare_app_mobile/features/user/presentation/screens/setting_screen.dart';
 
 class MainScaffoldUser extends StatefulWidget {

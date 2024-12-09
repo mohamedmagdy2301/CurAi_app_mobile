@@ -7,6 +7,7 @@ import 'package:smartcare_app_mobile/features/auth/presentation/screens/forget_p
 import 'package:smartcare_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/screens/register_screen.dart';
+import 'package:smartcare_app_mobile/features/user/presentation/screens/home.dart';
 import 'package:smartcare_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
 
 class AppRoutes {
@@ -25,6 +26,8 @@ class AppRoutes {
         return BaseRoute(page: const ForgetPasswordScreen());
       case Routes.otpVerification:
         return BaseRoute(page: const OtpVerifcationScreen());
+      case Routes.notificationScreen:
+        return BaseRoute(page: const NotificationScreen());
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }
