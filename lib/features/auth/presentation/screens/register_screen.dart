@@ -28,7 +28,6 @@ class RegisterScreen extends StatelessWidget {
                   title: LangKeys.createAccount,
                   descraption: LangKeys.descriptionRegister,
                 ),
-                spaceHeight(20),
                 const FormRegisterWidget(),
                 spaceHeight(30),
                 const LoginWithSocial(),
