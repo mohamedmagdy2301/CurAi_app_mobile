@@ -30,6 +30,8 @@ class AppRoutes {
         return BaseRoute(page: const NotificationScreen());
       case Routes.doctorSpeciality:
         return BaseRoute(page: const DoctorSpecialityScreen());
+      case Routes.allDoctors:
+        return BaseRoute(page: const AllDoctorsScreen());
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }

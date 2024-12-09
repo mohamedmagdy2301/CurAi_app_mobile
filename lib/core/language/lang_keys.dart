@@ -51,4 +51,5 @@ class LangKeys {
   static const String howAreYouToday = 'how_are_you_today';
   static const String seeAll = 'see_all';
   static const String doctorSpeciality = 'doctor_speciality';
+  static const String popularDoctor = 'popular_doctor';
 }

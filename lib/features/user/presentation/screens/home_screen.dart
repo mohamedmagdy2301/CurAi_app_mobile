@@ -31,7 +31,13 @@ class HomeScreen extends StatelessWidget {
           ),
           SliverToBoxAdapter(child: spaceHeight(20)),
           const SliverToBoxAdapter(child: DoctorSpecialityWidget()),
-          SliverToBoxAdapter(child: spaceHeight(20)),
+          SliverToBoxAdapter(child: spaceHeight(5)),
+          SliverToBoxAdapter(
+            child: TitleSectionWidget(
+              title: context.translate(LangKeys.popularDoctor),
+              onPressed: () => context.pushNamed(Routes.allDoctors),
+            ),
+          ),
         ],
       ),
     );
