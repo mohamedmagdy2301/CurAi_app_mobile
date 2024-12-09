@@ -3,25 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 
-class DoctorSpecialityWidget extends StatelessWidget {
-  const DoctorSpecialityWidget({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100.h,
-      child: ListView.separated(
-        itemCount: 8,
-        padding: padding(horizontal: 25),
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => spaceWidth(18),
-        itemBuilder: (context, index) {
-          return DoctorSpecialityItemWidget();
-        },
-      ),
-    );
-  }
-}
-
 class DoctorSpecialityItemWidget extends StatelessWidget {
   const DoctorSpecialityItemWidget({
     super.key,
