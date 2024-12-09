@@ -70,7 +70,7 @@ class _FormRegisterWidgetState extends State<FormRegisterWidget> {
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustemButton(
-            title: LangKeys.login,
+            title: LangKeys.register,
             onPressed: () => _onRegisterPressed(context),
           ),
         ],
