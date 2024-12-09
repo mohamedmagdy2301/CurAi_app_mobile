@@ -37,5 +37,7 @@
   "otp_verification": "OTP Verification",
   "pin_description": "Add a PIN number to make your account more secure and easy to sign in.",
   "submit": "Submit",
-  "or": "or"
+  "or": "or",
+  "hi_mohamed":"Hi Mohamed 👋",
+  "how_are_you_today":"How are you today?"
 }

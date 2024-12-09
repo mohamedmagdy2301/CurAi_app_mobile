@@ -45,4 +45,8 @@ class LangKeys {
   static const String otpVerification = 'otp_verification';
   static const String pinDescription = 'pin_description';
   static const String submit = 'submit';
+
+//! Home Screen
+  static const String hiMohamed = 'hi_mohamed';
+  static const String howAreYouToday = 'how_are_you_today';
 }
