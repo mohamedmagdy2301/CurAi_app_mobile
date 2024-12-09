@@ -28,6 +28,8 @@ class AppRoutes {
         return BaseRoute(page: const OtpVerifcationScreen());
       case Routes.notificationScreen:
         return BaseRoute(page: const NotificationScreen());
+      case Routes.doctorSpeciality:
+        return BaseRoute(page: const DoctorSpecialityScreen());
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }

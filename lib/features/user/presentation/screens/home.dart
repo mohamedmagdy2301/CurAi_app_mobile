@@ -14,6 +14,20 @@ class NotificationScreen extends StatelessWidget {
   }
 }
 
+class DoctorSpecialityScreen extends StatelessWidget {
+  const DoctorSpecialityScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Doctor Speciality'),
+        centerTitle: true,
+      ),
+    );
+  }
+}
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
