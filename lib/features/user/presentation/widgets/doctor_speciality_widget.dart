@@ -13,7 +13,7 @@ class DoctorSpecialityWidget extends StatelessWidget {
         itemCount: 8,
         padding: padding(horizontal: 25),
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => spaceWidth(18),
+        separatorBuilder: (context, index) => spaceWidth(18.w),
         itemBuilder: (context, index) {
           return const DoctorSpecialityItemWidget();
         },
