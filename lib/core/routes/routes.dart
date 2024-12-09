@@ -7,4 +7,5 @@ class Routes {
   static const String otpVerification = '/otpVerification';
   static const String notificationScreen = '/notificationScreen';
   static const String doctorSpeciality = '/doctorSpeciality';
+  static const String allDoctors = '/allDoctors';
 }

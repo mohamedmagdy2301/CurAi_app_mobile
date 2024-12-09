@@ -11,6 +11,7 @@ class MyColors extends ThemeExtension<MyColors> {
     required this.bodyTextOnboarding,
     required this.border,
     required this.focusedBorder,
+    required this.appBarHome,
   });
 
   final Color? primaryColor;
@@ -20,6 +21,7 @@ class MyColors extends ThemeExtension<MyColors> {
   final Color? bodyTextOnboarding;
   final Color? border;
   final Color? focusedBorder;
+  final Color? appBarHome;
 
   @override
   ThemeExtension<MyColors> copyWith({
@@ -30,6 +32,7 @@ class MyColors extends ThemeExtension<MyColors> {
     Color? border,
     Color? iconSocialBG,
     Color? focusedBorder,
+    Color? appBarHome,
   }) {
     return MyColors(
       primaryColor: primaryColor,
@@ -39,6 +42,7 @@ class MyColors extends ThemeExtension<MyColors> {
       border: border,
       iconSocialBG: iconSocialBG,
       focusedBorder: focusedBorder,
+      appBarHome: appBarHome,
     );
   }
 
@@ -58,6 +62,7 @@ class MyColors extends ThemeExtension<MyColors> {
       border: border,
       iconSocialBG: iconSocialBG,
       focusedBorder: focusedBorder,
+      appBarHome: appBarHome,
     );
   }
 
@@ -69,6 +74,7 @@ class MyColors extends ThemeExtension<MyColors> {
     border: Color.fromARGB(188, 153, 153, 153),
     focusedBorder: Color.fromARGB(255, 0, 128, 107),
     iconSocialBG: Color.fromARGB(206, 53, 53, 53),
+    appBarHome: ColorsDark.backgroundColor,
   );
 
   static MyColors light = const MyColors(
@@ -79,5 +85,6 @@ class MyColors extends ThemeExtension<MyColors> {
     border: Color.fromARGB(183, 156, 156, 156),
     focusedBorder: ColorsLight.primaryColor,
     iconSocialBG: Color.fromARGB(255, 208, 208, 208),
+    appBarHome: ColorsLight.backgroundColor,
   );
 }

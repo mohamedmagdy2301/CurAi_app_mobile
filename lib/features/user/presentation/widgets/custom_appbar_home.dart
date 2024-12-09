@@ -22,9 +22,12 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
     return SliverAppBar(
       // floating: true,
       // snap: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.colors.appBarHome,
       automaticallyImplyLeading: false,
       pinned: true,
+      elevation: 0,
+      flexibleSpace: Container(color: context.colors.appBarHome),
+      toolbarHeight: 70.h,
       title: ListTile(
         title: Text(
           context.translate(LangKeys.hiMohamed),
