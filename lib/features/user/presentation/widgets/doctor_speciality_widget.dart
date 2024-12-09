@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
 import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
+import 'package:smartcare_app_mobile/features/user/presentation/widgets/doctor_speciality_item_widget.dart';
 
 class DoctorSpecialityWidget extends StatelessWidget {
   const DoctorSpecialityWidget({super.key});
@@ -13,30 +13,9 @@ class DoctorSpecialityWidget extends StatelessWidget {
         itemCount: 8,
         padding: padding(horizontal: 25),
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => spaceWidth(18),
+        separatorBuilder: (context, index) => spaceWidth(18.w),
         itemBuilder: (context, index) {
-          return Column(
-            children: [
-              CircleAvatar(
-                backgroundColor: context.colors.iconSocialBG!.withOpacity(.6),
-                radius: 26.r,
-                child: Image.asset(
-                  'assets/images/Brain.png',
-                  height: 25.h,
-                  width: 25.w,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              spaceHeight(15),
-              Text(
-                isArabic() ? 'العصبية' : 'Neurologic',
-                style: context.textTheme.bodySmall!.copyWith(
-                  //TODO: change color
-                  color: context.colors.bodyTextOnboarding,
-                ),
-              ),
-            ],
-          );
+          return const DoctorSpecialityItemWidget();
         },
       ),
     );
