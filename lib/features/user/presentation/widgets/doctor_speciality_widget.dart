@@ -11,9 +11,9 @@ class DoctorSpecialityWidget extends StatelessWidget {
       height: 100.h,
       child: ListView.separated(
         itemCount: 8,
-        padding: padding(horizontal: 8),
+        padding: padding(horizontal: 20),
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => spaceWidth(25),
+        separatorBuilder: (context, index) => spaceWidth(20),
         itemBuilder: (context, index) {
           return Column(
             children: [

@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
         slivers: [
           SliverToBoxAdapter(child: spaceHeight(20)),
           const CustomAppBarHome(),
-          SliverToBoxAdapter(child: spaceHeight(20)),
+          SliverToBoxAdapter(child: spaceHeight(0)),
           const SliverToBoxAdapter(child: Center(child: BannerHomeWidget())),
           SliverToBoxAdapter(child: spaceHeight(20)),
           SliverToBoxAdapter(
@@ -29,6 +29,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () => context.pushNamed(Routes.doctorSpeciality),
             ),
           ),
+          SliverToBoxAdapter(child: spaceHeight(20)),
           const SliverToBoxAdapter(child: DoctorSpecialityWidget()),
           SliverToBoxAdapter(child: spaceHeight(20)),
         ],
