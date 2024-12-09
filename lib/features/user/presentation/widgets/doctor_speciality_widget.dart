@@ -29,7 +29,7 @@ class DoctorSpecialityWidget extends StatelessWidget {
               ),
               spaceHeight(15),
               Text(
-                'Neurologic',
+                isArabic() ? 'العصبية' : 'Neurologic',
                 style: context.textTheme.bodySmall!.copyWith(
                   //TODO: change color
                   color: context.colors.bodyTextOnboarding,

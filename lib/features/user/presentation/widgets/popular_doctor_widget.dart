@@ -43,7 +43,7 @@ class PopularDoctorWidget extends StatelessWidget {
               ),
               spaceHeight(5),
               Text(
-                'Mohamed Magdy',
+                isArabic() ? 'محــمد مجـــدي' : 'Mohamed Magdy',
                 style: context.textTheme.labelLarge!.copyWith(
                   color: context.colors.bodyTextOnboarding,
                   fontWeight: FontWeightHelper.black,
@@ -51,7 +51,7 @@ class PopularDoctorWidget extends StatelessWidget {
               ),
               spaceHeight(5),
               Text(
-                'Neurologist',
+                isArabic() ? 'العصبية' : 'Neurologic',
                 style: context.textTheme.bodySmall!.copyWith(
                   color: context.colors.textColorLight,
                 ),
