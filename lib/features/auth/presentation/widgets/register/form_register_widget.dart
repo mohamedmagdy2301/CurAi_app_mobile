@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:smartcare_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:smartcare_app_mobile/core/common/widgets/custom_text_feild.dart';
 import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
 import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
 import 'package:smartcare_app_mobile/core/routes/routes.dart';
 import 'package:smartcare_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
@@ -47,12 +46,7 @@ class _FormRegisterWidgetState extends State<FormRegisterWidget> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
-          ValueListenableBuilder<bool>(
-            valueListenable: _isFormValidNotifier,
-            builder: (context, isValid, child) {
-              return spaceHeight(isValid ? 20 : 10);
-            },
-          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
             labelText: context.translate(LangKeys.email),
             keyboardType: TextInputType.emailAddress,
