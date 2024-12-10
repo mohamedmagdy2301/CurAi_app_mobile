@@ -25,13 +25,24 @@
 
 ---
 
-### 📝 TODO List for SmartCare Mobile App 
+### 📝 TODO List for SmartCare Mobile App  
 
 #### **Core Features**
 - ✅ **Core Folder**
   - 🚀 Implemented project core structure (folder setup, base models, services, and utilities).
-        
-#### **Themes & Localization**
+  - 
+- ✅ **Styling**
+  - 📱 Ensured app is responsive for various device sizes.
+  - 🎥 Added smooth transitions and animations.
+ 
+- ✅ **Onboarding**
+  - 🎯 Created onboarding screens introducing app features.
+  - 🧭 Enabled user-friendly navigation through onboarding steps.
+
+- ✅ **Internet Connection**
+  - 📶 Handled offline/online states gracefully.
+  - 🔔 Displayed appropriate messages for no internet connection.
+ 
 - ✅ **Themes**
   - 🌗 Added **light** and **dark mode** support.
   - 🔄 Integrated in-app toggle to switch themes dynamically.
@@ -42,65 +53,94 @@
   - 🌐 Used the Flutter `intl` package for translations.
   - 🔧 Implemented language selection in app settings.
   - 📝 Updated text and layout dynamically based on language (e.g., RTL for Arabic).
-
-        
-#### **Key Features**
-- 🔲 **User Authentication**
-  - 🕓 Implement user registration (email/phone, password, OTP verification).
-  - 🕓 Enable user login/logout functionality.
-  - 🕓 Integrate social login (Google/Apple/Facebook).
-
-- 🔲 **Doctor Search and Booking**
-  - 🕓 Search for doctors by name, specialty, location, or cost.
-  - 🕓 Display detailed doctor profiles (rating, specialty, location, etc.).
-  - 🕓 Book appointments with selected doctors.
-
-- 🔲 **AI Chatbot Integration**
-  - 🕓 Integrate chatbot for symptom-based doctor recommendations.
-  - 🕓 Create conversational UI for chatbot interactions.
-
-- 🔲 **User Profile**
-  - 🕓 Develop a user profile page to manage personal details.
-  - 🕓 Allow users to view appointment history.
-
-- 🔲 **Payment Integration**
-  - 🕓 Implement payment gateway for appointment fees.
-  - 🕓 Add support for multiple payment methods (credit card, wallet, etc.).
  
-#### **Additional Features**
-- 🔲 **Notifications**
-  - 🕓 Push notifications for appointment reminders.
-  - 🕓 Notify users about doctor updates or promotions.
+  ---
+  
+#### **Key Features**
+##### **User Authentication**
+- ✅ **UI**  
+  - Design screens for:
+    - Registration (email/phone, password, OTP verification).  
+    - Login/logout functionality.  
+    - Social login (Google/Apple/Facebook).  
 
-#### **UI/UX Enhancements**
-- ✅ **Styling**
-  - 📱 Ensured app is responsive for various device sizes.
-  - 🎥 Added smooth transitions and animations.
+- 🔲 **API Integration**  
+  - Connect to APIs for:
+    - 🕓 User registration.  
+    - 🕓 Login/logout.  
+    - 🕓 OTP verification.  
+    - 🕓 Social login APIs (Google, Apple, Facebook).  
 
-- ✅ **Onboarding**
-  - 🎯 Created onboarding screens introducing app features.
-  - 🧭 Enabled user-friendly navigation through onboarding steps.
 
-#### **Connectivity**
-- ✅ **Internet Connection**
-  - 📶 Handled offline/online states gracefully.
-  - 🔔 Displayed appropriate messages for no internet connection.
+##### **Doctor Search and Booking**
+- 🔲 **UI**  
+  - Create screens for:
+    - 🕓 Searching doctors with filters (name, specialty, location, cost).  
+    - 🕓 Doctor profile details (rating, specialty, location, etc.).  
+    - 🕓 Appointment booking (calendar view).  
 
-#### **Testing**
-- 🔲 Write and execute unit tests for core functionalities.
-- 🔲 Conduct end-to-end testing on multiple devices (iOS and Android).
+- 🔲 **API Integration**  
+  - Connect to APIs for:
+    - 🕓 Fetching doctors based on search filters.  
+    - 🕓 Displaying doctor profiles.  
+    - 🕓 Booking appointments.  
 
-#### **Deployment**
-- 🔲 Optimize the app for release builds (Android and iOS).
-- 🔲 Publish the app on Google Play Store and Apple App Store.
 
-#### **Documentation**
-- 🔲 Create a detailed user guide for end users.
-- 🔲 Add developer documentation for new contributors.
+##### **AI Chatbot Integration**
+- 🔲 **UI**  
+  - Design chatbot interface:
+    - 🕓  Text input and message display area.  
+    - 🕓  Quick responses or symptom options for user interaction.  
 
-#### **Future Enhancements**
-- 🕓 Include real-time chat between patients and doctors.
-- 🕓 Add telemedicine/video consultation features.
+- 🔲 **API Integration**  
+  - Connect to the backend for:
+    - 🕓  Symptom-based doctor recommendations.  
+    - 🕓  AI responses and data handling.  
+
+
+##### **User Profile**
+- 🔲 **UI**  
+  - Create screens for:
+    - 🕓  User profile (editable fields like name, email, phone).  
+    - 🕓  Appointment history (list of past bookings).  
+
+- 🔲 **API Integration**  
+  - Connect to APIs for:
+    - 🕓  Fetching and updating profile details.  
+    - 🕓  Retrieving appointment history.  
+
+##### **Payment Integration**
+- 🔲 **UI**  
+  - Design screens for:
+    - 🕓  Payment methods (credit card, wallet, etc.).  
+    - 🕓  Payment confirmation and success/failure messages.  
+
+- 🔲 **API Integration**  
+  - Connect to APIs for:
+    - 🕓  Payment gateway integration.  
+    - 🕓  Payment status verification and receipts.  
 
 ---
 
+#### **Additional Features**
+- 🔲 **Notifications**
+  - 🕓  Push notifications for appointment reminders.  
+  - 🕓  Notify users about doctor updates or promotions.  
+
+#### **Testing**
+- 🔲 Write and execute unit tests for core functionalities.  
+- 🔲 Conduct end-to-end testing on multiple devices (iOS and Android).  
+
+#### **Deployment**
+- 🔲 Optimize the app for release builds (Android and iOS).  
+- 🔲 Publish the app on Google Play Store and Apple App Store.  
+
+#### **Documentation**
+- 🔲 Create a detailed user guide for end users.  
+- 🔲 Add developer documentation for new contributors.  
+
+#### **Future Enhancements**
+- 🕓 Include real-time chat between patients and doctors.  
+- 🕓 Add telemedicine/video consultation features.  
+
+---
