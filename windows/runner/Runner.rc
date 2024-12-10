@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.graduation" "\0"
-            VALUE "FileDescription", "smartcare_app_mobile" "\0"
+            VALUE "FileDescription", "curai_app_mobile" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "smartcare_app_mobile" "\0"
+            VALUE "InternalName", "curai_app_mobile" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.graduation. All rights reserved." "\0"
-            VALUE "OriginalFilename", "smartcare_app_mobile.exe" "\0"
-            VALUE "ProductName", "smartcare_app_mobile" "\0"
+            VALUE "OriginalFilename", "curai_app_mobile.exe" "\0"
+            VALUE "ProductName", "curai_app_mobile" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

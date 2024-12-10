@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
-import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/widgets/login/form_login_widget.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/widgets/login/not_have_account.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/widgets/login_with_social.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/widgets/terms_and_conditions_widget.dart';
+import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/login/form_login_widget.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/login/not_have_account.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/login_with_social.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/terms_and_conditions_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

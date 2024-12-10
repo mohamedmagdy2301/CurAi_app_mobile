@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smartcare_app_mobile/core/app/cubit/app_cubit.dart';
-import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
-import 'package:smartcare_app_mobile/core/helper/snackbar_helper.dart';
-import 'package:smartcare_app_mobile/core/language/app_localizations.dart';
-import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
-import 'package:smartcare_app_mobile/core/routes/routes.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/screens/register_screen.dart';
+import 'package:curai_app_mobile/core/app/cubit/app_cubit.dart';
+import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
+import 'package:curai_app_mobile/core/language/app_localizations.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});

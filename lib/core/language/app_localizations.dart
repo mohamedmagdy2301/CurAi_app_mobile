@@ -1,8 +1,8 @@
 import 'dart:convert' show json;
 
+import 'package:curai_app_mobile/core/language/app_localizations_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smartcare_app_mobile/core/language/app_localizations_delegate.dart';
 
 class AppLocalizations {
   AppLocalizations(this.locale);

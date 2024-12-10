@@ -1,15 +1,15 @@
+import 'package:curai_app_mobile/core/app/onboarding/cubit/onboarding_cubit.dart';
+import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
+import 'package:curai_app_mobile/core/app/onboarding/widgets/custom_dot_onboarding.dart';
+import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smartcare_app_mobile/core/app/onboarding/cubit/onboarding_cubit.dart';
-import 'package:smartcare_app_mobile/core/app/onboarding/data/onboarding_info.dart';
-import 'package:smartcare_app_mobile/core/app/onboarding/widgets/custom_dot_onboarding.dart';
-import 'package:smartcare_app_mobile/core/common/widgets/custom_button.dart';
-import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
-import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
-import 'package:smartcare_app_mobile/core/routes/routes.dart';
-import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
 
 class BodyOnboarding extends StatelessWidget {
   const BodyOnboarding({

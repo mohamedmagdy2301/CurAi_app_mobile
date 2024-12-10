@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
-import 'package:smartcare_app_mobile/core/helper/snackbar_helper.dart';
-import 'package:smartcare_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 
 class OtpInputWidget extends StatefulWidget {
   const OtpInputWidget({super.key});

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smartcare_app_mobile/core/styles/colors/colors_dark.dart';
-import 'package:smartcare_app_mobile/core/styles/colors/colors_light.dart';
-import 'package:smartcare_app_mobile/core/styles/fonts/font_style_helper.dart';
-import 'package:smartcare_app_mobile/core/styles/fonts/fonts_family_helper.dart';
-import 'package:smartcare_app_mobile/core/styles/themes/assets_extension.dart';
-import 'package:smartcare_app_mobile/core/styles/themes/color_extension.dart';
+import 'package:curai_app_mobile/core/styles/colors/colors_dark.dart';
+import 'package:curai_app_mobile/core/styles/colors/colors_light.dart';
+import 'package:curai_app_mobile/core/styles/fonts/font_style_helper.dart';
+import 'package:curai_app_mobile/core/styles/fonts/fonts_family_helper.dart';
+import 'package:curai_app_mobile/core/styles/themes/assets_extension.dart';
+import 'package:curai_app_mobile/core/styles/themes/color_extension.dart';
 
 class AppTheme {
   // Light Theme

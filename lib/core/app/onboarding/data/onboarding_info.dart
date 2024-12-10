@@ -1,6 +1,6 @@
-import 'package:smartcare_app_mobile/core/app/onboarding/data/model/onboarding_model.dart';
-import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
-import 'package:smartcare_app_mobile/core/styles/images/app_images.dart';
+import 'package:curai_app_mobile/core/app/onboarding/data/model/onboarding_model.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 
 class OnboardingInfo {
   static List<OnboardingModel> onboardingInfo = [

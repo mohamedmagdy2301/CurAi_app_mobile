@@ -1,6 +1,6 @@
-# Contributing to SmartCare
+# Contributing to CurAi
 
-Thank you for your interest in contributing to **SmartCare**! We're excited to collaborate and improve our project together. This guide will help you get started.
+Thank you for your interest in contributing to **CurAi**! We're excited to collaborate and improve our project together. This guide will help you get started.
 
 ---
 
@@ -26,7 +26,7 @@ If you encounter a bug or have a feature request:
 ### 2. **Fork the Repository**
 
 
-Contributions are highly encouraged! If you would like to contribute to `SmartCare`, please follow these steps:
+Contributions are highly encouraged! If you would like to contribute to `CurAi`, please follow these steps:
 
 1. **Fork the Repository**.
 2. **Create a New Branch**:
