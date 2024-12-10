@@ -24,7 +24,9 @@ EdgeInsets padding({double? horizontal, double? vertical}) {
 
 //! Check if the language is Arabic
 bool isArabic() {
-  if (SharedPrefManager.getString(SharedPrefKey.language) == kDefaultLanguage) {
+  if ((SharedPrefManager.getString(SharedPrefKey.language) ??
+          kDefaultLanguage) ==
+      'ar') {
     return true;
   }
   return false;
