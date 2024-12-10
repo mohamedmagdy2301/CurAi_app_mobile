@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "651753091974",
-    "project_id": "smartcare-app-8a32a",
-    "storage_bucket": "smartcare-app-8a32a.firebasestorage.app"
+    "project_number": "563850624574",
+    "project_id": "curai-app",
+    "storage_bucket": "curai-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:651753091974:android:dfb4461688c23dcaf77207",
+        "mobilesdk_app_id": "1:563850624574:android:ab67baf80482632a28db6f",
         "android_client_info": {
-          "package_name": "com.graduation.smartcare_app_mobile"
+          "package_name": "com.graduation.curai_app_mobile"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCBb13FLdOavcdl5aP1jIcSjE-YP_qmi1Q"
+          "current_key": "AIzaSyAlQrVOX2t3PVQJfJCu3iTlRKEnrXPZT-Q"
         }
       ],
       "services": {

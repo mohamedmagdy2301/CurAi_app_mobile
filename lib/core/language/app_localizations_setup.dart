@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:smartcare_app_mobile/core/language/app_localizations.dart';
+import 'package:curai_app_mobile/core/language/app_localizations.dart';
 
 class AppLocalSetup {
   static const Iterable<Locale> supportedLocales = [

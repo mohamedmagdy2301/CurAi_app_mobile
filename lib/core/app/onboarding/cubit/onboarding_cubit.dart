@@ -1,5 +1,5 @@
+import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smartcare_app_mobile/core/app/onboarding/data/onboarding_info.dart';
 
 part 'onboarding_state.dart';
 

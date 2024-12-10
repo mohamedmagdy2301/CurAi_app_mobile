@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:smartcare_app_mobile/core/app/onboarding/onboarding_screen.dart';
-import 'package:smartcare_app_mobile/core/common/screens/under_build_screen.dart';
-import 'package:smartcare_app_mobile/core/routes/base_routes.dart';
-import 'package:smartcare_app_mobile/core/routes/routes.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/screens/forget_password_screen.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/screens/login_screen.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/screens/register_screen.dart';
-import 'package:smartcare_app_mobile/features/user/presentation/screens/home.dart';
-import 'package:smartcare_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
+import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
+import 'package:curai_app_mobile/core/common/screens/under_build_screen.dart';
+import 'package:curai_app_mobile/core/routes/base_routes.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/forget_password_screen.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/home.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
 
 class AppRoutes {
   static Route<void> onGenerateRoute(RouteSettings settings) {
