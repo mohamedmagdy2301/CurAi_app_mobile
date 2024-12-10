@@ -5,10 +5,10 @@
 </div>
 
 <br clear="both">
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Protest+Guerrilla&weight=900&size=45&pause=1000&color=F78918&width=835&height=100&lines=SmartCare+App+📱+%F0%9F%98%8A%E2%9C%8C%EF%B8%8F" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Protest+Guerrilla&weight=900&size=45&pause=1000&color=F78918&width=835&height=100&lines=CurAi+App+📱+%F0%9F%98%8A%E2%9C%8C%EF%B8%8F" alt="Typing SVG" /></a>
 <br clear="both">
 
-**SmartCare** is an innovative **Smart Medical Appointment Booking System** designed to simplify and enhance the process of scheduling medical appointments. This mobile application, built with **Flutter**, offers a seamless experience for users to search for doctors, book appointments, and receive personalized recommendations through an AI-powered chatbot. 
+**CurAi** is an innovative **Smart Medical Appointment Booking System** designed to simplify and enhance the process of scheduling medical appointments. This mobile application, built with **Flutter**, offers a seamless experience for users to search for doctors, book appointments, and receive personalized recommendations through an AI-powered chatbot. 
 
 [![Flutter Version](https://img.shields.io/badge/Flutter-v3.0-blue.svg)](https://flutter.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -25,7 +25,7 @@
 
 ---
 
-### 📝 TODO List for SmartCare Mobile App  
+### 📝 TODO List for CurAi Mobile App  
 
 #### **Core Features**
 - ✅ **Core Folder**
