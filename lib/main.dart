@@ -1,17 +1,17 @@
 import 'dart:developer';
 
+import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
+import 'package:curai_app_mobile/core/app/env.variables.dart';
+import 'package:curai_app_mobile/core/app/error_widget_main.dart';
+import 'package:curai_app_mobile/core/app/my_app.dart';
+import 'package:curai_app_mobile/core/di/dependency_injection.dart';
+import 'package:curai_app_mobile/core/helper/bolc_observer.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smartcare_app_mobile/core/app/connectivity_controller.dart';
-import 'package:smartcare_app_mobile/core/app/env.variables.dart';
-import 'package:smartcare_app_mobile/core/app/error_widget_main.dart';
-import 'package:smartcare_app_mobile/core/app/my_app.dart';
-import 'package:smartcare_app_mobile/core/di/dependency_injection.dart';
-import 'package:smartcare_app_mobile/core/helper/bolc_observer.dart';
-import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
-import 'package:smartcare_app_mobile/core/local_storage/shared_preferences_manager.dart';
-import 'package:smartcare_app_mobile/firebase_options.dart';
 
 void main() async {
   ErrorWidget.builder = (FlutterErrorDetails details) {

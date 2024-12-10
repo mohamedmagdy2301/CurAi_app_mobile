@@ -1,10 +1,10 @@
+import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
-import 'package:smartcare_app_mobile/core/routes/routes.dart';
-import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
 
 class CustomAppBarHome extends StatefulWidget {
   const CustomAppBarHome({

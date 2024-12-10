@@ -1,7 +1,7 @@
+import 'package:curai_app_mobile/core/language/app_localizations.dart';
+import 'package:curai_app_mobile/core/styles/themes/assets_extension.dart';
+import 'package:curai_app_mobile/core/styles/themes/color_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:smartcare_app_mobile/core/language/app_localizations.dart';
-import 'package:smartcare_app_mobile/core/styles/themes/assets_extension.dart';
-import 'package:smartcare_app_mobile/core/styles/themes/color_extension.dart';
 
 extension ContextExt on BuildContext {
   //! MediaQuery

@@ -1,4 +1,4 @@
-package com.graduation.smartcare_app_mobile
+package com.graduation.curai_app_mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,6 @@
+import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
 
 class CustemButton extends StatelessWidget {
   const CustemButton({

@@ -1,5 +1,5 @@
+import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:flutter/material.dart' show Locale, LocalizationsDelegate;
-import 'package:smartcare_app_mobile/core/language/app_localizations.dart';
 
 // Defining a custom LocalizationsDelegate for AppLocalizations.
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

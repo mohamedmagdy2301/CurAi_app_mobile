@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smartcare_app_mobile/core/common/widgets/custom_button.dart';
-import 'package:smartcare_app_mobile/core/common/widgets/custom_text_feild.dart';
-import 'package:smartcare_app_mobile/core/extensions/context_extansions.dart';
-import 'package:smartcare_app_mobile/core/helper/functions_helper.dart';
-import 'package:smartcare_app_mobile/core/language/lang_keys.dart';
-import 'package:smartcare_app_mobile/core/routes/routes.dart';
-import 'package:smartcare_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
+import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
+import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});

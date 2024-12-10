@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smartcare_app_mobile/core/styles/fonts/font_weight_helper.dart';
-import 'package:smartcare_app_mobile/core/styles/fonts/fonts_family_helper.dart';
+import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:curai_app_mobile/core/styles/fonts/fonts_family_helper.dart';
 
 class AppTextStyles {
   static TextStyle bodyLarge({required Color color}) => TextStyle(

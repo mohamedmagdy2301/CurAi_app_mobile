@@ -1,5 +1,5 @@
-name: smartcare_app_mobile
-description: "SmartCare is an innovative Smart Medical Appointment Booking System designed to simplify and enhance the process of scheduling medical appointments. This mobile application, built with Flutter, offers a seamless experience for users to search for doctors, book appointments, and receive personalized recommendations through an AI-powered chatbot."
+name: curai_app_mobile
+description: "CurAi is an innovative Smart Medical Appointment Booking System designed to simplify and enhance the process of scheduling medical appointments. This mobile application, built with Flutter, offers a seamless experience for users to search for doctors, book appointments, and receive personalized recommendations through an AI-powered chatbot."
 publish_to: 'none'
 version: 1.0.0+1
 environment:

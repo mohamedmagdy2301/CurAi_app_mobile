@@ -41,48 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCh-KWPy1AMsecqIoLoHO5gJn-LQzERnnE',
-    appId: '1:651753091974:web:e6671a228a5806aaf77207',
-    messagingSenderId: '651753091974',
-    projectId: 'smartcare-app-8a32a',
-    authDomain: 'smartcare-app-8a32a.firebaseapp.com',
-    storageBucket: 'smartcare-app-8a32a.firebasestorage.app',
-    measurementId: 'G-67RN56CKNN',
+    apiKey: 'AIzaSyAs-jcw3g-5kN-_22oWG13fSMdPore1Vhg',
+    appId: '1:563850624574:web:7d384b2ec8cc3b3328db6f',
+    messagingSenderId: '563850624574',
+    projectId: 'curai-app',
+    authDomain: 'curai-app.firebaseapp.com',
+    storageBucket: 'curai-app.firebasestorage.app',
+    measurementId: 'G-8HKL6G0F7K',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCBb13FLdOavcdl5aP1jIcSjE-YP_qmi1Q',
-    appId: '1:651753091974:android:dfb4461688c23dcaf77207',
-    messagingSenderId: '651753091974',
-    projectId: 'smartcare-app-8a32a',
-    storageBucket: 'smartcare-app-8a32a.firebasestorage.app',
+    apiKey: 'AIzaSyAlQrVOX2t3PVQJfJCu3iTlRKEnrXPZT-Q',
+    appId: '1:563850624574:android:ab67baf80482632a28db6f',
+    messagingSenderId: '563850624574',
+    projectId: 'curai-app',
+    storageBucket: 'curai-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAcvdox0IRdbp5PyJbS1quAd65hJSE0wsI',
-    appId: '1:651753091974:ios:68b281404b79d43cf77207',
-    messagingSenderId: '651753091974',
-    projectId: 'smartcare-app-8a32a',
-    storageBucket: 'smartcare-app-8a32a.firebasestorage.app',
-    iosBundleId: 'com.graduation.smartcareAppMobile',
+    apiKey: 'AIzaSyBIl318-0dl4J446S6-ceF2zOPPt9nroxo',
+    appId: '1:563850624574:ios:fe41d2b3fad84ea028db6f',
+    messagingSenderId: '563850624574',
+    projectId: 'curai-app',
+    storageBucket: 'curai-app.firebasestorage.app',
+    iosBundleId: 'com.graduation.curaiAppMobile',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAcvdox0IRdbp5PyJbS1quAd65hJSE0wsI',
-    appId: '1:651753091974:ios:68b281404b79d43cf77207',
-    messagingSenderId: '651753091974',
-    projectId: 'smartcare-app-8a32a',
-    storageBucket: 'smartcare-app-8a32a.firebasestorage.app',
-    iosBundleId: 'com.graduation.smartcareAppMobile',
+    apiKey: 'AIzaSyBIl318-0dl4J446S6-ceF2zOPPt9nroxo',
+    appId: '1:563850624574:ios:fe41d2b3fad84ea028db6f',
+    messagingSenderId: '563850624574',
+    projectId: 'curai-app',
+    storageBucket: 'curai-app.firebasestorage.app',
+    iosBundleId: 'com.graduation.curaiAppMobile',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCh-KWPy1AMsecqIoLoHO5gJn-LQzERnnE',
-    appId: '1:651753091974:web:d64eb9899a61c8d5f77207',
-    messagingSenderId: '651753091974',
-    projectId: 'smartcare-app-8a32a',
-    authDomain: 'smartcare-app-8a32a.firebaseapp.com',
-    storageBucket: 'smartcare-app-8a32a.firebasestorage.app',
-    measurementId: 'G-SQGS3K2D5R',
+    apiKey: 'AIzaSyAs-jcw3g-5kN-_22oWG13fSMdPore1Vhg',
+    appId: '1:563850624574:web:ea116452504a2f0628db6f',
+    messagingSenderId: '563850624574',
+    projectId: 'curai-app',
+    authDomain: 'curai-app.firebaseapp.com',
+    storageBucket: 'curai-app.firebasestorage.app',
+    measurementId: 'G-SMLTHRXWEV',
   );
 }

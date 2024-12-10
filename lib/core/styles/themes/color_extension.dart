@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smartcare_app_mobile/core/styles/colors/colors_dark.dart';
-import 'package:smartcare_app_mobile/core/styles/colors/colors_light.dart';
+import 'package:curai_app_mobile/core/styles/colors/colors_dark.dart';
+import 'package:curai_app_mobile/core/styles/colors/colors_light.dart';
 
 class MyColors extends ThemeExtension<MyColors> {
   const MyColors({
