@@ -24,6 +24,7 @@ class SettingScreen extends StatelessWidget {
           isArabic() ? 'الأعـــــدادات' : 'Settings',
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
