@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/common/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
@@ -7,8 +6,10 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/forget_passw
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
+import 'package:flutter/material.dart';
 
 class AppRoutes {
   static Route<void> onGenerateRoute(RouteSettings settings) {
@@ -29,7 +30,7 @@ class AppRoutes {
       case Routes.notificationScreen:
         return BaseRoute(page: const NotificationScreen());
       case Routes.doctorSpeciality:
-        return BaseRoute(page: const DoctorSpecialityScreen());
+        return BaseRoute(page: const DoctorSpecialitiesScreen());
       case Routes.allDoctors:
         return BaseRoute(page: const AllDoctorsScreen());
       default:
