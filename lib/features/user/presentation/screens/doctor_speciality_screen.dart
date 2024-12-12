@@ -1,5 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/custom_appbar_doctor_specialities.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/filter_doctor_speciality_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -8,13 +7,9 @@ class DoctorSpecialitiesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Text(context.translate(LangKeys.doctorSpeciality)),
-        centerTitle: true,
-      ),
-      body: const FilterDoctorSpeciality(),
+    return const Scaffold(
+      appBar: CustomAppBarDoctorSpecialities(),
+      body: FilterDoctorSpeciality(),
     );
   }
 }
