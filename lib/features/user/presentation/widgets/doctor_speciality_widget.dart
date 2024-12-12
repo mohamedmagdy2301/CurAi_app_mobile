@@ -1,7 +1,8 @@
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/features/user/presentation/models/doctor_speciality_list.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/doctor_speciality_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/doctor_speciality_item_widget.dart';
 
 class DoctorSpecialityWidget extends StatelessWidget {
   const DoctorSpecialityWidget({super.key});
@@ -10,12 +11,15 @@ class DoctorSpecialityWidget extends StatelessWidget {
     return SizedBox(
       height: 100.h,
       child: ListView.separated(
-        itemCount: 8,
+        itemCount: doctorSpecialityList.length,
         padding: padding(horizontal: 25),
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) => spaceWidth(18.w),
         itemBuilder: (context, index) {
-          return const DoctorSpecialityItemWidget();
+          return DoctorSpecialityItemWidget(
+            title: doctorSpecialityList[index].name,
+            image: doctorSpecialityList[index].image,
+          );
         },
       ),
     );

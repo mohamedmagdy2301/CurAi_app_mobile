@@ -36,6 +36,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/doctor_specialties/
     - assets/svg/
     - assets/svg/doctor_speciality/
     - .env.prod

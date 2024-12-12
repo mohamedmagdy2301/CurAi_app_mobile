@@ -6,7 +6,7 @@ List<DoctorSpecialityModel> doctorSpecialityList = [
   DoctorSpecialityModel(
     id: 0,
     name: LangKeys.general,
-    image: SvgImages.general,
+    image: AppImages.general,
   ),
   DoctorSpecialityModel(
     id: 1,
@@ -16,12 +16,12 @@ List<DoctorSpecialityModel> doctorSpecialityList = [
   DoctorSpecialityModel(
     id: 2,
     name: LangKeys.pediatric,
-    image: SvgImages.pediatric,
+    image: AppImages.pediatric,
   ),
   DoctorSpecialityModel(
     id: 3,
     name: LangKeys.urologist,
-    image: SvgImages.urologist,
+    image: AppImages.urologist,
   ),
   DoctorSpecialityModel(
     id: 4,
@@ -51,7 +51,7 @@ List<DoctorSpecialityModel> doctorSpecialityList = [
   DoctorSpecialityModel(
     id: 9,
     name: LangKeys.neurologic,
-    image: SvgImages.neurologic,
+    image: AppImages.neurologic,
   ),
   DoctorSpecialityModel(
     id: 10,
