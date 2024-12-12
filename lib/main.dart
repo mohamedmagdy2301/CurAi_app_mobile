@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/core/helper/logger_helper.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
 
   try {
     await initializeDependencies();
+
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     runApp(MyApp(environment: sl<EnvVariables>().debugMode));
     FlutterNativeSplash.remove();
@@ -47,4 +49,7 @@ Future<void> initializeDependencies() async {
     sl<EnvVariables>().envVariablesSetup(envType: EnvTypeEnum.dev),
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
   ]);
+  if (kReleaseMode) {
+    await Future.delayed(const Duration(seconds: 1));
+  }
 }
