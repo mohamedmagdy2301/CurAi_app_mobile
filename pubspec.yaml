@@ -25,10 +25,11 @@ dependencies:
 
 dev_dependencies:
   flutter_lints:
+  flutter_native_splash: ^2.4.3
   flutter_test:
     sdk: flutter
   very_good_analysis:
-  
+ 
 flutter:
   uses-material-design: true
 
