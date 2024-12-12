@@ -9,6 +9,7 @@ environment:
 dependencies:
   connectivity_plus:
   cupertino_icons:
+  expansion_tile_card: ^3.0.0
   firebase_core:
   flutter:
     sdk: flutter
@@ -35,7 +36,9 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/doctor_specialties/
     - assets/svg/
+    - assets/svg/doctor_speciality/
     - .env.prod
     - .env.dev
     - lang/en.json

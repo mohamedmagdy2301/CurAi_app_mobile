@@ -42,5 +42,17 @@
   "how_are_you_today":"How are you today?",
   "see_all":"See All",
   "doctor_speciality":"Doctor Speciality",
-  "popular_doctor":"Popular Doctor"
+  "popular_doctor":"Popular Doctor",
+  "general": "General",
+  "ent": "ENT",
+  "pediatric": "Pediatric",
+  "urologist": "Urologist",
+  "dentistry": "Dentistry",
+  "intestine": "Intestine",
+  "histologist": "Histologist",
+  "hepatology": "Hepatology",
+  "cardiologist": "Cardiologist",
+  "neurologic": "Neurologic",
+  "pulmonary": "Pulmonary",
+  "optometry": "Optometry"
 }

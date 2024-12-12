@@ -52,4 +52,18 @@ class LangKeys {
   static const String seeAll = 'see_all';
   static const String doctorSpeciality = 'doctor_speciality';
   static const String popularDoctor = 'popular_doctor';
+
+//! Specialties
+  static const String general = 'general';
+  static const String ent = 'ent';
+  static const String pediatric = 'pediatric';
+  static const String urologist = 'urologist';
+  static const String dentistry = 'dentistry';
+  static const String intestine = 'intestine';
+  static const String histologist = 'histologist';
+  static const String hepatology = 'hepatology';
+  static const String cardiologist = 'cardiologist';
+  static const String neurologic = 'neurologic';
+  static const String pulmonary = 'pulmonary';
+  static const String optometry = 'optometry';
 }
