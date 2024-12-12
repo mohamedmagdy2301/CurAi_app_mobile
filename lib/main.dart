@@ -50,6 +50,6 @@ Future<void> initializeDependencies() async {
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
   ]);
   if (kReleaseMode) {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1), () {});
   }
 }
