@@ -1,11 +1,11 @@
 import 'package:curai_app_mobile/core/app/cubit/app_cubit.dart';
+import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/common/functions/build_app_connectivity_controller.dart';
 import 'package:curai_app_mobile/core/language/app_localizations_setup.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/app_routes.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_theme.dart';
-import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +36,7 @@ class curaiApp extends StatelessWidget {
               builder: (context, child) =>
                   buildAppConnectivityController(child),
               onGenerateRoute: AppRoutes.onGenerateRoute,
-              home: const MainScaffoldUser(),
+              home: const Onboarding(),
               locale: Locale(appCubit.currentLocale),
               supportedLocales: AppLocalSetup.supportedLocales,
               localeResolutionCallback: AppLocalSetup.localeResolutionCallback,
