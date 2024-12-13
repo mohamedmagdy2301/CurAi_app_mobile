@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:curai_app_mobile/core/common/screens/portrait_screen.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/forget_password/form_forget_password_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:lock_orientation_screen/lock_orientation_screen.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return PortraitScreen(
+    return LockOrientation(
       child: SafeArea(
         child: Scaffold(
           body: Padding(

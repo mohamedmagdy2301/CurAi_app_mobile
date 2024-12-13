@@ -1,37 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 
-class PortraitScreen extends StatefulWidget {
-  const PortraitScreen({required this.child, super.key});
+// class PortraitScreen extends StatefulWidget {
+//   const PortraitScreen({required this.child, super.key});
 
-  final Widget child;
+//   final Widget child;
 
-  @override
-  State<PortraitScreen> createState() => _PortraitScreenState();
-}
+//   @override
+//   State<PortraitScreen> createState() => _PortraitScreenState();
+// }
 
-class _PortraitScreenState extends State<PortraitScreen> {
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
-    );
-  }
+// class _PortraitScreenState extends State<PortraitScreen> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     SystemChrome.setPreferredOrientations(
+//       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+//     );
+//   }
 
-  @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     SystemChrome.setPreferredOrientations([
+//       DeviceOrientation.portraitUp,
+//       DeviceOrientation.portraitDown,
+//       DeviceOrientation.landscapeLeft,
+//       DeviceOrientation.landscapeRight,
+//     ]);
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return widget.child;
+//   }
+// }
