@@ -1,76 +1,90 @@
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/features/user/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class MainScaffoldUser extends StatefulWidget {
+class MainScaffoldUser extends StatelessWidget {
   const MainScaffoldUser({super.key});
 
-  @override
-  State<MainScaffoldUser> createState() => _MainScaffoldUserState();
-}
-
-class _MainScaffoldUserState extends State<MainScaffoldUser> {
-  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     final destinations = [
       NavigationDestination(
         icon: const Icon(CupertinoIcons.house_alt),
-        selectedIcon: selectedIconCustom(CupertinoIcons.house_alt_fill),
+        selectedIcon:
+            selectedIconCustom(CupertinoIcons.house_alt_fill, context),
         label: 'Home',
       ),
       NavigationDestination(
         icon: const Icon(CupertinoIcons.chat_bubble),
-        selectedIcon: selectedIconCustom(CupertinoIcons.chat_bubble_fill),
+        selectedIcon:
+            selectedIconCustom(CupertinoIcons.chat_bubble_fill, context),
         label: 'Chat',
       ),
       NavigationDestination(
         icon: const Icon(CupertinoIcons.bell),
-        selectedIcon: selectedIconCustom(CupertinoIcons.bell_solid),
+        selectedIcon: selectedIconCustom(CupertinoIcons.bell_solid, context),
         label: 'Notif',
       ),
       NavigationDestination(
         icon: const Icon(CupertinoIcons.gear),
-        selectedIcon: selectedIconCustom(CupertinoIcons.gear_alt_fill),
+        selectedIcon: selectedIconCustom(CupertinoIcons.gear_alt_fill, context),
         label: 'Setting',
       ),
     ];
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        bottomNavigationBar: NavigationBar(
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-          elevation: 0,
-          animationDuration: const Duration(seconds: 1),
-          height: 60.h,
-          indicatorColor: Colors.transparent,
-          overlayColor: WidgetStateProperty.all(
-            context.colors.onboardingBg!.withOpacity(.3),
-          ),
-          indicatorShape: Border.all(style: BorderStyle.none),
-          destinations: destinations,
-          selectedIndex: _currentIndex,
-          onDestinationSelected: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-        ),
-        body: IndexedStack(
-          index: _currentIndex,
-          children: _buildScreens,
-        ),
+
+    const screens = [
+      HomeScreen(),
+      ChatbotScreen(),
+      ProfileScreen(),
+      SettingScreen(),
+    ];
+
+    return BlocProvider(
+      create: (context) => NavigationCubit(),
+      child: BlocBuilder<NavigationCubit, int>(
+        builder: (context, currentIndex) {
+          return PopScope(
+            canPop: false,
+            child: Scaffold(
+              bottomNavigationBar: currentIndex == 1
+                  ? null
+                  : NavigationBar(
+                      labelBehavior:
+                          NavigationDestinationLabelBehavior.alwaysHide,
+                      elevation: 0,
+                      animationDuration: const Duration(seconds: 1),
+                      height: 60.h,
+                      indicatorColor: Colors.transparent,
+                      overlayColor: WidgetStateProperty.all(
+                        context.colors.onboardingBg!.withOpacity(.3),
+                      ),
+                      indicatorShape: Border.all(style: BorderStyle.none),
+                      destinations: destinations,
+                      selectedIndex: currentIndex,
+                      onDestinationSelected: (index) {
+                        context.read<NavigationCubit>().updateIndex(index);
+                      },
+                    ),
+              body: IndexedStack(
+                index: currentIndex,
+                children: screens,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Column selectedIconCustom(IconData icon) {
+  Column selectedIconCustom(IconData icon, BuildContext context) {
     return Column(
       children: [
         Divider(
@@ -83,11 +97,4 @@ class _MainScaffoldUserState extends State<MainScaffoldUser> {
       ],
     );
   }
-
-  final List<Widget> _buildScreens = [
-    const HomeScreen(),
-    const ChatbotScreen(),
-    const ProfileScreen(),
-    const SettingScreen(),
-  ];
 }

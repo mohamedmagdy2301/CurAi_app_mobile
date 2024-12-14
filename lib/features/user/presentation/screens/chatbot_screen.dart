@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/features/user/presentation/widgets/body_chatbot.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/custom_appbar_chatbot.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class ChatbotScreen extends StatelessWidget {
     return const SafeArea(
       child: Scaffold(
         appBar: CustomAppBarChatBot(),
-        body: Center(child: Text('ChatBot')),
+        body: BodyChatbot(),
       ),
     );
   }
