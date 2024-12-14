@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -9,6 +7,8 @@ import 'package:curai_app_mobile/features/user/presentation/widgets/custom_appba
 import 'package:curai_app_mobile/features/user/presentation/widgets/doctor_speciality_widget.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/popular_doctor_widget.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/title_section_widget.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

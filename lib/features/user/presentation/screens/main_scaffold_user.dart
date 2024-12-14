@@ -1,11 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/setting_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainScaffoldUser extends StatefulWidget {
   const MainScaffoldUser({super.key});
@@ -85,8 +86,8 @@ class _MainScaffoldUserState extends State<MainScaffoldUser> {
 
   final List<Widget> _buildScreens = [
     const HomeScreen(),
+    const ChatbotScreen(),
     const ProfileScreen(),
-    const ChatScreen(),
     const SettingScreen(),
   ];
 }
