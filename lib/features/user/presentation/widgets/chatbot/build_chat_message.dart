@@ -36,7 +36,7 @@ class BuildChatMessage extends StatelessWidget {
             Colors.green,
           );
         }
-        return spaceHeight(10);
+        return spaceHeight(0);
       },
     );
   }
