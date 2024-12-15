@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/features/user/presentation/widgets/body_chatbot
 import 'package:curai_app_mobile/features/user/presentation/widgets/custom_appbar_chatbot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lock_orientation_screen/lock_orientation_screen.dart';
 
 class ChatbotScreen extends StatelessWidget {
   const ChatbotScreen({super.key});
@@ -11,10 +12,12 @@ class ChatbotScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ChatCubit(),
-      child: const SafeArea(
-        child: Scaffold(
-          appBar: CustomAppBarChatBot(),
-          body: BodyChatbot(),
+      child: const LockOrientation(
+        child: SafeArea(
+          child: Scaffold(
+            appBar: CustomAppBarChatBot(),
+            body: BodyChatbot(),
+          ),
         ),
       ),
     );
