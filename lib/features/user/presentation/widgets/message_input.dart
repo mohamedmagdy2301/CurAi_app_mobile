@@ -62,12 +62,12 @@ class _MessageInputState extends State<MessageInput> {
                   setState(() => isSentMessage = value.trim().isNotEmpty);
                 },
                 minLines: 1,
-                maxLines: 10,
+                maxLines: 5,
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.white60,
-                  contentPadding: padding(horizontal: 20, vertical: 5),
+                  fillColor: context.colors.secondaryFontColor!.withOpacity(.7),
+                  contentPadding: padding(horizontal: 20, vertical: 10),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                     borderSide: BorderSide.none,
@@ -78,24 +78,21 @@ class _MessageInputState extends State<MessageInput> {
                   hintStyle: context.textTheme.bodyMedium!.copyWith(
                     color: context.colors.textColorLight,
                   ),
-                  suffixIcon: !isSentMessage
-                      ? IconButton(
+                  suffixIcon: isSentMessage
+                      ? null
+                      : IconButton(
                           onPressed: () {},
                           icon: Icon(
                             Icons.attach_file,
                             color: context.colors.textColorLight,
                           ),
-                        )
-                      : null,
+                        ),
                 ),
               ),
             ),
             spaceWidth(10),
             InkWell(
               onTap: isSentMessage ? _sendMessage : null,
-              onLongPress: isSentMessage
-                  ? null
-                  : () => LoggerHelper.info('Long press detected'),
               child: CircleAvatar(
                 backgroundColor: context.colors.primaryColor,
                 radius: 22.r,
