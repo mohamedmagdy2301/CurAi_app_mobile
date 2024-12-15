@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/features/user/presentation/models/messages_chatbot_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageBubbleWidget extends StatelessWidget {
@@ -41,7 +42,7 @@ class MessageBubbleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding(vertical: 10, horizontal: 10),
+      padding: padding(vertical: 12, horizontal: 15),
       margin: _bubbleMargin(),
       decoration: BoxDecoration(
         color: isUserMessage
@@ -49,13 +50,22 @@ class MessageBubbleWidget extends StatelessWidget {
             : context.colors.chatBubbleIsBot,
         borderRadius: _bubbleBorderRadius(),
       ),
-      child: Text(
-        messageModel.messageText,
-        textDirection: textDirection(messageModel.messageText),
-        style: context.textTheme.bodyMedium!.copyWith(
-          color: Colors.white,
-        ),
-      ),
+      child: isUserMessage
+          ? Text(
+              messageModel.messageText,
+              textDirection: textDirection(messageModel.messageText),
+              softWrap: true,
+              textAlign: isArabic() ? TextAlign.right : TextAlign.left,
+              style: context.textTheme.bodyMedium!.copyWith(
+                color: Colors.white,
+              ),
+            )
+          : Markdown(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              data: messageModel.messageText,
+            ),
     );
   }
 }
