@@ -12,11 +12,14 @@ class ChatbotScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return LockOrientation(
       child: SafeArea(
-        child: Scaffold(
-          appBar: const CustomAppBarChatBot(),
-          body: BlocProvider(
-            create: (_) => ChatCubit(),
-            child: const BodyChatbot(),
+        child: Container(
+          constraints: const BoxConstraints.expand(),
+          child: Scaffold(
+            appBar: const CustomAppBarChatBot(),
+            body: BlocProvider(
+              create: (_) => ChatCubit(),
+              child: const BodyChatbot(),
+            ),
           ),
         ),
       ),
