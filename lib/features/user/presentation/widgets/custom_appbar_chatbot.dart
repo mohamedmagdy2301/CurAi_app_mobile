@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/features/user/cubit/chat_cubit.dart';
 import 'package:curai_app_mobile/features/user/cubit/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBarChatBot extends StatelessWidget
     implements PreferredSizeWidget {
@@ -30,9 +31,9 @@ class CustomAppBarChatBot extends StatelessWidget
 
   Widget _buildTitleText(BuildContext context) {
     return Text(
-      isArabic() ? 'الدردشــة' : 'ChatBot',
-      style: context.textTheme.headlineMedium!.copyWith(
-        fontWeight: FontWeightHelper.extraBold,
+      isArabic() ? 'مساعدك الشخصى' : 'ChatBot Assistant',
+      style: context.textTheme.headlineSmall!.copyWith(
+        fontWeight: FontWeightHelper.semiBold,
         color: context.colors.bodyTextOnboarding,
       ),
     );
@@ -81,5 +82,5 @@ class CustomAppBarChatBot extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(60.h);
 }
