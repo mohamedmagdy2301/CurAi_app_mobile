@@ -10,13 +10,13 @@ class ChatbotScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ChatCubit(),
-      child: const LockOrientation(
-        child: SafeArea(
-          child: Scaffold(
-            appBar: CustomAppBarChatBot(),
-            body: BodyChatbot(),
+    return LockOrientation(
+      child: SafeArea(
+        child: Scaffold(
+          appBar: const CustomAppBarChatBot(),
+          body: BlocProvider(
+            create: (_) => ChatCubit(),
+            child: const BodyChatbot(),
           ),
         ),
       ),

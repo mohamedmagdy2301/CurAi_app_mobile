@@ -1,5 +1,5 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:curai_app_mobile/core/helper/logger_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefManager {
   static const String tag = 'Shared Preferences Manager';
@@ -8,10 +8,10 @@ class SharedPrefManager {
   Future<void> sharedPreferencesInitialize() async {
     try {
       _sharedPreferences = await SharedPreferences.getInstance();
-      LoggerHelper.info(
-        'SharedPreferences initialized successfully.',
-        tag: tag,
-      );
+      // LoggerHelper.info(
+      //   'SharedPreferences initialized successfully.',
+      //   tag: tag,
+      // );
     } catch (e) {
       LoggerHelper.error(
         'Error initializing SharedPreferences',
@@ -43,7 +43,7 @@ class SharedPrefManager {
         result = await _sharedPreferences.setStringList(key, value);
       }
 
-      LoggerHelper.info('Data set: Key = $key, Value = $value', tag: tag);
+      // LoggerHelper.info('Data set: Key = $key, Value = $value', tag: tag);
       return result;
     } catch (e) {
       LoggerHelper.error('Error setting data for key $key', tag: tag, error: e);
@@ -54,7 +54,7 @@ class SharedPrefManager {
   static bool? getBool(String key) {
     try {
       final value = _sharedPreferences.getBool(key);
-      LoggerHelper.info('Data retrieved: Key = $key, Value = $value', tag: tag);
+      // LoggerHelper.info('Data retrieved: Key = $key, Value = $value', tag: tag);
       return value;
     } catch (e) {
       LoggerHelper.error(
@@ -69,7 +69,7 @@ class SharedPrefManager {
   static String? getString(String key) {
     try {
       final value = _sharedPreferences.getString(key);
-      LoggerHelper.info('Data retrieved: Key = $key, Value = $value', tag: tag);
+      // LoggerHelper.info('Data retrieved: Key = $key, Value = $value', tag: tag);
       return value;
     } catch (e) {
       LoggerHelper.error(
@@ -84,7 +84,7 @@ class SharedPrefManager {
   static double? getDouble(String key) {
     try {
       final value = _sharedPreferences.getDouble(key);
-      LoggerHelper.info('Data retrieved: Key = $key, Value = $value', tag: tag);
+      // LoggerHelper.info('Data retrieved: Key = $key, Value = $value', tag: tag);
       return value;
     } catch (e) {
       LoggerHelper.error(
@@ -99,7 +99,7 @@ class SharedPrefManager {
   static int? getInt(String key) {
     try {
       final value = _sharedPreferences.getInt(key);
-      LoggerHelper.info('Data retrieved: Key = $key, Value = $value', tag: tag);
+      // LoggerHelper.info('Data retrieved: Key = $key, Value = $value', tag: tag);
       return value;
     } catch (e) {
       LoggerHelper.error(
@@ -114,7 +114,7 @@ class SharedPrefManager {
   static Future<bool> removeData({required String key}) async {
     try {
       final result = await _sharedPreferences.remove(key);
-      LoggerHelper.info('Data removed: Key = $key', tag: tag);
+      // LoggerHelper.info('Data removed: Key = $key', tag: tag);
       return result;
     } catch (e) {
       LoggerHelper.error(
@@ -129,7 +129,7 @@ class SharedPrefManager {
   static Future<bool> clearAllData() async {
     try {
       final result = await _sharedPreferences.clear();
-      LoggerHelper.info('All SharedPreferences data cleared.', tag: tag);
+      // LoggerHelper.info('All SharedPreferences data cleared.', tag: tag);
       return result;
     } catch (e) {
       LoggerHelper.error(
@@ -144,10 +144,10 @@ class SharedPrefManager {
   static bool containPreference(String key) {
     try {
       final exists = _sharedPreferences.containsKey(key);
-      LoggerHelper.info(
-        'Key existence check: Key = $key, Exists = $exists',
-        tag: tag,
-      );
+      // LoggerHelper.info(
+      //  'Key existence check: Key = $key, Exists = $exists',
+      //   tag: tag,
+      // );
       return exists;
     } catch (e) {
       LoggerHelper.error(
