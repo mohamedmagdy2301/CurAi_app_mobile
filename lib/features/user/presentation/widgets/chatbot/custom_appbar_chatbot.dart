@@ -2,13 +2,10 @@
 
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
-import 'package:curai_app_mobile/features/user/presentation/cubit/chat_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBarChatBot extends StatelessWidget
     implements PreferredSizeWidget {
@@ -20,12 +17,7 @@ class CustomAppBarChatBot extends StatelessWidget
       backgroundColor: context.colors.appBarHome,
       elevation: 0,
       flexibleSpace: Container(color: context.colors.appBarHome),
-      title: Column(
-        children: [
-          _buildTitleText(context),
-          _buildChatStatus(context),
-        ],
-      ),
+      title: _buildTitleText(context),
       leading: _buildBackButton(context),
       iconTheme: IconThemeData(color: context.colors.bodyTextOnboarding),
       centerTitle: true,
@@ -42,54 +34,6 @@ class CustomAppBarChatBot extends StatelessWidget
     );
   }
 
-  Widget _buildChatStatus(BuildContext context) {
-    return BlocConsumer<ChatCubit, ChatState>(
-      listener: (context, state) async {
-        if (state is ChatFialure) {
-          showMessage(
-            context,
-            type: SnackBarType.error,
-            message: state.message,
-          );
-        }
-      },
-      builder: (
-        context,
-        state,
-      ) {
-        if (state is ChatDone) {
-          return _buildStatusMessage(
-            context,
-            isArabic() ? 'تم التحقق' : 'Successful',
-            Colors.green,
-          );
-        } else if (state is ChatLoading) {
-          return _buildStatusMessage(
-            context,
-            isArabic() ? 'جاري التحقق...' : 'Wait a moment...',
-            Colors.green,
-          );
-        }
-
-        return const SizedBox();
-      },
-    );
-  }
-
-  Widget _buildStatusMessage(
-    BuildContext context,
-    String message,
-    Color color,
-  ) {
-    return Text(
-      message,
-      style: context.textTheme.bodySmall!.copyWith(
-        fontWeight: FontWeightHelper.semiBold,
-        color: color,
-      ),
-    );
-  }
-
   Widget _buildBackButton(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.arrow_back_ios_new),
@@ -101,5 +45,5 @@ class CustomAppBarChatBot extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(60.h);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

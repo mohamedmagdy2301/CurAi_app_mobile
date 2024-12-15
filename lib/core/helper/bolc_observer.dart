@@ -1,7 +1,7 @@
 // ignore_for_file: strict_raw_type
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:curai_app_mobile/core/helper/logger_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SimpleBlocObserver implements BlocObserver {
   static const String tag = 'Bloc Observer';

@@ -2,8 +2,8 @@ import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
-import 'package:curai_app_mobile/features/user/presentation/screens/screens.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/screens.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -73,10 +73,12 @@ class MainScaffoldUser extends StatelessWidget {
                         context.read<NavigationCubit>().updateIndex(index);
                       },
                     ),
-              body: IndexedStack(
-                index: currentIndex,
-                children: screens,
-              ),
+              body: screens[currentIndex],
+
+              //  IndexedStack(
+              //   index: currentIndex,
+              //   children: screens,
+              // ),
             ),
           );
         },
