@@ -1,5 +1,8 @@
+// ignore_for_file: inference_failure_on_instance_creation
+
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:curai_app_mobile/features/user/cubit/chat_cubit.dart';
 import 'package:curai_app_mobile/features/user/cubit/navigation_cubit.dart';
@@ -40,8 +43,20 @@ class CustomAppBarChatBot extends StatelessWidget
   }
 
   Widget _buildChatStatus(BuildContext context) {
-    return BlocBuilder<ChatCubit, ChatState>(
-      builder: (context, state) {
+    return BlocConsumer<ChatCubit, ChatState>(
+      listener: (context, state) async {
+        if (state is ChatFialure) {
+          showMessage(
+            context,
+            type: SnackBarType.error,
+            message: state.message,
+          );
+        }
+      },
+      builder: (
+        context,
+        state,
+      ) {
         if (state is ChatDone) {
           return _buildStatusMessage(
             context,
@@ -55,6 +70,7 @@ class CustomAppBarChatBot extends StatelessWidget
             Colors.green,
           );
         }
+
         return const SizedBox();
       },
     );

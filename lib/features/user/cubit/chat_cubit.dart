@@ -11,6 +11,11 @@ class ChatInitial extends ChatState {}
 
 class ChatLoading extends ChatState {}
 
+class ChatFialure extends ChatState {
+  ChatFialure({required this.message});
+  final String message;
+}
+
 class ChatDone extends ChatState {
   ChatDone({required this.messagesList});
   final List<MessageModel> messagesList;
@@ -25,40 +30,37 @@ class ChatCubit extends Cubit<ChatState> {
   Future<void> addNewMessage(String newMessage) async {
     // Emit loading state while waiting for the bot response
     emit(ChatLoading());
+    try {
+      // Create the new user message
+      final newUserMessage = MessageModel(
+        messageText: newMessage,
+        date: DateTime.now(),
+        sender: SenderType.user,
+      );
+      // Add the new user message to the message history
+      messagesList.insert(0, newUserMessage);
+      // Call Gemini API to get the bot response
+      final request = await Gemini.instance.prompt(
+        parts: [
+          Part.text(newMessage),
+        ],
+      );
+      final response = request?.output.toString() ?? 'No response';
+      // Create the bot's response message
+      final botMessage = MessageModel(
+        messageText: response,
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      // Add the bot's response to the message history
+      messagesList.insert(0, botMessage);
+      // Emit done state with updated message history
 
-    // Create the new user message
-    final newUserMessage = MessageModel(
-      messageText: newMessage,
-      date: DateTime.now(),
-      sender: SenderType.user,
-    );
-
-    // Add the new user message to the message history
-    messagesList.insert(0, newUserMessage);
-
-    // Call Gemini API to get the bot response
-    final request = await Gemini.instance.prompt(
-      parts: [
-        Part.text(newMessage),
-      ],
-    );
-
-    final response = request?.output.toString() ?? 'No response';
-
-    // Create the bot's response message
-    final botMessage = MessageModel(
-      messageText: response,
-      date: DateTime.now(),
-      sender: SenderType.bot,
-    );
-
-    // Add the bot's response to the message history
-    messagesList.insert(0, botMessage);
-
-    // Emit done state with updated message history
-    emit(ChatDone(messagesList: List.from(messagesList)));
-
-    await resetSuccessMessage();
+      emit(ChatDone(messagesList: List.from(messagesList)));
+      await resetSuccessMessage();
+    } on Exception catch (e) {
+      emit(ChatFialure(message: e.toString()));
+    }
   }
 
   Future<void> resetSuccessMessage() async {

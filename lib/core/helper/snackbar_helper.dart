@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:curai_app_mobile/core/common/widgets/animated_snackbar.dart';
+import 'package:flutter/material.dart';
 
 enum SnackBarType { error, success, warning, info }
 
