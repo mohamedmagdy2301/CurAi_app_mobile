@@ -1,7 +1,7 @@
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/features/user/cubit/chat_cubit.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/chat_bubble.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/message_input.dart';
+import 'package:curai_app_mobile/features/user/presentation/cubit/chat_cubit.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot/chat_bubble.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot/message_input_chatbot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -7,7 +7,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
-import 'package:curai_app_mobile/features/user/presentation/screens/home.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/screens.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
 import 'package:flutter/material.dart';
 

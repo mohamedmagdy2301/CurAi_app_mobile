@@ -1,18 +1,4 @@
-// ignore_for_file: lines_longer_than_80_chars
-
-enum SenderType { user, bot }
-
-class MessageModel {
-  const MessageModel({
-    required this.messageText,
-    required this.date,
-    required this.sender,
-  });
-
-  final String messageText;
-  final DateTime date;
-  final SenderType sender;
-}
+import 'package:curai_app_mobile/features/user/models/chatbot_model/messages_chatbot_model.dart';
 
 class MessageFactory {
   static List<MessageModel> generateEnglishMessages() {
@@ -39,7 +25,7 @@ class MessageFactory {
       ),
       _createMessage('Yes, tell me a riddle!', -16, SenderType.user),
       _createMessage(
-        'What comes once in a minute, twice in a moment, but never in a thousand years? The letter "M".',
+        '''What comes once in a minute, twice in a moment, but never in a thousand years? The letter "M".''',
         -15,
         SenderType.bot,
       ),
@@ -60,7 +46,7 @@ class MessageFactory {
       ),
       _createMessage('What can you do?', -11, SenderType.user),
       _createMessage(
-        'I can answer your questions, tell jokes, provide riddles, and much more!',
+        '''I can answer your questions, tell jokes, provide riddles, and much more!''',
         -10,
         SenderType.bot,
       ),
@@ -78,13 +64,13 @@ class MessageFactory {
         SenderType.user,
       ),
       _createMessage(
-        "I'm sorry, I can't fetch live weather updates yet. But I can suggest what to wear based on seasons!",
+        '''I'm sorry, I can't fetch live weather updates yet. But I can suggest what to wear based on seasons!''',
         -4,
         SenderType.bot,
       ),
       _createMessage('What do you think about AI?', -3, SenderType.user),
       _createMessage(
-        'AI is fascinating! It helps humans solve complex problems and makes life easier. What do you think?',
+        '''AI is fascinating! It helps humans solve complex problems and makes life easier. What do you think?''',
         -2,
         SenderType.bot,
       ),
@@ -117,7 +103,8 @@ class MessageFactory {
       ),
       _createMessage('نعم، أخبرني بأحجية!', -16, SenderType.user),
       _createMessage(
-        'ما الذي يأتي مرة في الدقيقة، مرتين في اللحظة، ولكن لا يأتي أبدًا في ألف سنة؟ الحرف "م".',
+        '''
+ما الذي يأتي مرة في الدقيقة، مرتين في اللحظة، ولكن لا يأتي أبدًا في ألف سنة؟ الحرف "م".''',
         -15,
         SenderType.bot,
       ),
@@ -134,7 +121,7 @@ class MessageFactory {
       _createMessage('هاها، أنت حقًا تعرف كيف تُسلّي!', -12, SenderType.user),
       _createMessage('ما الذي يمكنك فعله؟', -11, SenderType.user),
       _createMessage(
-        'أستطيع الإجابة على أسئلتك، وإخبارك بالنكات، وتقديم الأحاجي، والكثير غير ذلك!',
+        ''''أستطيع الإجابة على أسئلتك، وإخبارك بالنكات، وتقديم الأحاجي، والكثير غير ذلك!''',
         -10,
         SenderType.bot,
       ),
@@ -152,13 +139,13 @@ class MessageFactory {
         SenderType.user,
       ),
       _createMessage(
-        'أنا آسف، لا يمكنني الحصول على تحديثات الطقس المباشرة بعد. لكن يمكنني اقتراح ما ترتديه بناءً على المواسم!',
+        '''أنا آسف، لا يمكنني الحصول على تحديثات الطقس المباشرة بعد. لكن يمكنني اقتراح ما ترتديه بناءً على المواسم!''',
         -4,
         SenderType.bot,
       ),
       _createMessage('ما رأيك في الذكاء الاصطناعي؟', -3, SenderType.user),
       _createMessage(
-        'الذكاء الاصطناعي مثير جدًا! يساعد البشر في حل المشكلات المعقدة ويسهل الحياة. ما رأيك؟',
+        '''الذكاء الاصطناعي مثير جدًا! يساعد البشر في حل المشكلات المعقدة ويسهل الحياة. ما رأيك؟''',
         -2,
         SenderType.bot,
       ),

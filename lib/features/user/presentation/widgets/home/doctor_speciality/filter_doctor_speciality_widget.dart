@@ -3,9 +3,9 @@ import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/regex.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/features/user/presentation/models/doctor_speciality_list.dart';
-import 'package:curai_app_mobile/features/user/presentation/models/doctor_speciality_model.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/doctor_specialities_gridlist_widget.dart';
+import 'package:curai_app_mobile/features/user/data/doctor_speciality_list.dart';
+import 'package:curai_app_mobile/features/user/models/doctor_speciality_model/doctor_speciality_model.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/doctor_specialities_gridlist_widget.dart';
 import 'package:flutter/material.dart';
 
 class FilterDoctorSpeciality extends StatefulWidget {

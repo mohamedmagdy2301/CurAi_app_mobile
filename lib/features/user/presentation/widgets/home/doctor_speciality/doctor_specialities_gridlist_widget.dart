@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/features/user/presentation/models/doctor_speciality_model.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/doctor_speciality_item_widget.dart';
+import 'package:curai_app_mobile/features/user/models/doctor_speciality_model/doctor_speciality_model.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/doctor_speciality_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class DoctorSpecialitiesGridList extends StatelessWidget {

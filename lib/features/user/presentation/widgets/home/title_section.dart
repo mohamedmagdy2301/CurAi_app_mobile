@@ -1,10 +1,10 @@
 // ignore_for_file: flutter_style_todos
 
-import 'package:flutter/material.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:flutter/material.dart';
 
 class TitleSectionWidget extends StatelessWidget {
   const TitleSectionWidget({required this.title, super.key, this.onPressed});
