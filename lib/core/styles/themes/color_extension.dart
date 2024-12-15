@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:curai_app_mobile/core/styles/colors/colors_dark.dart';
 import 'package:curai_app_mobile/core/styles/colors/colors_light.dart';
+import 'package:flutter/material.dart';
 
 class MyColors extends ThemeExtension<MyColors> {
   const MyColors({
@@ -12,6 +12,10 @@ class MyColors extends ThemeExtension<MyColors> {
     required this.border,
     required this.focusedBorder,
     required this.appBarHome,
+    required this.fontColor,
+    required this.secondaryFontColor,
+    required this.chatBubbleIsBot,
+    required this.textTimeMessage,
   });
 
   final Color? primaryColor;
@@ -22,6 +26,10 @@ class MyColors extends ThemeExtension<MyColors> {
   final Color? border;
   final Color? focusedBorder;
   final Color? appBarHome;
+  final Color? fontColor;
+  final Color? secondaryFontColor;
+  final Color? chatBubbleIsBot;
+  final Color? textTimeMessage;
 
   @override
   ThemeExtension<MyColors> copyWith({
@@ -33,6 +41,10 @@ class MyColors extends ThemeExtension<MyColors> {
     Color? iconSocialBG,
     Color? focusedBorder,
     Color? appBarHome,
+    Color? fontColor,
+    Color? secondaryFontColor,
+    Color? chatBubbleIsBot,
+    Color? textTimeMessage,
   }) {
     return MyColors(
       primaryColor: primaryColor,
@@ -43,6 +55,10 @@ class MyColors extends ThemeExtension<MyColors> {
       iconSocialBG: iconSocialBG,
       focusedBorder: focusedBorder,
       appBarHome: appBarHome,
+      fontColor: fontColor,
+      secondaryFontColor: secondaryFontColor,
+      chatBubbleIsBot: chatBubbleIsBot,
+      textTimeMessage: textTimeMessage,
     );
   }
 
@@ -63,6 +79,10 @@ class MyColors extends ThemeExtension<MyColors> {
       iconSocialBG: iconSocialBG,
       focusedBorder: focusedBorder,
       appBarHome: appBarHome,
+      fontColor: fontColor,
+      secondaryFontColor: secondaryFontColor,
+      chatBubbleIsBot: chatBubbleIsBot,
+      textTimeMessage: textTimeMessage,
     );
   }
 
@@ -75,6 +95,10 @@ class MyColors extends ThemeExtension<MyColors> {
     focusedBorder: Color.fromARGB(255, 0, 128, 107),
     iconSocialBG: Color.fromARGB(206, 53, 53, 53),
     appBarHome: ColorsDark.backgroundColor,
+    fontColor: Colors.white,
+    secondaryFontColor: Colors.black,
+    chatBubbleIsBot: Color.fromARGB(255, 63, 63, 63),
+    textTimeMessage: Color.fromARGB(212, 214, 214, 214),
   );
 
   static MyColors light = const MyColors(
@@ -86,5 +110,9 @@ class MyColors extends ThemeExtension<MyColors> {
     focusedBorder: ColorsLight.primaryColor,
     iconSocialBG: Color.fromARGB(255, 208, 208, 208),
     appBarHome: ColorsLight.backgroundColor,
+    fontColor: Colors.black,
+    secondaryFontColor: Colors.white,
+    chatBubbleIsBot: Colors.grey,
+    textTimeMessage: ColorsLight.textColorLight,
   );
 }
