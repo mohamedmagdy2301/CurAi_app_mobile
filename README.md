@@ -87,10 +87,11 @@
 
 
 ##### **AI Chatbot Integration**
-- 🔲 **UI**  
+- ✅ **UI**  
   - Design chatbot interface:
-    - 🕓  Text input and message display area.  
-    - 🕓  Quick responses or symptom options for user interaction.  
+    - 💬  Text input and message display area.  
+    - 🤖  Quick responses or symptom options for user interaction.  
+ 
 
 - 🔲 **API Integration**  
   - Connect to the backend for:
