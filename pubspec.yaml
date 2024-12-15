@@ -15,8 +15,10 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.6
   flutter_dotenv:
+  flutter_gemini: ^3.0.0
   flutter_localizations:
     sdk: flutter
+  flutter_markdown: ^0.7.4+3
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.16
   get_it: ^8.0.2

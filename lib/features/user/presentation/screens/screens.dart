@@ -1,19 +1,5 @@
 import 'package:flutter/material.dart';
 
-class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notefication Screen'),
-        centerTitle: true,
-      ),
-    );
-  }
-}
-
 class AllDoctorsScreen extends StatelessWidget {
   const AllDoctorsScreen({super.key});
 
@@ -28,14 +14,14 @@ class AllDoctorsScreen extends StatelessWidget {
   }
 }
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class NotificationScreen extends StatelessWidget {
+  const NotificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Screen'),
+        title: const Text('Notefication Screen'),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),

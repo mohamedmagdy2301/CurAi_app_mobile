@@ -1,8 +1,8 @@
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/features/user/cubit/navigation_cubit.dart';
+import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
-import 'package:curai_app_mobile/features/user/presentation/screens/home.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/screens.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,7 +43,7 @@ class MainScaffoldUser extends StatelessWidget {
     const screens = [
       HomeScreen(),
       ChatbotScreen(),
-      ProfileScreen(),
+      NotificationScreen(),
       SettingScreen(),
     ];
 

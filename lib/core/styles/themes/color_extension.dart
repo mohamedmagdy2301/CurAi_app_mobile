@@ -112,7 +112,7 @@ class MyColors extends ThemeExtension<MyColors> {
     appBarHome: ColorsLight.backgroundColor,
     fontColor: Colors.black,
     secondaryFontColor: Colors.white,
-    chatBubbleIsBot: Colors.grey,
+    chatBubbleIsBot: Color.fromARGB(255, 227, 227, 227),
     textTimeMessage: ColorsLight.textColorLight,
   );
 }

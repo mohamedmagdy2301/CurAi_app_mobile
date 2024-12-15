@@ -1,6 +1,6 @@
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
-import 'package:curai_app_mobile/features/user/presentation/models/doctor_speciality_model.dart';
+import 'package:curai_app_mobile/features/user/models/doctor_speciality_model/doctor_speciality_model.dart';
 
 List<DoctorSpecialityModel> doctorSpecialityList = [
   DoctorSpecialityModel(

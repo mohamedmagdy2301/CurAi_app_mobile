@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
 import 'package:curai_app_mobile/core/app/env.variables.dart';
 import 'package:curai_app_mobile/core/app/error_widget_main.dart';
@@ -12,6 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
@@ -20,6 +23,7 @@ Future<void> main() async {
   Bloc.observer = SimpleBlocObserver();
   dependencyInjectionSetup();
   hideKeyboard();
+  Gemini.init(apiKey: 'AIzaSyA_ehqc-SrrKJDn5jO77Fgy_ae00UvevaM');
 
   try {
     await initializeDependencies();
