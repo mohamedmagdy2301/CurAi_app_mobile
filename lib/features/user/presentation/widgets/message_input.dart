@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_function_return_type
+
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/logger_helper.dart';
@@ -5,7 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageInput extends StatefulWidget {
-  const MessageInput({super.key});
+  const MessageInput({
+    required this.onMessageSent,
+    super.key,
+  });
+
+  final Function(String message) onMessageSent;
 
   @override
   State<MessageInput> createState() => _MessageInputState();
@@ -15,10 +22,28 @@ class _MessageInputState extends State<MessageInput> {
   final TextEditingController _controllerMessage = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isSentMessage = false;
+
   @override
   void dispose() {
     _controllerMessage.dispose();
     super.dispose();
+  }
+
+  void _sendMessage() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final messageText = _controllerMessage.text.trim();
+      if (messageText.isNotEmpty) {
+        widget.onMessageSent(messageText);
+        LoggerHelper.info('Message sent: $messageText');
+        _controllerMessage.clear();
+        setState(() {
+          isSentMessage = false;
+        });
+        hideKeyboard();
+      }
+    }
   }
 
   @override
@@ -34,11 +59,7 @@ class _MessageInputState extends State<MessageInput> {
               child: TextFormField(
                 controller: _controllerMessage,
                 onChanged: (value) {
-                  if (value.isEmpty || value.trim().isEmpty) {
-                    setState(() => isSentMessage = false);
-                  } else {
-                    setState(() => isSentMessage = true);
-                  }
+                  setState(() => isSentMessage = value.trim().isNotEmpty);
                 },
                 minLines: 1,
                 maxLines: 10,
@@ -53,7 +74,7 @@ class _MessageInputState extends State<MessageInput> {
                   ),
                   hintText: isArabic()
                       ? 'ماذا يمكنني مساعدتك؟'
-                      : 'what can i help you?',
+                      : 'What can I help you with?',
                   hintStyle: context.textTheme.bodyMedium!.copyWith(
                     color: context.colors.textColorLight,
                   ),
@@ -71,23 +92,10 @@ class _MessageInputState extends State<MessageInput> {
             ),
             spaceWidth(10),
             InkWell(
-              onTap: isSentMessage
-                  ? () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        setState(() {
-                          isSentMessage = false;
-                        });
-                        LoggerHelper.info(
-                          'Message sent: ${_controllerMessage.text}',
-                        );
-                        _controllerMessage.clear();
-                        hideKeyboard();
-                      }
-                    }
-                  : null,
-              onLongPress:
-                  isSentMessage ? null : () => LoggerHelper.info('Long press'),
+              onTap: isSentMessage ? _sendMessage : null,
+              onLongPress: isSentMessage
+                  ? null
+                  : () => LoggerHelper.info('Long press detected'),
               child: CircleAvatar(
                 backgroundColor: context.colors.primaryColor,
                 radius: 22.r,
