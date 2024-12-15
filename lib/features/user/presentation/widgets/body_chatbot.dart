@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/features/user/presentation/models/messages_chat
 import 'package:curai_app_mobile/features/user/presentation/widgets/chat_bubble.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/message_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
 class BodyChatbot extends StatefulWidget {
   const BodyChatbot({super.key});
@@ -13,29 +14,19 @@ class BodyChatbot extends StatefulWidget {
 
 class _BodyChatbotState extends State<BodyChatbot> {
   late ScrollController _scrollController;
+  List<MessageModel> messagesList = [];
 
   @override
   void initState() {
     super.initState();
-    // Initialize the ScrollController
     _scrollController = ScrollController();
-    // Scroll to the bottom when the widget is first built
-    // WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
   }
 
   @override
   void dispose() {
-    // Dispose of the ScrollController to avoid memory leaks
     _scrollController.dispose();
     super.dispose();
-  }
-
-  List<MessageModel> getMessagesList() {
-    if (isArabic()) {
-      return messagesListArabic.reversed.toList();
-    } else {
-      return messagesListEnglish.reversed.toList();
-    }
   }
 
   void _scrollToBottom() {
@@ -48,15 +39,33 @@ class _BodyChatbotState extends State<BodyChatbot> {
     }
   }
 
-  void _addNewMessage(MessageModel newMessage) {
+  Future<void> _addNewMessage(String newMessage) async {
     setState(() {
-      if (isArabic()) {
-        messagesListArabic.add(newMessage);
-      } else {
-        messagesListEnglish.add(newMessage);
-      }
+      messagesList.insert(
+        0,
+        MessageModel(
+          messageText: newMessage,
+          date: DateTime.now(),
+          sender: SenderType.user,
+        ),
+      );
     });
-
+    final request = await Gemini.instance.prompt(
+      parts: [
+        Part.text(newMessage),
+      ],
+    );
+    final response = request?.output.toString() ?? 'No response';
+    setState(() {
+      messagesList.insert(
+        0,
+        MessageModel(
+          messageText: response,
+          date: DateTime.now(),
+          sender: SenderType.bot,
+        ),
+      );
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
   }
 
@@ -72,22 +81,16 @@ class _BodyChatbotState extends State<BodyChatbot> {
               controller: _scrollController,
               reverse: true,
               physics: const BouncingScrollPhysics(),
-              itemCount: getMessagesList().length,
+              itemCount: messagesList.length,
               itemBuilder: (context, index) =>
-                  ChatBubble(messageModel: getMessagesList()[index]),
+                  ChatBubble(messageModel: messagesList[index]),
               separatorBuilder: (context, index) => spaceHeight(15),
             ),
           ),
         ),
         MessageInput(
           onMessageSent: (String messageText) {
-            _addNewMessage(
-              MessageModel(
-                messageText: messageText,
-                date: DateTime.now(),
-                sender: SenderType.user,
-              ),
-            );
+            _addNewMessage(messageText);
           },
         ),
       ],
