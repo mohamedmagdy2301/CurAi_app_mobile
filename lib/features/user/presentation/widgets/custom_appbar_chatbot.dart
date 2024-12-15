@@ -77,7 +77,10 @@ class CustomAppBarChatBot extends StatelessWidget
   Widget _buildBackButton(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.arrow_back_ios_new),
-      onPressed: () => context.read<NavigationCubit>().updateIndex(0),
+      onPressed: () {
+        hideKeyboard();
+        context.read<NavigationCubit>().updateIndex(0);
+      },
     );
   }
 
