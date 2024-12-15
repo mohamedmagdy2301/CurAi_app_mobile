@@ -2,8 +2,8 @@ import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/features/user/presentation/models/messages_chatbot_model.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot_markdown_bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageBubbleWidget extends StatelessWidget {
@@ -60,12 +60,7 @@ class MessageBubbleWidget extends StatelessWidget {
                 color: Colors.white,
               ),
             )
-          : Markdown(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              data: messageModel.messageText,
-            ),
+          : ChatBotMarkdownBubble(messageText: messageModel.messageText),
     );
   }
 }

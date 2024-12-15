@@ -32,7 +32,8 @@ class curaiApp extends StatelessWidget {
             splitScreenMode: true,
             builder: (_, __) => MaterialApp(
               debugShowCheckedModeBanner: environment,
-              theme: appCubit.isDark ? AppTheme.darkTheme : AppTheme.lightTheme,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
               builder: (context, child) =>
                   buildAppConnectivityController(child),
               onGenerateRoute: AppRoutes.onGenerateRoute,

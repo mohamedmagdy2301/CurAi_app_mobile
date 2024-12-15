@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
 import 'package:curai_app_mobile/core/app/env.variables.dart';
 import 'package:curai_app_mobile/core/app/error_widget_main.dart';
