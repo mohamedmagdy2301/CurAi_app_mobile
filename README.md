@@ -30,7 +30,7 @@
 #### **Core Features**
 - ✅ **Core Folder**
   - 🚀 Implemented project core structure (folder setup, base models, services, and utilities).
-  - 
+  
 - ✅ **Styling**
   - 📱 Ensured app is responsive for various device sizes.
   - 🎥 Added smooth transitions and animations.
@@ -123,10 +123,11 @@
 
 ---
 
-#### **Additional Features**
-- 🔲 **Notifications**
-  - 🕓  Push notifications for appointment reminders.  
-  - 🕓  Notify users about doctor updates or promotions.  
+### **Additional Features**
+
+#### **Notifications**
+- 🔲  Push notifications for appointment reminders.  
+- 🔲  Notify users about doctor updates or promotions.  
 
 #### **Testing**
 - 🔲 Write and execute unit tests for core functionalities.  
