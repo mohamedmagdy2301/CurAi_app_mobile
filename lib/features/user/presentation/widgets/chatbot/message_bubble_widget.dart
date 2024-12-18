@@ -54,10 +54,11 @@ class MessageBubbleWidget extends StatelessWidget {
           ? Text(
               messageModel.messageText,
               textDirection: textDirection(messageModel.messageText),
-              softWrap: true,
               textAlign: isArabic() ? TextAlign.right : TextAlign.left,
               style: context.textTheme.bodyMedium!.copyWith(
                 color: Colors.white,
+                fontSize: 16.sp,
+                height: 1.5.h,
               ),
             )
           : ChatBotMarkdownBubble(messageText: messageModel.messageText),
