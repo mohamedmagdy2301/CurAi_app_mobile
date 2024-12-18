@@ -48,7 +48,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
               context.pushNamed(Routes.notificationScreen);
             });
           },
-          iconSize: 28.sp,
+          iconSize: iconSize(context),
           icon: Badge.count(
             count: count,
             isLabelVisible: count != 0,
@@ -60,5 +60,15 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
         ),
       ),
     );
+  }
+
+  double iconSize(BuildContext context) {
+    return context.width < 500
+        ? 25.sp
+        : context.width < 700
+            ? 20.sp
+            : context.width < 900
+                ? 15.sp
+                : 10.sp;
   }
 }

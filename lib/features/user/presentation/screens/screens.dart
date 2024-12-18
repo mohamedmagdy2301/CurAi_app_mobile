@@ -23,7 +23,6 @@ class NotificationScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Notefication Screen'),
         centerTitle: true,
-        automaticallyImplyLeading: false,
       ),
     );
   }

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       valueListenable: sl<ConnectivityController>().isInternetNotifier,
       builder: (_, value, __) {
         if (value) {
-          return curaiApp(environment: environment);
+          return CuraiApp(environment: environment);
         }
         return const NoInternetConnection();
       },
