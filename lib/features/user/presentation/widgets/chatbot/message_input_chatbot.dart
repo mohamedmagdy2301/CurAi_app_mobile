@@ -77,6 +77,8 @@ class _MessageInputState extends State<MessageInput> {
                       : 'What can I help you with?',
                   hintStyle: context.textTheme.bodyMedium!.copyWith(
                     color: context.colors.textColorLight,
+                    fontSize: 16.sp,
+                    height: 1.5.h,
                   ),
                   suffixIcon: isSentMessage
                       ? null
