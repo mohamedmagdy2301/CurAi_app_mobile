@@ -21,9 +21,9 @@ class PopularDoctorItemWidget extends StatelessWidget {
         children: [
           ImageDoctorWidget(modelDoctor: modelDoctor),
           Padding(
-            padding: padding(horizontal: 10, vertical: 10),
+            padding: padding(horizontal: 15, vertical: 10),
             child: SizedBox(
-              width: 182.w,
+              width: 192.w,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,

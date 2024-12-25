@@ -10,12 +10,12 @@ class PopularDoctorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       options: CarouselOptions(
-        height: 130.h,
+        height: 135.h,
         autoPlay: true,
         autoPlayInterval: const Duration(seconds: 5),
         autoPlayCurve: Curves.easeInBack,
         enlargeCenterPage: true,
-        viewportFraction: 0.85,
+        viewportFraction: .9,
       ),
       itemCount: doctorsList.length,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
