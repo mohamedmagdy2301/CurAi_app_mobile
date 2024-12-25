@@ -2,6 +2,8 @@ import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/date_doctor_widget.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/image_doctor_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -67,85 +69,6 @@ class PopularDoctorItemWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class DateDoctorWidget extends StatelessWidget {
-  const DateDoctorWidget({
-    required this.modelDoctor,
-    super.key,
-  });
-
-  final DoctorModel modelDoctor;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      spacing: 8.w,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          isArabic() ? modelDoctor.dateAr : modelDoctor.dateEn,
-          style: context.textTheme.labelSmall!.copyWith(
-            color: context.colors.bodyTextOnboarding,
-            fontWeight: FontWeightHelper.regular,
-          ),
-        ),
-        RateingDoctorWidget(modelDoctor: modelDoctor),
-      ],
-    );
-  }
-}
-
-class ImageDoctorWidget extends StatelessWidget {
-  const ImageDoctorWidget({
-    required this.modelDoctor,
-    super.key,
-  });
-
-  final DoctorModel modelDoctor;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-        topRight: Radius.circular(isArabic() ? 12.r : 2.r),
-        bottomRight: Radius.circular(isArabic() ? 12.r : 2.r),
-        bottomLeft: Radius.circular(isArabic() ? 2.r : 12.r),
-        topLeft: Radius.circular(isArabic() ? 2.r : 12.r),
-      ),
-      child: Image.asset(
-        modelDoctor.imageUrl,
-        height: 130.w,
-        width: 90.w,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-}
-
-class RateingDoctorWidget extends StatelessWidget {
-  const RateingDoctorWidget({
-    required this.modelDoctor,
-    super.key,
-  });
-
-  final DoctorModel modelDoctor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      spacing: 5.w,
-      children: [
-        Icon(Icons.star, color: Colors.amber, size: 15.sp),
-        Text(
-          isArabic() ? modelDoctor.ratingAr : modelDoctor.ratingEn,
-          style: context.textTheme.labelSmall!.copyWith(
-            color: context.colors.bodyTextOnboarding,
-            fontWeight: FontWeightHelper.bold,
-          ),
-        ),
-      ],
     );
   }
 }
