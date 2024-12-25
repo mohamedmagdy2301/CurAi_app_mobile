@@ -12,7 +12,7 @@ class PopularDoctorWidget extends StatelessWidget {
       options: CarouselOptions(
         height: 135.h,
         autoPlay: true,
-        autoPlayInterval: const Duration(seconds: 5),
+        autoPlayInterval: const Duration(seconds: 10),
         autoPlayCurve: Curves.easeInBack,
         enlargeCenterPage: true,
         viewportFraction: .9,
