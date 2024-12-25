@@ -39,27 +39,9 @@ class HomeScreen extends StatelessWidget {
               onPressed: () => context.pushNamed(Routes.allDoctors),
             ),
           ),
-          SliverToBoxAdapter(child: spaceHeight(20)),
+          SliverToBoxAdapter(child: spaceHeight(10)),
           const SliverToBoxAdapter(child: PopularDoctorWidget()),
-          SliverToBoxAdapter(child: spaceHeight(5)),
-          SliverToBoxAdapter(
-            child: TitleSectionWidget(
-              title: context.translate(LangKeys.popularDoctor),
-              onPressed: () => context.pushNamed(Routes.allDoctors),
-            ),
-          ),
-          SliverToBoxAdapter(child: spaceHeight(20)),
-          const SliverToBoxAdapter(child: PopularDoctorWidget()),
-          SliverToBoxAdapter(child: spaceHeight(5)),
-          SliverToBoxAdapter(
-            child: TitleSectionWidget(
-              title: context.translate(LangKeys.popularDoctor),
-              onPressed: () => context.pushNamed(Routes.allDoctors),
-            ),
-          ),
-          SliverToBoxAdapter(child: spaceHeight(20)),
-          const SliverToBoxAdapter(child: PopularDoctorWidget()),
-          SliverToBoxAdapter(child: spaceHeight(20)),
+          SliverToBoxAdapter(child: spaceHeight(10)),
         ],
       ),
     );

@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffol
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lock_orientation_screen/lock_orientation_screen.dart';
 
 class CuraiApp extends StatelessWidget {
   const CuraiApp({required this.environment, super.key});
@@ -30,18 +31,21 @@ class CuraiApp extends StatelessWidget {
             designSize: const Size(360, 758.7),
             minTextAdapt: true,
             splitScreenMode: true,
-            builder: (_, __) => MaterialApp(
-              debugShowCheckedModeBanner: environment,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              builder: (context, child) =>
-                  buildAppConnectivityController(child),
-              onGenerateRoute: AppRoutes.onGenerateRoute,
-              home: const MainScaffoldUser(),
-              locale: Locale(appCubit.currentLocale),
-              supportedLocales: AppLocalSetup.supportedLocales,
-              localeResolutionCallback: AppLocalSetup.localeResolutionCallback,
-              localizationsDelegates: AppLocalSetup.localesDelegates,
+            builder: (_, __) => LockOrientation(
+              child: MaterialApp(
+                debugShowCheckedModeBanner: environment,
+                theme: AppTheme.lightTheme,
+                darkTheme: AppTheme.darkTheme,
+                builder: (context, child) =>
+                    buildAppConnectivityController(child),
+                onGenerateRoute: AppRoutes.onGenerateRoute,
+                home: const MainScaffoldUser(),
+                locale: Locale(appCubit.currentLocale),
+                supportedLocales: AppLocalSetup.supportedLocales,
+                localeResolutionCallback:
+                    AppLocalSetup.localeResolutionCallback,
+                localizationsDelegates: AppLocalSetup.localesDelegates,
+              ),
             ),
           );
         },

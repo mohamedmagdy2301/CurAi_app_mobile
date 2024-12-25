@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:curai_app_mobile/core/styles/colors/colors_dark.dart';
 import 'package:curai_app_mobile/core/styles/colors/colors_light.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_style_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/fonts_family_helper.dart';
 import 'package:curai_app_mobile/core/styles/themes/assets_extension.dart';
 import 'package:curai_app_mobile/core/styles/themes/color_extension.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   // Light Theme
@@ -69,14 +69,14 @@ class AppTheme {
       bodyLarge: AppTextStyles.bodyLarge(color: colorScheme.onSurface),
       bodyMedium: AppTextStyles.bodyMedium(color: colorScheme.onSurface),
       bodySmall: AppTextStyles.bodySmall(
-        color: colorScheme.onSurface.withOpacity(0.7),
+        color: colorScheme.onSurface.withValues(alpha: 0.7),
       ),
       titleLarge: AppTextStyles.titleLarge(color: colorScheme.onSurface),
       titleMedium: AppTextStyles.titleMedium(
-        color: colorScheme.onSurface.withOpacity(0.8),
+        color: colorScheme.onSurface.withValues(alpha: 0.8),
       ),
       titleSmall: AppTextStyles.bodySmall(
-        color: colorScheme.onSurface.withOpacity(0.6),
+        color: colorScheme.onSurface.withValues(alpha: 0.6),
       ),
     );
   }
@@ -104,13 +104,13 @@ class AppTheme {
     OutlineInputBorder buildBorder(Color color, {double width = 1.0}) {
       return OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.r)),
-        borderSide: BorderSide(color: color),
+        borderSide: BorderSide(color: color, width: width.w),
       );
     }
 
     return InputDecorationTheme(
       errorBorder: buildBorder(colorScheme.error),
-      focusedErrorBorder: buildBorder(colorScheme.error, width: 2),
+      focusedErrorBorder: buildBorder(colorScheme.error, width: 2.w),
       errorStyle: AppTextStyles.bodySmall(color: colorScheme.error),
     );
   }
@@ -120,7 +120,7 @@ class AppTheme {
     return CardTheme(
       color: colorScheme.surface,
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
     );
   }
 
