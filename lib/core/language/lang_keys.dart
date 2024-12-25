@@ -66,4 +66,9 @@ class LangKeys {
   static const String neurologic = 'neurologic';
   static const String pulmonary = 'pulmonary';
   static const String optometry = 'optometry';
+
+// ! All Doctor
+  static const String doctors = 'doctors';
+
+//! Doctor Details
 }

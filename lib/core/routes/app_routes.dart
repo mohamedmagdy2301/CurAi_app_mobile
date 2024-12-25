@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/forget_passw
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/screens.dart';
@@ -32,7 +33,7 @@ class AppRoutes {
       case Routes.doctorSpeciality:
         return BaseRoute(page: const DoctorSpecialitiesScreen());
       case Routes.allDoctors:
-        return BaseRoute(page: const AllDoctorsScreen());
+        return BaseRoute(page: const AllDoctorScreen());
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }
