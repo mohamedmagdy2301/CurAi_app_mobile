@@ -41,7 +41,7 @@ class SettingScreen extends StatelessWidget {
                   icon: Icons.language,
                   title: AppLocalizations.of(context)!
                       .translate(LangKeys.changeLanguage),
-                  trailing: Switch(
+                  trailing: Switch.adaptive(
                     value: isEnglish,
                     onChanged: (value) {
                       if (value) {
