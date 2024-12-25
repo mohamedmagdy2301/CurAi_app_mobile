@@ -7,6 +7,7 @@ environment:
 
 # versions available, run `flutter pub outdated`.
 dependencies:
+  carousel_slider: ^5.0.0
   connectivity_plus:
   cupertino_icons:
   expansion_tile_card: ^3.0.0

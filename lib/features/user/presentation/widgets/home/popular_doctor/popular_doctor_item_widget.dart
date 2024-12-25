@@ -15,7 +15,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 290.w,
+      // width: 300.w,
       child: Card(
         color: context.colors.doctorCardBg,
         elevation: 1.2,
@@ -25,7 +25,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
             Padding(
               padding: padding(horizontal: 10, vertical: 10),
               child: SizedBox(
-                width: 172.w,
+                width: 182.w,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curai_app_mobile/features/user/data/doctors_list.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/popular_doctor_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +10,19 @@ class PopularDoctorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 130.h,
-      child: ListView.separated(
+      child: CarouselSlider.builder(
+        options: CarouselOptions(
+          height: 130.h,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 5),
+          autoPlayCurve: Curves.easeInBack,
+          enlargeCenterPage: true,
+          viewportFraction: 0.85,
+        ),
         itemCount: doctorsList.length,
-        padding: padding(horizontal: 20),
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => spaceWidth(25.w),
-        itemBuilder: (context, index) {
+        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
           return PopularDoctorItemWidget(
-            modelDoctor: doctorsList[index],
+            modelDoctor: doctorsList[itemIndex],
           );
         },
       ),
