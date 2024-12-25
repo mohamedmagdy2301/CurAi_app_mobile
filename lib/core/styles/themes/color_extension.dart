@@ -16,6 +16,7 @@ class MyColors extends ThemeExtension<MyColors> {
     required this.secondaryFontColor,
     required this.chatBubbleIsBot,
     required this.textTimeMessage,
+    required this.doctorCardBg,
   });
 
   final Color? primaryColor;
@@ -30,6 +31,7 @@ class MyColors extends ThemeExtension<MyColors> {
   final Color? secondaryFontColor;
   final Color? chatBubbleIsBot;
   final Color? textTimeMessage;
+  final Color? doctorCardBg;
 
   @override
   ThemeExtension<MyColors> copyWith({
@@ -45,6 +47,7 @@ class MyColors extends ThemeExtension<MyColors> {
     Color? secondaryFontColor,
     Color? chatBubbleIsBot,
     Color? textTimeMessage,
+    Color? doctorCardBg,
   }) {
     return MyColors(
       primaryColor: primaryColor,
@@ -59,6 +62,7 @@ class MyColors extends ThemeExtension<MyColors> {
       secondaryFontColor: secondaryFontColor,
       chatBubbleIsBot: chatBubbleIsBot,
       textTimeMessage: textTimeMessage,
+      doctorCardBg: doctorCardBg,
     );
   }
 
@@ -83,6 +87,7 @@ class MyColors extends ThemeExtension<MyColors> {
       secondaryFontColor: secondaryFontColor,
       chatBubbleIsBot: chatBubbleIsBot,
       textTimeMessage: textTimeMessage,
+      doctorCardBg: doctorCardBg,
     );
   }
 
@@ -99,6 +104,7 @@ class MyColors extends ThemeExtension<MyColors> {
     secondaryFontColor: Colors.black,
     chatBubbleIsBot: Color.fromARGB(255, 63, 63, 63),
     textTimeMessage: Color.fromARGB(212, 214, 214, 214),
+    doctorCardBg: Color.fromARGB(223, 42, 42, 42),
   );
 
   static MyColors light = const MyColors(
@@ -114,5 +120,6 @@ class MyColors extends ThemeExtension<MyColors> {
     secondaryFontColor: Colors.white,
     chatBubbleIsBot: Color.fromARGB(255, 227, 227, 227),
     textTimeMessage: ColorsLight.textColorLight,
+    doctorCardBg: Color.fromARGB(202, 255, 255, 255),
   );
 }
