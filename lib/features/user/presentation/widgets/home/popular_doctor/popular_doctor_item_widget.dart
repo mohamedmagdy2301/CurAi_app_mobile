@@ -14,58 +14,55 @@ class PopularDoctorItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      // width: 300.w,
-      child: Card(
-        color: context.colors.doctorCardBg,
-        elevation: 1.2,
-        child: Row(
-          children: [
-            ImageDoctorWidget(modelDoctor: modelDoctor),
-            Padding(
-              padding: padding(horizontal: 10, vertical: 10),
-              child: SizedBox(
-                width: 182.w,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      isArabic() ? modelDoctor.nameAr : modelDoctor.nameEn,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.bodyLarge!.copyWith(
-                        color: context.colors.bodyTextOnboarding,
-                        fontWeight: FontWeightHelper.extraBold,
-                      ),
+    return Card(
+      color: context.colors.doctorCardBg,
+      elevation: 1.2,
+      child: Row(
+        children: [
+          ImageDoctorWidget(modelDoctor: modelDoctor),
+          Padding(
+            padding: padding(horizontal: 10, vertical: 10),
+            child: SizedBox(
+              width: 182.w,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    isArabic() ? modelDoctor.nameAr : modelDoctor.nameEn,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.bodyLarge!.copyWith(
+                      color: context.colors.bodyTextOnboarding,
+                      fontWeight: FontWeightHelper.extraBold,
                     ),
-                    spaceHeight(8),
-                    Text(
-                      isArabic()
-                          ? modelDoctor.locationAr
-                          : modelDoctor.locationEn,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.bodySmall!.copyWith(
-                        color: context.colors.textColorLight,
-                        fontWeight: FontWeightHelper.regular,
-                      ),
+                  ),
+                  spaceHeight(8),
+                  Text(
+                    isArabic()
+                        ? modelDoctor.locationAr
+                        : modelDoctor.locationEn,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.bodySmall!.copyWith(
+                      color: context.colors.textColorLight,
+                      fontWeight: FontWeightHelper.regular,
                     ),
-                    spaceHeight(5),
-                    Text(
-                      context.translate(modelDoctor.specialty),
-                      style: context.textTheme.bodySmall!.copyWith(
-                        color: context.colors.textColorLight,
-                      ),
+                  ),
+                  spaceHeight(5),
+                  Text(
+                    context.translate(modelDoctor.specialty),
+                    style: context.textTheme.bodySmall!.copyWith(
+                      color: context.colors.textColorLight,
                     ),
-                    const Spacer(),
-                    DateDoctorWidget(modelDoctor: modelDoctor),
-                  ],
-                ),
+                  ),
+                  const Spacer(),
+                  DateDoctorWidget(modelDoctor: modelDoctor),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

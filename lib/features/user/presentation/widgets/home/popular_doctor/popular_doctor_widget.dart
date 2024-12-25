@@ -8,24 +8,21 @@ class PopularDoctorWidget extends StatelessWidget {
   const PopularDoctorWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 130.h,
-      child: CarouselSlider.builder(
-        options: CarouselOptions(
-          height: 130.h,
-          autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 5),
-          autoPlayCurve: Curves.easeInBack,
-          enlargeCenterPage: true,
-          viewportFraction: 0.85,
-        ),
-        itemCount: doctorsList.length,
-        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-          return PopularDoctorItemWidget(
-            modelDoctor: doctorsList[itemIndex],
-          );
-        },
+    return CarouselSlider.builder(
+      options: CarouselOptions(
+        height: 130.h,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 5),
+        autoPlayCurve: Curves.easeInBack,
+        enlargeCenterPage: true,
+        viewportFraction: 0.85,
       ),
+      itemCount: doctorsList.length,
+      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+        return PopularDoctorItemWidget(
+          modelDoctor: doctorsList[itemIndex],
+        );
+      },
     );
   }
 }
