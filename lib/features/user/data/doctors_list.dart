@@ -36,6 +36,42 @@ List<DoctorModel> doctorsList = [
     dateEn: '10:30 AM - 12:00 PM',
   ),
   DoctorModel(
+    nameAr: 'د. محمد  مجدي',
+    nameEn: 'Dr. Mohamed Magdy',
+    specialty: LangKeys.general,
+    imageUrl: 'assets/images/mego1.jpg',
+    ratingAr: convertToArabicNumerals(4), // Arabic rating
+    ratingEn: '4.0', // English rating
+    locationAr: 'القاهرة - مدينة نصر',
+    locationEn: 'Cairo - Nasr City',
+    dateAr: '١٠:٣٠ صباحًا - ١٢:٠٠ مساءً',
+    dateEn: '10:30 AM - 12:00 PM',
+  ),
+  DoctorModel(
+    nameAr: 'د. محمد  مجدي',
+    nameEn: 'Dr. Mohamed Magdy',
+    specialty: LangKeys.general,
+    imageUrl: 'assets/images/mego3.jpg',
+    ratingAr: convertToArabicNumerals(4), // Arabic rating
+    ratingEn: '4.0', // English rating
+    locationAr: 'القاهرة - مدينة نصر',
+    locationEn: 'Cairo - Nasr City',
+    dateAr: '١٠:٣٠ صباحًا - ١٢:٠٠ مساءً',
+    dateEn: '10:30 AM - 12:00 PM',
+  ),
+  DoctorModel(
+    nameAr: 'د. محمد  مجدي',
+    nameEn: 'Dr. Mohamed Magdy',
+    specialty: LangKeys.general,
+    imageUrl: 'assets/images/mego4.jpg',
+    ratingAr: convertToArabicNumerals(4), // Arabic rating
+    ratingEn: '4.0', // English rating
+    locationAr: 'القاهرة - مدينة نصر',
+    locationEn: 'Cairo - Nasr City',
+    dateAr: '١٠:٣٠ صباحًا - ١٢:٠٠ مساءً',
+    dateEn: '10:30 AM - 12:00 PM',
+  ),
+  DoctorModel(
     nameAr: 'د. هبة محمد ',
     nameEn: 'Dr. Heba Mohamed',
     specialty: LangKeys.cardiologist,
