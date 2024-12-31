@@ -23,7 +23,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
         elevation: .3,
         child: Row(
           children: [
-            ImageDoctorWidget(modelDoctor: modelDoctor),
+            ImageDoctorWidget(doctorModel: modelDoctor),
             Padding(
               padding: padding(horizontal: 15, vertical: 10),
               child: SizedBox(
