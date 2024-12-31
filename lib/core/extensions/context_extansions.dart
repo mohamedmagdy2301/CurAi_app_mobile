@@ -7,6 +7,10 @@ extension ContextExt on BuildContext {
   //! MediaQuery
   double get width => MediaQuery.sizeOf(this).width;
   double get height => MediaQuery.sizeOf(this).height;
+  double get statusBarHeight => MediaQuery.paddingOf(this).top;
+  double get bottomBarHeight => MediaQuery.paddingOf(this).bottom;
+  double get screenHeightWithoutPadding => height - statusBarHeight;
+
   bool get isSytemDark =>
       MediaQuery.of(this).platformBrightness == Brightness.dark;
   bool get isLandscape =>
