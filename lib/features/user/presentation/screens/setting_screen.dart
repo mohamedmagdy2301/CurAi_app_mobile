@@ -10,7 +10,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
+// import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -32,11 +32,11 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Future<void> _initializeIconSettings() async {
     try {
-      badgeIconNumber =
-          await FlutterDynamicIcon.getApplicationIconBadgeNumber();
-      currentIconName =
-          await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
-      setState(() {});
+      // badgeIconNumber =
+      //     await FlutterDynamicIcon.getApplicationIconBadgeNumber();
+      // currentIconName =
+      //     await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
+      // setState(() {});
     } catch (e) {
       LoggerHelper.error('Error initializing icon settings', error: e);
     }
@@ -128,11 +128,11 @@ class _SettingScreenState extends State<SettingScreen> {
       onTap: () async {
         try {
           badgeIconNumber = increase ? badgeIconNumber + 1 : 0;
-          await FlutterDynamicIcon.setApplicationIconBadgeNumber(
-            badgeIconNumber,
-          );
-          badgeIconNumber =
-              await FlutterDynamicIcon.getApplicationIconBadgeNumber();
+          // // await FlutterDynamicIcon.setApplicationIconBadgeNumber(
+          //   badgeIconNumber,
+          // );
+          // badgeIconNumber =
+              // await FlutterDynamicIcon.getApplicationIconBadgeNumber();
           if (mounted)
             _showSnackbar(
               context,
@@ -190,16 +190,16 @@ class _SettingScreenState extends State<SettingScreen> {
     return GestureDetector(
       onTap: () async {
         try {
-          if (await FlutterDynamicIcon.supportsAlternateIcons) {
-            await FlutterDynamicIcon.setAlternateIconName(
-              imageName,
-              showAlert: showAlert,
-            );
-            _showSnackbar(context, true, 'App icon changed successfully');
-            currentIconName =
-                await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
-            setState(() {});
-          }
+          // if (await FlutterDynamicIcon.supportsAlternateIcons) {
+          //   await FlutterDynamicIcon.setAlternateIconName(
+          //     imageName,
+          //     showAlert: showAlert,
+          //   );
+          //   _showSnackbar(context, true, 'App icon changed successfully');
+          //   currentIconName =
+          //       await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
+          //   setState(() {});
+          // }
         } catch (e) {
           LoggerHelper.error('Error changing app icon', error: e);
           _showSnackbar(context, false, 'Failed to change app icon');
