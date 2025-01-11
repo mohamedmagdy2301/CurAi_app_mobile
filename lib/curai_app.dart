@@ -20,38 +20,34 @@ class CuraiApp extends StatelessWidget {
       create: (context) => SettingsCubit(),
       child: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, state) {
-          final cubit = context.read<SettingsCubit>();
-          return BlocBuilder<SettingsCubit, SettingsState>(
-            builder: (context, state) {
-              return ScreenUtilInit(
-                designSize: const Size(360, 758.7),
-                minTextAdapt: true,
-                splitScreenMode: true,
-                builder: (_, __) => LockOrientation(
-                  child: MaterialApp(
-                    debugShowCheckedModeBanner: environment,
-                    theme: AppTheme.getTheme(
-                      context,
-                      state.colors,
-                      state.themeMode,
-                    ),
-                    darkTheme: AppTheme.getTheme(
-                      context,
-                      state.colors,
-                      state.themeMode,
-                    ),
-                    themeMode: cubit.getThemeMode(state.themeMode),
-                    builder: (context, child) => setupConnectivityWidget(child),
-                    onGenerateRoute: AppRoutes.onGenerateRoute,
-                    locale: cubit.getLocaleFromState(state.locale),
-                    supportedLocales: AppLocalSetup.supportedLocales,
-                    localeResolutionCallback: AppLocalSetup.resolveUserLocale,
-                    localizationsDelegates: AppLocalSetup.localesDelegates,
-                    home: const Onboarding(),
-                  ),
+          final cubit = context.read<SettingsCubit>()..loadSettings();
+          return ScreenUtilInit(
+            designSize: const Size(360, 758.7),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (_, __) => LockOrientation(
+              child: MaterialApp(
+                debugShowCheckedModeBanner: environment,
+                theme: AppTheme.getTheme(
+                  context,
+                  state.colors,
+                  state.themeMode,
                 ),
-              );
-            },
+                darkTheme: AppTheme.getTheme(
+                  context,
+                  state.colors,
+                  state.themeMode,
+                ),
+                themeMode: cubit.getThemeMode(state.themeMode),
+                builder: (context, child) => setupConnectivityWidget(child),
+                onGenerateRoute: AppRoutes.onGenerateRoute,
+                locale: cubit.getLocaleFromState(state.locale),
+                supportedLocales: AppLocalSetup.supportedLocales,
+                localeResolutionCallback: AppLocalSetup.resolveUserLocale,
+                localizationsDelegates: AppLocalSetup.localesDelegates,
+                home: const Onboarding(),
+              ),
+            ),
           );
         },
       ),
