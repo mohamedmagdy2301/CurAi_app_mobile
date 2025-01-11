@@ -30,8 +30,16 @@ class CuraiApp extends StatelessWidget {
                 builder: (_, __) => LockOrientation(
                   child: MaterialApp(
                     debugShowCheckedModeBanner: environment,
-                    theme: AppTheme.getTheme(state.colors, state.themeMode),
-                    darkTheme: AppTheme.getTheme(state.colors, state.themeMode),
+                    theme: AppTheme.getTheme(
+                      context,
+                      state.colors,
+                      state.themeMode,
+                    ),
+                    darkTheme: AppTheme.getTheme(
+                      context,
+                      state.colors,
+                      state.themeMode,
+                    ),
                     themeMode: cubit.getThemeMode(state.themeMode),
                     builder: (context, child) => setupConnectivityWidget(child),
                     onGenerateRoute: AppRoutes.onGenerateRoute,
