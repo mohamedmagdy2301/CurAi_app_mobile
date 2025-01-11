@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension SettingsContextExtansions on BuildContext {
-  // ! System
+  // ! System Theme
   bool get isSystemDark =>
       MediaQuery.of(this).platformBrightness == Brightness.dark;
 
+  // ! System Locale
   bool get isSystemArabic => Platform.localeName.split('_').first == 'ar';
 
   // ! Settings Cubit
