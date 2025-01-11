@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
@@ -16,7 +17,7 @@ class DoctorDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
-      //   title: Text(isArabic() ? doctorModel.nameAr : doctorModel.nameEn),
+      //   title: Text(context.isStateArabic ? doctorModel.nameAr : doctorModel.nameEn),
       //   centerTitle: true,
       // ),
       body: Hero(
@@ -32,7 +33,7 @@ class DoctorDetailsScreen extends StatelessWidget {
         height: context.height - 380.h,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: context.colors.appBarHome,
+          // color: context.colors.appBarHome,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(18.r),
             topRight: Radius.circular(18.r),
@@ -46,9 +47,11 @@ class DoctorDetailsScreen extends StatelessWidget {
               spaceHeight(20),
               FittedBox(
                 child: Text(
-                  isArabic() ? doctorModel.nameAr : doctorModel.nameEn,
+                  context.isStateArabic
+                      ? doctorModel.nameAr
+                      : doctorModel.nameEn,
                   style: context.textTheme.headlineLarge!.copyWith(
-                    color: context.colors.bodyTextOnboarding,
+                    // color: context.colors.bodyTextOnboarding,
                     fontWeight: FontWeightHelper.bold,
                   ),
                 ),
@@ -56,10 +59,12 @@ class DoctorDetailsScreen extends StatelessWidget {
               spaceHeight(10),
               FittedBox(
                 child: Text(
-                  isArabic() ? doctorModel.locationAr : doctorModel.locationEn,
+                  context.isStateArabic
+                      ? doctorModel.locationAr
+                      : doctorModel.locationEn,
                   style: context.textTheme.bodyMedium!.copyWith(
-                    color: context.colors.bodyTextOnboarding,
-                  ),
+                      // color: context.colors.bodyTextOnboarding,
+                      ),
                 ),
               ),
               spaceHeight(10),
@@ -79,9 +84,11 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      isArabic() ? doctorModel.ratingAr : doctorModel.ratingEn,
+                      context.isStateArabic
+                          ? doctorModel.ratingAr
+                          : doctorModel.ratingEn,
                       style: context.textTheme.bodyLarge!.copyWith(
-                        color: context.colors.bodyTextOnboarding,
+                        // color: context.colors.bodyTextOnboarding,
                         fontWeight: FontWeightHelper.bold,
                       ),
                     ),

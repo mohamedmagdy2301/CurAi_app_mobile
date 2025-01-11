@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:flutter/material.dart';
 
 class TermsAndConditionsWidget extends StatelessWidget {
   const TermsAndConditionsWidget({
@@ -18,8 +18,8 @@ class TermsAndConditionsWidget extends StatelessWidget {
           Text(
             context.translate(LangKeys.byLoggingIn),
             style: context.textTheme.bodyMedium!.copyWith(
-              color: context.colors.textColorLight,
-            ),
+                // color: context.colors.textColorLight,
+                ),
           ),
           spaceWidth(5),
           Text(
@@ -33,8 +33,8 @@ class TermsAndConditionsWidget extends StatelessWidget {
           Text(
             context.translate(LangKeys.and),
             style: context.textTheme.bodyMedium!.copyWith(
-              color: context.colors.textColorLight,
-            ),
+                // color: context.colors.textColorLight,
+                ),
           ),
           spaceWidth(5),
           Text(

@@ -1,6 +1,4 @@
-// ignore_for_file: inference_failure_on_function_return_type
-
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/logger_helper.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +10,7 @@ class MessageInput extends StatefulWidget {
     super.key,
   });
 
-  final Function(String message) onMessageSent;
+  final void Function(String message) onMessageSent;
 
   @override
   State<MessageInput> createState() => _MessageInputState();
@@ -66,17 +64,17 @@ class _MessageInputState extends State<MessageInput> {
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: context.colors.secondaryFontColor!.withOpacity(.7),
+                  // fillColor: context.colors.secondaryFontColor!.withOpacity(.7),
                   contentPadding: padding(horizontal: 20, vertical: 10),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                     borderSide: BorderSide.none,
                   ),
-                  hintText: isArabic()
+                  hintText: context.isStateArabic
                       ? 'ماذا يمكنني مساعدتك؟'
                       : 'What can I help you with?',
                   hintStyle: context.textTheme.bodyMedium!.copyWith(
-                    color: context.colors.textColorLight,
+                    // color: context.colors.textColorLight,
                     fontSize: 16.sp,
                     height: 1.5.h,
                   ),
@@ -84,9 +82,9 @@ class _MessageInputState extends State<MessageInput> {
                       ? null
                       : IconButton(
                           onPressed: () {},
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.attach_file,
-                            color: context.colors.textColorLight,
+                            // color: context.colors.textColorLight,
                           ),
                         ),
                 ),

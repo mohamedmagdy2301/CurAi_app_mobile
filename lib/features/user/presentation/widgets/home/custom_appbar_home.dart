@@ -1,4 +1,5 @@
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
@@ -22,11 +23,10 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
     return SliverAppBar(
       // floating: true,
       // snap: true,
-      backgroundColor: context.colors.appBarHome,
       automaticallyImplyLeading: false,
       pinned: true,
       elevation: 0,
-      flexibleSpace: Container(color: context.colors.appBarHome),
+      flexibleSpace: Container(),
       toolbarHeight: 70.h,
       title: ListTile(
         title: Text(
@@ -38,8 +38,8 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
         subtitle: Text(
           context.translate(LangKeys.howAreYouToday),
           style: context.textTheme.bodyMedium!.copyWith(
-            color: context.colors.textColorLight,
-          ),
+              // color: context.colors.textColorLight,
+              ),
         ),
         trailing: IconButton(
           onPressed: () {

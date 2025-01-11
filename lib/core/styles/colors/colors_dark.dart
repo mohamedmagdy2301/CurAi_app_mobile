@@ -1,23 +1,48 @@
+import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
+import 'package:curai_app_mobile/core/styles/colors/theme_palette_model.dart';
 import 'package:flutter/material.dart';
 
-// class ColorsDark {
-//   static const Color primaryColor = Color(0xFF388E3C);
-//   static const Color accentColor = Color(0xFF0288D1);
-//   static const Color backgroundColor = Color(0xFF121212);
-//   static const Color textColor = Color(0xFFE0E0E0);
-//   static const Color errorColor = Color(0xFFFF5252);
-// }
-// kdfjewsakl
-
-class ColorsDark {
-  static const Color primaryColor = Color.fromARGB(
-      255, 0, 107, 89); // Dark teal - Professional and trustworthy
-  static const Color accentColor =
-      Color(0xFF00695C); // Deep teal - Strong and calming
-  static const Color backgroundColor =
-      Color(0xFF1E1E1E); // Dark grey - Modern and clean
-  static const Color textColor =
-      Color(0xFFECEFF1); // Light grey - Soft contrast for dark mode
-  static const Color errorColor =
-      Color(0xFFEF5350); // Soft red - Alerts without being too harsh
-}
+const darkPalettes = {
+  ColorsPalleteState.orange: ThemePaletteModel(
+    primary: Colors.orange,
+    secondary: Colors.orangeAccent,
+    background: Color(0xFF121212),
+    text: Color(0xFFBBDEFB),
+    error: Color(0xFFEF5350),
+  ),
+  ColorsPalleteState.blue: ThemePaletteModel(
+    primary: Colors.blue,
+    secondary: Colors.blueAccent,
+    background: Color(0xFF121212),
+    text: Color(0xFFBBDEFB),
+    error: Color(0xFFEF5350),
+  ),
+  ColorsPalleteState.green: ThemePaletteModel(
+    primary: Colors.green,
+    secondary: Colors.greenAccent,
+    background: Color(0xFF121212),
+    text: Color(0xFFC8E6C9),
+    error: Color(0xFFEF5350),
+  ),
+  ColorsPalleteState.red: ThemePaletteModel(
+    primary: Colors.red,
+    secondary: Colors.redAccent,
+    background: Color(0xFF121212),
+    text: Color(0xFFFFCDD2),
+    error: Color(0xFFEF5350),
+  ),
+  ColorsPalleteState.indigo: ThemePaletteModel(
+    primary: Colors.indigo,
+    secondary: Colors.indigoAccent,
+    background: Color(0xFF121212),
+    text: Color(0xFFFFCDD2),
+    error: Color(0xFFEF5350),
+  ),
+  ColorsPalleteState.purple: ThemePaletteModel(
+    primary: Colors.purple,
+    secondary: Colors.purpleAccent,
+    background: Color(0xFF121212), // Adjust as needed
+    text: Color(0xFFD1C4E9), // Adjust as needed
+    error: Color(0xFFEF5350), // Adjust as needed
+  ),
+};

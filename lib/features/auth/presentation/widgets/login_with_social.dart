@@ -1,9 +1,9 @@
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/core/language/lang_keys.dart';
 
 class LoginWithSocial extends StatelessWidget {
   const LoginWithSocial({
@@ -17,10 +17,10 @@ class LoginWithSocial extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
+            const Expanded(
               child: Divider(
                 thickness: 1,
-                color: context.colors.textColorLight,
+                // color: context.colors.textColorLight,
               ),
             ),
             Padding(
@@ -28,14 +28,14 @@ class LoginWithSocial extends StatelessWidget {
               child: Text(
                 context.translate(LangKeys.orSignInWith),
                 style: context.textTheme.bodyMedium!.copyWith(
-                  color: context.colors.textColorLight,
-                ),
+                    // color: context.colors.textColorLight,
+                    ),
               ),
             ),
-            Expanded(
+            const Expanded(
               child: Divider(
                 thickness: 1,
-                color: context.colors.textColorLight,
+                // color: context.colors.textColorLight,
               ),
             ),
           ],
@@ -45,7 +45,7 @@ class LoginWithSocial extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              backgroundColor: context.colors.iconSocialBG,
+              // backgroundColor: context.colors.iconSocialBG,
               radius: 25.r,
               child: SvgPicture.asset(
                 'assets/svg/Logo-Google.svg',
@@ -53,7 +53,7 @@ class LoginWithSocial extends StatelessWidget {
             ),
             spaceWidth(20),
             CircleAvatar(
-              backgroundColor: context.colors.iconSocialBG,
+              // backgroundColor: context.colors.iconSocialBG,
               radius: 25.r,
               child: SvgPicture.asset(
                 'assets/svg/Logo-Facebook.svg',
@@ -61,7 +61,7 @@ class LoginWithSocial extends StatelessWidget {
             ),
             spaceWidth(20),
             CircleAvatar(
-              backgroundColor: context.colors.iconSocialBG,
+              // backgroundColor: context.colors.iconSocialBG,
               radius: 25.r,
               child: SvgPicture.asset(
                 'assets/svg/Logo-Apple.svg',

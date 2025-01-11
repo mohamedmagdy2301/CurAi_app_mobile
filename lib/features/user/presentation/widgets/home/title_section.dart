@@ -1,6 +1,6 @@
 // ignore_for_file: flutter_style_todos
 
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
@@ -20,7 +20,7 @@ class TitleSectionWidget extends StatelessWidget {
             title,
             style: context.textTheme.titleLarge!.copyWith(
               //TODO: change color
-              color: context.colors.bodyTextOnboarding,
+              // color: context.colors.bodyTextOnboarding,
               fontWeight: FontWeightHelper.bold,
             ),
           ),

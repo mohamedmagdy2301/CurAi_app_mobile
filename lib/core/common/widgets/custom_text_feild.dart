@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +49,14 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       onChanged: widget.onChanged,
       obscureText: isPasswordObscure,
       decoration: InputDecoration(
-        border: customOutlineInputBorder(context.colors.border!),
-        enabledBorder: customOutlineInputBorder(context.colors.border!),
-        focusedBorder: customOutlineInputBorder(context.colors.focusedBorder!),
+        border: customOutlineInputBorder(Colors.black),
+        enabledBorder: customOutlineInputBorder(Colors.black),
+        focusedBorder: customOutlineInputBorder(Colors.black),
         suffixIcon: changePasswordObscure(),
         labelText: widget.labelText,
         labelStyle: context.textTheme.bodyMedium!.copyWith(
-          color: context.colors.textColorLight,
-        ),
+            // color: context.colors.textColorLight,
+            ),
       ),
     );
   }
@@ -71,8 +71,8 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
             },
             icon: Icon(
               color: isPasswordObscure
-                  ? context.colors.border
-                  : context.colors.focusedBorder!,
+                  ? Colors.black
+                  : context.colors.primaryColor!,
               isPasswordObscure
                   ? CupertinoIcons.eye_slash_fill
                   : CupertinoIcons.eye_fill,

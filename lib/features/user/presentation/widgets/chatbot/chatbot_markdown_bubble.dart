@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/regex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -30,7 +30,7 @@ class ChatBotMarkdownBubble extends StatelessWidget {
   MarkdownStyleSheet _buildChatGPTStyleSheet(
     BuildContext context,
   ) {
-    final isDark = context.isSytemDark;
+    final isDark = context.isStateDark;
     return MarkdownStyleSheet(
       p: context.textTheme.bodyMedium!.copyWith(
         fontSize: 16.sp,

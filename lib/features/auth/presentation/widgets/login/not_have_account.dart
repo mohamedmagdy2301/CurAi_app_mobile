@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:flutter/material.dart';
 
 class NotHaveAccount extends StatelessWidget {
   const NotHaveAccount({
@@ -17,8 +18,8 @@ class NotHaveAccount extends StatelessWidget {
         Text(
           context.translate(LangKeys.notHaveAccount),
           style: context.textTheme.bodyMedium!.copyWith(
-            color: context.colors.textColorLight,
-          ),
+              // color: context.colors.textColorLight,
+              ),
         ),
         TextButton(
           onPressed: () => context.pushNamed(Routes.registerScreen),

@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +19,7 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: context.colors.iconSocialBG!.withOpacity(.6),
+          // backgroundColor: context.colors.iconSocialBG!.withOpacity(.6),
           radius: 26.r,
           child: image.contains('.svg')
               ? SvgPicture.asset(
@@ -39,8 +39,8 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
         Text(
           context.translate(title),
           style: context.textTheme.bodySmall!.copyWith(
-            color: context.colors.bodyTextOnboarding,
-          ),
+              // color: context.colors.bodyTextOnboarding,
+              ),
         ),
       ],
     );

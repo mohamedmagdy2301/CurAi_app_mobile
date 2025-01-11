@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
 import 'package:curai_app_mobile/core/app/onboarding/widgets/custom_dot_onboarding.dart';
 import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
@@ -39,7 +40,7 @@ class BodyOnboarding extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Padding(
-            padding: padding(horizontal: isArabic() ? 20 : 15),
+            padding: padding(horizontal: context.isStateArabic ? 20 : 15),
             child: Text(
               textAlign: TextAlign.center,
               context.translate(title),
@@ -50,23 +51,26 @@ class BodyOnboarding extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: padding(horizontal: isArabic() ? 20 : 15, vertical: 15),
+            padding: padding(
+              horizontal: context.isStateArabic ? 20 : 15,
+              vertical: 15,
+            ),
             child: Text(
               textAlign: TextAlign.center,
               context.translate(body),
               maxLines: 4,
-              style: isArabic()
+              style: context.isStateArabic
                   ? context.textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeightHelper.medium,
-                      color: context.colors.bodyTextOnboarding!.withOpacity(.5),
+                      // color: context.colors.bodyTextOnboarding!.withOpacity(.5),
                     )
                   : context.textTheme.labelMedium!.copyWith(
                       fontWeight: FontWeightHelper.medium,
-                      color: context.colors.bodyTextOnboarding!.withOpacity(.5),
+                      // color: context.colors.bodyTextOnboarding!.withOpacity(.5),
                     ),
             ),
           ),
-          spaceHeight(isArabic() ? 0 : 10),
+          spaceHeight(context.isStateArabic ? 0 : 10),
           CustomDotOnboarding(
             index: index,
             currentIndex: currentIndex,
