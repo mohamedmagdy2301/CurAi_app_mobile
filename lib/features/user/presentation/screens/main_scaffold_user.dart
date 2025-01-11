@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
@@ -63,9 +63,9 @@ class MainScaffoldUser extends StatelessWidget {
                       animationDuration: const Duration(seconds: 1),
                       height: 60.h,
                       indicatorColor: Colors.transparent,
-                      overlayColor: WidgetStateProperty.all(
-                        context.colors.onboardingBg!.withOpacity(.3),
-                      ),
+                      // overlayColor: WidgetStateProperty.all(
+                      //     // context.colors.onboardingBg!.withOpacity(.3),
+                      //     ),
                       indicatorShape: Border.all(style: BorderStyle.none),
                       destinations: destinations,
                       selectedIndex: currentIndex,

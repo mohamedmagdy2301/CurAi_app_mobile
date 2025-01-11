@@ -1,5 +1,5 @@
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/details_doctor_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +19,10 @@ class ImageDoctorWidget extends StatelessWidget {
       onTap: () => context.push(DoctorDetailsScreen(doctorModel: doctorModel)),
       child: ClipRRect(
         borderRadius: BorderRadius.only(
-          topRight: Radius.circular(isArabic() ? 12.r : 2.r),
-          bottomRight: Radius.circular(isArabic() ? 12.r : 2.r),
-          bottomLeft: Radius.circular(isArabic() ? 2.r : 12.r),
-          topLeft: Radius.circular(isArabic() ? 2.r : 12.r),
+          topRight: Radius.circular(context.isStateArabic ? 12.r : 2.r),
+          bottomRight: Radius.circular(context.isStateArabic ? 12.r : 2.r),
+          bottomLeft: Radius.circular(context.isStateArabic ? 2.r : 12.r),
+          topLeft: Radius.circular(context.isStateArabic ? 2.r : 12.r),
         ),
         child: Hero(
           tag: doctorModel.id.toString(),

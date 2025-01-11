@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
@@ -12,17 +12,16 @@ class CustomAppBarDoctorSpecialities extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: context.colors.appBarHome,
       elevation: 0,
-      flexibleSpace: Container(color: context.colors.appBarHome),
+      flexibleSpace: Container(),
       title: Text(
         context.translate(LangKeys.doctorSpeciality),
         style: context.textTheme.headlineSmall!.copyWith(
           fontWeight: FontWeightHelper.extraBold,
-          color: context.colors.bodyTextOnboarding,
+          // color: context.colors.bodyTextOnboarding,
         ),
       ),
-      iconTheme: IconThemeData(color: context.colors.bodyTextOnboarding),
+      iconTheme: const IconThemeData(color: Colors.black),
       centerTitle: true,
     );
   }

@@ -1,5 +1,4 @@
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
-import 'package:curai_app_mobile/core/app/cubit/app_cubit.dart';
 import 'package:curai_app_mobile/core/app/env.variables.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:get_it/get_it.dart';
@@ -11,15 +10,15 @@ void dependencyInjectionSetup() {
     //! Controllers
     ..registerLazySingleton<ConnectivityController>(ConnectivityController.new)
     ..registerLazySingleton<EnvVariables>(EnvVariables.new)
-    ..registerLazySingleton<SharedPrefManager>(SharedPrefManager.new)
+    ..registerLazySingleton<SharedPrefManager>(SharedPrefManager.new);
 
-    //! Services
+  //! Services
 
-    //! Repositories
+  //! Repositories
 
-    //! Usecases
+  //! Usecases
 
-    //! Blocs(Cubit)
-    //? App Cubit
-    ..registerFactory<AppCubit>(AppCubit.new);
+  //! Blocs(Cubit)
+  //? App Cubit
+  // ..registerFactory<AppCubit>(AppCubit.new);
 }

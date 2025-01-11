@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
@@ -26,13 +26,13 @@ class BuildChatMessage extends StatelessWidget {
         if (state is ChatDone) {
           return _buildStatusMessage(
             context,
-            isArabic() ? 'تم التحقق' : 'Successful',
+            context.isStateArabic ? 'تم التحقق' : 'Successful',
             Colors.green,
           );
         } else if (state is ChatLoading) {
           return _buildStatusMessage(
             context,
-            isArabic() ? 'جاري التحقق...' : 'Wait a moment...',
+            context.isStateArabic ? 'جاري التحقق...' : 'Wait a moment...',
             Colors.green,
           );
         }

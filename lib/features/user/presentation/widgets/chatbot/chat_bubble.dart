@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/formatted_time.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
@@ -32,11 +32,11 @@ class ChatBubble extends StatelessWidget {
 
   Widget _buildMessageTime(BuildContext context) {
     return Text(
-      formattedTime(messageModel.date),
+      formattedTime(context, messageModel.date),
       textDirection: textDirection(messageModel.messageText),
       style: context.textTheme.bodySmall!.copyWith(
-        color: context.colors.textTimeMessage,
-      ),
+          // color: context.colors.textTimeMessage,
+          ),
     );
   }
 }

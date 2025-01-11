@@ -1,5 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +19,9 @@ class RateingDoctorWidget extends StatelessWidget {
       children: [
         Icon(Icons.star, color: Colors.amber, size: 15.sp),
         Text(
-          isArabic() ? modelDoctor.ratingAr : modelDoctor.ratingEn,
+          context.isStateArabic ? modelDoctor.ratingAr : modelDoctor.ratingEn,
           style: context.textTheme.labelSmall!.copyWith(
-            color: context.colors.bodyTextOnboarding,
+            // color: context.colors.bodyTextOnboarding,
             fontWeight: FontWeightHelper.bold,
           ),
         ),

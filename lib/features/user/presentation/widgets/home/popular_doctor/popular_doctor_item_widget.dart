@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
@@ -33,23 +33,25 @@ class PopularDoctorItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      isArabic() ? modelDoctor.nameAr : modelDoctor.nameEn,
+                      context.isStateArabic
+                          ? modelDoctor.nameAr
+                          : modelDoctor.nameEn,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge!.copyWith(
-                        color: context.colors.bodyTextOnboarding,
+                        // color: context.colors.bodyTextOnboarding,
                         fontWeight: FontWeightHelper.extraBold,
                       ),
                     ),
                     spaceHeight(8),
                     Text(
-                      isArabic()
+                      context.isStateArabic
                           ? modelDoctor.locationAr
                           : modelDoctor.locationEn,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodySmall!.copyWith(
-                        color: context.colors.textColorLight,
+                        // color: context.colors.textColorLight,
                         fontWeight: FontWeightHelper.regular,
                       ),
                     ),
@@ -57,8 +59,8 @@ class PopularDoctorItemWidget extends StatelessWidget {
                     Text(
                       context.translate(modelDoctor.specialty),
                       style: context.textTheme.bodySmall!.copyWith(
-                        color: context.colors.textColorLight,
-                      ),
+                          // color: context.colors.textColorLight,
+                          ),
                     ),
                     const Spacer(),
                     DateDoctorWidget(modelDoctor: modelDoctor),
