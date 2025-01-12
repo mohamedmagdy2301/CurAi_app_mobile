@@ -27,14 +27,6 @@ class AppTheme {
       );
     }
 
-    // Floating Action Button Theme
-    FloatingActionButtonThemeData fabTheme() {
-      return FloatingActionButtonThemeData(
-        backgroundColor: colorScheme.secondary,
-        foregroundColor: colorScheme.onSecondary,
-      );
-    }
-
     // Input Decoration Theme
     InputDecorationTheme inputDecorationTheme() {
       OutlineInputBorder buildBorder(Color color, {double width = 1.0}) {
@@ -97,7 +89,6 @@ class AppTheme {
       textTheme: AppTextStyles.getTextTheme(colorScheme),
       fontFamily: FontsFamilyHelper.getLocaledFontFamily(context),
       appBarTheme: appBarTheme(),
-      floatingActionButtonTheme: fabTheme(),
       inputDecorationTheme: inputDecorationTheme(),
       cardTheme: cardTheme(),
       elevatedButtonTheme: buttonTheme(),
