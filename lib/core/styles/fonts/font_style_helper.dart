@@ -23,24 +23,6 @@ class AppTextStyles {
     );
   }
 
-  static TextStyle overline({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 10.sp,
-        fontWeight: FontWeightHelper.regular,
-      );
-
-  static TextStyle captionRegular({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 12.sp,
-        fontWeight: FontWeightHelper.regular,
-      );
-
-  static TextStyle captionLight({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 12.sp,
-        fontWeight: FontWeightHelper.light,
-      );
-
   static TextStyle bodySmall({required Color color}) => TextStyle(
         color: color,
         fontSize: 12.sp,
@@ -53,22 +35,16 @@ class AppTextStyles {
         fontWeight: FontWeightHelper.semiBold,
       );
 
-  static TextStyle labelRegular({required Color color}) => TextStyle(
-        color: color,
-        fontSize: 14.sp,
-        fontWeight: FontWeightHelper.regular,
-      );
-
   static TextStyle labelLarge({required Color color}) => TextStyle(
         color: color,
         fontSize: 14.sp,
-        fontWeight: FontWeightHelper.medium,
+        fontWeight: FontWeightHelper.bold,
       );
 
   static TextStyle labelMedium({required Color color}) => TextStyle(
         color: color,
         fontSize: 14.sp,
-        fontWeight: FontWeightHelper.bold,
+        fontWeight: FontWeightHelper.medium,
       );
 
   static TextStyle bodyMedium({required Color color}) => TextStyle(
