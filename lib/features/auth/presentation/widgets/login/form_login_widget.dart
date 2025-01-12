@@ -47,7 +47,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             ValueListenableBuilder<bool>(
               valueListenable: _isFormValidNotifier,
               builder: (context, isValid, child) {
-                return spaceHeight(isValid ? 45 : 30);
+                return spaceHeight(isValid ? 35 : 20);
               },
             ),
             CustomTextFeild(
@@ -82,7 +82,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                 ),
               ],
             ),
-            spaceHeight(10),
+            spaceHeight(20),
             CustemButton(
               title: LangKeys.login,
               onPressed: () => _onLoginPressed(context),
