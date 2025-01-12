@@ -1,6 +1,3 @@
-import 'package:curai_app_mobile/core/language/app_localizations.dart';
-import 'package:curai_app_mobile/core/styles/themes/assets_extension.dart';
-import 'package:curai_app_mobile/core/styles/themes/color_extension.dart';
 import 'package:flutter/material.dart';
 
 extension ContextExt on BuildContext {
@@ -11,18 +8,8 @@ extension ContextExt on BuildContext {
   double get bottomBarHeight => MediaQuery.paddingOf(this).bottom;
   double get screenHeightWithoutPadding => height - statusBarHeight;
 
-  bool get isSytemDark =>
-      MediaQuery.of(this).platformBrightness == Brightness.dark;
   bool get isLandscape =>
       MediaQuery.of(this).orientation == Orientation.landscape;
-  //! Theme
-  MyAssets get assets => Theme.of(this).extension<MyAssets>()!;
-  MyColors get colors => Theme.of(this).extension<MyColors>()!;
-  TextTheme get textTheme => Theme.of(this).textTheme;
-
-  //! Localization translation
-  String translate(String langKey) =>
-      AppLocalizations.of(this)!.translate(langKey).toString();
 
   //! Navigation
 
