@@ -1,12 +1,14 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpInputWidget extends StatefulWidget {
   const OtpInputWidget({super.key});
@@ -46,7 +48,7 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
 
   void _onPinIncorrect() {
     setState(() {
-      activeFillColor = Colors.red;
+      activeFillColor = context.color.error;
       textEditingController.clear();
     });
     hideKeyboard();
@@ -61,7 +63,7 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
 
   void _resetActiveFillColor() {
     setState(() {
-      activeFillColor = Colors.greenAccent.shade400;
+      activeFillColor = context.color.primary;
     });
   }
 
@@ -74,10 +76,9 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
       autoFocus: true,
       animationType: AnimationType.fade,
       cursorWidth: 1,
-      textStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 35,
-        fontWeight: FontWeight.w100,
+      textStyle: context.styleBlack34.copyWith(
+        color: context.color.surface,
+        fontWeight: FontWeightHelper.light,
       ),
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
@@ -89,8 +90,8 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
         inactiveColor: Colors.transparent,
         selectedColor: Colors.transparent,
         activeFillColor: activeFillColor,
-        inactiveFillColor: Colors.blueAccent.shade100,
-        selectedFillColor: Colors.orangeAccent.shade100,
+        inactiveFillColor: context.color.onSecondary.withAlpha(70),
+        selectedFillColor: context.color.onSecondary.withAlpha(170),
       ),
       enableActiveFill: true,
       controller: textEditingController,
