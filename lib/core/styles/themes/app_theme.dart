@@ -21,7 +21,7 @@ class AppTheme {
     // AppBar Theme
     AppBarTheme appBarTheme() {
       return AppBarTheme(
-        titleTextStyle: AppTextStyles.appBarTitle(color: colorScheme.onPrimary),
+        titleTextStyle: AppTextStyles.appBarTitle(color: colorScheme.onSurface),
         elevation: 0,
         iconTheme: IconThemeData(color: colorScheme.onSurface),
       );

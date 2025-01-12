@@ -9,7 +9,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/register_scr
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
-import 'package:curai_app_mobile/features/user/presentation/screens/screens.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
