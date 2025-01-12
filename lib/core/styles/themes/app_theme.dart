@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_style_helper.dart';
+import 'package:curai_app_mobile/core/styles/fonts/fonts_family_helper.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_color_schemes.dart';
 import 'package:curai_app_mobile/core/styles/themes/color_extension.dart';
 import 'package:flutter/material.dart';
@@ -15,48 +16,14 @@ class AppTheme {
       palette: palette,
       themeMode: themeMode,
     );
-    final extension = themeExtensions[themeMode]![palette];
-
-    // Text Theme
-    TextTheme textTheme() {
-      return TextTheme(
-        bodyLarge:
-            AppTextStyles.bodyLarge(context, color: colorScheme.onSurface),
-        bodyMedium:
-            AppTextStyles.bodyMedium(context, color: colorScheme.onSurface),
-        bodySmall: AppTextStyles.bodySmall(
-          context,
-          color: colorScheme.onSurface.withValues(alpha: 0.7),
-        ),
-        titleLarge:
-            AppTextStyles.titleLarge(context, color: colorScheme.onSurface),
-        titleMedium: AppTextStyles.titleMedium(
-          context,
-          color: colorScheme.onSurface.withValues(alpha: 0.8),
-        ),
-        titleSmall: AppTextStyles.bodySmall(
-          context,
-          color: colorScheme.onSurface.withValues(alpha: 0.6),
-        ),
-      );
-    }
+    final extension = MyColors.themeExtensions[themeMode]![palette];
 
     // AppBar Theme
     AppBarTheme appBarTheme() {
       return AppBarTheme(
-        titleTextStyle:
-            AppTextStyles.appBarTitle(context, color: colorScheme.onPrimary),
-        // color: colorScheme,
+        titleTextStyle: AppTextStyles.appBarTitle(color: colorScheme.onPrimary),
         elevation: 0,
         iconTheme: IconThemeData(color: colorScheme.onSurface),
-      );
-    }
-
-    // Floating Action Button Theme
-    FloatingActionButtonThemeData fabTheme() {
-      return FloatingActionButtonThemeData(
-        backgroundColor: colorScheme.secondary,
-        foregroundColor: colorScheme.onSecondary,
       );
     }
 
@@ -70,9 +37,13 @@ class AppTheme {
       }
 
       return InputDecorationTheme(
+        border: buildBorder(colorScheme.onSecondary),
         errorBorder: buildBorder(colorScheme.error),
+        enabledBorder: buildBorder(colorScheme.onSecondary.withAlpha(70)),
+        focusedBorder: buildBorder(colorScheme.primary, width: 1.w),
         focusedErrorBorder: buildBorder(colorScheme.error, width: 2.w),
-        errorStyle: AppTextStyles.bodySmall(context, color: colorScheme.error),
+        errorStyle: AppTextStyles.bodySmall(color: colorScheme.error),
+        labelStyle: AppTextStyles.bodySmall(color: colorScheme.onSecondary),
       );
     }
 
@@ -90,8 +61,8 @@ class AppTheme {
     ElevatedButtonThemeData buttonTheme() {
       return ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          foregroundColor: colorScheme.onSecondary,
-          backgroundColor: colorScheme.secondary,
+          foregroundColor: Colors.white,
+          backgroundColor: colorScheme.primary,
           elevation: 0,
           fixedSize: Size(800.w, 50.h),
           shape: RoundedRectangleBorder(
@@ -104,9 +75,9 @@ class AppTheme {
     // Snack Bar Theme
     SnackBarThemeData snackBarTheme() {
       return SnackBarThemeData(
-        contentTextStyle: AppTextStyles.bodyLarge(context, color: Colors.white),
+        contentTextStyle: AppTextStyles.bodyLarge(color: Colors.white),
         backgroundColor: colorScheme.primary,
-        behavior: SnackBarBehavior.floating,
+        behavior: SnackBarBehavior.fixed,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.r),
         ),
@@ -119,9 +90,9 @@ class AppTheme {
       primaryColor: colorScheme.primary,
       scaffoldBackgroundColor: colorScheme.surface,
       useMaterial3: true,
-      textTheme: textTheme(),
+      textTheme: AppTextStyles.getTextTheme(colorScheme),
+      fontFamily: FontsFamilyHelper.getLocaledFontFamily(context),
       appBarTheme: appBarTheme(),
-      floatingActionButtonTheme: fabTheme(),
       inputDecorationTheme: inputDecorationTheme(),
       cardTheme: cardTheme(),
       elevatedButtonTheme: buttonTheme(),

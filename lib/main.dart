@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
+import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
 import 'package:curai_app_mobile/core/app/env.variables.dart';
 import 'package:curai_app_mobile/core/app/error_widget_main.dart';
 import 'package:curai_app_mobile/core/app/my_app.dart';
@@ -29,7 +30,12 @@ Future<void> main() async {
     await initializeDependencies();
 
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    runApp(MyApp(environment: sl<EnvVariables>().debugMode));
+    runApp(
+      BlocProvider(
+        create: (context) => SettingsCubit(),
+        child: MyApp(environment: sl<EnvVariables>().debugMode),
+      ),
+    );
     FlutterNativeSplash.remove();
   } catch (e, stackTrace) {
     LoggerHelper.error(

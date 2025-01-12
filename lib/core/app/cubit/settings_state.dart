@@ -2,7 +2,7 @@ enum ThemeModeState { light, dark, system }
 
 enum LocalizationState { ar, en, system }
 
-enum ColorsPalleteState { orange, blue, green, red, indigo, purple }
+enum ColorsPalleteState { blue, green }
 
 class SettingsState {
   SettingsState({

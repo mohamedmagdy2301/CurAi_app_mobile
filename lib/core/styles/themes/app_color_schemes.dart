@@ -16,13 +16,14 @@ class AppColorSchemes {
     return ColorScheme(
       primary: paletteData.primary,
       secondary: paletteData.secondary,
+      tertiary: paletteData.tertiary,
       surface: paletteData.background,
       error: paletteData.error,
-      onPrimary: Colors.white,
-      onSecondary:
-          themeMode == ThemeModeState.light ? Colors.black : Colors.white,
-      onSurface: paletteData.text,
-      onError: Colors.white,
+      onPrimary: paletteData.onPrimary,
+      onSecondary: paletteData.onSecondary,
+      onTertiary: paletteData.onTertiary,
+      onSurface: paletteData.onSurface,
+      onError: paletteData.onError,
       brightness: themeMode == ThemeModeState.light
           ? Brightness.light
           : Brightness.dark,

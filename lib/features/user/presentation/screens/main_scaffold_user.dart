@@ -92,10 +92,10 @@ class MainScaffoldUser extends StatelessWidget {
         Divider(
           height: 2,
           thickness: 2.5,
-          color: context.colors.primaryColor,
+          color: context.colors.primary,
         ),
         spaceHeight(15),
-        Icon(icon, color: context.colors.primaryColor),
+        Icon(icon, color: context.colors.primary),
       ],
     );
   }

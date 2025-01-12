@@ -12,7 +12,7 @@ class SettingsCubit extends Cubit<SettingsState> {
           SettingsState(
             themeMode: ThemeModeState.system,
             locale: LocalizationState.system,
-            colors: ColorsPalleteState.orange,
+            colors: ColorsPalleteState.blue,
           ),
         ) {
     loadSettings();
@@ -22,7 +22,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     final prefs = await SharedPreferences.getInstance();
     final theme = prefs.getString(SharedPrefKey.keyTheme) ?? 'system';
     final locale = prefs.getString(SharedPrefKey.keyLocale) ?? 'system';
-    final colors = prefs.getString(SharedPrefKey.keyColors) ?? 'orange';
+    final colors = prefs.getString(SharedPrefKey.keyColors) ?? 'blue';
 
     emit(
       SettingsState(
@@ -51,18 +51,10 @@ class SettingsCubit extends Cubit<SettingsState> {
     switch (colors) {
       case 'blue':
         return ColorsPalleteState.blue;
-      case 'red':
-        return ColorsPalleteState.red;
       case 'green':
         return ColorsPalleteState.green;
-      case 'indigo':
-        return ColorsPalleteState.indigo;
-      case 'orange':
-        return ColorsPalleteState.orange;
-      case 'purple':
-        return ColorsPalleteState.purple;
       default:
-        return ColorsPalleteState.orange;
+        return ColorsPalleteState.blue;
     }
   }
 

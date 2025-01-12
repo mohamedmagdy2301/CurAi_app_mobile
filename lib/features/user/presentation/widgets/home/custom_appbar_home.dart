@@ -54,7 +54,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
             isLabelVisible: count != 0,
             child: Icon(
               CupertinoIcons.bell,
-              color: context.colors.primaryColor,
+              color: context.colors.primary,
             ),
           ),
         ),
