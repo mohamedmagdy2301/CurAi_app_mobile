@@ -1,6 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBarDoctorSpecialities extends StatelessWidget
@@ -14,12 +14,9 @@ class CustomAppBarDoctorSpecialities extends StatelessWidget
     return AppBar(
       elevation: 0,
       flexibleSpace: Container(),
-      title: Text(
+      title: AutoSizeText(
         context.translate(LangKeys.doctorSpeciality),
-        style: context.textTheme.headlineSmall!.copyWith(
-          fontWeight: FontWeightHelper.extraBold,
-          // color: context.colors.bodyTextOnboarding,
-        ),
+        maxLines: 1,
       ),
       iconTheme: const IconThemeData(color: Colors.black),
       centerTitle: true,

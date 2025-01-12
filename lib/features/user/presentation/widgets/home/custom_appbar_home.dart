@@ -27,7 +27,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       automaticallyImplyLeading: false,
       pinned: true,
       elevation: 0,
-      flexibleSpace: Container(),
+      flexibleSpace: Container(color: context.color.surface),
       toolbarHeight: 70.h,
       title: ListTile(
         title: AutoSizeText(

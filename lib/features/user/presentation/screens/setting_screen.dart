@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/common/widgets/New%20folder/colors_palette
 import 'package:curai_app_mobile/core/common/widgets/New%20folder/localize_widget.dart';
 import 'package:curai_app_mobile/core/common/widgets/New%20folder/theme_widget.dart';
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -53,6 +54,7 @@ class _SettingScreenState extends State<SettingScreen> {
       appBar: AppBar(
         title: Text(context.isStateArabic ? 'الأعـــــدادات' : 'Settings'),
         centerTitle: true,
+        flexibleSpace: Container(color: context.color.surface),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
