@@ -30,7 +30,7 @@ class TitleSectionWidget extends StatelessWidget {
             child: Text(
               context.translate(LangKeys.seeAll),
               style: context.textTheme.bodyLarge!.copyWith(
-                color: context.colors.primaryColor,
+                color: context.colors.primary,
                 fontWeight: FontWeightHelper.medium,
               ),
             ),

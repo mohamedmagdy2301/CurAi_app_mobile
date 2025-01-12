@@ -76,7 +76,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                   child: Text(
                     context.translate(LangKeys.forgotPassword),
                     style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colors.primaryColor,
+                      color: context.colors.primary,
                     ),
                   ),
                 ),

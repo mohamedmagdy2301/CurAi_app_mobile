@@ -26,7 +26,7 @@ class NotHaveAccount extends StatelessWidget {
           child: Text(
             context.translate(LangKeys.register),
             style: context.textTheme.bodyMedium!.copyWith(
-              color: context.colors.primaryColor,
+              color: context.colors.primary,
               fontWeight: FontWeightHelper.extraBold,
             ),
           ),

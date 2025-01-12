@@ -31,8 +31,8 @@ class CustomDotOnboarding extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: currentIndex == index
-                    ? context.colors.primaryColor
-                    : context.colors.primaryColor!.withAlpha(100),
+                    ? context.colors.primary
+                    : context.colors.primary.withAlpha(100),
               ),
             );
           },

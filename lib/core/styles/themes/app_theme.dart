@@ -11,11 +11,14 @@ class AppTheme {
     ColorsPalleteState palette,
     ThemeModeState themeMode,
   ) {
+    // Generate ColorScheme based on the selected palette and theme mode (light/dark)
     final colorScheme = AppColorSchemes.generateColorScheme(
       palette: palette,
       themeMode: themeMode,
     );
-    final extension = themeExtensions[themeMode]![palette];
+
+    // Retrieve the appropriate color extension for the current theme and palette
+    final extension = MyColors.themeExtensions[themeMode]![palette];
 
     // Text Theme
     TextTheme textTheme() {
@@ -26,17 +29,17 @@ class AppTheme {
             AppTextStyles.bodyMedium(context, color: colorScheme.onSurface),
         bodySmall: AppTextStyles.bodySmall(
           context,
-          color: colorScheme.onSurface.withValues(alpha: 0.7),
+          color: colorScheme.onSurface.withOpacity(0.7),
         ),
         titleLarge:
             AppTextStyles.titleLarge(context, color: colorScheme.onSurface),
         titleMedium: AppTextStyles.titleMedium(
           context,
-          color: colorScheme.onSurface.withValues(alpha: 0.8),
+          color: colorScheme.onSurface.withOpacity(0.8),
         ),
         titleSmall: AppTextStyles.bodySmall(
           context,
-          color: colorScheme.onSurface.withValues(alpha: 0.6),
+          color: colorScheme.onSurface.withOpacity(0.6),
         ),
       );
     }
@@ -46,7 +49,6 @@ class AppTheme {
       return AppBarTheme(
         titleTextStyle:
             AppTextStyles.appBarTitle(context, color: colorScheme.onPrimary),
-        // color: colorScheme,
         elevation: 0,
         iconTheme: IconThemeData(color: colorScheme.onSurface),
       );
@@ -115,7 +117,9 @@ class AppTheme {
 
     return ThemeData(
       colorScheme: colorScheme,
-      extensions: [extension!],
+      extensions: [
+        extension!,
+      ], // Apply the correct extension for the selected theme
       primaryColor: colorScheme.primary,
       scaffoldBackgroundColor: colorScheme.surface,
       useMaterial3: true,

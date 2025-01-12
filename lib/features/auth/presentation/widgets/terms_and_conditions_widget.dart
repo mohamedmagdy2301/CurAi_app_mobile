@@ -25,7 +25,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
           Text(
             context.translate(LangKeys.termsOfUse),
             style: context.textTheme.bodyMedium!.copyWith(
-              color: context.colors.primaryColor,
+              color: context.colors.primary,
               fontWeight: FontWeightHelper.extraBold,
             ),
           ),
@@ -40,7 +40,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
           Text(
             context.translate(LangKeys.privacyPolicy),
             style: context.textTheme.bodyMedium!.copyWith(
-              color: context.colors.primaryColor,
+              color: context.colors.primary,
               fontWeight: FontWeightHelper.extraBold,
             ),
           ),

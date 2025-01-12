@@ -70,9 +70,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
               });
             },
             icon: Icon(
-              color: isPasswordObscure
-                  ? Colors.black
-                  : context.colors.primaryColor!,
+              color: isPasswordObscure ? Colors.black : context.colors.primary,
               isPasswordObscure
                   ? CupertinoIcons.eye_slash_fill
                   : CupertinoIcons.eye_fill,

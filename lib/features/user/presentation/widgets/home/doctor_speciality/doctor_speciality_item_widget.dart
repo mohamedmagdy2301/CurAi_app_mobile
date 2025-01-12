@@ -19,7 +19,7 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: context.colors.primaryColor!.withAlpha(100),
+          backgroundColor: context.colors.primary.withAlpha(100),
           radius: 26.r,
           child: image.contains('.svg')
               ? SvgPicture.asset(

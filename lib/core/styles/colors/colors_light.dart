@@ -3,46 +3,119 @@ import 'package:curai_app_mobile/core/styles/colors/theme_palette_model.dart';
 import 'package:flutter/material.dart';
 
 const lightPalettes = {
-  ColorsPalleteState.orange: ThemePaletteModel(
-    primary: Colors.orange,
-    secondary: Colors.orangeAccent,
-    background: Color(0xFFECECEC),
-    text: Color(0xFF2D2D2D),
-    error: Color(0xFFE53935),
+  ColorsPalleteState.green: ThemePaletteModel(
+    primary: Colors.green, // Primary color reflecting health
+    secondary: Colors.blue, // Secondary color for trust and stability
+    tertiary: Colors.blueGrey, // Tertiary color for calm and neutrality
+    background: Color(0xFFECECEC), // Light background color
+    backgroundLight: Color(0xFFF5F5F5), // Light shade for subtle contrast
+    text: Color(0xFF2D2D2D), // Dark text for readability
+    error: Color(0xFFE53935), // Error color
+    onPrimary: Colors.white, // Text on primary color
+    onSecondary: Colors.white, // Text on secondary color
+    onTertiary: Colors.white, // Text on tertiary color
+    onSurface: Color(0xFF2D2D2D), // Surface text color
+    onError: Colors.white, // Error text color
   ),
   ColorsPalleteState.blue: ThemePaletteModel(
-    primary: Colors.blue,
-    secondary: Colors.blueAccent,
-    background: Color(0xFFECECEC),
-    text: Color(0xFF2D2D2D),
-    error: Color(0xFFE53935),
-  ),
-  ColorsPalleteState.green: ThemePaletteModel(
-    primary: Colors.green,
-    secondary: Colors.greenAccent,
-    background: Color(0xFFECECEC),
-    text: Color(0xFF2D2D2D),
-    error: Color(0xFFE53935),
-  ),
-  ColorsPalleteState.red: ThemePaletteModel(
-    primary: Colors.red,
-    secondary: Colors.redAccent,
-    background: Color(0xFFECECEC),
-    text: Color(0xFF2D2D2D),
-    error: Color(0xFFE53935),
-  ),
-  ColorsPalleteState.indigo: ThemePaletteModel(
-    primary: Colors.indigo,
-    secondary: Colors.indigoAccent,
-    background: Color(0xFFECECEC),
-    text: Color(0xFF2D2D2D),
-    error: Color(0xFFE53935),
-  ),
-  ColorsPalleteState.purple: ThemePaletteModel(
-    primary: Colors.purple,
-    secondary: Colors.purpleAccent,
-    background: Color(0xFFECECEC), // Adjust as needed
-    text: Color(0xFF2D2D2D), // Adjust as needed
-    error: Color(0xFFE53935), // Adjust as needed
+    primary: Colors.blue, // Primary color for trust
+    secondary: Colors.greenAccent, // Secondary color for health
+    tertiary: Colors.blueGrey, // Tertiary color for calm and neutrality
+    background: Color(0xFFECECEC), // Background color
+    backgroundLight: Color(0xFFF5F5F5), // Lighter background
+    text: Color(0xFF2D2D2D), // Text color
+    error: Color(0xFFE53935), // Error color
+    onPrimary: Colors.white, // On primary text
+    onSecondary: Colors.black, // On secondary text
+    onTertiary: Colors.white, // On tertiary text
+    onSurface: Color(0xFF2D2D2D), // On surface text
+    onError: Colors.white, // On error text
   ),
 };
+
+// const lightPalettes = {
+//   ColorsPalleteState.orange: ThemePaletteModel(
+//     primary: Colors.orange,
+//     secondary: Colors.orangeAccent,
+//     tertiary: Colors.deepOrange,
+//     background: Color(0xFFECECEC),
+//     backgroundLight: Color(0xFFF5F5F5),
+//     text: Color(0xFF2D2D2D),
+//     error: Color(0xFFE53935),
+//     onPrimary: Colors.white,
+//     onSecondary: Colors.black,
+//     onTertiary: Colors.white,
+//     onSurface: Color(0xFF2D2D2D),
+//     onError: Colors.white,
+//   ),
+//   ColorsPalleteState.blue: ThemePaletteModel(
+//     primary: Colors.blue,
+//     secondary: Colors.blueAccent,
+//     tertiary: Colors.blueGrey,
+//     background: Color(0xFFECECEC),
+//     backgroundLight: Color(0xFFF5F5F5),
+//     text: Color(0xFF2D2D2D),
+//     error: Color(0xFFE53935),
+//     onPrimary: Colors.white,
+//     onSecondary: Colors.black,
+//     onTertiary: Colors.white,
+//     onSurface: Color(0xFF2D2D2D),
+//     onError: Colors.white,
+//   ),
+//   ColorsPalleteState.green: ThemePaletteModel(
+//     primary: Colors.green,
+//     secondary: Colors.greenAccent,
+//     tertiary: Color.fromARGB(255, 25, 74, 26),
+//     background: Color(0xFFECECEC),
+//     backgroundLight: Color(0xFFF5F5F5),
+//     text: Color(0xFF2D2D2D),
+//     error: Color(0xFFE53935),
+//     onPrimary: Colors.white,
+//     onSecondary: Colors.black,
+//     onTertiary: Colors.white,
+//     onSurface: Color(0xFF2D2D2D),
+//     onError: Colors.white,
+//   ),
+//   ColorsPalleteState.red: ThemePaletteModel(
+//     primary: Colors.red,
+//     secondary: Colors.redAccent,
+//     tertiary: Color.fromARGB(255, 107, 28, 22),
+//     background: Color(0xFFECECEC),
+//     backgroundLight: Color(0xFFF5F5F5),
+//     text: Color(0xFF2D2D2D),
+//     error: Color(0xFFE53935),
+//     onPrimary: Colors.white,
+//     onSecondary: Colors.black,
+//     onTertiary: Colors.white,
+//     onSurface: Color(0xFF2D2D2D),
+//     onError: Colors.white,
+//   ),
+//   ColorsPalleteState.indigo: ThemePaletteModel(
+//     primary: Colors.indigo,
+//     secondary: Colors.indigoAccent,
+//     tertiary: Colors.deepPurple,
+//     background: Color(0xFFECECEC),
+//     backgroundLight: Color(0xFFF5F5F5),
+//     text: Color(0xFF2D2D2D),
+//     error: Color(0xFFE53935),
+//     onPrimary: Colors.white,
+//     onSecondary: Colors.black,
+//     onTertiary: Colors.white,
+//     onSurface: Color(0xFF2D2D2D),
+//     onError: Colors.white,
+//   ),
+//   ColorsPalleteState.purple: ThemePaletteModel(
+//     primary: Colors.purple,
+//     secondary: Colors.purpleAccent,
+//     tertiary: Colors.deepPurple,
+//     background: Color(0xFFECECEC),
+//     backgroundLight: Color(0xFFF5F5F5),
+//     text: Color(0xFF2D2D2D),
+//     error: Color(0xFFE53935),
+//     onPrimary: Colors.white,
+//     onSecondary: Colors.black,
+//     onTertiary: Colors.white,
+//     onSurface: Color(0xFF2D2D2D),
+//     onError: Colors.white,
+//   ),
+// };

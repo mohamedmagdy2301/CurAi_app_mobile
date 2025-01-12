@@ -94,7 +94,7 @@ class _MessageInputState extends State<MessageInput> {
             InkWell(
               onTap: isSentMessage ? _sendMessage : null,
               child: CircleAvatar(
-                backgroundColor: context.colors.primaryColor,
+                backgroundColor: context.colors.primary,
                 radius: 22.r,
                 child: isSentMessage
                     ? Icon(Icons.send, size: 18.sp)

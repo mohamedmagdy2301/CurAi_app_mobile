@@ -21,7 +21,7 @@ class HeaderAuthWidger extends StatelessWidget {
         Text(
           context.translate(title),
           style: context.textTheme.headlineLarge!.copyWith(
-            color: context.colors.primaryColor,
+            color: context.colors.primary,
             fontWeight: FontWeightHelper.extraBold,
           ),
         ),
