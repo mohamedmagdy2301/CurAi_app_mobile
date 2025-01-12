@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                   descraption: LangKeys.descriptionLogin,
                 ),
                 const FormLoginWidget(),
-                spaceHeight(40),
+                spaceHeight(35),
                 const LoginWithSocial(),
                 spaceHeight(35),
                 const TermsAndConditionsWidget(),

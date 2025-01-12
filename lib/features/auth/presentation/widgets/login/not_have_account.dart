@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
@@ -15,19 +16,21 @@ class NotHaveAccount extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        AutoSizeText(
           context.translate(LangKeys.notHaveAccount),
-          style: context.styleSemiBold12.copyWith(
+          style: context.styleRegular14.copyWith(
             color: context.color.onSecondary,
           ),
+          maxLines: 1,
         ),
         TextButton(
           onPressed: () => context.pushNamed(Routes.registerScreen),
-          child: Text(
+          child: AutoSizeText(
             context.translate(LangKeys.register),
-            style: context.styleBold12.copyWith(
+            style: context.styleSemiBold14.copyWith(
               color: context.color.primary,
             ),
+            maxLines: 1,
           ),
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
@@ -26,11 +27,12 @@ class LoginWithSocial extends StatelessWidget {
             ),
             Padding(
               padding: padding(horizontal: 8),
-              child: Text(
+              child: AutoSizeText(
                 context.translate(LangKeys.orSignInWith),
                 style: context.styleMedium14.copyWith(
                   color: context.color.onSecondary,
                 ),
+                maxLines: 1,
               ),
             ),
             Expanded(
