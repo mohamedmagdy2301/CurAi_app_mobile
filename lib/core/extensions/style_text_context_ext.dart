@@ -18,7 +18,9 @@ extension StyleTextContextExt on BuildContext {
   TextStyle get styleRegular12 => textTheme.bodySmall!;
 
   TextStyle get styleSemiBold12 => textTheme.labelSmall!;
-
+  TextStyle get styleBold12 => textTheme.bodySmall!.copyWith(
+        fontWeight: FontWeightHelper.bold,
+      );
   TextStyle get styleRegular14 => textTheme.bodyMedium!;
 
   TextStyle get styleMedium14 => textTheme.labelMedium!;
