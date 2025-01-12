@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
@@ -37,9 +38,10 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
                 ),
         ),
         spaceHeight(15),
-        Text(
+        AutoSizeText(
           context.translate(title),
           style: context.styleRegular12,
+          maxLines: 1,
         ),
       ],
     );
