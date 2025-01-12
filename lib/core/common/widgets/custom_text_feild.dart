@@ -1,4 +1,5 @@
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +55,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         focusedBorder: customOutlineInputBorder(Colors.black),
         suffixIcon: changePasswordObscure(),
         labelText: widget.labelText,
-        labelStyle: context.textTheme.bodyMedium!.copyWith(
-            // color: context.colors.textColorLight,
-            ),
+        labelStyle: context.styleRegular14,
       ),
     );
   }

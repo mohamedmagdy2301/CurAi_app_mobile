@@ -9,12 +9,11 @@ const lightPalettes = {
     tertiary: Colors.blueGrey, // Tertiary color for calm and neutrality
     background: Color(0xFFECECEC), // Light background color
     backgroundLight: Color(0xFFF5F5F5), // Light shade for subtle contrast
-    text: Color(0xFF2D2D2D), // Dark text for readability
     error: Color(0xFFE53935), // Error color
     onPrimary: Colors.white, // Text on primary color
     onSecondary: Colors.white, // Text on secondary color
     onTertiary: Colors.white, // Text on tertiary color
-    onSurface: Color(0xFF2D2D2D), // Surface text color
+    onSurface: Colors.black, // Surface text color
     onError: Colors.white, // Error text color
   ),
   ColorsPalleteState.blue: ThemePaletteModel(
@@ -23,12 +22,11 @@ const lightPalettes = {
     tertiary: Colors.blueGrey, // Tertiary color for calm and neutrality
     background: Color(0xFFECECEC), // Background color
     backgroundLight: Color(0xFFF5F5F5), // Lighter background
-    text: Color(0xFF2D2D2D), // Text color
     error: Color(0xFFE53935), // Error color
     onPrimary: Colors.white, // On primary text
     onSecondary: Colors.black, // On secondary text
     onTertiary: Colors.white, // On tertiary text
-    onSurface: Color(0xFF2D2D2D), // On surface text
+    onSurface: Colors.black, // On surface text
     onError: Colors.white, // On error text
   ),
 };

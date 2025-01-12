@@ -16,10 +16,10 @@ class AppTextStyles {
       labelSmall: labelSmall(color: colorScheme.onSurface),
       bodyLarge: bodyLarge(color: colorScheme.onSurface),
       bodyMedium: bodyMedium(color: colorScheme.onSurface),
-      bodySmall: bodySmall(color: colorScheme.onSurface.withAlpha(160)),
+      bodySmall: bodySmall(color: colorScheme.onSurface),
       titleLarge: titleLarge(color: colorScheme.onSurface),
-      titleMedium: titleMedium(color: colorScheme.onSurface.withAlpha(200)),
-      titleSmall: bodySmall(color: colorScheme.onSurface.withAlpha(160)),
+      titleMedium: titleMedium(color: colorScheme.onSurface),
+      titleSmall: bodySmall(color: colorScheme.onSurface),
     );
   }
 

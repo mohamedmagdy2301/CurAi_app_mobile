@@ -32,7 +32,7 @@ class CustomDotOnboarding extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: currentIndex == index
                     ? context.colors.primary
-                    : context.colors.primary.withAlpha(100),
+                    : context.colors.primary.withAlpha(90),
               ),
             );
           },

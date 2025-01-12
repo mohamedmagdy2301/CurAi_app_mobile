@@ -7,7 +7,6 @@ class ThemePaletteModel {
     required this.tertiary,
     required this.background,
     required this.backgroundLight,
-    required this.text,
     required this.error,
     required this.onPrimary,
     required this.onSecondary,
@@ -21,7 +20,6 @@ class ThemePaletteModel {
   final Color tertiary;
   final Color background;
   final Color backgroundLight;
-  final Color text;
   final Color error;
   final Color onPrimary;
   final Color onSecondary;
