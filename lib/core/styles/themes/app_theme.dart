@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_style_helper.dart';
+import 'package:curai_app_mobile/core/styles/fonts/fonts_family_helper.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_color_schemes.dart';
 import 'package:curai_app_mobile/core/styles/themes/color_extension.dart';
 import 'package:flutter/material.dart';
@@ -11,44 +12,16 @@ class AppTheme {
     ColorsPalleteState palette,
     ThemeModeState themeMode,
   ) {
-    // Generate ColorScheme based on the selected palette and theme mode (light/dark)
     final colorScheme = AppColorSchemes.generateColorScheme(
       palette: palette,
       themeMode: themeMode,
     );
-
-    // Retrieve the appropriate color extension for the current theme and palette
     final extension = MyColors.themeExtensions[themeMode]![palette];
-
-    // Text Theme
-    TextTheme textTheme() {
-      return TextTheme(
-        bodyLarge:
-            AppTextStyles.bodyLarge(context, color: colorScheme.onSurface),
-        bodyMedium:
-            AppTextStyles.bodyMedium(context, color: colorScheme.onSurface),
-        bodySmall: AppTextStyles.bodySmall(
-          context,
-          color: colorScheme.onSurface.withOpacity(0.7),
-        ),
-        titleLarge:
-            AppTextStyles.titleLarge(context, color: colorScheme.onSurface),
-        titleMedium: AppTextStyles.titleMedium(
-          context,
-          color: colorScheme.onSurface.withOpacity(0.8),
-        ),
-        titleSmall: AppTextStyles.bodySmall(
-          context,
-          color: colorScheme.onSurface.withOpacity(0.6),
-        ),
-      );
-    }
 
     // AppBar Theme
     AppBarTheme appBarTheme() {
       return AppBarTheme(
-        titleTextStyle:
-            AppTextStyles.appBarTitle(context, color: colorScheme.onPrimary),
+        titleTextStyle: AppTextStyles.appBarTitle(color: colorScheme.onPrimary),
         elevation: 0,
         iconTheme: IconThemeData(color: colorScheme.onSurface),
       );
@@ -74,7 +47,7 @@ class AppTheme {
       return InputDecorationTheme(
         errorBorder: buildBorder(colorScheme.error),
         focusedErrorBorder: buildBorder(colorScheme.error, width: 2.w),
-        errorStyle: AppTextStyles.bodySmall(context, color: colorScheme.error),
+        errorStyle: AppTextStyles.bodySmall(color: colorScheme.error),
       );
     }
 
@@ -106,9 +79,9 @@ class AppTheme {
     // Snack Bar Theme
     SnackBarThemeData snackBarTheme() {
       return SnackBarThemeData(
-        contentTextStyle: AppTextStyles.bodyLarge(context, color: Colors.white),
+        contentTextStyle: AppTextStyles.bodyLarge(color: Colors.white),
         backgroundColor: colorScheme.primary,
-        behavior: SnackBarBehavior.floating,
+        behavior: SnackBarBehavior.fixed,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.r),
         ),
@@ -117,13 +90,12 @@ class AppTheme {
 
     return ThemeData(
       colorScheme: colorScheme,
-      extensions: [
-        extension!,
-      ], // Apply the correct extension for the selected theme
+      extensions: [extension!],
       primaryColor: colorScheme.primary,
       scaffoldBackgroundColor: colorScheme.surface,
       useMaterial3: true,
-      textTheme: textTheme(),
+      textTheme: AppTextStyles.getTextTheme(colorScheme),
+      fontFamily: FontsFamilyHelper.getLocaledFontFamily(context),
       appBarTheme: appBarTheme(),
       floatingActionButtonTheme: fabTheme(),
       inputDecorationTheme: inputDecorationTheme(),
