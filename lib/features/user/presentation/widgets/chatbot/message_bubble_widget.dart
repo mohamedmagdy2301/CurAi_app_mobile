@@ -1,4 +1,6 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/features/user/models/chatbot_model/messages_chatbot_model.dart';
@@ -14,28 +16,28 @@ class MessageBubbleWidget extends StatelessWidget {
   final MessageModel messageModel;
   bool get isUserMessage => messageModel.sender == SenderType.user;
 
-  EdgeInsets _bubbleMargin() {
+  EdgeInsets _bubbleMargin(BuildContext context) {
     return isUserMessage
         ? EdgeInsets.only(
-            right: isArabic() ? 0 : 40.w,
-            left: isArabic() ? 40.w : 0,
+            right: context.isStateArabic ? 0 : 40.w,
+            left: context.isStateArabic ? 40.w : 0,
           )
         : EdgeInsets.only(
-            right: isArabic() ? 40.w : 0,
-            left: isArabic() ? 0 : 40.w,
+            right: context.isStateArabic ? 40.w : 0,
+            left: context.isStateArabic ? 0 : 40.w,
           );
   }
 
-  BorderRadius _bubbleBorderRadius() {
+  BorderRadius _bubbleBorderRadius(BuildContext context) {
     return BorderRadius.only(
       topLeft: Radius.circular(10.r),
       topRight: Radius.circular(10.r),
       bottomRight: isUserMessage
-          ? Radius.circular(isArabic() ? 0 : 10.r)
-          : Radius.circular(isArabic() ? 10.r : 0),
+          ? Radius.circular(context.isStateArabic ? 0 : 10.r)
+          : Radius.circular(context.isStateArabic ? 10.r : 0),
       bottomLeft: isUserMessage
-          ? Radius.circular(isArabic() ? 10.r : 0)
-          : Radius.circular(isArabic() ? 0 : 10.r),
+          ? Radius.circular(context.isStateArabic ? 10.r : 0)
+          : Radius.circular(context.isStateArabic ? 0 : 10.r),
     );
   }
 
@@ -43,21 +45,19 @@ class MessageBubbleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: padding(vertical: 12, horizontal: 15),
-      margin: _bubbleMargin(),
+      margin: _bubbleMargin(context),
       decoration: BoxDecoration(
-        color: isUserMessage
-            ? context.colors.primaryColor
-            : context.colors.chatBubbleIsBot,
-        borderRadius: _bubbleBorderRadius(),
+        color: isUserMessage ? context.colors.primary : Colors.green,
+        borderRadius: _bubbleBorderRadius(context),
       ),
       child: isUserMessage
-          ? Text(
+          ? AutoSizeText(
               messageModel.messageText,
               textDirection: textDirection(messageModel.messageText),
-              textAlign: isArabic() ? TextAlign.right : TextAlign.left,
-              style: context.textTheme.bodyMedium!.copyWith(
-                color: Colors.white,
-                fontSize: 16.sp,
+              textAlign:
+                  context.isStateArabic ? TextAlign.right : TextAlign.left,
+              style: context.styleRegular16.copyWith(
+                color: context.color.onPrimary,
                 height: 1.5.h,
               ),
             )

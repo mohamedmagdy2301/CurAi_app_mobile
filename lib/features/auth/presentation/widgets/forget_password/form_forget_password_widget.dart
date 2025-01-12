@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FormForgetPasswordWidget extends StatefulWidget {
   const FormForgetPasswordWidget({super.key});

@@ -1,12 +1,14 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/app/onboarding/cubit/onboarding_cubit.dart';
 import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
 import 'package:curai_app_mobile/core/app/onboarding/widgets/custom_dot_onboarding.dart';
 import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,9 +28,10 @@ class BodyOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 320.h,
+      height: 330.h,
       width: double.infinity,
       decoration: BoxDecoration(
+        color: context.color.surface,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(40.r),
           topRight: Radius.circular(40.r),
@@ -36,42 +39,32 @@ class BodyOnboarding extends StatelessWidget {
       ),
       padding: padding(horizontal: 20, vertical: 25),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Padding(
-            padding: padding(horizontal: isArabic() ? 20 : 15),
-            child: Text(
+          SizedBox(
+            height: 80.h,
+            child: AutoSizeText(
               textAlign: TextAlign.center,
               context.translate(title),
               maxLines: 2,
-              style: context.textTheme.headlineMedium!.copyWith(
-                fontWeight: FontWeightHelper.black,
-              ),
+              style: context.styleBold34,
             ),
           ),
-          Padding(
-            padding: padding(horizontal: isArabic() ? 20 : 15, vertical: 15),
-            child: Text(
+          spaceHeight(10),
+          SizedBox(
+            height: 90.h,
+            child: AutoSizeText(
               textAlign: TextAlign.center,
               context.translate(body),
               maxLines: 4,
-              style: isArabic()
-                  ? context.textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeightHelper.medium,
-                      color: context.colors.bodyTextOnboarding!.withOpacity(.5),
-                    )
-                  : context.textTheme.labelMedium!.copyWith(
-                      fontWeight: FontWeightHelper.medium,
-                      color: context.colors.bodyTextOnboarding!.withOpacity(.5),
-                    ),
+              style: context.styleLight16,
             ),
           ),
-          spaceHeight(isArabic() ? 0 : 10),
+          const Spacer(),
           CustomDotOnboarding(
             index: index,
             currentIndex: currentIndex,
           ),
-          spaceHeight(5),
+          const Spacer(),
           CustemButton(
             title: index == OnboardingInfo.onboardingInfo.length - 1
                 ? LangKeys.getStarted

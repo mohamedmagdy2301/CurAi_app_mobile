@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -46,7 +47,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             ValueListenableBuilder<bool>(
               valueListenable: _isFormValidNotifier,
               builder: (context, isValid, child) {
-                return spaceHeight(isValid ? 45 : 30);
+                return spaceHeight(isValid ? 35 : 20);
               },
             ),
             CustomTextFeild(
@@ -75,13 +76,13 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                   child: Text(
                     context.translate(LangKeys.forgotPassword),
                     style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colors.primaryColor,
+                      color: context.colors.primary,
                     ),
                   ),
                 ),
               ],
             ),
-            spaceHeight(20),
+            spaceHeight(15),
             CustemButton(
               title: LangKeys.login,
               onPressed: () => _onLoginPressed(context),

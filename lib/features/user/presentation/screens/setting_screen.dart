@@ -1,8 +1,12 @@
-// ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
+// ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously, avoid_catches_without_on_clauses
 
-import 'package:curai_app_mobile/core/app/cubit/app_cubit.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/core/helper/logger_helper.dart';
+import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
+import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
+import 'package:curai_app_mobile/core/common/widgets/New%20folder/colors_palette_widget.dart';
+import 'package:curai_app_mobile/core/common/widgets/New%20folder/localize_widget.dart';
+import 'package:curai_app_mobile/core/common/widgets/New%20folder/theme_widget.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -10,7 +14,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
+// import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -24,54 +28,52 @@ class _SettingScreenState extends State<SettingScreen> {
   String currentIconName = '?';
   bool showAlert = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _initializeIconSettings();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _initializeIconSettings();
+  // }
 
-  Future<void> _initializeIconSettings() async {
-    try {
-      badgeIconNumber =
-          await FlutterDynamicIcon.getApplicationIconBadgeNumber();
-      currentIconName =
-          await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
-      setState(() {});
-    } catch (e) {
-      LoggerHelper.error('Error initializing icon settings', error: e);
-    }
-  }
+  // Future<void> _initializeIconSettings() async {
+  //   try {
+  //     // badgeIconNumber =
+  //     //     await FlutterDynamicIcon.getApplicationIconBadgeNumber();
+  //     // currentIconName =
+  //     //     await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
+  //     // setState(() {});
+  //   } catch (e) {
+  //     LoggerHelper.error('Error initializing icon settings', error: e);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final isEnglish = AppLocalizations.of(context)!.isEnglishLocale;
-    final isDarkMode = context.read<AppCubit>().isDark;
-
+    final cubit = context.read<SettingsCubit>();
+    final state = context.watch<SettingsCubit>().state;
     return Scaffold(
       appBar: AppBar(
-        title: Text(isArabic() ? 'الأعـــــدادات' : 'Settings'),
+        title: Text(context.isStateArabic ? 'الأعـــــدادات' : 'Settings'),
         centerTitle: true,
+        flexibleSpace: Container(color: context.color.surface),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: ListView(
           children: [
-            _buildGeneralSettingsSection(context, isEnglish),
-            _buildAppearanceSection(context, isDarkMode),
+            _buildGeneralSettingsSection(context),
+            _buildAppearanceSection(context, cubit, state),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildGeneralSettingsSection(BuildContext context, bool isEnglish) {
+  Widget _buildGeneralSettingsSection(BuildContext context) {
     return _buildSection(
       context,
-      title: isArabic() ? 'الاعــدادات العامة' : 'General Settings',
+      title: context.isStateArabic ? 'الاعــدادات العامة' : 'General Settings',
       children: [
-        _buildLanguageToggle(context, isEnglish),
-        _buildDivider(),
         _buildBadgeNotificationTile(context, increase: true),
         _buildDivider(),
         _buildBadgeNotificationTile(context, increase: false),
@@ -89,29 +91,22 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  Widget _buildAppearanceSection(BuildContext context, bool isDarkMode) {
+  Widget _buildAppearanceSection(
+    BuildContext context,
+    SettingsCubit cubit,
+    SettingsState state,
+  ) {
     return _buildSection(
       context,
-      title: isArabic() ? 'المظهر' : 'Appearance',
+      title: context.isStateArabic ? 'المظهر' : 'Appearance',
       children: [
-        _buildThemeToggle(context, isDarkMode),
-        _buildDivider(),
-        _buildAppIconChangeTile(context),
+        ThemeWidget(cubit: cubit, state: state),
+        const Divider(),
+        LocalizeWidget(cubit: cubit, state: state),
+        const Divider(),
+        const SizedBox(height: 20),
+        const ColorPaletteWidget(),
       ],
-    );
-  }
-
-  Widget _buildLanguageToggle(BuildContext context, bool isEnglish) {
-    return _buildListTile(
-      context,
-      icon: Icons.language,
-      title: AppLocalizations.of(context)!.translate(LangKeys.changeLanguage)!,
-      trailing: Switch.adaptive(
-        value: isEnglish,
-        onChanged: (value) => value
-            ? context.read<AppCubit>().toEnglish()
-            : context.read<AppCubit>().toArabic(),
-      ),
     );
   }
 
@@ -122,93 +117,23 @@ class _SettingScreenState extends State<SettingScreen> {
     return _buildListTile(
       context,
       icon: increase ? Icons.notifications : Icons.notifications_off_outlined,
-      title: isArabic()
+      title: context.isStateArabic
           ? (increase ? 'اضافة الأشعـــارات' : 'حذف الأشعـــارات')
           : (increase ? 'Add Notifications' : 'Remove Notifications'),
       onTap: () async {
         try {
           badgeIconNumber = increase ? badgeIconNumber + 1 : 0;
-          await FlutterDynamicIcon.setApplicationIconBadgeNumber(
-            badgeIconNumber,
-          );
-          badgeIconNumber =
-              await FlutterDynamicIcon.getApplicationIconBadgeNumber();
-          if (mounted)
+          if (mounted) {
             _showSnackbar(
               context,
               true,
               increase ? 'Badge added' : 'Badge removed',
             );
+          }
         } catch (e) {
           if (mounted) _showSnackbar(context, false, 'Failed to update badge');
         }
       },
-    );
-  }
-
-  Widget _buildThemeToggle(BuildContext context, bool isDarkMode) {
-    return _buildListTile(
-      context,
-      icon: Icons.brightness_6,
-      title: AppLocalizations.of(context)!.translate(LangKeys.changeTheme)!,
-      trailing: Switch.adaptive(
-        value: isDarkMode,
-        onChanged: (_) => context.read<AppCubit>().changeTheme(),
-      ),
-    );
-  }
-
-  Widget _buildAppIconChangeTile(BuildContext context) {
-    return _buildListTile(
-      context,
-      icon: Icons.launch,
-      title: isArabic() ? 'تغيير ايقونة التطبيق' : 'Change App Icon',
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildIconChangeButton(
-            context,
-            'light',
-            'assets/images/splash_light.png',
-          ),
-          spaceWidth(10),
-          _buildIconChangeButton(
-            context,
-            'dark',
-            'assets/images/splash_dark.png',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildIconChangeButton(
-    BuildContext context,
-    String imageName,
-    String image,
-  ) {
-    return GestureDetector(
-      onTap: () async {
-        try {
-          if (await FlutterDynamicIcon.supportsAlternateIcons) {
-            await FlutterDynamicIcon.setAlternateIconName(
-              imageName,
-              showAlert: showAlert,
-            );
-            _showSnackbar(context, true, 'App icon changed successfully');
-            currentIconName =
-                await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
-            setState(() {});
-          }
-        } catch (e) {
-          LoggerHelper.error('Error changing app icon', error: e);
-          _showSnackbar(context, false, 'Failed to change app icon');
-        }
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Image.asset(image, height: 50, width: 50),
-      ),
     );
   }
 
@@ -260,3 +185,56 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 }
+
+// Widget _buildAppIconChangeTile(BuildContext context) {
+//   return _buildListTile(
+//     context,
+//     icon: Icons.launch,
+//     title: context.isStateArabic ? 'تغيير ايقونة التطبيق' : 'Change App Icon',
+//     trailing: Row(
+//       mainAxisSize: MainAxisSize.min,
+//       children: [
+//         _buildIconChangeButton(
+//           context,
+//           'light',
+//           'assets/images/splash_light.png',
+//         ),
+//         spaceWidth(10),
+//         _buildIconChangeButton(
+//           context,
+//           'dark',
+//           'assets/images/splash_dark.png',
+//         ),
+//       ],
+//     ),
+//   );
+// }
+//   Widget _buildIconChangeButton(
+//     BuildContext context,
+//     String imageName,
+//     String image,
+//   ) {
+//     return GestureDetector(
+//       onTap: () async {
+//         try {
+//           // if (await FlutterDynamicIcon.supportsAlternateIcons) {
+//           //   await FlutterDynamicIcon.setAlternateIconName(
+//           //     imageName,
+//           //     showAlert: showAlert,
+//           //   );
+//           //   _showSnackbar(context, true, 'App icon changed successfully');
+//           //   currentIconName =
+//           //       await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
+//           //   setState(() {});
+//           // }
+//         } catch (e) {
+//           LoggerHelper.error('Error changing app icon', error: e);
+//           _showSnackbar(context, false, 'Failed to change app icon');
+//         }
+//       },
+//       child: ClipRRect(
+//         borderRadius: BorderRadius.circular(10),
+//         child: Image.asset(image, height: 50, width: 50),
+//       ),
+//     );
+//   }

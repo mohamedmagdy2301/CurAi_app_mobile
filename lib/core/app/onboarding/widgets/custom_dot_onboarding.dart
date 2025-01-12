@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,8 +31,8 @@ class CustomDotOnboarding extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: currentIndex == index
-                    ? context.colors.primaryColor
-                    : context.colors.bodyTextOnboarding!.withOpacity(.4),
+                    ? context.colors.primary
+                    : context.colors.primary.withAlpha(90),
               ),
             );
           },

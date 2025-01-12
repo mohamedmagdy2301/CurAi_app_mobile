@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:flutter/material.dart';
 
 class CustemButton extends StatelessWidget {
@@ -18,10 +18,7 @@ class CustemButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         context.translate(title),
-        style: context.textTheme.titleLarge!.copyWith(
-          fontWeight: FontWeightHelper.medium,
-          color: const Color.fromARGB(255, 255, 255, 255),
-        ),
+        style: context.styleRegular20.copyWith(color: Colors.white),
       ),
     );
   }

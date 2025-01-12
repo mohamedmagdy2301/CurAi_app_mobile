@@ -1,125 +1,78 @@
+import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
 import 'package:curai_app_mobile/core/styles/colors/colors_dark.dart';
 import 'package:curai_app_mobile/core/styles/colors/colors_light.dart';
 import 'package:flutter/material.dart';
 
 class MyColors extends ThemeExtension<MyColors> {
   const MyColors({
-    required this.primaryColor,
-    required this.textColorLight,
-    required this.iconSocialBG,
-    required this.onboardingBg,
-    required this.bodyTextOnboarding,
-    required this.border,
-    required this.focusedBorder,
-    required this.appBarHome,
-    required this.fontColor,
-    required this.secondaryFontColor,
-    required this.chatBubbleIsBot,
-    required this.textTimeMessage,
-    required this.doctorCardBg,
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
   });
-
-  final Color? primaryColor;
-  final Color? textColorLight;
-  final Color? iconSocialBG;
-  final Color? onboardingBg;
-  final Color? bodyTextOnboarding;
-  final Color? border;
-  final Color? focusedBorder;
-  final Color? appBarHome;
-  final Color? fontColor;
-  final Color? secondaryFontColor;
-  final Color? chatBubbleIsBot;
-  final Color? textTimeMessage;
-  final Color? doctorCardBg;
+  final Color primary;
+  final Color secondary;
+  final Color tertiary;
 
   @override
   ThemeExtension<MyColors> copyWith({
-    Color? primaryColor,
-    Color? textColorLight,
-    Color? onboardingBg,
-    Color? bodyOnboarding,
-    Color? border,
-    Color? iconSocialBG,
-    Color? focusedBorder,
-    Color? appBarHome,
-    Color? fontColor,
-    Color? secondaryFontColor,
-    Color? chatBubbleIsBot,
-    Color? textTimeMessage,
-    Color? doctorCardBg,
+    Color? primary,
+    Color? secondary,
+    Color? tertiary,
   }) {
     return MyColors(
-      primaryColor: primaryColor,
-      textColorLight: textColorLight,
-      onboardingBg: onboardingBg,
-      bodyTextOnboarding: bodyOnboarding,
-      border: border,
-      iconSocialBG: iconSocialBG,
-      focusedBorder: focusedBorder,
-      appBarHome: appBarHome,
-      fontColor: fontColor,
-      secondaryFontColor: secondaryFontColor,
-      chatBubbleIsBot: chatBubbleIsBot,
-      textTimeMessage: textTimeMessage,
-      doctorCardBg: doctorCardBg,
+      primary: primary ?? this.primary,
+      secondary: secondary ?? this.secondary,
+      tertiary: tertiary ?? this.tertiary,
     );
   }
 
   @override
-  ThemeExtension<MyColors> lerp(
-    covariant ThemeExtension<MyColors>? other,
-    double t,
-  ) {
-    if (other is! MyColors) {
-      return this;
-    }
+  ThemeExtension<MyColors> lerp(ThemeExtension<MyColors>? other, double t) {
+    if (other is! MyColors) return this;
     return MyColors(
-      primaryColor: primaryColor,
-      textColorLight: textColorLight,
-      onboardingBg: onboardingBg,
-      bodyTextOnboarding: bodyTextOnboarding,
-      border: border,
-      iconSocialBG: iconSocialBG,
-      focusedBorder: focusedBorder,
-      appBarHome: appBarHome,
-      fontColor: fontColor,
-      secondaryFontColor: secondaryFontColor,
-      chatBubbleIsBot: chatBubbleIsBot,
-      textTimeMessage: textTimeMessage,
-      doctorCardBg: doctorCardBg,
+      primary: Color.lerp(primary, other.primary, t)!,
+      secondary: Color.lerp(secondary, other.secondary, t)!,
+      tertiary: Color.lerp(tertiary, other.tertiary, t)!,
     );
   }
 
-  static MyColors dark = const MyColors(
-    primaryColor: Color.fromARGB(255, 0, 105, 87),
-    textColorLight: Color.fromARGB(255, 118, 118, 118),
-    onboardingBg: Color.fromARGB(223, 42, 42, 42),
-    bodyTextOnboarding: ColorsDark.textColor,
-    border: Color.fromARGB(188, 153, 153, 153),
-    focusedBorder: Color.fromARGB(255, 0, 128, 107),
-    iconSocialBG: Color.fromARGB(206, 53, 53, 53),
-    appBarHome: ColorsDark.backgroundColor,
-    fontColor: Colors.white,
-    secondaryFontColor: Colors.black,
-    chatBubbleIsBot: Color.fromARGB(255, 63, 63, 63),
-    textTimeMessage: Color.fromARGB(212, 214, 214, 214),
-    doctorCardBg: Color.fromARGB(223, 42, 42, 42),
-  );
-
-  static MyColors light = const MyColors(
-    primaryColor: ColorsLight.primaryColor,
-    textColorLight: ColorsLight.textColorLight,
-    onboardingBg: Color.fromARGB(158, 210, 210, 210),
-    bodyTextOnboarding: ColorsLight.textColor,
-    border: Color.fromARGB(183, 156, 156, 156),
-    focusedBorder: ColorsLight.primaryColor,
-    iconSocialBG: Color.fromARGB(255, 208, 208, 208),
-    appBarHome: ColorsLight.backgroundColor,
-    fontColor: Colors.black,
-    secondaryFontColor: Colors.white,
-    chatBubbleIsBot: Color.fromARGB(255, 227, 227, 227),
-    textTimeMessage: ColorsLight.textColorLight,
-    doctorCardBg: Color.fromARGB(202, 255, 255, 255),
-  );
+  static Map<ThemeModeState, Map<ColorsPalleteState, MyColors>>
+      themeExtensions = {
+    ThemeModeState.light: {
+      ColorsPalleteState.blue: MyColors(
+        primary: lightPalettes[ColorsPalleteState.blue]!.primary,
+        secondary: lightPalettes[ColorsPalleteState.blue]!.secondary,
+        tertiary: lightPalettes[ColorsPalleteState.blue]!.tertiary,
+      ),
+      ColorsPalleteState.green: MyColors(
+        primary: lightPalettes[ColorsPalleteState.green]!.primary,
+        secondary: lightPalettes[ColorsPalleteState.green]!.secondary,
+        tertiary: lightPalettes[ColorsPalleteState.green]!.tertiary,
+      ),
+    },
+    ThemeModeState.dark: {
+      ColorsPalleteState.blue: MyColors(
+        primary: darkPalettes[ColorsPalleteState.blue]!.primary,
+        secondary: darkPalettes[ColorsPalleteState.blue]!.secondary,
+        tertiary: darkPalettes[ColorsPalleteState.blue]!.tertiary,
+      ),
+      ColorsPalleteState.green: MyColors(
+        primary: darkPalettes[ColorsPalleteState.green]!.primary,
+        secondary: darkPalettes[ColorsPalleteState.green]!.secondary,
+        tertiary: darkPalettes[ColorsPalleteState.green]!.tertiary,
+      ),
+    },
+    ThemeModeState.system: {
+      ColorsPalleteState.blue: MyColors(
+        primary: lightPalettes[ColorsPalleteState.blue]!.primary,
+        secondary: lightPalettes[ColorsPalleteState.blue]!.secondary,
+        tertiary: lightPalettes[ColorsPalleteState.blue]!.tertiary,
+      ),
+      ColorsPalleteState.green: MyColors(
+        primary: lightPalettes[ColorsPalleteState.green]!.primary,
+        secondary: lightPalettes[ColorsPalleteState.green]!.secondary,
+        tertiary: lightPalettes[ColorsPalleteState.green]!.tertiary,
+      ),
+    },
+  };
 }

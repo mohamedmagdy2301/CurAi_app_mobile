@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -7,6 +6,7 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/login/form_l
 import 'package:curai_app_mobile/features/auth/presentation/widgets/login/not_have_account.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/login_with_social.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/terms_and_conditions_widget.dart';
+import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
         body: Padding(
           padding: context.isLandscape
               ? padding(horizontal: 100, vertical: 35)
-              : padding(horizontal: 20, vertical: 20),
+              : padding(horizontal: 20, vertical: 0),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -29,11 +29,11 @@ class LoginScreen extends StatelessWidget {
                   descraption: LangKeys.descriptionLogin,
                 ),
                 const FormLoginWidget(),
-                spaceHeight(30),
+                spaceHeight(35),
                 const LoginWithSocial(),
-                spaceHeight(25),
+                spaceHeight(35),
                 const TermsAndConditionsWidget(),
-                spaceHeight(10),
+                spaceHeight(15),
                 const NotHaveAccount(),
               ],
             ),
