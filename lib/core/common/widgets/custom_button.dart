@@ -18,7 +18,7 @@ class CustemButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         context.translate(title),
-        style: context.styleRegular20,
+        style: context.styleRegular20.copyWith(color: Colors.white),
       ),
     );
   }

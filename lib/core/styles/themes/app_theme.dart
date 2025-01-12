@@ -37,9 +37,13 @@ class AppTheme {
       }
 
       return InputDecorationTheme(
+        border: buildBorder(colorScheme.onSecondary),
         errorBorder: buildBorder(colorScheme.error),
+        enabledBorder: buildBorder(colorScheme.onSecondary.withAlpha(70)),
+        focusedBorder: buildBorder(colorScheme.primary, width: 1.w),
         focusedErrorBorder: buildBorder(colorScheme.error, width: 2.w),
         errorStyle: AppTextStyles.bodySmall(color: colorScheme.error),
+        labelStyle: AppTextStyles.bodySmall(color: colorScheme.onSecondary),
       );
     }
 
@@ -57,7 +61,7 @@ class AppTheme {
     ElevatedButtonThemeData buttonTheme() {
       return ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          foregroundColor: colorScheme.onSurface,
+          foregroundColor: Colors.white,
           backgroundColor: colorScheme.primary,
           elevation: 0,
           fixedSize: Size(800.w, 50.h),

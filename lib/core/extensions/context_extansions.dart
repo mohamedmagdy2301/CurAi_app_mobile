@@ -7,6 +7,7 @@ extension ContextExt on BuildContext {
   double get statusBarHeight => MediaQuery.paddingOf(this).top;
   double get bottomBarHeight => MediaQuery.paddingOf(this).bottom;
   double get screenHeightWithoutPadding => height - statusBarHeight;
+  bool get isKeyboardVisible => MediaQuery.of(this).viewInsets.bottom == 0;
 
   bool get isLandscape =>
       MediaQuery.of(this).orientation == Orientation.landscape;

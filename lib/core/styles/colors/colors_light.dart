@@ -11,7 +11,7 @@ const lightPalettes = {
     backgroundLight: Color(0xFFF5F5F5), // Light shade for subtle contrast
     error: Color(0xFFE53935), // Error color
     onPrimary: Colors.white, // Text on primary color
-    onSecondary: Colors.white, // Text on secondary color
+    onSecondary: Color.fromARGB(255, 98, 98, 98), // Text on secondary color
     onTertiary: Colors.white, // Text on tertiary color
     onSurface: Colors.black, // Surface text color
     onError: Colors.white, // Error text color
@@ -24,7 +24,7 @@ const lightPalettes = {
     backgroundLight: Color(0xFFF5F5F5), // Lighter background
     error: Color(0xFFE53935), // Error color
     onPrimary: Colors.white, // On primary text
-    onSecondary: Colors.black, // On secondary text
+    onSecondary: Color.fromARGB(255, 98, 98, 98), // Text on secondary color
     onTertiary: Colors.white, // On tertiary text
     onSurface: Colors.black, // On surface text
     onError: Colors.white, // On error text

@@ -3,7 +3,6 @@ import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFeild extends StatefulWidget {
   const CustomTextFeild({
@@ -50,12 +49,8 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       onChanged: widget.onChanged,
       obscureText: isPasswordObscure,
       decoration: InputDecoration(
-        border: customOutlineInputBorder(Colors.black),
-        enabledBorder: customOutlineInputBorder(Colors.black),
-        focusedBorder: customOutlineInputBorder(Colors.black),
         suffixIcon: changePasswordObscure(),
         labelText: widget.labelText,
-        labelStyle: context.styleRegular14,
       ),
     );
   }
@@ -69,19 +64,14 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
               });
             },
             icon: Icon(
-              color: isPasswordObscure ? Colors.black : context.colors.primary,
+              color: isPasswordObscure
+                  ? context.color.onSecondary.withAlpha(90)
+                  : context.color.primary,
               isPasswordObscure
                   ? CupertinoIcons.eye_slash_fill
                   : CupertinoIcons.eye_fill,
             ),
           )
         : null;
-  }
-
-  OutlineInputBorder customOutlineInputBorder(Color color) {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(15.r)),
-      borderSide: BorderSide(color: color),
-    );
   }
 }

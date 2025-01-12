@@ -1,6 +1,6 @@
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
 
 class HeaderAuthWidger extends StatelessWidget {
@@ -17,20 +17,19 @@ class HeaderAuthWidger extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        spaceHeight(30),
+        spaceHeight(40),
         Text(
           context.translate(title),
-          style: context.textTheme.headlineLarge!.copyWith(
-            color: context.colors.primary,
-            fontWeight: FontWeightHelper.extraBold,
+          style: context.styleBold24.copyWith(
+            color: context.color.primary,
           ),
         ),
         spaceHeight(10),
         Text(
           context.translate(descraption),
-          style: context.textTheme.bodyMedium!.copyWith(
-              // color: context.colors.textColorLight,
-              ),
+          style: context.styleRegular14.copyWith(
+            color: context.color.onSecondary,
+          ),
         ),
       ],
     );
