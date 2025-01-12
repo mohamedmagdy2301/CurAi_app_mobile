@@ -45,7 +45,7 @@ class LoginWithSocial extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              // backgroundColor: context.colors.iconSocialBG,
+              backgroundColor: context.colors.primaryColor!.withAlpha(100),
               radius: 25.r,
               child: SvgPicture.asset(
                 'assets/svg/Logo-Google.svg',
@@ -53,7 +53,7 @@ class LoginWithSocial extends StatelessWidget {
             ),
             spaceWidth(20),
             CircleAvatar(
-              // backgroundColor: context.colors.iconSocialBG,
+              backgroundColor: context.colors.primaryColor!.withAlpha(100),
               radius: 25.r,
               child: SvgPicture.asset(
                 'assets/svg/Logo-Facebook.svg',
@@ -61,7 +61,7 @@ class LoginWithSocial extends StatelessWidget {
             ),
             spaceWidth(20),
             CircleAvatar(
-              // backgroundColor: context.colors.iconSocialBG,
+              backgroundColor: context.colors.primaryColor!.withAlpha(100),
               radius: 25.r,
               child: SvgPicture.asset(
                 'assets/svg/Logo-Apple.svg',

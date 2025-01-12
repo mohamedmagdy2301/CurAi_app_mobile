@@ -27,7 +27,7 @@ class BodyOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 320.h,
+      height: 330.h,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
