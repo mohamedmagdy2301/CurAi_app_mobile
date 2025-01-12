@@ -1,8 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,20 +27,20 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       automaticallyImplyLeading: false,
       pinned: true,
       elevation: 0,
-      flexibleSpace: Container(),
+      flexibleSpace: Container(color: context.color.surface),
       toolbarHeight: 70.h,
       title: ListTile(
-        title: Text(
+        title: AutoSizeText(
           context.translate(LangKeys.hiMohamed),
-          style: context.textTheme.headlineSmall!.copyWith(
-            fontWeight: FontWeightHelper.bold,
-          ),
+          style: context.styleExtraBold20,
+          maxLines: 1,
         ),
-        subtitle: Text(
+        subtitle: AutoSizeText(
           context.translate(LangKeys.howAreYouToday),
-          style: context.textTheme.bodyMedium!.copyWith(
-              // color: context.colors.textColorLight,
-              ),
+          style: context.styleBold14.copyWith(
+            color: context.color.onSecondary.withAlpha(130),
+          ),
+          maxLines: 1,
         ),
         trailing: IconButton(
           onPressed: () {
@@ -54,7 +55,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
             isLabelVisible: count != 0,
             child: Icon(
               CupertinoIcons.bell,
-              color: context.colors.primary,
+              color: context.color.primary,
             ),
           ),
         ),
@@ -64,11 +65,11 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
 
   double iconSize(BuildContext context) {
     return context.width < 500
-        ? 25.sp
+        ? 28.sp
         : context.width < 700
-            ? 20.sp
+            ? 22.sp
             : context.width < 900
-                ? 15.sp
-                : 10.sp;
+                ? 17.sp
+                : 12.sp;
   }
 }

@@ -1,9 +1,10 @@
 // ignore_for_file: flutter_style_todos
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
 
 class TitleSectionWidget extends StatelessWidget {
@@ -16,23 +17,20 @@ class TitleSectionWidget extends StatelessWidget {
       padding: padding(horizontal: 20),
       child: Row(
         children: [
-          Text(
+          AutoSizeText(
             title,
-            style: context.textTheme.titleLarge!.copyWith(
-              //TODO: change color
-              // color: context.colors.bodyTextOnboarding,
-              fontWeight: FontWeightHelper.bold,
-            ),
+            maxLines: 1,
+            style: context.styleBold20,
           ),
           const Spacer(),
           TextButton(
             onPressed: onPressed,
-            child: Text(
+            child: AutoSizeText(
               context.translate(LangKeys.seeAll),
-              style: context.textTheme.bodyLarge!.copyWith(
+              style: context.styleBold14.copyWith(
                 color: context.colors.primary,
-                fontWeight: FontWeightHelper.medium,
               ),
+              maxLines: 1,
             ),
           ),
         ],

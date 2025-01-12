@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/features/user/models/chatbot_model/messages_chatbot_model.dart';
@@ -49,14 +51,13 @@ class MessageBubbleWidget extends StatelessWidget {
         borderRadius: _bubbleBorderRadius(context),
       ),
       child: isUserMessage
-          ? Text(
+          ? AutoSizeText(
               messageModel.messageText,
               textDirection: textDirection(messageModel.messageText),
               textAlign:
                   context.isStateArabic ? TextAlign.right : TextAlign.left,
-              style: context.textTheme.bodyMedium!.copyWith(
-                color: Colors.white,
-                fontSize: 16.sp,
+              style: context.styleRegular16.copyWith(
+                color: context.color.onPrimary,
                 height: 1.5.h,
               ),
             )
