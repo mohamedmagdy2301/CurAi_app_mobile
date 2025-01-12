@@ -18,7 +18,6 @@ class CustomAppBarDoctorSpecialities extends StatelessWidget
         context.translate(LangKeys.doctorSpeciality),
         maxLines: 1,
       ),
-      iconTheme: const IconThemeData(color: Colors.black),
       centerTitle: true,
     );
   }
