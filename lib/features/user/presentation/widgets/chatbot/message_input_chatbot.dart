@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
@@ -65,7 +66,7 @@ class _MessageInputState extends State<MessageInput> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: context.color.onSecondary.withAlpha(20),
-                  contentPadding: padding(horizontal: 20, vertical: 10),
+                  contentPadding: context.padding(horizontal: 20, vertical: 10),
                   enabledBorder: buildBorder(),
                   focusedBorder: buildBorder(),
                   border: buildBorder(),
@@ -92,10 +93,10 @@ class _MessageInputState extends State<MessageInput> {
               onTap: isSentMessage ? _sendMessage : null,
               child: CircleAvatar(
                 backgroundColor: context.color.primary,
-                radius: 22.r,
+                radius: context.setR(22),
                 child: isSentMessage
-                    ? Icon(Icons.send, size: 18.sp)
-                    : Icon(Icons.mic, size: 20.sp),
+                    ? Icon(Icons.send, size: context.setSp(18))
+                    : Icon(Icons.mic, size: context.setSp(20)),
               ),
             ),
           ],
@@ -106,7 +107,7 @@ class _MessageInputState extends State<MessageInput> {
 
   OutlineInputBorder buildBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+      borderRadius: BorderRadius.all(Radius.circular(context.setR(10))),
       borderSide: BorderSide.none,
     );
   }
