@@ -1,5 +1,4 @@
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/login_with_social.dart';
@@ -17,8 +16,8 @@ class RegisterScreen extends StatelessWidget {
       child: Scaffold(
         body: Padding(
           padding: context.isLandscape
-              ? padding(horizontal: 100, vertical: 35)
-              : padding(horizontal: 20),
+              ? context.padding(horizontal: 100, vertical: 35)
+              : context.padding(horizontal: 20),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -29,11 +28,11 @@ class RegisterScreen extends StatelessWidget {
                   descraption: LangKeys.descriptionRegister,
                 ),
                 const FormRegisterWidget(),
-                spaceHeight(35),
+                context.spaceHeight(35),
                 const LoginWithSocial(),
-                spaceHeight(35),
+                context.spaceHeight(35),
                 const TermsAndConditionsWidget(),
-                spaceHeight(15),
+                context.spaceHeight(15),
                 const AleadyHaveAccount(),
               ],
             ),
