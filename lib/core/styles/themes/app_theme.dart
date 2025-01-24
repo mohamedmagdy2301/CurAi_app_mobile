@@ -1,10 +1,10 @@
 import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_style_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/fonts_family_helper.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_color_schemes.dart';
 import 'package:curai_app_mobile/core/styles/themes/color_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   static ThemeData getTheme(
@@ -30,10 +30,10 @@ class AppTheme {
 
     // Input Decoration Theme
     InputDecorationTheme inputDecorationTheme() {
-      OutlineInputBorder buildBorder(Color color, {double width = 1.0}) {
+      OutlineInputBorder buildBorder(Color color) {
         return OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.r)),
-          borderSide: BorderSide(color: color, width: width.w),
+          borderRadius: BorderRadius.all(Radius.circular(context.setR(8))),
+          borderSide: BorderSide(color: color),
         );
       }
 
@@ -41,8 +41,8 @@ class AppTheme {
         border: buildBorder(colorScheme.onSecondary),
         errorBorder: buildBorder(colorScheme.error),
         enabledBorder: buildBorder(colorScheme.onSecondary.withAlpha(70)),
-        focusedBorder: buildBorder(colorScheme.primary, width: 1.w),
-        focusedErrorBorder: buildBorder(colorScheme.error, width: 2.w),
+        focusedBorder: buildBorder(colorScheme.primary),
+        focusedErrorBorder: buildBorder(colorScheme.error),
         errorStyle: AppTextStyles.bodySmall(color: colorScheme.error),
         labelStyle: AppTextStyles.bodySmall(color: colorScheme.onSecondary),
       );
@@ -53,8 +53,11 @@ class AppTheme {
       return CardTheme(
         color: colorScheme.surface,
         elevation: 2,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            context.setR(8),
+          ),
+        ),
       );
     }
 
@@ -65,9 +68,9 @@ class AppTheme {
           foregroundColor: Colors.white,
           backgroundColor: colorScheme.primary,
           elevation: 0,
-          fixedSize: Size(800.w, 50.h),
+          fixedSize: Size(context.setW(800), context.setH(50)),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: BorderRadius.circular(context.setR(10)),
           ),
         ),
       );
@@ -80,7 +83,7 @@ class AppTheme {
         backgroundColor: colorScheme.primary,
         behavior: SnackBarBehavior.fixed,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(context.setR(8)),
         ),
       );
     }

@@ -24,7 +24,7 @@ extension SizerExt on BuildContext {
   double setW(num width) => width * scaleWidth;
   double setH(num height) => height * scaleHeight;
   double setSp(num fontSize) => fontSize * scaleWidth;
-  double setMs(num size) => size * min(scaleWidth, scaleHeight);
+  double setR(num size) => size * min(scaleWidth, scaleHeight);
 
   double get statusBarHeight => MediaQuery.paddingOf(this).top;
   double get bottomBarHeight => MediaQuery.paddingOf(this).bottom;
