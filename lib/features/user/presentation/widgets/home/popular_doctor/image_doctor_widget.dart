@@ -1,4 +1,5 @@
 import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/details_doctor_screen.dart';
@@ -18,17 +19,25 @@ class ImageDoctorWidget extends StatelessWidget {
       onTap: () => context.push(DoctorDetailsScreen(doctorModel: doctorModel)),
       child: ClipRRect(
         borderRadius: BorderRadius.only(
-          topRight: Radius.circular(context.isStateArabic ? 12.r : 2.r),
-          bottomRight: Radius.circular(context.isStateArabic ? 12.r : 2.r),
-          bottomLeft: Radius.circular(context.isStateArabic ? 2.r : 12.r),
-          topLeft: Radius.circular(context.isStateArabic ? 2.r : 12.r),
+          topRight: Radius.circular(
+            context.isStateArabic ? context.setR(12) : context.setR(2),
+          ),
+          bottomRight: Radius.circular(
+            context.isStateArabic ? context.setR(12) : context.setR(2),
+          ),
+          bottomLeft: Radius.circular(
+            context.isStateArabic ? context.setR(2) : context.setR(12),
+          ),
+          topLeft: Radius.circular(
+            context.isStateArabic ? context.setR(2) : context.setR(12),
+          ),
         ),
         child: Hero(
           tag: doctorModel.id.toString(),
           child: Image.asset(
             doctorModel.imageUrl,
-            height: 130.w,
-            width: 90.w,
+            height: context.setH(130),
+            width: context.setW(90),
             fit: BoxFit.cover,
           ),
         ),

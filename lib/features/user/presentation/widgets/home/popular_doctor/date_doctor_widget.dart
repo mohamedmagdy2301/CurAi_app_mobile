@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
@@ -14,7 +15,7 @@ class DateDoctorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 8.w,
+      spacing: context.setW(8),
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(

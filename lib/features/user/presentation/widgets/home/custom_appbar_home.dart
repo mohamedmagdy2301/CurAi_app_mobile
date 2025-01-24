@@ -28,7 +28,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       pinned: true,
       elevation: 0,
       flexibleSpace: Container(color: context.color.surface),
-      toolbarHeight: 70.h,
+      toolbarHeight: context.setH(70),
       title: ListTile(
         title: AutoSizeText(
           context.translate(LangKeys.hiMohamed),
@@ -49,7 +49,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
               context.pushNamed(Routes.notificationScreen);
             });
           },
-          iconSize: iconSize(context),
+          iconSize: context.setSp(22),
           icon: Badge.count(
             count: count,
             isLabelVisible: count != 0,
@@ -61,15 +61,5 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
         ),
       ),
     );
-  }
-
-  double iconSize(BuildContext context) {
-    return context.width < 500
-        ? 28.sp
-        : context.width < 700
-            ? 22.sp
-            : context.width < 900
-                ? 17.sp
-                : 12.sp;
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/user/data/doctors_list.dart';

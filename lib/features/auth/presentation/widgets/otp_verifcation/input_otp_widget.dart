@@ -82,10 +82,10 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
       ),
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(context.setR(10)),
         borderWidth: 0,
-        fieldHeight: context.isLandscape ? 80.h : 60.h,
-        fieldWidth: context.isLandscape ? 20.w : 60.w,
+        fieldHeight: context.isLandscape ? context.setH(80) : context.setH(60),
+        fieldWidth: context.isLandscape ? context.setW(20) : context.setW(60),
         activeColor: Colors.transparent,
         inactiveColor: Colors.transparent,
         selectedColor: Colors.transparent,

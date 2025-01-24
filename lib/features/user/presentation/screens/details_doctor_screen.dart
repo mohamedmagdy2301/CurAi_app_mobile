@@ -22,19 +22,19 @@ class DoctorDetailsScreen extends StatelessWidget {
         tag: doctorModel.id.toString(),
         child: Image.asset(
           doctorModel.imageUrl,
-          height: 395.h,
+          height: context.setH(395),
           width: double.infinity,
           fit: BoxFit.fill,
         ),
       ),
       bottomSheet: Container(
-        height: context.height - 380.h,
+        height: context.height - context.setH(380),
         width: double.infinity,
         decoration: BoxDecoration(
           // color: context.colors.appBarHome,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(18.r),
-            topRight: Radius.circular(18.r),
+            topLeft: Radius.circular(context.setR(18)),
+            topRight: Radius.circular(context.setR(18)),
           ),
         ),
         child: Padding(
@@ -68,10 +68,10 @@ class DoctorDetailsScreen extends StatelessWidget {
               context.spaceHeight(10),
               FittedBox(
                 child: Row(
-                  spacing: 10.w,
+                  spacing: context.setW(5),
                   children: [
                     Row(
-                      spacing: 3.w,
+                      spacing: context.setW(3),
                       children: List.generate(
                         int.parse(doctorModel.ratingEn.split('.').first),
                         (index) => const Icon(
@@ -96,7 +96,7 @@ class DoctorDetailsScreen extends StatelessWidget {
               const Spacer(),
               Image.asset(
                 'assets/images/Map.png',
-                height: 140.h,
+                height: context.setH(140),
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),
