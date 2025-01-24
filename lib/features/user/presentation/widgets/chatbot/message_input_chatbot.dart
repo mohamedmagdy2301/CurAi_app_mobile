@@ -3,7 +3,6 @@ import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.da
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/logger_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageInput extends StatefulWidget {
   const MessageInput({
@@ -50,7 +49,7 @@ class _MessageInputState extends State<MessageInput> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: padding(horizontal: 10, vertical: 10),
+        padding: context.padding(horizontal: 10, vertical: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

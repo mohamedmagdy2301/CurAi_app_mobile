@@ -1,5 +1,4 @@
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
@@ -8,7 +7,6 @@ import 'package:curai_app_mobile/features/user/presentation/screens/setting_scre
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainScaffoldUser extends StatelessWidget {
   const MainScaffoldUser({super.key});

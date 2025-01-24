@@ -34,7 +34,7 @@ class _BodyChatbotState extends State<BodyChatbot> {
         const BuildChatMessage(),
         Expanded(
           child: Padding(
-            padding: padding(horizontal: 15),
+            padding: context.padding(horizontal: 15),
             child: BlocBuilder<ChatCubit, ChatState>(
               builder: (context, state) {
                 final messages = context.read<ChatCubit>().messagesList;

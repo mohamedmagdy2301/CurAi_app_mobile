@@ -4,14 +4,13 @@ import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
 import 'package:curai_app_mobile/core/app/onboarding/widgets/custom_dot_onboarding.dart';
 import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BodyOnboarding extends StatelessWidget {
   const BodyOnboarding({
@@ -28,20 +27,20 @@ class BodyOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 330.h,
+      height: context.setH(330),
       width: double.infinity,
       decoration: BoxDecoration(
         color: context.color.surface,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40.r),
-          topRight: Radius.circular(40.r),
+          topLeft: Radius.circular(context.setR(40)),
+          topRight: Radius.circular(context.setR(40)),
         ),
       ),
-      padding: padding(horizontal: 20, vertical: 25),
+      padding: context.padding(horizontal: 20, vertical: 25),
       child: Column(
         children: [
           SizedBox(
-            height: 80.h,
+            height: context.setH(80),
             child: AutoSizeText(
               textAlign: TextAlign.center,
               context.translate(title),
@@ -49,9 +48,9 @@ class BodyOnboarding extends StatelessWidget {
               style: context.styleBold34,
             ),
           ),
-          spaceHeight(10),
+          context.spaceHeight(10),
           SizedBox(
-            height: 90.h,
+            height: context.setH(90),
             child: AutoSizeText(
               textAlign: TextAlign.center,
               context.translate(body),

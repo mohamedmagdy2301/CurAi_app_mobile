@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/user/data/doctors_list.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
@@ -48,7 +47,7 @@ class _FilterAllDoctorState extends State<FilterAllDoctorWidget> {
       children: [
         spaceHeight(30),
         Padding(
-          padding: padding(horizontal: 20),
+          padding: context.padding(horizontal: 20),
           child: CustomTextFeild(
             labelText: context.translate(LangKeys.doctors),
             onChanged: filterList,

@@ -1,12 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/features/user/models/chatbot_model/messages_chatbot_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot/chatbot_markdown_bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageBubbleWidget extends StatelessWidget {
   const MessageBubbleWidget({
@@ -44,7 +42,7 @@ class MessageBubbleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding(vertical: 12, horizontal: 15),
+      padding: context.padding(vertical: 12, horizontal: 15),
       margin: _bubbleMargin(context),
       decoration: BoxDecoration(
         color: isUserMessage ? context.colors.primary : Colors.green,
