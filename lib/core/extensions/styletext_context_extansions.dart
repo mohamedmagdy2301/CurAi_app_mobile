@@ -1,6 +1,6 @@
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 extension StyleTextContextExt on BuildContext {
   TextTheme get textTheme => Theme.of(this).textTheme;
@@ -8,7 +8,7 @@ extension StyleTextContextExt on BuildContext {
 
   TextStyle get styleRegular10 => textTheme.bodySmall!.copyWith(
         fontWeight: FontWeightHelper.regular,
-        fontSize: 10.sp,
+        fontSize: setSp(10),
       );
 
   TextStyle get styleLight12 => textTheme.bodySmall!.copyWith(
@@ -47,13 +47,14 @@ extension StyleTextContextExt on BuildContext {
       );
 
   TextStyle get styleExtraBold16 => textTheme.bodyLarge!.copyWith(
-        fontSize: 16.sp,
+        fontSize: setSp(16),
         fontWeight: FontWeightHelper.extraBold,
       );
 
   TextStyle get styleMedium18 => textTheme.titleMedium!;
 
-  TextStyle get styleSemiBold18 => textTheme.headlineSmall!;
+  TextStyle get styleSemiBold18 =>
+      textTheme.headlineSmall!.copyWith(fontWeight: FontWeightHelper.semiBold);
   TextStyle get styleRegular20 => textTheme.titleLarge!.copyWith(
         fontWeight: FontWeightHelper.regular,
       );
@@ -71,7 +72,7 @@ extension StyleTextContextExt on BuildContext {
 
   TextStyle get styleBlack28 => textTheme.displayMedium!;
   TextStyle get styleBlack30 =>
-      textTheme.displayMedium!.copyWith(fontSize: 30.sp);
+      textTheme.displayMedium!.copyWith(fontSize: setSp(30));
   TextStyle get styleBold34 => textTheme.displayLarge!.copyWith(
         fontWeight: FontWeightHelper.bold,
       );

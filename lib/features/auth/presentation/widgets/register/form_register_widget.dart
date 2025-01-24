@@ -1,8 +1,8 @@
 import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
@@ -71,7 +71,7 @@ class _FormRegisterWidgetState extends State<FormRegisterWidget> {
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          spaceHeight(5),
+          context.spaceHeight(5),
           CustemButton(
             title: LangKeys.register,
             onPressed: () => _onRegisterPressed(context),

@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/features/user/data/doctors_list.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/popular_doctor_item_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PopularDoctorWidget extends StatelessWidget {
   const PopularDoctorWidget({super.key});
@@ -10,7 +10,7 @@ class PopularDoctorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       options: CarouselOptions(
-        height: 135.h,
+        height: context.setH(135),
         autoPlay: true,
         autoPlayInterval: const Duration(seconds: 10),
         autoPlayCurve: Curves.easeInBack,

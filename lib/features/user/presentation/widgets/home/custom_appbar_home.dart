@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
+import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBarHome extends StatefulWidget {
   const CustomAppBarHome({
@@ -28,7 +28,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       pinned: true,
       elevation: 0,
       flexibleSpace: Container(color: context.color.surface),
-      toolbarHeight: 70.h,
+      toolbarHeight: context.setH(70),
       title: ListTile(
         title: AutoSizeText(
           context.translate(LangKeys.hiMohamed),
@@ -49,7 +49,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
               context.pushNamed(Routes.notificationScreen);
             });
           },
-          iconSize: iconSize(context),
+          iconSize: context.setSp(22),
           icon: Badge.count(
             count: count,
             isLabelVisible: count != 0,
@@ -61,15 +61,5 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
         ),
       ),
     );
-  }
-
-  double iconSize(BuildContext context) {
-    return context.width < 500
-        ? 28.sp
-        : context.width < 700
-            ? 22.sp
-            : context.width < 900
-                ? 17.sp
-                : 12.sp;
   }
 }

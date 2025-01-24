@@ -1,9 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 //TODO: change color
@@ -22,22 +21,22 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           backgroundColor: context.color.onSecondary.withAlpha(30),
-          radius: 26.r,
+          radius: context.setR(26),
           child: image.contains('.svg')
               ? SvgPicture.asset(
                   image,
-                  height: 25.h,
-                  width: 25.w,
+                  height: context.setH(25),
+                  width: context.setW(25),
                   fit: BoxFit.fill,
                 )
               : Image.asset(
                   image,
-                  height: 25.h,
-                  width: 25.w,
+                  height: context.setH(25),
+                  width: context.setW(25),
                   fit: BoxFit.fill,
                 ),
         ),
-        spaceHeight(15),
+        context.spaceHeight(15),
         AutoSizeText(
           context.translate(title),
           style: context.styleRegular12,

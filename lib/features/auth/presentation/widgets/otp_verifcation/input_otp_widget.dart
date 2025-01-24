@@ -1,13 +1,13 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
+import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpInputWidget extends StatefulWidget {
@@ -82,10 +82,10 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
       ),
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(context.setR(10)),
         borderWidth: 0,
-        fieldHeight: context.isLandscape ? 80.h : 60.h,
-        fieldWidth: context.isLandscape ? 20.w : 60.w,
+        fieldHeight: context.isLandscape ? context.setH(80) : context.setH(60),
+        fieldWidth: context.isLandscape ? context.setW(20) : context.setW(60),
         activeColor: Colors.transparent,
         inactiveColor: Colors.transparent,
         selectedColor: Colors.transparent,

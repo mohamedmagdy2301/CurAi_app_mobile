@@ -1,6 +1,5 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/otp_verifcation/input_otp_widget.dart';
@@ -18,8 +17,8 @@ class OtpVerifcationScreen extends StatelessWidget {
           body: Center(
             child: Padding(
               padding: context.isLandscape
-                  ? padding(horizontal: 120, vertical: 35)
-                  : padding(horizontal: 10, vertical: 20),
+                  ? context.padding(horizontal: 120, vertical: 35)
+                  : context.padding(horizontal: 10, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -27,12 +26,12 @@ class OtpVerifcationScreen extends StatelessWidget {
                     title: LangKeys.otpVerification,
                     descraption: LangKeys.pinDescription,
                   ),
-                  spaceHeight(30),
+                  context.spaceHeight(30),
                   Expanded(
                     child: Column(
                       children: [
                         const OtpInputWidget(),
-                        spaceHeight(30),
+                        context.spaceHeight(30),
                         Center(
                           child: Text(
                             'Code:  5555',

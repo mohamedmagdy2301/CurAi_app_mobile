@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
             ),
             maxLines: 1,
           ),
-          spaceWidth(5),
+          context.spaceWidth(5),
           AutoSizeText(
             context.translate(LangKeys.termsOfUse),
             style: context.styleSemiBold14.copyWith(
@@ -31,7 +31,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
             ),
             maxLines: 1,
           ),
-          spaceWidth(5),
+          context.spaceWidth(5),
           AutoSizeText(
             context.translate(LangKeys.and),
             style: context.styleRegular14.copyWith(
@@ -39,7 +39,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
             ),
             maxLines: 1,
           ),
-          spaceWidth(5),
+          context.spaceWidth(5),
           AutoSizeText(
             context.translate(LangKeys.privacyPolicy),
             style: context.styleSemiBold14.copyWith(

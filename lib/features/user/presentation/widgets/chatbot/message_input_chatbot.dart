@@ -1,9 +1,9 @@
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/logger_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageInput extends StatefulWidget {
   const MessageInput({
@@ -50,7 +50,7 @@ class _MessageInputState extends State<MessageInput> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: padding(horizontal: 10, vertical: 10),
+        padding: context.padding(horizontal: 10, vertical: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -66,7 +66,7 @@ class _MessageInputState extends State<MessageInput> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: context.color.onSecondary.withAlpha(20),
-                  contentPadding: padding(horizontal: 20, vertical: 10),
+                  contentPadding: context.padding(horizontal: 20, vertical: 10),
                   enabledBorder: buildBorder(),
                   focusedBorder: buildBorder(),
                   border: buildBorder(),
@@ -88,15 +88,15 @@ class _MessageInputState extends State<MessageInput> {
                 ),
               ),
             ),
-            spaceWidth(10),
+            context.spaceWidth(10),
             InkWell(
               onTap: isSentMessage ? _sendMessage : null,
               child: CircleAvatar(
                 backgroundColor: context.color.primary,
-                radius: 22.r,
+                radius: context.setR(22),
                 child: isSentMessage
-                    ? Icon(Icons.send, size: 18.sp)
-                    : Icon(Icons.mic, size: 20.sp),
+                    ? Icon(Icons.send, size: context.setSp(18))
+                    : Icon(Icons.mic, size: context.setSp(20)),
               ),
             ),
           ],
@@ -107,7 +107,7 @@ class _MessageInputState extends State<MessageInput> {
 
   OutlineInputBorder buildBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+      borderRadius: BorderRadius.all(Radius.circular(context.setR(10))),
       borderSide: BorderSide.none,
     );
   }

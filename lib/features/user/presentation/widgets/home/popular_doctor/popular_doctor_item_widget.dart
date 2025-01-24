@@ -1,11 +1,10 @@
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/date_doctor_widget.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/image_doctor_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PopularDoctorItemWidget extends StatelessWidget {
   const PopularDoctorItemWidget({
@@ -17,7 +16,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 310.w,
+      width: context.setW(310),
       child: Card(
         // color: context.colors.doctorCardBg,
         elevation: .3,
@@ -25,9 +24,9 @@ class PopularDoctorItemWidget extends StatelessWidget {
           children: [
             ImageDoctorWidget(doctorModel: modelDoctor),
             Padding(
-              padding: padding(horizontal: 15, vertical: 10),
+              padding: context.padding(horizontal: 15, vertical: 10),
               child: SizedBox(
-                width: 172.w,
+                width: context.setW(172),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +42,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                         fontWeight: FontWeightHelper.extraBold,
                       ),
                     ),
-                    spaceHeight(8),
+                    context.spaceHeight(8),
                     Text(
                       context.isStateArabic
                           ? modelDoctor.locationAr
@@ -55,7 +54,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                         fontWeight: FontWeightHelper.regular,
                       ),
                     ),
-                    spaceHeight(5),
+                    context.spaceHeight(5),
                     Text(
                       context.translate(modelDoctor.specialty),
                       style: context.textTheme.bodySmall!.copyWith(

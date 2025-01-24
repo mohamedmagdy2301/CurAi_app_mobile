@@ -1,12 +1,10 @@
 import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoctorDetailsScreen extends StatelessWidget {
   const DoctorDetailsScreen({required this.doctorModel, super.key});
@@ -24,27 +22,27 @@ class DoctorDetailsScreen extends StatelessWidget {
         tag: doctorModel.id.toString(),
         child: Image.asset(
           doctorModel.imageUrl,
-          height: 395.h,
+          height: context.setH(395),
           width: double.infinity,
           fit: BoxFit.fill,
         ),
       ),
       bottomSheet: Container(
-        height: context.height - 380.h,
+        height: context.height - context.setH(380),
         width: double.infinity,
         decoration: BoxDecoration(
           // color: context.colors.appBarHome,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(18.r),
-            topRight: Radius.circular(18.r),
+            topLeft: Radius.circular(context.setR(18)),
+            topRight: Radius.circular(context.setR(18)),
           ),
         ),
         child: Padding(
-          padding: padding(horizontal: 20, vertical: 5),
+          padding: context.padding(horizontal: 20, vertical: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              spaceHeight(20),
+              context.spaceHeight(20),
               FittedBox(
                 child: Text(
                   context.isStateArabic
@@ -56,7 +54,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              spaceHeight(10),
+              context.spaceHeight(10),
               FittedBox(
                 child: Text(
                   context.isStateArabic
@@ -67,13 +65,13 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                 ),
               ),
-              spaceHeight(10),
+              context.spaceHeight(10),
               FittedBox(
                 child: Row(
-                  spacing: 10.w,
+                  spacing: context.setW(5),
                   children: [
                     Row(
-                      spacing: 3.w,
+                      spacing: context.setW(3),
                       children: List.generate(
                         int.parse(doctorModel.ratingEn.split('.').first),
                         (index) => const Icon(
@@ -98,7 +96,7 @@ class DoctorDetailsScreen extends StatelessWidget {
               const Spacer(),
               Image.asset(
                 'assets/images/Map.png',
-                height: 140.h,
+                height: context.setH(140),
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),
@@ -107,7 +105,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 title: LangKeys.appName,
                 onPressed: () {},
               ),
-              spaceHeight(10),
+              context.spaceHeight(10),
             ],
           ),
         ),

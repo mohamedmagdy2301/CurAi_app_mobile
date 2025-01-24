@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
@@ -8,7 +8,6 @@ import 'package:curai_app_mobile/features/user/presentation/screens/setting_scre
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainScaffoldUser extends StatelessWidget {
   const MainScaffoldUser({super.key});
@@ -61,7 +60,7 @@ class MainScaffoldUser extends StatelessWidget {
                           NavigationDestinationLabelBehavior.alwaysHide,
                       elevation: 0,
                       animationDuration: const Duration(seconds: 1),
-                      height: 60.h,
+                      height: context.setH(60),
                       indicatorColor: Colors.transparent,
                       // overlayColor: WidgetStateProperty.all(
                       //     // context.colors.onboardingBg!.withOpacity(.3),
@@ -94,7 +93,7 @@ class MainScaffoldUser extends StatelessWidget {
           thickness: 2.5,
           color: context.colors.primary,
         ),
-        spaceHeight(15),
+        context.spaceHeight(15),
         Icon(icon, color: context.colors.primary),
       ],
     );
