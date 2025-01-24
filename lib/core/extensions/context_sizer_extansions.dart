@@ -26,6 +26,21 @@ extension SizerExt on BuildContext {
   double setSp(num fontSize) => fontSize * scaleWidth;
   double setR(num size) => size * min(scaleWidth, scaleHeight);
 
+  //! Space widget
+  Widget spaceHeight(double height) => SizedBox(height: setH(height));
+  Widget spaceWidth(double width) => SizedBox(width: setW(width));
+
+//! Padding symetric
+  EdgeInsets padding({
+    double? horizontal,
+    double? vertical,
+  }) {
+    return EdgeInsets.symmetric(
+      horizontal: setW(horizontal ?? 0),
+      vertical: setH(vertical ?? 0),
+    );
+  }
+
   double get statusBarHeight => MediaQuery.paddingOf(this).top;
   double get bottomBarHeight => MediaQuery.paddingOf(this).bottom;
   double get screenHeightWithoutPadding => height - statusBarHeight;

@@ -1,115 +1,142 @@
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextStyles {
-  static TextTheme getTextTheme(ColorScheme colorScheme) {
+  static TextTheme getTextTheme(BuildContext context, ColorScheme colorScheme) {
     return TextTheme(
-      displayLarge: displayLarge(color: colorScheme.onSurface),
-      displayMedium: displayMedium(color: colorScheme.onSurface),
-      displaySmall: displaySmall(color: colorScheme.onSurface),
-      headlineLarge: headlineLarge(color: colorScheme.onSurface),
-      headlineMedium: headlineMedium(color: colorScheme.onSurface),
-      headlineSmall: headlineSmall(color: colorScheme.onSurface),
-      labelLarge: labelLarge(color: colorScheme.onSurface),
-      labelMedium: labelMedium(color: colorScheme.onSurface),
-      labelSmall: labelSmall(color: colorScheme.onSurface),
-      bodyLarge: bodyLarge(color: colorScheme.onSurface),
-      bodyMedium: bodyMedium(color: colorScheme.onSurface),
-      bodySmall: bodySmall(color: colorScheme.onSurface),
-      titleLarge: titleLarge(color: colorScheme.onSurface),
-      titleMedium: titleMedium(color: colorScheme.onSurface),
-      titleSmall: bodySmall(color: colorScheme.onSurface),
+      displayLarge: displayLarge(context, color: colorScheme.onSurface),
+      displayMedium: displayMedium(context, color: colorScheme.onSurface),
+      displaySmall: displaySmall(context, color: colorScheme.onSurface),
+      headlineLarge: headlineLarge(context, color: colorScheme.onSurface),
+      headlineMedium: headlineMedium(context, color: colorScheme.onSurface),
+      headlineSmall: headlineSmall(context, color: colorScheme.onSurface),
+      labelLarge: labelLarge(context, color: colorScheme.onSurface),
+      labelMedium: labelMedium(context, color: colorScheme.onSurface),
+      labelSmall: labelSmall(context, color: colorScheme.onSurface),
+      bodyLarge: bodyLarge(context, color: colorScheme.onSurface),
+      bodyMedium: bodyMedium(context, color: colorScheme.onSurface),
+      bodySmall: bodySmall(context, color: colorScheme.onSurface),
+      titleLarge: titleLarge(context, color: colorScheme.onSurface),
+      titleMedium: titleMedium(context, color: colorScheme.onSurface),
+      titleSmall: bodySmall(context, color: colorScheme.onSurface),
     );
   }
 
-  static TextStyle bodySmall({required Color color}) => TextStyle(
+  static TextStyle bodySmall(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
-        fontSize: 12.sp,
+        fontSize: context.setSp(12),
         fontWeight: FontWeightHelper.regular,
       );
 
-  static TextStyle labelSmall({required Color color}) => TextStyle(
+  static TextStyle labelSmall(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
-        fontSize: 12.sp,
+        fontSize: context.setSp(12),
         fontWeight: FontWeightHelper.semiBold,
       );
 
-  static TextStyle labelLarge({required Color color}) => TextStyle(
+  static TextStyle labelLarge(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
-        fontSize: 14.sp,
+        fontSize: context.setSp(14),
         fontWeight: FontWeightHelper.bold,
       );
 
-  static TextStyle labelMedium({required Color color}) => TextStyle(
+  static TextStyle labelMedium(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
-        fontSize: 14.sp,
+        fontSize: context.setSp(14),
         fontWeight: FontWeightHelper.medium,
       );
 
-  static TextStyle bodyMedium({required Color color}) => TextStyle(
+  static TextStyle bodyMedium(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
-        fontSize: 14.sp,
+        fontSize: context.setSp(14),
         fontWeight: FontWeightHelper.regular,
       );
 
-  static TextStyle bodyLarge({required Color color}) => TextStyle(
+  static TextStyle bodyLarge(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
-        fontSize: 16.sp,
+        fontSize: context.setSp(16),
         fontWeight: FontWeightHelper.regular,
       );
 
-  static TextStyle titleMedium({required Color color}) => TextStyle(
+  static TextStyle titleMedium(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
-        fontSize: 18.sp,
+        fontSize: context.setSp(18),
         fontWeight: FontWeightHelper.medium,
       );
 
-  static TextStyle headlineSmall({required Color color}) => TextStyle(
+  static TextStyle headlineSmall(
+    BuildContext context, {
+    required Color color,
+  }) =>
+      TextStyle(
         color: color,
         fontWeight: FontWeightHelper.semiBold,
-        fontSize: 18.sp,
+        fontSize: context.setSp(18),
       );
 
-  static TextStyle titleLarge({required Color color}) => TextStyle(
+  static TextStyle titleLarge(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
         fontWeight: FontWeightHelper.bold,
-        fontSize: 20.sp,
+        fontSize: context.setSp(20),
       );
 
-  static TextStyle headlineMedium({required Color color}) => TextStyle(
+  static TextStyle headlineMedium(
+    BuildContext context, {
+    required Color color,
+  }) =>
+      TextStyle(
         color: color,
         fontWeight: FontWeightHelper.extraBold,
-        fontSize: 20.sp,
+        fontSize: context.setSp(20),
       );
 
-  static TextStyle displaySmall({required Color color}) => TextStyle(
+  static TextStyle displaySmall(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
         fontWeight: FontWeightHelper.extraBold,
-        fontSize: 22.sp,
+        fontSize: context.setSp(22),
       );
 
-  static TextStyle displayMedium({required Color color}) => TextStyle(
+  static TextStyle displayMedium(
+    BuildContext context, {
+    required Color color,
+  }) =>
+      TextStyle(
         color: color,
         fontWeight: FontWeightHelper.black,
-        fontSize: 28.sp,
+        fontSize: context.setSp(28),
       );
 
-  static TextStyle displayLarge({required Color color}) => TextStyle(
+  static TextStyle displayLarge(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
         fontWeight: FontWeightHelper.black,
-        fontSize: 34.sp,
+        fontSize: context.setSp(34),
       );
 
-  static TextStyle appBarTitle({required Color color}) => TextStyle(
+  static TextStyle appBarTitle(BuildContext context, {required Color color}) =>
+      TextStyle(
         color: color,
         fontWeight: FontWeightHelper.bold,
-        fontSize: 22.sp,
+        fontSize: context.setSp(22),
       );
 
-  static TextStyle headlineLarge({required Color color}) => TextStyle(
+  static TextStyle headlineLarge(
+    BuildContext context, {
+    required Color color,
+  }) =>
+      TextStyle(
         color: color,
         fontWeight: FontWeightHelper.extraBold,
-        fontSize: 24.sp,
+        fontSize: context.setSp(24),
       );
 }

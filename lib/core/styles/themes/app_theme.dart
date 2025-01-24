@@ -21,7 +21,8 @@ class AppTheme {
     // AppBar Theme
     AppBarTheme appBarTheme() {
       return AppBarTheme(
-        titleTextStyle: AppTextStyles.appBarTitle(color: colorScheme.onSurface),
+        titleTextStyle:
+            AppTextStyles.appBarTitle(context, color: colorScheme.onSurface),
         backgroundColor: colorScheme.surface,
         elevation: 0,
         iconTheme: IconThemeData(color: colorScheme.onSurface),
@@ -43,8 +44,9 @@ class AppTheme {
         enabledBorder: buildBorder(colorScheme.onSecondary.withAlpha(70)),
         focusedBorder: buildBorder(colorScheme.primary),
         focusedErrorBorder: buildBorder(colorScheme.error),
-        errorStyle: AppTextStyles.bodySmall(color: colorScheme.error),
-        labelStyle: AppTextStyles.bodySmall(color: colorScheme.onSecondary),
+        errorStyle: AppTextStyles.bodySmall(context, color: colorScheme.error),
+        labelStyle:
+            AppTextStyles.bodySmall(context, color: colorScheme.onSecondary),
       );
     }
 
@@ -79,7 +81,7 @@ class AppTheme {
     // Snack Bar Theme
     SnackBarThemeData snackBarTheme() {
       return SnackBarThemeData(
-        contentTextStyle: AppTextStyles.bodyLarge(color: Colors.white),
+        contentTextStyle: AppTextStyles.bodyLarge(context, color: Colors.white),
         backgroundColor: colorScheme.primary,
         behavior: SnackBarBehavior.fixed,
         shape: RoundedRectangleBorder(
@@ -94,7 +96,7 @@ class AppTheme {
       primaryColor: colorScheme.primary,
       scaffoldBackgroundColor: colorScheme.surface,
       useMaterial3: true,
-      textTheme: AppTextStyles.getTextTheme(colorScheme),
+      textTheme: AppTextStyles.getTextTheme(context, colorScheme),
       fontFamily: FontsFamilyHelper.getLocaledFontFamily(context),
       appBarTheme: appBarTheme(),
       inputDecorationTheme: inputDecorationTheme(),
