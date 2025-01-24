@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -41,27 +42,27 @@ class LoginWithSocial extends StatelessWidget {
             ),
           ],
         ),
-        spaceHeight(35),
+        context.spaceHeight(35),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             CircleAvatar(
               backgroundColor: context.color.onSecondary.withAlpha(30),
-              radius: 25.r,
+              radius: context.setR(25),
               child: SvgPicture.asset(
                 'assets/svg/Logo-Google.svg',
               ),
             ),
             CircleAvatar(
               backgroundColor: context.color.onSecondary.withAlpha(30),
-              radius: 25.r,
+              radius: context.setR(25),
               child: SvgPicture.asset(
                 'assets/svg/Logo-Facebook.svg',
               ),
             ),
             CircleAvatar(
               backgroundColor: context.color.onSecondary.withAlpha(30),
-              radius: 25.r,
+              radius: context.setR(25),
               child: SvgPicture.asset(
                 'assets/svg/Logo-Apple.svg',
               ),

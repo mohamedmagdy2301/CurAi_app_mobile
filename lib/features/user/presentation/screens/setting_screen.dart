@@ -199,7 +199,7 @@ class _SettingScreenState extends State<SettingScreen> {
 //           'light',
 //           'assets/images/splash_light.png',
 //         ),
-//         spaceWidth(10),
+//     context.spaceWidth(10),
 //         _buildIconChangeButton(
 //           context,
 //           'dark',

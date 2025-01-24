@@ -41,7 +41,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                         fontWeight: FontWeightHelper.extraBold,
                       ),
                     ),
-                    spaceHeight(8),
+                    context.spaceHeight(8),
                     Text(
                       context.isStateArabic
                           ? modelDoctor.locationAr
@@ -53,7 +53,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                         fontWeight: FontWeightHelper.regular,
                       ),
                     ),
-                    spaceHeight(5),
+                    context.spaceHeight(5),
                     Text(
                       context.translate(modelDoctor.specialty),
                       style: context.textTheme.bodySmall!.copyWith(

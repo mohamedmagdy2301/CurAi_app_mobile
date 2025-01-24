@@ -35,7 +35,7 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
         ),
-        spaceHeight(15),
+        context.spaceHeight(15),
         AutoSizeText(
           context.translate(title),
           style: context.styleRegular12,

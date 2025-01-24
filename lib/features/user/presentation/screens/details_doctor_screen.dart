@@ -42,7 +42,7 @@ class DoctorDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              spaceHeight(20),
+              context.spaceHeight(20),
               FittedBox(
                 child: Text(
                   context.isStateArabic
@@ -54,7 +54,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              spaceHeight(10),
+              context.spaceHeight(10),
               FittedBox(
                 child: Text(
                   context.isStateArabic
@@ -65,7 +65,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                 ),
               ),
-              spaceHeight(10),
+              context.spaceHeight(10),
               FittedBox(
                 child: Row(
                   spacing: 10.w,
@@ -105,7 +105,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 title: LangKeys.appName,
                 onPressed: () {},
               ),
-              spaceHeight(10),
+              context.spaceHeight(10),
             ],
           ),
         ),

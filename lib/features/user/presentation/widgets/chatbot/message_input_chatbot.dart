@@ -87,7 +87,7 @@ class _MessageInputState extends State<MessageInput> {
                 ),
               ),
             ),
-            spaceWidth(10),
+            context.spaceWidth(10),
             InkWell(
               onTap: isSentMessage ? _sendMessage : null,
               child: CircleAvatar(

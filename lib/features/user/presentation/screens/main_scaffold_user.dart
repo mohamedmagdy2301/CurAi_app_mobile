@@ -92,7 +92,7 @@ class MainScaffoldUser extends StatelessWidget {
           thickness: 2.5,
           color: context.colors.primary,
         ),
-        spaceHeight(15),
+        context.spaceHeight(15),
         Icon(icon, color: context.colors.primary),
       ],
     );

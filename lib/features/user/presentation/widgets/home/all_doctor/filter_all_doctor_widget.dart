@@ -45,7 +45,7 @@ class _FilterAllDoctorState extends State<FilterAllDoctorWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        spaceHeight(30),
+        context.spaceHeight(30),
         Padding(
           padding: context.padding(horizontal: 20),
           child: CustomTextFeild(
@@ -53,7 +53,7 @@ class _FilterAllDoctorState extends State<FilterAllDoctorWidget> {
             onChanged: filterList,
           ),
         ),
-        spaceHeight(30),
+        context.spaceHeight(30),
         Expanded(
           child: AllDoctorListviewWidget(
             filteredItems: filteredAllDoctorList,
