@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
@@ -34,7 +35,7 @@ class BuildChatMessage extends StatelessWidget {
             Colors.green,
           );
         }
-        return spaceHeight(0);
+        return context.spaceHeight(0);
       },
     );
   }
@@ -45,7 +46,7 @@ class BuildChatMessage extends StatelessWidget {
     Color color,
   ) {
     return SizedBox(
-      height: 25.h,
+      height: context.setH(25),
       child: Text(
         message,
         style: context.textTheme.bodySmall!.copyWith(

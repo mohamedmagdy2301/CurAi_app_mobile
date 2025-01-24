@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/chat_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot/build_chat_message.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot/chat_bubble.dart';
@@ -46,7 +46,7 @@ class _BodyChatbotState extends State<BodyChatbot> {
                   itemBuilder: (context, index) => ChatBubble(
                     messageModel: messages[index],
                   ),
-                  separatorBuilder: (context, index) => spaceHeight(15),
+                  separatorBuilder: (context, index) => context.spaceHeight(15),
                 );
               },
             ),
