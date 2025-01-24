@@ -1,7 +1,8 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
+import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';

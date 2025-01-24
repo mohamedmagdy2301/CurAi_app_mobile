@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';

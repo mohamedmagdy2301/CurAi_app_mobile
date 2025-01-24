@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:flutter/material.dart';
 
