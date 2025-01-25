@@ -40,7 +40,7 @@ class _FormForgetPasswordWidgetState extends State<FormForgetPasswordWidget> {
               controller: emailOrPhoneController,
             ),
             const Spacer(),
-            CustemButton(
+            CustomButton(
               title: LangKeys.resetPassword,
               onPressed: () {
                 if (formKey.currentState!.validate()) {
