@@ -5,17 +5,16 @@ import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart'
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class FormForgetPasswordWidget extends StatefulWidget {
-  const FormForgetPasswordWidget({super.key});
+class ResetPasswordFormWidget extends StatefulWidget {
+  const ResetPasswordFormWidget({super.key});
 
   @override
-  State<FormForgetPasswordWidget> createState() =>
-      _FormForgetPasswordWidgetState();
+  State<ResetPasswordFormWidget> createState() =>
+      _ResetPasswordFormWidgetState();
 }
 
-class _FormForgetPasswordWidgetState extends State<FormForgetPasswordWidget> {
+class _ResetPasswordFormWidgetState extends State<ResetPasswordFormWidget> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController emailOrPhoneController = TextEditingController();
 
@@ -43,11 +42,11 @@ class _FormForgetPasswordWidgetState extends State<FormForgetPasswordWidget> {
             CustomButton(
               title: LangKeys.resetPassword,
               onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  TextInput.finishAutofillContext();
-                  formKey.currentState!.save();
-                  context.pushNamed(Routes.otpVerification);
-                }
+                // if (formKey.currentState!.validate()) {
+                // TextInput.finishAutofillContext();
+                // formKey.currentState!.save();
+                context.pushNamed(Routes.otpVerification);
+                // }
                 // context.pushNamed(Routes.mainScaffoldUser);
               },
             ),

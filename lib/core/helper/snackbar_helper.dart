@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/common/widgets/animated_snackbar.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +31,7 @@ void showAnimatedSnackBar({
   _currentOverlayEntry = OverlayEntry(
     builder: (context) {
       return Positioned(
-        bottom: 70,
+        bottom: Platform.isIOS ? 70 : 40,
         left: 16,
         right: 16,
         child: AnimatedSnackBar(

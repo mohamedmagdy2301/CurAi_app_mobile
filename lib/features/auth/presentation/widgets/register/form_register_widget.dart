@@ -9,14 +9,14 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class FormRegisterWidget extends StatefulWidget {
-  const FormRegisterWidget({super.key});
+class RegistrationFormWidget extends StatefulWidget {
+  const RegistrationFormWidget({super.key});
 
   @override
-  State<FormRegisterWidget> createState() => _FormRegisterWidgetState();
+  State<RegistrationFormWidget> createState() => _RegistrationFormWidgetState();
 }
 
-class _FormRegisterWidgetState extends State<FormRegisterWidget> {
+class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
