@@ -72,7 +72,7 @@ class _FormRegisterWidgetState extends State<FormRegisterWidget> {
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           context.spaceHeight(5),
-          CustemButton(
+          CustomButton(
             title: LangKeys.register,
             onPressed: () => _onRegisterPressed(context),
           ),

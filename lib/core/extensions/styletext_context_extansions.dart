@@ -73,8 +73,20 @@ extension StyleTextContextExt on BuildContext {
   TextStyle get styleBlack28 => textTheme.displayMedium!;
   TextStyle get styleBlack30 =>
       textTheme.displayMedium!.copyWith(fontSize: setSp(30));
+  TextStyle get styleBold30 => textTheme.displayMedium!.copyWith(
+        fontWeight: FontWeightHelper.bold,
+        fontSize: setSp(30),
+      );
+
+  TextStyle get styleBold32 => textTheme.displayLarge!.copyWith(
+        fontWeight: FontWeightHelper.bold,
+        fontSize: setSp(32),
+      );
   TextStyle get styleBold34 => textTheme.displayLarge!.copyWith(
         fontWeight: FontWeightHelper.bold,
+      );
+  TextStyle get styleExtraBold34 => textTheme.displayLarge!.copyWith(
+        fontWeight: FontWeightHelper.extraBold,
       );
 
   TextStyle get styleBlack34 => textTheme.displayLarge!;

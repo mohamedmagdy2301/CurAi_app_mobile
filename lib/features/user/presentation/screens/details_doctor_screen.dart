@@ -101,7 +101,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
               const Spacer(),
-              CustemButton(
+              CustomButton(
                 title: LangKeys.appName,
                 onPressed: () {},
               ),

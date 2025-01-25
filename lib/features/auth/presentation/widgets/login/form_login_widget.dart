@@ -83,7 +83,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               ],
             ),
             context.spaceHeight(15),
-            CustemButton(
+            CustomButton(
               title: LangKeys.login,
               onPressed: () => _onLoginPressed(context),
             ),

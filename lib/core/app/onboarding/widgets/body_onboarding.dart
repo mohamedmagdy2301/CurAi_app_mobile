@@ -8,75 +8,82 @@ import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/responsive_helper/size_provider.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BodyOnboarding extends StatelessWidget {
   const BodyOnboarding({
-    required this.title,
-    required this.body,
-    required this.index,
-    required this.currentIndex,
     super.key,
   });
-  final int index;
-  final int currentIndex;
-  final String title;
-  final String body;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: context.setH(330),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: context.color.surface,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(context.setR(40)),
-          topRight: Radius.circular(context.setR(40)),
-        ),
-      ),
-      padding: context.padding(horizontal: 20, vertical: 25),
-      child: Column(
-        children: [
-          SizedBox(
-            height: context.setH(80),
-            child: AutoSizeText(
-              textAlign: TextAlign.center,
-              context.translate(title),
-              maxLines: 2,
-              style: context.styleBold34,
+    return SizeProvider(
+      baseSize: Size(context.width, 330),
+      height: context.setR(330),
+      width: context.setR(context.width),
+      child: BlocBuilder<OnboardingCubit, OnboardingState>(
+        builder: (context, state) {
+          final onboardingInfo = OnboardingInfo.onboardingInfo[state.index];
+          return Container(
+            height: context.sizeProvider.height,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: context.color.surface,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(context.setR(40)),
+                topRight: Radius.circular(context.setR(40)),
+              ),
             ),
-          ),
-          context.spaceHeight(10),
-          SizedBox(
-            height: context.setH(90),
-            child: AutoSizeText(
-              textAlign: TextAlign.center,
-              context.translate(body),
-              maxLines: 4,
-              style: context.styleLight16,
+            padding: context.padding(horizontal: 20, vertical: 25),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: context.setH(90),
+                  child: AutoSizeText(
+                    textAlign: TextAlign.center,
+                    context.translate(onboardingInfo.title),
+                    maxLines: 2,
+                    style: context.styleBold34,
+                  ),
+                ),
+                SizedBox(
+                  height: context.setH(90),
+                  width: context.width * 0.9,
+                  child: AutoSizeText(
+                    context.translate(onboardingInfo.body),
+                    style: context.styleMedium18.copyWith(
+                      color: context.color.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 4,
+                  ),
+                ),
+                const Spacer(),
+                CustomDotOnboarding(
+                  index: onboardingInfo.index,
+                  currentIndex: state.index,
+                ),
+                const Spacer(),
+                CustomButton(
+                  title: onboardingInfo.index ==
+                          OnboardingInfo.onboardingInfo.length - 1
+                      ? LangKeys.getStarted
+                      : LangKeys.next,
+                  onPressed: () {
+                    context.read<OnboardingCubit>().nextPage();
+                    if (BlocProvider.of<OnboardingCubit>(context).state
+                        is OnboardingFinished) {
+                      context.pushReplacementNamed(Routes.loginScreen);
+                    }
+                  },
+                ),
+              ],
             ),
-          ),
-          const Spacer(),
-          CustomDotOnboarding(
-            index: index,
-            currentIndex: currentIndex,
-          ),
-          const Spacer(),
-          CustemButton(
-            title: index == OnboardingInfo.onboardingInfo.length - 1
-                ? LangKeys.getStarted
-                : LangKeys.next,
-            onPressed: () {
-              context.read<OnboardingCubit>().nextPage();
-              if (BlocProvider.of<OnboardingCubit>(context).state
-                  is OnboardingFinished) {
-                context.pushReplacementNamed(Routes.loginScreen);
-              }
-            },
-          ),
-        ],
+          );
+        },
       ),
     );
   }
