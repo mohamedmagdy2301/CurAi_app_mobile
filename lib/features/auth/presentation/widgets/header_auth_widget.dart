@@ -4,8 +4,8 @@ import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart'
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:flutter/material.dart';
 
-class HeaderAuthWidger extends StatelessWidget {
-  const HeaderAuthWidger({
+class HeaderAuthWidget extends StatelessWidget {
+  const HeaderAuthWidget({
     required this.title,
     required this.descraption,
     super.key,

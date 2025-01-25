@@ -10,14 +10,14 @@ import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpInputWidget extends StatefulWidget {
-  const OtpInputWidget({super.key});
+class OtpCodeInput extends StatefulWidget {
+  const OtpCodeInput({super.key});
 
   @override
-  State<OtpInputWidget> createState() => _OtpInputWidgetState();
+  State<OtpCodeInput> createState() => _OtpCodeInputState();
 }
 
-class _OtpInputWidgetState extends State<OtpInputWidget> {
+class _OtpCodeInputState extends State<OtpCodeInput> {
   final TextEditingController textEditingController = TextEditingController();
   final String correctPin = '5555';
   Color activeFillColor = Colors.greenAccent.shade400;

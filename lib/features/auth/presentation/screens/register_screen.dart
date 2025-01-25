@@ -23,17 +23,17 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const HeaderAuthWidger(
+                const HeaderAuthWidget(
                   title: LangKeys.createAccount,
                   descraption: LangKeys.descriptionRegister,
                 ),
-                const FormRegisterWidget(),
+                const RegistrationFormWidget(),
                 context.spaceHeight(35),
-                const LoginWithSocial(),
+                const SocialAuthenticationWidget(),
                 context.spaceHeight(35),
-                const TermsAndConditionsWidget(),
+                const TermsOfServiceWidget(),
                 context.spaceHeight(15),
-                const AleadyHaveAccount(),
+                const AlreadyHaveAccountWidget(),
               ],
             ),
           ),

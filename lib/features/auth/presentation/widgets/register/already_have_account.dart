@@ -5,8 +5,8 @@ import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.da
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/material.dart';
 
-class AleadyHaveAccount extends StatelessWidget {
-  const AleadyHaveAccount({
+class AlreadyHaveAccountWidget extends StatelessWidget {
+  const AlreadyHaveAccountWidget({
     super.key,
   });
 

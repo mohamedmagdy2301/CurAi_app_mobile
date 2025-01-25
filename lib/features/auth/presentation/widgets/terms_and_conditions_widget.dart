@@ -5,8 +5,8 @@ import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.da
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/material.dart';
 
-class TermsAndConditionsWidget extends StatelessWidget {
-  const TermsAndConditionsWidget({
+class TermsOfServiceWidget extends StatelessWidget {
+  const TermsOfServiceWidget({
     super.key,
   });
 

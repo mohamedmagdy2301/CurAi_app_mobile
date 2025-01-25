@@ -23,15 +23,15 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const HeaderAuthWidger(
+                const HeaderAuthWidget(
                   title: LangKeys.welcomeBack,
                   descraption: LangKeys.descriptionLogin,
                 ),
                 const FormLoginWidget(),
                 context.spaceHeight(35),
-                const LoginWithSocial(),
+                const SocialAuthenticationWidget(),
                 context.spaceHeight(35),
-                const TermsAndConditionsWidget(),
+                const TermsOfServiceWidget(),
                 context.spaceHeight(15),
                 const NotHaveAccount(),
               ],

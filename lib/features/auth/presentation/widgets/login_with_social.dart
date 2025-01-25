@@ -3,11 +3,11 @@ import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/login/icon_auth_with_social.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class LoginWithSocial extends StatelessWidget {
-  const LoginWithSocial({
+class SocialAuthenticationWidget extends StatelessWidget {
+  const SocialAuthenticationWidget({
     super.key,
   });
 
@@ -43,30 +43,12 @@ class LoginWithSocial extends StatelessWidget {
           ],
         ),
         context.spaceHeight(35),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CircleAvatar(
-              backgroundColor: context.color.onSecondary.withAlpha(30),
-              radius: context.setR(25),
-              child: SvgPicture.asset(
-                'assets/svg/Logo-Google.svg',
-              ),
-            ),
-            CircleAvatar(
-              backgroundColor: context.color.onSecondary.withAlpha(30),
-              radius: context.setR(25),
-              child: SvgPicture.asset(
-                'assets/svg/Logo-Facebook.svg',
-              ),
-            ),
-            CircleAvatar(
-              backgroundColor: context.color.onSecondary.withAlpha(30),
-              radius: context.setR(25),
-              child: SvgPicture.asset(
-                'assets/svg/Logo-Apple.svg',
-              ),
-            ),
+            IconAuthWithSocial(icon: 'assets/svg/Logo-Google.svg'),
+            IconAuthWithSocial(icon: 'assets/svg/Logo-Facebook.svg'),
+            IconAuthWithSocial(icon: 'assets/svg/Logo-Apple.svg'),
           ],
         ),
       ],
