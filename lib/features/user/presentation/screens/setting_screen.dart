@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
 import 'package:curai_app_mobile/core/common/widgets/New%20folder/colors_palette_widget.dart';
 import 'package:curai_app_mobile/core/common/widgets/New%20folder/localize_widget.dart';
 import 'package:curai_app_mobile/core/common/widgets/New%20folder/theme_widget.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
@@ -52,7 +53,7 @@ class _SettingScreenState extends State<SettingScreen> {
     final state = context.watch<SettingsCubit>().state;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.isStateArabic ? 'الأعـــــدادات' : 'Settings'),
+        title: Text(context.translate(LangKeys.settings)),
         centerTitle: true,
         flexibleSpace: Container(color: context.color.surface),
         automaticallyImplyLeading: false,
@@ -62,7 +63,9 @@ class _SettingScreenState extends State<SettingScreen> {
         child: ListView(
           children: [
             _buildGeneralSettingsSection(context),
-            _buildAppearanceSection(context, cubit, state),
+            _buildthemeSection(context, cubit, state),
+            _buildLocalizeSection(context, cubit, state),
+            _buildColorPalettteSection(context, cubit, state),
           ],
         ),
       ),
@@ -87,24 +90,49 @@ class _SettingScreenState extends State<SettingScreen> {
             (route) => false,
           ),
         ),
+        _buildDivider(),
       ],
     );
   }
 
-  Widget _buildAppearanceSection(
+  Widget _buildthemeSection(
     BuildContext context,
     SettingsCubit cubit,
     SettingsState state,
   ) {
     return _buildSection(
       context,
-      title: context.isStateArabic ? 'المظهر' : 'Appearance',
+      title: context.translate(LangKeys.theme),
       children: [
         ThemeWidget(cubit: cubit, state: state),
-        const Divider(),
+      ],
+    );
+  }
+
+  Widget _buildLocalizeSection(
+    BuildContext context,
+    SettingsCubit cubit,
+    SettingsState state,
+  ) {
+    return _buildSection(
+      context,
+      title: context.translate(LangKeys.language),
+      children: [
         LocalizeWidget(cubit: cubit, state: state),
-        const Divider(),
-        const SizedBox(height: 20),
+      ],
+    );
+  }
+
+  Widget _buildColorPalettteSection(
+    BuildContext context,
+    SettingsCubit cubit,
+    SettingsState state,
+  ) {
+    return _buildSection(
+      context,
+      title: context.isStateArabic ? 'لوحة الألوان' : 'Color Palette',
+      children: [
+        context.spaceHeight(20),
         const ColorPaletteWidget(),
       ],
     );
@@ -143,18 +171,21 @@ class _SettingScreenState extends State<SettingScreen> {
     required List<Widget> children,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: ExpansionTileCard(
-        baseColor: Theme.of(context).cardColor,
-        expandedColor: Theme.of(context).cardColor,
-        elevation: 0,
-        title: Text(
-          title,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium
-              ?.copyWith(fontWeight: FontWeight.bold),
+        title: Text(title, style: context.styleSemiBold16),
+        trailing: RotatedBox(
+          quarterTurns: context.isStateArabic ? 3 : 1,
+          child: Icon(
+            size: context.setSp(15),
+            Icons.arrow_forward_ios,
+            color: context.color.onSurface,
+          ),
         ),
+        animateTrailing: true,
+        baseColor: Colors.transparent,
+        expandedColor: Colors.transparent,
+        elevation: 0,
         children: children,
       ),
     );
@@ -168,14 +199,14 @@ class _SettingScreenState extends State<SettingScreen> {
     VoidCallback? onTap,
   }) {
     return ListTile(
-      leading: Icon(icon, color: Theme.of(context).primaryColor),
-      title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
+      leading: Icon(icon, color: context.color.primary),
+      title: Text(title, style: context.styleRegular14),
       trailing: trailing,
       onTap: onTap,
     );
   }
 
-  Widget _buildDivider() => const Divider(thickness: 0.5);
+  Widget _buildDivider() => const Divider(thickness: 0.2);
 
   void _showSnackbar(BuildContext context, bool success, String message) {
     showMessage(

@@ -1,5 +1,5 @@
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
@@ -91,10 +91,10 @@ class MainScaffoldUser extends StatelessWidget {
         Divider(
           height: 2,
           thickness: 2.5,
-          color: context.colors.primary,
+          color: context.color.primary,
         ),
         context.spaceHeight(15),
-        Icon(icon, color: context.colors.primary),
+        Icon(icon, color: context.color.primary),
       ],
     );
   }

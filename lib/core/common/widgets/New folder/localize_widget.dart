@@ -1,7 +1,6 @@
 import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
 import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
 import 'package:curai_app_mobile/core/common/widgets/New%20folder/build_radio_listtile.dart';
-import 'package:curai_app_mobile/core/common/widgets/New%20folder/build_section_title.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,6 @@ class LocalizeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const BuildSectionTitle(title: LangKeys.language),
         BuildRadioListTile<LocalizationState>(
           labelKey: LangKeys.english,
           value: LocalizationState.en,

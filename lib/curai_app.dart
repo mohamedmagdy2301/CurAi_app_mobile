@@ -67,8 +67,9 @@ class _CuraiAppState extends State<CuraiApp> with WidgetsBindingObserver {
                 themeMode: cubit.getThemeMode(state.themeMode),
                 builder: (context, child) => setupConnectivityWidget(child),
                 onGenerateRoute: AppRoutes.onGenerateRoute,
-                locale: const Locale('en'),
-                // cubit.getLocaleFromState(state.locale),
+                locale:
+                    // const Locale('ar'),
+                    cubit.getLocaleFromState(state.locale),
                 supportedLocales: AppLocalSetup.supportedLocales,
                 localeResolutionCallback: AppLocalSetup.resolveUserLocale,
                 localizationsDelegates: AppLocalSetup.localesDelegates,
