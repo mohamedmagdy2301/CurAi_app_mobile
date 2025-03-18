@@ -1,0 +1,2 @@
+F:/Projects/curai_app_mobile/android/app/.cxx/Debug/1g71f111/armeabi-v7a/CMakeFiles/edit_cache.dir
+F:/Projects/curai_app_mobile/android/app/.cxx/Debug/1g71f111/armeabi-v7a/CMakeFiles/rebuild_cache.dir
