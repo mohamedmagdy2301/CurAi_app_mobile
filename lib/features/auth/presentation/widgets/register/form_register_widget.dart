@@ -3,11 +3,15 @@ import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/features/auth/data/models/register_model/register_request.dart';
+import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegistrationFormWidget extends StatefulWidget {
   const RegistrationFormWidget({super.key});
@@ -38,8 +42,23 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
     _validateForm();
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
-
-      context.pushNamed(Routes.mainScaffoldUser);
+      if (_passwordController.text != _confirmPasswordController.text) {
+        showMessage(
+          context,
+          message: context.translate(LangKeys.passwordNotMatch),
+          type: SnackBarType.error,
+        );
+        return;
+      }
+      context.read<AuthCubit>().register(
+            RegisterRequest(
+              email: _emailController.text,
+              password: _passwordController.text,
+              username: _userNameController.text,
+              confirmPassword: _confirmPasswordController.text,
+            ),
+          );
+      context.pushNamed(Routes.loginScreen);
     }
   }
 
@@ -82,9 +101,38 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           context.spaceHeight(5),
-          CustomButton(
-            title: LangKeys.register,
-            onPressed: () => _onRegisterPressed(context),
+          BlocConsumer<AuthCubit, AuthState>(
+            buildWhen: (previous, current) =>
+                current is RegisterLoading ||
+                current is RegisterSuccess ||
+                current is RegisterError,
+            listenWhen: (previous, current) =>
+                current is RegisterLoading ||
+                current is RegisterSuccess ||
+                current is RegisterError,
+            listener: (context, state) {
+              if (state is RegisterError) {
+                showMessage(
+                  context,
+                  message: state.message,
+                  type: SnackBarType.error,
+                );
+              }
+              if (state is RegisterSuccess) {
+                showMessage(
+                  context,
+                  message: state.message,
+                  type: SnackBarType.success,
+                );
+              }
+            },
+            builder: (context, state) {
+              return CustomButton(
+                title: LangKeys.register,
+                isLoading: state is RegisterLoading,
+                onPressed: () => _onRegisterPressed(context),
+              );
+            },
           ),
         ],
       ),

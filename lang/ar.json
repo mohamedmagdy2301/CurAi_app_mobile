@@ -67,5 +67,6 @@
   "english": "الإنجليزية",
   "arabic": "العربية",
   "user_name": "اسم المستخدم",
-  "confirm_password": "تاكيد كلمة المرور"
+  "confirm_password": "تاكيد كلمة المرور",
+  "password_not_match": "كلمة المرور غير متطابقة"
 }

@@ -1,16 +1,20 @@
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/common/screens/under_build_screen.dart';
+import 'package:curai_app_mobile/core/di/dependency_injection.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
-import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
+import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRoutes {
   static Route<void> onGenerateRoute(RouteSettings settings) {
@@ -23,7 +27,12 @@ class AppRoutes {
       case Routes.loginScreen:
         return BaseRoute(page: const LoginScreen());
       case Routes.registerScreen:
-        return BaseRoute(page: const RegisterScreen());
+        return BaseRoute(
+          page: BlocProvider(
+            create: (context) => AuthCubit(sl<RegisterUsecase>()),
+            child: const RegisterScreen(),
+          ),
+        );
       case Routes.forgetPasswordScreen:
         return BaseRoute(page: const ForgetPasswordScreen());
       case Routes.otpVerification:

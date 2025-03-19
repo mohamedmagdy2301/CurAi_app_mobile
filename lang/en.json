@@ -67,5 +67,6 @@
   "english": "English",
   "arabic": "Arabic",
   "user_name": "User Name",
-  "confirm_password": "Confirm Password"
+  "confirm_password": "Confirm Password",
+  "password_not_match": "Password does not match"
 }
