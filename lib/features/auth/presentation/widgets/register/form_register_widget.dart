@@ -9,7 +9,6 @@ import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register_model/register_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,7 +57,6 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
               confirmPassword: _confirmPasswordController.text,
             ),
           );
-      context.pushNamed(Routes.loginScreen);
     }
   }
 
@@ -124,12 +122,12 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
                   message: state.message,
                   type: SnackBarType.success,
                 );
+                context.pushNamed(Routes.loginScreen);
               }
             },
             builder: (context, state) {
               return CustomButton(
                 title: LangKeys.register,
-                isLoading: state is RegisterLoading,
                 onPressed: () => _onRegisterPressed(context),
               );
             },

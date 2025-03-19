@@ -28,6 +28,7 @@ Future<void> main() async {
 
   try {
     await initializeDependencies();
+
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     runApp(
       BlocProvider(
