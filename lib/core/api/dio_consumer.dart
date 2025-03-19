@@ -9,7 +9,7 @@ import 'package:curai_app_mobile/core/api/app_interceptors.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/status_code.dart';
 import 'package:curai_app_mobile/core/di/dependency_injection.dart' as di;
-import 'package:curai_app_mobile/core/error/exceptions.dart';
+import 'package:curai_app_mobile/core/error/failure.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
@@ -90,34 +90,14 @@ class DioConsumer implements ApiConsumer {
   }
 
   Exception _handleDioError(DioException error) {
-    switch (error.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        return const FetchDataException();
-      case DioExceptionType.badResponse:
-        switch (error.response?.statusCode) {
-          case StatusCode.badRequest:
-            return const BadRequestException();
-          case StatusCode.unauthorized:
-          case StatusCode.forbidden:
-            return const UnauthorizedException();
-          case StatusCode.notFound:
-            return const NotFoundException();
-          case StatusCode.confilct:
-            return const ConflictException();
-          case StatusCode.internalServerError:
-            return const InternalServerErrorException();
-          default:
-            return Exception(
-              'Unexpected error occurred: ${error.response?.statusCode}',
-            );
-        }
-      case DioExceptionType.cancel:
-        return Exception('Request was cancelled.');
-      case DioExceptionType.unknown:
-      default:
-        return const NoInternetConnectionException();
-    }
+    return FailureException(ServerFailure.fromDioException(error));
   }
+}
+
+class FailureException implements Exception {
+  FailureException(this.failure);
+  final Failure failure;
+
+  @override
+  String toString() => failure.message;
 }
