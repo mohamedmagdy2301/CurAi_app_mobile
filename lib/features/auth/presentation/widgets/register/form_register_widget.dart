@@ -20,7 +20,9 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
 
   // A ValueNotifier to track the form validation status
   final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
@@ -28,7 +30,6 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
   final bool _isPasswordObscure = true;
 
   void _validateForm() {
-    // Update the validation status in the notifier
     final isValid = _formKey.currentState?.validate() ?? false;
     _isFormValidNotifier.value = isValid;
   }
@@ -37,6 +38,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
     _validateForm();
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
+
       context.pushNamed(Routes.mainScaffoldUser);
     }
   }
@@ -50,9 +52,9 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
         children: [
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
-            labelText: context.translate(LangKeys.yourNumber),
-            keyboardType: TextInputType.phone,
-            controller: _phoneController,
+            labelText: context.translate(LangKeys.userName),
+            keyboardType: TextInputType.name,
+            controller: _userNameController,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -71,6 +73,14 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.confirmPassword),
+            keyboardType: TextInputType.visiblePassword,
+            controller: _confirmPasswordController,
+            obscureText: _isPasswordObscure,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           context.spaceHeight(5),
           CustomButton(
             title: LangKeys.register,
@@ -83,9 +93,10 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
 
   @override
   void dispose() {
+    _userNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _phoneController.dispose();
+    _confirmPasswordController.dispose();
     _isFormValidNotifier.dispose();
     super.dispose();
   }

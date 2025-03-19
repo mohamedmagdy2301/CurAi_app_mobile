@@ -37,6 +37,9 @@ class LangKeys {
   static const String createAccount = 'create_account';
   static const String descriptionRegister = 'description_register';
   static const String yourNumber = 'your_number';
+  static const String userName = 'user_name';
+
+  static const String confirmPassword = 'confirm_password';
   static const String register = 'register';
   static const String alreadyHaveAccount = 'already_have_account';
   static const String orSignInWith = 'or_sign_in_with';

@@ -65,5 +65,7 @@
   "system_default": "System Default",
   "language": "Language",
   "english": "English",
-  "arabic": "Arabic"
+  "arabic": "Arabic",
+  "user_name": "User Name",
+  "confirm_password": "Confirm Password"
 }

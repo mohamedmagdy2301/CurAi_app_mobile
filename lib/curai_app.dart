@@ -43,7 +43,7 @@ class _CuraiAppState extends State<CuraiApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return DevicePreview(
-      enabled: widget.environment,
+      enabled: false,
       builder: (context) => SizeProvider(
         baseSize: const Size(360, 758.7),
         width: context.width,

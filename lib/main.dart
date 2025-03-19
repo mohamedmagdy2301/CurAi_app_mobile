@@ -22,13 +22,12 @@ Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   setCustomErrorWidget();
   Bloc.observer = SimpleBlocObserver();
-  dependencyInjectionSetup();
+  setupInit();
   hideKeyboard();
   Gemini.init(apiKey: 'AIzaSyA_ehqc-SrrKJDn5jO77Fgy_ae00UvevaM');
 
   try {
     await initializeDependencies();
-
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     runApp(
       BlocProvider(
