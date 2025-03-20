@@ -2,7 +2,7 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
-import 'package:curai_app_mobile/features/auth/data/models/register_model/register_request.dart';
+import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';

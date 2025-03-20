@@ -2,7 +2,7 @@
 
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
-import 'package:curai_app_mobile/features/auth/data/models/register_model/register_request.dart';
+import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AuthRepo {

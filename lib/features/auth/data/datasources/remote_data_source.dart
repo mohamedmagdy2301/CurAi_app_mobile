@@ -4,7 +4,7 @@ import 'package:curai_app_mobile/core/error/failure.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
-import 'package:curai_app_mobile/features/auth/data/models/register_model/register_request.dart';
+import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class RemoteDataSource {
