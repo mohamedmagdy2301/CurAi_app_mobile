@@ -12,7 +12,7 @@ import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
-import 'package:curai_app_mobile/features/auth/presentation/widgets/change_password_widget.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/change_password/change_password_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/logout_widget.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';

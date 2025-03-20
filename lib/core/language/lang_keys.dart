@@ -37,6 +37,10 @@ class LangKeys {
   static const String cancel = 'cancel';
   static const String ok = 'ok';
   static const String changePassword = 'change_password';
+  static const String descriptionChangePassword = 'description_change_password';
+  static const String currentPassword = 'current_password';
+  static const String newPassword = 'new_password';
+  static const String confirmNewPassword = 'confirm_new_password';
   static const String forgotPassword = 'forgot_password';
   static const String notHaveAccount = 'no_account';
   static const String createAccount = 'create_account';

@@ -2,6 +2,7 @@ import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/common/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
@@ -21,17 +22,15 @@ class AppRoutes {
       case Routes.onboarding:
         return BaseRoute(page: const Onboarding());
       case Routes.loginScreen:
-        return BaseRoute(
-          page: const LoginScreen(),
-        );
+        return BaseRoute(page: const LoginScreen());
       case Routes.registerScreen:
-        return BaseRoute(
-          page: const RegisterScreen(),
-        );
+        return BaseRoute(page: const RegisterScreen());
       case Routes.forgetPasswordScreen:
         return BaseRoute(page: const ForgetPasswordScreen());
       case Routes.otpVerification:
         return BaseRoute(page: const OtpVerifcationScreen());
+      case Routes.changePasswordScreen:
+        return BaseRoute(page: const ChangePasswordScreen());
       case Routes.notificationScreen:
         return BaseRoute(page: const NotificationScreen());
       case Routes.doctorSpeciality:

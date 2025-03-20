@@ -1,8 +1,10 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
+import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordWidget extends StatelessWidget {
@@ -16,9 +18,7 @@ class ChangePasswordWidget extends StatelessWidget {
         context.translate(LangKeys.changePassword),
         style: context.styleRegular14,
       ),
-      onTap: () {
-        // context.read<AuthCubit>().changePassword();
-      },
+      onTap: () => context.pushNamed(Routes.changePasswordScreen),
     );
   }
 }
