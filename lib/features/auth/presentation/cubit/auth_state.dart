@@ -46,3 +46,22 @@ class LoginError extends AuthState {
   @override
   List<Object> get props => [message];
 }
+// ! Logout States
+
+class LogoutLoading extends AuthState {}
+
+class LogoutSuccess extends AuthState {
+  const LogoutSuccess({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+class LogoutError extends AuthState {
+  const LogoutError({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

@@ -46,7 +46,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   @override
   Future<Either<Failure, Map<String, dynamic>>> logout() async {
     final response = await dioConsumer.post(
-      EndPoints.login,
+      EndPoints.logout,
       body: {
         'refresh': SharedPrefManager.getString(SharedPrefKey.keyRefreshToken),
       },

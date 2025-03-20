@@ -1,17 +1,22 @@
+// ignore_for_file: inference_failure_on_instance_creation
+
 import 'package:bloc/bloc.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register_model/register_request.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:equatable/equatable.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this._registerUsecase, this._loginUsecase) : super(AuthInitial());
+  AuthCubit(this._registerUsecase, this._loginUsecase, this._logoutUsecase)
+      : super(AuthInitial());
 
   final RegisterUsecase _registerUsecase;
   final LoginUsecase _loginUsecase;
+  final LogoutUsecase _logoutUsecase;
 
   Future<void> register(RegisterRequest registerRequest) async {
     emit(RegisterLoading());
@@ -26,7 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login(LoginRequest loginRequest) async {
     emit(LoginLoading());
-
+    await Future.delayed(const Duration(seconds: 2));
     final result = await _loginUsecase.call(loginRequest);
 
     result.fold(
@@ -36,6 +41,17 @@ class AuthCubit extends Cubit<AuthState> {
           message: 'Welcome ${successMessage.username} in CurAi ☺️',
         ),
       ),
+    );
+  }
+
+  Future<void> logout() async {
+    emit(LogoutLoading());
+
+    final result = await _logoutUsecase.call('');
+
+    result.fold(
+      (errorMessage) => emit(LogoutError(message: errorMessage)),
+      (successMessage) => emit(LogoutSuccess(message: successMessage)),
     );
   }
 }

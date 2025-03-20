@@ -32,6 +32,10 @@ class LangKeys {
   static const String email = 'email';
   static const String password = 'password';
   static const String login = 'login';
+  static const String logout = 'logout';
+  static const String logoutMessage = 'logout_message';
+  static const String cancel = 'cancel';
+  static const String ok = 'ok';
   static const String forgotPassword = 'forgot_password';
   static const String notHaveAccount = 'no_account';
   static const String createAccount = 'create_account';
