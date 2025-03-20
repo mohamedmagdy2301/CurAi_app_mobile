@@ -29,8 +29,20 @@ class RegisterError extends AuthState {
 }
 
 // ! Login States
-// class LoginLoading extends AuthState {}
+class LoginLoading extends AuthState {}
 
-// class LoginSuccess extends AuthState {}
+class LoginSuccess extends AuthState {
+  const LoginSuccess({required this.message});
+  final String message;
 
-// class LoginError extends AuthState {}
+  @override
+  List<Object> get props => [message];
+}
+
+class LoginError extends AuthState {
+  const LoginError({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

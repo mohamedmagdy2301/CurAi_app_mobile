@@ -6,7 +6,9 @@ import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.d
 import 'package:curai_app_mobile/features/auth/data/datasources/remote_data_source.dart';
 import 'package:curai_app_mobile/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:curai_app_mobile/features/auth/domain/repositories/auth_repo.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
+import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,9 +26,20 @@ void setupInit() {
     )
     ..registerLazySingleton(() => DioConsumer(client: sl<Dio>()))
     ..registerLazySingleton<Dio>(Dio.new)
+    // ! Cubit StateManagement
+    ..registerFactory<AuthCubit>(
+      () => AuthCubit(
+        sl<RegisterUsecase>(),
+        sl<LoginUsecase>(),
+      ),
+    )
+
     //! UseCases
     ..registerLazySingleton<RegisterUsecase>(
       () => RegisterUsecase(repository: sl<AuthRepo>()),
+    )
+    ..registerLazySingleton<LoginUsecase>(
+      () => LoginUsecase(repository: sl<AuthRepo>()),
     )
     //! Repository
     ..registerLazySingleton<AuthRepo>(

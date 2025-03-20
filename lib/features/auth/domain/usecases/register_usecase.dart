@@ -9,6 +9,6 @@ class RegisterUsecase extends UseCase<Either<String, String>, RegisterRequest> {
   final AuthRepo repository;
   @override
   Future<Either<String, String>> call(RegisterRequest params) async {
-    return repository.register(params);
+    return repository.register(registerRequest: params);
   }
 }

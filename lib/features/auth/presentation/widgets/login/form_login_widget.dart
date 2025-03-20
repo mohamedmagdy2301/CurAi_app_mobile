@@ -3,11 +3,16 @@ import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
+import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -28,11 +33,17 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
   }
 
   void _onLoginPressed(BuildContext context) {
+    hideKeyboard();
     _validateForm();
     if (_isFormValidNotifier.value) {
       TextInput.finishAutofillContext();
       _formKey.currentState?.save();
-      context.pushNamed(Routes.mainScaffoldUser);
+      context.read<AuthCubit>().login(
+            LoginRequest(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim(),
+            ),
+          );
     }
   }
 
@@ -83,9 +94,34 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               ],
             ),
             context.spaceHeight(15),
-            CustomButton(
-              title: LangKeys.login,
-              onPressed: () => _onLoginPressed(context),
+            BlocConsumer<AuthCubit, AuthState>(
+              listenWhen: (previous, current) =>
+                  current is LoginLoading ||
+                  current is LoginSuccess ||
+                  current is LoginError,
+              listener: (context, state) {
+                if (state is LoginError) {
+                  showMessage(
+                    context,
+                    message: state.message,
+                    type: SnackBarType.error,
+                  );
+                } else if (state is LoginSuccess) {
+                  showMessage(
+                    context,
+                    message: state.message,
+                    type: SnackBarType.success,
+                  );
+                  context.pushNamed(Routes.mainScaffoldUser);
+                }
+              },
+              builder: (context, state) {
+                return CustomButton(
+                  title: LangKeys.login,
+                  isLoading: state is LoginLoading,
+                  onPressed: () => _onLoginPressed(context),
+                );
+              },
             ),
           ],
         ),
