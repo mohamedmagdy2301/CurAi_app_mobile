@@ -22,6 +22,7 @@
   "logout_message": "Are you sure you want to logout?",
   "cancel": "Cancel",
   "ok": "Ok",
+  "changePassword": "Change Password",
   "forgot_password": "Forgot Password?",
   "no_account": "Don't have an account?",
   "create_account": "Create Account",

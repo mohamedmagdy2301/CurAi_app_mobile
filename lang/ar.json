@@ -22,6 +22,7 @@
   "logout_message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "cancel": "إلغاء",
   "ok": "موافق",
+  "changePassword": "تغيير كلمة المرور",
   "forgot_password": "نسيت كلمة المرور؟",
   "no_account": "ليس لديك حساب؟",
   "create_account": "إنشاء حساب",
