@@ -65,3 +65,22 @@ class LogoutError extends AuthState {
   @override
   List<Object> get props => [message];
 }
+
+// ! Change Password States
+class ChangePasswordLoading extends AuthState {}
+
+class ChangePasswordSuccess extends AuthState {
+  const ChangePasswordSuccess({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+class ChangePasswordError extends AuthState {
+  const ChangePasswordError({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

@@ -7,10 +7,10 @@ import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FormChangePasswordWidget extends StatefulWidget {
@@ -39,14 +39,23 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
     hideKeyboard();
     _validateForm();
     if (_isFormValidNotifier.value) {
-      TextInput.finishAutofillContext();
       _formKey.currentState?.save();
-      // context.read<AuthCubit>().login(
-      //       LoginRequest(
-      //         email: _emailController.text.trim(),
-      //         password: _passwordController.text.trim(),
-      //       ),
-      //     );
+      if (_newPasswordController.text.trim() !=
+          _confirmNewPasswordController.text.trim()) {
+        showMessage(
+          context,
+          message: context.translate(LangKeys.passwordNotMatch),
+          type: SnackBarType.error,
+        );
+        return;
+      }
+      context.read<AuthCubit>().changePassword(
+            ChangePasswordRequest(
+              currentPassword: _currentPasswordController.text.trim(),
+              newPassword: _newPasswordController.text.trim(),
+              confirmNewPassword: _confirmNewPasswordController.text.trim(),
+            ),
+          );
     }
   }
 
@@ -93,17 +102,17 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
             context.spaceHeight(10),
             BlocConsumer<AuthCubit, AuthState>(
               listenWhen: (previous, current) =>
-                  current is LoginLoading ||
-                  current is LoginSuccess ||
-                  current is LoginError,
+                  current is ChangePasswordLoading ||
+                  current is ChangePasswordSuccess ||
+                  current is ChangePasswordError,
               listener: (context, state) {
-                if (state is LoginError) {
+                if (state is ChangePasswordError) {
                   showMessage(
                     context,
                     message: state.message,
                     type: SnackBarType.error,
                   );
-                } else if (state is LoginSuccess) {
+                } else if (state is ChangePasswordSuccess) {
                   showMessage(
                     context,
                     message: state.message,
@@ -115,7 +124,7 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
               builder: (context, state) {
                 return CustomButton(
                   title: LangKeys.changePassword,
-                  // isLoading: state is LoginLoading,
+                  isLoading: state is ChangePasswordLoading,
                   onPressed: () => _onChangePasswordPressed(context),
                 );
               },

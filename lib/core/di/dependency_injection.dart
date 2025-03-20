@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.d
 import 'package:curai_app_mobile/features/auth/data/datasources/remote_data_source.dart';
 import 'package:curai_app_mobile/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:curai_app_mobile/features/auth/domain/repositories/auth_repo.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
@@ -33,6 +34,7 @@ void setupInit() {
         sl<RegisterUsecase>(),
         sl<LoginUsecase>(),
         sl<LogoutUsecase>(),
+        sl<ChangePasswordUsecase>(),
       ),
     )
 
@@ -45,6 +47,9 @@ void setupInit() {
     )
     ..registerLazySingleton<LogoutUsecase>(
       () => LogoutUsecase(repository: sl<AuthRepo>()),
+    )
+    ..registerLazySingleton<ChangePasswordUsecase>(
+      () => ChangePasswordUsecase(repository: sl<AuthRepo>()),
     )
     //! Repository
     ..registerLazySingleton<AuthRepo>(

@@ -3,6 +3,7 @@
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/datasources/remote_data_source.dart';
+import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
@@ -57,32 +58,46 @@ class AuthRepoImpl extends AuthRepo {
     );
   }
 
-  void saveDataUser({
-    required String accessToken,
-    String? refreshToken,
-    String? role,
-    String? userName,
-    int? userId,
-  }) {
-    SharedPrefManager.setData(
-      key: SharedPrefKey.keyAccessToken,
-      value: accessToken,
+  @override
+  Future<Either<String, String>> changePassword({
+    required ChangePasswordRequest changePasswordRequest,
+  }) async {
+    final response = await remoteDataSource.changePassword(
+      changePasswordRequest: changePasswordRequest,
     );
-    SharedPrefManager.setData(
-      key: SharedPrefKey.keyRefreshToken,
-      value: refreshToken ?? '',
-    );
-    SharedPrefManager.setData(
-      key: SharedPrefKey.keyUserName,
-      value: userName ?? '',
-    );
-    SharedPrefManager.setData(
-      key: SharedPrefKey.keyRole,
-      value: role ?? '',
-    );
-    SharedPrefManager.setData(
-      key: SharedPrefKey.keyUserId,
-      value: userId ?? '',
+
+    return response.fold(
+      (failure) => left(failure.message),
+      (result) => right(result['detail'] as String),
     );
   }
+}
+
+void saveDataUser({
+  required String accessToken,
+  String? refreshToken,
+  String? role,
+  String? userName,
+  int? userId,
+}) {
+  SharedPrefManager.setData(
+    key: SharedPrefKey.keyAccessToken,
+    value: accessToken,
+  );
+  SharedPrefManager.setData(
+    key: SharedPrefKey.keyRefreshToken,
+    value: refreshToken ?? '',
+  );
+  SharedPrefManager.setData(
+    key: SharedPrefKey.keyUserName,
+    value: userName ?? '',
+  );
+  SharedPrefManager.setData(
+    key: SharedPrefKey.keyRole,
+    value: role ?? '',
+  );
+  SharedPrefManager.setData(
+    key: SharedPrefKey.keyUserId,
+    value: userId ?? '',
+  );
 }
