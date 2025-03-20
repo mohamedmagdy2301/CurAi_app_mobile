@@ -124,7 +124,8 @@ class DioConsumer implements ApiConsumer {
   Either<Failure, Map<String, dynamic>> _handleResponseAsJson(
     Response<Map<String, dynamic>> response,
   ) {
-    if (response.statusCode == StatusCode.ok) {
+    if (response.statusCode == StatusCode.ok ||
+        response.statusCode == StatusCode.okCreated) {
       return right(response.data!);
     } else {
       return left(

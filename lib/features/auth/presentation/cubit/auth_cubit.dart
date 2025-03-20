@@ -13,7 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> register(RegisterRequest registerRequest) async {
     emit(RegisterLoading());
 
-    final result = await _registerUsecase(registerRequest);
+    final result = await _registerUsecase.call(registerRequest);
 
     result.fold(
       (errorMessage) => emit(RegisterError(message: errorMessage)),
