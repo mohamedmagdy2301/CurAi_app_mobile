@@ -8,6 +8,8 @@ import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/responsive_helper/size_provider.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +78,10 @@ class BodyOnboarding extends StatelessWidget {
                     context.read<OnboardingCubit>().nextPage();
                     if (BlocProvider.of<OnboardingCubit>(context).state
                         is OnboardingFinished) {
+                      SharedPrefManager.setData(
+                        key: SharedPrefKey.keyIsFirstLaunch,
+                        value: false,
+                      );
                       context.pushReplacementNamed(Routes.loginScreen);
                     }
                   },

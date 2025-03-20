@@ -6,6 +6,8 @@ import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart'
 import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
@@ -111,6 +113,10 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                     context,
                     message: state.message,
                     type: SnackBarType.success,
+                  );
+                  SharedPrefManager.setData(
+                    key: SharedPrefKey.keyIsLoggedIn,
+                    value: true,
                   );
                   context.pushNamed(Routes.mainScaffoldUser);
                 }

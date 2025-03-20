@@ -38,6 +38,7 @@ class LogoutWidget extends StatelessWidget {
             SharedPrefManager.removeData(key: SharedPrefKey.keyUserName);
             SharedPrefManager.removeData(key: SharedPrefKey.keyRole);
             SharedPrefManager.removeData(key: SharedPrefKey.keyUserId);
+            SharedPrefManager.removeData(key: SharedPrefKey.keyIsLoggedIn);
             context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutError) {
             showMessage(
