@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/helper/functions_helper.dart';
 import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
@@ -38,6 +39,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
   }
 
   void _onRegisterPressed(BuildContext context) {
+    hideKeyboard();
     _validateForm();
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
@@ -100,10 +102,6 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           context.spaceHeight(5),
           BlocConsumer<AuthCubit, AuthState>(
-            buildWhen: (previous, current) =>
-                current is RegisterLoading ||
-                current is RegisterSuccess ||
-                current is RegisterError,
             listenWhen: (previous, current) =>
                 current is RegisterLoading ||
                 current is RegisterSuccess ||
@@ -115,8 +113,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
                   message: state.message,
                   type: SnackBarType.error,
                 );
-              }
-              if (state is RegisterSuccess) {
+              } else if (state is RegisterSuccess) {
                 showMessage(
                   context,
                   message: state.message,
@@ -128,6 +125,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             builder: (context, state) {
               return CustomButton(
                 title: LangKeys.register,
+                isLoading: state is RegisterLoading,
                 onPressed: () => _onRegisterPressed(context),
               );
             },

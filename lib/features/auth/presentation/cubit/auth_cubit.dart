@@ -7,15 +7,17 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this._registerUsecase) : super(AuthInitial());
+
   final RegisterUsecase _registerUsecase;
 
   Future<void> register(RegisterRequest registerRequest) async {
     emit(RegisterLoading());
-    final reslut = await _registerUsecase.call(registerRequest);
-    reslut.fold((message) {
-      emit(RegisterError(message: message));
-    }, (message) {
-      emit(RegisterSuccess(message: message));
-    });
+
+    final result = await _registerUsecase(registerRequest);
+
+    result.fold(
+      (errorMessage) => emit(RegisterError(message: errorMessage)),
+      (successMessage) => emit(RegisterSuccess(message: successMessage)),
+    );
   }
 }

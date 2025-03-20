@@ -7,6 +7,11 @@ void hideKeyboard() {
   return FocusManager.instance.primaryFocus?.unfocus();
 }
 
+//  isKeyboardVisible
+bool isKeyboardVisible(BuildContext context) {
+  return MediaQuery.of(context).viewInsets.bottom > 0;
+}
+
 /// Returns a string from Clipboard
 Future<String> paste() async {
   final data = await Clipboard.getData('text/plain');

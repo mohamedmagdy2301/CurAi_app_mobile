@@ -1,14 +1,3 @@
-// import 'package:equatable/equatable.dart';
-
-// abstract class Failure extends Equatable {
-//   @override
-//   List<Object?> get props => [];
-// }
-
-// class ServerFailure extends Failure {}
-
-// class CacheFailure extends Failure {}
-
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:dio/dio.dart';
@@ -28,103 +17,74 @@ class ServerFailure extends Failure {
     switch (dioException.type) {
       case DioExceptionType.sendTimeout:
         return ServerFailure(
-          isArabic
-              ? 'انتهت مهلة إرسال الاتصال بخادم API'
-              : 'Send timeout with API server',
+          isArabic ? 'انتهت مهلة إرسال الطلب' : 'Send timeout',
         );
-
       case DioExceptionType.receiveTimeout:
         return ServerFailure(
-          isArabic
-              ? 'انتهت مهلة استقبال الاتصال بخادم API'
-              : 'Receive timeout with API server',
+          isArabic ? 'انتهت مهلة استقبال البيانات' : 'Receive timeout',
         );
-
       case DioExceptionType.connectionTimeout:
         return ServerFailure(
-          isArabic
-              ? 'انتهت مهلة الاتصال بخادم API'
-              : 'Connection timeout with API server',
+          isArabic ? 'انتهت مهلة الاتصال' : 'Connection timeout',
         );
-
       case DioExceptionType.cancel:
         return ServerFailure(
-          isArabic
-              ? 'تم إلغاء الطلب إلى خادم API'
-              : 'Request to API server was canceled',
+          isArabic ? 'تم إلغاء الطلب' : 'Request was canceled',
         );
-
       case DioExceptionType.badResponse:
-        final statusCode = dioException.response?.statusCode ?? 500;
-        final data = dioException.response?.data;
-        var errorMessage =
-            isArabic ? 'حدث خطأ في الخادم' : 'Server error occurred';
-
-        if (data is Map<String, dynamic> && data.containsKey('message')) {
-          errorMessage = data['message'] as String;
-        }
-
-        return ServerFailure.fromBadResponse(statusCode, errorMessage);
-
-      case DioExceptionType.badCertificate:
-        return ServerFailure(
-          isArabic ? 'شهادة غير صالحة' : 'Invalid certificate',
+        return ServerFailure.fromBadResponse(
+          dioException.response?.statusCode ?? 500,
+          dioException.response?.data,
         );
-
       case DioExceptionType.connectionError:
         return ServerFailure(
           isArabic ? 'لا يوجد اتصال بالإنترنت' : 'No internet connection',
         );
-
       case DioExceptionType.unknown:
-        if (dioException.message?.contains('SocketException') ?? false) {
-          return ServerFailure(
-            isArabic ? 'لا يوجد اتصال بالإنترنت' : 'No internet connection',
-          );
-        } else {
-          return ServerFailure(
-            isArabic ? 'حدث خطأ غير متوقع' : 'Unexpected error occurred',
-          );
-        }
+        return ServerFailure(isArabic ? 'خطأ غير متوقع' : 'Unexpected error');
+      default:
+        return ServerFailure(isArabic ? 'حدث خطأ ما' : 'Something went wrong');
     }
   }
-
-  factory ServerFailure.fromBadResponse(int statusCode, dynamic response) {
+  factory ServerFailure.fromBadResponse(int statusCode, dynamic error) {
     final isArabic =
         SharedPrefManager.getString(SharedPrefKey.keyLocale) == 'ar';
 
     switch (statusCode) {
       case 400:
-        return ServerFailure(
-          isArabic
-              ? 'طلب غير صالح، يرجى إبلاغ المطور\n$response'
-              : 'Bad request, please contact the developer\n$response',
-        );
+        var errMessage = error.toString();
+        if (error is Map<String, dynamic>) {
+          errMessage = error.entries.map((e) {
+            return e.value.join(', ').toString();
+          }).join('\n');
+        }
 
+        return ServerFailure(
+          isArabic ? 'طلب غير صالح\n$errMessage' : 'Bad request\n$errMessage',
+        );
       case 401:
         return ServerFailure(
           isArabic
-              ? 'دخول غير مصرح به\n$response'
-              : 'Unauthorized access\n$response',
+              ? 'دخول غير مصرح به:\n$error'
+              : 'Unauthorized access:\n$error',
         );
-
       case 403:
         return ServerFailure(
-          isArabic ? 'الوصول محظور\n$response' : 'Access forbidden\n$response',
+          isArabic ? 'الوصول محظور\n$error' : 'Access forbidden\n$error',
         );
 
       case 404:
         return ServerFailure(
           isArabic
-              ? 'لم يتم العثور على أي معلومات\n$response'
-              : 'No information found\n$response',
+              ? 'لم يتم العثور على أي معلومات\n$error'
+              : 'No information found\n$error',
         );
 
       case 500:
         return ServerFailure(
           isArabic
-              ? 'خطأ في الخادم الداخلي\n$response'
-              : 'Internal server error\n$response',
+              ? 'خطأ في الخادم الداخلي\n$error'
+              : 'Internal server error\n$error',
         );
 
       default:
