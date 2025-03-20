@@ -48,6 +48,15 @@ class AuthRepoImpl extends AuthRepo {
     );
   }
 
+  @override
+  Future<Either<String, String>> logout() async {
+    final response = await remoteDataSource.logout();
+    return response.fold(
+      (failure) => left(failure.message),
+      (result) => right(result['detail'] as String),
+    );
+  }
+
   void saveDataUser({
     required String accessToken,
     String? refreshToken,

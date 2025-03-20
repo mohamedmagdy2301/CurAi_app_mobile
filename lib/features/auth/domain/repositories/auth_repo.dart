@@ -12,4 +12,5 @@ abstract class AuthRepo {
   Future<Either<String, LoginModel>> login({
     required LoginRequest loginRequest,
   });
+  Future<Either<String, String>> logout();
 }
