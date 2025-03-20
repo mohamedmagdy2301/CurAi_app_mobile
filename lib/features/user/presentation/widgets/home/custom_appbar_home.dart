@@ -4,6 +4,8 @@ import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +33,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       toolbarHeight: context.setH(70),
       title: ListTile(
         title: AutoSizeText(
-          context.translate(LangKeys.hiMohamed),
+          'Hi, ${SharedPrefManager.getString(SharedPrefKey.keyUserName)} 👋',
           style: context.styleExtraBold20,
           maxLines: 1,
         ),
