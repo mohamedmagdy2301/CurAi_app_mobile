@@ -25,14 +25,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> login(LoginRequest loginRequest) async {
-    emit(RegisterLoading());
+    emit(LoginLoading());
 
     final result = await _loginUsecase.call(loginRequest);
 
     result.fold(
-      (errorMessage) => emit(RegisterError(message: errorMessage)),
+      (errorMessage) => emit(LoginError(message: errorMessage)),
       (successMessage) => emit(
-        RegisterSuccess(
+        LoginSuccess(
           message: 'Welcome ${successMessage.username} in CurAi ☺️',
         ),
       ),
