@@ -53,10 +53,10 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
       }
       context.read<AuthCubit>().register(
             RegisterRequest(
-              email: _emailController.text,
-              password: _passwordController.text,
-              username: _userNameController.text,
-              confirmPassword: _confirmPasswordController.text,
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim(),
+              username: _userNameController.text.trim(),
+              confirmPassword: _confirmPasswordController.text.trim(),
             ),
           );
     }
