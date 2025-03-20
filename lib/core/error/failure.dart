@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:dio/dio.dart';
@@ -49,18 +51,18 @@ class ServerFailure extends Failure {
   factory ServerFailure.fromBadResponse(int statusCode, dynamic error) {
     final isArabic =
         SharedPrefManager.getString(SharedPrefKey.keyLocale) == 'ar';
-
+    if (error is Map<String, dynamic>) {
+      error = error.entries.map((e) {
+        if (e.value is List) {
+          return e.value.join(', ').toString();
+        }
+        return e.value.toString();
+      }).join('\n');
+    }
     switch (statusCode) {
       case 400:
-        var errMessage = error.toString();
-        if (error is Map<String, dynamic>) {
-          errMessage = error.entries.map((e) {
-            return e.value.join(', ').toString();
-          }).join('\n');
-        }
-
         return ServerFailure(
-          isArabic ? 'طلب غير صالح\n$errMessage' : 'Bad request\n$errMessage',
+          isArabic ? 'طلب غير صالح\n$error' : 'Bad request\n$error',
         );
       case 401:
         return ServerFailure(
