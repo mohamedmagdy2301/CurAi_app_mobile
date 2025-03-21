@@ -1,6 +1,6 @@
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
-import 'package:curai_app_mobile/core/error/failure.dart';
+import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
