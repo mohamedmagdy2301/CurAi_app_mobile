@@ -27,4 +27,9 @@ extension ContextExt on BuildContext {
   }
 
   void pop() => Navigator.of(this).maybePop();
+
+  void popWithValue<T>(T value) => Navigator.of(this).pop(value);
+
+  void popUntil(String routeName) =>
+      Navigator.of(this).popUntil(ModalRoute.withName(routeName));
 }
