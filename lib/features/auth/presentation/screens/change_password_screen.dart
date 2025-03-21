@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/di/dependency_injection.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';

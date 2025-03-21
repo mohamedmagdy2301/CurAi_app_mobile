@@ -6,7 +6,8 @@ import 'package:curai_app_mobile/core/api/api_consumer.dart';
 import 'package:curai_app_mobile/core/api/app_interceptors.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/status_code.dart';
-import 'package:curai_app_mobile/core/di/dependency_injection.dart' as di;
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';

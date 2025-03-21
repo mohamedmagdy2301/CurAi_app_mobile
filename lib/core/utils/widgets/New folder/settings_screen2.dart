@@ -1,7 +1,7 @@
 import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
-import 'package:curai_app_mobile/core/common/widgets/New%20folder/colors_palette_widget.dart';
-import 'package:curai_app_mobile/core/common/widgets/New%20folder/localize_widget.dart';
-import 'package:curai_app_mobile/core/common/widgets/New%20folder/theme_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/New%20folder/colors_palette_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/New%20folder/localize_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/New%20folder/theme_widget.dart';
 import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/material.dart';

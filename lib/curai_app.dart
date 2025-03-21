@@ -1,12 +1,12 @@
 import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
 import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
-import 'package:curai_app_mobile/core/common/functions/build_app_connectivity_controller.dart';
+import 'package:curai_app_mobile/core/utils/helper/build_app_connectivity_controller.dart';
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/language/app_localizations_setup.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
-import 'package:curai_app_mobile/core/responsive_helper/size_provider.dart';
+import 'package:curai_app_mobile/core/utils/responsive/size_provider.dart';
 import 'package:curai_app_mobile/core/routes/app_routes.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_theme.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';

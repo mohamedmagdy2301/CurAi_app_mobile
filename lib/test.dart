@@ -1,6 +1,6 @@
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/responsive_helper/size_provider.dart';
+import 'package:curai_app_mobile/core/utils/responsive/size_provider.dart';
 import 'package:flutter/material.dart';
 
 class MyWidget extends StatelessWidget {

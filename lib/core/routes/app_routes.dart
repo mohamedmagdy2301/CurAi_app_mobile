@@ -1,5 +1,5 @@
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
-import 'package:curai_app_mobile/core/common/screens/under_build_screen.dart';
+import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';

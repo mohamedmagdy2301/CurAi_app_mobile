@@ -1,9 +1,9 @@
 // ignore_for_file: strict_raw_type, document_ignores, lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, avoid_catches_without_on_clauses
 
 import 'package:curai_app_mobile/core/api/end_points.dart';
-import 'package:curai_app_mobile/core/helper/logger_helper.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 

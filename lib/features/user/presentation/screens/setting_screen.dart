@@ -2,15 +2,15 @@
 
 import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
 import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
-import 'package:curai_app_mobile/core/common/widgets/New%20folder/colors_palette_widget.dart';
-import 'package:curai_app_mobile/core/common/widgets/New%20folder/localize_widget.dart';
-import 'package:curai_app_mobile/core/common/widgets/New%20folder/theme_widget.dart';
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
 import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/utils/widgets/New%20folder/colors_palette_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/New%20folder/localize_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/New%20folder/theme_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/change_password/change_password_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/logout_widget.dart';

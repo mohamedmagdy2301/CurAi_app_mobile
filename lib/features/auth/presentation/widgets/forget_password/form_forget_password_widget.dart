@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
-import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';

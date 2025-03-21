@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:curai_app_mobile/core/responsive_helper/size_provider.dart';
+import 'package:curai_app_mobile/core/utils/responsive/size_provider.dart';
 import 'package:flutter/material.dart';
 
 extension SizerExt on BuildContext {

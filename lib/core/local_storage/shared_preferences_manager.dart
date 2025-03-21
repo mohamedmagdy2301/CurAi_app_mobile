@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/helper/logger_helper.dart';
+import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefManager {

@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/app/onboarding/cubit/onboarding_cubit.dart';
 import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
 import 'package:curai_app_mobile/core/app/onboarding/widgets/custom_dot_onboarding.dart';
-import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
@@ -10,7 +10,7 @@ import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.da
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
-import 'package:curai_app_mobile/core/responsive_helper/size_provider.dart';
+import 'package:curai_app_mobile/core/utils/responsive/size_provider.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
