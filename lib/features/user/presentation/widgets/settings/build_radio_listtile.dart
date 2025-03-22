@@ -1,5 +1,5 @@
+import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
-import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class BuildRadioListTile<T> extends StatelessWidget {
@@ -18,10 +18,9 @@ class BuildRadioListTile<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appLocal = AppLocalizations.of(context)!;
     return RadioListTile<T>(
       title: Text(
-        appLocal.translate(labelKey)!,
+        context.translate(labelKey),
         style: context.styleRegular14,
       ),
       value: value,

@@ -1,6 +1,6 @@
 import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
 import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
-import 'package:curai_app_mobile/core/utils/widgets/New%20folder/build_radio_listtile.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/settings/build_radio_listtile.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/material.dart';
 

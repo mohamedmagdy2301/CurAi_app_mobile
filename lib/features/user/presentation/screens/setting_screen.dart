@@ -1,5 +1,5 @@
-// ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously, avoid_catches_without_on_clauses
-
+// ignore_for_file: inference_failure_on_instance_creation,, document_ignores
+// use_build_context_synchronously, avoid_catches_without_on_clauses
 import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
 import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
@@ -7,13 +7,13 @@ import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart'
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/utils/widgets/New%20folder/colors_palette_widget.dart';
-import 'package:curai_app_mobile/core/utils/widgets/New%20folder/localize_widget.dart';
-import 'package:curai_app_mobile/core/utils/widgets/New%20folder/theme_widget.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/settings/colors_palette_widget.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/change_password/change_password_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/logout_widget.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/settings/localize_widget.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/settings/theme_widget.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,14 +36,13 @@ class _SettingScreenState extends State<SettingScreen> {
   //   super.initState();
   //   _initializeIconSettings();
   // }
-
   // Future<void> _initializeIconSettings() async {
   //   try {
-  //     // badgeIconNumber =
-  //     //     await FlutterDynamicIcon.getApplicationIconBadgeNumber();
-  //     // currentIconName =
-  //     //     await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
-  //     // setState(() {});
+  //       badgeIconNumber =
+  //           await FlutterDynamicIcon.getApplicationIconBadgeNumber();
+  //       currentIconName =
+  //           await FlutterDynamicIcon.getAlternateIconName() ?? 'light';
+  //       setState(() {});
   //   } catch (e) {
   //     LoggerHelper.error('Error initializing icon settings', error: e);
   //   }
