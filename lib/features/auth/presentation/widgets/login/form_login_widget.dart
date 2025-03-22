@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
@@ -119,12 +120,16 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                     value: true,
                   );
                   context.pushNamed(Routes.mainScaffoldUser);
+                } else if (state is LoginLoading) {
+                  AdaptiveDialogs.shoLoadingAlertDialog(
+                    context: context,
+                    title: context.translate(LangKeys.login),
+                  );
                 }
               },
               builder: (context, state) {
                 return CustomButton(
                   title: LangKeys.login,
-                  isLoading: state is LoginLoading,
                   onPressed: () => _onLoginPressed(context),
                 );
               },

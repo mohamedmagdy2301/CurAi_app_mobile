@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as a;
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/logout_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_profile.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/image_profile_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
@@ -70,14 +71,10 @@ class ProfileScreen extends StatelessWidget {
               onTap: () {},
             ),
             _buildDivider(context),
-            RowNavigateProfileWidget(
-              icon: Icons.logout_rounded,
-              title: LangKeys.logout,
-              onTap: () {},
-            ),
+            const LogoutWidget(),
           ],
         ).center(),
-      ).paddingSymmetric(horizontal: context.isLandscape ? 120 : 0),
+      ).paddingSymmetric(horizontal: context.isLandscape ? 100 : 0),
     );
   }
 

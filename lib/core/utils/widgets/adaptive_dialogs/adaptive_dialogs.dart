@@ -3,15 +3,32 @@
 import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AdaptiveDialogs {
+  /// Show an alert
+  static Future<void> shoLoadingAlertDialog({
+    required BuildContext context,
+    required String title,
+  }) async {
+    return _showPlatformDialog(
+      context: context,
+      title: '$title...',
+      message: const CustomLoadingWidget(
+        width: 40,
+        height: 40,
+      ),
+      actions: [],
+    );
+  }
+
   /// Show an alert with only an "OK" button.
   static Future<void> showOkAlertDialog({
     required BuildContext context,
     required String title,
-    required String message,
+    required Widget message,
   }) async {
     return _showPlatformDialog(
       context: context,
@@ -21,7 +38,7 @@ class AdaptiveDialogs {
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.ok),
-          onPressed: () => context.pop(),
+          onPressed: () {},
         ),
       ],
     );
@@ -31,7 +48,9 @@ class AdaptiveDialogs {
   static Future<bool?> showOkCancelAlertDialog({
     required BuildContext context,
     required String title,
-    required String message,
+    required Widget message,
+    void Function()? onPressedOk,
+    void Function()? onPressedCancel,
   }) async {
     return _showPlatformDialog(
       context: context,
@@ -41,13 +60,13 @@ class AdaptiveDialogs {
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.cancel),
-          onPressed: () => context.popWithValue(false),
+          onPressed: onPressedCancel ?? () => context.pop(),
         ),
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.ok),
           isDefaultAction: true,
-          onPressed: () => context.popWithValue(true),
+          onPressed: onPressedOk ?? () => context.pop(),
         ),
       ],
     );
@@ -57,7 +76,7 @@ class AdaptiveDialogs {
   static Future<bool?> showConfirmationDialog({
     required BuildContext context,
     required String title,
-    required String message,
+    required Widget message,
     required String confirmText,
     required String cancelText,
   }) async {
@@ -156,7 +175,7 @@ class AdaptiveDialogs {
     await _showPlatformDialog(
       context: context,
       title: title,
-      message: '',
+      message: const Text(''),
       content: TextField(
         controller: textController,
         decoration: InputDecoration(hintText: hintText),
@@ -185,7 +204,7 @@ class AdaptiveDialogs {
   static Future<T?> _showPlatformDialog<T>({
     required BuildContext context,
     required String title,
-    required String message,
+    required Widget message,
     required List<Widget> actions,
     Widget? content,
   }) {
@@ -197,7 +216,7 @@ class AdaptiveDialogs {
             title: Text(title),
             content: Column(
               children: [
-                if (message.isNotEmpty) Text(message),
+                message,
                 if (content != null) content,
               ],
             ),
@@ -209,7 +228,7 @@ class AdaptiveDialogs {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (message.isNotEmpty) Text(message),
+                message,
                 if (content != null) content,
               ],
             ),

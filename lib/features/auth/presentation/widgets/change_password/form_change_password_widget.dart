@@ -4,6 +4,7 @@ import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart'
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
@@ -107,6 +108,7 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
                   current is ChangePasswordError,
               listener: (context, state) {
                 if (state is ChangePasswordError) {
+                  context.pop();
                   showMessage(
                     context,
                     message: state.message,
@@ -119,12 +121,16 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
                     type: SnackBarType.success,
                   );
                   context.pushNamed(Routes.loginScreen);
+                } else if (state is ChangePasswordLoading) {
+                  AdaptiveDialogs.shoLoadingAlertDialog(
+                    context: context,
+                    title: context.translate(LangKeys.changePassword),
+                  );
                 }
               },
               builder: (context, state) {
                 return CustomButton(
                   title: LangKeys.changePassword,
-                  isLoading: state is ChangePasswordLoading,
                   onPressed: () => _onChangePasswordPressed(context),
                 );
               },
