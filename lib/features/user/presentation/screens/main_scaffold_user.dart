@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
@@ -37,6 +38,11 @@ class MainScaffoldUser extends StatelessWidget {
         selectedIcon: selectedIconCustom(CupertinoIcons.gear_alt_fill, context),
         label: 'Setting',
       ),
+      NavigationDestination(
+        icon: const Icon(CupertinoIcons.person),
+        selectedIcon: selectedIconCustom(CupertinoIcons.person_alt, context),
+        label: 'Profile',
+      ),
     ];
 
     const screens = [
@@ -44,6 +50,7 @@ class MainScaffoldUser extends StatelessWidget {
       ChatbotScreen(),
       NotificationScreen(),
       SettingScreen(),
+      ProfileScreen(),
     ];
 
     return BlocProvider(
