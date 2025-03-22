@@ -1,6 +1,7 @@
 // ignore_for_file: flutter_style_todos
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as a;
 import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
@@ -76,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ],
         ).center(),
-      ),
+      ).paddingSymmetric(horizontal: context.isLandscape ? 120 : 0),
     );
   }
 
