@@ -77,5 +77,11 @@
   "arabic": "Arabic",
   "user_name": "User Name",
   "confirm_password": "Confirm Password",
-  "password_not_match": "Password does not match"
+  "password_not_match": "Password does not match",
+  "profile": "Profile",
+  "your_profile": "Your Profile",
+  "edit_profile": "Edit Profile",
+  "favorite": "Favorites",
+  "payment_method": "Payment Method",
+  "help_center": "Help Center"
 }

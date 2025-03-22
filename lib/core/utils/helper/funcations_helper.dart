@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Hide soft keyboard
 void hideKeyboard() {
@@ -20,15 +19,15 @@ Future<String> paste() async {
 
 /// returns Radius
 Radius radiusCircular([double? radius]) {
-  return Radius.circular(radius?.r ?? 12.r);
+  return Radius.circular(radius ?? 12);
 }
 
 BorderRadius radius([double? radius]) {
-  return BorderRadius.all(radiusCircular(radius?.r ?? 12.r));
+  return BorderRadius.all(radiusCircular(radius ?? 12));
 }
 
 ShapeBorder shapeBorder([double? borderRadius]) {
-  return RoundedRectangleBorder(borderRadius: radius(borderRadius?.r ?? 12.r));
+  return RoundedRectangleBorder(borderRadius: radius(borderRadius ?? 12));
 }
 
 /// returns custom Radius on each side

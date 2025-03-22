@@ -77,5 +77,11 @@
   "arabic": "العربية",
   "user_name": "اسم المستخدم",
   "confirm_password": "تاكيد كلمة المرور",
-  "password_not_match": "كلمة المرور غير متطابقة"
+  "password_not_match": "كلمة المرور غير متطابقة",
+  "profile": "الملف الشخصي",
+  "your_profile": "ملفك الشخصي",
+  "edit_profile": "تعديل الملف الشخصي",
+  "favorite": "المفضلة",
+  "payment_method": "طريقة الدفع",
+  "help_center": "مركز المساعدة"
 }

@@ -93,5 +93,11 @@ class LangKeys {
 // ! All Doctor
   static const String doctors = 'doctors';
 
-//! Doctor Details
+//! Profile
+  static const String profile = 'profile';
+  static const String yourProfile = 'your_profile';
+  static const String editProfile = 'edit_profile';
+  static const String paymentMethod = 'payment_method';
+  static const String favorite = 'favorite';
+  static const String helpCenter = 'help_center';
 }
