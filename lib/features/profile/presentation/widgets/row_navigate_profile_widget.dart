@@ -23,10 +23,11 @@ class RowNavigateProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap ?? () {},
+      borderRadius: BorderRadius.circular(10),
       child: Row(
         children: [
           Icon(icon, color: context.color.primary),
-          10.wSpace,
+          15.wSpace,
           AutoSizeText(
             context.translate(title),
             maxLines: 1,
@@ -39,7 +40,7 @@ class RowNavigateProfileWidget extends StatelessWidget {
             color: context.color.primary,
           ),
         ],
-      ),
-    ).paddingSymmetric(horizontal: 30, vertical: 12);
+      ).paddingSymmetric(horizontal: 10, vertical: 15),
+    ).paddingSymmetric(horizontal: 15);
   }
 }
