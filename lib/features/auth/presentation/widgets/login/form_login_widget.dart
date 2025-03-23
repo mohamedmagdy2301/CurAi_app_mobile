@@ -1,10 +1,12 @@
-import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
@@ -61,7 +63,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             ValueListenableBuilder<bool>(
               valueListenable: _isFormValidNotifier,
               builder: (context, isValid, child) {
-                return context.spaceHeight(isValid ? 35 : 20);
+                return isValid ? 35.hSpace : 20.hSpace;
               },
             ),
             CustomTextFeild(
@@ -89,14 +91,14 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                       context.pushNamed(Routes.forgetPasswordScreen),
                   child: Text(
                     context.translate(LangKeys.forgotPassword),
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colors.primary,
+                    style: TextStyleApp.regular14().copyWith(
+                      color: context.backgroundColor,
                     ),
                   ),
                 ),
               ],
             ),
-            context.spaceHeight(15),
+            15.hSpace,
             BlocConsumer<AuthCubit, AuthState>(
               listenWhen: (previous, current) =>
                   current is LoginLoading ||

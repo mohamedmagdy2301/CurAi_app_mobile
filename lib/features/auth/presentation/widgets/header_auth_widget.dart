@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class HeaderAuthWidget extends StatelessWidget {
@@ -18,19 +19,19 @@ class HeaderAuthWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        context.spaceHeight(40),
+        40.hSpace,
         AutoSizeText(
           context.translate(title),
-          style: context.styleBold24.copyWith(
-            color: context.color.primary,
+          style: TextStyleApp.bold24().copyWith(
+            color: context.primaryColor,
           ),
           maxLines: 1,
         ),
-        context.spaceHeight(10),
+        10.hSpace,
         AutoSizeText(
           context.translate(descraption),
-          style: context.styleRegular14.copyWith(
-            color: context.color.onSecondary,
+          style: TextStyleApp.regular14().copyWith(
+            color: context.onSecondaryColor,
           ),
           maxLines: 2,
         ),

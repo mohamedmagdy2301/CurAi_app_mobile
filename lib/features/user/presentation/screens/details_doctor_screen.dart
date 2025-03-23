@@ -1,8 +1,10 @@
-import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
+    as int_ext;
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
 import 'package:flutter/material.dart';
 
@@ -22,19 +24,19 @@ class DoctorDetailsScreen extends StatelessWidget {
         tag: doctorModel.id.toString(),
         child: Image.asset(
           doctorModel.imageUrl,
-          height: context.setH(395),
+          height: 395,
           width: double.infinity,
           fit: BoxFit.fill,
         ),
       ),
       bottomSheet: Container(
-        height: context.height - context.setH(380),
+        height: context.H - 380,
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           // color: context.colors.appBarHome,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(context.setR(18)),
-            topRight: Radius.circular(context.setR(18)),
+            topLeft: Radius.circular(18),
+            topRight: Radius.circular(18),
           ),
         ),
         child: Padding(
@@ -42,36 +44,35 @@ class DoctorDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              context.spaceHeight(20),
+              20.hSpace,
               FittedBox(
                 child: Text(
                   context.isStateArabic
                       ? doctorModel.nameAr
                       : doctorModel.nameEn,
-                  style: context.textTheme.headlineLarge!.copyWith(
-                    // color: context.colors.bodyTextOnboarding,
-                    fontWeight: FontWeightHelper.bold,
+                  style: TextStyleApp.bold24().copyWith(
+                    color: context.onPrimaryColor,
                   ),
                 ),
               ),
-              context.spaceHeight(10),
+              10.hSpace,
               FittedBox(
                 child: Text(
                   context.isStateArabic
                       ? doctorModel.locationAr
                       : doctorModel.locationEn,
-                  style: context.textTheme.bodyMedium!.copyWith(
-                      // color: context.colors.bodyTextOnboarding,
-                      ),
+                  style: TextStyleApp.bold24().copyWith(
+                    color: context.onPrimaryColor,
+                  ),
                 ),
               ),
-              context.spaceHeight(10),
+              10.hSpace,
               FittedBox(
                 child: Row(
-                  spacing: context.setW(5),
+                  spacing: 5,
                   children: [
                     Row(
-                      spacing: context.setW(3),
+                      spacing: 3,
                       children: List.generate(
                         int.parse(doctorModel.ratingEn.split('.').first),
                         (index) => const Icon(
@@ -85,9 +86,8 @@ class DoctorDetailsScreen extends StatelessWidget {
                       context.isStateArabic
                           ? doctorModel.ratingAr
                           : doctorModel.ratingEn,
-                      style: context.textTheme.bodyLarge!.copyWith(
-                        // color: context.colors.bodyTextOnboarding,
-                        fontWeight: FontWeightHelper.bold,
+                      style: TextStyleApp.bold24().copyWith(
+                        color: context.onPrimaryColor,
                       ),
                     ),
                   ],
@@ -96,7 +96,7 @@ class DoctorDetailsScreen extends StatelessWidget {
               const Spacer(),
               Image.asset(
                 'assets/images/Map.png',
-                height: context.setH(140),
+                height: 140,
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),
@@ -105,7 +105,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 title: LangKeys.appName,
                 onPressed: () {},
               ),
-              context.spaceHeight(10),
+              10.hSpace,
             ],
           ),
         ),

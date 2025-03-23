@@ -1,6 +1,7 @@
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/utils/helper/regex.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/features/user/data/doctor_speciality_list.dart';
@@ -42,7 +43,7 @@ class _FilterDoctorSpecialityState extends State<FilterDoctorSpeciality> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        context.spaceHeight(30),
+        30.hSpace,
         Padding(
           padding: context.padding(horizontal: 20),
           child: CustomTextFeild(
@@ -50,7 +51,7 @@ class _FilterDoctorSpecialityState extends State<FilterDoctorSpeciality> {
             onChanged: filterList,
           ),
         ),
-        context.spaceHeight(30),
+        30.hSpace,
         Expanded(
           child: DoctorSpecialitiesGridList(
             filteredItems: filteredDoctorSpecialityList,

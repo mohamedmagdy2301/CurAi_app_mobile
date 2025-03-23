@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
@@ -67,7 +67,7 @@ class MainScaffoldUser extends StatelessWidget {
                           NavigationDestinationLabelBehavior.alwaysHide,
                       elevation: 0,
                       animationDuration: const Duration(seconds: 1),
-                      height: context.setH(60),
+                      height: 60,
                       indicatorColor: Colors.transparent,
                       // overlayColor: WidgetStateProperty.all(
                       //     // context.colors.onboardingBg!.withOpacity(.3),
@@ -98,10 +98,10 @@ class MainScaffoldUser extends StatelessWidget {
         Divider(
           height: 2,
           thickness: 2.5,
-          color: context.color.primary,
+          color: context.backgroundColor,
         ),
-        context.spaceHeight(15),
-        Icon(icon, color: context.color.primary),
+        15.hSpace,
+        Icon(icon, color: context.backgroundColor),
       ],
     );
   }

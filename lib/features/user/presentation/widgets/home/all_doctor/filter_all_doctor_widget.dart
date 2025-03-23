@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/features/user/data/doctors_list.dart';
 import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/all_doctor/all_doctor_listview_widget.dart';
@@ -46,7 +47,7 @@ class _FilterAllDoctorState extends State<FilterAllDoctorWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        context.spaceHeight(30),
+        30.hSpace,
         Padding(
           padding: context.padding(horizontal: 20),
           child: CustomTextFeild(
@@ -54,7 +55,7 @@ class _FilterAllDoctorState extends State<FilterAllDoctorWidget> {
             onChanged: filterList,
           ),
         ),
-        context.spaceHeight(30),
+        30.hSpace,
         Expanded(
           child: AllDoctorListviewWidget(
             filteredItems: filteredAllDoctorList,

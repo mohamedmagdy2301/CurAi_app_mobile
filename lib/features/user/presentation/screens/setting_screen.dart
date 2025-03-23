@@ -1,19 +1,18 @@
 // ignore_for_file: inference_failure_on_instance_creation,, document_ignores
 // use_build_context_synchronously, avoid_catches_without_on_clauses
-import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
-import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
+import 'package:curai_app_mobile/core/app/cubit/localization_state.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/change_password/change_password_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/logout_widget.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/settings/colors_palette_widget.dart';
+import 'package:curai_app_mobile/features/profile/presentation/screens/appreance_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/settings/localize_widget.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/settings/theme_widget.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,13 +49,13 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<SettingsCubit>();
-    final state = context.watch<SettingsCubit>().state;
+    final cubit = context.read<LocalizationCubit>();
+    final state = context.watch<LocalizationCubit>().state;
     return Scaffold(
       appBar: AppBar(
         title: Text(context.translate(LangKeys.settings)),
         centerTitle: true,
-        flexibleSpace: Container(color: context.color.surface),
+        flexibleSpace: Container(color: context.backgroundColor),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -65,11 +64,9 @@ class _SettingScreenState extends State<SettingScreen> {
           children: [
             _buildGeneralSettingsSection(context),
             _buildDivider(),
-            _buildthemeSection(context, cubit, state),
+            const AppreanceScreen(),
             _buildDivider(),
             _buildLocalizeSection(context, cubit, state),
-            _buildDivider(),
-            _buildColorPalettteSection(context, cubit, state),
             _buildDivider(),
             const ChangePasswordWidget(),
             _buildDivider(),
@@ -103,45 +100,16 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  Widget _buildthemeSection(
-    BuildContext context,
-    SettingsCubit cubit,
-    SettingsState state,
-  ) {
-    return _buildSection(
-      context,
-      title: context.translate(LangKeys.theme),
-      children: [
-        ThemeWidget(cubit: cubit, state: state),
-      ],
-    );
-  }
-
   Widget _buildLocalizeSection(
     BuildContext context,
-    SettingsCubit cubit,
-    SettingsState state,
+    LocalizationCubit cubit,
+    LocalizationState state,
   ) {
     return _buildSection(
       context,
       title: context.translate(LangKeys.language),
       children: [
         LocalizeWidget(cubit: cubit, state: state),
-      ],
-    );
-  }
-
-  Widget _buildColorPalettteSection(
-    BuildContext context,
-    SettingsCubit cubit,
-    SettingsState state,
-  ) {
-    return _buildSection(
-      context,
-      title: context.isStateArabic ? 'لوحة الألوان' : 'Color Palette',
-      children: [
-        context.spaceHeight(20),
-        const ColorPaletteWidget(),
       ],
     );
   }
@@ -181,13 +149,13 @@ class _SettingScreenState extends State<SettingScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: ExpansionTileCard(
-        title: Text(title, style: context.styleSemiBold16),
+        title: Text(title, style: TextStyleApp.semiBold16()),
         trailing: RotatedBox(
           quarterTurns: context.isStateArabic ? 3 : 1,
           child: Icon(
-            size: context.setSp(15),
+            size: 15,
             Icons.arrow_forward_ios,
-            color: context.color.onSurface,
+            color: context.onPrimaryColor,
           ),
         ),
         animateTrailing: true,
@@ -207,8 +175,8 @@ class _SettingScreenState extends State<SettingScreen> {
     VoidCallback? onTap,
   }) {
     return ListTile(
-      leading: Icon(icon, color: context.color.primary),
-      title: Text(title, style: context.styleRegular14),
+      leading: Icon(icon, color: context.backgroundColor),
+      title: Text(title, style: TextStyleApp.regular14()),
       trailing: trailing,
       onTap: onTap,
     );
@@ -238,7 +206,6 @@ class _SettingScreenState extends State<SettingScreen> {
 //           'light',
 //           'assets/images/splash_light.png',
 //         ),
-//     context.spaceWidth(10),
 //         _buildIconChangeButton(
 //           context,
 //           'dark',

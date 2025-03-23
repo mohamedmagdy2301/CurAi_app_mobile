@@ -1,10 +1,9 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
-import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +47,7 @@ class _OtpCodeInputState extends State<OtpCodeInput> {
 
   void _onPinIncorrect() {
     setState(() {
-      activeFillColor = context.color.error;
+      activeFillColor = Colors.redAccent.shade400;
       textEditingController.clear();
     });
     hideKeyboard();
@@ -63,7 +62,7 @@ class _OtpCodeInputState extends State<OtpCodeInput> {
 
   void _resetActiveFillColor() {
     setState(() {
-      activeFillColor = context.color.primary;
+      activeFillColor = context.backgroundColor;
     });
   }
 
@@ -76,22 +75,21 @@ class _OtpCodeInputState extends State<OtpCodeInput> {
       autoFocus: true,
       animationType: AnimationType.fade,
       cursorWidth: 1,
-      textStyle: context.styleBlack34.copyWith(
-        color: context.color.surface,
-        fontWeight: FontWeightHelper.light,
+      textStyle: TextStyleApp.light34().copyWith(
+        color: context.onPrimaryColor,
       ),
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
-        borderRadius: BorderRadius.circular(context.setR(10)),
+        borderRadius: BorderRadius.circular(10),
         borderWidth: 0,
-        fieldHeight: context.isLandscape ? context.setH(80) : context.setH(60),
-        fieldWidth: context.isLandscape ? context.setW(20) : context.setW(60),
+        fieldHeight: context.isLandscape ? 80 : 60,
+        fieldWidth: context.isLandscape ? 20 : 40,
         activeColor: Colors.transparent,
         inactiveColor: Colors.transparent,
         selectedColor: Colors.transparent,
         activeFillColor: activeFillColor,
-        inactiveFillColor: context.color.onSecondary.withAlpha(70),
-        selectedFillColor: context.color.onSecondary.withAlpha(170),
+        inactiveFillColor: context.onSecondaryColor.withAlpha(70),
+        selectedFillColor: context.onSecondaryColor.withAlpha(170),
       ),
       enableActiveFill: true,
       controller: textEditingController,

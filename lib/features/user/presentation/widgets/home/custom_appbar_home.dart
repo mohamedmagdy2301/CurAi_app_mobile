@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -29,18 +29,18 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       automaticallyImplyLeading: false,
       pinned: true,
       elevation: 0,
-      flexibleSpace: Container(color: context.color.surface),
-      toolbarHeight: context.setH(70),
+      flexibleSpace: Container(color: context.backgroundColor),
+      toolbarHeight: 70,
       title: ListTile(
         title: AutoSizeText(
           'Hi, ${SharedPrefManager.getString(SharedPrefKey.keyUserName)} 👋',
-          style: context.styleExtraBold20,
+          style: TextStyleApp.extraBold20(),
           maxLines: 1,
         ),
         subtitle: AutoSizeText(
           context.translate(LangKeys.howAreYouToday),
-          style: context.styleBold14.copyWith(
-            color: context.color.onSecondary.withAlpha(130),
+          style: TextStyleApp.bold14().copyWith(
+            color: context.onSecondaryColor.withAlpha(130),
           ),
           maxLines: 1,
         ),
@@ -51,13 +51,13 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
               context.pushNamed(Routes.notificationScreen);
             });
           },
-          iconSize: context.setSp(22),
+          iconSize: 22,
           icon: Badge.count(
             count: count,
             isLabelVisible: count != 0,
             child: Icon(
               CupertinoIcons.bell,
-              color: context.color.primary,
+              color: context.backgroundColor,
             ),
           ),
         ),

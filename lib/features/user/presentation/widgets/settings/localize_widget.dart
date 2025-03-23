@@ -1,33 +1,33 @@
-import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
-import 'package:curai_app_mobile/core/app/cubit/settings_state.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/settings/build_radio_listtile.dart';
+import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
+import 'package:curai_app_mobile/core/app/cubit/localization_state.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/settings/build_radio_listtile.dart';
 import 'package:flutter/material.dart';
 
 class LocalizeWidget extends StatelessWidget {
   const LocalizeWidget({required this.cubit, required this.state, super.key});
-  final SettingsCubit cubit;
-  final SettingsState state;
+  final LocalizationCubit cubit;
+  final LocalizationState state;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BuildRadioListTile<LocalizationState>(
+        BuildRadioListTile<LocalizationStateEnum>(
           labelKey: LangKeys.english,
-          value: LocalizationState.en,
+          value: LocalizationStateEnum.en,
           groupValue: state.locale,
           onChanged: (locale) => cubit.setLocale(locale!),
         ),
-        BuildRadioListTile<LocalizationState>(
+        BuildRadioListTile<LocalizationStateEnum>(
           labelKey: LangKeys.arabic,
-          value: LocalizationState.ar,
+          value: LocalizationStateEnum.ar,
           groupValue: state.locale,
           onChanged: (locale) => cubit.setLocale(locale!),
         ),
-        BuildRadioListTile<LocalizationState>(
+        BuildRadioListTile<LocalizationStateEnum>(
           labelKey: LangKeys.systemDefault,
-          value: LocalizationState.system,
+          value: LocalizationStateEnum.system,
           groupValue: state.locale,
           onChanged: (locale) => cubit.setLocale(locale!),
         ),

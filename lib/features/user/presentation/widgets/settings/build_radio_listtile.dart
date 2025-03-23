@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class BuildRadioListTile<T> extends StatelessWidget {
@@ -21,7 +21,7 @@ class BuildRadioListTile<T> extends StatelessWidget {
     return RadioListTile<T>(
       title: Text(
         context.translate(labelKey),
-        style: context.styleRegular14,
+        style: TextStyleApp.regular14(),
       ),
       value: value,
       groupValue: groupValue,

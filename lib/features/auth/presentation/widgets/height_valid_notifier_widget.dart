@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:flutter/material.dart';
 
 class HeightValidNotifier extends StatelessWidget {
@@ -14,7 +14,7 @@ class HeightValidNotifier extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: isFormValidNotifier,
       builder: (context, isValid, child) {
-        return context.spaceHeight(isValid ? 20 : 10);
+        return isValid ? 20.hSpace : 10.hSpace;
       },
     );
   }

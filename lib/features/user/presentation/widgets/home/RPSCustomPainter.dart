@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class RPSCustomPainter extends CustomPainter {
@@ -10,7 +10,7 @@ class RPSCustomPainter extends CustomPainter {
     // Layer 1
 
     final paintFill0 = Paint()
-      ..color = context.color.onPrimary.withAlpha(50)
+      ..color = context.primaryColor.withAlpha(50)
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt

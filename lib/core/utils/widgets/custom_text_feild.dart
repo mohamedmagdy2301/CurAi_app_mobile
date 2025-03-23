@@ -1,6 +1,6 @@
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -65,8 +65,8 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
             },
             icon: Icon(
               color: isPasswordObscure
-                  ? context.color.onSecondary.withAlpha(90)
-                  : context.color.primary,
+                  ? context.onSecondaryColor.withAlpha(90)
+                  : context.backgroundColor,
               isPasswordObscure
                   ? CupertinoIcons.eye_slash_fill
                   : CupertinoIcons.eye_fill,

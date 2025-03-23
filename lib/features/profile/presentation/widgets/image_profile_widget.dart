@@ -1,6 +1,6 @@
 // ignore_for_file: flutter_style_todos
 
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,10 +26,10 @@ class ImageProfileWidget extends StatelessWidget {
             onTap: () {},
             child: CircleAvatar(
               radius: 16,
-              backgroundColor: context.color.onPrimary,
+              backgroundColor: context.onPrimaryColor,
               child: CircleAvatar(
                 radius: 15,
-                backgroundColor: context.color.primary,
+                backgroundColor: context.backgroundColor,
                 child: const Icon(
                   CupertinoIcons.pencil,
                   color: Colors.white,

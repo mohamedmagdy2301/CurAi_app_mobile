@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class TermsOfServiceWidget extends StatelessWidget {
@@ -18,32 +19,32 @@ class TermsOfServiceWidget extends StatelessWidget {
         children: [
           AutoSizeText(
             context.translate(LangKeys.byLoggingIn),
-            style: context.styleRegular14.copyWith(
-              color: context.color.onSecondary,
+            style: TextStyleApp.regular14().copyWith(
+              color: context.onSecondaryColor,
             ),
             maxLines: 1,
           ),
-          context.spaceWidth(5),
+          5.wSpace,
           AutoSizeText(
             context.translate(LangKeys.termsOfUse),
-            style: context.styleSemiBold14.copyWith(
-              color: context.color.primary,
+            style: TextStyleApp.semiBold14().copyWith(
+              color: context.backgroundColor,
             ),
             maxLines: 1,
           ),
-          context.spaceWidth(5),
+          5.wSpace,
           AutoSizeText(
             context.translate(LangKeys.and),
-            style: context.styleRegular14.copyWith(
-              color: context.color.onSecondary,
+            style: TextStyleApp.regular14().copyWith(
+              color: context.onSecondaryColor,
             ),
             maxLines: 1,
           ),
-          context.spaceWidth(5),
+          5.wSpace,
           AutoSizeText(
             context.translate(LangKeys.privacyPolicy),
-            style: context.styleSemiBold14.copyWith(
-              color: context.color.primary,
+            style: TextStyleApp.semiBold14().copyWith(
+              color: context.backgroundColor,
             ),
             maxLines: 1,
           ),

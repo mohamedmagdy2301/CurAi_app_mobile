@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,9 @@ class CustomButton extends StatelessWidget {
             )
           : Text(
               context.translate(title),
-              style: context.styleRegular20.copyWith(color: Colors.white),
+              style: TextStyleApp.bold24().copyWith(
+                color: Colors.white,
+              ),
             ),
     );
   }
