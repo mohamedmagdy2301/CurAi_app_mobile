@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,7 +26,7 @@ class SettingsRowItem extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyleApp.regular20().copyWith(
+                style: TextStyleApp.regular18().copyWith(
                   color: context.onPrimaryColor,
                 ),
               ),

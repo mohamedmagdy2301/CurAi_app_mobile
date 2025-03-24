@@ -34,7 +34,8 @@ Future<void> main() async {
 
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     final savedThemeMode =
-        await AdaptiveTheme.getThemeMode() ?? AdaptiveThemeMode.system;
+        CacheDataHelper.getData(key: SharedPrefKey.saveThemeMode) ??
+            AdaptiveThemeMode.system;
     final savedThemeColor = await CacheDataHelper.getData(
           key: SharedPrefKey.keyThemeColor,
         ) ??
@@ -45,7 +46,7 @@ Future<void> main() async {
         child: MyApp(
           environment: sl<EnvVariables>().debugMode,
           savedThemeColor: savedThemeColor as Color,
-          savedThemeMode: savedThemeMode,
+          savedThemeMode: savedThemeMode as AdaptiveThemeMode,
         ),
       ),
     );
