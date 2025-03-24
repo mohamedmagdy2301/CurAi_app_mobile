@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppThemeData {
   static const String fontFamilyEn = 'Poppins';
@@ -64,7 +65,7 @@ class AppThemeData {
           color: AppColors.backgroundDarkColor,
           elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -72,10 +73,10 @@ class AppThemeData {
             foregroundColor: Colors.white,
             backgroundColor: seedColor,
             elevation: 0,
-            fixedSize: const Size(800, 50),
+            fixedSize: Size(800.w, 50.h),
             alignment: Alignment.center,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
           ),
         ),
@@ -111,23 +112,23 @@ class AppThemeData {
         ),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            borderRadius: BorderRadius.all(Radius.circular(8.r)),
             borderSide: BorderSide(color: seedColor.withAlpha(120)),
           ),
-          errorBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            borderSide: BorderSide(color: Colors.redAccent),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r)),
+            borderSide: const BorderSide(color: Colors.redAccent),
           ),
-          focusedErrorBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            borderSide: BorderSide(color: AppColors.red),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r)),
+            borderSide: const BorderSide(color: AppColors.red),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            borderRadius: BorderRadius.all(Radius.circular(8.r)),
             borderSide: BorderSide(color: seedColor.withAlpha(120)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            borderRadius: BorderRadius.all(Radius.circular(8.r)),
             borderSide: BorderSide(color: seedColor),
           ),
           errorStyle: TextStyleApp.medium14().copyWith(color: Colors.redAccent),
@@ -139,7 +140,7 @@ class AppThemeData {
           color: AppColors.backgroundLightColor,
           elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -147,9 +148,9 @@ class AppThemeData {
             foregroundColor: Colors.white,
             backgroundColor: seedColor,
             elevation: 0,
-            fixedSize: const Size(800, 50),
+            fixedSize: Size(800.w, 50.h),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
           ),
         ),

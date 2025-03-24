@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/app/onboarding/widgets/custom_dot_onboardi
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
@@ -13,6 +14,7 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BodyOnboarding extends StatelessWidget {
   const BodyOnboarding({
@@ -25,20 +27,21 @@ class BodyOnboarding extends StatelessWidget {
       builder: (context, state) {
         final onboardingInfo = OnboardingInfo.onboardingInfo[state.index];
         return Container(
-          height: context.H * 0.7,
-          width: double.infinity,
+          height: context.H * 0.46,
+          width: context.W,
           decoration: BoxDecoration(
-            color: context.backgroundColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(40),
-              topRight: Radius.circular(40),
+            color: context.primaryColor.withAlpha(10),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40.r),
+              topRight: Radius.circular(40.r),
             ),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+          padding: context.padding(horizontal: 25, vertical: 20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                height: 90,
+                height: context.H * 0.12,
                 child: AutoSizeText(
                   textAlign: TextAlign.center,
                   context.translate(onboardingInfo.title),
@@ -49,23 +52,20 @@ class BodyOnboarding extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 90,
-                width: context.W * 0.9,
+                height: context.H * 0.17,
                 child: AutoSizeText(
                   context.translate(onboardingInfo.body),
-                  style: TextStyleApp.medium18().copyWith(
-                    color: context.onPrimaryColor,
+                  style: TextStyleApp.medium20().copyWith(
+                    color: context.onSecondaryColor,
                   ),
                   textAlign: TextAlign.center,
-                  maxLines: 4,
-                ),
+                  maxLines: 5,
+                ).paddingSymmetric(horizontal: 6),
               ),
-              const Spacer(),
               CustomDotOnboarding(
                 index: onboardingInfo.index,
                 currentIndex: state.index,
               ),
-              const Spacer(),
               CustomButton(
                 title: onboardingInfo.index ==
                         OnboardingInfo.onboardingInfo.length - 1

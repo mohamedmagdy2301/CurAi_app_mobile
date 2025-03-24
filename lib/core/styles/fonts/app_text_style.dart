@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextStyleApp {
   static TextStyle _baseTextStyle({
     required double fontSize,
     required FontWeight fontWeight,
   }) {
-    // TODO: change fontFamily and add sp
     return TextStyle(
-      fontSize: fontSize,
+      fontSize: fontSize.sp,
       fontWeight: fontWeight,
       color: Colors.black,
     );

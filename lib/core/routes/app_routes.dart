@@ -1,7 +1,7 @@
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
-import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
@@ -20,7 +20,7 @@ class AppRoutes {
       case Routes.mainScaffoldUser:
         return BaseRoute(page: const MainScaffoldUser());
       case Routes.onboarding:
-        return BaseRoute(page: const Onboarding());
+        return BaseRoute(page: const OnboardingScreen());
       case Routes.loginScreen:
         return BaseRoute(page: const LoginScreen());
       case Routes.registerScreen:

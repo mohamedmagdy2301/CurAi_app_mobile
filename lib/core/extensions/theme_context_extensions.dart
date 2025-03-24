@@ -1,8 +1,11 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 extension ContextExtensions on BuildContext {
   Size get size => MediaQuery.sizeOf(this);
+
+  EdgeInsets get paddingOf => MediaQuery.paddingOf(this);
 
   double get W => size.width;
 
@@ -38,8 +41,8 @@ extension ContextExtensions on BuildContext {
     double? vertical,
   }) {
     return EdgeInsets.symmetric(
-      horizontal: horizontal ?? 0,
-      vertical: vertical ?? 0,
+      horizontal: horizontal?.w ?? 0,
+      vertical: vertical?.h ?? 0,
     );
   }
 }
