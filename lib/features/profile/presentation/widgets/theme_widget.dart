@@ -13,15 +13,14 @@ import 'package:curai_app_mobile/features/user/presentation/widgets/settings/cir
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AppreanceScreen extends StatefulWidget {
-  const AppreanceScreen({super.key});
-  static const routeName = '/settings';
+class ThemeWidget extends StatefulWidget {
+  const ThemeWidget({super.key});
 
   @override
-  State<AppreanceScreen> createState() => _AppreanceScreenState();
+  State<ThemeWidget> createState() => _ThemeWidgetState();
 }
 
-class _AppreanceScreenState extends State<AppreanceScreen> {
+class _ThemeWidgetState extends State<ThemeWidget> {
   dynamic saveThemeMode =
       CacheDataHelper.getData(key: SharedPrefKey.saveThemeMode) ??
           AdaptiveThemeMode.system;

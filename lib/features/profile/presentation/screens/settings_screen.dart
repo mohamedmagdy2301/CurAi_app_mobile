@@ -8,10 +8,11 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
-import 'package:curai_app_mobile/features/profile/presentation/screens/appreance_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_settings.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_expansion_tile_card.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/palette_listview_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/theme_widget.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/settings/localize_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,13 @@ class SettingsScreen2 extends StatelessWidget {
             const CustomExpansionTileCard(
               icon: Icons.dark_mode_outlined,
               title: LangKeys.changeTheme,
-              children: [AppreanceScreen()],
+              children: [ThemeWidget()],
+            ),
+            _buildDivider(context),
+            const CustomExpansionTileCard(
+              icon: Icons.color_lens,
+              title: LangKeys.colorPalette,
+              children: [PalettListViewWidget()],
             ),
             _buildDivider(context),
             RowNavigateProfileWidget(

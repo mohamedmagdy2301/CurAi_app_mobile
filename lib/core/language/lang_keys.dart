@@ -99,6 +99,8 @@ class LangKeys {
   static const String delete = 'delete';
   static const String changeLanguage = 'change_language';
   static const String changeTheme = 'change_theme';
+
+  static const String colorPalette = 'color_palette';
   static const String light = 'light';
   static const String dark = 'dark';
   static const String systemDefault = 'system_default';

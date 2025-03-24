@@ -5,7 +5,6 @@ import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cub
 import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/notification_screen.dart';
-import 'package:curai_app_mobile/features/user/presentation/screens/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,29 +17,24 @@ class MainScaffoldUser extends StatelessWidget {
   Widget build(BuildContext context) {
     final destinations = [
       NavigationDestination(
-        icon: const Icon(CupertinoIcons.house_alt),
+        icon: Icon(CupertinoIcons.house_alt, size: 20.sp),
         selectedIcon:
             selectedIconCustom(CupertinoIcons.house_alt_fill, context),
         label: 'Home',
       ),
       NavigationDestination(
-        icon: const Icon(CupertinoIcons.chat_bubble),
+        icon: Icon(CupertinoIcons.chat_bubble, size: 20.sp),
         selectedIcon:
             selectedIconCustom(CupertinoIcons.chat_bubble_fill, context),
         label: 'Chat',
       ),
       NavigationDestination(
-        icon: const Icon(CupertinoIcons.bell),
+        icon: Icon(CupertinoIcons.bell, size: 20.sp),
         selectedIcon: selectedIconCustom(CupertinoIcons.bell_solid, context),
-        label: 'Notif',
+        label: 'Notification',
       ),
       NavigationDestination(
-        icon: const Icon(CupertinoIcons.gear),
-        selectedIcon: selectedIconCustom(CupertinoIcons.gear_alt_fill, context),
-        label: 'Setting',
-      ),
-      NavigationDestination(
-        icon: const Icon(CupertinoIcons.person),
+        icon: Icon(CupertinoIcons.person, size: 20.sp),
         selectedIcon: selectedIconCustom(CupertinoIcons.person_alt, context),
         label: 'Profile',
       ),
@@ -50,7 +44,6 @@ class MainScaffoldUser extends StatelessWidget {
       HomeScreen(),
       ChatbotScreen(),
       NotificationScreen(),
-      SettingScreen(),
       ProfileScreen(),
     ];
 
@@ -66,8 +59,6 @@ class MainScaffoldUser extends StatelessWidget {
                   : NavigationBar(
                       labelBehavior:
                           NavigationDestinationLabelBehavior.alwaysHide,
-                      elevation: 10,
-                      shadowColor: Colors.amber,
                       animationDuration: const Duration(seconds: 1),
                       height: 60.sp,
                       indicatorColor: Colors.transparent,
@@ -105,7 +96,7 @@ class MainScaffoldUser extends StatelessWidget {
           color: context.primaryColor,
         ),
         15.hSpace,
-        Icon(icon, color: context.primaryColor, size: 25.sp),
+        Icon(icon, color: context.primaryColor, size: 20.sp),
       ],
     );
   }
