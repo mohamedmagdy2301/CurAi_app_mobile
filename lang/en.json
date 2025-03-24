@@ -86,6 +86,8 @@
   "password_manager": "Password Manager",
   "change_language": "Change Language",
   "change_theme": "Change Theme",
-  "delete_account": "Delete Account"
+  "delete_account": "Delete Account",
+  "delete_account_message": "Are you sure you want to delete your account?",
+  "delete": "Delete"
 
 }

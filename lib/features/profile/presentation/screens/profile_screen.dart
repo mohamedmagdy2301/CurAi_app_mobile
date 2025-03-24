@@ -34,7 +34,9 @@ class ProfileScreen extends StatelessWidget {
             AutoSizeText(
               context.translate(LangKeys.editProfile),
               maxLines: 1,
-              style: TextStyleApp.medium18(),
+              style: TextStyleApp.medium18().copyWith(
+                color: context.primaryColor,
+              ),
             ),
             25.hSpace,
             RowNavigateProfileWidget(

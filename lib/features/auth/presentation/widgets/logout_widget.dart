@@ -72,7 +72,7 @@ class LogoutWidget extends StatelessWidget {
               AdaptiveDialogs.showOkCancelAlertDialog(
                 context: context,
                 title: context.translate(LangKeys.logout),
-                message: Text(context.translate(LangKeys.logoutMessage)),
+                message: context.translate(LangKeys.logoutMessage),
                 onPressedOk: () {
                   context.pop();
                   context.read<AuthCubit>().logout();

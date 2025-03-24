@@ -95,6 +95,8 @@ class LangKeys {
   static const String notificationSettings = 'notification_settings';
   static const String passwordManager = 'password_manager';
   static const String deleteAccount = 'delete_account';
+  static const String deleteAccountMessage = 'delete_account_message';
+  static const String delete = 'delete';
   static const String changeLanguage = 'change_language';
   static const String changeTheme = 'change_theme';
   static const String light = 'light';

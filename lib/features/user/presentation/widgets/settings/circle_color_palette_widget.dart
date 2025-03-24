@@ -22,8 +22,9 @@ class CircleColorPaletteWidget extends StatelessWidget {
       child: CircleAvatar(
         backgroundColor: color,
         radius: 27.r,
-        child:
-            isSelected ? const Icon(Icons.check, color: AppColors.white) : null,
+        child: isSelected
+            ? Icon(Icons.check, color: AppColors.white, size: 30.sp)
+            : null,
       ),
     );
   }

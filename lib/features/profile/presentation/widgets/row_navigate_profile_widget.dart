@@ -37,7 +37,9 @@ class RowNavigateProfileWidget extends StatelessWidget {
           AutoSizeText(
             context.translate(title),
             maxLines: 1,
-            style: TextStyleApp.regular16(),
+            style: TextStyleApp.regular16().copyWith(
+              color: context.onPrimaryColor,
+            ),
           ),
           const Spacer(),
           Icon(

@@ -109,7 +109,7 @@ class _SettingScreenState extends State<SettingScreen> {
       context,
       title: context.translate(LangKeys.language),
       children: [
-        LocalizeWidget(cubit: cubit, state: state),
+        const LocalizeWidget(),
       ],
     );
   }

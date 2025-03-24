@@ -2,7 +2,9 @@
 
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,20 @@ class AdaptiveDialogs {
         width: 40,
         height: 40,
       ),
+      actions: [],
+    );
+  }
+
+  /// Show an alert with only an "OK" button.
+  static Future<void> showAlertDialogWithWidget({
+    required BuildContext context,
+    required String title,
+    required Widget widget,
+  }) async {
+    return _showPlatformDialog(
+      context: context,
+      title: title,
+      message: widget,
       actions: [],
     );
   }
@@ -48,25 +64,30 @@ class AdaptiveDialogs {
   static Future<bool?> showOkCancelAlertDialog({
     required BuildContext context,
     required String title,
-    required Widget message,
+    required String message,
     void Function()? onPressedOk,
     void Function()? onPressedCancel,
   }) async {
     return _showPlatformDialog(
       context: context,
       title: title,
-      message: message,
+      message: Text(
+        message,
+        style: TextStyleApp.medium14().copyWith(
+          color: context.onPrimaryColor,
+        ),
+      ),
       actions: [
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.cancel),
-          onPressed: onPressedCancel ?? () => context.pop(),
+          onPressed: onPressedCancel ?? () => ContextExtensions(context).pop(),
         ),
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.ok),
           isDefaultAction: true,
-          onPressed: onPressedOk ?? () => context.pop(),
+          onPressed: onPressedOk ?? () => ContextExtensions(context).pop(),
         ),
       ],
     );
@@ -112,18 +133,23 @@ class AdaptiveDialogs {
         context: context,
         builder: (BuildContext context) {
           return CupertinoActionSheet(
-            title: Text(title),
+            title: Text(
+              title,
+              style: TextStyleApp.bold16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
             actions: actions.asMap().entries.map((entry) {
               return CupertinoActionSheetAction(
                 onPressed: () {
-                  context.pop();
+                  ContextExtensions(context).pop();
                   onSelected(entry.key);
                 },
                 child: Text(entry.value),
               );
             }).toList(),
             cancelButton: CupertinoActionSheetAction(
-              onPressed: () => context.pop(),
+              onPressed: () => ContextExtensions(context).pop(),
               child: Text(
                 context.translate(LangKeys.cancel),
                 style: const TextStyle(fontWeight: FontWeight.bold),
@@ -141,9 +167,14 @@ class AdaptiveDialogs {
             children: [
               ...actions.asMap().entries.map((entry) {
                 return ListTile(
-                  title: Text(entry.value),
+                  title: Text(
+                    entry.value,
+                    style: TextStyleApp.bold16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
                   onTap: () {
-                    context.pop();
+                    ContextExtensions(context).pop();
                     onSelected(entry.key);
                   },
                 );
@@ -153,7 +184,7 @@ class AdaptiveDialogs {
                   context.translate(LangKeys.cancel),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                onTap: () => context.pop(),
+                onTap: () => ContextExtensions(context).pop(),
               ),
             ],
           );
@@ -184,7 +215,7 @@ class AdaptiveDialogs {
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.cancel),
-          onPressed: () => context.pop(),
+          onPressed: () => ContextExtensions(context).pop(),
         ),
         _buildDialogAction(
           context,
@@ -213,7 +244,12 @@ class AdaptiveDialogs {
       builder: (BuildContext context) {
         if (Theme.of(context).platform == TargetPlatform.iOS) {
           return CupertinoAlertDialog(
-            title: Text(title),
+            title: Text(
+              title,
+              style: TextStyleApp.bold16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
             content: Column(
               children: [
                 message,
@@ -224,7 +260,12 @@ class AdaptiveDialogs {
           );
         } else {
           return AlertDialog(
-            title: Text(title),
+            title: Text(
+              title,
+              style: TextStyleApp.bold16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -250,10 +291,23 @@ class AdaptiveDialogs {
       return CupertinoDialogAction(
         onPressed: onPressed,
         isDefaultAction: isDefaultAction,
-        child: Text(text),
+        child: Text(
+          text,
+          style: TextStyleApp.bold14().copyWith(
+            color: context.primaryColor,
+          ),
+        ),
       );
     } else {
-      return TextButton(onPressed: onPressed, child: Text(text));
+      return TextButton(
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyleApp.bold14().copyWith(
+            color: context.primaryColor,
+          ),
+        ),
+      );
     }
   }
 }

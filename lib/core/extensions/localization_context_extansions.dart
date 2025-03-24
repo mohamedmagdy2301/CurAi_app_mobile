@@ -13,7 +13,7 @@ extension LocalizationContextExtansions on BuildContext {
   bool get isSystemArabic => Platform.localeName.split('_').first == 'ar';
 
   // ! Localization Cubit
-  LocalizationState get localizationState => watch<LocalizationCubit>().state;
+  LocalizationState get localizationState => read<LocalizationCubit>().state;
   LocalizationCubit get localizationCubit => read<LocalizationCubit>();
 
   bool get isStateArabic {
