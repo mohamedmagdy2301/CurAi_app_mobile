@@ -29,7 +29,7 @@ class NotHaveAccount extends StatelessWidget {
           child: AutoSizeText(
             context.translate(LangKeys.register),
             style: TextStyleApp.semiBold14().copyWith(
-              color: context.backgroundColor,
+              color: context.primaryColor,
             ),
             maxLines: 1,
           ),

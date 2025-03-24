@@ -1,8 +1,11 @@
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
-import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFeild extends StatefulWidget {
   const CustomTextFeild({
@@ -40,6 +43,16 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       keyboardType: widget.keyboardType ?? TextInputType.text,
       controller: widget.controller,
       autofillHints: widget.autofillHints ?? const [],
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      cursorColor: context.primaryColor,
+      style: TextStyleApp.regular16().copyWith(
+        color: context.onPrimaryColor,
+        decoration: TextDecoration.none,
+      ),
+      // autocorrect: false,
+      // enableSuggestions: false,
+      cursorHeight: 26.h,
+      cursorWidth: 1.2.w,
       validator: (value) {
         if (value == '') {
           return '${widget.labelText} ${context.translate(LangKeys.isRequired)}';
@@ -49,13 +62,21 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       onChanged: widget.onChanged,
       obscureText: isPasswordObscure,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: context.primaryColor.withAlpha(10),
+        contentPadding: context.W > 400
+            ? EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h)
+            : null,
+        errorStyle: TextStyleApp.regular14().copyWith(
+          color: Colors.redAccent,
+        ),
         suffixIcon: changePasswordObscure(),
         labelText: widget.labelText,
       ),
     );
   }
 
-  IconButton? changePasswordObscure() {
+  Widget? changePasswordObscure() {
     return widget.obscureText != null
         ? IconButton(
             onPressed: () {
@@ -64,14 +85,15 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
               });
             },
             icon: Icon(
+              size: 26.sp,
               color: isPasswordObscure
-                  ? context.onSecondaryColor.withAlpha(90)
-                  : context.backgroundColor,
+                  ? context.onSecondaryColor
+                  : context.primaryColor,
               isPasswordObscure
                   ? CupertinoIcons.eye_slash_fill
                   : CupertinoIcons.eye_fill,
             ),
-          )
+          ).paddingSymmetric(horizontal: 5)
         : null;
   }
 }

@@ -92,7 +92,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                   child: Text(
                     context.translate(LangKeys.forgotPassword),
                     style: TextStyleApp.regular14().copyWith(
-                      color: context.backgroundColor,
+                      color: context.primaryColor,
                     ),
                   ),
                 ),

@@ -111,6 +111,7 @@ class AppThemeData {
           iconTheme: const IconThemeData(color: AppColors.textLightColor),
         ),
         inputDecorationTheme: InputDecorationTheme(
+          alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.r)),
             borderSide: BorderSide(color: seedColor.withAlpha(120)),

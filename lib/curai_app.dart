@@ -52,6 +52,7 @@ class _CuraiAppState extends State<CuraiApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return DevicePreview(
+      enabled: false,
       builder: (context) => LockOrientation(
         child: ScreenUtilInit(
           designSize: const Size(390, 844),
