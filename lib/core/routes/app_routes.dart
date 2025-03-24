@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
+import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
@@ -37,6 +38,8 @@ class AppRoutes {
         return BaseRoute(page: const DoctorSpecialitiesScreen());
       case Routes.allDoctors:
         return BaseRoute(page: const AllDoctorScreen());
+      case Routes.settingsScreen:
+        return BaseRoute(page: const SettingsScreen2());
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }

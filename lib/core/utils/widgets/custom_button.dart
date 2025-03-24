@@ -27,7 +27,7 @@ class CustomButton extends StatelessWidget {
             )
           : Text(
               context.translate(title),
-              style: TextStyleApp.bold24().copyWith(
+              style: TextStyleApp.bold20().copyWith(
                 color: Colors.white,
               ),
             ),

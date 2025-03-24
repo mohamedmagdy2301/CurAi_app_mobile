@@ -1,8 +1,6 @@
 {
   "app_name": "CurAi",
   "skip": "Skip",
-  "change_language": "Change Language",
-  "change_theme": "Change Theme",
   "title_onboarding_1": "Welcome to the CurAi App",
   "title_onboarding_2": "Easily Book Your Medical Appointments",
   "title_onboarding_3": "Continuously Monitor Your Health",
@@ -83,5 +81,11 @@
   "edit_profile": "Edit Profile",
   "favorite": "Favorites",
   "payment_method": "Payment Method",
-  "help_center": "Help Center"
+  "help_center": "Help Center",
+  "notification_settings": "Notification Settings",
+  "password_manager": "Password Manager",
+  "change_language": "Change Language",
+  "change_theme": "Change Theme",
+  "delete_account": "Delete Account"
+
 }

@@ -2,17 +2,6 @@ class LangKeys {
   // App General
   static const String appName = 'app_name';
   static const String skip = 'skip';
-  static const String changeLanguage = 'change_language';
-  static const String changeTheme = 'change_theme';
-  // !------------------
-  static const String settings = 'settings';
-  static const String theme = 'theme';
-  static const String light = 'light';
-  static const String dark = 'dark';
-  static const String systemDefault = 'system_default';
-  static const String language = 'language';
-  static const String english = 'english';
-  static const String arabic = 'arabic';
 
   // Onboarding
   static const String titleOnboarding1 = 'title_onboarding_1';
@@ -100,4 +89,18 @@ class LangKeys {
   static const String paymentMethod = 'payment_method';
   static const String favorite = 'favorite';
   static const String helpCenter = 'help_center';
+
+//! Settings
+  static const String settings = 'settings';
+  static const String notificationSettings = 'notification_settings';
+  static const String passwordManager = 'password_manager';
+  static const String deleteAccount = 'delete_account';
+  static const String changeLanguage = 'change_language';
+  static const String changeTheme = 'change_theme';
+  static const String light = 'light';
+  static const String dark = 'dark';
+  static const String systemDefault = 'system_default';
+  static const String language = 'language';
+  static const String english = 'english';
+  static const String arabic = 'arabic';
 }
