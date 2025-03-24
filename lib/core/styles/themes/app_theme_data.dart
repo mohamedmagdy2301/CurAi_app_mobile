@@ -25,6 +25,7 @@ class AppThemeData {
         inputDecorationTheme: _inputDecorationTheme(seedColor),
         cardTheme: _cardTheme(AppColors.backgroundDarkColor),
         elevatedButtonTheme: _elevatedButtonTheme(seedColor),
+        snackBarTheme: _snackBarTheme(),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
 
@@ -44,8 +45,21 @@ class AppThemeData {
         inputDecorationTheme: _inputDecorationTheme(seedColor),
         cardTheme: _cardTheme(AppColors.backgroundLightColor),
         elevatedButtonTheme: _elevatedButtonTheme(seedColor),
+        snackBarTheme: _snackBarTheme(),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
+  static SnackBarThemeData _snackBarTheme() {
+    return SnackBarThemeData(
+      contentTextStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 16.sp,
+      ),
+      behavior: SnackBarBehavior.fixed,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+    );
+  }
 
   static ColorScheme _colorScheme(Color seedColor, Brightness brightness) =>
       ColorScheme.fromSeed(

@@ -1,7 +1,7 @@
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
-import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/register/already_have_account.dart';
@@ -34,12 +34,10 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   const RegistrationFormWidget(),
                   35.hSpace,
-                  // const SocialAuthenticationWidget(),
-                  //      35.hSpace,
-
                   const TermsOfServiceWidget(),
                   15.hSpace,
                   const AlreadyHaveAccountWidget(),
+                  30.hSpace,
                 ],
               ),
             ),

@@ -106,12 +106,14 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                   current is LoginError,
               listener: (context, state) {
                 if (state is LoginError) {
+                  Navigator.pop(context);
                   showMessage(
                     context,
                     message: state.message,
                     type: SnackBarType.error,
                   );
                 } else if (state is LoginSuccess) {
+                  Navigator.pop(context);
                   showMessage(
                     context,
                     message: state.message,
@@ -132,7 +134,9 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               builder: (context, state) {
                 return CustomButton(
                   title: LangKeys.login,
-                  onPressed: () => _onLoginPressed(context),
+                  onPressed: () {
+                    _onLoginPressed(context);
+                  },
                 );
               },
             ),

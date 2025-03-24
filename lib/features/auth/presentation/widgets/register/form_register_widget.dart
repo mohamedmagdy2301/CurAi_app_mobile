@@ -109,12 +109,14 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
                 current is RegisterError,
             listener: (context, state) {
               if (state is RegisterError) {
+                Navigator.pop(context);
                 showMessage(
                   context,
                   message: state.message,
                   type: SnackBarType.error,
                 );
               } else if (state is RegisterSuccess) {
+                Navigator.pop(context);
                 showMessage(
                   context,
                   message: state.message,

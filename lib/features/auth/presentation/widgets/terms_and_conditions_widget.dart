@@ -19,7 +19,7 @@ class TermsOfServiceWidget extends StatelessWidget {
         children: [
           AutoSizeText(
             context.translate(LangKeys.byLoggingIn),
-            style: TextStyleApp.regular14().copyWith(
+            style: TextStyleApp.regular16().copyWith(
               color: context.onSecondaryColor,
             ),
             maxLines: 1,
@@ -27,7 +27,7 @@ class TermsOfServiceWidget extends StatelessWidget {
           5.wSpace,
           AutoSizeText(
             context.translate(LangKeys.termsOfUse),
-            style: TextStyleApp.semiBold14().copyWith(
+            style: TextStyleApp.semiBold16().copyWith(
               color: context.primaryColor,
             ),
             maxLines: 1,
@@ -35,7 +35,7 @@ class TermsOfServiceWidget extends StatelessWidget {
           5.wSpace,
           AutoSizeText(
             context.translate(LangKeys.and),
-            style: TextStyleApp.regular14().copyWith(
+            style: TextStyleApp.regular16().copyWith(
               color: context.onSecondaryColor,
             ),
             maxLines: 1,
@@ -43,7 +43,7 @@ class TermsOfServiceWidget extends StatelessWidget {
           5.wSpace,
           AutoSizeText(
             context.translate(LangKeys.privacyPolicy),
-            style: TextStyleApp.semiBold14().copyWith(
+            style: TextStyleApp.semiBold16().copyWith(
               color: context.primaryColor,
             ),
             maxLines: 1,
