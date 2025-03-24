@@ -26,10 +26,10 @@ class ImageProfileWidget extends StatelessWidget {
             onTap: () {},
             child: CircleAvatar(
               radius: 16,
-              backgroundColor: context.onPrimaryColor,
+              backgroundColor: context.backgroundColor,
               child: CircleAvatar(
                 radius: 15,
-                backgroundColor: context.backgroundColor,
+                backgroundColor: context.primaryColor,
                 child: const Icon(
                   CupertinoIcons.pencil,
                   color: Colors.white,

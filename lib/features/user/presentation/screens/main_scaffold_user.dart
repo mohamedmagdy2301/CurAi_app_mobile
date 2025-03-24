@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/features/user/presentation/screens/setting_scre
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainScaffoldUser extends StatelessWidget {
   const MainScaffoldUser({super.key});
@@ -65,10 +66,13 @@ class MainScaffoldUser extends StatelessWidget {
                   : NavigationBar(
                       labelBehavior:
                           NavigationDestinationLabelBehavior.alwaysHide,
-                      elevation: 0,
+                      elevation: 10,
+                      shadowColor: Colors.amber,
                       animationDuration: const Duration(seconds: 1),
-                      height: 60,
+                      height: 60.sp,
                       indicatorColor: Colors.transparent,
+                      backgroundColor: context.backgroundColor,
+
                       // overlayColor: WidgetStateProperty.all(
                       //     // context.colors.onboardingBg!.withOpacity(.3),
                       //     ),
@@ -96,12 +100,12 @@ class MainScaffoldUser extends StatelessWidget {
     return Column(
       children: [
         Divider(
-          height: 2,
+          height: 2.sp,
           thickness: 2.5,
-          color: context.backgroundColor,
+          color: context.primaryColor,
         ),
         15.hSpace,
-        Icon(icon, color: context.backgroundColor),
+        Icon(icon, color: context.primaryColor, size: 25.sp),
       ],
     );
   }
