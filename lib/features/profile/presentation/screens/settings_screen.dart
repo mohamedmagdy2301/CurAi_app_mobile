@@ -52,10 +52,16 @@ class SettingsScreen2 extends StatelessWidget {
               },
             ),
             _buildDivider(context),
-            const CustomExpansionTileCard(
+            RowNavigateProfileWidget(
               icon: Icons.dark_mode_outlined,
               title: LangKeys.changeTheme,
-              children: [ThemeWidget()],
+              onTap: () {
+                AdaptiveDialogs.showAlertDialogWithWidget(
+                  context: context,
+                  title: context.translate(LangKeys.changeTheme),
+                  widget: const ThemeWidget(),
+                );
+              },
             ),
             _buildDivider(context),
             const CustomExpansionTileCard(

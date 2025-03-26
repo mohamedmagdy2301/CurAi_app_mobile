@@ -21,9 +21,9 @@ class CircleColorPaletteWidget extends StatelessWidget {
       onTap: () => onSelect(color),
       child: CircleAvatar(
         backgroundColor: color,
-        radius: 27.r,
+        radius: 20.r,
         child: isSelected
-            ? Icon(Icons.check, color: AppColors.white, size: 30.sp)
+            ? Icon(Icons.check, color: AppColors.white, size: 20.sp)
             : null,
       ),
     );

@@ -43,39 +43,44 @@ class _PalettListViewWidgetState extends State<PalettListViewWidget> {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      scrollDirection: Axis.horizontal,
-      children: (context.isDark ? darkColors : lightColors)
-          .map(
-            (color) => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.w),
-              child: CircleColorPaletteWidget(
-                color: color,
-                isSelected: selectedColor == color,
-                onSelect: (selected) {
-                  setState(() {
-                    selectedColor = selected;
-                    AdaptiveTheme.of(context).setTheme(
-                      light: AppThemeData.lightTheme(
-                        context.isStateArabic,
-                        selected,
-                      ),
-                      dark: AppThemeData.darkTheme(
-                        context.isStateArabic,
-                        selected,
-                      ),
-                    );
-                    CacheDataHelper.setData(
-                      key: SharedPrefKey.keyThemeColor,
-                      value: selected,
-                    );
-                  });
-                },
+    return SizedBox(
+      height: 80.h,
+      width: double.infinity,
+      child: ListView(
+        shrinkWrap: true,
+        reverse: true,
+        scrollDirection: Axis.horizontal,
+        children: (context.isDark ? darkColors : lightColors)
+            .map(
+              (color) => Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: CircleColorPaletteWidget(
+                  color: color,
+                  isSelected: selectedColor == color,
+                  onSelect: (selected) {
+                    setState(() {
+                      selectedColor = selected;
+                      AdaptiveTheme.of(context).setTheme(
+                        light: AppThemeData.lightTheme(
+                          context.isStateArabic,
+                          selected,
+                        ),
+                        dark: AppThemeData.darkTheme(
+                          context.isStateArabic,
+                          selected,
+                        ),
+                      );
+                      CacheDataHelper.setData(
+                        key: SharedPrefKey.keyThemeColor,
+                        value: selected,
+                      );
+                    });
+                  },
+                ),
               ),
-            ),
-          )
-          .toList(),
-    ).expand();
+            )
+            .toList(),
+      ).paddingSymmetric(horizontal: 30),
+    );
   }
 }
