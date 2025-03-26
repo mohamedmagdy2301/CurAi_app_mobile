@@ -17,24 +17,24 @@ class MainScaffoldUser extends StatelessWidget {
   Widget build(BuildContext context) {
     final destinations = [
       NavigationDestination(
-        icon: Icon(CupertinoIcons.house_alt, size: 20.sp),
+        icon: Icon(CupertinoIcons.house_alt, size: 25.sp),
         selectedIcon:
             selectedIconCustom(CupertinoIcons.house_alt_fill, context),
         label: 'Home',
       ),
       NavigationDestination(
-        icon: Icon(CupertinoIcons.chat_bubble, size: 20.sp),
+        icon: Icon(CupertinoIcons.chat_bubble, size: 25.sp),
         selectedIcon:
             selectedIconCustom(CupertinoIcons.chat_bubble_fill, context),
         label: 'Chat',
       ),
       NavigationDestination(
-        icon: Icon(CupertinoIcons.bell, size: 20.sp),
+        icon: Icon(CupertinoIcons.bell, size: 25.sp),
         selectedIcon: selectedIconCustom(CupertinoIcons.bell_solid, context),
         label: 'Notification',
       ),
       NavigationDestination(
-        icon: Icon(CupertinoIcons.person, size: 20.sp),
+        icon: Icon(CupertinoIcons.person, size: 25.sp),
         selectedIcon: selectedIconCustom(CupertinoIcons.person_alt, context),
         label: 'Profile',
       ),
@@ -54,6 +54,7 @@ class MainScaffoldUser extends StatelessWidget {
           return PopScope(
             canPop: false,
             child: Scaffold(
+              backgroundColor: context.backgroundColor,
               bottomNavigationBar: currentIndex == 1
                   ? null
                   : NavigationBar(
@@ -63,11 +64,11 @@ class MainScaffoldUser extends StatelessWidget {
                       height: 60.sp,
                       indicatorColor: Colors.transparent,
                       backgroundColor: context.backgroundColor,
-
-                      // overlayColor: WidgetStateProperty.all(
-                      //     // context.colors.onboardingBg!.withOpacity(.3),
-                      //     ),
+                      overlayColor: WidgetStateProperty.all(
+                        context.primaryColor.withAlpha(20),
+                      ),
                       indicatorShape: Border.all(style: BorderStyle.none),
+                      elevation: 0,
                       destinations: destinations,
                       selectedIndex: currentIndex,
                       onDestinationSelected: (index) {
@@ -75,11 +76,6 @@ class MainScaffoldUser extends StatelessWidget {
                       },
                     ),
               body: screens[currentIndex],
-
-              //  IndexedStack(
-              //   index: currentIndex,
-              //   children: screens,
-              // ),
             ),
           );
         },
@@ -89,14 +85,18 @@ class MainScaffoldUser extends StatelessWidget {
 
   Column selectedIconCustom(IconData icon, BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        Icon(icon, color: context.primaryColor, size: 28.sp),
+        15.hSpace,
         Divider(
-          height: 2.sp,
-          thickness: 2.5,
+          height: 1.sp,
+          thickness: 3,
           color: context.primaryColor,
+          indent: 30.w,
+          endIndent: 30.w,
         ),
         15.hSpace,
-        Icon(icon, color: context.primaryColor, size: 25.sp),
       ],
     );
   }
