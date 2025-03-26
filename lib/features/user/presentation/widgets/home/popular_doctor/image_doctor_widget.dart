@@ -31,15 +31,15 @@ class ImageDoctorWidget extends StatelessWidget {
             context.isStateArabic ? 2 : 12,
           ),
         ),
-        child: Hero(
-          tag: doctorModel.id.toString(),
-          child: Image.asset(
-            doctorModel.imageUrl,
-            height: 130,
-            width: 90,
-            fit: BoxFit.cover,
-          ),
+        // child: Hero(
+        // tag: doctorModel.id.toString(),
+        child: Image.asset(
+          doctorModel.imageUrl,
+          height: 130,
+          width: 90,
+          fit: BoxFit.cover,
         ),
+        // ),
       ),
     );
   }

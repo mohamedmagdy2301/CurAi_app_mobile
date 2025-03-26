@@ -20,7 +20,9 @@ class TitleSectionWidget extends StatelessWidget {
           AutoSizeText(
             title,
             maxLines: 1,
-            style: TextStyleApp.bold20(),
+            style: TextStyleApp.bold20().copyWith(
+              color: context.primaryColor,
+            ),
           ),
           const Spacer(),
           TextButton(

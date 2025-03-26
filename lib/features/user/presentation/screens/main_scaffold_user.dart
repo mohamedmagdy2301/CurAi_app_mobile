@@ -96,7 +96,7 @@ class MainScaffoldUser extends StatelessWidget {
           color: context.primaryColor,
         ),
         15.hSpace,
-        Icon(icon, color: context.primaryColor, size: 20.sp),
+        Icon(icon, color: context.primaryColor, size: 25.sp),
       ],
     );
   }

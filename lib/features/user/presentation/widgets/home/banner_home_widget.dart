@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
-import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/RPSCustomPainter.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class BannerHomeWidget extends StatelessWidget {
         height: 174,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: context.backgroundColor,
+          color: context.primaryColor.withAlpha(210),
         ),
         child: Stack(
           children: [
@@ -60,7 +60,7 @@ class BannerHomeWidget extends StatelessWidget {
                     style: TextStyleApp.bold16().copyWith(
                       height: 1.6,
                       fontSize: context.isStateArabic ? 20 : 18,
-                      color: Colors.white,
+                      color: context.backgroundColor,
                     ),
                   ),
                   Container(
@@ -68,14 +68,14 @@ class BannerHomeWidget extends StatelessWidget {
                     width: 130,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      color: context.primaryColor.withAlpha(120),
+                      color: context.backgroundColor,
                     ),
                     alignment: Alignment.center,
                     child: Text(
                       context.translate(LangKeys.findNearby),
                       textAlign: TextAlign.center,
                       style: TextStyleApp.semiBold14().copyWith(
-                        color: context.backgroundColor,
+                        color: context.primaryColor,
                       ),
                     ),
                   ),

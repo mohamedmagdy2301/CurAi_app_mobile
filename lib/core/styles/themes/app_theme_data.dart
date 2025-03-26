@@ -116,7 +116,7 @@ class AppThemeData {
           borderSide: BorderSide(color: seedColor),
         ),
         errorStyle: TextStyleApp.medium14().copyWith(color: Colors.redAccent),
-        labelStyle: TextStyleApp.medium14(),
+        labelStyle: TextStyleApp.medium14().copyWith(color: seedColor),
       );
 
   static CardTheme _cardTheme(Color backgroundColor) => CardTheme(

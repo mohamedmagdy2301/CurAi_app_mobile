@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
@@ -33,8 +35,12 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       toolbarHeight: 70,
       title: ListTile(
         title: AutoSizeText(
-          'Hi, ${SharedPrefManager.getString(SharedPrefKey.keyUserName)} 👋',
-          style: TextStyleApp.extraBold20(),
+          context.isStateArabic
+              ? 'مرحبا, ${SharedPrefManager.getString(SharedPrefKey.keyUserName)} 👋'
+              : 'Hi, ${SharedPrefManager.getString(SharedPrefKey.keyUserName)} 👋',
+          style: TextStyleApp.extraBold20().copyWith(
+            color: context.primaryColor,
+          ),
           maxLines: 1,
         ),
         subtitle: AutoSizeText(
@@ -57,7 +63,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
             isLabelVisible: count != 0,
             child: Icon(
               CupertinoIcons.bell,
-              color: context.backgroundColor,
+              color: context.primaryColor,
             ),
           ),
         ),

@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
-import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -40,7 +40,9 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
         15.hSpace,
         AutoSizeText(
           context.translate(title),
-          style: TextStyleApp.regular12(),
+          style: TextStyleApp.regular12().copyWith(
+            color: context.onPrimaryColor,
+          ),
           maxLines: 1,
         ),
       ],

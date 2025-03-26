@@ -10,7 +10,7 @@ class RPSCustomPainter extends CustomPainter {
     // Layer 1
 
     final paintFill0 = Paint()
-      ..color = context.primaryColor.withAlpha(50)
+      ..color = context.primaryColor.withAlpha(150)
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
