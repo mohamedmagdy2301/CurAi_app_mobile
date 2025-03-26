@@ -15,13 +15,13 @@ class AppIntercepters extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final token =
-        SharedPrefManager.getString(SharedPrefKey.keyAccessToken) ?? '';
+        CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
     // final lang = SharedPrefManager.getString(SharedPrefKey.keyLocale) ?? 'en';
     options
       ..headers['Content-Type'] = 'application/json'
       ..headers['Accept'] = 'application/json';
     // ..headers['lang'] = lang;
-    if (token.isNotEmpty) {
+    if ((token as String).isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
     super.onRequest(options, handler);
@@ -42,11 +42,12 @@ class AppIntercepters extends Interceptor {
   ) async {
     if (err.response != null && err.response?.statusCode == 401) {
       final accessToken =
-          SharedPrefManager.getString(SharedPrefKey.keyAccessToken) ?? '';
+          CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
       final refreshToken =
-          SharedPrefManager.getString(SharedPrefKey.keyRefreshToken) ?? '';
+          CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken) ?? '';
 
-      if (accessToken.isNotEmpty && refreshToken.isNotEmpty) {
+      if ((accessToken as String).isNotEmpty &&
+          (refreshToken as String).isNotEmpty) {
         if (await _refreshToken(refreshToken)) {
           return handler.resolve(await retry(err.requestOptions));
         }
@@ -64,7 +65,7 @@ class AppIntercepters extends Interceptor {
 
       if (response.statusCode == 200) {
         final newAccessToken = response.data['access'];
-        await SharedPrefManager.setData(
+        await CacheDataHelper.setData(
           key: SharedPrefKey.keyAccessToken,
           value: newAccessToken,
         );

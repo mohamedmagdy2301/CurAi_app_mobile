@@ -36,8 +36,8 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       title: ListTile(
         title: AutoSizeText(
           context.isStateArabic
-              ? 'مرحبا, ${SharedPrefManager.getString(SharedPrefKey.keyUserName)} 👋'
-              : 'Hi, ${SharedPrefManager.getString(SharedPrefKey.keyUserName)} 👋',
+              ? 'مرحبا, ${CacheDataHelper.getData(key: SharedPrefKey.keyUserName)} 👋'
+              : 'Hi, ${CacheDataHelper.getData(key: SharedPrefKey.keyUserName)} 👋',
           style: TextStyleApp.extraBold20().copyWith(
             color: context.primaryColor,
           ),

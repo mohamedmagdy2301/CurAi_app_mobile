@@ -20,7 +20,7 @@ void setupInit() {
     //! Services
     ..registerLazySingleton<ConnectivityController>(ConnectivityController.new)
     ..registerLazySingleton<EnvVariables>(EnvVariables.new)
-    ..registerLazySingleton<SharedPrefManager>(SharedPrefManager.new)
+    ..registerLazySingleton<CacheDataHelper>(CacheDataHelper.new)
     //! Networking
     ..registerLazySingleton(() => AppIntercepters(client: sl<Dio>()))
     ..registerLazySingleton(

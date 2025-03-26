@@ -33,15 +33,15 @@ class CuraiApp extends StatefulWidget {
 }
 
 class _CuraiAppState extends State<CuraiApp> with WidgetsBindingObserver {
-  bool isLoggedIn =
-      SharedPrefManager.getBool(SharedPrefKey.keyIsLoggedIn) ?? false;
-  bool isFirstLaunch =
-      SharedPrefManager.getBool(SharedPrefKey.keyIsFirstLaunch) ?? true;
+  dynamic isLoggedIn =
+      CacheDataHelper.getData(key: SharedPrefKey.keyIsLoggedIn) ?? false;
+  dynamic isFirstLaunch =
+      CacheDataHelper.getData(key: SharedPrefKey.keyIsFirstLaunch) ?? true;
   Widget navigationToInitScreen() {
-    if (isFirstLaunch) {
+    if (isFirstLaunch as bool) {
       return const OnboardingScreen();
     } else {
-      if (isLoggedIn) {
+      if (isLoggedIn as bool) {
         return const MainScaffoldUser();
       } else {
         return const LoginScreen();

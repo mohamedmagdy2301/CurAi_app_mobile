@@ -52,7 +52,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     final response = await dioConsumer.post(
       EndPoints.logout,
       body: {
-        'refresh': SharedPrefManager.getString(SharedPrefKey.keyRefreshToken),
+        'refresh': CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken),
       },
     );
     return response.fold(left, right);

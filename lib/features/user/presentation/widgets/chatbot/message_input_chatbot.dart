@@ -4,6 +4,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -37,7 +38,9 @@ class _MessageInputState extends State<MessageInput> {
       final messageText = _controllerMessage.text.trim();
       if (messageText.isNotEmpty) {
         widget.onMessageSent(messageText);
-        LoggerHelper.info('Message sent: $messageText');
+        if (kDebugMode) {
+          LoggerHelper.info('Message sent: $messageText');
+        }
         _controllerMessage.clear();
         setState(() {
           isSentMessage = false;

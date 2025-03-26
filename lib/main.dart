@@ -24,7 +24,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   setCustomErrorWidget();
-  CacheDataHelper.sharedPreferencesInitialize();
   Bloc.observer = SimpleBlocObserver();
   setupInit();
   Gemini.init(apiKey: 'AIzaSyA_ehqc-SrrKJDn5jO77Fgy_ae00UvevaM');
@@ -52,12 +51,14 @@ Future<void> main() async {
     );
     FlutterNativeSplash.remove();
   } catch (e, stackTrace) {
-    LoggerHelper.error(
-      'Dependency initialization failed',
-      stackTrace: stackTrace,
-      error: e,
-      tag: 'Initialization main',
-    );
+    if (kDebugMode) {
+      LoggerHelper.error(
+        'Dependency initialization failed',
+        stackTrace: stackTrace,
+        error: e,
+        tag: 'Initialization main',
+      );
+    }
   }
 }
 
@@ -70,7 +71,7 @@ Future<void> initializeDependencies() async {
   hideKeyboard();
   await Future.wait([
     sl<ConnectivityController>().connectivityControllerInit(),
-    sl<SharedPrefManager>().sharedPreferencesInitialize(),
+    sl<CacheDataHelper>().sharedPreferencesInitialize(),
     sl<EnvVariables>().envVariablesSetup(envType: EnvTypeEnum.dev),
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
   ]);

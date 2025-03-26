@@ -14,7 +14,7 @@ class ServerFailure extends Failure {
 
   factory ServerFailure.fromDioException(DioException dioException) {
     final isArabic =
-        SharedPrefManager.getString(SharedPrefKey.keyLocale) == 'ar';
+        CacheDataHelper.getData(key: SharedPrefKey.keyLocale) == 'ar';
 
     switch (dioException.type) {
       case DioExceptionType.sendTimeout:
@@ -50,7 +50,7 @@ class ServerFailure extends Failure {
   }
   factory ServerFailure.fromBadResponse(int statusCode, dynamic error) {
     final isArabic =
-        SharedPrefManager.getString(SharedPrefKey.keyLocale) == 'ar';
+        CacheDataHelper.getData(key: SharedPrefKey.keyLocale) == 'ar';
     if (error is Map<String, dynamic>) {
       error = error.entries.map((e) {
         if (e.value is List) {

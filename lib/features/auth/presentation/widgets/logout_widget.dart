@@ -36,27 +36,30 @@ class LogoutWidget extends StatelessWidget {
               message: state.message,
             );
 
-            await SharedPrefManager.removeData(
+            await CacheDataHelper.removeData(
               key: SharedPrefKey.keyAccessToken,
             );
-            await SharedPrefManager.removeData(
+            await CacheDataHelper.removeData(
               key: SharedPrefKey.keyRefreshToken,
             );
-            await SharedPrefManager.removeData(key: SharedPrefKey.keyUserName);
-            await SharedPrefManager.removeData(key: SharedPrefKey.keyRole);
-            await SharedPrefManager.removeData(key: SharedPrefKey.keyUserId);
-            await SharedPrefManager.removeData(
-              key: SharedPrefKey.keyIsLoggedIn,
-            );
-
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutError) {
             context.pop();
-            showMessage(
-              context,
-              type: SnackBarType.error,
-              message: state.message,
+            await CacheDataHelper.removeData(
+              key: SharedPrefKey.keyAccessToken,
             );
+            await CacheDataHelper.removeData(
+              key: SharedPrefKey.keyRefreshToken,
+            );
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
+            await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutLoading) {
             await AdaptiveDialogs.shoLoadingAlertDialog(
               context: context,
