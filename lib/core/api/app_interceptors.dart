@@ -7,8 +7,8 @@ import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-class AppIntercepters extends Interceptor {
-  AppIntercepters({required this.client});
+class AppInterceptors extends Interceptor {
+  AppInterceptors({required this.client});
 
   final Dio client;
 
@@ -16,11 +16,9 @@ class AppIntercepters extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final token =
         CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
-    // final lang = SharedPrefManager.getString(SharedPrefKey.keyLocale) ?? 'en';
     options
       ..headers['Content-Type'] = 'application/json'
       ..headers['Accept'] = 'application/json';
-    // ..headers['lang'] = lang;
     if ((token as String).isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
@@ -40,19 +38,23 @@ class AppIntercepters extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    if (err.response != null && err.response?.statusCode == 403) {
-      final accessToken =
-          CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
-      final refreshToken =
-          CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken) ?? '';
+    // log('==========================================================');
+    // if (err.response != null &&
+    //     (err.response?.statusCode == 401 ||
+    //         err.response?.statusCode == 403 ||
+    //         err.response!.data['detail'] == 'Expired JWT.')) {
+    //   final accessToken =
+    //       CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
+    //   final refreshToken =
+    //       CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken) ?? '';
 
-      if ((accessToken as String).isNotEmpty &&
-          (refreshToken as String).isNotEmpty) {
-        if (await _refreshToken(refreshToken)) {
-          return handler.resolve(await retry(err.requestOptions));
-        }
-      }
-    }
+    //   if (accessToken != '' && refreshToken != '') {
+    //     if (await _refreshToken(refreshToken as String)) {
+    //       return handler.resolve(await retry(err.requestOptions));
+    //     }
+    //   }
+    //   log('==========================================================');
+    // }
     super.onError(err, handler);
   }
 
@@ -63,7 +65,7 @@ class AppIntercepters extends Interceptor {
         data: {'refresh': refreshToken},
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final newAccessToken = response.data['access'];
         await CacheDataHelper.setData(
           key: SharedPrefKey.keyAccessToken,
@@ -81,9 +83,15 @@ class AppIntercepters extends Interceptor {
   }
 
   Future<Response<dynamic>> retry(RequestOptions requestOptions) async {
+    final newAccessToken =
+        CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken);
+
     final options = Options(
       method: requestOptions.method,
-      headers: requestOptions.headers,
+      headers: {
+        ...requestOptions.headers,
+        'Authorization': 'Bearer $newAccessToken',
+      },
     );
     return client.request<dynamic>(
       requestOptions.path,

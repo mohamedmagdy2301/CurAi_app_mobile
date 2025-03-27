@@ -23,7 +23,7 @@ void setupInit() {
     ..registerLazySingleton<EnvVariables>(EnvVariables.new)
     ..registerLazySingleton<CacheDataHelper>(CacheDataHelper.new)
     //! Networking
-    ..registerLazySingleton(() => AppIntercepters(client: sl<Dio>()))
+    ..registerLazySingleton(() => AppInterceptors(client: sl<Dio>()))
     ..registerLazySingleton(
       () => LogInterceptor(requestBody: true, responseBody: true),
     )

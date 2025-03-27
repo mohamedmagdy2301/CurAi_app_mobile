@@ -9,8 +9,9 @@ class ImageProfileWidget extends StatelessWidget {
   const ImageProfileWidget({
     super.key,
     this.onTap,
+    this.imageUrl,
   });
-
+  final String? imageUrl;
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,9 @@ class ImageProfileWidget extends StatelessWidget {
         CircleAvatar(
           radius: 70.r,
           foregroundColor: context.onSecondaryColor,
-          backgroundImage: const NetworkImage(
-            'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          backgroundImage: NetworkImage(
+            imageUrl ??
+                'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
           ),
         ),
         Positioned(

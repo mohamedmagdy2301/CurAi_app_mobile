@@ -63,7 +63,9 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   spacing: 12.h,
                   children: [
                     4.hSpace,
-                    const ImageProfileWidget(),
+                    ImageProfileWidget(
+                      imageUrl: state.profileModel.profilePicture,
+                    ),
                     CustomTextFeildEditProfile(
                       title: LangKeys.fullName,
                       controller: _fullNameController,
