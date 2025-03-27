@@ -5,4 +5,5 @@ class EndPoints {
   static const String login = '$baseUrl/api/login/';
   static const String logout = '$baseUrl/api/logout/';
   static const String changePassword = '$baseUrl/api/change-password/';
+  static const String getProfile = '$baseUrl/api/profile/';
 }

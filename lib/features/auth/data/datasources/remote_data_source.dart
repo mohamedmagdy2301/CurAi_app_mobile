@@ -19,6 +19,7 @@ abstract class RemoteDataSource {
     required ChangePasswordRequest changePasswordRequest,
   });
   Future<Either<Failure, Map<String, dynamic>>> logout();
+  Future<Either<Failure, Map<String, dynamic>>> getProfile();
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -65,6 +66,14 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     final response = await dioConsumer.post(
       EndPoints.changePassword,
       body: changePasswordRequest.toJson(),
+    );
+    return response.fold(left, right);
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getProfile() async {
+    final response = await dioConsumer.get(
+      EndPoints.getProfile,
     );
     return response.fold(left, right);
   }
