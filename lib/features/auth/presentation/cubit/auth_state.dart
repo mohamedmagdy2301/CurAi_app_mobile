@@ -86,18 +86,18 @@ class ChangePasswordError extends AuthState {
 }
 
 // !   Profile States
-class ProfileLoading extends AuthState {}
+class GetProfileLoading extends AuthState {}
 
-class ProfileSuccess extends AuthState {
-  const ProfileSuccess({required this.profileModel});
+class GetProfileSuccess extends AuthState {
+  const GetProfileSuccess({required this.profileModel});
   final ProfileModel profileModel;
 
   @override
   List<Object> get props => [profileModel];
 }
 
-class ProfileError extends AuthState {
-  const ProfileError({required this.message});
+class GetProfileError extends AuthState {
+  const GetProfileError({required this.message});
   final String message;
 
   @override

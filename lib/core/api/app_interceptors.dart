@@ -40,7 +40,7 @@ class AppIntercepters extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    if (err.response != null && err.response?.statusCode == 401) {
+    if (err.response != null && err.response?.statusCode == 403) {
       final accessToken =
           CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
       final refreshToken =

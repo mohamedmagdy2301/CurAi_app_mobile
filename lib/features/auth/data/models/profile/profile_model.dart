@@ -19,18 +19,18 @@ class ProfileModel {
   ProfileModel.fromJson(Map<String, dynamic> json) {
     id = json['id'] as int;
     username = json['username'] as String;
-    firstName = json['first_name'] as String;
-    lastName = json['last_name'] as String;
-    phoneNumber = json['phone_number'] as String;
-    gender = json['gender'] as String;
-    age = json['age'] as int;
-    email = json['email'] as String;
-    role = json['role'] as String;
-    specialization = json['specialization'] as int;
-    consultationPrice = json['consultation_price'] as String;
-    location = json['location'] as String;
-    isApproved = json['is_approved'] as bool;
-    profilePicture = json['profile_picture'] as String;
+    firstName = (json['first_name'] ?? '') as String;
+    lastName = (json['last_name'] ?? '') as String;
+    phoneNumber = (json['phone_number'] ?? '') as String;
+    gender = (json['gender'] ?? '0') as String;
+    age = (json['age'] ?? 0) as int;
+    email = (json['email'] ?? '') as String;
+    role = (json['role'] ?? '') as String;
+    specialization = (json['specialization'] ?? 0) as int;
+    consultationPrice = (json['consultation_price'] ?? '') as String;
+    location = (json['location'] ?? '') as String;
+    isApproved = (json['is_approved'] ?? false) as bool;
+    profilePicture = (json['profile_picture'] ?? '') as String;
   }
 
   int? id;

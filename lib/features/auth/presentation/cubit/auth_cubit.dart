@@ -80,13 +80,13 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> getProfile() async {
-    emit(ProfileLoading());
+    emit(GetProfileLoading());
 
     final result = await _profileUsecase.call('');
 
     result.fold(
-      (errorMessage) => emit(ProfileError(message: errorMessage)),
-      (profileModel) => emit(ProfileSuccess(profileModel: profileModel)),
+      (errorMessage) => emit(GetProfileError(message: errorMessage)),
+      (profileModel) => emit(GetProfileSuccess(profileModel: profileModel)),
     );
   }
 }
