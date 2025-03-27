@@ -91,23 +91,23 @@ void saveDataUser({
   String? userName,
   int? userId,
 }) {
-  SharedPrefManager.setData(
+  CacheDataHelper.setData(
     key: SharedPrefKey.keyAccessToken,
     value: accessToken,
   );
-  SharedPrefManager.setData(
+  CacheDataHelper.setData(
     key: SharedPrefKey.keyRefreshToken,
     value: refreshToken ?? '',
   );
-  SharedPrefManager.setData(
+  CacheDataHelper.setData(
     key: SharedPrefKey.keyUserName,
     value: userName ?? '',
   );
-  SharedPrefManager.setData(
+  CacheDataHelper.setData(
     key: SharedPrefKey.keyRole,
     value: role ?? '',
   );
-  SharedPrefManager.setData(
+  CacheDataHelper.setData(
     key: SharedPrefKey.keyUserId,
     value: userId ?? '',
   );

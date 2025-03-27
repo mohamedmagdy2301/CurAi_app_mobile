@@ -1,6 +1,5 @@
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/chat_cubit.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,7 @@ class BuildChatMessage extends StatelessWidget {
             Colors.green,
           );
         }
-        return context.spaceHeight(0);
+        return const SizedBox();
       },
     );
   }
@@ -46,11 +45,10 @@ class BuildChatMessage extends StatelessWidget {
     Color color,
   ) {
     return SizedBox(
-      height: context.setH(25),
+      height: 25,
       child: Text(
         message,
-        style: context.textTheme.bodySmall!.copyWith(
-          fontWeight: FontWeightHelper.semiBold,
+        style: TextStyleApp.semiBold12().copyWith(
           color: color,
         ),
       ),

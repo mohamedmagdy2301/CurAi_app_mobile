@@ -1,7 +1,8 @@
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -20,13 +21,15 @@ class CustomButton extends StatelessWidget {
       style: Theme.of(context).elevatedButtonTheme.style,
       onPressed: onPressed,
       child: isLoading
-          ? const CustomLoadingWidget(
-              width: 30,
-              height: 30,
+          ? CustomLoadingWidget(
+              width: 30.w,
+              height: 30.h,
             )
           : Text(
               context.translate(title),
-              style: context.styleRegular20.copyWith(color: Colors.white),
+              style: TextStyleApp.bold20().copyWith(
+                color: Colors.white,
+              ),
             ),
     );
   }

@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -20,26 +21,28 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: context.color.onSecondary.withAlpha(30),
-          radius: context.setR(26),
+          backgroundColor: context.onSecondaryColor.withAlpha(30),
+          radius: 26,
           child: image.contains('.svg')
               ? SvgPicture.asset(
                   image,
-                  height: context.setH(25),
-                  width: context.setW(25),
+                  height: 25,
+                  width: 25,
                   fit: BoxFit.fill,
                 )
               : Image.asset(
                   image,
-                  height: context.setH(25),
-                  width: context.setW(25),
+                  height: 25,
+                  width: 25,
                   fit: BoxFit.fill,
                 ),
         ),
-        context.spaceHeight(15),
+        15.hSpace,
         AutoSizeText(
           context.translate(title),
-          style: context.styleRegular12,
+          style: TextStyleApp.regular12().copyWith(
+            color: context.onPrimaryColor,
+          ),
           maxLines: 1,
         ),
       ],

@@ -1,6 +1,6 @@
-import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
@@ -101,7 +101,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          context.spaceHeight(5),
+          5.hSpace,
           BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (previous, current) =>
                 current is RegisterLoading ||
@@ -109,12 +109,14 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
                 current is RegisterError,
             listener: (context, state) {
               if (state is RegisterError) {
+                Navigator.pop(context);
                 showMessage(
                   context,
                   message: state.message,
                   type: SnackBarType.error,
                 );
               } else if (state is RegisterSuccess) {
+                Navigator.pop(context);
                 showMessage(
                   context,
                   message: state.message,

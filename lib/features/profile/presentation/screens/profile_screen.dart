@@ -1,12 +1,15 @@
 // ignore_for_file: flutter_style_todos
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as a;
-import 'package:curai_app_mobile/core/extensions/styletext_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/logout_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_profile.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/image_profile_widget.dart';
@@ -30,15 +33,17 @@ class ProfileScreen extends StatelessWidget {
             // TODO: Add edit profile
             15.hSpace,
             AutoSizeText(
-              context.translate(LangKeys.editProfile),
+              CacheDataHelper.getData(key: SharedPrefKey.keyUserName) as String,
               maxLines: 1,
-              style: context.styleMedium18,
+              style: TextStyleApp.medium22().copyWith(
+                color: context.primaryColor,
+              ),
             ),
-            25.hSpace,
+            20.hSpace,
             RowNavigateProfileWidget(
               icon: CupertinoIcons.person,
               title: LangKeys.yourProfile,
-              onTap: () {},
+              onTap: () => context.pushNamed(Routes.yourProfileScreen),
             ),
             _buildDivider(context),
             RowNavigateProfileWidget(
@@ -56,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
             RowNavigateProfileWidget(
               icon: CupertinoIcons.settings,
               title: LangKeys.settings,
-              onTap: () {},
+              onTap: () => context.pushNamed(Routes.settingsScreen),
             ),
             _buildDivider(context),
             RowNavigateProfileWidget(
@@ -83,6 +88,6 @@ class ProfileScreen extends StatelessWidget {
         endIndent: 30,
         indent: 30,
         height: 0,
-        color: context.color.onSecondary,
+        color: context.onSecondaryColor,
       );
 }

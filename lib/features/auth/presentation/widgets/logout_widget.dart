@@ -1,8 +1,8 @@
 // ignore_for_file: inference_failure_on_function_invocation, inference_failure_on_instance_creation, use_build_context_synchronously
 
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
-import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
@@ -36,27 +36,30 @@ class LogoutWidget extends StatelessWidget {
               message: state.message,
             );
 
-            await SharedPrefManager.removeData(
+            await CacheDataHelper.removeData(
               key: SharedPrefKey.keyAccessToken,
             );
-            await SharedPrefManager.removeData(
+            await CacheDataHelper.removeData(
               key: SharedPrefKey.keyRefreshToken,
             );
-            await SharedPrefManager.removeData(key: SharedPrefKey.keyUserName);
-            await SharedPrefManager.removeData(key: SharedPrefKey.keyRole);
-            await SharedPrefManager.removeData(key: SharedPrefKey.keyUserId);
-            await SharedPrefManager.removeData(
-              key: SharedPrefKey.keyIsLoggedIn,
-            );
-
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutError) {
             context.pop();
-            showMessage(
-              context,
-              type: SnackBarType.error,
-              message: state.message,
+            await CacheDataHelper.removeData(
+              key: SharedPrefKey.keyAccessToken,
             );
+            await CacheDataHelper.removeData(
+              key: SharedPrefKey.keyRefreshToken,
+            );
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
+            await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
+            await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutLoading) {
             await AdaptiveDialogs.shoLoadingAlertDialog(
               context: context,
@@ -72,7 +75,7 @@ class LogoutWidget extends StatelessWidget {
               AdaptiveDialogs.showOkCancelAlertDialog(
                 context: context,
                 title: context.translate(LangKeys.logout),
-                message: Text(context.translate(LangKeys.logoutMessage)),
+                message: context.translate(LangKeys.logoutMessage),
                 onPressedOk: () {
                   context.pop();
                   context.read<AuthCubit>().logout();

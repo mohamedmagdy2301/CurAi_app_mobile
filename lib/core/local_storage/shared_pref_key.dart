@@ -1,5 +1,5 @@
 class SharedPrefKey {
-  static const String keyTheme = 'theme';
+  static const String keyThemeColor = 'themeColor';
   static const String keyColors = 'colors';
   static const String keyLocale = 'locale';
 
@@ -11,4 +11,5 @@ class SharedPrefKey {
   static const String keyUserName = 'userName';
   static const String keyRole = 'role';
   static const String keyUserId = 'userId';
+  static const String saveThemeMode = 'themeMode';
 }

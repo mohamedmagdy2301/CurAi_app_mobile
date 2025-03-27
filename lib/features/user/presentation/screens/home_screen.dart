@@ -1,6 +1,6 @@
-import 'package:curai_app_mobile/core/extensions/context_navigation_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/context_system_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/banner_home_widget.dart';
@@ -20,29 +20,29 @@ class HomeScreen extends StatelessWidget {
       bottom: false,
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: context.spaceHeight(20)),
+          SliverToBoxAdapter(child: 20.hSpace),
           const CustomAppBarHome(),
-          SliverToBoxAdapter(child: context.spaceHeight(0)),
+          SliverToBoxAdapter(child: 0.hSpace),
           const SliverToBoxAdapter(child: Center(child: BannerHomeWidget())),
-          SliverToBoxAdapter(child: context.spaceHeight(20)),
+          SliverToBoxAdapter(child: 20.hSpace),
           SliverToBoxAdapter(
             child: TitleSectionWidget(
               title: context.translate(LangKeys.doctorSpeciality),
               onPressed: () => context.pushNamed(Routes.doctorSpeciality),
             ),
           ),
-          SliverToBoxAdapter(child: context.spaceHeight(20)),
+          SliverToBoxAdapter(child: 20.hSpace),
           const SliverToBoxAdapter(child: DoctorSpecialityWidget()),
-          SliverToBoxAdapter(child: context.spaceHeight(5)),
+          SliverToBoxAdapter(child: 5.hSpace),
           SliverToBoxAdapter(
             child: TitleSectionWidget(
               title: context.translate(LangKeys.popularDoctor),
               onPressed: () => context.pushNamed(Routes.allDoctors),
             ),
           ),
-          SliverToBoxAdapter(child: context.spaceHeight(10)),
+          SliverToBoxAdapter(child: 10.hSpace),
           const SliverToBoxAdapter(child: PopularDoctorWidget()),
-          SliverToBoxAdapter(child: context.spaceHeight(10)),
+          SliverToBoxAdapter(child: 10.hSpace),
         ],
       ),
     );

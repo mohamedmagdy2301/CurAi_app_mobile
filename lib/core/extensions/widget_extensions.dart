@@ -1,42 +1,45 @@
+// ignore_for_file: avoid_positional_boolean_parameters
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Widget Extensions
 extension WidgetExtension on Widget? {
   /// With custom height and width
   SizedBox withSize({double width = 0.0, double height = 0.0}) {
-    return SizedBox(height: height, width: width, child: this);
+    return SizedBox(height: height.h, width: width.w, child: this);
   }
 
   /// With custom width
-  SizedBox withWidth(double width) => SizedBox(width: width, child: this);
+  SizedBox withWidth(double width) => SizedBox(width: width.w, child: this);
 
   /// With custom height
-  SizedBox withHeight(double height) => SizedBox(height: height, child: this);
+  SizedBox withHeight(double height) => SizedBox(height: height.h, child: this);
 
   /// return padding top
   Padding paddingTop(double top) {
-    return Padding(padding: EdgeInsets.only(top: top), child: this);
+    return Padding(padding: EdgeInsets.only(top: top.h), child: this);
   }
 
   /// return padding left
   Padding paddingLeft(double left) {
-    return Padding(padding: EdgeInsets.only(left: left), child: this);
+    return Padding(padding: EdgeInsets.only(left: left.w), child: this);
   }
 
   /// return padding right
   Padding paddingRight(double right) {
-    return Padding(padding: EdgeInsets.only(right: right), child: this);
+    return Padding(padding: EdgeInsets.only(right: right.w), child: this);
   }
 
   /// return padding bottom
   Padding paddingBottom(double bottom) {
-    return Padding(padding: EdgeInsets.only(bottom: bottom), child: this);
+    return Padding(padding: EdgeInsets.only(bottom: bottom.h), child: this);
   }
 
   /// return padding all
   Padding paddingAll(double padding) {
-    return Padding(padding: EdgeInsets.all(padding), child: this);
+    return Padding(padding: EdgeInsets.all(padding.r), child: this);
   }
 
   /// return custom padding from each side
@@ -47,7 +50,7 @@ extension WidgetExtension on Widget? {
     double right = 0.0,
   }) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(left, top, right, bottom),
+      padding: EdgeInsets.fromLTRB(left.w, top.h, right.w, bottom.h),
       child: this,
     );
   }
@@ -56,8 +59,8 @@ extension WidgetExtension on Widget? {
   Padding paddingSymmetric({double vertical = 0.0, double horizontal = 0.0}) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: vertical,
-        horizontal: horizontal,
+        vertical: vertical.h,
+        horizontal: horizontal.w,
       ),
       child: this,
     );
@@ -77,10 +80,10 @@ extension WidgetExtension on Widget? {
   }) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(bottomLeft.toDouble()),
-        bottomRight: Radius.circular(bottomRight.toDouble()),
-        topLeft: Radius.circular(topLeft.toDouble()),
-        topRight: Radius.circular(topRight.toDouble()),
+        bottomLeft: Radius.circular(bottomLeft.toDouble().r),
+        bottomRight: Radius.circular(bottomRight.toDouble().r),
+        topLeft: Radius.circular(topLeft.toDouble().r),
+        topRight: Radius.circular(topRight.toDouble().r),
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: this,
@@ -90,7 +93,7 @@ extension WidgetExtension on Widget? {
   /// add corner radius
   ClipRRect cornerRadiusWithClipRRect(double radius) {
     return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(radius)),
+      borderRadius: BorderRadius.all(Radius.circular(radius.r)),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: this,
     );

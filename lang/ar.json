@@ -1,8 +1,6 @@
 {
   "app_name": "الرعاية الصحية الذكية",
   "skip": "تخطي",
-  "change_language": "تغيير اللغة",
-  "change_theme": "تغيير المظهر",
   "title_onboarding_1": "مرحبًا بك في تطبيق الرعاية الصحية الذكية",
   "title_onboarding_2": "حجز مواعيد طبية بكل سهولة",
   "title_onboarding_3": "متابعة صحتك بشكل مستمر",
@@ -83,5 +81,23 @@
   "edit_profile": "تعديل الملف الشخصي",
   "favorite": "المفضلة",
   "payment_method": "طريقة الدفع",
-  "help_center": "مركز المساعدة"
-}
+  "help_center": "مركز المساعدة",
+  "notification_settings": "اعدادات الاشعارات",
+  "password_manager": "مدير كلمات المرور",
+  "change_language": "تغيير اللغة",
+  "change_theme": "تغيير المظهر",
+  "color_palette": "لوحة الالوان",
+  "delete_account": "حذف الحساب",
+  "delete_account_message": "هل تريد حذف حسابك؟",
+  "delete": "حذف",
+  "update_profile": "تحديث الملف الشخصي",
+  "update_profile_message": "هل تريد تحديث الملف الشخصي؟",
+  "gender": "الجنس",
+  "male": "ذكر",
+  "female": "انثى",
+  "birth_date": "تاريخ الميلاد",
+  "phone": "الهاتف",
+  "address": "العنوان",
+  "full_name": "الاسم الكامل",
+  "phone_number": "رقم الهاتف"
+ }

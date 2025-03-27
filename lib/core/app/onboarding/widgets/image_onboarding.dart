@@ -1,5 +1,5 @@
 import 'package:curai_app_mobile/core/app/onboarding/cubit/onboarding_cubit.dart';
-import 'package:curai_app_mobile/core/extensions/context_sizer_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class ImageOnboarding extends StatelessWidget {
@@ -17,7 +17,9 @@ class ImageOnboarding extends StatelessWidget {
     return Padding(
       padding: context.isLandscape
           ? context.padding(horizontal: 25)
-          : context.padding(),
+          : context.W > 460
+              ? context.padding(horizontal: 25)
+              : context.padding(),
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 180),
         transitionBuilder: (Widget child, Animation<double> animation) {
@@ -36,9 +38,9 @@ class ImageOnboarding extends StatelessWidget {
         child: Image.asset(
           image,
           key: ValueKey<String>(image),
-          height: context.setH(460),
-          width: double.infinity,
-          fit: BoxFit.fill,
+          height: context.H - (context.H * 0.4),
+          width: context.W,
+          fit: BoxFit.cover,
         ),
       ),
     );
