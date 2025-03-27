@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/your_profile/custom_appbar_your_profile.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/your_profile/custom_text_feild_edit_profile.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/image_profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -142,64 +143,5 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         ).center(),
       ),
     );
-  }
-}
-
-class CustomTextFeildEditProfile extends StatelessWidget {
-  const CustomTextFeildEditProfile({
-    required this.controller,
-    required this.title,
-    super.key,
-  });
-
-  final TextEditingController controller;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.translate(title),
-          style: TextStyleApp.medium14().copyWith(
-            color: context.onPrimaryColor,
-          ),
-        ),
-        8.hSpace,
-        TextField(
-          cursorColor: context.primaryColor,
-          controller: controller,
-          style: TextStyleApp.regular16().copyWith(
-            color: context.onPrimaryColor,
-          ),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 15.w,
-              vertical: 10.h,
-            ),
-            isDense: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: context.primaryColor.withAlpha(90),
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: context.primaryColor.withAlpha(90),
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: context.primaryColor,
-              ),
-            ),
-          ),
-        ),
-      ],
-    ).paddingSymmetric(horizontal: 20);
   }
 }
