@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/features/auth/domain/repositories/auth_repo.dar
 import 'package:curai_app_mobile/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dio/dio.dart';
@@ -35,6 +36,7 @@ void setupInit() {
         sl<LoginUsecase>(),
         sl<LogoutUsecase>(),
         sl<ChangePasswordUsecase>(),
+        sl<ProfileUsecase>(),
       ),
     )
 
@@ -51,6 +53,10 @@ void setupInit() {
     ..registerLazySingleton<ChangePasswordUsecase>(
       () => ChangePasswordUsecase(repository: sl<AuthRepo>()),
     )
+    ..registerLazySingleton<ProfileUsecase>(
+      () => ProfileUsecase(repository: sl<AuthRepo>()),
+    )
+
     //! Repository
     ..registerLazySingleton<AuthRepo>(
       () => AuthRepoImpl(remoteDataSource: sl<RemoteDataSource>()),
