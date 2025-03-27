@@ -97,7 +97,7 @@ class AppThemeData {
       InputDecorationTheme(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor.withAlpha(120)),
+          borderSide: BorderSide(color: seedColor.withAlpha(80)),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
@@ -109,7 +109,7 @@ class AppThemeData {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor.withAlpha(120)),
+          borderSide: BorderSide(color: seedColor.withAlpha(80)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),

@@ -63,7 +63,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       obscureText: isPasswordObscure,
       decoration: InputDecoration(
         filled: true,
-        fillColor: context.primaryColor.withAlpha(10),
+        fillColor: context.backgroundColor,
         contentPadding: context.W > 400
             ? EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h)
             : null,
