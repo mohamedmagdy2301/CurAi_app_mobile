@@ -18,6 +18,7 @@ class ImageProfileWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 70.r,
+          foregroundColor: context.onSecondaryColor,
           backgroundImage: const NetworkImage(
             'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
           ),
@@ -28,13 +29,14 @@ class ImageProfileWidget extends StatelessWidget {
           child: InkWell(
             onTap: onTap ?? () {},
             child: CircleAvatar(
-              radius: 16.r,
+              radius: 18.r,
               backgroundColor: context.backgroundColor,
               child: CircleAvatar(
-                radius: 15.r,
+                radius: 17.r,
                 backgroundColor: context.primaryColor,
-                child: const Icon(
-                  CupertinoIcons.pencil,
+                child: Icon(
+                  CupertinoIcons.camera_fill,
+                  size: 18.sp,
                   color: Colors.white,
                 ),
               ),

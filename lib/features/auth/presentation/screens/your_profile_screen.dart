@@ -71,9 +71,11 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                 8.hSpace,
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  height: 50.h,
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 20.w),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
                     border: Border.all(
@@ -91,7 +93,12 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       isDense: true,
                       icon: const Icon(Icons.arrow_drop_down),
                       value: selectedGender,
-                      hint: Text(context.translate(LangKeys.gender)),
+                      hint: Text(
+                        context.translate(LangKeys.gender),
+                        style: TextStyleApp.regular18().copyWith(
+                          color: context.onPrimaryColor,
+                        ),
+                      ),
                       items: [
                         DropdownMenuItem(
                           value: 0,
@@ -129,19 +136,21 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               title: LangKeys.birthDate,
               controller: _birthDateController,
             ),
-            CustomButton(
-              title: LangKeys.updateProfile,
-              onPressed: () {
-                AdaptiveDialogs.showOkCancelAlertDialog(
-                  context: context,
-                  title: context.translate(LangKeys.updateProfile),
-                  message: context.translate(LangKeys.updateProfileMessage),
-                );
-              },
-            ).paddingSymmetric(horizontal: 20, vertical: 5),
+            5.hSpace,
           ],
         ).center(),
       ),
+      bottomNavigationBar: CustomButton(
+        title: LangKeys.updateProfile,
+        onPressed: () {
+          AdaptiveDialogs.showOkCancelAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.updateProfile),
+            message: context.translate(LangKeys.updateProfileMessage),
+          );
+        },
+      ).paddingSymmetric(horizontal: 20, vertical: 10),
+      backgroundColor: context.backgroundColor,
     );
   }
 }
