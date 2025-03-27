@@ -10,4 +10,5 @@ class Routes {
   static const String allDoctors = '/allDoctors';
   static const String changePasswordScreen = '/changePasswordScreen';
   static const String settingsScreen = '/settingsScreen';
+  static const String yourProfileScreen = '/yourProfileScreen';
 }

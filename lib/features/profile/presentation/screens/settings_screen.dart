@@ -17,8 +17,8 @@ import 'package:curai_app_mobile/features/user/presentation/widgets/settings/loc
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SettingsScreen2 extends StatelessWidget {
-  const SettingsScreen2({super.key});
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

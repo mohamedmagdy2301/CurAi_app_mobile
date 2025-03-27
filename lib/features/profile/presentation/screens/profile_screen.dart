@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
             RowNavigateProfileWidget(
               icon: CupertinoIcons.person,
               title: LangKeys.yourProfile,
-              onTap: () {},
+              onTap: () => context.pushNamed(Routes.yourProfileScreen),
             ),
             _buildDivider(context),
             RowNavigateProfileWidget(
