@@ -1,13 +1,13 @@
+// import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+// import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+// import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:home_services/core/constant/app_colors.dart';
-// import 'package:home_services/core/constant/app_styles.dart';
-// import 'package:home_services/core/extansions/context_system_extansions.dart';
 
 // class CustomDropdownButton extends StatelessWidget {
 //   const CustomDropdownButton({
-//     super.key,
 //     required this.items,
+//     super.key,
 //     this.onChanged,
 //     this.hint = '',
 //     this.borderRadius = 16,
@@ -18,13 +18,13 @@
 //     this.isExpanded = true,
 //   });
 
-//   final List<String> items;
-//   final void Function(String?)? onChanged;
+//   final List<DropdownMenuItem> items;
+//   final void Function(int?)? onChanged;
 //   final String hint;
 //   final double? borderRadius;
-//   final String? value;
+//   final int? value;
 //   final String? label;
-//   final String? Function(String?)? validator;
+//   final String? Function(int?)? validator;
 //   final Widget? prefix;
 //   final bool isExpanded;
 
@@ -39,10 +39,10 @@
 //           borderRadius: BorderRadius.circular(borderRadius!),
 //           border: Border.all(
 //             width: .4,
-//             color: AppColors.orange,
+//             color: context.primaryColor,
 //           ),
 //         ),
-//         child: DropdownButtonFormField(
+//         child: DropdownButtonFormField<int>(
 //           isExpanded: isExpanded,
 //           autovalidateMode: AutovalidateMode.onUserInteraction,
 //           validator: validator,
@@ -51,7 +51,7 @@
 //             quarterTurns: context.isStateArabic ? 3 : 1,
 //             child: Icon(
 //               Icons.arrow_forward_ios,
-//               color: AppColors.bunker,
+//               color: context.primaryColor,
 //               size: 16.sp,
 //             ),
 //           ),
@@ -85,24 +85,15 @@
 //               borderRadius: BorderRadius.circular(borderRadius!.r),
 //             ),
 //           ),
-//           items: items.map((String? value) {
-//             return DropdownMenuItem(
-//               value: value,
-//               child: Text(
-//                 style: AppStyles.textBody12,
-//                 value ?? '',
-//                 overflow: TextOverflow.ellipsis,
-//               ),
-//             );
-//           }).toList(),
+//           items: items ,
 //           onChanged: onChanged,
 //           hint: Text(
 //             hint,
 //             textAlign: TextAlign.start,
-//             style: AppStyles.textBody12.copyWith(color: Colors.grey),
+//             style: TextStyleApp.regular16().copyWith(color: Colors.grey),
 //           ),
 //         ),
 //       ),
-//     );
+//     )
 //   }
 // }

@@ -89,5 +89,15 @@
   "color_palette": "لوحة الالوان",
   "delete_account": "حذف الحساب",
   "delete_account_message": "هل تريد حذف حسابك؟",
-  "delete": "حذف" 
+  "delete": "حذف",
+  "update_profile": "تحديث الملف الشخصي",
+  "update_profile_message": "هل تريد تحديث الملف الشخصي؟",
+  "gender": "الجنس",
+  "male": "ذكر",
+  "female": "انثى",
+  "birth_date": "تاريخ الميلاد",
+  "phone": "الهاتف",
+  "address": "العنوان",
+  "full_name": "الاسم الكامل",
+  "phone_number": "رقم الهاتف"
  }

@@ -89,6 +89,17 @@
   "color_palette": "Color Palette",
   "delete_account": "Delete Account",
   "delete_account_message": "Are you sure you want to delete your account?",
-  "delete": "Delete"
+  "delete": "Delete",
+  "update_profile": "Update Profile",
+  "update_profile_message": "Are you sure you want to update your profile?",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "birth_date": "Date of Birth",
+  "phone": "Phone",
+  "address": "Address",
+  "full_name": "Full Name",
+  "phone_number": "Phone Number"
+ 
 
 }

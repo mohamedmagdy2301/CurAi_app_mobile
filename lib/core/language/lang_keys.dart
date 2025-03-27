@@ -90,6 +90,16 @@ class LangKeys {
   static const String favorite = 'favorite';
   static const String helpCenter = 'help_center';
 
+//! Edit Profile
+  static const String fullName = 'full_name';
+  static const String phone = 'phone';
+  static const String gender = 'gender';
+  static const String male = 'male';
+  static const String female = 'female';
+  static const String address = 'address';
+  static const String birthDate = 'birth_date';
+  static const String updateProfile = 'update_profile';
+  static const String updateProfileMessage = 'update_profile_message';
 //! Settings
   static const String settings = 'settings';
   static const String notificationSettings = 'notification_settings';
