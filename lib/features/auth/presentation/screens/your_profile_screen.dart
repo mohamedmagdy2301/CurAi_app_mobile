@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as int_ex;
@@ -67,9 +66,8 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
       age: int.parse(_birthDateController.text),
       gender: selectedGender ?? 'male',
       specialization: '',
-      consultationPrice: '0',
+      consultationPrice: '',
     );
-    log('--------------------------------$imageFile');
     context.read<AuthCubit>().editProfile(
           profileRequest: profileRequest,
           imageFile: imageFile,
@@ -87,18 +85,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           ImageProfileWidget(
             imageFile: imageFile,
             imageUrl: imageUrl,
+            isEdit: true,
             onTap: () async {
               xFilePhoto = await imagePicker.pickImage(
                 source: ImageSource.gallery,
               );
-
               if (xFilePhoto != null) {
                 setState(() {
                   imageFile = File(xFilePhoto!.path);
                   imageUrl = null;
                 });
               }
-              log(imageFile!.path);
             },
           ),
           CustomTextFeildEditProfile(

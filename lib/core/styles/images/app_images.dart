@@ -12,6 +12,7 @@ class AppImages {
   static const String pediatric = '$doctorSpeciality/pediatric.png';
   static const String urologist = '$doctorSpeciality/urologist.png';
   static const String neurologic = '$doctorSpeciality/neurologic.png';
+  static const String loading = '$images/loading.gif';
 }
 
 class SvgImages {
