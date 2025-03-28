@@ -13,11 +13,13 @@ class CustomTextFeildEditProfile extends StatelessWidget {
     required this.title,
     super.key,
     this.onChanged,
+    this.keyboardType,
   });
 
   final TextEditingController controller;
   final String title;
   final void Function(String)? onChanged;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class CustomTextFeildEditProfile extends StatelessWidget {
         TextFormField(
           cursorColor: context.primaryColor,
           controller: controller,
+          keyboardType: keyboardType ?? TextInputType.text,
           validator: (value) {
             if (value == '') {
               return '${context.translate(title)} ${context.translate(LangKeys.isRequired)}';

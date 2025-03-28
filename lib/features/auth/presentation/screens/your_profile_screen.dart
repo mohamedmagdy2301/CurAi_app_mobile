@@ -22,29 +22,24 @@ import 'package:image_picker/image_picker.dart';
 
 class YourProfileScreen extends StatefulWidget {
   const YourProfileScreen({required this.profileModel, super.key});
-
   final ProfileModel profileModel;
+
   @override
   State<YourProfileScreen> createState() => _YourProfileScreenState();
 }
 
 class _YourProfileScreenState extends State<YourProfileScreen> {
-  final TextEditingController _fullNameController =
-      TextEditingController(text: '');
-  final TextEditingController _userNameController =
-      TextEditingController(text: '');
-  final TextEditingController _phoneController =
-      TextEditingController(text: '');
-  final TextEditingController _addressController =
-      TextEditingController(text: '');
-  final TextEditingController _yourAgeController =
-      TextEditingController(text: '');
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _yourAgeController = TextEditingController();
 
   String? selectedGender;
   ImagePicker imagePicker = ImagePicker();
   File? imageFile;
-  XFile? xFilePhoto;
   String? imageUrl;
+  bool isChanged = false;
 
   @override
   void initState() {
@@ -56,9 +51,27 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     _yourAgeController.text = widget.profileModel.age.toString();
     selectedGender = widget.profileModel.gender;
     imageUrl = widget.profileModel.profilePicture;
+
+    _userNameController.addListener(checkIfChanged);
+    _fullNameController.addListener(checkIfChanged);
+    _phoneController.addListener(checkIfChanged);
+    _addressController.addListener(checkIfChanged);
+    _yourAgeController.addListener(checkIfChanged);
+  }
+
+  void checkIfChanged() {
+    setState(() {
+      isChanged = widget.profileModel.username! != _userNameController.text ||
+          widget.profileModel.phoneNumber! != _phoneController.text ||
+          widget.profileModel.location! != _addressController.text ||
+          widget.profileModel.age! != int.tryParse(_yourAgeController.text) ||
+          widget.profileModel.gender! != selectedGender ||
+          imageFile != null;
+    });
   }
 
   void _updateProfileOnTap() {
+    context.pop();
     final profileRequest = ProfileRequest(
       fullName: _fullNameController.text,
       username: _userNameController.text,
@@ -85,34 +98,37 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           4.hSpace,
           ImageProfileWidget(
             imageFile: imageFile,
-            imageUrl: imageUrl,
+            imageUrl: imageFile == null ? imageUrl : null,
             isEdit: true,
             onTap: () async {
-              xFilePhoto = await imagePicker.pickImage(
-                source: ImageSource.gallery,
-              );
+              final xFilePhoto =
+                  await imagePicker.pickImage(source: ImageSource.gallery);
               if (xFilePhoto != null) {
                 setState(() {
-                  imageFile = File(xFilePhoto!.path);
-                  imageUrl = null;
+                  imageFile = File(xFilePhoto.path);
+                  checkIfChanged();
                 });
               }
             },
           ),
           CustomTextFeildEditProfile(
             title: LangKeys.userName,
+            keyboardType: TextInputType.emailAddress,
             controller: _userNameController,
           ),
           CustomTextFeildEditProfile(
             title: LangKeys.fullName,
+            keyboardType: TextInputType.name,
             controller: _fullNameController,
           ),
           CustomTextFeildEditProfile(
             title: LangKeys.phone,
+            keyboardType: TextInputType.phone,
             controller: _phoneController,
           ),
           CustomTextFeildEditProfile(
             title: LangKeys.address,
+            keyboardType: TextInputType.streetAddress,
             controller: _addressController,
           ),
           Column(
@@ -162,6 +178,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedGender = newValue;
+                        checkIfChanged();
                       });
                     },
                   ),
@@ -171,6 +188,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           ),
           CustomTextFeildEditProfile(
             title: LangKeys.yourAge,
+            keyboardType: TextInputType.number,
             controller: _yourAgeController,
           ),
           BlocConsumer<AuthCubit, AuthState>(
@@ -200,7 +218,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   message: state.message,
                 );
               } else if (state is EditProfileLoading) {
-                context.pop();
                 AdaptiveDialogs.shoLoadingAlertDialog(
                   context: context,
                   title: context.translate(LangKeys.editProfile),
@@ -210,13 +227,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             builder: (context, state) {
               return CustomButton(
                 title: LangKeys.updateProfile,
+                color: isChanged ? context.primaryColor : Colors.grey,
                 onPressed: () {
-                  AdaptiveDialogs.showOkCancelAlertDialog(
-                    context: context,
-                    title: context.translate(LangKeys.updateProfile),
-                    message: context.translate(LangKeys.updateProfileMessage),
-                    onPressedOk: _updateProfileOnTap,
-                  );
+                  isChanged
+                      ? AdaptiveDialogs.showOkCancelAlertDialog(
+                          context: context,
+                          title: context.translate(LangKeys.updateProfile),
+                          message:
+                              context.translate(LangKeys.updateProfileMessage),
+                          onPressedOk: _updateProfileOnTap,
+                        )
+                      : null;
                 },
               );
             },
