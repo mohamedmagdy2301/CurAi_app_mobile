@@ -3,8 +3,8 @@ import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model
 import 'package:curai_app_mobile/features/auth/domain/repositories/auth_repo.dart';
 import 'package:dartz/dartz.dart';
 
-class ProfileUsecase extends UseCase<Either<String, ProfileModel>, String> {
-  ProfileUsecase({required this.repository});
+class GetProfileUsecase extends UseCase<Either<String, ProfileModel>, String> {
+  GetProfileUsecase({required this.repository});
 
   final AuthRepo repository;
   @override

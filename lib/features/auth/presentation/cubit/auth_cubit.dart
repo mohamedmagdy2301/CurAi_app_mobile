@@ -8,7 +8,7 @@ import 'package:curai_app_mobile/features/auth/data/models/register/register_req
 import 'package:curai_app_mobile/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
-import 'package:curai_app_mobile/features/auth/domain/usecases/profile_usecase.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/get_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:equatable/equatable.dart';
 
@@ -27,7 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
   final LoginUsecase _loginUsecase;
   final LogoutUsecase _logoutUsecase;
   final ChangePasswordUsecase _changePasswordUsecase;
-  final ProfileUsecase _profileUsecase;
+  final GetProfileUsecase _profileUsecase;
 
   Future<void> register(RegisterRequest registerRequest) async {
     emit(RegisterLoading());
