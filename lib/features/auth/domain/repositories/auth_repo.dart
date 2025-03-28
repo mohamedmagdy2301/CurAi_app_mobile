@@ -4,6 +4,7 @@ import 'package:curai_app_mobile/features/auth/data/models/change_password/chang
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model.dart';
+import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:dartz/dartz.dart';
 
@@ -18,5 +19,8 @@ abstract class AuthRepo {
     required ChangePasswordRequest changePasswordRequest,
   });
   Future<Either<String, ProfileModel>> getProfile();
+  Future<Either<String, ProfileModel>> editProdile({
+    required ProfileRequest profileRequest,
+  });
   Future<Either<String, String>> logout();
 }

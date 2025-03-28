@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/features/auth/data/models/change_password/chang
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model.dart';
+import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:curai_app_mobile/features/auth/domain/repositories/auth_repo.dart';
 import 'package:dartz/dartz.dart';
@@ -76,6 +77,19 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<Either<String, ProfileModel>> getProfile() async {
     final response = await remoteDataSource.getProfile();
+
+    return response.fold(
+      (failure) => left(failure.message),
+      (result) => right(ProfileModel.fromJson(result)),
+    );
+  }
+
+  @override
+  Future<Either<String, ProfileModel>> editProdile({
+    required ProfileRequest profileRequest,
+  }) async {
+    final response =
+        await remoteDataSource.editProfile(profileRequest: profileRequest);
 
     return response.fold(
       (failure) => left(failure.message),
