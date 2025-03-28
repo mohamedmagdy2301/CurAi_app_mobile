@@ -81,13 +81,13 @@ class AdaptiveDialogs {
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.cancel),
-          onPressed: onPressedCancel ?? () => ContextExtensions(context).pop(),
+          onPressed: onPressedCancel ?? () => context.pop(),
         ),
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.ok),
           isDefaultAction: true,
-          onPressed: onPressedOk ?? () => ContextExtensions(context).pop(),
+          onPressed: onPressedOk ?? () => context.pop(),
         ),
       ],
     );
@@ -142,14 +142,14 @@ class AdaptiveDialogs {
             actions: actions.asMap().entries.map((entry) {
               return CupertinoActionSheetAction(
                 onPressed: () {
-                  ContextExtensions(context).pop();
+                  context.pop();
                   onSelected(entry.key);
                 },
                 child: Text(entry.value),
               );
             }).toList(),
             cancelButton: CupertinoActionSheetAction(
-              onPressed: () => ContextExtensions(context).pop(),
+              onPressed: () => context.pop(),
               child: Text(
                 context.translate(LangKeys.cancel),
                 style: const TextStyle(fontWeight: FontWeight.bold),
@@ -174,7 +174,7 @@ class AdaptiveDialogs {
                     ),
                   ),
                   onTap: () {
-                    ContextExtensions(context).pop();
+                    context.pop();
                     onSelected(entry.key);
                   },
                 );
@@ -184,7 +184,7 @@ class AdaptiveDialogs {
                   context.translate(LangKeys.cancel),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                onTap: () => ContextExtensions(context).pop(),
+                onTap: () => context.pop(),
               ),
             ],
           );
@@ -215,7 +215,7 @@ class AdaptiveDialogs {
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.cancel),
-          onPressed: () => ContextExtensions(context).pop(),
+          onPressed: () => context.pop(),
         ),
         _buildDialogAction(
           context,

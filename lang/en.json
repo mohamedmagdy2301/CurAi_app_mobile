@@ -96,10 +96,14 @@
   "male": "Male",
   "female": "Female",
   "birth_date": "Date of Birth",
+  "your_age":  "Your Age",
   "phone": "Phone",
   "address": "Address",
   "full_name": "Full Name",
-  "phone_number": "Phone Number"
+  "phone_number": "Phone Number",
+  "complete_profile": "Complete Profile",
+  "complete_profile_title":"Complete Your Profile",
+  "description_complete_profile"  :"Don't worry, only you can see your personal data, No one else will be able see it."
  
 
 }

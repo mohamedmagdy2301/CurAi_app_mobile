@@ -19,8 +19,6 @@ extension ContextExtensions on BuildContext {
 
   bool get canPop => Navigator.canPop(this);
 
-  void pop<T extends Object>([T? result]) => Navigator.pop(this, result);
-
   //! App Theme Data
   ThemeData get theme => AdaptiveTheme.of(this).theme;
   Color get primaryColor => AdaptiveTheme.of(this).theme.primaryColor;

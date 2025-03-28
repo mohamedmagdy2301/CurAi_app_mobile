@@ -2,6 +2,7 @@ import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as int_ex;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,10 +12,12 @@ class CustomTextFeildEditProfile extends StatelessWidget {
     required this.controller,
     required this.title,
     super.key,
+    this.onChanged,
   });
 
   final TextEditingController controller;
   final String title;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +31,16 @@ class CustomTextFeildEditProfile extends StatelessWidget {
           ),
         ),
         8.hSpace,
-        TextField(
+        TextFormField(
           cursorColor: context.primaryColor,
           controller: controller,
+          validator: (value) {
+            if (value == '') {
+              return '${context.translate(title)} ${context.translate(LangKeys.isRequired)}';
+            }
+            return null;
+          },
+          onChanged: onChanged,
           style: TextStyleApp.regular16().copyWith(
             color: context.onPrimaryColor,
           ),

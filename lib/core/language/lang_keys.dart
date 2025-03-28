@@ -15,7 +15,7 @@ class LangKeys {
   static const String next = 'next';
   static const String getStarted = 'get_started';
 
-  // Auth
+  //! Auth
   static const String welcomeBack = 'welcome_back';
   static const String descriptionLogin = 'description_login';
   static const String email = 'email';
@@ -50,6 +50,10 @@ class LangKeys {
   static const String descriptionForgotPassword = 'description_forgot_password';
   static const String resetPassword = 'reset_password';
   static const String or = 'or';
+  static const String completeProfile = 'complete_profile';
+  static const String completeProfileTitle = 'complete_profile_title';
+  static const String descriptioncompleteProfile =
+      'description_complete_profile';
 
   //! OTP and PIN
   static const String otpVerification = 'otp_verification';
@@ -97,6 +101,7 @@ class LangKeys {
   static const String male = 'male';
   static const String female = 'female';
   static const String address = 'address';
+  static const String yourAge = 'your_age';
   static const String birthDate = 'birth_date';
   static const String updateProfile = 'update_profile';
   static const String updateProfileMessage = 'update_profile_message';

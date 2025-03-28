@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as int_ex;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -36,7 +37,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
       TextEditingController(text: '');
   final TextEditingController _addressController =
       TextEditingController(text: '');
-  final TextEditingController _birthDateController =
+  final TextEditingController _yourAgeController =
       TextEditingController(text: '');
 
   String? selectedGender;
@@ -52,7 +53,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     _fullNameController.text = widget.profileModel.firstName!;
     _phoneController.text = widget.profileModel.phoneNumber!;
     _addressController.text = widget.profileModel.location!;
-    _birthDateController.text = widget.profileModel.age.toString();
+    _yourAgeController.text = widget.profileModel.age.toString();
     selectedGender = widget.profileModel.gender;
     imageUrl = widget.profileModel.profilePicture;
   }
@@ -63,7 +64,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
       username: _userNameController.text,
       phoneNumber: _phoneController.text,
       location: _addressController.text,
-      age: int.parse(_birthDateController.text),
+      age: int.parse(_yourAgeController.text),
       gender: selectedGender ?? 'male',
       specialization: '',
       consultationPrice: '',
@@ -169,8 +170,8 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             ],
           ),
           CustomTextFeildEditProfile(
-            title: LangKeys.birthDate,
-            controller: _birthDateController,
+            title: LangKeys.yourAge,
+            controller: _yourAgeController,
           ),
           BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (previous, current) =>
@@ -231,7 +232,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     _userNameController.dispose();
     _phoneController.dispose();
     _addressController.dispose();
-    _birthDateController.dispose();
+    _yourAgeController.dispose();
     super.dispose();
   }
 }

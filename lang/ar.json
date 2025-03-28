@@ -96,8 +96,12 @@
   "male": "ذكر",
   "female": "انثى",
   "birth_date": "تاريخ الميلاد",
+  "your_age": "عمرك",
   "phone": "الهاتف",
   "address": "العنوان",
   "full_name": "الاسم الكامل",
-  "phone_number": "رقم الهاتف"
+  "phone_number": "رقم الهاتف",
+  "complete_profile":  "اكمل الملف الشخصي",
+    "complete_profile_title": "اكمل الملف الشخصي",
+  "description_complete_profile"  :"لا تقلق ، فقط يمكنك رؤية بياناتك الشخصية ، لا يمكن لاحد اخر لرؤيتها."
  }
