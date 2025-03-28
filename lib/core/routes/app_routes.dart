@@ -2,12 +2,12 @@ import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/build_your_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
-import 'package:curai_app_mobile/features/auth/presentation/screens/your_profile_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
@@ -42,7 +42,7 @@ class AppRoutes {
       case Routes.settingsScreen:
         return BaseRoute(page: const SettingsScreen());
       case Routes.yourProfileScreen:
-        return BaseRoute(page: const YourProfileScreen());
+        return BaseRoute(page: const BuildYourProfileScreen());
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }

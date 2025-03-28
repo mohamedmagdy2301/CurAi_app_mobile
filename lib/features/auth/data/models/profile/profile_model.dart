@@ -22,7 +22,7 @@ class ProfileModel {
     firstName = (json['first_name'] ?? '') as String;
     lastName = (json['last_name'] ?? '') as String;
     phoneNumber = (json['phone_number'] ?? '') as String;
-    gender = (json['gender'] ?? '0') as String;
+    gender = (json['gender'] ?? 'male') as String;
     age = (json['age'] ?? 0) as int;
     email = (json['email'] ?? '') as String;
     role = (json['role'] ?? '') as String;

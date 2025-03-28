@@ -87,7 +87,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     required ProfileRequest profileRequest,
   }) async {
     final response = await dioConsumer.put(
-      EndPoints.register,
+      EndPoints.getProfile,
       body: profileRequest.toJson(),
     );
     return response.fold(left, right);
