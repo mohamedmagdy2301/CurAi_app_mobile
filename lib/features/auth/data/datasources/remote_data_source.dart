@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
@@ -8,6 +11,7 @@ import 'package:curai_app_mobile/features/auth/data/models/login/login_request.d
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 
 abstract class RemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> register({
@@ -22,6 +26,7 @@ abstract class RemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getProfile();
   Future<Either<Failure, Map<String, dynamic>>> editProfile({
     required ProfileRequest profileRequest,
+    File? imageFile,
   });
   Future<Either<Failure, Map<String, dynamic>>> logout();
 }
@@ -85,10 +90,38 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   @override
   Future<Either<Failure, Map<String, dynamic>>> editProfile({
     required ProfileRequest profileRequest,
+    File? imageFile,
   }) async {
+    MultipartFile? photoFile;
+    var photoName = '';
+
+    if (imageFile != null) {
+      log('Image file path: ${imageFile.path}');
+      photoName = imageFile.path.split('/').last;
+      log('Photo name: $photoName');
+      photoFile = await MultipartFile.fromFile(
+        imageFile.path,
+        filename: photoName,
+      );
+    } else {
+      log('Image file is null');
+    }
+
+    final data = FormData.fromMap({
+      'first_name': profileRequest.fullName,
+      'username': profileRequest.username,
+      'phone_number': profileRequest.phoneNumber,
+      'location': profileRequest.location,
+      'age': profileRequest.age,
+      'gender': profileRequest.gender,
+      'specialization': profileRequest.specialization,
+      'consultation_price': profileRequest.consultationPrice,
+      'profile_picture': photoFile,
+    });
+    log(data.fields.toString());
     final response = await dioConsumer.put(
       EndPoints.getProfile,
-      body: profileRequest.toJson(),
+      body: data,
     );
     return response.fold(left, right);
   }

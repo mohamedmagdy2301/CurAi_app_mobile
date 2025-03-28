@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as int_ex;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -17,6 +18,7 @@ import 'package:curai_app_mobile/features/profile/presentation/widgets/image_pro
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 class YourProfileScreen extends StatefulWidget {
   const YourProfileScreen({required this.profileModel, super.key});
@@ -39,6 +41,9 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
       TextEditingController(text: '');
 
   String? selectedGender;
+  ImagePicker imagePicker = ImagePicker();
+  File? imageFile;
+  XFile? xFilePhoto;
   String? imageUrl;
 
   @override
@@ -54,7 +59,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   }
 
   void _updateProfileOnTap() {
-    // context.pop();
     final profileRequest = ProfileRequest(
       fullName: _fullNameController.text,
       username: _userNameController.text,
@@ -65,7 +69,11 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
       specialization: '',
       consultationPrice: '0',
     );
-    context.read<AuthCubit>().editProfile(profileRequest: profileRequest);
+    log('--------------------------------$imageFile');
+    context.read<AuthCubit>().editProfile(
+          profileRequest: profileRequest,
+          imageFile: imageFile,
+        );
   }
 
   @override
@@ -76,7 +84,23 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         spacing: 12.h,
         children: [
           4.hSpace,
-          ImageProfileWidget(imageUrl: imageUrl),
+          ImageProfileWidget(
+            imageFile: imageFile,
+            imageUrl: imageUrl,
+            onTap: () async {
+              xFilePhoto = await imagePicker.pickImage(
+                source: ImageSource.gallery,
+              );
+
+              if (xFilePhoto != null) {
+                setState(() {
+                  imageFile = File(xFilePhoto!.path);
+                  imageUrl = null;
+                });
+              }
+              log(imageFile!.path);
+            },
+          ),
           CustomTextFeildEditProfile(
             title: LangKeys.userName,
             controller: _userNameController,
@@ -127,39 +151,20 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                     isDense: true,
                     icon: const Icon(Icons.arrow_drop_down),
                     value: selectedGender,
-                    hint: Text(
-                      context.translate(LangKeys.gender),
-                      style: TextStyleApp.regular18().copyWith(
-                        color: context.onPrimaryColor,
-                      ),
-                    ),
                     items: [
                       DropdownMenuItem(
                         value: 'male',
-                        child: Text(
-                          context.translate(LangKeys.male),
-                          style: TextStyleApp.regular16().copyWith(
-                            color: context.onPrimaryColor,
-                          ),
-                        ),
+                        child: Text(context.translate(LangKeys.male)),
                       ),
                       DropdownMenuItem(
                         value: 'female',
-                        child: Text(
-                          context.translate(LangKeys.female),
-                          style: TextStyleApp.regular16().copyWith(
-                            color: context.onPrimaryColor,
-                          ),
-                        ),
+                        child: Text(context.translate(LangKeys.female)),
                       ),
                     ],
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedGender = newValue;
                       });
-                      if (newValue != null) {
-                        log('Selected Gender Value: $newValue');
-                      }
                     },
                   ),
                 ),

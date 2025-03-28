@@ -76,7 +76,7 @@ class DioConsumer implements ApiConsumer {
   @override
   Future<Either<Failure, Map<String, dynamic>>> put(
     String url, {
-    Map<String, dynamic>? body,
+    dynamic body,
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(

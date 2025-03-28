@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls, avoid_catches_without_on_clauses
 
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/datasources/remote_data_source.dart';
@@ -87,9 +89,12 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<Either<String, ProfileModel>> editProdile({
     required ProfileRequest profileRequest,
+    File? imageFile,
   }) async {
-    final response =
-        await remoteDataSource.editProfile(profileRequest: profileRequest);
+    final response = await remoteDataSource.editProfile(
+      profileRequest: profileRequest,
+      imageFile: imageFile,
+    );
 
     return response.fold(
       (failure) => left(failure.message),

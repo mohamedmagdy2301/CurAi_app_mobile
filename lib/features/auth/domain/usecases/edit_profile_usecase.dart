@@ -1,16 +1,18 @@
-import 'package:curai_app_mobile/core/usecases/usecase.dart';
+import 'dart:io';
+
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/domain/repositories/auth_repo.dart';
 import 'package:dartz/dartz.dart';
 
-class EditProfileUsecase
-    extends UseCase<Either<String, ProfileModel>, ProfileRequest> {
+class EditProfileUsecase {
   EditProfileUsecase({required this.repository});
 
   final AuthRepo repository;
-  @override
-  Future<Either<String, ProfileModel>> call(ProfileRequest params) async {
-    return repository.editProdile(profileRequest: params);
+  Future<Either<String, ProfileModel>> call(
+    ProfileRequest params,
+    File? imageFile,
+  ) async {
+    return repository.editProdile(profileRequest: params, imageFile: imageFile);
   }
 }

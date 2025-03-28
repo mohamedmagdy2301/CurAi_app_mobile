@@ -1,4 +1,4 @@
-// ignore_for_file: flutter_style_todos
+import 'dart:io';
 
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,9 +10,13 @@ class ImageProfileWidget extends StatelessWidget {
     super.key,
     this.onTap,
     this.imageUrl,
+    this.imageFile,
   });
+
   final String? imageUrl;
+  final File? imageFile;
   final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -20,10 +24,12 @@ class ImageProfileWidget extends StatelessWidget {
         CircleAvatar(
           radius: 70.r,
           foregroundColor: context.onSecondaryColor,
-          backgroundImage: NetworkImage(
-            imageUrl ??
-                'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-          ),
+          backgroundImage: imageFile != null
+              ? FileImage(imageFile!)
+              : NetworkImage(
+                  imageUrl ??
+                      'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                ) as ImageProvider,
         ),
         Positioned(
           bottom: 5.h,
