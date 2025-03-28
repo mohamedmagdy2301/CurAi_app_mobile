@@ -4,11 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model.dart';
+import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/change_password_usecase.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/edit_profile_usecase.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/get_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
-import 'package:curai_app_mobile/features/auth/domain/usecases/get_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:equatable/equatable.dart';
 
@@ -20,14 +22,16 @@ class AuthCubit extends Cubit<AuthState> {
     this._loginUsecase,
     this._logoutUsecase,
     this._changePasswordUsecase,
-    this._profileUsecase,
+    this._getProfileUsecase,
+    this._editProfileUsecase,
   ) : super(AuthInitial());
 
   final RegisterUsecase _registerUsecase;
   final LoginUsecase _loginUsecase;
   final LogoutUsecase _logoutUsecase;
   final ChangePasswordUsecase _changePasswordUsecase;
-  final GetProfileUsecase _profileUsecase;
+  final GetProfileUsecase _getProfileUsecase;
+  final EditProfileUsecase _editProfileUsecase;
 
   Future<void> register(RegisterRequest registerRequest) async {
     emit(RegisterLoading());
@@ -82,11 +86,22 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> getProfile() async {
     emit(GetProfileLoading());
 
-    final result = await _profileUsecase.call('');
+    final result = await _getProfileUsecase.call('');
 
     result.fold(
       (errorMessage) => emit(GetProfileError(message: errorMessage)),
       (profileModel) => emit(GetProfileSuccess(profileModel: profileModel)),
+    );
+  }
+
+  Future<void> editProfile({required ProfileRequest profileRequest}) async {
+    emit(EditProfileLoading());
+
+    final result = await _editProfileUsecase.call(profileRequest);
+
+    result.fold(
+      (errorMessage) => emit(EditProfileError(message: errorMessage)),
+      (profileModel) => emit(EditProfileSuccess(profileModel: profileModel)),
     );
   }
 }
