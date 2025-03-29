@@ -1,4 +1,4 @@
-// ignore_for_file: flutter_style_todos
+// ignore_for_file: flutter_style_todos, use_build_context_synchronously
 
 import 'dart:io';
 
@@ -51,11 +51,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 buildWhen: (previous, current) =>
                     current is GetProfileLoading ||
                     current is GetProfileError ||
-                    current is GetProfileSuccess,
+                    current is GetProfileSuccess ||
+                    current is EditPhotoProfileSuccess ||
+                    current is EditPhotoProfileError ||
+                    current is EditPhotoProfileLoading,
                 builder: (context, state) {
                   if (state is GetProfileSuccess) {
                     return ImageProfileWidget(
                       imageUrl: state.profileModel.profilePicture,
+                      isEdit: true,
+                      onTap: () async {
+                        xFilePhoto = await imagePicker.pickImage(
+                          source: ImageSource.gallery,
+                        );
+                        if (xFilePhoto != null) {
+                          setState(() {
+                            imageFile = File(xFilePhoto!.path);
+                            imageUrl = imageFile!.path;
+                          });
+                        }
+                        await context.read<AuthCubit>().editPhotoProfile(
+                              imageFile: imageFile,
+                            );
+                        await context.read<AuthCubit>().getProfile();
+                      },
                     );
                   } else if (state is GetProfileError) {
                     return Text(state.message).withHeight(155.h).center();

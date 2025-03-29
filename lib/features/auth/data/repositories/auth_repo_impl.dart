@@ -87,12 +87,26 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<Either<String, ProfileModel>> editProdile({
+  Future<Either<String, ProfileModel>> editProfile({
     required ProfileRequest profileRequest,
     File? imageFile,
   }) async {
     final response = await remoteDataSource.editProfile(
       profileRequest: profileRequest,
+      imageFile: imageFile,
+    );
+
+    return response.fold(
+      (failure) => left(failure.message),
+      (result) => right(ProfileModel.fromJson(result)),
+    );
+  }
+
+  @override
+  Future<Either<String, ProfileModel>> editPhotoProfile({
+    File? imageFile,
+  }) async {
+    final response = await remoteDataSource.editPhotoProfile(
       imageFile: imageFile,
     );
 

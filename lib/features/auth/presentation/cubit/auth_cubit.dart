@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/change_password_usecase.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/edit_photo_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/edit_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/get_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
@@ -26,6 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
     this._changePasswordUsecase,
     this._getProfileUsecase,
     this._editProfileUsecase,
+    this._editPhotoProfileUsecase,
   ) : super(AuthInitial());
 
   final RegisterUsecase _registerUsecase;
@@ -34,6 +36,7 @@ class AuthCubit extends Cubit<AuthState> {
   final ChangePasswordUsecase _changePasswordUsecase;
   final GetProfileUsecase _getProfileUsecase;
   final EditProfileUsecase _editProfileUsecase;
+  final EditPhotoProfileUsecase _editPhotoProfileUsecase;
 
   Future<void> register(RegisterRequest registerRequest) async {
     emit(RegisterLoading());
@@ -107,6 +110,20 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (errorMessage) => emit(EditProfileError(message: errorMessage)),
       (profileModel) => emit(EditProfileSuccess(profileModel: profileModel)),
+    );
+  }
+
+  Future<void> editPhotoProfile({
+    File? imageFile,
+  }) async {
+    emit(EditPhotoProfileLoading());
+
+    final result = await _editPhotoProfileUsecase.call(imageFile);
+
+    result.fold(
+      (errorMessage) => emit(EditPhotoProfileError(message: errorMessage)),
+      (profileModel) =>
+          emit(EditPhotoProfileSuccess(profileModel: profileModel)),
     );
   }
 }

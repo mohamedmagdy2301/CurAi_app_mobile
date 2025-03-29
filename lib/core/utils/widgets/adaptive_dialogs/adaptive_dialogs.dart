@@ -45,6 +45,7 @@ class AdaptiveDialogs {
     required BuildContext context,
     required String title,
     required Widget message,
+    void Function()? onPressed,
   }) async {
     return _showPlatformDialog(
       context: context,
@@ -54,7 +55,7 @@ class AdaptiveDialogs {
         _buildDialogAction(
           context,
           text: context.translate(LangKeys.ok),
-          onPressed: () {},
+          onPressed: onPressed ?? () {},
         ),
       ],
     );

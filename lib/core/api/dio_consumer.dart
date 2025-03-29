@@ -88,6 +88,21 @@ class DioConsumer implements ApiConsumer {
     );
   }
 
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> patch(
+    String url, {
+    dynamic body,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return _safeApiCall(
+      () => client.patch(
+        url,
+        queryParameters: queryParameters,
+        data: body,
+      ),
+    );
+  }
+
   Future<Either<Failure, Map<String, dynamic>>> _safeApiCall(
     Future<Response<Map<String, dynamic>>> Function() apiCall,
   ) async {

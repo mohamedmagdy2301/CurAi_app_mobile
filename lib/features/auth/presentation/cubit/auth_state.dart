@@ -121,4 +121,22 @@ class EditProfileError extends AuthState {
 
   @override
   List<Object> get props => [message];
+} // ! Edit Photo Profile States
+
+class EditPhotoProfileLoading extends AuthState {}
+
+class EditPhotoProfileSuccess extends AuthState {
+  const EditPhotoProfileSuccess({required this.profileModel});
+  final ProfileModel profileModel;
+
+  @override
+  List<Object> get props => [profileModel];
+}
+
+class EditPhotoProfileError extends AuthState {
+  const EditPhotoProfileError({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
 }

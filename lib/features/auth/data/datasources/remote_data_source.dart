@@ -28,6 +28,9 @@ abstract class RemoteDataSource {
     required ProfileRequest profileRequest,
     File? imageFile,
   });
+  Future<Either<Failure, Map<String, dynamic>>> editPhotoProfile({
+    File? imageFile,
+  });
   Future<Either<Failure, Map<String, dynamic>>> logout();
 }
 
@@ -96,17 +99,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     var photoName = '';
 
     if (imageFile != null) {
-      log('Image file path: ${imageFile.path}');
       photoName = imageFile.path.split('/').last;
-      log('Photo name: $photoName');
       photoFile = await MultipartFile.fromFile(
         imageFile.path,
         filename: photoName,
       );
-    } else {
-      log('Image file is null');
     }
-
     final data = FormData.fromMap({
       'first_name': profileRequest.fullName,
       'username': profileRequest.username,
@@ -120,6 +118,30 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     });
     log(data.fields.toString());
     final response = await dioConsumer.put(
+      EndPoints.getProfile,
+      body: data,
+    );
+    return response.fold(left, right);
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> editPhotoProfile({
+    File? imageFile,
+  }) async {
+    MultipartFile? photoFile;
+    var photoName = '';
+
+    if (imageFile != null) {
+      photoName = imageFile.path.split('/').last;
+      photoFile = await MultipartFile.fromFile(
+        imageFile.path,
+        filename: photoName,
+      );
+    }
+    final data = FormData.fromMap({
+      'profile_picture': photoFile,
+    });
+    final response = await dioConsumer.patch(
       EndPoints.getProfile,
       body: data,
     );

@@ -21,8 +21,11 @@ abstract class AuthRepo {
     required ChangePasswordRequest changePasswordRequest,
   });
   Future<Either<String, ProfileModel>> getProfile();
-  Future<Either<String, ProfileModel>> editProdile({
+  Future<Either<String, ProfileModel>> editProfile({
     required ProfileRequest profileRequest,
+    File? imageFile,
+  });
+  Future<Either<String, ProfileModel>> editPhotoProfile({
     File? imageFile,
   });
   Future<Either<String, String>> logout();
