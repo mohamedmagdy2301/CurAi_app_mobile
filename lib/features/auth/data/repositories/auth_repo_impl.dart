@@ -93,7 +93,7 @@ class AuthRepoImpl extends AuthRepo {
   }) async {
     final response = await remoteDataSource.editProfile(
       profileRequest: profileRequest,
-      imageFile: imageFile,
+      // imageFile: imageFile,
     );
 
     return response.fold(

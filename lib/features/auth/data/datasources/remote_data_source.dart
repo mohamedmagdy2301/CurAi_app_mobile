@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
@@ -26,7 +25,7 @@ abstract class RemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getProfile();
   Future<Either<Failure, Map<String, dynamic>>> editProfile({
     required ProfileRequest profileRequest,
-    File? imageFile,
+    // File? imageFile,
   });
   Future<Either<Failure, Map<String, dynamic>>> editPhotoProfile({
     File? imageFile,
@@ -93,33 +92,32 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   @override
   Future<Either<Failure, Map<String, dynamic>>> editProfile({
     required ProfileRequest profileRequest,
-    File? imageFile,
+    // File? im ageFile,
   }) async {
-    MultipartFile? photoFile;
-    var photoName = '';
+    // MultipartFile? photoFile;
+    // var photoName = '';
 
-    if (imageFile != null) {
-      photoName = imageFile.path.split('/').last;
-      photoFile = await MultipartFile.fromFile(
-        imageFile.path,
-        filename: photoName,
-      );
-    }
-    final data = FormData.fromMap({
-      'first_name': profileRequest.fullName,
-      'username': profileRequest.username,
-      'phone_number': profileRequest.phoneNumber,
-      'location': profileRequest.location,
-      'age': profileRequest.age,
-      'gender': profileRequest.gender,
-      'specialization': profileRequest.specialization,
-      'consultation_price': profileRequest.consultationPrice,
-      'profile_picture': photoFile,
-    });
-    log(data.fields.toString());
+    // if (imageFile != null) {
+    //   photoName = imageFile.path.split('/').last;
+    //   photoFile = await MultipartFile.fromFile(
+    //     imageFile.path,
+    //     filename: photoName,
+    //   );
+    // }
+    // final data = FormData.fromMap({
+    //   'first_name': profileRequest.fullName,
+    //   'username': profileRequest.username,
+    //   'phone_number': profileRequest.phoneNumber,
+    //   'location': profileRequest.location,
+    //   'age': profileRequest.age,
+    //   'gender': profileRequest.gender,
+    //   'specialization': profileRequest.specialization,
+    //   'consultation_price': profileRequest.consultationPrice,
+    //   // 'profile_picture': photoFile,
+    // });
     final response = await dioConsumer.patch(
       EndPoints.getProfile,
-      body: data,
+      body: profileRequest.toJson(),
     );
     return response.fold(left, right);
   }

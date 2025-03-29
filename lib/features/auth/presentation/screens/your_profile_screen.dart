@@ -99,6 +99,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           ImageProfileWidget(
             imageFile: imageFile,
             imageUrl: imageFile == null ? imageUrl : null,
+            // isEdit: true,
             // onTap: () async {
             //   final xFilePhoto =
             //       await imagePicker.pickImage(source: ImageSource.gallery);
@@ -107,7 +108,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             //       imageFile = File(xFilePhoto.path);
             //       checkIfChanged();
             //     });
-            //   }
+            // }
             // },
           ),
           CustomTextFeildEditProfile(
