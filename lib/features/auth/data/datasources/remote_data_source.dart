@@ -117,7 +117,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       'profile_picture': photoFile,
     });
     log(data.fields.toString());
-    final response = await dioConsumer.put(
+    final response = await dioConsumer.patch(
       EndPoints.getProfile,
       body: data,
     );

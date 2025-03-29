@@ -84,7 +84,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     );
     context.read<AuthCubit>().editProfile(
           profileRequest: profileRequest,
-          imageFile: imageFile,
+          // imageFile: imageFile,
         );
   }
 
@@ -99,17 +99,16 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           ImageProfileWidget(
             imageFile: imageFile,
             imageUrl: imageFile == null ? imageUrl : null,
-            isEdit: true,
-            onTap: () async {
-              final xFilePhoto =
-                  await imagePicker.pickImage(source: ImageSource.gallery);
-              if (xFilePhoto != null) {
-                setState(() {
-                  imageFile = File(xFilePhoto.path);
-                  checkIfChanged();
-                });
-              }
-            },
+            // onTap: () async {
+            //   final xFilePhoto =
+            //       await imagePicker.pickImage(source: ImageSource.gallery);
+            //   if (xFilePhoto != null) {
+            //     setState(() {
+            //       imageFile = File(xFilePhoto.path);
+            //       checkIfChanged();
+            //     });
+            //   }
+            // },
           ),
           CustomTextFeildEditProfile(
             title: LangKeys.userName,
