@@ -121,58 +121,68 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.yourAge),
-            keyboardType: TextInputType.number,
-            controller: _yourAgeController,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          Container(
+          SizedBox(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 15.h,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(
-                color: context.primaryColor.withAlpha(90),
-              ),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                isExpanded: true,
-                borderRadius: BorderRadius.circular(8.r),
-                elevation: 0,
-                style: TextStyleApp.regular16().copyWith(
-                  color: context.onPrimaryColor,
-                ),
-                isDense: true,
-                icon: const Icon(Icons.arrow_drop_down),
-                value: selectedGender,
-                hint: Text(
-                  context.translate(LangKeys.gender),
-                  style: TextStyleApp.regular16().copyWith(
-                    color: context.primaryColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: context.W * .3,
+                  child: CustomTextFeild(
+                    labelText: context.translate(LangKeys.yourAge),
+                    keyboardType: TextInputType.number,
+                    controller: _yourAgeController,
+                    onChanged: (_) => _validateForm(),
                   ),
                 ),
-                items: [
-                  DropdownMenuItem(
-                    value: 'male',
-                    child: Text(context.translate(LangKeys.male)),
+                Container(
+                  width: context.W * .55,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 15.h,
                   ),
-                  DropdownMenuItem(
-                    value: 'female',
-                    child: Text(context.translate(LangKeys.female)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: Border.all(
+                      color: context.primaryColor.withAlpha(90),
+                    ),
                   ),
-                ],
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedGender = newValue;
-                  });
-                },
-              ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(8.r),
+                      elevation: 0,
+                      style: TextStyleApp.regular16().copyWith(
+                        color: context.onPrimaryColor,
+                      ),
+                      isDense: true,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      value: selectedGender,
+                      hint: Text(
+                        context.translate(LangKeys.gender),
+                        style: TextStyleApp.regular16().copyWith(
+                          color: context.primaryColor,
+                        ),
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'male',
+                          child: Text(context.translate(LangKeys.male)),
+                        ),
+                        DropdownMenuItem(
+                          value: 'female',
+                          child: Text(context.translate(LangKeys.female)),
+                        ),
+                      ],
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedGender = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
