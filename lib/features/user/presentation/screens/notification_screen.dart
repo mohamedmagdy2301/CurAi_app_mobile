@@ -11,6 +11,7 @@ class NotificationScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.isStateArabic ? 'الاشعارات' : 'Notefication'),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         flexibleSpace: Container(color: context.backgroundColor),
       ),
     );
