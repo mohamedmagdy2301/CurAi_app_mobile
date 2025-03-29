@@ -62,11 +62,11 @@ class _PalettListViewWidgetState extends State<PalettListViewWidget> {
                       selectedColor = selected;
                       AdaptiveTheme.of(context).setTheme(
                         light: AppThemeData.lightTheme(
-                          context.isStateArabic,
+                          context.isStateArabic ? 'Cairo' : 'Poppins',
                           selected,
                         ),
                         dark: AppThemeData.darkTheme(
-                          context.isStateArabic,
+                          context.isStateArabic ? 'Cairo' : 'Poppins',
                           selected,
                         ),
                       );

@@ -32,20 +32,20 @@ Future<void> main() async {
     await initializeDependencies();
 
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    final savedThemeMode =
-        CacheDataHelper.getData(key: SharedPrefKey.saveThemeMode) ??
-            AdaptiveThemeMode.light;
+    final savedThemeMode = await AdaptiveTheme.getThemeMode();
+
     final savedThemeColor = await CacheDataHelper.getData(
           key: SharedPrefKey.keyThemeColor,
         ) ??
         AppColors.primary;
+
     runApp(
       BlocProvider(
         create: (context) => LocalizationCubit()..loadSettings(),
         child: MyApp(
           environment: sl<EnvVariables>().debugMode,
           savedThemeColor: savedThemeColor as Color,
-          savedThemeMode: savedThemeMode as AdaptiveThemeMode,
+          savedThemeMode: savedThemeMode!,
         ),
       ),
     );

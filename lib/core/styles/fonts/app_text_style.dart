@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextStyleApp {
+  static String fontFamily = 'Cairo';
+
   static TextStyle _baseTextStyle({
     required double fontSize,
     required FontWeight fontWeight,
   }) {
     return TextStyle(
+      fontFamily: fontFamily,
       fontSize: fontSize.sp,
       fontWeight: fontWeight,
       color: Colors.black,

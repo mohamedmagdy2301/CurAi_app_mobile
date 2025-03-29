@@ -6,11 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppThemeData {
-  static const String fontFamilyEn = 'Poppins';
-  static const String fontFamilyAr = 'Cairo';
-
-  static ThemeData darkTheme(bool isArabic, Color seedColor) => ThemeData(
-        fontFamily: isArabic ? fontFamilyAr : fontFamilyEn,
+  static ThemeData darkTheme(String fontFamily, Color seedColor) => ThemeData(
+        fontFamily: fontFamily,
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.backgroundDarkColor,
         primaryColor: seedColor,
@@ -29,8 +26,8 @@ class AppThemeData {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
 
-  static ThemeData lightTheme(bool isArabic, Color seedColor) => ThemeData(
-        fontFamily: isArabic ? fontFamilyAr : fontFamilyEn,
+  static ThemeData lightTheme(String fontFamily, Color seedColor) => ThemeData(
+        fontFamily: fontFamily,
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.backgroundLightColor,
         primaryColor: seedColor,

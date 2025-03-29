@@ -56,11 +56,11 @@ class _ThemeWidgetState extends State<ThemeWidget> {
             AdaptiveTheme.of(context).setLight();
             AdaptiveTheme.of(context).setTheme(
               light: AppThemeData.lightTheme(
-                context.isStateArabic,
+                context.isStateArabic ? 'Cairo' : 'Poppins',
                 selectedColor,
               ),
               dark: AppThemeData.darkTheme(
-                context.isStateArabic,
+                context.isStateArabic ? 'Cairo' : 'Poppins',
                 selectedColor,
               ),
             );
@@ -83,11 +83,11 @@ class _ThemeWidgetState extends State<ThemeWidget> {
             AdaptiveTheme.of(context).setDark();
             AdaptiveTheme.of(context).setTheme(
               light: AppThemeData.lightTheme(
-                context.isStateArabic,
+                context.isStateArabic ? 'Cairo' : 'Poppins',
                 selectedColor,
               ),
               dark: AppThemeData.darkTheme(
-                context.isStateArabic,
+                context.isStateArabic ? 'Cairo' : 'Poppins',
                 selectedColor,
               ),
             );
@@ -101,33 +101,33 @@ class _ThemeWidgetState extends State<ThemeWidget> {
             context.pop();
           },
         ),
-        BuildRadioListTile<AdaptiveThemeMode>(
-          labelKey: LangKeys.systemDefault,
-          value: AdaptiveThemeMode.system,
-          groupValue: saveThemeMode as AdaptiveThemeMode,
-          onChanged: (locale) {
-            selectedColor = darkColors[0];
-            AdaptiveTheme.of(context).setSystem();
-            AdaptiveTheme.of(context).setTheme(
-              light: AppThemeData.lightTheme(
-                context.isStateArabic,
-                selectedColor,
-              ),
-              dark: AppThemeData.darkTheme(
-                context.isStateArabic,
-                selectedColor,
-              ),
-            );
-            setState(() {
-              saveThemeMode = AdaptiveThemeMode.system;
-            });
-            CacheDataHelper.setData(
-              key: SharedPrefKey.saveThemeMode,
-              value: AdaptiveThemeMode.system,
-            );
-            context.pop();
-          },
-        ),
+        // BuildRadioListTile<AdaptiveThemeMode>(
+        //   labelKey: LangKeys.systemDefault,
+        //   value: AdaptiveThemeMode.system,
+        //   groupValue: saveThemeMode as AdaptiveThemeMode,
+        //   onChanged: (locale) {
+        //     selectedColor = darkColors[0];
+        //     AdaptiveTheme.of(context).setSystem();
+        //     AdaptiveTheme.of(context).setTheme(
+        //       light: AppThemeData.lightTheme(
+        //         context.isStateArabic,
+        //         selectedColor,
+        //       ),
+        //       dark: AppThemeData.darkTheme(
+        //         context.isStateArabic,
+        //         selectedColor,
+        //       ),
+        //     );
+        //     setState(() {
+        //       saveThemeMode = AdaptiveThemeMode.system;
+        //     });
+        //     CacheDataHelper.setData(
+        //       key: SharedPrefKey.saveThemeMode,
+        //       value: AdaptiveThemeMode.system,
+        //     );
+        //     context.pop();
+        //   },
+        // ),
       ],
     ).paddingSymmetric(vertical: 10.h);
   }

@@ -32,7 +32,7 @@ class CuraiApp extends StatefulWidget {
   _CuraiAppState createState() => _CuraiAppState();
 }
 
-class _CuraiAppState extends State<CuraiApp> with WidgetsBindingObserver {
+class _CuraiAppState extends State<CuraiApp> {
   dynamic isLoggedIn =
       CacheDataHelper.getData(key: SharedPrefKey.keyIsLoggedIn) ?? false;
   dynamic isFirstLaunch =
@@ -62,12 +62,13 @@ class _CuraiAppState extends State<CuraiApp> with WidgetsBindingObserver {
             builder: (context, state) {
               final cubit = context.read<LocalizationCubit>();
               return AdaptiveTheme(
+                debugShowFloatingThemeButton: true,
                 light: AppThemeData.lightTheme(
-                  context.isStateArabic,
+                  context.isStateArabic ? 'Cairo' : 'Poppins',
                   widget.savedThemeColor,
                 ),
                 dark: AppThemeData.darkTheme(
-                  context.isStateArabic,
+                  context.isStateArabic ? 'Cairo' : 'Poppins',
                   widget.savedThemeColor,
                 ),
                 initial: widget.savedThemeMode,
