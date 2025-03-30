@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
+import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
@@ -49,6 +50,8 @@ class AppRoutes {
         );
       case Routes.settingsScreen:
         return BaseRoute(page: const SettingsScreen());
+      case Routes.privacyPolicyScreen:
+        return BaseRoute(page: const PrivacyPolicyScreen());
       case Routes.yourProfileScreen:
         return BaseRoute(page: const BuildYourProfileScreen());
       default:
