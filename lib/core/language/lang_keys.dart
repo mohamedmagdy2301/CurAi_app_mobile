@@ -68,6 +68,7 @@ class LangKeys {
   static const String seeAll = 'see_all';
   static const String doctorSpeciality = 'doctor_speciality';
   static const String popularDoctor = 'popular_doctor';
+  static const String noData = 'no_data';
 
 //! Specialties
   static const String general = 'general';

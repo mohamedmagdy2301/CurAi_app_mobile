@@ -103,5 +103,6 @@
   "phone_number": "رقم الهاتف",
   "complete_profile":  "اكمل الملف الشخصي",
     "complete_profile_title": "اكمل الملف الشخصي",
-  "description_complete_profile"  :"لا تقلق ، فقط يمكنك رؤية بياناتك الشخصية ، لا يمكن لاحد اخر لرؤيتها."
+  "description_complete_profile"  :"لا تقلق ، فقط يمكنك رؤية بياناتك الشخصية ، لا يمكن لاحد اخر لرؤيتها.",
+  "no_data": "لا توجد بيانات"
  }

@@ -6,8 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchBarDelegate extends SliverPersistentHeaderDelegate {
-  SearchBarDelegate({required this.onChanged});
+  SearchBarDelegate({
+    required this.suffixIcon,
+    required this.controller,
+    required this.onChanged,
+  });
   final ValueChanged<String> onChanged;
+  final TextEditingController controller;
+  final Widget? suffixIcon;
 
   @override
   Widget build(
@@ -24,7 +30,9 @@ class SearchBarDelegate extends SliverPersistentHeaderDelegate {
       child: CustomTextFeild(
         labelText: context.translate(LangKeys.doctors),
         isValidator: false,
+        controller: controller,
         onChanged: onChanged,
+        suffixIcon: suffixIcon,
       ),
     );
   }

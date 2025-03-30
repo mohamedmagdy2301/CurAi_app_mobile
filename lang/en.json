@@ -103,7 +103,8 @@
   "phone_number": "Phone Number",
   "complete_profile": "Complete Profile",
   "complete_profile_title":"Complete Your Profile",
-  "description_complete_profile"  :"Don't worry, only you can see your personal data, No one else will be able see it."
+  "description_complete_profile"  :"Don't worry, only you can see your personal data, No one else will be able see it.",
+  "no_data": "No data found"
  
 
 }

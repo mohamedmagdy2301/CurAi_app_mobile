@@ -17,6 +17,7 @@ class CustomTextFeild extends StatefulWidget {
     this.autofillHints,
     this.onChanged,
     this.isValidator,
+    this.suffixIcon,
   });
   final String labelText;
   final TextEditingController? controller;
@@ -25,6 +26,7 @@ class CustomTextFeild extends StatefulWidget {
   final Iterable<String>? autofillHints;
   final void Function(String)? onChanged;
   final bool? isValidator;
+  final Widget? suffixIcon;
 
   @override
   State<CustomTextFeild> createState() => _CustomTextFeildState();
@@ -76,7 +78,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         errorStyle: TextStyleApp.regular14().copyWith(
           color: Colors.redAccent,
         ),
-        suffixIcon: changePasswordObscure(),
+        suffixIcon: widget.suffixIcon ?? changePasswordObscure(),
         labelText: widget.labelText,
       ),
     );

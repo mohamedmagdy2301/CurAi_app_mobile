@@ -1,4 +1,5 @@
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
@@ -9,11 +10,13 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcat
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
+import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRoutes {
   static Route<void> onGenerateRoute(RouteSettings settings) {
@@ -38,7 +41,12 @@ class AppRoutes {
       case Routes.doctorSpeciality:
         return BaseRoute(page: const DoctorSpecialitiesScreen());
       case Routes.allDoctors:
-        return BaseRoute(page: const AllDoctorScreen());
+        return BaseRoute(
+          page: BlocProvider<HomeCubit>(
+            create: (context) => sl<HomeCubit>(),
+            child: const AllDoctorScreen(),
+          ),
+        );
       case Routes.settingsScreen:
         return BaseRoute(page: const SettingsScreen());
       case Routes.yourProfileScreen:

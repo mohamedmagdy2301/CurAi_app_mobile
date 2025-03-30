@@ -1,12 +1,16 @@
-import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
+import 'dart:async';
+
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_state.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/all_doctor/custom_appbar_all_doctor.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/all_doctor/custom_search_bar.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/popular_doctor_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,84 +24,105 @@ class AllDoctorScreen extends StatefulWidget {
 }
 
 class _AllDoctorScreenState extends State<AllDoctorScreen> {
-  // List<DoctorModel> filteredAllDoctorList = doctorsList;
-  // Timer? _debounce;
+  List<DoctorModel> filteredDoctorsList = [];
+  List<DoctorModel> allDoctorsList = [];
+  Timer? _debounce;
+  TextEditingController searchController = TextEditingController();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   filteredAllDoctorList = doctorsList;
-  // }
+  @override
+  void initState() {
+    super.initState();
 
-  // void filterList(String query) {
-  //   if (_debounce?.isActive ?? false) _debounce?.cancel();
-  //   _debounce = Timer(const Duration(milliseconds: 200), () {
-  //     setState(() {
-  //       filteredAllDoctorList = doctorsList.where((item) {
-  //         final localizedNameAr = item.nameAr.toLowerCase();
-  //         final localizedNameEn = item.nameEn.toLowerCase();
-  //         final searchQuery = query.toLowerCase();
-  //         return localizedNameAr.contains(searchQuery) ||
-  //             localizedNameEn.contains(searchQuery);
-  //       }).toList();
-  //     });
-  //   });
-  // }
+    context.read<HomeCubit>().getAllDoctor();
+  }
+
+  void filterDoctors(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 200), () {
+      setState(() {
+        filteredDoctorsList = allDoctorsList.where((doctor) {
+          final name = doctor.username!.toLowerCase();
+          final specialization = doctor.specialization!.toLowerCase();
+          final location = doctor.location!.toLowerCase();
+          final searchQuery = query.toLowerCase();
+          return name.contains(searchQuery) ||
+              specialization.contains(searchQuery) ||
+              location.contains(searchQuery);
+        }).toList();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<HomeCubit>()..getAllDoctor(),
-      child: CustomScrollView(
-        slivers: [
-          const CustomAppBarAllDoctor(),
-          // SliverPersistentHeader(
-          //   pinned: true,
-          //   delegate: SearchBarDelegate( ),
-          // ),
-          BlocBuilder<HomeCubit, HomeState>(
-            buildWhen: (previous, current) =>
-                current is GetAllDoctorSuccess ||
-                current is GetAllDoctorFailure ||
-                current is GetAllDoctorLoading,
-            builder: (context, state) {
-              if (state is GetAllDoctorSuccess) {
-                final doctorsList = state.doctorModel;
-                return SliverList.separated(
-                  itemCount: doctorsList.length,
-                  separatorBuilder: (context, index) => 10.hSpace,
-                  itemBuilder: (context, index) {
-                    return PopularDoctorItemWidget(
-                      doctorModel: doctorsList[index],
-                    );
-                  },
-                );
-              } else if (state is GetAllDoctorFailure) {
-                return SliverToBoxAdapter(
-                  child: Text(
-                    state.message,
-                    textAlign: TextAlign.center,
-                    style: TextStyleApp.regular26().copyWith(
-                      color: context.onSecondaryColor,
-                    ),
-                  ).center().paddingSymmetric(vertical: 45),
-                );
-              }
+    return CustomScrollView(
+      slivers: [
+        const CustomAppBarAllDoctor(),
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: SearchBarDelegate(
+            onChanged: filterDoctors,
+            controller: searchController,
+            suffixIcon: searchController.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      hideKeyboard();
+                      searchController.clear();
+                      setState(() {
+                        filteredDoctorsList = allDoctorsList;
+                      });
+                    },
+                  )
+                : null,
+          ),
+        ),
+        BlocBuilder<HomeCubit, HomeState>(
+          buildWhen: (previous, current) =>
+              current is GetAllDoctorSuccess ||
+              current is GetAllDoctorFailure ||
+              current is GetAllDoctorLoading,
+          builder: (context, state) {
+            if (state is GetAllDoctorSuccess) {
+              allDoctorsList = state.doctorModel;
+              filteredDoctorsList = filteredDoctorsList.isEmpty
+                  ? allDoctorsList
+                  : filteredDoctorsList;
               return SliverList.separated(
-                itemCount: doctorsListDome.length,
+                itemCount: filteredDoctorsList.length,
                 separatorBuilder: (context, index) => 10.hSpace,
                 itemBuilder: (context, index) {
-                  return Skeletonizer(
-                    child: PopularDoctorItemWidget(
-                      doctorModel: doctorsListDome[index],
-                    ),
+                  return PopularDoctorItemWidget(
+                    doctorModel: filteredDoctorsList[index],
                   );
                 },
               );
-            },
-          ),
-        ],
-      ),
+            } else if (state is GetAllDoctorFailure) {
+              return SliverToBoxAdapter(
+                child: Text(
+                  state.message,
+                  textAlign: TextAlign.center,
+                  style: TextStyleApp.regular26().copyWith(
+                    color: context.onSecondaryColor,
+                  ),
+                ).center().paddingSymmetric(vertical: 45),
+              );
+            }
+            return SliverList.separated(
+              itemCount: doctorsListDome.length,
+              separatorBuilder: (context, index) => 10.hSpace,
+              itemBuilder: (context, index) {
+                return Skeletonizer(
+                  effect: shimmerEffect(context),
+                  child: PopularDoctorItemWidget(
+                    doctorModel: doctorsListDome[index],
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }
