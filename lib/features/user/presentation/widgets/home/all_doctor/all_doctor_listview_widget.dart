@@ -23,7 +23,7 @@ class AllDoctorListviewWidget extends StatelessWidget {
           return SizedBox(
             height: 130,
             child: PopularDoctorItemWidget(
-              modelDoctor: filteredItems[index],
+              doctorModel: filteredItems[index],
             ),
           );
         },

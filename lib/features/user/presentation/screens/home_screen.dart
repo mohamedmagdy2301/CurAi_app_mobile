@@ -3,10 +3,11 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/features/user/data/doctors_list.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/banner_home_widget.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/custom_appbar_home.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/doctor_speciality_widget.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/popular_doctor_widget.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/popular_doctor_item_widget.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/title_section.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,14 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(child: 10.hSpace),
-          const SliverToBoxAdapter(child: PopularDoctorWidget()),
+          SliverList.builder(
+            itemCount: doctorsList.length,
+            itemBuilder: (context, index) {
+              return PopularDoctorItemWidget(
+                doctorModel: doctorsList[index],
+              );
+            },
+          ),
           SliverToBoxAdapter(child: 10.hSpace),
         ],
       ),
