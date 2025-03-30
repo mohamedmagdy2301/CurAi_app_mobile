@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
-import 'package:curai_app_mobile/features/auth/data/datasources/remote_data_source.dart';
+import 'package:curai_app_mobile/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
@@ -16,7 +16,7 @@ import 'package:dartz/dartz.dart';
 
 class AuthRepoImpl extends AuthRepo {
   AuthRepoImpl({required this.remoteDataSource});
-  final RemoteDataSource remoteDataSource;
+  final AuthRemoteDataSource remoteDataSource;
 
   @override
   Future<Either<String, String>> register({

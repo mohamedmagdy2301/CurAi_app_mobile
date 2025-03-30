@@ -6,4 +6,5 @@ class EndPoints {
   static const String logout = '$baseUrl/api/logout/';
   static const String changePassword = '$baseUrl/api/change-password/';
   static const String getProfile = '$baseUrl/api/profile/';
+  static const String getAllDoctor = '$baseUrl/All_doctors/';
 }

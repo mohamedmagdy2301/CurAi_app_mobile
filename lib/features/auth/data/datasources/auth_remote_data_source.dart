@@ -12,7 +12,7 @@ import 'package:curai_app_mobile/features/auth/data/models/register/register_req
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
-abstract class RemoteDataSource {
+abstract class AuthRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> register({
     required RegisterRequest registerRequest,
   });
@@ -33,8 +33,8 @@ abstract class RemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> logout();
 }
 
-class RemoteDataSourceImpl implements RemoteDataSource {
-  RemoteDataSourceImpl({required this.dioConsumer});
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+  AuthRemoteDataSourceImpl({required this.dioConsumer});
   final DioConsumer dioConsumer;
 
   @override
