@@ -119,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             RowNavigateProfileWidget(
               icon: CupertinoIcons.info,
               title: LangKeys.helpCenter,
-              onTap: () {},
+              onTap: () => context.pushNamed(Routes.helpCenterScreen),
             ),
             _buildDivider(context),
             RowNavigateProfileWidget(
