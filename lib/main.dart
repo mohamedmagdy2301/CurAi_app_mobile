@@ -33,7 +33,6 @@ Future<void> main() async {
 
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
-
     final savedThemeColor = await CacheDataHelper.getData(
           key: SharedPrefKey.keyThemeColor,
         ) ??
@@ -45,7 +44,7 @@ Future<void> main() async {
         child: MyApp(
           environment: sl<EnvVariables>().debugMode,
           savedThemeColor: savedThemeColor as Color,
-          savedThemeMode: savedThemeMode!,
+          savedThemeMode: savedThemeMode ?? AdaptiveThemeMode.light,
         ),
       ),
     );
@@ -75,7 +74,7 @@ Future<void> initializeDependencies() async {
     sl<EnvVariables>().envVariablesSetup(envType: EnvTypeEnum.dev),
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
   ]);
-  if (kReleaseMode) {
-    await Future.delayed(const Duration(seconds: 1), () {});
-  }
+  // if (kReleaseMode) {
+  //   await Future.delayed(const Duration(seconds: 1), () {});
+  // }
 }

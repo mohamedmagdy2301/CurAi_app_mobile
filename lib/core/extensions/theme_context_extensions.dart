@@ -14,10 +14,9 @@ extension ContextExtensions on BuildContext {
   Orientation get orientation => MediaQuery.orientationOf(this);
 
   bool get isLandscape => orientation == Orientation.landscape;
+  bool get isTablet => W > 600;
 
   bool get isPortrait => orientation == Orientation.portrait;
-
-  bool get canPop => Navigator.canPop(this);
 
   //! App Theme Data
   ThemeData get theme => AdaptiveTheme.of(this).theme;

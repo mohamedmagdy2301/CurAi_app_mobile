@@ -16,6 +16,7 @@ class CustomTextFeild extends StatefulWidget {
     this.keyboardType,
     this.autofillHints,
     this.onChanged,
+    this.isValidator,
   });
   final String labelText;
   final TextEditingController? controller;
@@ -23,6 +24,7 @@ class CustomTextFeild extends StatefulWidget {
   final TextInputType? keyboardType;
   final Iterable<String>? autofillHints;
   final void Function(String)? onChanged;
+  final bool? isValidator;
 
   @override
   State<CustomTextFeild> createState() => _CustomTextFeildState();
@@ -53,12 +55,16 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       // enableSuggestions: false,
       cursorHeight: 26.h,
       cursorWidth: 1.2.w,
-      validator: (value) {
-        if (value == '') {
-          return '${widget.labelText} ${context.translate(LangKeys.isRequired)}';
-        }
-        return null;
-      },
+      validator: widget.isValidator ?? true
+          ? (value) {
+              if (value == '') {
+                return '${widget.labelText} ${context.translate(LangKeys.isRequired)}';
+              }
+              return null;
+            }
+          : (v) {
+              return null;
+            },
       onChanged: widget.onChanged,
       obscureText: isPasswordObscure,
       decoration: InputDecoration(
