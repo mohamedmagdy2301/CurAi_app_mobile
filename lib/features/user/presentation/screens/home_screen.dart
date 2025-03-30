@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverToBoxAdapter(child: 20.hSpace),
             const CustomAppBarHome(),
             SliverToBoxAdapter(child: 0.hSpace),
-            const SliverToBoxAdapter(child: Center(child: BannerHomeWidget())),
+            SliverToBoxAdapter(child: const BannerHomeWidget().center()),
             SliverToBoxAdapter(child: 20.hSpace),
             SliverToBoxAdapter(
               child: TitleSectionWidget(
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SliverToBoxAdapter(child: context.isTablet ? 25.hSpace : 10.hSpace),
             const SliverToBoxAdapter(child: DoctorSpecialityWidget()),
-            SliverToBoxAdapter(child: context.isTablet ? 10.hSpace : 5.hSpace),
+            SliverToBoxAdapter(child: context.isTablet ? 5.hSpace : 0.hSpace),
             SliverToBoxAdapter(
               child: TitleSectionWidget(
                 title: context.translate(LangKeys.popularDoctor),

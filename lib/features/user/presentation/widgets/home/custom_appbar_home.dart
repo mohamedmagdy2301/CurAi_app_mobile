@@ -11,6 +11,7 @@ import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBarHome extends StatefulWidget {
   const CustomAppBarHome({
@@ -32,7 +33,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       pinned: true,
       elevation: 0,
       flexibleSpace: Container(color: context.backgroundColor),
-      toolbarHeight: 70,
+      toolbarHeight: context.H * 0.1,
       title: ListTile(
         title: AutoSizeText(
           context.isStateArabic
@@ -57,12 +58,18 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
               context.pushNamed(Routes.notificationScreen);
             });
           },
-          iconSize: 22,
+          iconSize: 27.sp,
           icon: Badge.count(
             count: count,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            textStyle: TextStyleApp.medium8().copyWith(
+              color: Colors.white,
+            ),
             isLabelVisible: count != 0,
             child: Icon(
               CupertinoIcons.bell,
+              size: 27.sp,
               color: context.primaryColor,
             ),
           ),

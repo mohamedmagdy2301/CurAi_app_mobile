@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/RPSCustomPainter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BannerHomeWidget extends StatelessWidget {
   const BannerHomeWidget({super.key});
@@ -15,59 +16,59 @@ class BannerHomeWidget extends StatelessWidget {
     return Padding(
       padding: context.padding(horizontal: 20, vertical: 5),
       child: Container(
-        height: 174,
+        height: context.H * 0.23,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.r),
           color: context.primaryColor.withAlpha(210),
         ),
         child: Stack(
           children: [
             Positioned(
-              top: -50,
-              right: 20,
-              bottom: -50,
-              left: 20,
+              top: -50.h,
+              right: 20.w,
+              bottom: -50.h,
+              left: 20.w,
               child: CustomPaint(
-                size: const Size(
-                  400,
-                  200,
-                ),
+                size: Size(400.w, 200.h),
                 painter: RPSCustomPainter(context: context),
               ),
             ),
             Positioned(
-              top: 10,
-              right: context.isStateArabic ? null : 10,
+              top: 10.h,
+              right: context.isStateArabic ? null : 10.w,
               bottom: 0,
-              left: context.isStateArabic ? 10 : null,
+              left: context.isStateArabic ? 10.w : null,
               child: Image.asset(
                 AppImages.doctorInBanner,
                 fit: BoxFit.fitHeight,
               ),
             ),
             Positioned(
-              top: 15,
-              right: context.isStateArabic ? 18 : null,
-              bottom: 10,
-              left: context.isStateArabic ? null : 18,
-              width: 150,
+              top: 10.h,
+              right: context.isStateArabic ? 18.w : null,
+              bottom: 10.h,
+              left: context.isStateArabic ? null : 18.w,
+              width: context.W * 0.4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AutoSizeText(
-                    context.translate(LangKeys.bannerBookHome),
-                    style: TextStyleApp.bold16().copyWith(
-                      height: 1.6,
-                      fontSize: context.isStateArabic ? 20 : 18,
-                      color: context.backgroundColor,
+                  SizedBox(
+                    width: context.W * .8,
+                    height: context.H * 0.145,
+                    child: AutoSizeText(
+                      context.translate(LangKeys.bannerBookHome),
+                      style: TextStyleApp.bold32().copyWith(
+                        height: 1.6,
+                        color: context.backgroundColor,
+                      ),
                     ),
                   ),
                   Container(
-                    height: 43,
-                    width: 130,
+                    height: context.H * 0.05,
+                    width: context.W * 0.3,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(50.r),
                       color: context.backgroundColor,
                     ),
                     alignment: Alignment.center,
