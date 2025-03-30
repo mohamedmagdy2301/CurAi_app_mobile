@@ -45,7 +45,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                 SizedBox(
                   width: context.W * .55,
                   child: AutoSizeText(
-                    doctorModel.location ?? '',
+                    doctorModel.email ?? '',
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
@@ -57,7 +57,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                 SizedBox(
                   width: context.W * .55,
                   child: AutoSizeText(
-                    doctorModel.email ?? '',
+                    doctorModel.location ?? '',
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
