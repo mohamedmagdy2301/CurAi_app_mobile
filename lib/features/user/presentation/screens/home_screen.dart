@@ -42,8 +42,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(child: 10.hSpace),
-          SliverList.builder(
+          SliverList.separated(
             itemCount: doctorsList.length,
+            separatorBuilder: (context, index) => 10.hSpace,
             itemBuilder: (context, index) {
               return PopularDoctorItemWidget(
                 doctorModel: doctorsList[index],

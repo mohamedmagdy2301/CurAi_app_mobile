@@ -22,8 +22,10 @@ class PopularDoctorItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => context.push(DoctorDetailsScreen(doctorModel: doctorModel)),
+      borderRadius: BorderRadius.circular(10.r),
       child: Card(
-        elevation: 6,
+        elevation: 4,
+        shadowColor: context.primaryColor.withAlpha(100),
         child: Row(
           children: [
             ImageDoctorWidget(doctorModel: doctorModel),
@@ -78,7 +80,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
             ).paddingSymmetric(horizontal: 12, vertical: 5),
           ],
         ),
-      ).paddingSymmetric(horizontal: 18, vertical: 5),
-    );
+      ),
+    ).paddingSymmetric(horizontal: 18);
   }
 }
