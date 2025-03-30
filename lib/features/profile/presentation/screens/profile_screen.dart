@@ -69,11 +69,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             imageFile = File(xFilePhoto!.path);
                             imageUrl = imageFile!.path;
                           });
+                          await context.read<AuthCubit>().editPhotoProfile(
+                                imageFile: imageFile,
+                              );
+                          await context.read<AuthCubit>().getProfile();
                         }
-                        await context.read<AuthCubit>().editPhotoProfile(
-                              imageFile: imageFile,
-                            );
-                        await context.read<AuthCubit>().getProfile();
                       },
                     );
                   } else if (state is GetProfileError) {
@@ -125,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             RowNavigateProfileWidget(
               icon: CupertinoIcons.lock_shield,
               title: LangKeys.privacyPolicy,
-              onTap: () {},
+              onTap: () => context.pushNamed(Routes.privacyPolicyScreen),
             ),
             _buildDivider(context),
             const LogoutWidget(),

@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -25,12 +27,15 @@ class TermsOfServiceWidget extends StatelessWidget {
             maxLines: 1,
           ),
           5.wSpace,
-          AutoSizeText(
-            context.translate(LangKeys.termsOfUse),
-            style: TextStyleApp.semiBold16().copyWith(
-              color: context.primaryColor,
+          InkWell(
+            onTap: () => context.pushNamed(Routes.privacyPolicyScreen),
+            child: AutoSizeText(
+              context.translate(LangKeys.termsOfUse),
+              style: TextStyleApp.semiBold16().copyWith(
+                color: context.primaryColor,
+              ),
+              maxLines: 1,
             ),
-            maxLines: 1,
           ),
           5.wSpace,
           AutoSizeText(
@@ -41,12 +46,15 @@ class TermsOfServiceWidget extends StatelessWidget {
             maxLines: 1,
           ),
           5.wSpace,
-          AutoSizeText(
-            context.translate(LangKeys.privacyPolicy),
-            style: TextStyleApp.semiBold16().copyWith(
-              color: context.primaryColor,
+          InkWell(
+            onTap: () => context.pushNamed(Routes.privacyPolicyScreen),
+            child: AutoSizeText(
+              context.translate(LangKeys.privacyPolicy),
+              style: TextStyleApp.semiBold16().copyWith(
+                color: context.primaryColor,
+              ),
+              maxLines: 1,
             ),
-            maxLines: 1,
           ),
         ],
       ),

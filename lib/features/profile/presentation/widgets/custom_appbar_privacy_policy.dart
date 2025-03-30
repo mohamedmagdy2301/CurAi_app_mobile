@@ -5,9 +5,9 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-class CustomAppBarProfile extends StatelessWidget
+class CustomAppBarPrivacyPolicy extends StatelessWidget
     implements PreferredSizeWidget {
-  const CustomAppBarProfile({
+  const CustomAppBarPrivacyPolicy({
     super.key,
   });
 
@@ -16,13 +16,12 @@ class CustomAppBarProfile extends StatelessWidget
     return AppBar(
       flexibleSpace: Container(color: context.backgroundColor),
       title: AutoSizeText(
-        context.translate(LangKeys.profile),
+        context.translate(LangKeys.privacyPolicy),
         maxLines: 1,
         style: TextStyleApp.bold22().copyWith(
           color: context.onPrimaryColor,
         ),
       ),
-      automaticallyImplyLeading: false,
       centerTitle: true,
     );
   }
