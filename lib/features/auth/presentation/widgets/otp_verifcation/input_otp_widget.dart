@@ -1,23 +1,22 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/core/helper/snackbar_helper.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpInputWidget extends StatefulWidget {
-  const OtpInputWidget({super.key});
+class OtpCodeInput extends StatefulWidget {
+  const OtpCodeInput({super.key});
 
   @override
-  State<OtpInputWidget> createState() => _OtpInputWidgetState();
+  State<OtpCodeInput> createState() => _OtpCodeInputState();
 }
 
-class _OtpInputWidgetState extends State<OtpInputWidget> {
+class _OtpCodeInputState extends State<OtpCodeInput> {
   final TextEditingController textEditingController = TextEditingController();
   final String correctPin = '5555';
   Color activeFillColor = Colors.greenAccent.shade400;
@@ -48,7 +47,7 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
 
   void _onPinIncorrect() {
     setState(() {
-      activeFillColor = context.color.error;
+      activeFillColor = Colors.redAccent.shade400;
       textEditingController.clear();
     });
     hideKeyboard();
@@ -63,7 +62,7 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
 
   void _resetActiveFillColor() {
     setState(() {
-      activeFillColor = context.color.primary;
+      activeFillColor = context.backgroundColor;
     });
   }
 
@@ -76,22 +75,21 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
       autoFocus: true,
       animationType: AnimationType.fade,
       cursorWidth: 1,
-      textStyle: context.styleBlack34.copyWith(
-        color: context.color.surface,
-        fontWeight: FontWeightHelper.light,
+      textStyle: TextStyleApp.light34().copyWith(
+        color: context.onPrimaryColor,
       ),
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
         borderRadius: BorderRadius.circular(10),
         borderWidth: 0,
-        fieldHeight: context.isLandscape ? 80.h : 60.h,
-        fieldWidth: context.isLandscape ? 20.w : 60.w,
+        fieldHeight: context.isLandscape ? 80 : 60,
+        fieldWidth: context.isLandscape ? 20 : 40,
         activeColor: Colors.transparent,
         inactiveColor: Colors.transparent,
         selectedColor: Colors.transparent,
         activeFillColor: activeFillColor,
-        inactiveFillColor: context.color.onSecondary.withAlpha(70),
-        selectedFillColor: context.color.onSecondary.withAlpha(170),
+        inactiveFillColor: context.onSecondaryColor.withAlpha(70),
+        selectedFillColor: context.onSecondaryColor.withAlpha(170),
       ),
       enableActiveFill: true,
       controller: textEditingController,

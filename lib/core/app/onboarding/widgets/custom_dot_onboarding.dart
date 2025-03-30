@@ -1,7 +1,5 @@
 import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,7 +14,7 @@ class CustomDotOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
@@ -27,12 +25,12 @@ class CustomDotOnboarding extends StatelessWidget {
               width: currentIndex == index
                   ? (context.isLandscape ? 30.w : 50.w)
                   : (context.isLandscape ? 10.w : 20.w),
-              margin: const EdgeInsets.only(right: 5),
+              margin: EdgeInsets.only(right: 5.w),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20.r),
                 color: currentIndex == index
-                    ? context.colors.primary
-                    : context.colors.primary.withAlpha(90),
+                    ? context.primaryColor
+                    : context.primaryColor.withAlpha(100),
               ),
             );
           },

@@ -1,15 +1,18 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
-import 'package:curai_app_mobile/core/app/cubit/settings_cubit.dart';
+import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
 import 'package:curai_app_mobile/core/app/env.variables.dart';
 import 'package:curai_app_mobile/core/app/error_widget_main.dart';
 import 'package:curai_app_mobile/core/app/my_app.dart';
-import 'package:curai_app_mobile/core/di/dependency_injection.dart';
-import 'package:curai_app_mobile/core/helper/bolc_observer.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/core/helper/logger_helper.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
+import 'package:curai_app_mobile/core/utils/helper/bolc_observer.dart';
+import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:curai_app_mobile/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -22,44 +25,56 @@ Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   setCustomErrorWidget();
   Bloc.observer = SimpleBlocObserver();
-  dependencyInjectionSetup();
-  hideKeyboard();
+  setupInit();
   Gemini.init(apiKey: 'AIzaSyA_ehqc-SrrKJDn5jO77Fgy_ae00UvevaM');
 
   try {
     await initializeDependencies();
 
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+    final savedThemeMode = await AdaptiveTheme.getThemeMode();
+    final savedThemeColor = await CacheDataHelper.getData(
+          key: SharedPrefKey.keyThemeColor,
+        ) ??
+        AppColors.primary;
+
     runApp(
       BlocProvider(
-        create: (context) => SettingsCubit(),
-        child: MyApp(environment: sl<EnvVariables>().debugMode),
+        create: (context) => LocalizationCubit()..loadSettings(),
+        child: MyApp(
+          environment: sl<EnvVariables>().debugMode,
+          savedThemeColor: savedThemeColor as Color,
+          savedThemeMode: savedThemeMode ?? AdaptiveThemeMode.light,
+        ),
       ),
     );
     FlutterNativeSplash.remove();
   } catch (e, stackTrace) {
-    LoggerHelper.error(
-      'Dependency initialization failed',
-      stackTrace: stackTrace,
-      error: e,
-      tag: 'Initialization main',
-    );
+    if (kDebugMode) {
+      LoggerHelper.error(
+        'Dependency initialization failed',
+        stackTrace: stackTrace,
+        error: e,
+        tag: 'Initialization main',
+      );
+    }
   }
 }
 
 void setCustomErrorWidget() {
   ErrorWidget.builder =
-      (FlutterErrorDetails details) => const ErrorWidgetMain();
+      (FlutterErrorDetails details) => ErrorWidgetMain(details: details);
 }
 
 Future<void> initializeDependencies() async {
+  hideKeyboard();
   await Future.wait([
     sl<ConnectivityController>().connectivityControllerInit(),
-    sl<SharedPrefManager>().sharedPreferencesInitialize(),
+    sl<CacheDataHelper>().sharedPreferencesInitialize(),
     sl<EnvVariables>().envVariablesSetup(envType: EnvTypeEnum.dev),
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
   ]);
-  if (kReleaseMode) {
-    await Future.delayed(const Duration(seconds: 1), () {});
-  }
+  // if (kReleaseMode) {
+  //   await Future.delayed(const Duration(seconds: 1), () {});
+  // }
 }

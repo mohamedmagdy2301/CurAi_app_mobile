@@ -1,13 +1,23 @@
-import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
-import 'package:curai_app_mobile/core/common/widgets/custom_text_feild.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
+import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -28,11 +38,17 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
   }
 
   void _onLoginPressed(BuildContext context) {
+    hideKeyboard();
     _validateForm();
     if (_isFormValidNotifier.value) {
       TextInput.finishAutofillContext();
       _formKey.currentState?.save();
-      context.pushNamed(Routes.mainScaffoldUser);
+      context.read<AuthCubit>().login(
+            LoginRequest(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim(),
+            ),
+          );
     }
   }
 
@@ -47,7 +63,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             ValueListenableBuilder<bool>(
               valueListenable: _isFormValidNotifier,
               builder: (context, isValid, child) {
-                return spaceHeight(isValid ? 35 : 20);
+                return isValid ? 35.hSpace : 20.hSpace;
               },
             ),
             CustomTextFeild(
@@ -75,17 +91,54 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                       context.pushNamed(Routes.forgetPasswordScreen),
                   child: Text(
                     context.translate(LangKeys.forgotPassword),
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colors.primary,
+                    style: TextStyleApp.regular14().copyWith(
+                      color: context.primaryColor,
                     ),
                   ),
                 ),
               ],
             ),
-            spaceHeight(15),
-            CustemButton(
-              title: LangKeys.login,
-              onPressed: () => _onLoginPressed(context),
+            15.hSpace,
+            BlocConsumer<AuthCubit, AuthState>(
+              listenWhen: (previous, current) =>
+                  current is LoginLoading ||
+                  current is LoginSuccess ||
+                  current is LoginError,
+              listener: (context, state) {
+                if (state is LoginError) {
+                  Navigator.pop(context);
+                  showMessage(
+                    context,
+                    message: state.message,
+                    type: SnackBarType.error,
+                  );
+                } else if (state is LoginSuccess) {
+                  Navigator.pop(context);
+                  showMessage(
+                    context,
+                    message: state.message,
+                    type: SnackBarType.success,
+                  );
+                  CacheDataHelper.setData(
+                    key: SharedPrefKey.keyIsLoggedIn,
+                    value: true,
+                  );
+                  context.pushNamed(Routes.mainScaffoldUser);
+                } else if (state is LoginLoading) {
+                  AdaptiveDialogs.shoLoadingAlertDialog(
+                    context: context,
+                    title: context.translate(LangKeys.login),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return CustomButton(
+                  title: LangKeys.login,
+                  onPressed: () {
+                    _onLoginPressed(context);
+                  },
+                );
+              },
             ),
           ],
         ),

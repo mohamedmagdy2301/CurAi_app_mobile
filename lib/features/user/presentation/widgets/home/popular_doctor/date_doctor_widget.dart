@@ -1,31 +1,34 @@
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/styles/fonts/font_weight_helper.dart';
-import 'package:curai_app_mobile/features/user/models/doctor_model/popular_doctor_model.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/rateing_doctor_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DateDoctorWidget extends StatelessWidget {
   const DateDoctorWidget({
-    required this.modelDoctor,
+    required this.doctorModel,
     super.key,
   });
 
-  final DoctorModel modelDoctor;
+  final DoctorModel doctorModel;
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 8.w,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          context.isStateArabic ? modelDoctor.dateAr : modelDoctor.dateEn,
-          style: context.textTheme.labelSmall!.copyWith(
-            // color: context.colors.bodyTextOnboarding,
-            fontWeight: FontWeightHelper.regular,
+        SizedBox(
+          width: context.W * .45,
+          child: AutoSizeText(
+            doctorModel.specialization ?? '',
+            maxLines: 1,
+            textAlign: TextAlign.start,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyleApp.medium14().copyWith(
+              color: context.onPrimaryColor,
+            ),
           ),
         ),
-        RateingDoctorWidget(modelDoctor: modelDoctor),
+        RateingDoctorWidget(doctorModel: doctorModel),
       ],
     );
   }

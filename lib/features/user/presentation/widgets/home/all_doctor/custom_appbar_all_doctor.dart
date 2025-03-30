@@ -1,27 +1,39 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-class CustomAppBarAllDoctor extends StatelessWidget
-    implements PreferredSizeWidget {
+class CustomAppBarAllDoctor extends StatefulWidget {
   const CustomAppBarAllDoctor({
     super.key,
   });
 
   @override
+  State<CustomAppBarAllDoctor> createState() => _CustomAppBarAllDoctorState();
+}
+
+class _CustomAppBarAllDoctorState extends State<CustomAppBarAllDoctor> {
+  int count = 5;
+  @override
   Widget build(BuildContext context) {
-    return AppBar(
-      flexibleSpace: Container(color: context.color.surface),
+    return SliverAppBar(
+      // floating: true,
+      // snap: true,
+      pinned: true,
+      elevation: 0,
+      flexibleSpace: Container(color: context.backgroundColor),
       title: AutoSizeText(
         context.translate(LangKeys.doctors),
         maxLines: 1,
+        style: TextStyleApp.bold20().copyWith(
+          color: context.onPrimaryColor,
+        ),
       ),
       centerTitle: true,
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

@@ -2,83 +2,91 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/app/onboarding/cubit/onboarding_cubit.dart';
 import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
 import 'package:curai_app_mobile/core/app/onboarding/widgets/custom_dot_onboarding.dart';
-import 'package:curai_app_mobile/core/common/widgets/custom_button.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BodyOnboarding extends StatelessWidget {
   const BodyOnboarding({
-    required this.title,
-    required this.body,
-    required this.index,
-    required this.currentIndex,
     super.key,
   });
-  final int index;
-  final int currentIndex;
-  final String title;
-  final String body;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 330.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: context.color.surface,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40.r),
-          topRight: Radius.circular(40.r),
-        ),
-      ),
-      padding: padding(horizontal: 20, vertical: 25),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 80.h,
-            child: AutoSizeText(
-              textAlign: TextAlign.center,
-              context.translate(title),
-              maxLines: 2,
-              style: context.styleBold34,
+    return BlocBuilder<OnboardingCubit, OnboardingState>(
+      builder: (context, state) {
+        final onboardingInfo = OnboardingInfo.onboardingInfo[state.index];
+        return Container(
+          height: context.H * 0.46,
+          width: context.W,
+          decoration: BoxDecoration(
+            color: context.primaryColor.withAlpha(10),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40.r),
+              topRight: Radius.circular(40.r),
             ),
           ),
-          spaceHeight(10),
-          SizedBox(
-            height: 90.h,
-            child: AutoSizeText(
-              textAlign: TextAlign.center,
-              context.translate(body),
-              maxLines: 4,
-              style: context.styleLight16,
-            ),
+          padding: context.padding(horizontal: 25, vertical: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                height: context.H * 0.12,
+                child: AutoSizeText(
+                  textAlign: TextAlign.center,
+                  context.translate(onboardingInfo.title),
+                  maxLines: 2,
+                  style: TextStyleApp.bold34().copyWith(
+                    color: context.onPrimaryColor,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: context.H * 0.17,
+                child: AutoSizeText(
+                  context.translate(onboardingInfo.body),
+                  style: TextStyleApp.medium20().copyWith(
+                    color: context.onSecondaryColor,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 5,
+                ).paddingSymmetric(horizontal: 6),
+              ),
+              CustomDotOnboarding(
+                index: onboardingInfo.index,
+                currentIndex: state.index,
+              ),
+              CustomButton(
+                title: onboardingInfo.index ==
+                        OnboardingInfo.onboardingInfo.length - 1
+                    ? LangKeys.getStarted
+                    : LangKeys.next,
+                onPressed: () {
+                  context.read<OnboardingCubit>().nextPage();
+                  if (BlocProvider.of<OnboardingCubit>(context).state
+                      is OnboardingFinished) {
+                    CacheDataHelper.setData(
+                      key: SharedPrefKey.keyIsFirstLaunch,
+                      value: false,
+                    );
+                    context.pushReplacementNamed(Routes.loginScreen);
+                  }
+                },
+              ),
+            ],
           ),
-          const Spacer(),
-          CustomDotOnboarding(
-            index: index,
-            currentIndex: currentIndex,
-          ),
-          const Spacer(),
-          CustemButton(
-            title: index == OnboardingInfo.onboardingInfo.length - 1
-                ? LangKeys.getStarted
-                : LangKeys.next,
-            onPressed: () {
-              context.read<OnboardingCubit>().nextPage();
-              if (BlocProvider.of<OnboardingCubit>(context).state
-                  is OnboardingFinished) {
-                context.pushReplacementNamed(Routes.loginScreen);
-              }
-            },
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

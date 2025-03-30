@@ -1,8 +1,6 @@
 import 'package:curai_app_mobile/core/app/onboarding/cubit/onboarding_cubit.dart';
-import 'package:curai_app_mobile/core/extensions/context_extansions.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ImageOnboarding extends StatelessWidget {
   const ImageOnboarding({
@@ -17,7 +15,11 @@ class ImageOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: context.isLandscape ? padding(horizontal: 25.w) : padding(),
+      padding: context.isLandscape
+          ? context.padding(horizontal: 25)
+          : context.W > 460
+              ? context.padding(horizontal: 25)
+              : context.padding(),
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 180),
         transitionBuilder: (Widget child, Animation<double> animation) {
@@ -36,9 +38,9 @@ class ImageOnboarding extends StatelessWidget {
         child: Image.asset(
           image,
           key: ValueKey<String>(image),
-          height: 460.h,
-          width: double.infinity,
-          fit: BoxFit.fill,
+          height: context.H - (context.H * 0.4),
+          width: context.W,
+          fit: BoxFit.cover,
         ),
       ),
     );

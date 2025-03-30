@@ -1,7 +1,10 @@
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
-import 'package:curai_app_mobile/core/helper/functions_helper.dart';
-import 'package:curai_app_mobile/core/helper/logger_helper.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -35,7 +38,9 @@ class _MessageInputState extends State<MessageInput> {
       final messageText = _controllerMessage.text.trim();
       if (messageText.isNotEmpty) {
         widget.onMessageSent(messageText);
-        LoggerHelper.info('Message sent: $messageText');
+        if (kDebugMode) {
+          LoggerHelper.info('Message sent: $messageText');
+        }
         _controllerMessage.clear();
         setState(() {
           isSentMessage = false;
@@ -50,7 +55,7 @@ class _MessageInputState extends State<MessageInput> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: padding(horizontal: 10, vertical: 10),
+        padding: context.padding(horizontal: 10, vertical: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -65,16 +70,16 @@ class _MessageInputState extends State<MessageInput> {
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: context.color.onSecondary.withAlpha(20),
-                  contentPadding: padding(horizontal: 20, vertical: 10),
+                  fillColor: context.onSecondaryColor.withAlpha(20),
+                  contentPadding: context.padding(horizontal: 20, vertical: 10),
                   enabledBorder: buildBorder(),
                   focusedBorder: buildBorder(),
                   border: buildBorder(),
                   hintText: context.isStateArabic
                       ? 'ماذا يمكنني مساعدتك؟'
                       : 'What can I help you with?',
-                  hintStyle: context.styleRegular14.copyWith(
-                    color: context.color.onSecondary,
+                  hintStyle: TextStyleApp.regular14().copyWith(
+                    color: context.onSecondaryColor,
                   ),
                   suffixIcon: isSentMessage
                       ? null
@@ -82,21 +87,21 @@ class _MessageInputState extends State<MessageInput> {
                           onPressed: () {},
                           icon: Icon(
                             Icons.attach_file,
-                            color: context.color.onSecondary,
+                            color: context.primaryColor,
                           ),
                         ),
                 ),
               ),
             ),
-            spaceWidth(10),
+            10.wSpace,
             InkWell(
               onTap: isSentMessage ? _sendMessage : null,
               child: CircleAvatar(
-                backgroundColor: context.color.primary,
-                radius: 22.r,
+                backgroundColor: context.primaryColor,
+                radius: 22,
                 child: isSentMessage
-                    ? Icon(Icons.send, size: 18.sp)
-                    : Icon(Icons.mic, size: 20.sp),
+                    ? Icon(Icons.send, size: 22.sp, color: Colors.white)
+                    : Icon(Icons.mic, size: 24.sp, color: Colors.white),
               ),
             ),
           ],
@@ -106,8 +111,8 @@ class _MessageInputState extends State<MessageInput> {
   }
 
   OutlineInputBorder buildBorder() {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+    return const OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
       borderSide: BorderSide.none,
     );
   }

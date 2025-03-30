@@ -7,10 +7,12 @@ class AppImages {
   static const String onboardingDoctor3 = '$images/onboarding-doctor-3.png';
   static const String onboardingDoctor4 = '$images/onboarding-doctor-4.png';
   static const String doctorSpeciality = '$images/doctor_specialties';
+  static const String doctorInBanner = '$images/doctor-in-banner.png';
   static const String general = '$doctorSpeciality/general.png';
   static const String pediatric = '$doctorSpeciality/pediatric.png';
   static const String urologist = '$doctorSpeciality/urologist.png';
   static const String neurologic = '$doctorSpeciality/neurologic.png';
+  static const String loading = '$images/loading.gif';
 }
 
 class SvgImages {

@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/extensions/settings_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/style_text_context_ext.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatelessWidget {
@@ -11,7 +11,8 @@ class NotificationScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.isStateArabic ? 'الاشعارات' : 'Notefication'),
         centerTitle: true,
-        flexibleSpace: Container(color: context.color.surface),
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(color: context.backgroundColor),
       ),
     );
   }

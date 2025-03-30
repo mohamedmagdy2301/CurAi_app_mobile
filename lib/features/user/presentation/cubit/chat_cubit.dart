@@ -1,6 +1,6 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
-import 'package:curai_app_mobile/features/user/models/chatbot_model/messages_chatbot_model.dart';
+import 'package:curai_app_mobile/features/user/data/models/messages_chatbot_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
