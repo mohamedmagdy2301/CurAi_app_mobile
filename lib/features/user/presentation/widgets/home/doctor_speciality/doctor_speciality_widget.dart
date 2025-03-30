@@ -9,12 +9,12 @@ class DoctorSpecialityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: context.H * 0.15,
       child: ListView.separated(
         itemCount: doctorSpecialityList.length,
-        padding: context.padding(horizontal: 25),
+        padding: context.padding(horizontal: 10),
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => 18.wSpace,
+        separatorBuilder: (context, index) => 16.wSpace,
         itemBuilder: (context, index) {
           return DoctorSpecialityItemWidget(
             title: doctorSpecialityList[index].name,
