@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
@@ -33,6 +35,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   int nextPage = 1;
   bool isLoading = false;
   bool hasMoreData = true;
+  bool isSearching = false;
 
   @override
   void initState() {
@@ -67,16 +70,15 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   void filterDoctors(String query) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 200), () {
-      setState(() {
-        filteredDoctorsList = allDoctorsList.where((doctor) {
-          final name = doctor.username!.toLowerCase();
-          final specialization = doctor.specialization!.toLowerCase();
-          final location = doctor.location!.toLowerCase();
-          final searchQuery = query.toLowerCase();
-          return name.contains(searchQuery) ||
-              specialization.contains(searchQuery) ||
-              location.contains(searchQuery);
-        }).toList();
+      setState(() => isSearching = true);
+
+      context.read<HomeCubit>().getAllDoctor(query: query).then((_) {
+        setState(() {
+          filteredDoctorsList = context.read<HomeCubit>().filteredDoctorsList;
+          isSearching = false;
+        });
+      }).catchError((_) {
+        setState(() => isSearching = false);
       });
     });
   }
@@ -117,8 +119,12 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               if (state.doctorModel.isEmpty) {
                 hasMoreData = false;
               } else {
-                allDoctorsList.addAll(state.doctorModel);
-                filteredDoctorsList = allDoctorsList;
+                if (isSearching) {
+                  filteredDoctorsList = state.doctorModel;
+                } else {
+                  allDoctorsList.addAll(state.doctorModel);
+                  filteredDoctorsList = allDoctorsList;
+                }
               }
             }
             if (state is GetAllDoctorPagenationFailure) {
@@ -139,6 +145,17 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                     color: context.onSecondaryColor,
                   ),
                 ).center().paddingSymmetric(vertical: 45),
+              );
+            }
+            if (filteredDoctorsList.isEmpty && !isLoading) {
+              return SliverToBoxAdapter(
+                child: Text(
+                  context.translate(LangKeys.noData),
+                  textAlign: TextAlign.center,
+                  style: TextStyleApp.regular26().copyWith(
+                    color: context.onSecondaryColor,
+                  ),
+                ).center().paddingSymmetric(vertical: 200),
               );
             }
             return SliverList(

@@ -4,5 +4,8 @@ import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.d
 import 'package:dartz/dartz.dart';
 
 abstract class HomeRepo {
-  Future<Either<String, List<DoctorModel>>> getAllDoctor({int page});
+  Future<Either<String, List<DoctorModel>>> getAllDoctor({
+    int page,
+    String? querey,
+  });
 }

@@ -12,8 +12,11 @@ class HomeRepoImpl extends HomeRepo {
   final HomeRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<String, List<DoctorModel>>> getAllDoctor({int page = 1}) async {
-    final response = await remoteDataSource.getAllDoctor(page);
+  Future<Either<String, List<DoctorModel>>> getAllDoctor({
+    int page = 1,
+    String? querey,
+  }) async {
+    final response = await remoteDataSource.getAllDoctor(page, querey: querey);
 
     return response.fold((failure) {
       log(failure.message);
