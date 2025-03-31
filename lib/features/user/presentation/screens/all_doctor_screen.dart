@@ -120,11 +120,6 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                 allDoctorsList.addAll(state.doctorModel);
                 filteredDoctorsList = allDoctorsList;
               }
-              showMessage(
-                context,
-                type: SnackBarType.success,
-                message: 'Done Loaded Successfully',
-              );
             }
             if (state is GetAllDoctorPagenationFailure) {
               showMessage(
