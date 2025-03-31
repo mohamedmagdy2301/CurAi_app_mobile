@@ -4,12 +4,12 @@ import 'package:curai_app_mobile/features/user/domain/repositories/home_repo.dar
 import 'package:dartz/dartz.dart';
 
 class GetAllDoctorUsecase
-    extends UseCase<Either<String, List<DoctorModel>>, String> {
+    extends UseCase<Either<String, List<DoctorModel>>, int> {
   GetAllDoctorUsecase({required this.repository});
 
   final HomeRepo repository;
   @override
-  Future<Either<String, List<DoctorModel>>> call(String params) async {
-    return repository.getAllDoctor();
+  Future<Either<String, List<DoctorModel>>> call(int params) async {
+    return repository.getAllDoctor(page: params);
   }
 }

@@ -7,12 +7,22 @@ class HomeCubit extends Cubit<HomeState> {
 
   final GetAllDoctorUsecase _getAllDoctorUsecase;
 
-  Future<void> getAllDoctor() async {
-    emit(GetAllDoctorLoading());
-    final result = await _getAllDoctorUsecase.call('');
+  Future<void> getAllDoctor({int page = 1}) async {
+    if (page == 1) {
+      emit(GetAllDoctorLoading());
+    } else {
+      emit(GetAllDoctorPagenationLoading());
+    }
+    final result = await _getAllDoctorUsecase.call(page);
     result.fold(
-      (l) => emit(GetAllDoctorFailure(message: l)),
-      (r) => emit(GetAllDoctorSuccess(doctorModel: r)),
+      (errMessage) {
+        if (page == 1) {
+          emit(GetAllDoctorFailure(message: errMessage));
+        } else {
+          emit(GetAllDoctorPagenationFailure(errMessage: errMessage));
+        }
+      },
+      (doctorModel) => emit(GetAllDoctorSuccess(doctorModel: doctorModel)),
     );
   }
 }

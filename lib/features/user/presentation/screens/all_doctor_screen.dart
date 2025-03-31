@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_state.dart';
@@ -28,12 +28,40 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   List<DoctorModel> allDoctorsList = [];
   Timer? _debounce;
   TextEditingController searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  int nextPage = 1;
+  bool isLoading = false;
+  bool hasMoreData = true;
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_scrollListener);
+    _fetchDoctors();
+  }
 
-    context.read<HomeCubit>().getAllDoctor();
+  void _scrollListener() {
+    final currentPosition = _scrollController.position.pixels;
+    final maxScrollExtent = _scrollController.position.maxScrollExtent;
+
+    if (currentPosition >= 0.7 * maxScrollExtent && !isLoading && hasMoreData) {
+      if (nextPage > 2) return;
+      _fetchDoctors();
+    }
+  }
+
+  Future<void> _fetchDoctors() async {
+    setState(() => isLoading = true);
+
+    await context.read<HomeCubit>().getAllDoctor(page: nextPage).then((_) {
+      setState(() {
+        isLoading = false;
+        nextPage++;
+      });
+    }).catchError((_) {
+      setState(() => isLoading = false);
+    });
   }
 
   void filterDoctors(String query) {
@@ -56,6 +84,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      controller: _scrollController,
       slivers: [
         const CustomAppBarAllDoctor(),
         SliverPersistentHeader(
@@ -77,27 +106,36 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                 : null,
           ),
         ),
-        BlocBuilder<HomeCubit, HomeState>(
-          buildWhen: (previous, current) =>
+        BlocConsumer<HomeCubit, HomeState>(
+          listenWhen: (previous, current) =>
               current is GetAllDoctorSuccess ||
               current is GetAllDoctorFailure ||
-              current is GetAllDoctorLoading,
-          builder: (context, state) {
+              current is GetAllDoctorPagenationFailure ||
+              current is GetAllDoctorPagenationLoading,
+          listener: (context, state) {
             if (state is GetAllDoctorSuccess) {
-              allDoctorsList = state.doctorModel;
-              filteredDoctorsList = filteredDoctorsList.isEmpty
-                  ? allDoctorsList
-                  : filteredDoctorsList;
-              return SliverList.separated(
-                itemCount: filteredDoctorsList.length,
-                separatorBuilder: (context, index) => 10.hSpace,
-                itemBuilder: (context, index) {
-                  return PopularDoctorItemWidget(
-                    doctorModel: filteredDoctorsList[index],
-                  );
-                },
+              if (state.doctorModel.isEmpty) {
+                hasMoreData = false;
+              } else {
+                allDoctorsList.addAll(state.doctorModel);
+                filteredDoctorsList = allDoctorsList;
+              }
+              showMessage(
+                context,
+                type: SnackBarType.success,
+                message: 'Done Loaded Successfully',
               );
-            } else if (state is GetAllDoctorFailure) {
+            }
+            if (state is GetAllDoctorPagenationFailure) {
+              showMessage(
+                context,
+                type: SnackBarType.error,
+                message: state.errMessage,
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is GetAllDoctorFailure) {
               return SliverToBoxAdapter(
                 child: Text(
                   state.message,
@@ -108,17 +146,25 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                 ).center().paddingSymmetric(vertical: 45),
               );
             }
-            return SliverList.separated(
-              itemCount: doctorsListDome.length,
-              separatorBuilder: (context, index) => 10.hSpace,
-              itemBuilder: (context, index) {
-                return Skeletonizer(
-                  effect: shimmerEffect(context),
-                  child: PopularDoctorItemWidget(
-                    doctorModel: doctorsListDome[index],
-                  ),
-                );
-              },
+            return SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index < filteredDoctorsList.length) {
+                    return PopularDoctorItemWidget(
+                      doctorModel: filteredDoctorsList[index],
+                    );
+                  } else if (isLoading) {
+                    return Skeletonizer(
+                      effect: shimmerEffect(context),
+                      child: PopularDoctorItemWidget(
+                        doctorModel: doctorsListDome[0],
+                      ),
+                    );
+                  }
+                  return null;
+                },
+                childCount: filteredDoctorsList.length + (isLoading ? 1 : 0),
+              ),
             );
           },
         ),
@@ -128,10 +174,10 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
 }
 
 List<DoctorModel> doctorsListDome = List.generate(
-  7,
+  5,
   (index) => DoctorModel(
     id: index,
-    username: 'محمد',
+    username: 'محمد محمsa دمحمد',
     profilePicture:
         'https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
     consultationPrice: index.toString(),
@@ -139,7 +185,7 @@ List<DoctorModel> doctorsListDome = List.generate(
     location: 'msabnj hjdgav hdgah',
     specialization: 'sdnaj sadkldbn ',
     reviews: List.generate(
-      2,
+      5,
       (index) => Reviews(
         id: index,
         rating: index,
