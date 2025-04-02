@@ -8,13 +8,11 @@ class HomeCubit extends Cubit<HomeState> {
 
   final GetAllDoctorUsecase _getAllDoctorUsecase;
   List<DoctorModel> allDoctorsList = [];
-  List<DoctorModel> filteredDoctorsList =
-      []; // Add this list to store search results
 
   Future<void> getAllDoctor({int page = 1, String? query}) async {
-    if (page == 1 && query == null) {
+    if (page == 1) {
       emit(GetAllDoctorLoading());
-    } else if (query == null) {
+    } else {
       emit(GetAllDoctorPagenationLoading());
     }
 
@@ -28,14 +26,11 @@ class HomeCubit extends Cubit<HomeState> {
         }
       },
       (doctorModel) {
-        if (query == null) {
-          allDoctorsList.addAll(doctorModel);
-        } else {
-          filteredDoctorsList = doctorModel;
-        }
+        allDoctorsList = doctorModel;
+
         emit(
           GetAllDoctorSuccess(
-            doctorModel: query == null ? allDoctorsList : filteredDoctorsList,
+            doctorModel: allDoctorsList,
           ),
         );
       },

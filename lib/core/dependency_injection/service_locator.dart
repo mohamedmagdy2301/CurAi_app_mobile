@@ -19,6 +19,7 @@ import 'package:curai_app_mobile/features/user/data/repositories/home_repo_impl.
 import 'package:curai_app_mobile/features/user/domain/repositories/home_repo.dart';
 import 'package:curai_app_mobile/features/user/domain/usecases/get_all_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/test.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -36,6 +37,9 @@ void setupInit() {
       () => LogInterceptor(requestBody: true, responseBody: true),
     )
     ..registerLazySingleton(() => DioConsumer(client: sl<Dio>()))
+
+    // DioHelper
+    ..registerLazySingleton(DioHelper.new)
     ..registerLazySingleton<Dio>(Dio.new)
 
     // ! Cubit StateManagement

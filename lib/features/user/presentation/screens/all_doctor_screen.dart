@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
-import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
@@ -27,59 +25,53 @@ class AllDoctorScreen extends StatefulWidget {
 
 class _AllDoctorScreenState extends State<AllDoctorScreen> {
   List<DoctorModel> filteredDoctorsList = [];
-  List<DoctorModel> allDoctorsList = [];
   Timer? _debounce;
   TextEditingController searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
   int nextPage = 1;
   bool isLoading = false;
-  bool hasMoreData = true;
-  bool isSearching = false;
+  bool hasReachedMax = false;
 
   @override
   void initState() {
     super.initState();
+    nextPage = 2;
+    context.read<HomeCubit>().getAllDoctor();
     _scrollController.addListener(_scrollListener);
-    _fetchDoctors();
   }
 
-  void _scrollListener() {
+  Future<void> _scrollListener() async {
+    if (hasReachedMax || isLoading) return;
+
     final currentPosition = _scrollController.position.pixels;
     final maxScrollExtent = _scrollController.position.maxScrollExtent;
 
-    if (currentPosition >= 0.7 * maxScrollExtent && !isLoading && hasMoreData) {
-      if (nextPage > 2) return;
-      _fetchDoctors();
-    }
-  }
-
-  Future<void> _fetchDoctors() async {
-    setState(() => isLoading = true);
-
-    await context.read<HomeCubit>().getAllDoctor(page: nextPage).then((_) {
+    if (currentPosition >= maxScrollExtent * 0.75) {
       setState(() {
-        isLoading = false;
-        nextPage++;
+        isLoading = true;
       });
-    }).catchError((_) {
-      setState(() => isLoading = false);
-    });
+      await context.read<HomeCubit>().getAllDoctor(page: nextPage).then((_) {
+        setState(() {
+          if (nextPage >= 2) {
+            hasReachedMax = true;
+          } else {
+            nextPage++;
+          }
+          isLoading = false;
+        });
+      });
+    }
   }
 
   void filterDoctors(String query) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 200), () {
-      setState(() => isSearching = true);
-
-      context.read<HomeCubit>().getAllDoctor(query: query).then((_) {
-        setState(() {
-          filteredDoctorsList = context.read<HomeCubit>().filteredDoctorsList;
-          isSearching = false;
-        });
-      }).catchError((_) {
-        setState(() => isSearching = false);
+      setState(() {
+        filteredDoctorsList = [];
+        hasReachedMax = false;
       });
+      context.read<HomeCubit>().getAllDoctor(query: query);
     });
   }
 
@@ -101,14 +93,21 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                       hideKeyboard();
                       searchController.clear();
                       setState(() {
-                        filteredDoctorsList = allDoctorsList;
+                        filteredDoctorsList = [];
+                        hasReachedMax = false;
                       });
+                      context.read<HomeCubit>().getAllDoctor();
                     },
                   )
                 : null,
           ),
         ),
         BlocConsumer<HomeCubit, HomeState>(
+          buildWhen: (previous, current) =>
+              current is GetAllDoctorSuccess ||
+              current is GetAllDoctorFailure ||
+              current is GetAllDoctorPagenationFailure ||
+              current is GetAllDoctorPagenationLoading,
           listenWhen: (previous, current) =>
               current is GetAllDoctorSuccess ||
               current is GetAllDoctorFailure ||
@@ -116,16 +115,14 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               current is GetAllDoctorPagenationLoading,
           listener: (context, state) {
             if (state is GetAllDoctorSuccess) {
-              if (state.doctorModel.isEmpty) {
-                hasMoreData = false;
-              } else {
-                if (isSearching) {
-                  filteredDoctorsList = state.doctorModel;
-                } else {
-                  allDoctorsList.addAll(state.doctorModel);
-                  filteredDoctorsList = allDoctorsList;
-                }
-              }
+              setState(() {
+                filteredDoctorsList.addAll(state.doctorModel);
+              });
+              showMessage(
+                context,
+                type: SnackBarType.success,
+                message: '${state.doctorModel.length} Doctors found',
+              );
             }
             if (state is GetAllDoctorPagenationFailure) {
               showMessage(
@@ -146,37 +143,28 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                   ),
                 ).center().paddingSymmetric(vertical: 45),
               );
-            }
-            if (filteredDoctorsList.isEmpty && !isLoading) {
-              return SliverToBoxAdapter(
-                child: Text(
-                  context.translate(LangKeys.noData),
-                  textAlign: TextAlign.center,
-                  style: TextStyleApp.regular26().copyWith(
-                    color: context.onSecondaryColor,
-                  ),
-                ).center().paddingSymmetric(vertical: 200),
+            } else if (state is GetAllDoctorSuccess ||
+                state is GetAllDoctorPagenationLoading ||
+                state is GetAllDoctorPagenationLoading) {
+              return SliverList.builder(
+                itemCount: filteredDoctorsList.length,
+                itemBuilder: (context, index) {
+                  return PopularDoctorItemWidget(
+                    doctorModel: filteredDoctorsList[index],
+                  );
+                },
               );
             }
-            return SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  if (index < filteredDoctorsList.length) {
-                    return PopularDoctorItemWidget(
-                      doctorModel: filteredDoctorsList[index],
-                    );
-                  } else if (isLoading) {
-                    return Skeletonizer(
-                      effect: shimmerEffect(context),
-                      child: PopularDoctorItemWidget(
-                        doctorModel: doctorsListDome[0],
-                      ),
-                    );
-                  }
-                  return null;
-                },
-                childCount: filteredDoctorsList.length + (isLoading ? 1 : 0),
-              ),
+            return SliverList.builder(
+              itemCount: doctorsListDome.length,
+              itemBuilder: (context, index) {
+                return Skeletonizer(
+                  effect: shimmerEffect(context),
+                  child: PopularDoctorItemWidget(
+                    doctorModel: doctorsListDome[index],
+                  ),
+                );
+              },
             );
           },
         ),
