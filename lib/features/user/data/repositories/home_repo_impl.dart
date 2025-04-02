@@ -12,20 +12,17 @@ class HomeRepoImpl extends HomeRepo {
   final HomeRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<String, List<DoctorModel>>> getAllDoctor() async {
-    final response = await remoteDataSource.getAllDoctor();
+  Future<Either<String, AllDoctorModel>> getAllDoctor({
+    int page = 1,
+    String? querey,
+  }) async {
+    final response = await remoteDataSource.getAllDoctor(page, querey: querey);
 
     return response.fold((failure) {
       log(failure.message);
       return left(failure.message);
     }, (responseData) {
-      if (responseData['results'] == null) return right([]);
-      final doctorList = <DoctorModel>[];
-      for (final result in (responseData['results'] as Iterable)) {
-        doctorList.add(DoctorModel.fromJson(result as Map<String, dynamic>));
-      }
-
-      return right(doctorList);
+      return right(responseData as AllDoctorModel);
     });
   }
 }

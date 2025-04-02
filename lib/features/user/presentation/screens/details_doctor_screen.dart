@@ -8,23 +8,23 @@
 // // import 'package:flutter/material.dart';
 
 // class DoctorDetailsScreen extends StatelessWidget {
-//   const DoctorDetailsScreen({required this.doctorModel, super.key});
+//   const DoctorDetailsScreen({required this.DoctorResults, super.key});
 
-//   final DoctorModel doctorModel;
+//   final DoctorResults DoctorResults;
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       // appBar: AppBar(
-//       //   title: Text(context.isStateArabic ? doctorModel.nameAr : doctorModel.nameEn),
+//       //   title: Text(context.isStateArabic ? DoctorResults.nameAr : DoctorResults.nameEn),
 //       //   centerTitle: true,
 //       // ),
 //       body:
 //           //  Hero(
-//           //   tag: doctorModel.id.toString(),
+//           //   tag: DoctorResults.id.toString(),
 //           //   child:
 //           Image.asset(
-//         doctorModel.imageUrl,
+//         DoctorResults.imageUrl,
 //         height: 395,
 //         width: double.infinity,
 //         fit: BoxFit.fill,
@@ -49,8 +49,8 @@
 //               FittedBox(
 //                 child: Text(
 //                   context.isStateArabic
-//                       ? doctorModel.nameAr
-//                       : doctorModel.nameEn,
+//                       ? DoctorResults.nameAr
+//                       : DoctorResults.nameEn,
 //                   style: TextStyleApp.bold24().copyWith(
 //                     color: context.onPrimaryColor,
 //                   ),
@@ -60,8 +60,8 @@
 //               FittedBox(
 //                 child: Text(
 //                   context.isStateArabic
-//                       ? doctorModel.locationAr
-//                       : doctorModel.locationEn,
+//                       ? DoctorResults.locationAr
+//                       : DoctorResults.locationEn,
 //                   style: TextStyleApp.bold24().copyWith(
 //                     color: context.onPrimaryColor,
 //                   ),
@@ -75,7 +75,7 @@
 //                     Row(
 //                       spacing: 3,
 //                       children: List.generate(
-//                         int.parse(doctorModel.ratingEn.split('.').first),
+//                         int.parse(DoctorResults.ratingEn.split('.').first),
 //                         (index) => const Icon(
 //                           Icons.star,
 //                           color: Colors.yellow,
@@ -85,8 +85,8 @@
 //                     ),
 //                     Text(
 //                       context.isStateArabic
-//                           ? doctorModel.ratingAr
-//                           : doctorModel.ratingEn,
+//                           ? DoctorResults.ratingAr
+//                           : DoctorResults.ratingEn,
 //                       style: TextStyleApp.bold24().copyWith(
 //                         color: context.onPrimaryColor,
 //                       ),

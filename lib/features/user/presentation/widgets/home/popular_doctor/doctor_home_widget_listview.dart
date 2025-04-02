@@ -25,13 +25,13 @@ class DoctorHomeWidgetListView extends StatelessWidget {
           current is GetAllDoctorLoading,
       builder: (context, state) {
         if (state is GetAllDoctorSuccess) {
-          final doctorsList = state.doctorModel;
+          final doctorsList = state.doctorResults;
           return SliverList.separated(
             itemCount: doctorsList.length,
             separatorBuilder: (context, index) => 10.hSpace,
             itemBuilder: (context, index) {
               return PopularDoctorItemWidget(
-                doctorModel: doctorsList[index],
+                doctorResults: doctorsList[index],
               );
             },
           );
@@ -53,7 +53,7 @@ class DoctorHomeWidgetListView extends StatelessWidget {
             return Skeletonizer(
               effect: shimmerEffect(context),
               child: PopularDoctorItemWidget(
-                doctorModel: doctorsListDome[index],
+                doctorResults: doctorsListDome[index],
               ),
             );
           },

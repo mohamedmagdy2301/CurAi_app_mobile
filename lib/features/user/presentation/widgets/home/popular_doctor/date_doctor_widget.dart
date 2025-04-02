@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 
 class DateDoctorWidget extends StatelessWidget {
   const DateDoctorWidget({
-    required this.doctorModel,
+    required this.doctorResults,
     super.key,
   });
 
-  final DoctorModel doctorModel;
+  final DoctorResults doctorResults;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,7 +19,7 @@ class DateDoctorWidget extends StatelessWidget {
         SizedBox(
           width: context.W * .45,
           child: AutoSizeText(
-            doctorModel.specialization ?? '',
+            doctorResults.specialization ?? '',
             maxLines: 1,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
@@ -28,7 +28,7 @@ class DateDoctorWidget extends StatelessWidget {
             ),
           ),
         ),
-        RateingDoctorWidget(doctorModel: doctorModel),
+        RateingDoctorWidget(doctorResults: doctorResults),
       ],
     );
   }

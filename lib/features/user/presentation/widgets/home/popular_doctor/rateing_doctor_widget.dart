@@ -8,15 +8,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RateingDoctorWidget extends StatelessWidget {
   const RateingDoctorWidget({
-    required this.doctorModel,
+    required this.doctorResults,
     super.key,
   });
 
-  final DoctorModel doctorModel;
+  final DoctorResults doctorResults;
 
   @override
   Widget build(BuildContext context) {
-    return doctorModel.reviews!.isEmpty
+    return doctorResults.reviews!.isEmpty
         ? const SizedBox()
         : Row(
             spacing: 3.w,
@@ -25,7 +25,7 @@ class RateingDoctorWidget extends StatelessWidget {
               SizedBox(
                 width: context.W * .07,
                 child: AutoSizeText(
-                  doctorModel.reviews![0].rating.toString(),
+                  doctorResults.reviews![0].rating.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyleApp.medium14().copyWith(

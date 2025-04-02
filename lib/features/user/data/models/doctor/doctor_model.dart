@@ -1,7 +1,26 @@
 // ignore_for_file: inference_failure_on_untyped_parameter, avoid_dynamic_calls
+class AllDoctorModel {
+  AllDoctorModel({this.count, this.next, this.previous, this.results});
 
-class DoctorModel {
-  DoctorModel({
+  AllDoctorModel.fromJson(Map<String, dynamic> json) {
+    count = json['count'] as int;
+    next = json['next'] as String;
+    previous = (json['previous'] ?? '') as String;
+    if (json['results'] != null) {
+      results = <DoctorResults>[];
+      json['results'].forEach((v) {
+        results!.add(DoctorResults.fromJson(v as Map<String, dynamic>));
+      });
+    }
+  }
+  int? count;
+  String? next;
+  String? previous;
+  List<DoctorResults>? results;
+}
+
+class DoctorResults {
+  DoctorResults({
     this.id,
     this.profilePicture,
     this.username,
@@ -12,7 +31,7 @@ class DoctorModel {
     this.reviews,
   });
 
-  DoctorModel.fromJson(Map<String, dynamic> json) {
+  DoctorResults.fromJson(Map<String, dynamic> json) {
     id = json['id'] as int;
     profilePicture = json['profile_picture'] as String;
     username = json['username'] as String;

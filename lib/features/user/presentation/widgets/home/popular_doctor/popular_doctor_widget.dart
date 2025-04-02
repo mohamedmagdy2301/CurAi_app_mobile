@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class PopularDoctorWidget extends StatelessWidget {
   const PopularDoctorWidget({required this.doctorsList, super.key});
-  final List<DoctorModel> doctorsList;
+  final List<DoctorResults> doctorsList;
   @override
   Widget build(BuildContext context) {
     return
@@ -21,7 +21,7 @@ class PopularDoctorWidget extends StatelessWidget {
       itemCount: doctorsList.length,
       itemBuilder: (BuildContext context, int itemIndex) {
         return PopularDoctorItemWidget(
-          doctorModel: doctorsList[itemIndex],
+          doctorResults: doctorsList[itemIndex],
         );
       },
     );
