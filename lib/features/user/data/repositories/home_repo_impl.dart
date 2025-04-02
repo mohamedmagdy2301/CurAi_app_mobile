@@ -12,7 +12,7 @@ class HomeRepoImpl extends HomeRepo {
   final HomeRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<String, AllDoctorModel>> getAllDoctor({
+  Future<Either<String, Map<String, dynamic>>> getAllDoctor({
     int page = 1,
     String? querey,
   }) async {
@@ -22,7 +22,8 @@ class HomeRepoImpl extends HomeRepo {
       log(failure.message);
       return left(failure.message);
     }, (responseData) {
-      return right(responseData as AllDoctorModel);
+      return right(responseData as Map<String, dynamic>);
+      ;
     });
   }
 }
