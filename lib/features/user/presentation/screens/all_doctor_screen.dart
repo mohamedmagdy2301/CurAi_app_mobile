@@ -24,7 +24,7 @@ class AllDoctorScreen extends StatefulWidget {
 }
 
 class _AllDoctorScreenState extends State<AllDoctorScreen> {
-  List<DoctorModel> filteredDoctorsList = [];
+  List<DoctorResults> filteredDoctorsList = [];
   Timer? _debounce;
   TextEditingController searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -53,7 +53,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
       });
       await context.read<HomeCubit>().getAllDoctor(page: nextPage).then((_) {
         setState(() {
-          if (nextPage >= 2) {
+          if (nextPage >= context.read<HomeCubit>().lastPage) {
             hasReachedMax = true;
           } else {
             nextPage++;
@@ -116,12 +116,12 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
           listener: (context, state) {
             if (state is GetAllDoctorSuccess) {
               setState(() {
-                filteredDoctorsList.addAll(state.doctorModel);
+                filteredDoctorsList.addAll(state.doctorResults);
               });
               showMessage(
                 context,
                 type: SnackBarType.success,
-                message: '${state.doctorModel.length} Doctors found',
+                message: '${state.doctorResults.length} Doctors found',
               );
             }
             if (state is GetAllDoctorPagenationFailure) {
@@ -150,7 +150,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                 itemCount: filteredDoctorsList.length,
                 itemBuilder: (context, index) {
                   return PopularDoctorItemWidget(
-                    doctorModel: filteredDoctorsList[index],
+                    doctorResults: filteredDoctorsList[index],
                   );
                 },
               );
@@ -161,7 +161,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                 return Skeletonizer(
                   effect: shimmerEffect(context),
                   child: PopularDoctorItemWidget(
-                    doctorModel: doctorsListDome[index],
+                    doctorResults: doctorsListDome[index],
                   ),
                 );
               },
@@ -173,9 +173,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   }
 }
 
-List<DoctorModel> doctorsListDome = List.generate(
+List<DoctorResults> doctorsListDome = List.generate(
   5,
-  (index) => DoctorModel(
+  (index) => DoctorResults(
     id: index,
     username: 'محمد محمsa دمحمد',
     profilePicture:

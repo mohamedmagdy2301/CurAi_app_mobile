@@ -7,7 +7,7 @@ class GetAllDoctorUsecase {
 
   final HomeRepo repository;
 
-  Future<Either<String, List<DoctorModel>>> call(
+  Future<Either<String, AllDoctorModel>> call(
     int params,
     String? querey,
   ) async {

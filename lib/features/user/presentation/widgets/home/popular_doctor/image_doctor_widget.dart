@@ -7,11 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ImageDoctorWidget extends StatelessWidget {
   const ImageDoctorWidget({
-    required this.doctorModel,
+    required this.doctorResults,
     super.key,
   });
 
-  final DoctorModel doctorModel;
+  final DoctorResults doctorResults;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ImageDoctorWidget extends StatelessWidget {
         ),
       ),
       child: CustomCachedNetworkImage(
-        imgUrl: doctorModel.profilePicture ??
+        imgUrl: doctorResults.profilePicture ??
             'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
         width: context.W * 0.25,
         height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
@@ -39,7 +39,7 @@ class ImageDoctorWidget extends StatelessWidget {
         errorIconSize: 50.sp,
       ),
       // Image.asset(
-      //   doctorModel.imageUrl,
+      //   DoctorResults.imageUrl,
       //   height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
       //   width: context.W * 0.25,
       //   fit: BoxFit.cover,

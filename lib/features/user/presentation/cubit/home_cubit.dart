@@ -7,7 +7,9 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._getAllDoctorUsecase) : super(HomeInitial());
 
   final GetAllDoctorUsecase _getAllDoctorUsecase;
-  List<DoctorModel> allDoctorsList = [];
+  List<DoctorResults> allDoctorsList = [];
+
+  int lastPage = 1;
 
   Future<void> getAllDoctor({int page = 1, String? query}) async {
     if (page == 1) {
@@ -25,12 +27,13 @@ class HomeCubit extends Cubit<HomeState> {
           emit(GetAllDoctorPagenationFailure(errMessage: errMessage));
         }
       },
-      (doctorModel) {
-        allDoctorsList = doctorModel;
+      (data) {
+        lastPage = (data.count! / 10).ceil();
+        allDoctorsList = data.results ?? [];
 
         emit(
           GetAllDoctorSuccess(
-            doctorModel: allDoctorsList,
+            doctorResults: allDoctorsList,
           ),
         );
       },

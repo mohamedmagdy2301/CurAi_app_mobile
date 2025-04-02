@@ -8,8 +8,8 @@ class HomeInitial extends HomeState {}
 class GetAllDoctorLoading extends HomeState {}
 
 class GetAllDoctorSuccess extends HomeState {
-  GetAllDoctorSuccess({required this.doctorModel});
-  final List<DoctorModel> doctorModel;
+  GetAllDoctorSuccess({required this.doctorResults});
+  final List<DoctorResults> doctorResults;
 }
 
 class GetAllDoctorFailure extends HomeState {
