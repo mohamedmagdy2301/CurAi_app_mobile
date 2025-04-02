@@ -1,0 +1,2 @@
+F:/Projects/curai_app_mobile/android/app/.cxx/RelWithDebInfo/555211f6/x86/CMakeFiles/edit_cache.dir
+F:/Projects/curai_app_mobile/android/app/.cxx/RelWithDebInfo/555211f6/x86/CMakeFiles/rebuild_cache.dir

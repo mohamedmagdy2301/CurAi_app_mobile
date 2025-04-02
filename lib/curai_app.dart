@@ -62,7 +62,6 @@ class _CuraiAppState extends State<CuraiApp> {
             builder: (context, state) {
               final cubit = context.read<LocalizationCubit>();
               return AdaptiveTheme(
-                debugShowFloatingThemeButton: true,
                 light: AppThemeData.lightTheme(
                   context.isStateArabic ? 'Cairo' : 'Poppins',
                   widget.savedThemeColor,

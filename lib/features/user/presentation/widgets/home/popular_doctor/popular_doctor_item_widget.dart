@@ -10,22 +10,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PopularDoctorItemWidget extends StatelessWidget {
   const PopularDoctorItemWidget({
-    required this.doctorModel,
+    required this.doctorResults,
     super.key,
   });
-  final DoctorModel doctorModel;
+  final DoctorResults doctorResults;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () => context.push(DoctorDetailsScreen(doctorModel: doctorModel)),
+      // onTap: () => context.push(DoctorDetailsScreen(DoctorResults: DoctorResults)),
       borderRadius: BorderRadius.circular(10.r),
       child: Card(
         elevation: 4,
         shadowColor: context.primaryColor.withAlpha(100),
         child: Row(
           children: [
-            ImageDoctorWidget(doctorModel: doctorModel),
+            ImageDoctorWidget(doctorResults: doctorResults),
             Column(
               spacing: 3.h,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                 SizedBox(
                   width: context.W * .55,
                   child: AutoSizeText(
-                    doctorModel.username ?? '',
+                    doctorResults.username ?? '',
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
@@ -45,7 +45,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                 SizedBox(
                   width: context.W * .55,
                   child: AutoSizeText(
-                    doctorModel.email ?? '',
+                    doctorResults.email ?? '',
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
@@ -57,7 +57,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                 SizedBox(
                   width: context.W * .55,
                   child: AutoSizeText(
-                    doctorModel.location ?? '',
+                    doctorResults.location ?? '',
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
@@ -66,7 +66,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                DateDoctorWidget(doctorModel: doctorModel),
+                DateDoctorWidget(doctorResults: doctorResults),
               ],
             ).paddingSymmetric(horizontal: 12, vertical: 5),
           ],
