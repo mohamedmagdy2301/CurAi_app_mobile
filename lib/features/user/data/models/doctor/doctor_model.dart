@@ -4,7 +4,7 @@ class AllDoctorModel {
 
   AllDoctorModel.fromJson(Map<String, dynamic> json) {
     count = json['count'] as int;
-    next = json['next'] as String;
+    next = (json['next'] ?? '') as String;
     previous = (json['previous'] ?? '') as String;
     if (json['results'] != null) {
       results = <DoctorResults>[];

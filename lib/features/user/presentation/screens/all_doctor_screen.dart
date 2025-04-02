@@ -53,7 +53,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
       });
       await context.read<HomeCubit>().getAllDoctor(page: nextPage).then((_) {
         setState(() {
-          if (nextPage >= context.read<HomeCubit>().lastPage) {
+          if (nextPage >= 2) {
             hasReachedMax = true;
           } else {
             nextPage++;
