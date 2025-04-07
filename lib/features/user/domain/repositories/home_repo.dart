@@ -6,6 +6,6 @@ import 'package:dartz/dartz.dart';
 abstract class HomeRepo {
   Future<Either<String, AllDoctorModel>> getAllDoctor({
     int page,
-    String? querey,
+    String? query,
   });
 }
