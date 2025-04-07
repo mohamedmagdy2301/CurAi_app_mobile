@@ -2,6 +2,8 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
 import 'package:curai_app_mobile/core/app/cubit/localization_state.dart';
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/app_localizations_setup.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
@@ -72,6 +74,7 @@ class _CuraiAppState extends State<CuraiApp> {
                 ),
                 initial: widget.savedThemeMode,
                 builder: (theme, darkTheme) => MaterialApp(
+                  navigatorKey: di.navigatorKey,
                   theme: theme,
                   darkTheme: darkTheme,
                   debugShowCheckedModeBanner: widget.environment,
