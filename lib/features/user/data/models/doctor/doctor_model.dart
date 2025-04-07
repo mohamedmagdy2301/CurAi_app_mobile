@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_untyped_parameter, avoid_dynamic_calls, document_ignores
+
 class AllDoctorModel {
   AllDoctorModel({this.count, this.next, this.previous, this.results});
 
