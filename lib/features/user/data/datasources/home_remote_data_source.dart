@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 abstract class HomeRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getAllDoctor(
     int page, {
-    String? querey,
+    String? query,
   });
 }
 
@@ -17,11 +17,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<Either<Failure, Map<String, dynamic>>> getAllDoctor(
     int page, {
-    String? querey,
+    String? query,
   }) async {
     final response = await dioConsumer.get(
       EndPoints.getAllDoctor,
-      queryParameters: {'page': page, 'search': querey},
+      queryParameters: {'page': page, 'search': query},
     );
 
     return response.fold(left, right);

@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
+import 'package:curai_app_mobile/features/user/presentation/screens/details_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/date_doctor_widget.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/image_doctor_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,8 @@ class PopularDoctorItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () => context.push(DoctorDetailsScreen(DoctorResults: DoctorResults)),
+      onTap: () =>
+          context.push(DoctorDetailsScreen(doctorResults: doctorResults)),
       borderRadius: BorderRadius.circular(10.r),
       child: Card(
         elevation: 4,

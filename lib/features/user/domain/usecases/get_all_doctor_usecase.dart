@@ -8,8 +8,8 @@ class GetAllDoctorUsecase {
 
   Future<Either<String, Map<String, dynamic>>> call(
     int params,
-    String? querey,
+    String? query,
   ) async {
-    return repository.getAllDoctor(page: params, querey: querey);
+    return repository.getAllDoctor(page: params, query: query);
   }
 }

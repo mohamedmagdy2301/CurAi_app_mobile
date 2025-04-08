@@ -20,15 +20,19 @@ import 'package:curai_app_mobile/features/user/domain/repositories/home_repo.dar
 import 'package:curai_app_mobile/features/user/domain/usecases/get_all_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt sl = GetIt.instance;
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void setupInit() {
   sl
     //! Services
     ..registerLazySingleton<ConnectivityController>(ConnectivityController.new)
     ..registerLazySingleton<EnvVariables>(EnvVariables.new)
     ..registerLazySingleton<CacheDataHelper>(CacheDataHelper.new)
+    ..registerLazySingleton<GlobalKey<NavigatorState>>(() => navigatorKey)
 
     //! Networking
     ..registerLazySingleton(() => AppInterceptors(client: sl<Dio>()))

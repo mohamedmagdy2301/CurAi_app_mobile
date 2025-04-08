@@ -60,28 +60,30 @@
 ##### **User Authentication**
 - ✅ **UI**  
   - Design screens for:
-    - Registration (email/phone, password, OTP verification).  
-    - Login/logout functionality.  
-    - Social login (Google/Apple/Facebook).  
+    - ✔️ Registration (email/phone, password, OTP verification).  
+    - ✔️ Login/logout functionality.  
+    - ✔️ Social login (Google/Apple/Facebook).  
 
-- 🔲 **API Integration**  
+- ✅ **API Integration**  
   - Connect to APIs for:
-    - 🕓 User registration.  
-    - 🕓 Login/logout.  
+    - ✔️ User registration.  
+    - ✔️ Login/logout.
+    - ✔️ New Passeord
+    - ✔️ Edit Profile 
     - 🕓 OTP verification.  
     - 🕓 Social login APIs (Google, Apple, Facebook).  
 
 
 ##### **Doctor Search and Booking**
-- 🔲 **UI**  
+- ✅ **UI**  
   - Create screens for:
-    - 🕓 Searching doctors with filters (name, specialty, location, cost).  
+    - ✔️ Searching doctors with filters (name, specialty, location, cost).  
     - 🕓 Doctor profile details (rating, specialty, location, etc.).  
     - 🕓 Appointment booking (calendar view).  
 
-- 🔲 **API Integration**  
+- ✅ **API Integration**  
   - Connect to APIs for:
-    - 🕓 Fetching doctors based on search filters.  
+    - ✔️ Fetching doctors based on search filters.  
     - 🕓 Displaying doctor profiles.  
     - 🕓 Booking appointments.  
 
@@ -89,8 +91,8 @@
 ##### **AI Chatbot Integration**
 - ✅ **UI**  
   - Design chatbot interface:
-    - 💬  Text input and message display area.  
-    - 🤖  Quick responses or symptom options for user interaction.  
+    - ✔️  Text input and message display area.  
+    - 🕓  Quick responses or symptom options for user interaction.  
  
 
 - 🔲 **API Integration**  
@@ -100,14 +102,14 @@
 
 
 ##### **User Profile**
-- 🔲 **UI**  
+- ✅ **UI**  
   - Create screens for:
-    - 🕓  User profile (editable fields like name, email, phone).  
+    - ✔️ User profile (editable fields like name, email, phone).  
     - 🕓  Appointment history (list of past bookings).  
 
-- 🔲 **API Integration**  
+- ✅ **API Integration**  
   - Connect to APIs for:
-    - 🕓  Fetching and updating profile details.  
+    - ✔️  Fetching and updating profile details.  
     - 🕓  Retrieving appointment history.  
 
 ##### **Payment Integration**

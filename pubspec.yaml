@@ -7,40 +7,39 @@ environment:
 
 # versions available, run `flutter pub outdated`.
 dependencies:
-  adaptive_theme: ^3.7.0
-  auto_size_text: ^3.0.0
-  cached_network_image: ^3.4.1
-  carousel_slider: ^5.0.0
+  adaptive_theme: 
+  auto_size_text: 
+  cached_network_image: 
+  carousel_slider: 
   connectivity_plus:
   cupertino_icons:
-  dartz: ^0.10.1
-  device_preview: ^1.2.0
-  dio: ^5.8.0+1
-  dropdown_button2: ^2.3.9
-  equatable: ^2.0.7
-  expansion_tile_card: ^3.0.0
+  dartz: 
+  device_preview:
+  dio: 
+  dropdown_button2:
+  equatable:
+  expansion_tile_card:
   firebase_core:
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
+  flutter_bloc:
   flutter_dotenv:
   # flutter_dynamic_icon:
-  flutter_gemini: ^3.0.0
+  flutter_gemini:
   flutter_localizations:
     sdk: flutter
-  flutter_markdown: ^0.7.4+3
-  flutter_screenutil: ^5.9.3
-  flutter_svg: ^2.0.16
-  get_it: ^8.0.2
-  image_picker: ^1.1.2
-  intl: ^0.19.0
-  lock_orientation_screen: ^0.0.4
-  logger: ^2.5.0
-  pin_code_fields: ^8.0.1
-  shared_preferences: ^2.3.3
-  skeletonizer: ^1.4.3
-  url_launcher: ^6.3.1
-
+  flutter_markdown:
+  flutter_screenutil:
+  flutter_svg: 
+  get_it:
+  image_picker:
+  intl: 
+  lock_orientation_screen:
+  logger:
+  pin_code_fields:
+  shared_preferences:
+  skeletonizer:
+  url_launcher:
 dev_dependencies:
   flutter_lints:
   flutter_native_splash: ^2.4.3

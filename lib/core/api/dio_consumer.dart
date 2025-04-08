@@ -10,13 +10,18 @@ import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/core/api/status_code.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class DioConsumer implements ApiConsumer {
   DioConsumer({required this.client}) {
@@ -145,13 +150,41 @@ class DioConsumer implements ApiConsumer {
         if (refreshed && retryRequest != null) {
           final retriedResponse = await retryRequest();
           return _handleResponseAsJson(retriedResponse, null);
+        } else {
+          await _handleLogout();
         }
+      } else {
+        await _handleLogout();
       }
     }
-
     return left(
       ServerFailure.fromBadResponse(response.statusCode!, response.data),
     );
+  }
+
+  Future<void> _handleLogout() async {
+    final context = di.sl<GlobalKey<NavigatorState>>().currentContext;
+
+    if (context != null) {
+      await AdaptiveDialogs.showLogoutAlertDialog(
+        context: context,
+        title: context.isStateArabic ? 'انتهت الجلسة' : 'Session Expired',
+        message: context.isStateArabic
+            ? 'انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.'
+            : 'Your session has expired. Please log in again.',
+        onPressed: () {
+          // di.sl<AuthCubit>().logout();
+          CacheDataHelper.removeData(key: SharedPrefKey.keyAccessToken);
+          CacheDataHelper.removeData(key: SharedPrefKey.keyRefreshToken);
+          CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
+          CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
+          CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
+          context
+            ..pop()
+            ..pushNamedAndRemoveUntil(Routes.loginScreen);
+        },
+      );
+    }
   }
 
   Future<bool> _refreshToken(String refreshToken) async {
@@ -173,6 +206,7 @@ class DioConsumer implements ApiConsumer {
       if (kDebugMode) {
         LoggerHelper.error('Error while refreshing token: $e');
       }
+      await _handleLogout();
     }
     return false;
   }
