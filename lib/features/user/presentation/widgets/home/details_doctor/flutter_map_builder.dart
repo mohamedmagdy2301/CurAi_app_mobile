@@ -72,11 +72,14 @@ class _FlutterMapBuilderState extends State<FlutterMapBuilder> {
           children: [
             IconButton(
               onPressed: () {
-                // getLoctionCubit.mapController.rotate(
-                //   0,
-                // );
+                getLoctionCubit.mapController.rotate(
+                  0,
+                );
                 getLoctionCubit.mapController.move(
-                  widget.points.first,
+                  LatLng(
+                    getLoctionCubit.currentLocation!.latitude,
+                    getLoctionCubit.currentLocation!.longitude,
+                  ),
                   16,
                 );
               },

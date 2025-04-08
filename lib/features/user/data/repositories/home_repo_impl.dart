@@ -8,7 +8,7 @@ class HomeRepoImpl extends HomeRepo {
   final HomeRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<String, Map<String, dynamic>>> getAllDoctor({
+  Future<Either<String, AllDoctorModel>> getAllDoctor({
     int page = 1,
     String? query,
   }) async {
@@ -20,7 +20,7 @@ class HomeRepoImpl extends HomeRepo {
       (responseData) {
         try {
           final allDoctorModel = AllDoctorModel.fromJson(responseData);
-          return right(allDoctorModel as Map<String, dynamic>);
+          return right(allDoctorModel);
         } catch (e) {
           return left('Error parsing response: $e');
         }
