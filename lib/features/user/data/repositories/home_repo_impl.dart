@@ -20,12 +20,11 @@ class HomeRepoImpl extends HomeRepo {
       (responseData) {
         try {
           final allDoctorModel = AllDoctorModel.fromJson(responseData);
-          return right(allDoctorModel);
+          return right(allDoctorModel as Map<String, dynamic>);
         } catch (e) {
           return left('Error parsing response: $e');
         }
       },
     );
-
   }
 }
