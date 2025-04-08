@@ -67,10 +67,12 @@ class LangKeys {
   static const String findNearby = 'find_nearby';
   static const String seeAll = 'see_all';
   static const String doctorSpeciality = 'doctor_speciality';
+  static const String doctorDetails = 'doctor_details';
   static const String popularDoctor = 'popular_doctor';
   static const String noData = 'no_data';
 
 //! Specialties
+  static const String specialty = 'specialty';
   static const String general = 'general';
   static const String ent = 'ent';
   static const String pediatric = 'pediatric';
@@ -86,6 +88,26 @@ class LangKeys {
 
 // ! All Doctor
   static const String doctors = 'doctors';
+
+//! Doctor Details
+  static const String egp = 'egp';
+  static const String experience = 'experience';
+  static const String bookAppointment = 'book_appointment';
+  static const String about = 'about';
+  static const String aboutMe = 'about_me';
+  static const String reviews = 'reviews';
+  static const String location = 'location';
+  static const String workingTime = 'working_time';
+  static const String saturday = 'saturday';
+  static const String sunday = 'sunday';
+  static const String monday = 'monday';
+  static const String tuesday = 'tuesday';
+  static const String wednesday = 'wednesday';
+  static const String thursday = 'thursday';
+  static const String friday = 'friday';
+  static const String am = 'am';
+  static const String pm = 'pm';
+  static const String medicalDegree = 'medical_degree';
 
 //! Profile
   static const String profile = 'profile';
