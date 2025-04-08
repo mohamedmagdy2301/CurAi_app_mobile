@@ -28,8 +28,8 @@ class HomeCubit extends Cubit<HomeState> {
         }
       },
       (data) {
-        lastPage = (data.count! / 10).ceil();
-        allDoctorsList = data.results ?? [];
+        lastPage = (AllDoctorModel.fromJson(data).count! / 10).ceil();
+        allDoctorsList = AllDoctorModel.fromJson(data).results ?? [];
 
         emit(
           GetAllDoctorSuccess(
