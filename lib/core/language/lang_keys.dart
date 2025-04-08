@@ -97,6 +97,7 @@ class LangKeys {
   static const String aboutMe = 'about_me';
   static const String reviews = 'reviews';
   static const String location = 'location';
+  static const String locationMe = 'location_me';
   static const String workingTime = 'working_time';
   static const String saturday = 'saturday';
   static const String sunday = 'sunday';

@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.d
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/details_doctor/about_tap.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/details_doctor/custom_appbar_details_doctor.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/details_doctor/header_details_doctor_widget.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/details_doctor/location_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -55,7 +56,7 @@ class DoctorDetailsScreen extends StatelessWidget {
               child: TabBarView(
                 children: [
                   AboutTap(doctorResults: doctorResults),
-                  AboutTap(doctorResults: doctorResults),
+                  LocationTap(doctorResults: doctorResults),
                   AboutTap(doctorResults: doctorResults),
                 ],
               ),
