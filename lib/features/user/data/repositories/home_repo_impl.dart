@@ -8,12 +8,11 @@ class HomeRepoImpl extends HomeRepo {
   final HomeRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<String, AllDoctorModel>> getAllDoctor({
+  Future<Either<String, Map<String, dynamic>>> getAllDoctor({
     int page = 1,
     String? query,
   }) async {
     final response = await remoteDataSource.getAllDoctor(page, query: query);
-
     return response.fold(
       (failure) {
         return left(failure.message);
@@ -27,5 +26,6 @@ class HomeRepoImpl extends HomeRepo {
         }
       },
     );
+
   }
 }
