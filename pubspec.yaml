@@ -30,6 +30,7 @@ dependencies:
     sdk: flutter
   flutter_map: ^8.1.1
   flutter_markdown:
+  flutter_rating: ^2.0.2
   flutter_screenutil:
   flutter_svg: 
   geocoding: ^3.0.0
