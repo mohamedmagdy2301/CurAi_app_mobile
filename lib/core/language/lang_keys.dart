@@ -109,6 +109,7 @@ class LangKeys {
   static const String am = 'am';
   static const String pm = 'pm';
   static const String medicalDegree = 'medical_degree';
+  static const String addReview = 'add_review';
 
 //! Profile
   static const String profile = 'profile';
