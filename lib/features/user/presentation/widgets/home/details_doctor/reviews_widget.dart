@@ -126,7 +126,6 @@ class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
             color: Colors.orangeAccent,
             mainAxisAlignment: MainAxisAlignment.start,
             filledIcon: CupertinoIcons.star_fill,
-            // onRatingChanged: (rating) => setState(() => this.rating = rating),
           ).paddingSymmetric(horizontal: 50, vertical: 10),
           SizedBox(
             width: context.W * 0.9,
