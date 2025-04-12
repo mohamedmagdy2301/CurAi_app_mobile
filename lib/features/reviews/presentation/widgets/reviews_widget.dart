@@ -25,31 +25,9 @@ class ReviewsListViewWidget extends StatefulWidget {
 }
 
 class _ReviewsListViewWidgetState extends State<ReviewsListViewWidget> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Scroll to top (which is the bottom in reverse mode)
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      controller: _scrollController,
-      reverse: true,
       itemCount: widget.doctorResults.reviews!.length,
       itemBuilder: (context, index) {
         return ReviewsItemWidget(
