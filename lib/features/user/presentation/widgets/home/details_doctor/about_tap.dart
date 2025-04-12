@@ -23,11 +23,11 @@ class AboutTap extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AboutMeWidget(doctorResults: doctorResults),
-          5.hSpace,
+          15.hSpace,
           const MedicalDegreeWidget(),
-          10.hSpace,
+          20.hSpace,
           const WorkingTimeWidget(),
-          50.hSpace,
+          10.hSpace,
         ],
       ).paddingSymmetric(horizontal: 10, vertical: 10),
     );
@@ -50,7 +50,7 @@ class MedicalDegreeWidget extends StatelessWidget {
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
           style: TextStyleApp.bold20().copyWith(
-            color: context.onPrimaryColor,
+            color: context.onPrimaryColor.withAlpha(140),
           ),
         ),
         5.hSpace,
@@ -86,13 +86,13 @@ class WorkingTimeWidget extends StatelessWidget {
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
           style: TextStyleApp.bold20().copyWith(
-            color: context.onPrimaryColor,
+            color: context.onPrimaryColor.withAlpha(140),
           ),
         ),
         10.hSpace,
         Divider(
           color: context.onSecondaryColor.withAlpha(80),
-          thickness: .5,
+          thickness: .3,
         ),
         const TimeRowWidget(
           day: LangKeys.saturday,
@@ -170,7 +170,7 @@ class TimeRowWidget extends StatelessWidget {
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
             style: TextStyleApp.regular14().copyWith(
-              color: context.onPrimaryColor,
+              color: context.onPrimaryColor.withAlpha(140),
             ),
           ),
         ],
@@ -200,7 +200,7 @@ class AboutMeWidget extends StatelessWidget {
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
           style: TextStyleApp.bold20().copyWith(
-            color: context.onPrimaryColor,
+            color: context.onPrimaryColor.withAlpha(140),
           ),
         ),
         10.hSpace,

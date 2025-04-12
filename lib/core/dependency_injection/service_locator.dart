@@ -14,6 +14,11 @@ import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dar
 import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:curai_app_mobile/features/reviews/data/datasources/reviews_remote_data_source.dart';
+import 'package:curai_app_mobile/features/reviews/data/repositories/reviews_repo_impl.dart';
+import 'package:curai_app_mobile/features/reviews/domain/repositories/reviews_repo.dart';
+import 'package:curai_app_mobile/features/reviews/domain/usecases/add_reviews_usecase.dart';
+import 'package:curai_app_mobile/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:curai_app_mobile/features/user/data/datasources/home_remote_data_source.dart';
 import 'package:curai_app_mobile/features/user/data/repositories/home_repo_impl.dart';
 import 'package:curai_app_mobile/features/user/domain/repositories/home_repo.dart';
@@ -61,6 +66,12 @@ void setupInit() {
         sl<GetAllDoctorUsecase>(),
       ),
     )
+    // # Reviews
+    ..registerFactory<ReviewsCubit>(
+      () => ReviewsCubit(
+        sl<AddReviewsUsecase>(),
+      ),
+    )
 
     //! UseCases
     // # Auth
@@ -89,6 +100,10 @@ void setupInit() {
     ..registerLazySingleton<GetAllDoctorUsecase>(
       () => GetAllDoctorUsecase(repository: sl<HomeRepo>()),
     )
+    //# Reviews
+    ..registerLazySingleton<AddReviewsUsecase>(
+      () => AddReviewsUsecase(repository: sl<ReviewsRepo>()),
+    )
 
     //! Repository
     // # Auth
@@ -99,6 +114,10 @@ void setupInit() {
     ..registerLazySingleton<HomeRepo>(
       () => HomeRepoImpl(remoteDataSource: sl<HomeRemoteDataSource>()),
     )
+    // # Reviews
+    ..registerLazySingleton<ReviewsRepo>(
+      () => ReviewsRepoImpl(remoteDataSource: sl<ReviewsRemoteDataSource>()),
+    )
 
     //! DataSources
     // # Auth
@@ -108,5 +127,9 @@ void setupInit() {
     // # Home
     ..registerLazySingleton<HomeRemoteDataSource>(
       () => HomeRemoteDataSourceImpl(dioConsumer: sl<DioConsumer>()),
+    )
+    // # Reviews
+    ..registerLazySingleton<ReviewsRemoteDataSource>(
+      () => ReviewsRemoteDataSourceImpl(dioConsumer: sl<DioConsumer>()),
     );
 }

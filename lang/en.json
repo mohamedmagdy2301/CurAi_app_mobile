@@ -114,6 +114,7 @@
   "about_me": "About Me",
   "reviews": "Reviews",
   "location": "Location",
+  "location_me": "Location Me",
   "working_time": "Working Time",
    "saturday": "Saturday",
   "sunday": "Sunday",
@@ -124,6 +125,10 @@
   "friday": "Friday",
   "am": "AM",
   "pm": "PM",
-  "medical_degree": "Medical Degree"
+  "medical_degree": "Medical Degree",
+  "add_review": "Add Review",
+  "your_review": "Your Review",
+  "rate": "Rate",
+  "please_enter_review": "Please enter your review"
 
 }

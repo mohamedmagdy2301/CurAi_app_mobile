@@ -59,7 +59,7 @@ class AdaptiveDialogs {
       actions: [
         _buildDialogAction(
           context,
-          text: context.translate(LangKeys.logout),
+          text: context.translate(LangKeys.login),
           onPressed: onPressed ?? () {},
         ),
       ],

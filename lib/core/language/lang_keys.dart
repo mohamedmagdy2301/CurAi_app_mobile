@@ -97,6 +97,7 @@ class LangKeys {
   static const String aboutMe = 'about_me';
   static const String reviews = 'reviews';
   static const String location = 'location';
+  static const String locationMe = 'location_me';
   static const String workingTime = 'working_time';
   static const String saturday = 'saturday';
   static const String sunday = 'sunday';
@@ -108,6 +109,10 @@ class LangKeys {
   static const String am = 'am';
   static const String pm = 'pm';
   static const String medicalDegree = 'medical_degree';
+  static const String addReview = 'add_review';
+  static const String yourReview = 'your_review';
+  static const String rate = 'rate';
+  static const String pleaseEnterReview = 'please_enter_review';
 
 //! Profile
   static const String profile = 'profile';

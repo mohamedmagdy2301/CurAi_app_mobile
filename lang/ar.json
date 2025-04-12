@@ -115,6 +115,7 @@
   "about_me": "حولي",
   "reviews": "التقييمات",
   "location": "الموقع",
+  "location_me": "موقعي",
   "working_time": "وقت العمل",
   "saturday": "السبت",
   "sunday": "الأحد",
@@ -125,5 +126,9 @@
   "friday": "الجمعة",
   "am": "ص",
   "pm": "م",
-   "medical_degree": "الدرجة الطبية"
+   "medical_degree": "الدرجة الطبية",
+   "add_review": "اضف تقييم",
+   "your_review": "تقييمك",
+   "rate": "تقييم",
+   "please_enter_review": "يرجى ادخال التقييم"
  }

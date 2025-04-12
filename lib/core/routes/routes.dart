@@ -14,4 +14,5 @@ class Routes {
   static const String yourProfileScreen = '/yourProfileScreen';
   static const String privacyPolicyScreen = '/privacyPolicyScreen';
   static const String helpCenterScreen = '/helpCenterScreen';
+  static const String addReviewScreen = '/addReviewScreen';
 }
