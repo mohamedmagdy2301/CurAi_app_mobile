@@ -42,7 +42,13 @@ class HomeRepoImpl extends HomeRepo {
       },
       (responseData) {
         final specializationsList = <SpecializationsModel>[];
-
+        for (var i = 0; i < responseData.length; i++) {
+          specializationsList.add(
+            SpecializationsModel.fromJson(
+              responseData[i] as Map<String, dynamic>,
+            ),
+          );
+        }
         return right(specializationsList);
       },
     );
