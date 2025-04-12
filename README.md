@@ -78,13 +78,13 @@
 - ✅ **UI**  
   - Create screens for:
     - ✔️ Searching doctors with filters (name, specialty, location, cost).  
-    - 🕓 Doctor profile details (rating, specialty, location, etc.).  
+    - ✔️ Doctor profile details (rating, specialty, location, etc.).  
     - 🕓 Appointment booking (calendar view).  
 
 - ✅ **API Integration**  
   - Connect to APIs for:
     - ✔️ Fetching doctors based on search filters.  
-    - 🕓 Displaying doctor profiles.  
+    - ✔️ Displaying doctor profiles.  
     - 🕓 Booking appointments.  
 
 
