@@ -18,7 +18,7 @@ class NoReviewsWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        (context.H * 0.05).hSpace,
+        (context.H * 0.02).hSpace,
         Icon(
           CupertinoIcons.star_slash_fill,
           size: 150.sp,

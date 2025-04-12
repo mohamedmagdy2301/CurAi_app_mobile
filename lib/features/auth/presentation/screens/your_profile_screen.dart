@@ -227,7 +227,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             builder: (context, state) {
               return CustomButton(
                 title: LangKeys.updateProfile,
-                color: isChanged ? context.primaryColor : Colors.grey,
+                colorBackground: isChanged ? context.primaryColor : Colors.grey,
                 onPressed: () {
                   isChanged
                       ? AdaptiveDialogs.showOkCancelAlertDialog(

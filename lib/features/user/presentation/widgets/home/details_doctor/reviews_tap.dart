@@ -24,9 +24,18 @@ class ReviewsTap extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        15.hSpace,
+        if (doctorResults.reviews!.isNotEmpty)
+          ReviewsListViewWidget(
+            doctorResults: doctorResults,
+          ).expand()
+        else
+          const NoReviewsWidget().expand(),
+        5.hSpace,
         CustomButton(
           title: LangKeys.addReview,
+          colorBackground: context.backgroundColor,
+          colorBorder: context.primaryColor,
+          colorText: context.primaryColor,
           onPressed: () {
             showModalBottomSheet(
               context: context,
@@ -38,12 +47,7 @@ class ReviewsTap extends StatelessWidget {
             );
           },
         ),
-        if (doctorResults.reviews!.isNotEmpty)
-          ReviewsListViewWidget(
-            doctorResults: doctorResults,
-          ).expand()
-        else
-          const NoReviewsWidget(),
+        10.hSpace,
       ],
     );
   }
