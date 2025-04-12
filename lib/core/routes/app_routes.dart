@@ -12,6 +12,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/reset_passwo
 import 'package:curai_app_mobile/features/profile/presentation/screens/help_center_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
+import 'package:curai_app_mobile/features/reviews/presentation/screens/add_review_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
@@ -22,7 +23,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRoutes {
   static Route<void> onGenerateRoute(RouteSettings settings) {
-    // final arg = settings.arguments;
+    final arg = settings.arguments;
     switch (settings.name) {
       case Routes.mainScaffoldUser:
         return BaseRoute(page: const MainScaffoldUser());
@@ -55,6 +56,10 @@ class AppRoutes {
         return BaseRoute(page: const PrivacyPolicyScreen());
       case Routes.helpCenterScreen:
         return BaseRoute(page: HelpCenterScreen());
+      case Routes.addReviewScreen:
+        return BaseRoute(
+          page: AddReviewScreen(doctorId: arg! as int),
+        );
       case Routes.yourProfileScreen:
         return BaseRoute(page: const BuildYourProfileScreen());
       default:

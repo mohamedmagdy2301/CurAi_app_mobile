@@ -1,14 +1,16 @@
 class AddReviewRequest {
-  AddReviewRequest({this.doctor, this.rating, this.comment});
-  int? doctor;
-  int? rating;
-  String? comment;
+  AddReviewRequest({
+    required this.doctor,
+    required this.rating,
+    required this.comment,
+  });
+  final int doctor;
+  final int rating;
+  final String comment;
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['doctor'] = doctor;
-    data['rating'] = rating;
-    data['comment'] = comment;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        'doctor': doctor,
+        'rating': rating,
+        'comment': comment,
+      };
 }

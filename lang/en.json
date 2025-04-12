@@ -126,6 +126,9 @@
   "am": "AM",
   "pm": "PM",
   "medical_degree": "Medical Degree",
-  "add_review": "Add Review"
+  "add_review": "Add Review",
+  "your_review": "Your Review",
+  "rate": "Rate",
+  "please_enter_review": "Please enter your review"
 
 }

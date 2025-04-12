@@ -20,7 +20,7 @@ class ReviewsRemoteDataSourceImpl implements ReviewsRemoteDataSource {
   }) async {
     final response = await dioConsumer.post(
       EndPoints.addReview,
-      queryParameters: addReviewRequest.toJson(),
+      body: addReviewRequest.toJson(),
     );
 
     return response.fold(left, right);

@@ -127,5 +127,8 @@
   "am": "ص",
   "pm": "م",
    "medical_degree": "الدرجة الطبية",
-   "add_review": "اضف تقييم"
+   "add_review": "اضف تقييم",
+   "your_review": "تقييمك",
+   "rate": "تقييم",
+   "please_enter_review": "يرجى ادخال التقييم"
  }

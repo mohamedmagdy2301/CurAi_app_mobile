@@ -1,6 +1,8 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/widgets/no_reviews_widget.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/widgets/reviews_widget.dart';
@@ -22,7 +24,15 @@ class ReviewsTap extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         15.hSpace,
-        CustomButton(title: LangKeys.addReview, onPressed: () {}),
+        CustomButton(
+          title: LangKeys.addReview,
+          onPressed: () {
+            context.pushNamed(
+              Routes.addReviewScreen,
+              arguments: doctorResults.id,
+            );
+          },
+        ),
         if (doctorResults.reviews!.isNotEmpty)
           ReviewsListViewWidget(
             doctorResults: doctorResults,
