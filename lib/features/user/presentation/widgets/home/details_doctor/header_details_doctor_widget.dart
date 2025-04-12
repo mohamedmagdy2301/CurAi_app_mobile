@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/specialization_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,7 +56,10 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
             SizedBox(
               width: context.W * .35,
               child: AutoSizeText(
-                '${context.translate(LangKeys.specialty)} ${doctorResults.specialization ?? ''} ',
+                '${context.translate(LangKeys.specialty)} ${specializationName(
+                  doctorResults.specialization ?? '',
+                  context.isStateArabic,
+                )} ',
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
