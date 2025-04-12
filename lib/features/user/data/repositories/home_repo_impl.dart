@@ -14,8 +14,13 @@ class HomeRepoImpl extends HomeRepo {
   Future<Either<String, AllDoctorModel>> getAllDoctor({
     int page = 1,
     String? query,
+    String? speciality,
   }) async {
-    final response = await remoteDataSource.getAllDoctor(page, query: query);
+    final response = await remoteDataSource.getAllDoctor(
+      page,
+      query: query,
+      speciality: speciality,
+    );
     return response.fold(
       (failure) {
         return left(failure.message);

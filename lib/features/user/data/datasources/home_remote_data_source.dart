@@ -7,6 +7,7 @@ abstract class HomeRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getAllDoctor(
     int page, {
     String? query,
+    String? speciality,
   });
   Future<Either<Failure, List<dynamic>>> getSpecializations();
 }
@@ -19,10 +20,15 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getAllDoctor(
     int page, {
     String? query,
+    String? speciality,
   }) async {
     final response = await dioConsumer.get(
       EndPoints.getAllDoctor,
-      queryParameters: {'page': page, 'search': query},
+      queryParameters: {
+        'page': page,
+        'search': query,
+        'specialization': speciality,
+      },
     );
 
     return response.fold(

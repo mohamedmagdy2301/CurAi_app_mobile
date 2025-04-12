@@ -14,14 +14,18 @@ class HomeCubit extends Cubit<HomeState> {
 
   int lastPage = 1;
 
-  Future<void> getAllDoctor({int page = 1, String? query}) async {
+  Future<void> getAllDoctor({
+    int page = 1,
+    String? query,
+    String? speciality,
+  }) async {
     if (page == 1) {
       emit(GetAllDoctorLoading());
     } else {
       emit(GetAllDoctorPagenationLoading());
     }
 
-    final result = await _getAllDoctorUsecase.call(page, query);
+    final result = await _getAllDoctorUsecase.call(page, query, speciality);
     result.fold(
       (errMessage) {
         if (page == 1) {

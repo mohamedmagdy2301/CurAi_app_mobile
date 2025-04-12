@@ -1,3 +1,5 @@
+// ignore_for_file: parameter_assignments
+
 import 'dart:async';
 
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
@@ -38,12 +40,14 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   void initState() {
     super.initState();
     nextPage = 2;
-    context.read<HomeCubit>().getAllDoctor(query: widget.specialityName);
+    context.read<HomeCubit>().getAllDoctor(speciality: widget.specialityName);
     _scrollController.addListener(_scrollListener);
   }
 
   Future<void> _scrollListener() async {
-    if (hasReachedMax || isLoading) return;
+    if (hasReachedMax ||
+        isLoading ||
+        nextPage > context.read<HomeCubit>().lastPage) return;
 
     final currentPosition = _scrollController.position.pixels;
     final maxScrollExtent = _scrollController.position.maxScrollExtent;
@@ -52,7 +56,10 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
       setState(() {
         isLoading = true;
       });
-      await context.read<HomeCubit>().getAllDoctor(page: nextPage).then((_) {
+      await context
+          .read<HomeCubit>()
+          .getAllDoctor(page: nextPage, speciality: widget.specialityName)
+          .then((_) {
         setState(() {
           if (nextPage >= context.read<HomeCubit>().lastPage) {
             hasReachedMax = true;
@@ -72,7 +79,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
         filteredDoctorsList = [];
         hasReachedMax = false;
       });
-      context.read<HomeCubit>().getAllDoctor(query: query);
+      context
+          .read<HomeCubit>()
+          .getAllDoctor(query: query, speciality: widget.specialityName);
     });
   }
 
@@ -81,7 +90,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
-        const CustomAppBarAllDoctor(),
+        CustomAppBarAllDoctor(title: widget.specialityName),
         SliverPersistentHeader(
           pinned: true,
           delegate: SearchBarDelegate(
@@ -147,14 +156,24 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
             } else if (state is GetAllDoctorSuccess ||
                 state is GetAllDoctorPagenationLoading ||
                 state is GetAllDoctorPagenationLoading) {
-              return SliverList.builder(
-                itemCount: filteredDoctorsList.length,
-                itemBuilder: (context, index) {
-                  return PopularDoctorItemWidget(
-                    doctorResults: filteredDoctorsList[index],
-                  );
-                },
-              );
+              return filteredDoctorsList.isEmpty
+                  ? SliverToBoxAdapter(
+                      child: Text(
+                        'No Doctors found',
+                        textAlign: TextAlign.center,
+                        style: TextStyleApp.regular26().copyWith(
+                          color: context.onSecondaryColor,
+                        ),
+                      ),
+                    )
+                  : SliverList.builder(
+                      itemCount: filteredDoctorsList.length,
+                      itemBuilder: (context, index) {
+                        return PopularDoctorItemWidget(
+                          doctorResults: filteredDoctorsList[index],
+                        );
+                      },
+                    );
             }
             return SliverList.builder(
               itemCount: doctorsListDome.length,

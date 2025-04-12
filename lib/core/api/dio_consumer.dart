@@ -131,19 +131,13 @@ class DioConsumer implements ApiConsumer {
   ) async {
     if (response.statusCode == StatusCode.ok ||
         response.statusCode == StatusCode.okCreated) {
-      try {
-        final data = jsonDecode(response.data.toString());
-        return right(data);
-      } catch (e) {
-        return left(ServerFailure('Failed to parse response'));
-      }
+      final data = jsonDecode(response.data.toString());
+      return right(data);
     }
 
     if (response.statusCode == StatusCode.unauthorized ||
         response.statusCode == StatusCode.forbidden ||
-        (response.data is Map<String, dynamic> &&
-            (response.data! as Map<String, dynamic>).containsKey('detail') &&
-            response.data!['detail'] == 'Expired JWT.')) {
+        (response.data != null && response.data!['detail'] == 'Expired JWT.')) {
       final refreshToken =
           CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken);
 
