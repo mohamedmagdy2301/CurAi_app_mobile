@@ -53,7 +53,7 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> get(
+  Future<Either<Failure, dynamic>> get(
     String url, {
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -63,7 +63,7 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> post(
+  Future<Either<Failure, dynamic>> post(
     String url, {
     Map<String, dynamic>? body,
     bool formDataIsEnabled = false,
@@ -79,7 +79,7 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> put(
+  Future<Either<Failure, dynamic>> put(
     String url, {
     dynamic body,
     Map<String, dynamic>? queryParameters,
@@ -94,7 +94,7 @@ class DioConsumer implements ApiConsumer {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> patch(
+  Future<Either<Failure, dynamic>> patch(
     String url, {
     dynamic body,
     Map<String, dynamic>? queryParameters,
@@ -108,8 +108,8 @@ class DioConsumer implements ApiConsumer {
     );
   }
 
-  Future<Either<Failure, Map<String, dynamic>>> _safeApiCall(
-    Future<Response<Map<String, dynamic>>> Function() apiCall,
+  Future<Either<Failure, dynamic>> _safeApiCall(
+    Future<Response<dynamic>> Function() apiCall,
   ) async {
     try {
       final response = await apiCall();
@@ -125,20 +125,19 @@ class DioConsumer implements ApiConsumer {
     }
   }
 
-  Future<Either<Failure, Map<String, dynamic>>> _handleResponseAsJson(
-    Response<Map<String, dynamic>> response,
-    Future<Response<Map<String, dynamic>>> Function()? retryRequest,
+  Future<Either<Failure, dynamic>> _handleResponseAsJson(
+    Response<dynamic> response,
+    Future<Response<dynamic>> Function()? retryRequest,
   ) async {
     if (response.statusCode == StatusCode.ok ||
         response.statusCode == StatusCode.okCreated) {
-      return right(response.data!);
+      final data = jsonDecode(response.data.toString());
+      return right(data);
     }
 
     if (response.statusCode == StatusCode.unauthorized ||
         response.statusCode == StatusCode.forbidden ||
-        (response.data is Map<String, dynamic> &&
-            response.data!.containsKey('detail') &&
-            response.data!['detail'] == 'Expired JWT.')) {
+        (response.data != null && response.data!['detail'] == 'Expired JWT.')) {
       final refreshToken =
           CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken);
 
@@ -157,8 +156,12 @@ class DioConsumer implements ApiConsumer {
         await _handleLogout();
       }
     }
+
     return left(
-      ServerFailure.fromBadResponse(response.statusCode!, response.data),
+      ServerFailure.fromBadResponse(
+        response.statusCode!,
+        jsonDecode(response.data.toString()),
+      ),
     );
   }
 

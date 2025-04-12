@@ -45,7 +45,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       EndPoints.register,
       body: registerRequest.toJson(),
     );
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
   }
 
   @override
@@ -56,7 +61,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       EndPoints.login,
       body: loginRequest.toJson(),
     );
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
   }
 
   @override
@@ -67,7 +77,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         'refresh': CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken),
       },
     );
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
   }
 
   @override
@@ -78,7 +93,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       EndPoints.changePassword,
       body: changePasswordRequest.toJson(),
     );
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
   }
 
   @override
@@ -86,7 +106,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final response = await dioConsumer.get(
       EndPoints.getProfile,
     );
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
   }
 
   @override
@@ -119,7 +144,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       EndPoints.getProfile,
       body: profileRequest.toJson(),
     );
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
   }
 
   @override
@@ -143,6 +173,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       EndPoints.getProfile,
       body: data,
     );
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
   }
 }
