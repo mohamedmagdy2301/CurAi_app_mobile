@@ -6,10 +6,10 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
-import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/banner_home_widget.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/custom_appbar_home.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/doctor_speciality_widget.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/specializations_home_widget_listview.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/popular_doctor/doctor_home_widget_listview.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/title_section.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,7 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeCubit>(
-      create: (context) => sl<HomeCubit>()..getAllDoctor(),
+      create: (context) => sl<HomeCubit>()
+        ..getAllDoctor()
+        ..getSpecializations(),
       child: SafeArea(
         bottom: false,
         child: CustomScrollView(
@@ -43,7 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SliverToBoxAdapter(child: context.isTablet ? 25.hSpace : 10.hSpace),
-            const SliverToBoxAdapter(child: DoctorSpecialityWidget()),
+            const SliverToBoxAdapter(
+              child: SpecializationsHomeWidgetListView(),
+            ),
             SliverToBoxAdapter(child: context.isTablet ? 5.hSpace : 0.hSpace),
             SliverToBoxAdapter(
               child: TitleSectionWidget(

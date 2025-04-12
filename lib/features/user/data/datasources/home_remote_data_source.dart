@@ -8,6 +8,7 @@ abstract class HomeRemoteDataSource {
     int page, {
     String? query,
   });
+  Future<Either<Failure, List<dynamic>>> getSpecializations();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -24,6 +25,28 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       queryParameters: {'page': page, 'search': query},
     );
 
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, List<dynamic>>> getSpecializations() async {
+    final response = await dioConsumer.get(
+      EndPoints.getSpecializations,
+    );
+
+    return response.fold(
+      left,
+      (data) {
+        if (data is List) {
+          return right(data);
+        }
+        return left(ServerFailure('Invalid response format'));
+      },
+    );
   }
 }

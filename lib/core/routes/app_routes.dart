@@ -13,7 +13,7 @@ import 'package:curai_app_mobile/features/profile/presentation/screens/help_cent
 import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/screens/add_review_screen.dart';
-import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';

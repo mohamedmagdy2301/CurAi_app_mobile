@@ -3,9 +3,9 @@ import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class DoctorSpecialityItemWidget extends StatelessWidget {
   const DoctorSpecialityItemWidget({
@@ -22,20 +22,27 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           backgroundColor: context.onSecondaryColor.withAlpha(30),
-          radius: 26.r,
-          child: image.contains('.svg')
-              ? SvgPicture.asset(
-                  image,
-                  height: 25.h,
-                  width: 25.w,
-                  fit: BoxFit.fill,
-                )
-              : Image.asset(
-                  image,
-                  height: 25.h,
-                  width: 25.w,
-                  fit: BoxFit.fill,
-                ),
+          radius: context.H * 0.055,
+          child: CustomCachedNetworkImage(
+            imgUrl: image,
+            width: context.H * 0.05,
+            height: context.H * 0.05,
+            loadingImgPadding: 7.w,
+            errorIconSize: 20.sp,
+          ),
+          // image.contains('.svg')
+          //     ? SvgPicture.asset(
+          //         image,
+          //         height: 25.h,
+          //         width: 25.w,
+          //         fit: BoxFit.fill,
+          //       )
+          //     : Image.asset(
+          //         image,
+          //         height: 25.h,
+          //         width: 25.w,
+          //         fit: BoxFit.fill,
+          //       ),
         ),
         10.hSpace,
         AutoSizeText(
