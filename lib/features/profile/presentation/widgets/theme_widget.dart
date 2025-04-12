@@ -7,7 +7,7 @@ import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_theme_data.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/settings/build_radio_listtile.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/build_radio_listtile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

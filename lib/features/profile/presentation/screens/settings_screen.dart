@@ -17,7 +17,7 @@ import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_ap
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_expansion_tile_card.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/palette_listview_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/settings/localize_widget.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/localize_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

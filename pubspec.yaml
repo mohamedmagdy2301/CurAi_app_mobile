@@ -24,22 +24,21 @@ dependencies:
     sdk: flutter
   flutter_bloc:
   flutter_dotenv:
-  # flutter_dynamic_icon:
   flutter_gemini:
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^8.1.1
+  flutter_map: 
   flutter_markdown:
-  flutter_rating: ^2.0.2
+  flutter_rating: 
   flutter_screenutil:
   flutter_svg: 
-  geocoding: ^3.0.0
-  geolocator: ^13.0.4
+  geocoding: 
+  geolocator:
   get_it:
-  http: ^1.3.0
+  http: 
   image_picker:
   intl: 
-  latlong2: ^0.9.1
+  latlong2: 
   lock_orientation_screen:
   logger:
   pin_code_fields:

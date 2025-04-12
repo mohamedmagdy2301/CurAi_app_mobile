@@ -1,4 +1,4 @@
-// ignore_for_file: inference_failure_on_function_return_type
+// ignore_for_file: inference_failure_on_function_return_type, document_ignores
 
 import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
 import 'package:flutter/material.dart';
