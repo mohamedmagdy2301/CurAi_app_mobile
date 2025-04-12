@@ -23,7 +23,7 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushNamed(Routes.allDoctors, arguments: title);
+        context.pushNamed(Routes.allDoctors, arguments: specialityNameEn);
       },
       child: Column(
         children: [
