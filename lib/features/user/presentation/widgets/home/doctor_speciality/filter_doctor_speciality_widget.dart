@@ -27,8 +27,10 @@ class _FilterDoctorSpecialityState extends State<FilterDoctorSpeciality> {
   void filterList(String query) {
     setState(() {
       filteredDoctorSpecialityList = widget.specializationsList
-          .where((element) =>
-              element.name.toLowerCase().contains(query.toLowerCase()))
+          .where(
+            (element) =>
+                element.name.toLowerCase().contains(query.toLowerCase()),
+          )
           .toList();
     });
   }
@@ -43,6 +45,7 @@ class _FilterDoctorSpecialityState extends State<FilterDoctorSpeciality> {
           child: CustomTextFeild(
             labelText: context.translate(LangKeys.doctorSpeciality),
             onChanged: filterList,
+            isValidator: false,
           ),
         ),
         30.hSpace,
