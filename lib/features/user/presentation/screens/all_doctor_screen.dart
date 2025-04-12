@@ -106,7 +106,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                         filteredDoctorsList = [];
                         hasReachedMax = false;
                       });
-                      context.read<HomeCubit>().getAllDoctor();
+                      context
+                          .read<HomeCubit>()
+                          .getAllDoctor(speciality: widget.specialityName);
                     },
                   )
                 : null,

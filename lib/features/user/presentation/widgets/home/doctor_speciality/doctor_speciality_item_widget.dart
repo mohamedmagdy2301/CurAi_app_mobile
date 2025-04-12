@@ -12,9 +12,11 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
   const DoctorSpecialityItemWidget({
     required this.title,
     required this.image,
+    required this.specialityNameEn,
     super.key,
   });
   final String title;
+  final String specialityNameEn;
   final String image;
 
   @override

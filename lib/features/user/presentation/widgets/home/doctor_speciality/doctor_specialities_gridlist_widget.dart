@@ -58,6 +58,7 @@ class DoctorSpecialitiesGridList extends StatelessWidget {
             context.isStateArabic,
           ),
           image: filteredItems[index].image,
+          specialityNameEn: filteredItems[index].name,
         );
       },
     ).paddingSymmetric(horizontal: 10, vertical: 10);
