@@ -30,6 +30,7 @@ class _SpecializationWidgetState extends State<SpecializationWidget> {
               context.isStateArabic,
             ),
             image: widget.specializationsList[index].image,
+            specialityNameEn: widget.specializationsList[index].name,
           );
         },
       ),
