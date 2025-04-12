@@ -23,6 +23,11 @@ class ReviewsRemoteDataSourceImpl implements ReviewsRemoteDataSource {
       body: addReviewRequest.toJson(),
     );
 
-    return response.fold(left, right);
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
   }
 }

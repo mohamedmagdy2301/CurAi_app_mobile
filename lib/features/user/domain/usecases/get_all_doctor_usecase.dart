@@ -10,7 +10,12 @@ class GetAllDoctorUsecase {
   Future<Either<String, AllDoctorModel>> call(
     int params,
     String? query,
+    String? speciality,
   ) async {
-    return repository.getAllDoctor(page: params, query: query);
+    return repository.getAllDoctor(
+      page: params,
+      query: query,
+      speciality: speciality,
+    );
   }
 }

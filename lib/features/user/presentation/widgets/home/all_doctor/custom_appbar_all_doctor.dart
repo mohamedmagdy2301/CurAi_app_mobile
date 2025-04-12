@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 class CustomAppBarAllDoctor extends StatefulWidget {
   const CustomAppBarAllDoctor({
     super.key,
+    this.title,
   });
+  final String? title;
 
   @override
   State<CustomAppBarAllDoctor> createState() => _CustomAppBarAllDoctorState();
@@ -27,7 +29,9 @@ class _CustomAppBarAllDoctorState extends State<CustomAppBarAllDoctor> {
       elevation: 0,
       flexibleSpace: Container(color: context.backgroundColor),
       title: AutoSizeText(
-        context.translate(LangKeys.doctors),
+        widget.title != ''
+            ? widget.title!
+            : context.translate(LangKeys.doctors),
         maxLines: 1,
         style: TextStyleApp.bold20().copyWith(
           color: context.onPrimaryColor,
