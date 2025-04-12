@@ -36,7 +36,7 @@ class _ReviewsListViewWidgetState extends State<ReviewsListViewWidget> {
         ).paddingOnly(
           top: index == 0 ? context.H * 0.015 : 0,
           bottom: index == widget.doctorResults.reviews!.length - 1
-              ? context.H * 0.07
+              ? context.H * 0.01
               : 0,
         );
       },

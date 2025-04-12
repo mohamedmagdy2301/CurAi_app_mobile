@@ -31,93 +31,106 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<ReviewsCubit>(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Add Review'),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              20.hSpace,
-              StarRating(
-                rating: _rating.toDouble(),
-                size: 50.r,
-                color: Colors.orangeAccent,
-                borderColor: context.onSecondaryColor.withAlpha(50),
-                emptyIcon: CupertinoIcons.star,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                filledIcon: CupertinoIcons.star_fill,
-                onRatingChanged: (rating) {
-                  setState(() {
-                    _rating = rating.toInt();
-                  });
-                },
-              ),
-              30.hSpace,
-              CustomTextFeild(
-                labelText: context.translate(LangKeys.yourReview),
-                keyboardType: TextInputType.text,
-                controller: _commentController,
-                maxLines: 5,
-              ),
-              30.hSpace,
-              BlocConsumer<ReviewsCubit, ReviewsState>(
-                listenWhen: (previous, current) =>
-                    current is ReviewsLoading ||
-                    current is ReviewsSuccess ||
-                    current is ReviewsError,
-                listener: (context, state) {
-                  if (state is ReviewsError) {
-                    Navigator.pop(context);
-                    showMessage(
-                      context,
-                      message: state.message,
-                      type: SnackBarType.error,
-                    );
-                  } else if (state is ReviewsSuccess) {
-                    Navigator.pop(context);
-                    showMessage(
-                      context,
-                      message: state.message,
-                      type: SnackBarType.success,
-                    );
-                    Navigator.pop(context);
-                  } else if (state is ReviewsLoading) {
-                    AdaptiveDialogs.shoLoadingAlertDialog(
-                      context: context,
-                      title: context.translate(LangKeys.register),
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return CustomButton(
-                    title: LangKeys.addReview,
-                    onPressed: () {
-                      if (_commentController.text.trim().isEmpty) {
-                        showMessage(
-                          context,
-                          message:
-                              context.translate(LangKeys.pleaseEnterReview),
-                          type: SnackBarType.error,
-                        );
-                        return;
-                      }
-                      context.read<ReviewsCubit>().addReviews(
-                            AddReviewRequest(
-                              doctor: widget.doctorId,
-                              rating: _rating,
-                              comment: _commentController.text.trim(),
-                            ),
-                          );
-                    },
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            20.hSpace,
+            StarRating(
+              rating: _rating.toDouble(),
+              size: 50.r,
+              color: Colors.orangeAccent,
+              borderColor: context.onSecondaryColor.withAlpha(50),
+              emptyIcon: CupertinoIcons.star,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              filledIcon: CupertinoIcons.star_fill,
+              onRatingChanged: (rating) {
+                setState(() {
+                  _rating = rating.toInt();
+                });
+              },
+            ),
+            30.hSpace,
+            CustomTextFeild(
+              labelText: context.translate(LangKeys.yourReview),
+              keyboardType: TextInputType.text,
+              controller: _commentController,
+              maxLines: 5,
+            ),
+            30.hSpace,
+            BlocConsumer<ReviewsCubit, ReviewsState>(
+              listenWhen: (previous, current) =>
+                  current is ReviewsLoading ||
+                  current is ReviewsSuccess ||
+                  current is ReviewsError,
+              listener: (context, state) {
+                if (state is ReviewsError) {
+                  Navigator.pop(context);
+                  final isAlreadyRated = state.message == 'خطأ غير متوقع' ||
+                      state.message == 'Unexpected error';
+                  final errorMessage = isAlreadyRated
+                      ? (context.isStateArabic
+                          ? 'لقد قمت بالتقييم من قبل'
+                          : 'You have already rated')
+                      : state.message;
+
+                  showMessage(
+                    context,
+                    message: errorMessage,
+                    type:
+                        isAlreadyRated ? SnackBarType.info : SnackBarType.error,
                   );
-                },
-              ),
-            ],
-          ).paddingSymmetric(horizontal: 20, vertical: 10),
-        ),
+
+                  Navigator.of(context).pop();
+                } else if (state is ReviewsSuccess) {
+                  Navigator.pop(context);
+
+                  showMessage(
+                    context,
+                    message: state.message,
+                    type: SnackBarType.success,
+                  );
+
+                  Navigator.of(context).pop(); // Close the bottom sheet
+                } else if (state is ReviewsLoading) {
+                  AdaptiveDialogs.shoLoadingAlertDialog(
+                    context: context,
+                    title: context.translate(LangKeys.addReview),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return CustomButton(
+                  title: LangKeys.addReview,
+                  onPressed: () {
+                    if (_commentController.text.trim().isEmpty) {
+                      showMessage(
+                        context,
+                        message: context.translate(LangKeys.pleaseEnterReview),
+                        type: SnackBarType.error,
+                      );
+                      return;
+                    }
+                    context.read<ReviewsCubit>().addReviews(
+                          AddReviewRequest(
+                            doctor: widget.doctorId,
+                            rating: _rating,
+                            comment: _commentController.text.trim(),
+                          ),
+                        );
+                  },
+                );
+              },
+            ),
+          ],
+        ).paddingSymmetric(horizontal: 20, vertical: 10),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
   }
 }

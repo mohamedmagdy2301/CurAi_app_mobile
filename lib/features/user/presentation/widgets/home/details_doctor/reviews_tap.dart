@@ -1,13 +1,14 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
-import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/features/reviews/presentation/screens/add_review_screen.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/widgets/no_reviews_widget.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/widgets/reviews_widget.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ReviewsTap extends StatelessWidget {
@@ -27,9 +28,13 @@ class ReviewsTap extends StatelessWidget {
         CustomButton(
           title: LangKeys.addReview,
           onPressed: () {
-            context.pushNamed(
-              Routes.addReviewScreen,
-              arguments: doctorResults.id,
+            showModalBottomSheet(
+              context: context,
+              backgroundColor: context.backgroundColor,
+              isScrollControlled: true,
+              builder: (_) => AddReviewScreen(
+                doctorId: doctorResults.id!,
+              ).paddingBottom(MediaQuery.of(context).viewInsets.bottom),
             );
           },
         ),

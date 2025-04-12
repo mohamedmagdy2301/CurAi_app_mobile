@@ -62,11 +62,11 @@ class DoctorDetailsScreen extends StatelessWidget {
                 ],
               ),
             ),
+            CustomButton(
+              title: LangKeys.bookAppointment,
+              onPressed: () {},
+            ).paddingOnly(bottom: 10),
           ],
-        ),
-        bottomSheet: CustomButton(
-          title: LangKeys.bookAppointment,
-          onPressed: () {},
         ),
       ).paddingSymmetric(horizontal: 12, vertical: 5),
     );

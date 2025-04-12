@@ -58,6 +58,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       // autocorrect: false,
       // enableSuggestions: false,
       maxLines: widget.maxLines ?? 1,
+
       cursorHeight: 26.h,
       cursorWidth: 1.2.w,
       validator: widget.isValidator ?? true
