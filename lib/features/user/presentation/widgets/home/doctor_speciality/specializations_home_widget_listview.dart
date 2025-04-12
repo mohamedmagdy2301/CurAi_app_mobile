@@ -49,7 +49,7 @@ class SpecializationsHomeWidgetListView extends StatelessWidget {
 }
 
 final specializationsListDome = List.filled(
-  5,
+  12,
   SpecializationsModel(
     id: 0,
     name: 'mkm mkm',

@@ -42,7 +42,12 @@ class AppRoutes {
       case Routes.notificationScreen:
         return BaseRoute(page: const NotificationScreen());
       case Routes.doctorSpeciality:
-        return BaseRoute(page: const DoctorSpecialitiesScreen());
+        return BaseRoute(
+          page: BlocProvider(
+            create: (context) => sl<HomeCubit>(),
+            child: const DoctorSpecialitiesScreen(),
+          ),
+        );
       case Routes.allDoctors:
         return BaseRoute(
           page: BlocProvider<HomeCubit>(

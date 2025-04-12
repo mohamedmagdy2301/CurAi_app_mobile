@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/features/user/data/models/doctor_speciality_model.dart';
+import 'package:curai_app_mobile/features/user/data/models/specializations_model/specializations_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/doctor_speciality_item_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ class DoctorSpecialitiesGridList extends StatelessWidget {
     super.key,
   });
 
-  final List<DoctorSpecialityModel> filteredItems;
+  final List<SpecializationsModel> filteredItems;
 
   @override
   Widget build(BuildContext context) {
