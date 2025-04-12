@@ -52,7 +52,7 @@ class AppRoutes {
         return BaseRoute(
           page: BlocProvider<HomeCubit>(
             create: (context) => sl<HomeCubit>(),
-            child: const AllDoctorScreen(),
+            child: AllDoctorScreen(specialityName: (arg ?? '') as String),
           ),
         );
       case Routes.settingsScreen:

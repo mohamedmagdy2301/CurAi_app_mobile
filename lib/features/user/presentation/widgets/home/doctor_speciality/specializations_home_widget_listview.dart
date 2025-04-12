@@ -10,8 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class SpecializationsHomeWidgetListView extends StatelessWidget {
-  const SpecializationsHomeWidgetListView({
+class SpecializationsListViewHome extends StatelessWidget {
+  const SpecializationsListViewHome({
     super.key,
   });
 

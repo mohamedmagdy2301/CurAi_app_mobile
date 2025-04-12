@@ -1,4 +1,5 @@
-import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
@@ -26,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeCubit>(
-      create: (context) => sl<HomeCubit>()
+      create: (context) => di.sl<HomeCubit>()
         ..getAllDoctor()
         ..getSpecializations(),
       child: SafeArea(
@@ -45,9 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SliverToBoxAdapter(child: context.isTablet ? 25.hSpace : 10.hSpace),
-            const SliverToBoxAdapter(
-              child: SpecializationsHomeWidgetListView(),
-            ),
+            const SliverToBoxAdapter(child: SpecializationsListViewHome()),
             SliverToBoxAdapter(child: context.isTablet ? 5.hSpace : 0.hSpace),
             SliverToBoxAdapter(
               child: TitleSectionWidget(
@@ -56,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SliverToBoxAdapter(child: 10.hSpace),
-            const DoctorHomeWidgetListView(),
+            const DoctorListViewHome(),
             SliverToBoxAdapter(child: 10.hSpace),
           ],
         ),

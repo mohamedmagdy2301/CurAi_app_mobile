@@ -17,7 +17,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AllDoctorScreen extends StatefulWidget {
-  const AllDoctorScreen({super.key});
+  const AllDoctorScreen({this.specialityName, super.key});
+  final String? specialityName;
 
   @override
   State<AllDoctorScreen> createState() => _AllDoctorScreenState();
@@ -37,7 +38,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   void initState() {
     super.initState();
     nextPage = 2;
-    context.read<HomeCubit>().getAllDoctor();
+    context.read<HomeCubit>().getAllDoctor(query: widget.specialityName);
     _scrollController.addListener(_scrollListener);
   }
 

@@ -11,8 +11,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class DoctorHomeWidgetListView extends StatelessWidget {
-  const DoctorHomeWidgetListView({
+class DoctorListViewHome extends StatelessWidget {
+  const DoctorListViewHome({
     super.key,
   });
 
