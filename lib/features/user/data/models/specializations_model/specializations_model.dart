@@ -16,6 +16,6 @@ class SpecializationsModel {
   }
   final int id;
   final String image;
-  final String name;
+  String name;
   final int doctorCount;
 }

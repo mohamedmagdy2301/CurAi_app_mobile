@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/user/data/models/specializations_model/specializations_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/doctor_speciality_item_widget.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/specialization_widget.dart';
 import 'package:flutter/material.dart';
 
 class DoctorSpecialitiesGridList extends StatelessWidget {
@@ -52,7 +53,10 @@ class DoctorSpecialitiesGridList extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         return DoctorSpecialityItemWidget(
-          title: filteredItems[index].name,
+          title: specializationName(
+            filteredItems[index].name,
+            context.isStateArabic,
+          ),
           image: filteredItems[index].image,
         );
       },
