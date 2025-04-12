@@ -11,19 +11,28 @@ class CustomButton extends StatelessWidget {
     this.isLoading = false,
     super.key,
     this.onPressed,
-    this.color,
+    this.colorBackground,
+    this.colorBorder,
+    this.colorText,
   });
   final String title;
   final void Function()? onPressed;
   final bool isLoading;
-  final Color? color;
+  final Color? colorBackground;
+  final Color? colorBorder;
+  final Color? colorText;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
             backgroundColor:
-                WidgetStatePropertyAll(color ?? context.primaryColor),
+                WidgetStatePropertyAll(colorBackground ?? context.primaryColor),
+            side: WidgetStatePropertyAll(
+              BorderSide(
+                color: colorBorder ?? context.primaryColor,
+              ),
+            ),
           ),
       onPressed: onPressed,
       child: isLoading
@@ -34,7 +43,7 @@ class CustomButton extends StatelessWidget {
           : Text(
               context.translate(title),
               style: TextStyleApp.bold20().copyWith(
-                color: Colors.white,
+                color: colorText ?? Colors.white,
               ),
             ),
     );

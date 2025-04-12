@@ -104,7 +104,31 @@
   "complete_profile": "Complete Profile",
   "complete_profile_title":"Complete Your Profile",
   "description_complete_profile"  :"Don't worry, only you can see your personal data, No one else will be able see it.",
-  "no_data": "No data found"
- 
+  "no_data": "No data found",
+  "doctor_details": "Doctor Details",
+  "egp": "EGP",
+  "specialty": "Specialty",
+  "experience": "Experience",
+  "book_appointment": "Book Appointment",
+   "about": "About",
+  "about_me": "About Me",
+  "reviews": "Reviews",
+  "location": "Location",
+  "location_me": "Location Me",
+  "working_time": "Working Time",
+   "saturday": "Saturday",
+  "sunday": "Sunday",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "am": "AM",
+  "pm": "PM",
+  "medical_degree": "Medical Degree",
+  "add_review": "Add Review",
+  "your_review": "Your Review",
+  "rate": "Rate",
+  "please_enter_review": "Please enter your review"
 
 }

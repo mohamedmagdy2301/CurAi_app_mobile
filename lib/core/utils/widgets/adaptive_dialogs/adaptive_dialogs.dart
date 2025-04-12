@@ -40,6 +40,32 @@ class AdaptiveDialogs {
     );
   }
 
+  /// Show an alert with only an "Logout" button.
+  static Future<void> showLogoutAlertDialog({
+    required BuildContext context,
+    required String title,
+    required String message,
+    void Function()? onPressed,
+  }) async {
+    return _showPlatformDialog(
+      context: context,
+      title: title,
+      message: Text(
+        message,
+        style: TextStyleApp.medium14().copyWith(
+          color: context.onPrimaryColor,
+        ),
+      ),
+      actions: [
+        _buildDialogAction(
+          context,
+          text: context.translate(LangKeys.login),
+          onPressed: onPressed ?? () {},
+        ),
+      ],
+    );
+  }
+
   /// Show an alert with only an "OK" button.
   static Future<void> showOkAlertDialog({
     required BuildContext context,

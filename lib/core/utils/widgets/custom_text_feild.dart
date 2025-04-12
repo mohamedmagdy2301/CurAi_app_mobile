@@ -18,6 +18,7 @@ class CustomTextFeild extends StatefulWidget {
     this.onChanged,
     this.isValidator,
     this.suffixIcon,
+    this.maxLines,
   });
   final String labelText;
   final TextEditingController? controller;
@@ -27,6 +28,7 @@ class CustomTextFeild extends StatefulWidget {
   final void Function(String)? onChanged;
   final bool? isValidator;
   final Widget? suffixIcon;
+  final int? maxLines;
 
   @override
   State<CustomTextFeild> createState() => _CustomTextFeildState();
@@ -55,6 +57,8 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       ),
       // autocorrect: false,
       // enableSuggestions: false,
+      maxLines: widget.maxLines ?? 1,
+
       cursorHeight: 26.h,
       cursorWidth: 1.2.w,
       validator: widget.isValidator ?? true
