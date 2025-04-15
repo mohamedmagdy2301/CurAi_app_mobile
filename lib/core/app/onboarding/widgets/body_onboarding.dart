@@ -75,7 +75,7 @@ class BodyOnboarding extends StatelessWidget {
                   context.read<OnboardingCubit>().nextPage();
                   if (BlocProvider.of<OnboardingCubit>(context).state
                       is OnboardingFinished) {
-                    CacheDataHelper.setData(
+                    CacheDataHelper.saveData(
                       key: SharedPrefKey.keyIsFirstLaunch,
                       value: false,
                     );

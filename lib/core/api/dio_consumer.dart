@@ -207,7 +207,7 @@ class DioConsumer implements ApiConsumer {
         final decoded = jsonDecode(response.data.toString());
         if (decoded is Map && decoded.containsKey('access')) {
           final newAccessToken = decoded['access'];
-          await CacheDataHelper.setData(
+          await CacheDataHelper.saveData(
             key: SharedPrefKey.keyAccessToken,
             value: newAccessToken,
           );

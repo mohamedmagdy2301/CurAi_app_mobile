@@ -119,7 +119,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                     message: state.message,
                     type: SnackBarType.success,
                   );
-                  CacheDataHelper.setData(
+                  CacheDataHelper.saveData(
                     key: SharedPrefKey.keyIsLoggedIn,
                     value: true,
                   );

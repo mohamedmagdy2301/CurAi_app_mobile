@@ -15,9 +15,9 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_settings.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_expansion_tile_card.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/localize_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/palette_listview_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
-import 'package:curai_app_mobile/features/profile/presentation/widgets/localize_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,7 +79,7 @@ class SettingsScreen extends StatelessWidget {
                   onChanged: (_) {
                     AdaptiveTheme.of(context).toggleThemeMode();
 
-                    CacheDataHelper.setData(
+                    CacheDataHelper.saveData(
                       key: SharedPrefKey.saveThemeMode,
                       value: AdaptiveTheme.of(context).mode,
                     );

@@ -67,7 +67,7 @@ class _ThemeWidgetState extends State<ThemeWidget> {
             setState(() {
               saveThemeMode = AdaptiveThemeMode.light;
             });
-            CacheDataHelper.setData(
+            CacheDataHelper.saveData(
               key: SharedPrefKey.saveThemeMode,
               value: AdaptiveThemeMode.light,
             );
@@ -94,7 +94,7 @@ class _ThemeWidgetState extends State<ThemeWidget> {
             setState(() {
               saveThemeMode = AdaptiveThemeMode.dark;
             });
-            CacheDataHelper.setData(
+            CacheDataHelper.saveData(
               key: SharedPrefKey.saveThemeMode,
               value: AdaptiveThemeMode.dark,
             );

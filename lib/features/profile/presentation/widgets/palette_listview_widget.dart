@@ -70,7 +70,7 @@ class _PalettListViewWidgetState extends State<PalettListViewWidget> {
                           selected,
                         ),
                       );
-                      CacheDataHelper.setData(
+                      CacheDataHelper.saveData(
                         key: SharedPrefKey.keyThemeColor,
                         value: selected,
                       );
