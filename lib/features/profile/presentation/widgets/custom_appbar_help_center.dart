@@ -22,6 +22,13 @@ class CustomAppBarHelpCenter extends StatelessWidget
           color: context.onPrimaryColor,
         ),
       ),
+      bottom: TabBar(
+        onTap: (value) {},
+        tabs: const [
+          Icon(Icons.abc),
+          Icon(Icons.abc),
+        ],
+      ),
       centerTitle: true,
     );
   }

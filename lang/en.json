@@ -129,6 +129,15 @@
   "add_review": "Add Review",
   "your_review": "Your Review",
   "rate": "Rate",
-  "please_enter_review": "Please enter your review"
-
+  "please_enter_review": "Please enter your review",
+  "contact_us": "Contact Us",
+  "faq": "FAQ",
+  "customer_service": "Customer Service",
+  "how_do_we_help_you": "How do we help you?",
+  "send": "Send",
+  "whatsApp":  "WhatsApp",
+  "website": "Website",
+  "facebook": "Facebook",
+  "x": "X",
+  "instagram": "Instagram"
 }

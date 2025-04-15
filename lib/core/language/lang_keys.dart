@@ -121,6 +121,16 @@ class LangKeys {
   static const String paymentMethod = 'payment_method';
   static const String favorite = 'favorite';
   static const String helpCenter = 'help_center';
+  static const String contactUs = 'contact_us';
+  static const String faq = 'faq';
+  static const String customerService = 'customer_service';
+  static const String whatsApp = 'whatsApp';
+  static const String website = 'website';
+  static const String facebook = 'facebook';
+  static const String x = 'x';
+  static const String instagram = 'instagram';
+  static const String howDoWeHelpYou = 'how_do_we_help_you';
+  static const String send = 'send';
 
 //! Edit Profile
   static const String fullName = 'full_name';

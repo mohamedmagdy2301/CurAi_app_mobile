@@ -130,5 +130,15 @@
    "add_review": "اضف تقييم",
    "your_review": "تقييمك",
    "rate": "تقييم",
-   "please_enter_review": "يرجى ادخال التقييم"
+   "please_enter_review": "يرجى ادخال التقييم",
+   "contact_us": "اتصل بنا",
+   "faq": "الاسئلة الشائعة",
+  "customer_service":  "خدمة العملاء",
+  "how_do_we_help_you":   "كيف يمكننا مساعدتك؟",
+  "send":    "ارسل",
+  "whatsApp":   "واتساب",
+  "website":  "موقع الانترنت",
+  "facebook":  "فيسبوك",
+  "x":  "X",
+  "instagram":  "انستقرام"
  }

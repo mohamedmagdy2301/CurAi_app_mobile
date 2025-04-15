@@ -19,10 +19,12 @@ class CustomTextFeild extends StatefulWidget {
     this.isValidator,
     this.suffixIcon,
     this.maxLines,
+    this.isLable,
   });
   final String labelText;
   final TextEditingController? controller;
   final bool? obscureText;
+  final bool? isLable;
   final TextInputType? keyboardType;
   final Iterable<String>? autofillHints;
   final void Function(String)? onChanged;
@@ -58,7 +60,6 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       // autocorrect: false,
       // enableSuggestions: false,
       maxLines: widget.maxLines ?? 1,
-
       cursorHeight: 26.h,
       cursorWidth: 1.2.w,
       validator: widget.isValidator ?? true
@@ -83,7 +84,18 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
           color: Colors.redAccent,
         ),
         suffixIcon: widget.suffixIcon ?? changePasswordObscure(),
-        labelText: widget.labelText,
+        labelText: widget.isLable ?? true ? widget.labelText : null,
+        hintText: widget.labelText,
+        labelStyle: TextStyleApp.regular16().copyWith(
+          color: context.primaryColor,
+        ),
+        hintStyle: TextStyleApp.regular16().copyWith(
+          color: context.onSecondaryColor,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: BorderSide(color: context.onSecondaryColor, width: 1.w),
+        ),
       ),
     );
   }

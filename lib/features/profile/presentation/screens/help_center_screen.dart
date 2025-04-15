@@ -1,209 +1,77 @@
-// ignore_for_file: lines_longer_than_80_chars, avoid_field_initializers_in_const_classes
+// ignore_for_file: lines_longer_than_80_chars, avoid_field_initializers_in_const_classes, document_ignores
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
-import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_help_center.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/help_center/contact_us_body_listview.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/help_center/faq_body_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HelpCenterScreen extends StatelessWidget {
-  HelpCenterScreen({super.key});
-  final List<Map<String, Map<String, String>>> faqItems = [
-    {
-      'question': {'en': 'What is CurAi?', 'ar': 'ما هو CurAi؟'},
-      'answer': {
-        'en':
-            'CurAi is a smart doctor appointment system that connects patients with doctors for easy scheduling.',
-        'ar':
-            'CurAi هو نظام ذكي لمواعيد الأطباء يربط المرضى بالأطباء لجدولة سهلة.',
-      },
-    },
-    {
-      'question': {'en': 'How do I sign up?', 'ar': 'كيف يمكنني التسجيل؟'},
-      'answer': {
-        'en':
-            'Patients can register with an email and phone number, while doctors must go through a verification process.',
-        'ar':
-            'يمكن للمرضى التسجيل باستخدام البريد الإلكتروني ورقم الهاتف، بينما يجب على الأطباء اجتياز عملية التحقق.',
-      },
-    },
-    {
-      'question': {
-        'en': 'How do I book an appointment?',
-        'ar': 'كيف يمكنني حجز موعد؟',
-      },
-      'answer': {
-        'en':
-            'Search for a doctor, select a time slot, and confirm your appointment.',
-        'ar': 'ابحث عن طبيب، اختر وقتًا مناسبًا، وقم بتأكيد موعدك.',
-      },
-    },
-    {
-      'question': {
-        'en': 'How do I reset my password?',
-        'ar': 'كيف يمكنني إعادة تعيين كلمة المرور؟',
-      },
-      'answer': {
-        'en':
-            "Use the 'Forgot Password' option on the login screen to reset your password.",
-        'ar':
-            "استخدم خيار 'نسيت كلمة المرور' في شاشة تسجيل الدخول لإعادة تعيين كلمة المرور.",
-      },
-    },
-    {
-      'question': {
-        'en': 'How do I cancel an appointment?',
-        'ar': 'كيف يمكنني إلغاء موعد؟',
-      },
-      'answer': {
-        'en':
-            "Go to 'My Appointments', select the appointment, and choose 'Cancel'.",
-        'ar': "انتقل إلى 'مواعيدي'، حدد الموعد، واختر 'إلغاء'.",
-      },
-    },
-    {
-      'question': {
-        'en': 'Will I receive appointment reminders?',
-        'ar': 'هل سأحصل على تذكيرات بالمواعيد؟',
-      },
-      'answer': {
-        'en':
-            'Yes, CurAi sends automated notifications before your appointment.',
-        'ar': 'نعم، يرسل CurAi إشعارات تلقائية قبل موعدك.',
-      },
-    },
-    {
-      'question': {
-        'en': 'How do I contact support?',
-        'ar': 'كيف يمكنني التواصل مع الدعم؟',
-      },
-      'answer': {
-        'en':
-            'You can reach our support team through the in-app Help & Support section or via email at support@curai.com.',
-        'ar':
-            'يمكنك التواصل مع فريق الدعم من خلال قسم المساعدة والدعم داخل التطبيق أو عبر البريد الإلكتروني support@curai.com.',
-      },
-    },
-    {
-      'question': {
-        'en': 'Can I reschedule an appointment?',
-        'ar': 'هل يمكنني إعادة جدولة موعد؟',
-      },
-      'answer': {
-        'en':
-            "Yes, go to 'My Appointments', select the appointment, and choose 'Reschedule'.",
-        'ar': "نعم، انتقل إلى 'مواعيدي'، حدد الموعد، واختر 'إعادة جدولة'.",
-      },
-    },
-    {
-      'question': {
-        'en': 'How do I update my profile?',
-        'ar': 'كيف يمكنني تحديث ملفي الشخصي؟',
-      },
-      'answer': {
-        'en':
-            "Navigate to 'Profile Settings' to update your personal information and preferences.",
-        'ar':
-            "انتقل إلى 'إعدادات الملف الشخصي' لتحديث معلوماتك الشخصية وتفضيلاتك.",
-      },
-    },
-    {
-      'question': {
-        'en': 'How do I add my medical history?',
-        'ar': 'كيف يمكنني إضافة تاريخي الطبي؟',
-      },
-      'answer': {
-        'en':
-            "Go to 'Medical History' section in your profile and enter your past medical records.",
-        'ar':
-            "انتقل إلى قسم 'التاريخ الطبي' في ملفك الشخصي وأدخل سجلاتك الطبية السابقة.",
-      },
-    },
-    {
-      'question': {
-        'en': 'What languages does CurAi support?',
-        'ar': 'ما هي اللغات التي يدعمها CurAi؟',
-      },
-      'answer': {
-        'en': 'CurAi currently supports English and Arabic.',
-        'ar': 'يدعم CurAi حاليًا اللغتين الإنجليزية والعربية.',
-      },
-    },
-    {
-      'question': {
-        'en': 'Can I have a video consultation?',
-        'ar': 'هل يمكنني إجراء استشارة عبر الفيديو؟',
-      },
-      'answer': {
-        'en': 'Yes, CurAi provides video consultation options with doctors.',
-        'ar': 'نعم، يوفر CurAi خيار الاستشارة عبر الفيديو مع الأطباء.',
-      },
-    },
-    {
-      'question': {
-        'en': 'What is the refund policy?',
-        'ar': 'ما هي سياسة الاسترداد؟',
-      },
-      'answer': {
-        'en': 'Refunds depend on cancellation timing and specific conditions.',
-        'ar': 'تعتمد المبالغ المستردة على توقيت الإلغاء وظروف معينة.',
-      },
-    },
-    {
-      'question': {
-        'en': 'How do I enable or disable notifications?',
-        'ar': 'كيف يمكنني تفعيل أو تعطيل الإشعارات؟',
-      },
-      'answer': {
-        'en': "Go to 'Settings' and manage your notification preferences.",
-        'ar': "انتقل إلى 'الإعدادات' وقم بإدارة تفضيلات الإشعارات الخاصة بك.",
-      },
-    },
-    {
-      'question': {
-        'en': 'Can I switch my account type?',
-        'ar': 'هل يمكنني تغيير نوع حسابي؟',
-      },
-      'answer': {
-        'en':
-            'Currently, account types are fixed. Contact support for any modifications.',
-        'ar': 'حاليًا، أنواع الحسابات ثابتة. تواصل مع الدعم لأي تعديلات.',
-      },
-    }
-  ];
+class HelpCenterScreen extends StatefulWidget {
+  const HelpCenterScreen({super.key});
+
+  @override
+  State<HelpCenterScreen> createState() => _HelpCenterScreenState();
+}
+
+class _HelpCenterScreenState extends State<HelpCenterScreen>
+    with TickerProviderStateMixin {
+  late TabController tabController;
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isArabic = context.isStateArabic;
     return Scaffold(
-      appBar: const CustomAppBarHelpCenter(),
-      body: ListView(
-        children: faqItems
-            .map(
-              (faq) => ExpansionTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                dense: true,
-                title: Text(
-                  isArabic ? faq['question']!['ar']! : faq['question']!['en']!,
-                  style: TextStyleApp.medium20().copyWith(
-                    color: context.onPrimaryColor,
-                  ),
-                ),
-                children: [
-                  Text(
-                    isArabic ? faq['answer']!['ar']! : faq['answer']!['en']!,
-                    style: TextStyleApp.regular18().copyWith(
-                      color: context.onSecondaryColor,
-                    ),
-                  ).paddingSymmetric(horizontal: 15, vertical: 5),
-                ],
-              ),
-            )
-            .toList(),
-      ).paddingSymmetric(horizontal: 5, vertical: 10),
+      appBar: AppBar(
+        flexibleSpace: Container(color: context.backgroundColor),
+        title: AutoSizeText(
+          context.translate(LangKeys.helpCenter),
+          maxLines: 1,
+          style: TextStyleApp.bold22().copyWith(
+            color: context.onPrimaryColor,
+          ),
+        ),
+        bottom: TabBar(
+          labelColor: context.primaryColor,
+          unselectedLabelColor: context.onPrimaryColor,
+          indicatorColor: context.primaryColor,
+          indicatorWeight: 3.w,
+          indicatorSize: TabBarIndicatorSize.tab,
+          labelStyle: TextStyleApp.bold16().copyWith(
+            color: context.primaryColor,
+          ),
+          unselectedLabelStyle: TextStyleApp.regular16().copyWith(
+            color: context.onPrimaryColor,
+          ),
+          dividerColor: context.onSecondaryColor.withAlpha(120),
+          overlayColor: WidgetStateProperty.all(
+            context.primaryColor.withAlpha(25),
+          ),
+          controller: tabController,
+          onTap: (value) {
+            setState(() {});
+            tabController.index = value;
+          },
+          tabs: [
+            Tab(text: context.translate(LangKeys.faq)),
+            Tab(text: context.translate(LangKeys.contactUs)),
+          ],
+        ),
+        centerTitle: true,
+      ),
+      body: _bodyWidget[tabController.index],
     );
   }
+
+  final List<Widget> _bodyWidget = [
+    const FAQBodyListView(),
+    const ContactUsBodyListview(),
+  ];
 }

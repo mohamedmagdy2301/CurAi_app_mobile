@@ -277,11 +277,13 @@ class AdaptiveDialogs {
                 color: context.onPrimaryColor,
               ),
             ),
-            content: Column(
-              children: [
-                message,
-                if (content != null) content,
-              ],
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  message,
+                  if (content != null) content,
+                ],
+              ),
             ),
             actions: actions,
           );
@@ -293,12 +295,14 @@ class AdaptiveDialogs {
                 color: context.onPrimaryColor,
               ),
             ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                message,
-                if (content != null) content,
-              ],
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  message,
+                  if (content != null) content,
+                ],
+              ),
             ),
             actions: actions,
           );
