@@ -31,6 +31,7 @@ dependencies:
   flutter_markdown:
   flutter_rating: 
   flutter_screenutil:
+  flutter_secure_storage: ^9.2.4
   flutter_svg: 
   geocoding: 
   geolocator:
