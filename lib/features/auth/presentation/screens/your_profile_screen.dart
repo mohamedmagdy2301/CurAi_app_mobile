@@ -218,7 +218,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   message: state.message,
                 );
               } else if (state is EditProfileLoading) {
-                AdaptiveDialogs.shoLoadingAlertDialog(
+                AdaptiveDialogs.showLoadingAlertDialog(
                   context: context,
                   title: context.translate(LangKeys.editProfile),
                 );

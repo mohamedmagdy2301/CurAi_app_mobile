@@ -140,3 +140,20 @@ class EditPhotoProfileError extends AuthState {
   @override
   List<Object> get props => [message];
 }
+
+// ! Contact Us States
+class ContactUsLoading extends AuthState {}
+
+class ContactUsSuccess extends AuthState {
+  const ContactUsSuccess({required this.message});
+  final String message;
+  @override
+  List<Object> get props => [message];
+}
+
+class ContactUsError extends AuthState {
+  const ContactUsError({required this.message});
+  final String message;
+  @override
+  List<Object> get props => [message];
+}

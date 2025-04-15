@@ -9,4 +9,5 @@ class EndPoints {
   static const String getAllDoctor = '$baseUrl/All_doctors/';
   static const String getSpecializations = '$baseUrl/specializations/';
   static const String addReview = '$baseUrl/review/';
+  static const String contactUs = '$baseUrl/api/contact-us/';
 }

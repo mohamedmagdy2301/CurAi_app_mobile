@@ -125,7 +125,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                   );
                   context.pushNamed(Routes.mainScaffoldUser);
                 } else if (state is LoginLoading) {
-                  AdaptiveDialogs.shoLoadingAlertDialog(
+                  AdaptiveDialogs.showLoadingAlertDialog(
                     context: context,
                     title: context.translate(LangKeys.login),
                   );

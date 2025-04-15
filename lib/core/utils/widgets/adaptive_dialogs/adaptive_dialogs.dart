@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 class AdaptiveDialogs {
   /// Show an alert
-  static Future<void> shoLoadingAlertDialog({
+  static Future<void> showLoadingAlertDialog({
     required BuildContext context,
     required String title,
   }) async {

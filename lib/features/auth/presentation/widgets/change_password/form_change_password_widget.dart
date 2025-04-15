@@ -122,7 +122,7 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
                   );
                   context.pushNamed(Routes.loginScreen);
                 } else if (state is ChangePasswordLoading) {
-                  AdaptiveDialogs.shoLoadingAlertDialog(
+                  AdaptiveDialogs.showLoadingAlertDialog(
                     context: context,
                     title: context.translate(LangKeys.changePassword),
                   );

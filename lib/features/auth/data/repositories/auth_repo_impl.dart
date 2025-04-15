@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
+import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model.dart';
@@ -113,6 +114,19 @@ class AuthRepoImpl extends AuthRepo {
     return response.fold(
       (failure) => left(failure.message),
       (result) => right(ProfileModel.fromJson(result)),
+    );
+  }
+
+  @override
+  Future<Either<String, String>> contactUs({
+    required ContactUsRequest contactUsRequest,
+  }) async {
+    final response =
+        await remoteDataSource.contactUS(contactUsRequest: contactUsRequest);
+
+    return response.fold(
+      (failure) => left(failure.message),
+      (result) => right(result['message'] as String),
     );
   }
 }

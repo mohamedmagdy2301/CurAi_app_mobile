@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
+import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
@@ -31,6 +32,10 @@ abstract class AuthRemoteDataSource {
     File? imageFile,
   });
   Future<Either<Failure, Map<String, dynamic>>> logout();
+
+  Future<Either<Failure, Map<String, dynamic>>> contactUS({
+    required ContactUsRequest contactUsRequest,
+  });
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -172,6 +177,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final response = await dioConsumer.patch(
       EndPoints.getProfile,
       body: data,
+    );
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> contactUS({
+    required ContactUsRequest contactUsRequest,
+  }) async {
+    final response = await dioConsumer.post(
+      EndPoints.contactUs,
+      body: contactUsRequest.toJson(),
     );
     return response.fold(
       left,

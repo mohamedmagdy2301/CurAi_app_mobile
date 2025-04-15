@@ -4,11 +4,13 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
+import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/change_password_usecase.dart';
+import 'package:curai_app_mobile/features/auth/domain/usecases/contact_us_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/edit_photo_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/edit_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/get_profile_usecase.dart';
@@ -28,6 +30,7 @@ class AuthCubit extends Cubit<AuthState> {
     this._getProfileUsecase,
     this._editProfileUsecase,
     this._editPhotoProfileUsecase,
+    this._contactUsUsecase,
   ) : super(AuthInitial());
 
   final RegisterUsecase _registerUsecase;
@@ -37,6 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
   final GetProfileUsecase _getProfileUsecase;
   final EditProfileUsecase _editProfileUsecase;
   final EditPhotoProfileUsecase _editPhotoProfileUsecase;
+  final ContactUsUsecase _contactUsUsecase;
 
   Future<void> register(RegisterRequest registerRequest) async {
     emit(RegisterLoading());
@@ -124,6 +128,17 @@ class AuthCubit extends Cubit<AuthState> {
       (errorMessage) => emit(EditPhotoProfileError(message: errorMessage)),
       (profileModel) =>
           emit(EditPhotoProfileSuccess(profileModel: profileModel)),
+    );
+  }
+
+  Future<void> contactUs(ContactUsRequest contactUsRequest) async {
+    emit(ContactUsLoading());
+
+    final result = await _contactUsUsecase.call(contactUsRequest);
+
+    result.fold(
+      (errorMessage) => emit(ContactUsError(message: errorMessage)),
+      (successMessage) => emit(ContactUsSuccess(message: successMessage)),
     );
   }
 }

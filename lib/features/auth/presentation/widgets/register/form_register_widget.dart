@@ -225,7 +225,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
                 );
                 context.pushNamed(Routes.loginScreen);
               } else if (state is RegisterLoading) {
-                AdaptiveDialogs.shoLoadingAlertDialog(
+                AdaptiveDialogs.showLoadingAlertDialog(
                   context: context,
                   title: context.translate(LangKeys.register),
                 );

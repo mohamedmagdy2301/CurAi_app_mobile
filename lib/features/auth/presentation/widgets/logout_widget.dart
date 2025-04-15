@@ -61,7 +61,7 @@ class LogoutWidget extends StatelessWidget {
             await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutLoading) {
-            await AdaptiveDialogs.shoLoadingAlertDialog(
+            await AdaptiveDialogs.showLoadingAlertDialog(
               context: context,
               title: context.translate(LangKeys.logout),
             );

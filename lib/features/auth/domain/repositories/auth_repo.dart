@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
+import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model.dart';
@@ -29,4 +30,7 @@ abstract class AuthRepo {
     File? imageFile,
   });
   Future<Either<String, String>> logout();
+  Future<Either<String, String>> contactUs({
+    required ContactUsRequest contactUsRequest,
+  });
 }

@@ -1,11 +1,16 @@
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
+import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomerServiceFormWidget extends StatefulWidget {
@@ -23,12 +28,6 @@ class _CustomerServiceFormWidgetState extends State<CustomerServiceFormWidget> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
-
-  void onPressed() {
-    if (_formKey.currentState!.validate()) {
-      context.pop();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +55,66 @@ class _CustomerServiceFormWidgetState extends State<CustomerServiceFormWidget> {
               isLable: false,
               maxLines: 5,
             ),
-            CustomButton(
-              title: LangKeys.send,
-              onPressed: onPressed,
+            BlocProvider(
+              create: (context) => sl<AuthCubit>(),
+              child: BlocConsumer<AuthCubit, AuthState>(
+                listenWhen: (previous, current) =>
+                    current is ContactUsLoading ||
+                    current is ContactUsSuccess ||
+                    current is ContactUsError,
+                listener: (context, state) {
+                  if (state is ContactUsError) {
+                    Navigator.pop(context);
+                    showMessage(
+                      context,
+                      message: state.message,
+                      type: SnackBarType.error,
+                    );
+                  } else if (state is ContactUsSuccess) {
+                    Navigator.pop(context);
+                    showMessage(
+                      context,
+                      message: state.message,
+                      type: SnackBarType.success,
+                    );
+                    Navigator.pop(context);
+                  } else if (state is ContactUsLoading) {
+                    AdaptiveDialogs.showLoadingAlertDialog(
+                      context: context,
+                      title: context.translate(LangKeys.customerService),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return CustomButton(
+                    title: LangKeys.send,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(_emailController.text.trim())) {
+                          showMessage(
+                            context,
+                            message: context.isStateArabic
+                                ? 'البريد الإلكتروني غير صالح'
+                                : 'Email is not valid',
+                            type: SnackBarType.error,
+                          );
+                          return;
+                        }
+                        context.read<AuthCubit>().contactUs(
+                              ContactUsRequest(
+                                subject: 'Customer Service',
+                                name: _fullNameController.text.trim(),
+                                email: _emailController.text.trim(),
+                                message: _messageController.text.trim(),
+                              ),
+                            );
+                      }
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ).paddingSymmetric(horizontal: 20, vertical: 10),

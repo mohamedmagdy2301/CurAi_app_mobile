@@ -93,7 +93,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
 
                   Navigator.of(context).pop(); // Close the bottom sheet
                 } else if (state is ReviewsLoading) {
-                  AdaptiveDialogs.shoLoadingAlertDialog(
+                  AdaptiveDialogs.showLoadingAlertDialog(
                     context: context,
                     title: context.translate(LangKeys.addReview),
                   );
