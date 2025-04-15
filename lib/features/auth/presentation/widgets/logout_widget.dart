@@ -36,10 +36,10 @@ class LogoutWidget extends StatelessWidget {
               message: state.message,
             );
 
-            await CacheDataHelper.removeData(
+            await CacheDataHelper.removeSecureData(
               key: SharedPrefKey.keyAccessToken,
             );
-            await CacheDataHelper.removeData(
+            await CacheDataHelper.removeSecureData(
               key: SharedPrefKey.keyRefreshToken,
             );
             await CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
@@ -49,10 +49,10 @@ class LogoutWidget extends StatelessWidget {
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutError) {
             context.pop();
-            await CacheDataHelper.removeData(
+            await CacheDataHelper.removeSecureData(
               key: SharedPrefKey.keyAccessToken,
             );
-            await CacheDataHelper.removeData(
+            await CacheDataHelper.removeSecureData(
               key: SharedPrefKey.keyRefreshToken,
             );
             await CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);

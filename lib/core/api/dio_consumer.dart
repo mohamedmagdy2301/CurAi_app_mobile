@@ -135,11 +135,12 @@ class DioConsumer implements ApiConsumer {
     if (response.statusCode == StatusCode.unauthorized ||
         response.statusCode == StatusCode.forbidden ||
         isJwtExpired) {
-      final refreshToken =
-          CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken);
-      if (refreshToken != null && refreshToken != '' && !_isRefreshing) {
+      final refreshToken = await CacheDataHelper.getSecureData(
+        key: SharedPrefKey.keyRefreshToken,
+      );
+      if (refreshToken != '' && !_isRefreshing) {
         _isRefreshing = true;
-        final refreshed = await _refreshToken(refreshToken as String);
+        final refreshed = await _refreshToken(refreshToken);
         _isRefreshing = false;
         if (refreshed && retryRequest != null) {
           final retriedResponse = await retryRequest();
@@ -183,8 +184,8 @@ class DioConsumer implements ApiConsumer {
             ? 'انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.'
             : 'Your session has expired. Please log in again.',
         onPressed: () {
-          CacheDataHelper.removeData(key: SharedPrefKey.keyAccessToken);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyRefreshToken);
+          CacheDataHelper.removeSecureData(key: SharedPrefKey.keyAccessToken);
+          CacheDataHelper.removeSecureData(key: SharedPrefKey.keyRefreshToken);
           CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
           CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
           CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
@@ -207,9 +208,9 @@ class DioConsumer implements ApiConsumer {
         final decoded = jsonDecode(response.data.toString());
         if (decoded is Map && decoded.containsKey('access')) {
           final newAccessToken = decoded['access'];
-          await CacheDataHelper.saveData(
+          await CacheDataHelper.saveSecureData(
             key: SharedPrefKey.keyAccessToken,
-            value: newAccessToken,
+            value: newAccessToken as String,
           );
           await _processQueue();
           return true;

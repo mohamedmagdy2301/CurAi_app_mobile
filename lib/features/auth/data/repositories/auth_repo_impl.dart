@@ -138,11 +138,11 @@ void saveDataUser({
   String? userName,
   int? userId,
 }) {
-  CacheDataHelper.saveData(
+  CacheDataHelper.saveSecureData(
     key: SharedPrefKey.keyAccessToken,
     value: accessToken,
   );
-  CacheDataHelper.saveData(
+  CacheDataHelper.saveSecureData(
     key: SharedPrefKey.keyRefreshToken,
     value: refreshToken ?? '',
   );

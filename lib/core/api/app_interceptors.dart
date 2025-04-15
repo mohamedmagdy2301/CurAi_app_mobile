@@ -13,7 +13,7 @@ class AppInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final token =
-        CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
+        CacheDataHelper.getSecureData(key: SharedPrefKey.keyAccessToken);
     options
       ..headers['Content-Type'] = 'application/json'
       ..headers['Accept'] = 'application/json';
@@ -58,7 +58,7 @@ class AppInterceptors extends Interceptor {
 
   Future<Response<dynamic>> retry(RequestOptions requestOptions) async {
     final newAccessToken =
-        CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken);
+        await CacheDataHelper.getSecureData(key: SharedPrefKey.keyAccessToken);
 
     final options = Options(
       method: requestOptions.method,

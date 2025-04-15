@@ -79,7 +79,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final response = await dioConsumer.post(
       EndPoints.logout,
       body: {
-        'refresh': CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken),
+        'refresh':
+            CacheDataHelper.getSecureData(key: SharedPrefKey.keyRefreshToken),
       },
     );
     return response.fold(
