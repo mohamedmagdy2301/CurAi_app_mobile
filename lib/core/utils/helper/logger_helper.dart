@@ -1,21 +1,32 @@
+import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class LoggerHelper {
   static final Logger _logger = Logger(
-    printer: PrettyPrinter(methodCount: 0),
+    printer: PrettyPrinter(
+      methodCount: 0,
+    ),
     level: Level.debug,
+    output: MultiOutput([ConsoleOutput()]),
+    filter: ProductionFilter(),
   );
 
   static void debug(String message, {String? tag}) {
-    _logger.d(_formatMessage(tag, message));
+    if (kDebugMode) {
+      _logger.d(_formatMessage(tag, message));
+    }
   }
 
   static void info(String message, {String? tag}) {
-    _logger.i(_formatMessage(tag, message));
+    if (kDebugMode) {
+      _logger.i(_formatMessage(tag, message));
+    }
   }
 
   static void warning(String message, {String? tag}) {
-    _logger.w(_formatMessage(tag, message));
+    if (kDebugMode) {
+      _logger.w(_formatMessage(tag, message));
+    }
   }
 
   static void error(
@@ -24,11 +35,13 @@ class LoggerHelper {
     StackTrace? stackTrace,
     String? tag,
   }) {
-    _logger.e(
-      _formatMessage(tag, message),
-      error: error,
-      stackTrace: stackTrace,
-    );
+    if (kDebugMode) {
+      _logger.e(
+        _formatMessage(tag, message),
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
   }
 
   static String _formatMessage(String? tag, String message) {
