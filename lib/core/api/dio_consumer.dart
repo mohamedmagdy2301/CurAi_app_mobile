@@ -1,4 +1,4 @@
-// ignore_for_file: no_default_cases, inference_failure_on_function_invocation, document_ignores, avoid_catches_without_on_clauses, avoid_dynamic_calls
+// ignore_for_file: strict_raw_type, document_ignores, lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, avoid_catches_without_on_clauses, inference_failure_on_function_return_type
 
 import 'dart:convert';
 import 'dart:io';
@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/api/app_interceptors.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/core/api/status_code.dart';
+import 'package:curai_app_mobile/core/app/env.variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -15,7 +16,6 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
-import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -30,6 +30,7 @@ class DioConsumer implements ApiConsumer {
 
   final Dio client;
   static bool _isRefreshing = false;
+  static final List<Function()> _refreshQueue = [];
 
   void _configureDio() {
     (client.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
@@ -40,7 +41,9 @@ class DioConsumer implements ApiConsumer {
     };
 
     client.options
-      ..baseUrl = EndPoints.baseUrl
+      ..baseUrl = EnvVariables.baseApiUrl
+      ..connectTimeout = const Duration(seconds: 20)
+      ..receiveTimeout = const Duration(seconds: 20)
       ..responseType = ResponseType.plain
       ..followRedirects = false
       ..validateStatus =
@@ -85,11 +88,7 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(
-      () => client.put(
-        url,
-        queryParameters: queryParameters,
-        data: body,
-      ),
+      () => client.put(url, queryParameters: queryParameters, data: body),
     );
   }
 
@@ -100,11 +99,7 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(
-      () => client.patch(
-        url,
-        queryParameters: queryParameters,
-        data: body,
-      ),
+      () => client.patch(url, queryParameters: queryParameters, data: body),
     );
   }
 
@@ -129,23 +124,23 @@ class DioConsumer implements ApiConsumer {
     Response<dynamic> response,
     Future<Response<dynamic>> Function()? retryRequest,
   ) async {
+    final decoded = jsonDecode(response.data.toString());
+    final isJwtExpired = decoded is Map &&
+        (decoded['detail']?.toString().toLowerCase().contains('expired') ??
+            false);
     if (response.statusCode == StatusCode.ok ||
         response.statusCode == StatusCode.okCreated) {
-      final data = jsonDecode(response.data.toString());
-      return right(data);
+      return right(decoded);
     }
-
     if (response.statusCode == StatusCode.unauthorized ||
         response.statusCode == StatusCode.forbidden ||
-        (response.data != null && response.data!['detail'] == 'Expired JWT.')) {
+        isJwtExpired) {
       final refreshToken =
           CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken);
-
       if (refreshToken != null && refreshToken != '' && !_isRefreshing) {
         _isRefreshing = true;
         final refreshed = await _refreshToken(refreshToken as String);
         _isRefreshing = false;
-
         if (refreshed && retryRequest != null) {
           final retriedResponse = await retryRequest();
           return _handleResponseAsJson(retriedResponse, null);
@@ -153,16 +148,28 @@ class DioConsumer implements ApiConsumer {
           await _handleLogout();
         }
       } else {
-        await _handleLogout();
+        _addToQueue(retryRequest);
       }
     }
 
-    return left(
-      ServerFailure.fromBadResponse(
-        response.statusCode!,
-        jsonDecode(response.data.toString()),
-      ),
-    );
+    return left(ServerFailure.fromBadResponse(response.statusCode!, decoded));
+  }
+
+  void _addToQueue(Future<Response<dynamic>> Function()? retryRequest) {
+    if (retryRequest != null) {
+      _refreshQueue.add(() async {
+        final retriedResponse = await retryRequest();
+        final decoded = jsonDecode(retriedResponse.data.toString());
+        return decoded;
+      });
+    }
+  }
+
+  Future<void> _processQueue() async {
+    while (_refreshQueue.isNotEmpty) {
+      final request = _refreshQueue.removeAt(0);
+      await request();
+    }
   }
 
   Future<void> _handleLogout() async {
@@ -176,7 +183,6 @@ class DioConsumer implements ApiConsumer {
             ? 'انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.'
             : 'Your session has expired. Please log in again.',
         onPressed: () {
-          // di.sl<AuthCubit>().logout();
           CacheDataHelper.removeData(key: SharedPrefKey.keyAccessToken);
           CacheDataHelper.removeData(key: SharedPrefKey.keyRefreshToken);
           CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
@@ -198,19 +204,20 @@ class DioConsumer implements ApiConsumer {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final newAccessToken = jsonDecode(response.data as String)['access'];
-        await CacheDataHelper.setData(
-          key: SharedPrefKey.keyAccessToken,
-          value: newAccessToken,
-        );
-        return true;
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        LoggerHelper.error('Error while refreshing token: $e');
-      }
-      await _handleLogout();
-    }
+        final decoded = jsonDecode(response.data.toString());
+        if (decoded is Map && decoded.containsKey('access')) {
+          final newAccessToken = decoded['access'];
+          await CacheDataHelper.setData(
+            key: SharedPrefKey.keyAccessToken,
+            value: newAccessToken,
+          );
+          await _processQueue();
+          return true;
+        } else {}
+      } else {}
+    } catch (e) {}
+
+    await _handleLogout();
     return false;
   }
 }

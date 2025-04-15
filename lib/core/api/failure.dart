@@ -59,6 +59,9 @@ class ServerFailure extends Failure {
         return e.value.toString();
       }).join('\n');
     }
+    if (error is List) {
+      error = error;
+    }
     switch (statusCode) {
       case 400:
         return ServerFailure(

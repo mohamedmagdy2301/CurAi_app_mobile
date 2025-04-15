@@ -1,13 +1,12 @@
 class EndPoints {
-  static const String baseUrl = 'https://mostafa3mad.pythonanywhere.com';
-  static const String refreshToken = '$baseUrl/api/token/refresh/';
-  static const String register = '$baseUrl/api/register/';
-  static const String login = '$baseUrl/api/login/';
-  static const String logout = '$baseUrl/api/logout/';
-  static const String changePassword = '$baseUrl/api/change-password/';
-  static const String getProfile = '$baseUrl/api/profile/';
-  static const String getAllDoctor = '$baseUrl/All_doctors/';
-  static const String getSpecializations = '$baseUrl/specializations/';
-  static const String addReview = '$baseUrl/review/';
-  static const String contactUs = '$baseUrl/api/contact-us/';
+  static const String refreshToken = '/api/token/refresh/';
+  static const String register = 'api/register/';
+  static const String login = '/api/login/';
+  static const String logout = '/api/logout/';
+  static const String changePassword = '/api/change-password/';
+  static const String getProfile = '/api/profile/';
+  static const String getAllDoctor = '/All_doctors/';
+  static const String getSpecializations = '/specializations/';
+  static const String addReview = '/review/';
+  static const String contactUs = '/api/contact-us/';
 }
