@@ -1,13 +1,18 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as a;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/utils/helper/url_launcher_helper.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/help_center/customer_service_form_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/help_center/row_navigate_contact_us_widget.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/help_center/whatsapp_content_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ContactUsBodyListview extends StatelessWidget {
   const ContactUsBodyListview({super.key});
@@ -28,32 +33,79 @@ class ContactUsBodyListview extends StatelessWidget {
             );
           },
         ),
-        20.hSpace,
+        10.hSpace,
         CustomExpansionTile(
-          leadingIcon: const Icon(Icons.email_outlined),
-          title: context.translate(LangKeys.email),
-        ),
-        20.hSpace,
-        CustomExpansionTile(
-          leadingIcon: const Icon(Icons.phone),
-          contentWidget: const Text('123456789'),
+          leadingIcon: const Icon(CupertinoIcons.phone),
           title: context.translate(LangKeys.phone),
+          contentWidget: const NumberPhoneContentWidget(
+            number: '01015415210',
+            isPhone: true,
+          ),
         ),
-        20.hSpace,
-        CustomExpansionTile(
-          leadingIcon: const Icon(Icons.email_outlined),
+        10.hSpace,
+        CustomNavagationTile(
+          leadingIcon: Icon(CupertinoIcons.mail, size: 25.sp),
           title: context.translate(LangKeys.email),
+          onTap: () => UrlLauncherHelper.launchEmail(
+            context,
+            'smartcare112000@gmail.com',
+          ),
         ),
-        20.hSpace,
-        CustomExpansionTile(
-          leadingIcon: const Icon(Icons.phone),
-          contentWidget: const Text('123456789'),
-          title: context.translate(LangKeys.phone),
+        10.hSpace,
+        CustomNavagationTile(
+          title: context.translate(LangKeys.website),
+          leadingIcon: SvgPicture.asset(
+            'assets/svg/website.svg',
+            height: 25.h,
+            width: 25.h,
+          ),
+          onTap: () =>
+              UrlLauncherHelper.launchWebsite(context, 'https://google.com'),
         ),
-        20.hSpace,
+        10.hSpace,
         CustomExpansionTile(
-          leadingIcon: const Icon(Icons.email_outlined),
-          title: context.translate(LangKeys.email),
+          leadingIcon: SvgPicture.asset(
+            'assets/svg/whatsapp.svg',
+            height: 25.h,
+            width: 25.h,
+          ),
+          title: context.translate(LangKeys.whatsApp),
+          contentWidget: const NumberPhoneContentWidget(
+            number: '01015415210',
+          ),
+        ),
+        10.hSpace,
+        CustomNavagationTile(
+          title: context.translate(LangKeys.facebook),
+          leadingIcon: SvgPicture.asset(
+            'assets/svg/facebook.svg',
+            height: 25.h,
+            width: 25.h,
+          ),
+          onTap: () =>
+              UrlLauncherHelper.launchWebsite(context, 'https://facebook.com'),
+        ),
+        10.hSpace,
+        CustomNavagationTile(
+          title: context.translate(LangKeys.instagram),
+          leadingIcon: Image.asset(
+            'assets/images/Instagram.png',
+            height: 25.h,
+            width: 25.h,
+          ),
+          onTap: () =>
+              UrlLauncherHelper.launchWebsite(context, 'https://instagram.com'),
+        ),
+        10.hSpace,
+        CustomNavagationTile(
+          title: context.translate(LangKeys.x),
+          leadingIcon: SvgPicture.asset(
+            'assets/svg/X.svg',
+            height: 25.h,
+            width: 25.h,
+          ),
+          onTap: () =>
+              UrlLauncherHelper.launchWebsite(context, 'https://x.com'),
         ),
       ],
     ).paddingSymmetric(horizontal: 15, vertical: 10);

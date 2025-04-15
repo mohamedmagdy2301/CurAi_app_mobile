@@ -13,12 +13,10 @@ class CustomExpansionTile extends StatefulWidget {
     this.contentWidget,
     super.key,
     this.leadingIcon,
-    this.onTap,
   });
   final String title;
   final Widget? contentWidget;
   final Widget? leadingIcon;
-  final void Function()? onTap;
 
   @override
   _CustomExpansionTileState createState() => _CustomExpansionTileState();
@@ -29,59 +27,49 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: widget.onTap ?? () {},
-      borderRadius: BorderRadius.circular(8.r),
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.backgroundColor.withAlpha(80),
-          borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: context.onSecondaryColor.withAlpha(15)),
-          boxShadow: [
-            BoxShadow(
-              color: context.onSecondaryColor.withAlpha(5),
-            ),
-          ],
-        ),
-        child: Theme(
-          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-          child: ExpansionTile(
-            leading: widget.leadingIcon,
-            title: AutoSizeText(
-              widget.title,
-              style: TextStyleApp.regular18().copyWith(
-                color: context.onPrimaryColor,
-              ),
-            ),
-            trailing: Icon(
-              widget.onTap != null
-                  ? Icons.arrow_forward_ios
-                  : _isExpanded
-                      ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down,
-              color: context.primaryColor,
-              size: widget.onTap != null ? 20.sp : 30.sp,
-            ),
-            onExpansionChanged: widget.onTap != null
-                ? null
-                : (expanded) {
-                    setState(() {
-                      _isExpanded = expanded;
-                    });
-                  },
-            children: widget.contentWidget == null
-                ? []
-                : [
-                    Divider(
-                      endIndent: 15.w,
-                      height: 2.h,
-                      indent: 15.w,
-                      thickness: .7,
-                    ),
-                    widget.contentWidget
-                        .paddingSymmetric(horizontal: 15, vertical: 10),
-                  ],
+    return Container(
+      decoration: BoxDecoration(
+        color: context.backgroundColor.withAlpha(80),
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: context.onSecondaryColor.withAlpha(15)),
+        boxShadow: [
+          BoxShadow(
+            color: context.onSecondaryColor.withAlpha(5),
           ),
+        ],
+      ),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          leading: widget.leadingIcon,
+          title: AutoSizeText(
+            widget.title,
+            style: TextStyleApp.regular18().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ),
+          trailing: Icon(
+            _isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+            color: context.primaryColor,
+            size: 30.sp,
+          ),
+          onExpansionChanged: (expanded) {
+            setState(() {
+              _isExpanded = expanded;
+            });
+          },
+          children: widget.contentWidget == null
+              ? []
+              : [
+                  Divider(
+                    endIndent: 15.w,
+                    height: 2.h,
+                    indent: 15.w,
+                    thickness: .7,
+                  ),
+                  widget.contentWidget
+                      .paddingSymmetric(horizontal: 15, vertical: 10),
+                ],
         ),
       ),
     );
@@ -104,8 +92,6 @@ class CustomNavagationTile extends StatefulWidget {
 }
 
 class _CustomNavagationTileState extends State<CustomNavagationTile> {
-  final bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -133,13 +119,9 @@ class _CustomNavagationTileState extends State<CustomNavagationTile> {
               ),
             ),
             trailing: Icon(
-              widget.onTap != null
-                  ? Icons.arrow_forward_ios
-                  : _isExpanded
-                      ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down,
+              Icons.arrow_forward_ios,
               color: context.primaryColor,
-              size: widget.onTap != null ? 20.sp : 30.sp,
+              size: 20.sp,
             ),
           ),
         ),
