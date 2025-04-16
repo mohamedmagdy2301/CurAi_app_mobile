@@ -4,15 +4,12 @@ class AllDoctorModel {
   AllDoctorModel({this.count, this.next, this.previous, this.results});
 
   AllDoctorModel.fromJson(Map<String, dynamic> json) {
-<<<<<<< HEAD
     count = json['count'] as int?;
     next = json['next'] as String?;
     previous = json['previous'] as String? ?? '';
-=======
     count = json['count'] as int;
     next = (json['next'] ?? '') as String;
     previous = (json['previous'] ?? '') as String;
->>>>>>> 219fc9f9c009b4d43895c7700fcdec72a11defb9
     if (json['results'] != null) {
       results = <DoctorResults>[];
       json['results'].forEach((v) {
