@@ -115,6 +115,8 @@ class LangKeys {
   static const String pleaseEnterReview = 'please_enter_review';
   static const String dr = 'dr';
   static const String noBio = 'no_bio';
+  static const String doctorNotHaveLocationInfoMaps =
+      'doctor_not_have_location_info_maps';
 
 //! Profile
   static const String profile = 'profile';

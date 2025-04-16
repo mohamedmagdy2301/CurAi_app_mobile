@@ -141,5 +141,6 @@
   "x": "X",
   "instagram": "Instagram",
   "dr"  :"Dr",
-  "no_bio": "No bio found for this doctor"
+  "no_bio": "No bio found for this doctor",
+  "doctor_not_have_location_info_maps": "This doctor does not have location information or maps"
 }
