@@ -31,6 +31,11 @@ class DoctorResults {
     this.consultationPrice,
     this.location,
     this.reviews,
+    this.firstName,
+    this.lastName,
+    this.bio,
+    this.latitude,
+    this.longitude,
   });
 
   DoctorResults.fromJson(Map<String, dynamic> json) {
@@ -41,13 +46,18 @@ class DoctorResults {
     specialization = json['specialization'] as String?;
     consultationPrice = json['consultation_price'] as String?;
     location = json['location'] as String?;
+    firstName = json['first_name'] as String?;
+    lastName = json['last_name'] as String?;
+    bio = json['bio'] as String?;
+    latitude = json['latitude'] as double?;
+    longitude = json['longitude'] as double?;
     if (json['reviews'] != null) {
       reviews = <Reviews>[];
       json['reviews'].forEach((v) {
         reviews!.add(Reviews.fromJson(v as Map<String, dynamic>));
       });
     } else {
-      reviews = []; // Handle empty reviews array
+      reviews = [];
     }
   }
 
@@ -59,6 +69,11 @@ class DoctorResults {
   String? consultationPrice;
   String? location;
   List<Reviews>? reviews;
+  String? firstName;
+  String? lastName;
+  String? bio;
+  double? latitude;
+  double? longitude;
 }
 
 class Reviews {
@@ -68,6 +83,9 @@ class Reviews {
     this.rating,
     this.comment,
     this.createdAt,
+    this.profilePatientPicture,
+    this.firstName,
+    this.lastName,
   });
 
   Reviews.fromJson(Map<String, dynamic> json) {
@@ -76,6 +94,9 @@ class Reviews {
     rating = json['rating'] as int?;
     comment = json['comment'] as String?;
     createdAt = json['created_at'] as String?;
+    profilePatientPicture = json['profile_picture'] as String?;
+    firstName = json['first_name'] as String?;
+    lastName = json['last_name'] as String?;
   }
 
   int? id;
@@ -83,4 +104,7 @@ class Reviews {
   int? rating;
   String? comment;
   String? createdAt;
+  String? profilePatientPicture;
+  String? firstName;
+  String? lastName;
 }

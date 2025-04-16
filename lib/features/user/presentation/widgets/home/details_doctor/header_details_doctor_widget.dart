@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -29,8 +31,8 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
           child: CustomCachedNetworkImage(
             imgUrl: doctorResults.profilePicture ??
                 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            width: context.isTablet ? context.H * 0.18 : context.H * 0.155,
-            height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
+            width: context.isTablet ? context.H * 0.17 : context.H * 0.145,
+            height: context.isTablet ? context.H * 0.17 : context.H * 0.145,
             loadingImgPadding: 50.w,
             errorIconSize: 50.sp,
           ),
@@ -42,21 +44,24 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: context.W * .5,
+              width: context.W * .55,
               child: AutoSizeText(
-                doctorResults.username ?? '',
+                '${context.translate(LangKeys.dr)} '
+                "${doctorResults.firstName ?? ""} "
+                "${doctorResults.lastName ?? ""}",
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyleApp.extraBold24().copyWith(
+                style: TextStyleApp.extraBold26().copyWith(
                   color: context.onPrimaryColor,
                 ),
               ),
             ),
             SizedBox(
-              width: context.W * .35,
+              width: context.W * .52,
               child: AutoSizeText(
-                '${context.translate(LangKeys.specialty)} ${specializationName(
+                '${context.translate(LangKeys.specialty)}'
+                ' ${specializationName(
                   doctorResults.specialization ?? '',
                   context.isStateArabic,
                 )} ',
@@ -71,7 +76,8 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
             SizedBox(
               width: context.W * .33,
               child: AutoSizeText(
-                '${doctorResults.consultationPrice} ${context.translate(LangKeys.egp)}',
+                '${doctorResults.consultationPrice} '
+                '${context.translate(LangKeys.egp)}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyleApp.extraBold16().copyWith(
