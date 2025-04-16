@@ -1,4 +1,3 @@
-import 'package:curai_app_mobile/core/api/app_interceptors.dart';
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
 import 'package:curai_app_mobile/core/app/env.variables.dart';
@@ -42,7 +41,7 @@ void setupInit() {
     ..registerLazySingleton<GlobalKey<NavigatorState>>(() => navigatorKey)
 
     //! Networking
-    ..registerLazySingleton(() => AppInterceptors(client: sl<Dio>()))
+    // ..registerLazySingleton(() => AppInterceptors(client: ))
     ..registerLazySingleton(
       () => LogInterceptor(requestBody: true, responseBody: true),
     )
