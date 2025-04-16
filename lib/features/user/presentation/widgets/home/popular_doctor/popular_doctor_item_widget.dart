@@ -28,8 +28,12 @@ class PopularDoctorItemWidget extends StatelessWidget {
           context.push(DoctorDetailsScreen(doctorResults: doctorResults)),
       borderRadius: BorderRadius.circular(10.r),
       child: Card(
-        elevation: 4,
-        shadowColor: context.primaryColor.withAlpha(100),
+        elevation: 1,
+        shadowColor: context.onSecondaryColor.withAlpha(70),
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(style: BorderStyle.none),
+          borderRadius: BorderRadius.circular(8.r),
+        ),
         child: Row(
           children: [
             ImageDoctorWidget(doctorResults: doctorResults),
@@ -91,6 +95,6 @@ class PopularDoctorItemWidget extends StatelessWidget {
           ],
         ),
       ),
-    ).paddingSymmetric(horizontal: 18);
+    ).paddingSymmetric(horizontal: 18, vertical: 3);
   }
 }
