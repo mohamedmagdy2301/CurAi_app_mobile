@@ -22,6 +22,7 @@ class AboutTap extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // if (doctorResults.bio != null)
           AboutMeWidget(doctorResults: doctorResults),
           15.hSpace,
           const MedicalDegreeWidget(),
@@ -205,12 +206,9 @@ class AboutMeWidget extends StatelessWidget {
         ),
         10.hSpace,
         SizedBox(
-          height: context.H * .15,
+          height: doctorResults.bio == null ? context.H * .05 : context.H * .15,
           child: AutoSizeText(
-            // doctorResults.bio ??
-            context.isStateArabic
-                ? 'د. ${doctorResults.username} هي أفضل أخصائية مناعة في مستشفى ${doctorResults.location}. حصلت على العديد من الجوائز لمساهمتها الرائعة في المجال الطبي. وهي متاحة للاستشارة الخاصة.'
-                : 'Dr. ${doctorResults.username} is the top most Immunologists specialist in Hospital ${doctorResults.location}. She achived several awards for her wonderful contribution in medical field. She is available for private consultation.',
+            doctorResults.bio ?? context.translate(LangKeys.noBio),
             maxLines: 6,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,

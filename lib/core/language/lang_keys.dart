@@ -114,6 +114,7 @@ class LangKeys {
   static const String rate = 'rate';
   static const String pleaseEnterReview = 'please_enter_review';
   static const String dr = 'dr';
+  static const String noBio = 'no_bio';
 
 //! Profile
   static const String profile = 'profile';

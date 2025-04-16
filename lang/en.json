@@ -140,5 +140,6 @@
   "facebook": "Facebook",
   "x": "X",
   "instagram": "Instagram",
-  "dr"  :"Dr"
+  "dr"  :"Dr",
+  "no_bio": "No bio found for this doctor"
 }
