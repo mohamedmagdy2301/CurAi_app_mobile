@@ -19,7 +19,6 @@ class SocialContactDoctorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       spacing: 10.w,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CircleAvatar(
           backgroundColor: context.onSecondaryColor.withAlpha(70),
