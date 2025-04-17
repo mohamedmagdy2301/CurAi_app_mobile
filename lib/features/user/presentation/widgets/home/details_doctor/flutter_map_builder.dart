@@ -34,8 +34,10 @@ class _FlutterMapBuilderState extends State<FlutterMapBuilder> {
             mapController: getLoctionCubit.mapController,
             options: MapOptions(
               initialCenter: LatLng(
-                getLoctionCubit.currentLocation!.latitude,
-                getLoctionCubit.currentLocation!.longitude,
+                widget.doctorResults.latitude!,
+                widget.doctorResults.longitude!,
+                // getLoctionCubit.currentLocation!.latitude,
+                // getLoctionCubit.currentLocation!.longitude,
               ),
               minZoom: 8,
               maxZoom: 20,
@@ -77,8 +79,8 @@ class _FlutterMapBuilderState extends State<FlutterMapBuilder> {
                 );
                 getLoctionCubit.mapController.move(
                   LatLng(
-                    getLoctionCubit.currentLocation!.latitude,
-                    getLoctionCubit.currentLocation!.longitude,
+                    widget.doctorResults.latitude!,
+                    widget.doctorResults.longitude!,
                   ),
                   16,
                 );

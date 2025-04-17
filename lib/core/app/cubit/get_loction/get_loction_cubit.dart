@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,24 +17,25 @@ class GetLoctionCubit extends Cubit<GetLoctionState> {
   List<Marker> markers = [];
 
   Future<void> getCurrentLocation({
-    required BuildContext context,
     required String? image,
+    required LatLng doctorPostion,
   }) async {
-    final userLocation = await determinePosition();
-    currentLocation = userLocation;
+    // final userLocation = await determinePosition();
+    // currentLocation = userLocation;
     markers.add(
       Marker(
-        point: LatLng(
-          userLocation.latitude,
-          userLocation.longitude,
-        ),
+        point: doctorPostion,
+        // LatLng(
+        //   userLocation.latitude,
+        //   userLocation.longitude,
+        // ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(1000.r),
           child: CustomCachedNetworkImage(
             imgUrl: image ??
                 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            width: context.W * 0.4,
-            height: context.H * 0.2,
+            width: 20.w,
+            height: 20.h,
             loadingImgPadding: 5.w,
             errorIconSize: 20.sp,
           ),

@@ -139,5 +139,10 @@
   "website": "Website",
   "facebook": "Facebook",
   "x": "X",
-  "instagram": "Instagram"
+  "instagram": "Instagram",
+  "dr"  :"Dr",
+  "no_bio": "No bio found for this doctor",
+  "consultation_price": "Consultation Price",
+  "medical_specialization": "Medical Specialization",
+  "doctor_not_have_location_info_maps": "This doctor does not have location information or maps"
 }

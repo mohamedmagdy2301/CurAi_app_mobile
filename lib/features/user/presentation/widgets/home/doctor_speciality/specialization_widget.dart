@@ -38,7 +38,7 @@ class _SpecializationWidgetState extends State<SpecializationWidget> {
   }
 }
 
-String specializationName(String name, bool isArabic) {
+String specializationName(String? name, bool isArabic) {
   const specializationsMap = {
     'Allergist': 'أخصائي حساسية',
     'Andrologists': 'أطباء أمراض الذكورة',
@@ -51,12 +51,23 @@ String specializationName(String name, bool isArabic) {
     'Orthopedist': 'طبيب عظام',
     'Pediatrician': 'طبيب أطفال',
     'Surgeon': 'جراح',
-    'neurologist': 'طبيب اعصاب',
+    'Neurologist': 'طبيب اعصاب',
   };
 
-  if (isArabic && specializationsMap.containsKey(name)) {
-    return specializationsMap[name]!;
+  // لو الاسم null أو فاضي
+  if (name == null || name.trim().isEmpty) {
+    return isArabic ? 'غير محدد' : 'Unknown';
   }
 
-  return name[0].toUpperCase() + name.substring(1);
+  // ننضف الاسم ونتأكد أول حرف كابيتال عشان يتطابق مع الماب
+  final cleanName = name.trim();
+  final formattedName = cleanName[0].toUpperCase() + cleanName.substring(1);
+
+  // لو عربي وفي ترجمة
+  if (isArabic && specializationsMap.containsKey(formattedName)) {
+    return specializationsMap[formattedName]!;
+  }
+
+  // لو مش عربي أو مفيش ترجمة، يرجع الاسم الإنجليزي متظبط
+  return formattedName;
 }

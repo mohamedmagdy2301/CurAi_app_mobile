@@ -140,5 +140,10 @@
   "website":  "موقع الانترنت",
   "facebook":  "فيسبوك",
   "x":  "X",
-  "instagram":  "انستقرام"
+  "instagram":  "انستقرام",
+  "dr":  "د.ك",
+  "no_bio":  "لا يوجد بيو لهذا الطبيب",
+  "consultation_price":  "سعر الاستشارة",
+  "medical_specialization":  "التخصص الطبي",
+  "doctor_not_have_location_info_maps":  "لا يوجد معلومات عن الموقع لهذا الطبيب"
  }

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -83,8 +84,8 @@ class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(1000.r),
                 child: CustomCachedNetworkImage(
-                  imgUrl:
-                      // widget.doctorResults.profilePicture ??
+                  imgUrl: widget.doctorResults.reviews![widget.index]
+                          .profilePatientPicture ??
                       'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
                   width: context.H * 0.045,
                   height: context.H * 0.045,
@@ -96,7 +97,8 @@ class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
               SizedBox(
                 width: context.W * 0.45,
                 child: AutoSizeText(
-                  review.patientUsername ?? '',
+                  "${review.firstName?.capitalizeFirstChar ?? ""} "
+                  "${review.lastName?.capitalizeFirstChar ?? ""}",
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
@@ -122,28 +124,29 @@ class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
           ),
           StarRating(
             rating: (review.rating ?? 0).toDouble(),
-            size: 20.r,
+            size: 25.r,
             color: Colors.orangeAccent,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             filledIcon: CupertinoIcons.star_fill,
-          ).paddingSymmetric(horizontal: 50, vertical: 10),
-          SizedBox(
-            width: context.W * 0.9,
-            child: AutoSizeText(
-              review.comment ?? '',
-              maxLines: 5,
-              textDirection: detectLanguage(review.comment ?? '') == 'ar'
-                  ? TextDirection.rtl
-                  : TextDirection.ltr,
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyleApp.regular18().copyWith(
-                color: context.onSecondaryColor,
+            emptyIcon: CupertinoIcons.star,
+            borderColor: context.onSecondaryColor.withAlpha(50),
+          ).paddingSymmetric(vertical: 5),
+          if (review.comment != '')
+            SizedBox(
+              width: context.W * 0.9,
+              child: AutoSizeText(
+                review.comment!,
+                maxLines: 5,
+                textDirection: detectLanguage(review.comment ?? '') == 'ar'
+                    ? TextDirection.rtl
+                    : TextDirection.ltr,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyleApp.regular18().copyWith(
+                  color: context.onSecondaryColor,
+                ),
               ),
-            ),
-          ).paddingSymmetric(
-            horizontal: 10,
-          ),
+            ).paddingSymmetric(horizontal: 8, vertical: 4),
         ],
       ).paddingSymmetric(horizontal: 15, vertical: 15),
     );
