@@ -74,7 +74,7 @@ class _CuraiAppState extends State<CuraiApp> {
                 ),
                 initial: widget.savedThemeMode,
                 builder: (theme, darkTheme) => MaterialApp(
-                  navigatorKey: di.navigatorKey,
+                  navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
                   theme: theme,
                   darkTheme: darkTheme,
                   debugShowCheckedModeBanner: widget.environment,

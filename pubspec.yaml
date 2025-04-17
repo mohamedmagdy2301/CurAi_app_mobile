@@ -42,6 +42,7 @@ dependencies:
   lock_orientation_screen:
   logger:
   pin_code_fields:
+  readmore: ^3.0.0
   shared_preferences:
   skeletonizer:
   translator: ^1.0.3+1

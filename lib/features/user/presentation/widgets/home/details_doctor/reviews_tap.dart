@@ -39,6 +39,7 @@ class ReviewsTap extends StatelessWidget {
           onPressed: () {
             showModalBottomSheet(
               context: context,
+              barrierColor: context.onPrimaryColor.withAlpha(60),
               backgroundColor: context.backgroundColor,
               isScrollControlled: true,
               builder: (_) => AddReviewScreen(

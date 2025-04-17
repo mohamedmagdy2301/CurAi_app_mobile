@@ -61,7 +61,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
           .getAllDoctor(page: nextPage, speciality: widget.specialityName)
           .then((_) {
         setState(() {
-          if (nextPage >= context.read<HomeCubit>().lastPage) {
+          if (nextPage >= 2) {
             hasReachedMax = true;
           } else {
             nextPage++;

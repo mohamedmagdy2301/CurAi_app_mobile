@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -55,6 +57,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               labelText: context.translate(LangKeys.yourReview),
               keyboardType: TextInputType.text,
               controller: _commentController,
+              isLable: false,
               maxLines: 5,
             ),
             30.hSpace,
@@ -66,14 +69,14 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               listener: (context, state) {
                 if (state is ReviewsError) {
                   Navigator.pop(context);
-                  final isAlreadyRated = state.message == 'خطأ غير متوقع' ||
-                      state.message == 'Unexpected error';
+                  final isAlreadyRated = state.message.contains(
+                    'You have already submitted a review for this doctor.',
+                  );
                   final errorMessage = isAlreadyRated
                       ? (context.isStateArabic
-                          ? 'لقد قمت بالتقييم من قبل'
-                          : 'You have already rated')
+                          ? 'لقد قمت بتقييم هذا الطبيب من قبل، يمكنك تعديل تقييمك'
+                          : 'You have already rated ,You can edit your review')
                       : state.message;
-
                   showMessage(
                     context,
                     message: errorMessage,
@@ -91,7 +94,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     type: SnackBarType.success,
                   );
 
-                  Navigator.of(context).pop(); // Close the bottom sheet
+                  Navigator.of(context).pop();
                 } else if (state is ReviewsLoading) {
                   AdaptiveDialogs.showLoadingAlertDialog(
                     context: context,

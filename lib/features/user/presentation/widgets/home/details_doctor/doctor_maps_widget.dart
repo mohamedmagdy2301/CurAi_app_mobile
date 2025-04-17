@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/features/user/presentation/widgets/home/details
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class DoctorMapsWidget extends StatelessWidget {
@@ -26,8 +27,11 @@ class DoctorMapsWidget extends StatelessWidget {
         BlocProvider<GetLoctionCubit>(
           create: (context) => GetLoctionCubit()
             ..getCurrentLocation(
-              context: context,
               image: doctorResults.profilePicture,
+              doctorPostion: LatLng(
+                doctorResults.latitude ?? 0.0,
+                doctorResults.longitude ?? 0.0,
+              ),
             ),
         ),
         BlocProvider<RouteCubit>(

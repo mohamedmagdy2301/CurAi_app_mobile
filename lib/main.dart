@@ -23,10 +23,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  setCustomErrorWidget();
-  Bloc.observer = SimpleBlocObserver();
-  setupInit();
-  Gemini.init(apiKey: 'AIzaSyA_ehqc-SrrKJDn5jO77Fgy_ae00UvevaM');
 
   try {
     await initializeDependencies();
@@ -68,6 +64,10 @@ void setCustomErrorWidget() {
 
 Future<void> initializeDependencies() async {
   hideKeyboard();
+  setCustomErrorWidget();
+  Bloc.observer = SimpleBlocObserver();
+  await setupAllDependencies();
+  Gemini.init(apiKey: 'AIzaSyA_ehqc-SrrKJDn5jO77Fgy_ae00UvevaM');
   await Future.wait([
     sl<ConnectivityController>().connectivityControllerInit(),
     sl<CacheDataHelper>().sharedPreferencesInitialize(),
