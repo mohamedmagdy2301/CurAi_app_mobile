@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -96,7 +97,8 @@ class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
               SizedBox(
                 width: context.W * 0.45,
                 child: AutoSizeText(
-                  review.patientUsername ?? '',
+                  "${review.firstName?.capitalizeFirstChar ?? ""} "
+                  "${review.lastName?.capitalizeFirstChar ?? ""}",
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
@@ -144,9 +146,7 @@ class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
                   color: context.onSecondaryColor,
                 ),
               ),
-            ).paddingSymmetric(
-              horizontal: 10,
-            ),
+            ).paddingSymmetric(horizontal: 8, vertical: 4),
         ],
       ).paddingSymmetric(horizontal: 15, vertical: 15),
     );
