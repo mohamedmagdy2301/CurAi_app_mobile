@@ -62,7 +62,7 @@ class PopularDoctorItemWidget extends StatelessWidget {
                         width: context.W * .55,
                         child: AutoSizeText(
                           specializationName(
-                            doctorResults.specialization!,
+                            doctorResults.specialization ?? '',
                             context.isStateArabic,
                           ),
                           maxLines: 1,

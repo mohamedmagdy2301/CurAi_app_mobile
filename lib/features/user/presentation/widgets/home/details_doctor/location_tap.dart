@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -74,14 +75,14 @@ class LocationWidget extends StatelessWidget {
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
           style: TextStyleApp.bold20().copyWith(
-            color: context.onPrimaryColor,
+            color: context.onPrimaryColor.withAlpha(180),
           ),
         ),
         10.hSpace,
         SizedBox(
           height: context.H * .1,
           child: AutoSizeText(
-            doctorResults.location ?? '',
+            doctorResults.location?.capitalizeFirstChar ?? '',
             maxLines: 2,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
