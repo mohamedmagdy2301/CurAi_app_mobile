@@ -69,6 +69,7 @@ class LocationWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        10.hSpace,
         AutoSizeText(
           context.translate(LangKeys.locationMe),
           maxLines: 1,
