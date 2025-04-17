@@ -28,7 +28,6 @@ class DoctorDetailsScreen extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            10.hSpace,
             HeaderDetailsDoctorWidget(doctorResults: doctorResults),
             20.hSpace,
             TabBar(

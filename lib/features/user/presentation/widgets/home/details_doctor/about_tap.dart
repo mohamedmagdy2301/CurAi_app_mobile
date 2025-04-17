@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
+import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/specialization_widget.dart';
 import 'package:flutter/material.dart';
 
 class AboutTap extends StatelessWidget {
@@ -22,11 +23,12 @@ class AboutTap extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // if (doctorResults.bio != null)
           AboutMeWidget(doctorResults: doctorResults),
           15.hSpace,
-          const MedicalDegreeWidget(),
-          20.hSpace,
+          MedicalDegreeWidget(doctorResults: doctorResults),
+          15.hSpace,
+          ConsultationPriceWidget(doctorResults: doctorResults),
+          15.hSpace,
           const WorkingTimeWidget(),
           10.hSpace,
         ],
@@ -35,10 +37,12 @@ class AboutTap extends StatelessWidget {
   }
 }
 
-class MedicalDegreeWidget extends StatelessWidget {
-  const MedicalDegreeWidget({
+class ConsultationPriceWidget extends StatelessWidget {
+  const ConsultationPriceWidget({
+    required this.doctorResults,
     super.key,
   });
+  final DoctorResults doctorResults;
 
   @override
   Widget build(BuildContext context) {
@@ -46,23 +50,61 @@ class MedicalDegreeWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AutoSizeText(
-          context.translate(LangKeys.medicalDegree),
+          context.translate(LangKeys.consultationPrice),
           maxLines: 1,
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
-          style: TextStyleApp.bold20().copyWith(
-            color: context.onPrimaryColor.withAlpha(140),
+          style: TextStyleApp.bold18().copyWith(
+            color: context.onPrimaryColor.withAlpha(180),
           ),
         ),
         5.hSpace,
         AutoSizeText(
-          context.isStateArabic
-              ? 'دكتوراه في الطب من جامعة هارفارد'
-              : 'Doctor of Medicine from Harvard University',
+          '${doctorResults.consultationPrice} '
+          '${context.translate(LangKeys.egp)}',
           maxLines: 1,
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
-          style: TextStyleApp.medium16().copyWith(
+          style: TextStyleApp.medium18().copyWith(
+            color: context.onSecondaryColor,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MedicalDegreeWidget extends StatelessWidget {
+  const MedicalDegreeWidget({
+    required this.doctorResults,
+    super.key,
+  });
+  final DoctorResults doctorResults;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AutoSizeText(
+          context.translate(LangKeys.medicalSpecialization),
+          maxLines: 1,
+          textAlign: TextAlign.start,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyleApp.bold18().copyWith(
+            color: context.onPrimaryColor.withAlpha(180),
+          ),
+        ),
+        5.hSpace,
+        AutoSizeText(
+          ' ${specializationName(
+            doctorResults.specialization ?? '',
+            context.isStateArabic,
+          )} ',
+          maxLines: 1,
+          textAlign: TextAlign.start,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyleApp.medium18().copyWith(
             color: context.onSecondaryColor,
           ),
         ),
@@ -86,8 +128,8 @@ class WorkingTimeWidget extends StatelessWidget {
           maxLines: 1,
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
-          style: TextStyleApp.bold20().copyWith(
-            color: context.onPrimaryColor.withAlpha(140),
+          style: TextStyleApp.bold18().copyWith(
+            color: context.onPrimaryColor.withAlpha(180),
           ),
         ),
         10.hSpace,
@@ -201,7 +243,7 @@ class AboutMeWidget extends StatelessWidget {
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
           style: TextStyleApp.bold20().copyWith(
-            color: context.onPrimaryColor.withAlpha(140),
+            color: context.onPrimaryColor.withAlpha(180),
           ),
         ),
         10.hSpace,

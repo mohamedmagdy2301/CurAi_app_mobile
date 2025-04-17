@@ -117,6 +117,8 @@ class LangKeys {
   static const String noBio = 'no_bio';
   static const String doctorNotHaveLocationInfoMaps =
       'doctor_not_have_location_info_maps';
+  static const String consultationPrice = 'consultation_price';
+  static const String medicalSpecialization = 'medical_specialization';
 
 //! Profile
   static const String profile = 'profile';
