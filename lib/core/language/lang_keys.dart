@@ -166,4 +166,10 @@ class LangKeys {
   static const String language = 'language';
   static const String english = 'english';
   static const String arabic = 'arabic';
+
+  // ! Appointments
+  static const String setManual = 'set_manual';
+  static const String selectDate = 'select_date';
+  static const String selectTime = 'select_time';
+  static const String availableTime = 'available_time';
 }

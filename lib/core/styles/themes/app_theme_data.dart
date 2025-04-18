@@ -24,6 +24,11 @@ class AppThemeData {
         elevatedButtonTheme: _elevatedButtonTheme(seedColor),
         snackBarTheme: _snackBarTheme(),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        datePickerTheme: _datePickerThemeData(
+          AppColors.backgroundDarkColor,
+          seedColor,
+          AppColors.textDarkColor,
+        ),
       );
 
   static ThemeData lightTheme(String fontFamily, Color seedColor) => ThemeData(
@@ -44,6 +49,11 @@ class AppThemeData {
         elevatedButtonTheme: _elevatedButtonTheme(seedColor),
         snackBarTheme: _snackBarTheme(),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        datePickerTheme: _datePickerThemeData(
+          AppColors.backgroundLightColor,
+          seedColor,
+          AppColors.textLightColor,
+        ),
       );
   static SnackBarThemeData _snackBarTheme() {
     return SnackBarThemeData(
@@ -69,6 +79,40 @@ class AppThemeData {
             : AppColors.textSubLightColor,
         brightness: brightness,
       );
+
+  static DatePickerThemeData _datePickerThemeData(
+    Color backgroundColor,
+    Color primaryColor,
+    Color onPrimaryColor,
+  ) {
+    return DatePickerThemeData(
+      backgroundColor: backgroundColor,
+      headerBackgroundColor: primaryColor.withAlpha(120),
+      dayStyle: TextStyleApp.medium16().copyWith(
+        color: onPrimaryColor,
+      ),
+      // todayBackgroundColor: WidgetStateProperty.all(
+      //   primaryColor,
+      // ),
+
+      headerForegroundColor: onPrimaryColor,
+      headerHelpStyle: TextStyleApp.bold20().copyWith(
+        color: onPrimaryColor,
+      ),
+      cancelButtonStyle: TextButton.styleFrom(
+        foregroundColor: primaryColor,
+        textStyle: TextStyleApp.medium18().copyWith(
+          color: primaryColor,
+        ),
+      ),
+      confirmButtonStyle: TextButton.styleFrom(
+        foregroundColor: primaryColor,
+        textStyle: TextStyleApp.medium18().copyWith(
+          color: primaryColor,
+        ),
+      ),
+    );
+  }
 
   static BottomNavigationBarThemeData _bottomNavBarTheme(
     Color backgroundColor,
