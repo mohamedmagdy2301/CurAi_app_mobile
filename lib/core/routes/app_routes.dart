@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/screens/book_appointment_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/build_your_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
@@ -13,6 +14,7 @@ import 'package:curai_app_mobile/features/profile/presentation/screens/help_cent
 import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/screens/add_review_screen.dart';
+import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/doctor_speciality_screen.dart';
@@ -60,10 +62,14 @@ class AppRoutes {
       case Routes.privacyPolicyScreen:
         return BaseRoute(page: const PrivacyPolicyScreen());
       case Routes.helpCenterScreen:
-        return BaseRoute(page: HelpCenterScreen());
+        return BaseRoute(page: const HelpCenterScreen());
       case Routes.addReviewScreen:
         return BaseRoute(
           page: AddReviewScreen(doctorId: arg! as int),
+        );
+      case Routes.bookAppointmentScreen:
+        return BaseRoute(
+          page: BookAppointmentScreen(doctorResults: arg! as DoctorResults),
         );
       case Routes.yourProfileScreen:
         return BaseRoute(page: const BuildYourProfileScreen());

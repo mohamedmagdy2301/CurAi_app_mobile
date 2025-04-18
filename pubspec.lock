@@ -435,6 +435,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.9.3"
+  flutter_steps:
+    dependency: "direct main"
+    description:
+      name: flutter_steps
+      sha256: "63b08306401c9f6ed4e0a12cea47a9f0b2bb120887b03ddf9c81e4c4ed665e72"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   flutter_svg:
     dependency: "direct main"
     description:
