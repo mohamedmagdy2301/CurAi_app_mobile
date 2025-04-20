@@ -1,9 +1,9 @@
-// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation
+// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation
 
+import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:curai_app_mobile/features/chatbot/domain/usecases/diagnosis_usecase.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatBotCubit extends Cubit<ChatBotState> {
@@ -15,7 +15,6 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   final bool isArabic;
   // Dio instance
-  final Dio _dio = Dio();
 
   // إضافة رسالة الترحيب مع أمثلة الأسئلة أو الأعراض
   void addWelcomeMessage() {
@@ -130,95 +129,52 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   // إضافة رسالة جديدة من المستخدم
   Future<void> addNewMessage(String newMessage) async {
     emit(ChatBotLoading());
+    final newUserMessage = MessageBubbleModel(
+      messageText: newMessage,
+      date: DateTime.now(),
+      sender: SenderType.user,
+    );
+    messagesList.insert(0, newUserMessage);
 
-    try {
-      final newUserMessage = MessageBubbleModel(
-        messageText: newMessage,
-        date: DateTime.now(),
-        sender: SenderType.user,
-      );
-      messagesList.insert(0, newUserMessage);
-      addLoadingMessage();
-      // الاتصال بالـ API
-      final response = await _dio.post(
-        'https://aa6c-156-199-179-208.ngrok-free.app/predict',
-        data: {'input': newMessage},
-      );
+    addLoadingMessage();
 
-      // إزالة رسالة "جاري المعالجة..."
-      removeLoadingMessage();
+    final response =
+        await _diagnosisUsecase.call(DiagnosisRequest(input: newMessage));
 
-      if (response.statusCode == 200 && response.data['status'] == 'Success') {
-        final diagnosisParts =
-            (response.data['prediction'] as String).split(' - ');
-        final diagnosis = diagnosisParts.first.trim();
-        final specialty = diagnosisParts.length > 1
-            ? diagnosisParts.last.replaceFirst('Specialization:', '').trim()
-            : 'Not specified';
+    removeLoadingMessage();
 
-        final botResponseDiagnosis = '🧠 Diagnosis: $diagnosis';
-
-        final botResponseSpecialty = '🏥 Recommended Specialty: $specialty';
-
+    response.fold(addErrorMessage, (result) {
+      if (result.prediction == '') {
+        final botMessage = MessageBubbleModel(
+          messageText: result.message!,
+          date: DateTime.now(),
+          sender: SenderType.bot,
+        );
+        messagesList.insert(0, botMessage);
+      } else {
         final botMessageDiagnosis = MessageBubbleModel(
-          messageText: botResponseDiagnosis,
+          messageText: result.botResponseDiagnosis,
           date: DateTime.now(),
           sender: SenderType.bot,
         );
         final botMessageSpecialty = MessageBubbleModel(
-          messageText: botResponseSpecialty,
+          messageText: result.botResponseSpecialty,
           date: DateTime.now(),
           sender: SenderType.bot,
         );
-        final botMessage = MessageBubbleModel(
-          messageText: response.data['message'] as String,
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-        if (response.data['prediction'] == '') {
-          messagesList.insert(0, botMessage);
-        } else {
-          messagesList
-            ..insert(0, botMessageDiagnosis)
-            ..insert(0, botMessageSpecialty);
-        }
+
+        messagesList
+          ..insert(0, botMessageDiagnosis)
+          ..insert(0, botMessageSpecialty);
         if (isClosed) return;
-
         emit(ChatBotDone(messagesList: List.from(messagesList)));
-      } else {
-        addLoadingMessage();
-        addErrorMessage('❌ فشل في الحصول على الرد من البوت.');
       }
-
-      await resetSuccessMessage();
-    } on DioException catch (e) {
-      messagesList
-          .removeWhere((msg) => msg.messageText.contains('جاري معالجة'));
-      var errorText = 'حدث خطأ: ${e.message}';
-
-      if (e.type == DioExceptionType.connectionTimeout) {
-        errorText = '⏱ انتهى وقت الاتصال';
-      } else if (e.type == DioExceptionType.receiveTimeout) {
-        errorText = '📡 انتهى وقت الاستقبال';
-      } else if (e.type == DioExceptionType.sendTimeout) {
-        errorText = '📤 انتهى وقت الإرسال';
-      } else if (e.type == DioExceptionType.badResponse) {
-        errorText = '❌ خطأ في الرد من السيرفر';
-      } else if (e.type == DioExceptionType.cancel) {
-        errorText = '🚫 تم إلغاء الطلب';
-      }
-
-      addErrorMessage(errorText);
-    } catch (e) {
-      messagesList
-          .removeWhere((msg) => msg.messageText.contains('جاري معالجة'));
-      addErrorMessage('⚠️ حصل استثناء: $e');
-    }
+    });
+    await resetSuccessMessage();
   }
 
-  // إعادة الرسالة الأصلية بعد النجاح
   Future<void> resetSuccessMessage() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     if (isClosed) return;
     emit(ChatBotInitial());
   }

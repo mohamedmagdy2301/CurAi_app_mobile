@@ -23,4 +23,16 @@ class DiagnosisModel {
   final String? prediction;
   final String? status;
   final String? time;
+
+  List<String> get diagnosisParts => (prediction ?? '').split(' - ');
+
+  String get diagnosis => diagnosisParts.first.trim();
+
+  String get specialty => diagnosisParts.length > 1
+      ? diagnosisParts.last.replaceFirst('Specialization:', '').trim()
+      : 'Not specified';
+
+  String get botResponseDiagnosis => '🧠 Diagnosis: $diagnosis';
+
+  String get botResponseSpecialty => '🏥 Recommended Specialty: $specialty';
 }
