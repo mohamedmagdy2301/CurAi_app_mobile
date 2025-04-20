@@ -1,5 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation
 
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:curai_app_mobile/features/chatbot/domain/usecases/diagnosis_usecase.dart';
@@ -14,54 +16,56 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   List<MessageBubbleModel> messagesList = [];
 
   final bool isArabic;
-  // Dio instance
-
-  // إضافة رسالة الترحيب مع أمثلة الأسئلة أو الأعراض
-  void addWelcomeMessage() {
+  Future<void> addWelcomeMessage() async {
+    final userName =
+        await CacheDataHelper.getData(key: SharedPrefKey.keyUserName) ?? '';
     MessageBubbleModel? welcomeMessage;
     MessageBubbleModel? suggestionsMessage;
+
     if (isArabic) {
       welcomeMessage = MessageBubbleModel(
-        messageText:
-            '👋 أهلاً بيك في CurAi\nأنا مساعدك الطبي الذكي.\nمن فضلك، احكيلي عن الأعراض اللي حاسس بيها علشان أساعدك بالتشخيص المناسب 🩺',
+        messageText: '👋 أهلاً $userName '
+            'في CurAi.'
+            '\n\nأنا مساعدك الطبي الذكي، هنا لمساعدتك في تحليل الأعراض وتوجيهك للتخصص المناسب.\n\n'
+            'من فضلك، ابدأ بوصف الأعراض التي تشعر بها.',
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+
+      suggestionsMessage = MessageBubbleModel(
+        messageText: '💡 أمثلة لما يمكنك كتابته:\n'
+            '- أعاني من صداع مستمر منذ عدة أيام\n'
+            '- أشعر بدوخة وتعب عام\n'
+            '- أعاني من كحة شديدة وسخونية\n'
+            '- عندي آلام في المعدة بعد الأكل\n'
+            '- أشعر بألم في الصدر عند التنفس\n'
+            '- لا أستطيع النوم جيدًا خلال الليل',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
     } else {
       welcomeMessage = MessageBubbleModel(
-        messageText:
-            '👋 Welcome to CurAi\nI am your smart medical assistant.\nPlease tell me about the symptoms you are feeling so I can help you with the appropriate diagnosis 🩺',
+        messageText: '👋 Welcome $userName '
+            'to CurAi.\n '
+            "I'm your smart medical assistant, here to help analyze your symptoms and guide you to the appropriate specialty.\n"
+            'Please start by describing the symptoms you are experiencing.',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
-    }
-    if (isArabic) {
+
       suggestionsMessage = MessageBubbleModel(
-        messageText: '💡 يمكنك تبدء بـ:\n'
-            '- عندي صداع مستمر\n'
-            '- بحس بدوخة وتعب\n'
-            '- عندي كحة وسخونية\n'
-            '- بطني بتوجعني بعد الأكل\n'
-            '- عندي ألم في الصدر\n'
-            '- مش قادر أنام كويس',
-        date: DateTime.now(),
-        sender: SenderType.bot,
-      );
-    } else {
-      suggestionsMessage = MessageBubbleModel(
-        messageText: '💡 You can start with:\n'
-            '- I have a persistent headache\n'
-            '- I feel dizzy and tired\n'
-            '- I have a cough and fever\n'
-            '- My stomach hurts after eating\n'
-            '- I have chest pain\n'
-            "- I can't sleep well",
+        messageText: '💡 Here are some examples you can start with:\n'
+            '- I have had a persistent headache for several days\n'
+            '- I feel dizzy and extremely tired\n'
+            '- I have a bad cough and high fever\n'
+            '- I feel stomach pain after eating\n'
+            '- I experience chest pain when breathing\n'
+            '- I can’t sleep well at night',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
     }
 
-    // إضافة الرسائل للقائمة
     messagesList
       ..insert(0, welcomeMessage)
       ..insert(0, suggestionsMessage);
@@ -70,63 +74,6 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }
 
-  // إضافة رسالة تحميل
-  void addLoadingMessage() {
-    if (isArabic) {
-      messagesList.insert(
-        0,
-        MessageBubbleModel(
-          messageText: 'جاري معالجة طلبك...',
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        ),
-      );
-    } else {
-      messagesList.insert(
-        0,
-        MessageBubbleModel(
-          messageText: 'Processing your request...',
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        ),
-      );
-    }
-    if (isClosed) return;
-
-    emit(ChatBotLoading());
-  }
-
-  //  إزالة رسالة التحميل
-  void removeLoadingMessage() {
-    if (isArabic) {
-      messagesList.removeWhere(
-        (message) => message.messageText.contains('جاري معالجة'),
-      );
-    } else {
-      messagesList.removeWhere(
-        (message) => message.messageText.contains('Processing your request'),
-      );
-    }
-    if (isClosed) return;
-
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
-  }
-
-  // إضافة رسالة خطأ
-  void addErrorMessage(String errorMessage) {
-    final errorMessageModel = MessageBubbleModel(
-      messageText: errorMessage,
-      date: DateTime.now(),
-      sender: SenderType.bot,
-    );
-
-    messagesList.insert(0, errorMessageModel);
-    if (isClosed) return;
-
-    emit(ChatBotFialure(message: errorMessage));
-  }
-
-  // إضافة رسالة جديدة من المستخدم
   Future<void> addNewMessage(String newMessage) async {
     emit(ChatBotLoading());
     final newUserMessage = MessageBubbleModel(
@@ -153,12 +100,12 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         messagesList.insert(0, botMessage);
       } else {
         final botMessageDiagnosis = MessageBubbleModel(
-          messageText: result.botResponseDiagnosis,
+          messageText: result.botResponse,
           date: DateTime.now(),
           sender: SenderType.bot,
         );
         final botMessageSpecialty = MessageBubbleModel(
-          messageText: result.botResponseSpecialty,
+          messageText: '',
           date: DateTime.now(),
           sender: SenderType.bot,
         );
@@ -171,6 +118,59 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       }
     });
     await resetSuccessMessage();
+  }
+
+  void addLoadingMessage() {
+    if (isArabic) {
+      messagesList.insert(
+        0,
+        MessageBubbleModel(
+          messageText: 'جاري معالجة طلبك...',
+          date: DateTime.now(),
+          sender: SenderType.bot,
+        ),
+      );
+    } else {
+      messagesList.insert(
+        0,
+        MessageBubbleModel(
+          messageText: 'Processing your request...',
+          date: DateTime.now(),
+          sender: SenderType.bot,
+        ),
+      );
+    }
+    if (isClosed) return;
+
+    emit(ChatBotLoading());
+  }
+
+  void removeLoadingMessage() {
+    if (isArabic) {
+      messagesList.removeWhere(
+        (message) => message.messageText.contains('جاري معالجة'),
+      );
+    } else {
+      messagesList.removeWhere(
+        (message) => message.messageText.contains('Processing your request'),
+      );
+    }
+    if (isClosed) return;
+
+    emit(ChatBotDone(messagesList: List.from(messagesList)));
+  }
+
+  void addErrorMessage(String errorMessage) {
+    final errorMessageModel = MessageBubbleModel(
+      messageText: errorMessage,
+      date: DateTime.now(),
+      sender: SenderType.bot,
+    );
+
+    messagesList.insert(0, errorMessageModel);
+    if (isClosed) return;
+
+    emit(ChatBotFialure(message: errorMessage));
   }
 
   Future<void> resetSuccessMessage() async {

@@ -35,4 +35,6 @@ class DiagnosisModel {
   String get botResponseDiagnosis => '🧠 Diagnosis: $diagnosis';
 
   String get botResponseSpecialty => '🏥 Recommended Specialty: $specialty';
+
+  String get botResponse => '$botResponseDiagnosis\n$botResponseSpecialty';
 }
