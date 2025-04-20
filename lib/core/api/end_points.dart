@@ -9,4 +9,5 @@ class EndPoints {
   static const String getSpecializations = '/specializations/';
   static const String addReview = '/review/';
   static const String contactUs = '/api/contact-us/';
+  static const String predict = '/predict';
 }

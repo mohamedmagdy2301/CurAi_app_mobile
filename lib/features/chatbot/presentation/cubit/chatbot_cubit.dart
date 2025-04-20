@@ -1,14 +1,17 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation
 
-import 'package:curai_app_mobile/features/chatbot/data/models/messages_chatbot_model.dart';
+import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
+import 'package:curai_app_mobile/features/chatbot/domain/usecases/diagnosis_usecase.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatBotCubit extends Cubit<ChatBotState> {
-  ChatBotCubit({required this.isArabic}) : super(ChatBotInitial());
+  ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
+      : super(ChatBotInitial());
+  final DiagnosisUsecase _diagnosisUsecase;
 
-  List<MessageModel> messagesList = [];
+  List<MessageBubbleModel> messagesList = [];
 
   final bool isArabic;
   // Dio instance
@@ -16,17 +19,17 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   // إضافة رسالة الترحيب مع أمثلة الأسئلة أو الأعراض
   void addWelcomeMessage() {
-    MessageModel? welcomeMessage;
-    MessageModel? suggestionsMessage;
+    MessageBubbleModel? welcomeMessage;
+    MessageBubbleModel? suggestionsMessage;
     if (isArabic) {
-      welcomeMessage = MessageModel(
+      welcomeMessage = MessageBubbleModel(
         messageText:
             '👋 أهلاً بيك في CurAi\nأنا مساعدك الطبي الذكي.\nمن فضلك، احكيلي عن الأعراض اللي حاسس بيها علشان أساعدك بالتشخيص المناسب 🩺',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
     } else {
-      welcomeMessage = MessageModel(
+      welcomeMessage = MessageBubbleModel(
         messageText:
             '👋 Welcome to CurAi\nI am your smart medical assistant.\nPlease tell me about the symptoms you are feeling so I can help you with the appropriate diagnosis 🩺',
         date: DateTime.now(),
@@ -34,7 +37,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
     }
     if (isArabic) {
-      suggestionsMessage = MessageModel(
+      suggestionsMessage = MessageBubbleModel(
         messageText: '💡 يمكنك تبدء بـ:\n'
             '- عندي صداع مستمر\n'
             '- بحس بدوخة وتعب\n'
@@ -46,7 +49,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         sender: SenderType.bot,
       );
     } else {
-      suggestionsMessage = MessageModel(
+      suggestionsMessage = MessageBubbleModel(
         messageText: '💡 You can start with:\n'
             '- I have a persistent headache\n'
             '- I feel dizzy and tired\n'
@@ -73,7 +76,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     if (isArabic) {
       messagesList.insert(
         0,
-        MessageModel(
+        MessageBubbleModel(
           messageText: 'جاري معالجة طلبك...',
           date: DateTime.now(),
           sender: SenderType.bot,
@@ -82,7 +85,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     } else {
       messagesList.insert(
         0,
-        MessageModel(
+        MessageBubbleModel(
           messageText: 'Processing your request...',
           date: DateTime.now(),
           sender: SenderType.bot,
@@ -112,7 +115,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   // إضافة رسالة خطأ
   void addErrorMessage(String errorMessage) {
-    final errorMessageModel = MessageModel(
+    final errorMessageModel = MessageBubbleModel(
       messageText: errorMessage,
       date: DateTime.now(),
       sender: SenderType.bot,
@@ -129,7 +132,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     emit(ChatBotLoading());
 
     try {
-      final newUserMessage = MessageModel(
+      final newUserMessage = MessageBubbleModel(
         messageText: newMessage,
         date: DateTime.now(),
         sender: SenderType.user,
@@ -157,17 +160,17 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
         final botResponseSpecialty = '🏥 Recommended Specialty: $specialty';
 
-        final botMessageDiagnosis = MessageModel(
+        final botMessageDiagnosis = MessageBubbleModel(
           messageText: botResponseDiagnosis,
           date: DateTime.now(),
           sender: SenderType.bot,
         );
-        final botMessageSpecialty = MessageModel(
+        final botMessageSpecialty = MessageBubbleModel(
           messageText: botResponseSpecialty,
           date: DateTime.now(),
           sender: SenderType.bot,
         );
-        final botMessage = MessageModel(
+        final botMessage = MessageBubbleModel(
           messageText: response.data['message'] as String,
           date: DateTime.now(),
           sender: SenderType.bot,

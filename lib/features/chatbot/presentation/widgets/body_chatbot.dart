@@ -1,6 +1,6 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
-import 'package:curai_app_mobile/features/chatbot/data/models/messages_chatbot_model.dart';
+import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/widgets/build_chat_message.dart';

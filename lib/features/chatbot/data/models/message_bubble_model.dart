@@ -2,8 +2,8 @@
 
 enum SenderType { user, bot }
 
-class MessageModel {
-  const MessageModel({
+class MessageBubbleModel {
+  const MessageBubbleModel({
     required this.messageText,
     required this.date,
     required this.sender,

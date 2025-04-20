@@ -1,4 +1,5 @@
 import 'package:curai_app_mobile/core/dependency_injection/auth_di.dart';
+import 'package:curai_app_mobile/core/dependency_injection/chatbot_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/core_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/home_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/reviews_di.dart';
@@ -20,4 +21,7 @@ Future<void> setupAllDependencies() async {
 
   /// Reviews feature dependencies
   setupReviewsDI();
+
+  /// Chatbot feature dependencies
+  setupChatbotDI();
 }
