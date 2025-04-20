@@ -1,9 +1,10 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
-import 'package:curai_app_mobile/features/user/presentation/cubit/chat_cubit.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot/build_chat_message.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot/chat_bubble.dart';
-import 'package:curai_app_mobile/features/user/presentation/widgets/chatbot/message_input_chatbot.dart';
+import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
+import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
+import 'package:curai_app_mobile/features/chatbot/presentation/widgets/build_chat_message.dart';
+import 'package:curai_app_mobile/features/chatbot/presentation/widgets/chat_bubble.dart';
+import 'package:curai_app_mobile/features/chatbot/presentation/widgets/message_input_chatbot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,9 +37,9 @@ class _BodyChatbotState extends State<BodyChatbot> {
         Expanded(
           child: Padding(
             padding: context.padding(horizontal: 15),
-            child: BlocBuilder<ChatCubit, ChatState>(
+            child: BlocBuilder<ChatBotCubit, ChatBotState>(
               builder: (context, state) {
-                final messages = context.read<ChatCubit>().messagesList;
+                final messages = context.read<ChatBotCubit>().messagesList;
                 return ListView.separated(
                   controller: _scrollController,
                   reverse: true,
@@ -55,7 +56,7 @@ class _BodyChatbotState extends State<BodyChatbot> {
         ),
         MessageInput(
           onMessageSent: (String messageText) {
-            context.read<ChatCubit>().addNewMessage(messageText);
+            context.read<ChatBotCubit>().addNewMessage(messageText);
             _jampToLastMessage();
           },
         ),

@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/features/user/data/models/messages_chatbot_model.dart';
+import 'package:curai_app_mobile/features/chatbot/data/models/messages_chatbot_model.dart';
 
 class MessageFactory {
   static List<MessageModel> generateEnglishMessages() {

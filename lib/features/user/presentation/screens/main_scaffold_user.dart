@@ -1,8 +1,8 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
-import 'package:curai_app_mobile/features/user/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/user/presentation/screens/notification_screen.dart';
 import 'package:flutter/cupertino.dart';
