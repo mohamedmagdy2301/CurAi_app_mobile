@@ -19,7 +19,7 @@ class ChatbotScreen extends StatelessWidget {
           constraints: const BoxConstraints.expand(),
           child: Scaffold(
             appBar: const CustomAppBarChatBot(),
-            body: BlocProvider(
+            body: BlocProvider<ChatBotCubit>(
               create: (_) => ChatBotCubit(
                 sl<DiagnosisUsecase>(),
                 isArabic: context.isStateArabic,
