@@ -20,23 +20,33 @@ class HomeCubit extends Cubit<HomeState> {
     String? speciality,
   }) async {
     if (page == 1) {
+      if (isClosed) return;
+
       emit(GetAllDoctorLoading());
     } else {
+      if (isClosed) return;
+
       emit(GetAllDoctorPagenationLoading());
     }
 
     final result = await _getAllDoctorUsecase.call(page, query, speciality);
+    if (isClosed) return;
     result.fold(
       (errMessage) {
         if (page == 1) {
+          if (isClosed) return;
+
           emit(GetAllDoctorFailure(message: errMessage));
         } else {
+          if (isClosed) return;
+
           emit(GetAllDoctorPagenationFailure(errMessage: errMessage));
         }
       },
       (data) {
         lastPage = (data.count! / 10).ceil();
         allDoctorsList = data.results ?? [];
+        if (isClosed) return;
 
         emit(
           GetAllDoctorSuccess(
@@ -51,9 +61,13 @@ class HomeCubit extends Cubit<HomeState> {
     emit(GetSpecializationsLoading());
 
     final result = await _getSpecializationsUsecase.call(0);
+    if (isClosed) return;
+
     result.fold(
       (errMessage) => emit(GetSpecializationsFailure(message: errMessage)),
       (specializationsList) {
+        if (isClosed) return;
+
         emit(
           GetSpecializationsSuccess(
             specializationsList: specializationsList,

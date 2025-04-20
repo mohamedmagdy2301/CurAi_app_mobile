@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/widgets/body_chatbot.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/widgets/custom_appbar_chatbot.dart';
@@ -17,7 +18,7 @@ class ChatbotScreen extends StatelessWidget {
           child: Scaffold(
             appBar: const CustomAppBarChatBot(),
             body: BlocProvider(
-              create: (_) => ChatBotCubit(),
+              create: (_) => ChatBotCubit(isArabic: context.isStateArabic),
               child: const BodyChatbot(),
             ),
           ),
