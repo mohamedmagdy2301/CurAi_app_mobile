@@ -92,13 +92,13 @@
 - ✅ **UI**  
   - Design chatbot interface:
     - ✔️  Text input and message display area.  
-    - 🕓  Quick responses or symptom options for user interaction.  
- 
+    - ✔️  Quick responses or symptom options for user interaction. 
 
-- 🔲 **API Integration**  
+- ✅ **API Integration**  
   - Connect to the backend for:
-    - 🕓  Symptom-based doctor recommendations.  
-    - 🕓  AI responses and data handling.  
+    - ✔️  Symptom-based doctor recommendations.
+    - ✔️  Image Classifications Model Integration  
+    - ✔️  AI responses and data handling.  
 
 
 ##### **User Profile**
