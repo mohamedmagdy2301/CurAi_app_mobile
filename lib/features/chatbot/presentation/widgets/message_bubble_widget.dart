@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
@@ -6,6 +8,7 @@ import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/core/utils/helper/regex.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageBubbleWidget extends StatelessWidget {
   const MessageBubbleWidget({
@@ -51,29 +54,39 @@ class MessageBubbleWidget extends StatelessWidget {
             : context.onPrimaryColor.withAlpha(80),
         borderRadius: _bubbleBorderRadius(context),
       ),
-      child: isUserMessage
-          ? AutoSizeText(
-              messageModel.messageText,
-              textDirection: textDirection(messageModel.messageText),
-              textAlign: isArabicFormat(messageModel.messageText)
-                  ? TextAlign.right
-                  : TextAlign.left,
-              style: TextStyleApp.medium16().copyWith(
-                color: Colors.white,
-                height: 1.55,
+      child: messageModel.image != null
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.file(
+                File(messageModel.image!.path),
+                width: 200.w,
+                height: 200.h,
+                fit: BoxFit.cover,
               ),
             )
-          : SelectableText(
-              messageModel.messageText,
-              textDirection: textDirection(messageModel.messageText),
-              textAlign: isArabicFormat(messageModel.messageText)
-                  ? TextAlign.right
-                  : TextAlign.left,
-              style: TextStyleApp.medium16().copyWith(
-                color: Colors.white,
-                height: 1.55,
-              ),
-            ),
+          : isUserMessage
+              ? AutoSizeText(
+                  messageModel.messageText,
+                  textDirection: textDirection(messageModel.messageText),
+                  textAlign: isArabicFormat(messageModel.messageText)
+                      ? TextAlign.right
+                      : TextAlign.left,
+                  style: TextStyleApp.medium16().copyWith(
+                    color: Colors.white,
+                    height: 1.55,
+                  ),
+                )
+              : SelectableText(
+                  messageModel.messageText,
+                  textDirection: textDirection(messageModel.messageText),
+                  textAlign: isArabicFormat(messageModel.messageText)
+                      ? TextAlign.right
+                      : TextAlign.left,
+                  style: TextStyleApp.medium16().copyWith(
+                    color: Colors.white,
+                    height: 1.55,
+                  ),
+                ),
     );
   }
 }
