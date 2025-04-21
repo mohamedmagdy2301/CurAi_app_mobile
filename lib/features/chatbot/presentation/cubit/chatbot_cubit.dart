@@ -11,16 +11,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ChatBotCubit extends Cubit<ChatBotState> {
   ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
       : super(ChatBotInitial());
-  final DiagnosisUsecase _diagnosisUsecase;
+  //     {
+  // _initializeChatBox();
+  // }
 
   List<MessageBubbleModel> messagesList = [];
+
+  final DiagnosisUsecase _diagnosisUsecase;
+  final bool isArabic;
+
+  /// get the username from Cache Data Local
   String getUsername() {
     final userName =
         CacheDataHelper.getData(key: SharedPrefKey.keyUserName) ?? '';
     return userName is String ? userName : '';
   }
 
-  final bool isArabic;
+  /// Add welcome and suggestion messages
   Future<void> addWelcomeMessage() async {
     MessageBubbleModel? welcomeMessage;
     MessageBubbleModel? suggestionsMessage;
@@ -79,22 +86,28 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         sender: SenderType.bot,
       );
     }
+
     await Future.delayed(const Duration(milliseconds: 600));
     messagesList.insert(0, welcomeMessage);
+    // await saveMessageLocally(welcomeMessage);
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
     await Future.delayed(const Duration(milliseconds: 1000));
     messagesList.insert(0, startDescribingMessage);
-
+    // await saveMessageLocally(
+    //   startDescribingMessage,
+    // );
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
-    await Future.delayed(const Duration(milliseconds: 2000));
+    await Future.delayed(const Duration(milliseconds: 1600));
     messagesList.insert(0, suggestionsMessage);
+    // await saveMessageLocally(suggestionsMessage);
 
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }
 
+  /// Add a new user message and perform a diagnosis
   Future<void> addNewMessage(String newMessage) async {
     emit(ChatBotLoading());
     final newUserMessage = MessageBubbleModel(
@@ -103,11 +116,15 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       sender: SenderType.user,
     );
     messagesList.insert(0, newUserMessage);
+    // await saveMessageLocally(newUserMessage);
 
     addLoadingMessage();
 
-    final response =
-        await _diagnosisUsecase.call(DiagnosisRequest(input: newMessage));
+    final response = await _diagnosisUsecase.call(
+      DiagnosisRequest(
+        input: newMessage,
+      ),
+    );
 
     removeLoadingMessage();
 
@@ -119,6 +136,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
           sender: SenderType.bot,
         );
         messagesList.insert(0, botMessage);
+        // await saveMessageLocally(botMessage);
       } else {
         final botMessageDiagnosis = MessageBubbleModel(
           messageText: result.botResponse,
@@ -143,14 +161,20 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         );
 
         messagesList.insert(0, botMessageDiagnosis);
+        // await saveMessageLocally(botMessageDiagnosis);
+
         if (isClosed) return;
         emit(ChatBotDone(messagesList: List.from(messagesList)));
         await Future.delayed(const Duration(milliseconds: 1500));
         messagesList.insert(0, goodbyeMessage);
+        // await saveMessageLocally(goodbyeMessage); // Save goodbye message
+
         if (isClosed) return;
         emit(ChatBotDone(messagesList: List.from(messagesList)));
         await Future.delayed(const Duration(milliseconds: 1500));
         messagesList.insert(0, restartMessage);
+        // await saveMessageLocally(restartMessage); // Save restart message
+
         if (isClosed) return;
         emit(ChatBotDone(messagesList: List.from(messagesList)));
       }
@@ -158,6 +182,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     await resetSuccessMessage();
   }
 
+  // Add loading message
   void addLoadingMessage() {
     if (isArabic) {
       messagesList.insert(
@@ -183,14 +208,16 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     emit(ChatBotLoading());
   }
 
+  // Remove loading message
   void removeLoadingMessage() {
     if (isArabic) {
       messagesList.removeWhere(
-        (message) => message.messageText.contains('جاري معالجة'),
+        (message) => message.messageText.contains('جاري معالجة طلبك 🔃...'),
       );
     } else {
       messagesList.removeWhere(
-        (message) => message.messageText.contains('Processing your request'),
+        (message) =>
+            message.messageText.contains('🔃 Processing your request...'),
       );
     }
     if (isClosed) return;
@@ -198,6 +225,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }
 
+  // Add error message
   void addErrorMessage(String errorMessage) {
     final errorMessageModel = MessageBubbleModel(
       messageText: errorMessage,
@@ -211,9 +239,36 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     emit(ChatBotFialure(message: errorMessage));
   }
 
+  // Reset success message
   Future<void> resetSuccessMessage() async {
     await Future.delayed(const Duration(seconds: 1));
     if (isClosed) return;
     emit(ChatBotInitial());
   }
 }
+ // late Box<MessageBubbleModel> chatBox;
+
+  /// Open and initialize the chat box
+  // Future<void> _initializeChatBox() async {
+  //   if (!Hive.isBoxOpen('chatMessages')) {
+  //     chatBox = await Hive.openBox<MessageBubbleModel>('chatMessages');
+  //   } else {
+  //     chatBox = Hive.box<MessageBubbleModel>('chatMessages');
+  //   }
+  //   await loadMessagesLocally();
+  // }
+
+  /// Save a message to Hive
+  // Future<void> saveMessageLocally(MessageBubbleModel message) async {
+  //   await chatBox.add(message);
+  // }
+
+  /// Load all messages from Hive
+  // Future<void> loadMessagesLocally() async {
+  //   if (!Hive.isBoxOpen('chatMessages')) {
+  //     // Wait for initialization if not yet initialized
+  //     await _initializeChatBox();
+  //   }
+  //   final messages = chatBox.values.toList();
+  //   emit(ChatBotDone(messagesList: List.from(messages)));
+  // }

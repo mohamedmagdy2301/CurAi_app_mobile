@@ -1,15 +1,26 @@
-// ignore_for_file: lines_longer_than_80_chars
+// part 'message_bubble_model.g.dart'; // Generate Hive adapter
 
-enum SenderType { user, bot }
-
+// @HiveType(typeId: 0)
 class MessageBubbleModel {
-  const MessageBubbleModel({
+  MessageBubbleModel({
     required this.messageText,
     required this.date,
     required this.sender,
   });
-
+  // @HiveField(0)
   final String messageText;
+
+  // @HiveField(1)
   final DateTime date;
+
+  // @HiveField(2)
   final SenderType sender;
+}
+
+// @HiveType(typeId: 1)
+enum SenderType {
+  // @HiveField(0)
+  user,
+  // @HiveField(1)
+  bot,
 }
