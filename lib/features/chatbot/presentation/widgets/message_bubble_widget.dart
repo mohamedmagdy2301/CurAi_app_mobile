@@ -47,7 +47,7 @@ class MessageBubbleWidget extends StatelessWidget {
       margin: _bubbleMargin(context),
       decoration: BoxDecoration(
         color: !isUserMessage
-            ? context.primaryColor
+            ? context.primaryColor.withAlpha(200)
             : context.onPrimaryColor.withAlpha(80),
         borderRadius: _bubbleBorderRadius(context),
       ),
@@ -61,7 +61,7 @@ class MessageBubbleWidget extends StatelessWidget {
             : TextAlign.left,
         style: TextStyleApp.medium16().copyWith(
           color: Colors.white,
-          height: 1.6,
+          height: 1.55,
         ),
       ),
       // : ChatBotMarkdownBubble(messageText: messageModel.messageText),
