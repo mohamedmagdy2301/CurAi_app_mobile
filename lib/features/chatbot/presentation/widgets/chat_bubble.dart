@@ -19,7 +19,7 @@ class ChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment:
-          isUserMessage ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+          isUserMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         MessageBubbleWidget(messageModel: messageModel),
         5.hSpace,
@@ -31,7 +31,9 @@ class ChatBubble extends StatelessWidget {
   Widget _buildMessageTime(BuildContext context) {
     return AutoSizeText(
       formattedTime(context, messageModel.date),
-      style: TextStyleApp.regular12().copyWith(color: context.onSecondaryColor),
+      style: TextStyleApp.regular12().copyWith(
+        color: context.onPrimaryColor.withAlpha(220),
+      ),
       maxLines: 1,
     );
   }

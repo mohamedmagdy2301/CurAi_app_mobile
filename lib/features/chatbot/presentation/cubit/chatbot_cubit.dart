@@ -1,25 +1,29 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation, missing_whitespace_between_adjacent_strings
 
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:curai_app_mobile/features/chatbot/domain/usecases/diagnosis_usecase.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ChatBotCubit extends Cubit<ChatBotState> {
   ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
       : super(ChatBotInitial());
-  //     {
-  // _initializeChatBox();
-  // }
 
   List<MessageBubbleModel> messagesList = [];
-
   final DiagnosisUsecase _diagnosisUsecase;
   final bool isArabic;
+  final Box<MessageBubbleModel> _chatBox =
+      Hive.box<MessageBubbleModel>('chat_messages');
 
   /// get the username from Cache Data Local
   String getUsername() {
@@ -28,11 +32,77 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     return userName is String ? userName : '';
   }
 
+  /// Check if the chat box is closed
+  Future<void> loadPreviousMessages() async {
+    messagesList = _chatBox.values.toList().reversed.toList();
+    emit(ChatBotDone(messagesList: List.from(messagesList)));
+
+    // Add welcome only if no previous messages
+    if (messagesList.isEmpty) {
+      await addWelcomeMessage();
+    }
+  }
+
+  /// clear the chat box
+  Future<void> clearChatBot() async {
+    await _chatBox.clear();
+    messagesList.clear();
+    emit(ChatBotInitial());
+  }
+
+  /// Add a new message to the chat box
+  Future<void> addMessage(MessageBubbleModel message) async {
+    messagesList.insert(0, message);
+    await _chatBox.add(message);
+    if (isClosed) return;
+    emit(ChatBotDone(messagesList: List.from(messagesList)));
+  }
+
+  /// Handle diagnosis response and display appropriate messages
+  Future<void> handleDiagnosisResponse(DiagnosisModel result) async {
+    if (result.prediction == '') {
+      final botMessage = MessageBubbleModel(
+        messageText: result.message,
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      await addMessage(botMessage);
+    } else {
+      final botMessageDiagnosis = MessageBubbleModel(
+        messageText: result.responseMessage(isArabic),
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      await addMessage(botMessageDiagnosis);
+
+      final goodbyeMessage = MessageBubbleModel(
+        messageText: isArabic
+            ? 'شكرًا لك يا ${getUsername()} على استخدامك CurAi.\nنتمنى لك الشفاء العاجل!. 😊'
+            : 'Thank you, ${getUsername()}, for using CurAi.\nWe wish you a speedy recovery! 😊',
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      await Future.delayed(const Duration(milliseconds: 1000));
+      await addMessage(goodbyeMessage);
+
+      final restartMessage = MessageBubbleModel(
+        messageText: isArabic
+            ? 'هل لديك أي أعراض أخرى تود مشاركتها؟'
+            : "Any other symptoms you'd like to share?",
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      await Future.delayed(const Duration(milliseconds: 1400));
+
+      await addMessage(restartMessage);
+    }
+  }
+
   /// Add welcome and suggestion messages
   Future<void> addWelcomeMessage() async {
-    MessageBubbleModel? welcomeMessage;
-    MessageBubbleModel? suggestionsMessage;
-    MessageBubbleModel? startDescribingMessage;
+    MessageBubbleModel welcomeMessage;
+    MessageBubbleModel startDescribingMessage;
+    MessageBubbleModel suggestionsMessage;
 
     if (isArabic) {
       welcomeMessage = MessageBubbleModel(
@@ -41,6 +111,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         date: DateTime.now(),
         sender: SenderType.bot,
       );
+
       startDescribingMessage = MessageBubbleModel(
         messageText: 'من فضلك، ابدأ بوصف الأعراض التي تشعر بها.❗',
         date: DateTime.now(),
@@ -81,6 +152,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         date: DateTime.now(),
         sender: SenderType.bot,
       );
+
       startDescribingMessage = MessageBubbleModel(
         messageText: 'Please start describing your symptoms.❗',
         date: DateTime.now(),
@@ -89,101 +161,49 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     }
 
     await Future.delayed(const Duration(milliseconds: 600));
-    messagesList.insert(0, welcomeMessage);
-    // await saveMessageLocally(welcomeMessage);
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
+    await addMessage(welcomeMessage);
     await Future.delayed(const Duration(milliseconds: 1000));
-    messagesList.insert(0, startDescribingMessage);
-    // await saveMessageLocally(
-    //   startDescribingMessage,
-    // );
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
+    await addMessage(startDescribingMessage);
     await Future.delayed(const Duration(milliseconds: 1600));
-    messagesList.insert(0, suggestionsMessage);
-    // await saveMessageLocally(suggestionsMessage);
-
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
+    await addMessage(suggestionsMessage);
   }
 
   /// Add a new user message and perform a diagnosis
-  Future<void> addNewMessage(String newMessage) async {
+  Future<void> addNewMessage({String? message, XFile? image}) async {
+    Either<String, DiagnosisModel> response;
     emit(ChatBotLoading());
+
+    String? imagePath;
+    if (image != null) {
+      final appDir = await getApplicationDocumentsDirectory();
+      final savedImage = await File(image.path).copy(
+        '${appDir.path}/${DateTime.now().millisecondsSinceEpoch}_${image.name}',
+      );
+      imagePath = savedImage.path;
+    }
+
     final newUserMessage = MessageBubbleModel(
-      messageText: newMessage,
+      messageText: message ?? '',
       date: DateTime.now(),
       sender: SenderType.user,
+      imagePath: imagePath,
     );
-    messagesList.insert(0, newUserMessage);
-    // await saveMessageLocally(newUserMessage);
 
+    await addMessage(newUserMessage);
     addLoadingMessage();
 
-    final response = await _diagnosisUsecase.call(
-      DiagnosisRequest(
-        input: newMessage,
-      ),
-    );
+    if (image != null) {
+      response = await _diagnosisUsecase.call(DiagnosisRequest(image: image));
+    } else {
+      response =
+          await _diagnosisUsecase.call(DiagnosisRequest(inputText: message));
+    }
 
     removeLoadingMessage();
-
-    response.fold(addErrorMessage, (result) async {
-      if (result.prediction == '') {
-        final botMessage = MessageBubbleModel(
-          messageText: result.message!,
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-        messagesList.insert(0, botMessage);
-        // await saveMessageLocally(botMessage);
-      } else {
-        final botMessageDiagnosis = MessageBubbleModel(
-          messageText: result.botResponse,
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-        final goodbyeMessage = MessageBubbleModel(
-          messageText: isArabic
-              ? 'شكرًا لك يا ${getUsername()} على استخدامك CurAi.'
-                  '\nنتمنى لك الشفاء العاجل!. 😊'
-              : 'Thank you, ${getUsername()}, for using CurAi.'
-                  '\nWe wish you a speedy recovery! 😊',
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-        final restartMessage = MessageBubbleModel(
-          messageText: isArabic
-              ? 'هل هناك أعراض أخرى تحب تخبرني بها؟'
-              : "Any other symptoms you'd like to share?",
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-
-        messagesList.insert(0, botMessageDiagnosis);
-        // await saveMessageLocally(botMessageDiagnosis);
-
-        if (isClosed) return;
-        emit(ChatBotDone(messagesList: List.from(messagesList)));
-        await Future.delayed(const Duration(milliseconds: 1500));
-        messagesList.insert(0, goodbyeMessage);
-        // await saveMessageLocally(goodbyeMessage); // Save goodbye message
-
-        if (isClosed) return;
-        emit(ChatBotDone(messagesList: List.from(messagesList)));
-        await Future.delayed(const Duration(milliseconds: 1500));
-        messagesList.insert(0, restartMessage);
-        // await saveMessageLocally(restartMessage); // Save restart message
-
-        if (isClosed) return;
-        emit(ChatBotDone(messagesList: List.from(messagesList)));
-      }
-    });
-    await resetSuccessMessage();
+    response.fold(addErrorMessage, handleDiagnosisResponse);
   }
 
-  // Add loading message
+  /// Add loading message
   void addLoadingMessage() {
     if (isArabic) {
       messagesList.insert(
@@ -205,124 +225,41 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
     }
     if (isClosed) return;
-
     emit(ChatBotLoading());
   }
 
-  // Remove loading message
+  /// Remove loading message
   void removeLoadingMessage() {
-    if (isArabic) {
-      messagesList.removeWhere(
-        (message) => message.messageText.contains('جاري معالجة طلبك'),
-      );
-    } else {
-      messagesList.removeWhere(
-        (message) => message.messageText.contains('Processing your request'),
-      );
-    }
+    messagesList.removeWhere(
+      (message) =>
+          message.messageText?.contains(
+            isArabic
+                ? 'جاري معالجة طلبك 🔃...'
+                : '🔃 Processing your request...',
+          ) ??
+          false,
+    );
     if (isClosed) return;
-
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }
 
-  // Add error message
+  /// Add error message
   void addErrorMessage(String errorMessage) {
     final errorMessageModel = MessageBubbleModel(
       messageText: errorMessage,
       date: DateTime.now(),
       sender: SenderType.bot,
     );
-
     removeLoadingMessage();
-
     messagesList.insert(0, errorMessageModel);
     if (isClosed) return;
-
     emit(ChatBotFialure(message: errorMessage));
   }
 
-  // Reset success message
+  /// Reset success message
   Future<void> resetSuccessMessage() async {
     await Future.delayed(const Duration(seconds: 1));
     if (isClosed) return;
     emit(ChatBotInitial());
   }
-
-  /// Add an image message
-  Future<void> addImageMessage(XFile image) async {
-    final imageMessage = MessageBubbleModel(
-      messageText: '',
-      date: DateTime.now(),
-      sender: SenderType.user,
-      image: image,
-    );
-    final generateImageMessage = MessageBubbleModel(
-      messageText: isArabic
-          ? 'سيتم معالجة الصورة الخاصة بك قريبًا.  🔜'
-          : 'Your image will be processed soon.  🔜',
-      date: DateTime.now(),
-      sender: SenderType.bot,
-    );
-    messagesList.insert(0, imageMessage);
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
-    addLoadingMessage();
-    await Future.delayed(const Duration(milliseconds: 3000));
-    removeLoadingMessage();
-    messagesList.insert(0, generateImageMessage);
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
-  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- // late Box<MessageBubbleModel> chatBox;
-
-  /// Open and initialize the chat box
-  // Future<void> _initializeChatBox() async {
-  //   if (!Hive.isBoxOpen('chatMessages')) {
-  //     chatBox = await Hive.openBox<MessageBubbleModel>('chatMessages');
-  //   } else {
-  //     chatBox = Hive.box<MessageBubbleModel>('chatMessages');
-  //   }
-  //   await loadMessagesLocally();
-  // }
-
-  /// Save a message to Hive
-  // Future<void> saveMessageLocally(MessageBubbleModel message) async {
-  //   await chatBox.add(message);
-  // }
-
-  /// Load all messages from Hive
-  // Future<void> loadMessagesLocally() async {
-  //   if (!Hive.isBoxOpen('chatMessages')) {
-  //     // Wait for initialization if not yet initialized
-  //     await _initializeChatBox();
-  //   }
-  //   final messages = chatBox.values.toList();
-  //   emit(ChatBotDone(messagesList: List.from(messages)));
-  // }

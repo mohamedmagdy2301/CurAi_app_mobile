@@ -1,31 +1,33 @@
-// part 'message_bubble_model.g.dart'; // Generate Hive adapter
+import 'package:hive/hive.dart';
 
-// @HiveType(typeId: 0)
-import 'package:image_picker/image_picker.dart';
+part 'message_bubble_model.g.dart';
 
-class MessageBubbleModel {
+@HiveType(typeId: 0)
+class MessageBubbleModel extends HiveObject {
   MessageBubbleModel({
-    required this.messageText,
     required this.date,
     required this.sender,
-    this.image,
+    this.messageText,
+    this.imagePath,
   });
-  // @HiveField(0)
-  final String messageText;
+  @HiveField(0)
+  final String? messageText;
 
-  // @HiveField(1)
+  @HiveField(1)
   final DateTime date;
 
-  // @HiveField(2)
+  @HiveField(2)
   final SenderType sender;
-  // @HiveField(3)
-  final XFile? image;
+
+  @HiveField(3)
+  final String? imagePath;
 }
 
-// @HiveType(typeId: 1)
+@HiveType(typeId: 1)
 enum SenderType {
-  // @HiveField(0)
+  @HiveField(0)
   user,
-  // @HiveField(1)
+
+  @HiveField(1)
   bot,
 }

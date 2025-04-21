@@ -9,13 +9,11 @@ class NoInternetConnection extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Container(
-          constraints: const BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                AppImages.noNetwork,
-              ),
+        body: ColoredBox(
+          color: const Color(0xfff7f7f7),
+          child: Center(
+            child: Image.asset(
+              AppImages.noNetwork,
               fit: BoxFit.contain,
             ),
           ),

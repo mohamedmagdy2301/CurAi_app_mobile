@@ -1,34 +1,24 @@
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BuildChatMessage extends StatelessWidget {
+class BuildChatMessage extends StatefulWidget {
   const BuildChatMessage({super.key});
 
   @override
+  State<BuildChatMessage> createState() => _BuildChatMessageState();
+}
+
+class _BuildChatMessageState extends State<BuildChatMessage> {
+  @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ChatBotCubit, ChatBotState>(
-      listener: (context, state) async {
-        if (state is ChatBotFialure) {
-          showMessage(
-            context,
-            type: SnackBarType.error,
-            message: state.message,
-          );
-        }
-      },
+    return BlocBuilder<ChatBotCubit, ChatBotState>(
       builder: (context, state) {
-        if (state is ChatBotDone) {
-          return _buildStatusMessage(
-            context,
-            context.isStateArabic ? 'تم التحقق' : 'Successful',
-            Colors.green,
-          );
-        } else if (state is ChatBotLoading) {
+        if (state is ChatBotLoading) {
           return _buildStatusMessage(
             context,
             context.isStateArabic ? 'جاري التحقق...' : 'Wait a moment...',
@@ -46,7 +36,7 @@ class BuildChatMessage extends StatelessWidget {
     Color color,
   ) {
     return SizedBox(
-      height: 25,
+      height: 25.h,
       child: Text(
         message,
         style: TextStyleApp.semiBold12().copyWith(
