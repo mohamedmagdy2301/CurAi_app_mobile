@@ -50,7 +50,7 @@ class MessageBubbleWidget extends StatelessWidget {
       margin: _bubbleMargin(context),
       decoration: BoxDecoration(
         color: !isUserMessage
-            ? context.primaryColor.withAlpha(200)
+            ? context.primaryColor.withAlpha(120)
             : context.onPrimaryColor.withAlpha(80),
         borderRadius: _bubbleBorderRadius(context),
       ),

@@ -228,15 +228,15 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   /// Remove loading message
   void removeLoadingMessage() {
-    if (isArabic) {
-      messagesList.removeWhere(
-        (message) => message.messageText!.contains('جاري معالجة طلبك'),
-      );
-    } else {
-      messagesList.removeWhere(
-        (message) => message.messageText!.contains('Processing your request'),
-      );
-    }
+    messagesList.removeWhere(
+      (message) =>
+          message.messageText?.contains(
+            isArabic
+                ? 'جاري معالجة طلبك 🔃...'
+                : '🔃 Processing your request...',
+          ) ??
+          false,
+    );
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }

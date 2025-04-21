@@ -11,6 +11,7 @@ import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cub
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,7 +23,19 @@ class CustomAppBarChatBot extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      flexibleSpace: Container(color: context.backgroundColor),
+      backgroundColor:
+          context.isDark ? const Color(0xff113746) : const Color(0xffe8f1f5),
+      systemOverlayStyle: context.isDark
+          ? SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: const Color(0xff113746),
+            )
+          : SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: const Color(0xffe8f1f5),
+            ),
+      flexibleSpace: Container(
+        color:
+            context.isDark ? const Color(0xff113746) : const Color(0xffe8f1f5),
+      ),
       title: _buildTitleText(context),
       leading: _buildBackButton(context),
       actions: [
@@ -55,9 +68,10 @@ class CustomAppBarChatBot extends StatelessWidget
                     ),
               onPressed: () {
                 hideKeyboard();
-                context.read<ChatBotCubit>().clearChatBot();
+                context.read<ChatBotCubit>()
+                  ..clearChatBot()
+                  ..addWelcomeMessage();
                 context.pop();
-                context.read<ChatBotCubit>().loadPreviousMessages();
               },
             );
           },

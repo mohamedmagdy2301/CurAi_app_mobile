@@ -17,7 +17,7 @@ class ChatbotScreen extends StatelessWidget {
       create: (_) => ChatBotCubit(
         sl<DiagnosisUsecase>(),
         isArabic: context.isStateArabic,
-      ),
+      )..loadPreviousMessages(),
       child: LockOrientation(
         child: SafeArea(
           child: Container(

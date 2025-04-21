@@ -21,12 +21,6 @@ class _BodyChatbotState extends State<BodyChatbot> {
   final ScrollController _scrollController = ScrollController();
 
   @override
-  void initState() {
-    super.initState();
-    context.read<ChatBotCubit>().loadPreviousMessages();
-  }
-
-  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
@@ -34,51 +28,65 @@ class _BodyChatbotState extends State<BodyChatbot> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        const BuildChatMessage(),
-        Expanded(
-          child: Padding(
-            padding: context.padding(horizontal: 15),
-            child: BlocBuilder<ChatBotCubit, ChatBotState>(
-              builder: (context, state) {
-                final messages = context.read<ChatBotCubit>().messagesList;
-                return ListView.separated(
-                  controller: _scrollController,
-                  reverse: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    if (messages[index].sender == SenderType.bot) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          ChatBubble(messageModel: messages[index]),
-                        ],
-                      );
-                    } else {
-                      return ChatBubble(messageModel: messages[index]);
-                    }
-                  },
-                  separatorBuilder: (context, index) => 15.hSpace,
-                );
-              },
+    return Container(
+      decoration: BoxDecoration(
+        color:
+            context.isDark ? const Color(0xff113746) : const Color(0xffe8f1f5),
+        image: DecorationImage(
+          image: context.isDark
+              ? const AssetImage('assets/images/splash_dark.png')
+              : const AssetImage('assets/images/splash_light.png'),
+          fit: BoxFit.contain,
+          alignment: Alignment.topCenter,
+          opacity: 0.05,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          const BuildChatMessage(),
+          Expanded(
+            child: Padding(
+              padding: context.padding(horizontal: 15),
+              child: BlocBuilder<ChatBotCubit, ChatBotState>(
+                builder: (context, state) {
+                  final messages = context.read<ChatBotCubit>().messagesList;
+                  return ListView.separated(
+                    controller: _scrollController,
+                    reverse: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      if (messages[index].sender == SenderType.bot) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            ChatBubble(messageModel: messages[index]),
+                          ],
+                        );
+                      } else {
+                        return ChatBubble(messageModel: messages[index]);
+                      }
+                    },
+                    separatorBuilder: (context, index) => 15.hSpace,
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        MessageInput(
-          onMessageSent: ({String? message, XFile? image}) {
-            if (image != null) {
-              context.read<ChatBotCubit>().addNewMessage(image: image);
-            }
-            if (message != null) {
-              context.read<ChatBotCubit>().addNewMessage(message: message);
-            }
-            _jampToLastMessage();
-          },
-        ),
-      ],
+          MessageInput(
+            onMessageSent: ({String? message, XFile? image}) {
+              if (image != null) {
+                context.read<ChatBotCubit>().addNewMessage(image: image);
+              }
+              if (message != null) {
+                context.read<ChatBotCubit>().addNewMessage(message: message);
+              }
+              _jampToLastMessage();
+            },
+          ),
+        ],
+      ),
     );
   }
 
