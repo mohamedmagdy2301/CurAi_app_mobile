@@ -12,6 +12,7 @@ import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cub
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBarChatBot extends StatelessWidget
     implements PreferredSizeWidget {
@@ -26,7 +27,11 @@ class CustomAppBarChatBot extends StatelessWidget
       leading: _buildBackButton(context),
       actions: [
         IconButton(
-          icon: const Icon(CupertinoIcons.add_circled_solid),
+          icon: Icon(
+            CupertinoIcons.add_circled_solid,
+            size: 32.sp,
+            color: context.onPrimaryColor,
+          ),
           onPressed: () {
             AdaptiveDialogs.showOkAlertDialog(
               context: context,
