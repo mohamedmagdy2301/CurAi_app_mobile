@@ -65,6 +65,10 @@ void setCustomErrorWidget() {
 Future<void> initializeDependencies() async {
   hideKeyboard();
   setCustomErrorWidget();
+  // await Hive.initFlutter();
+  // Hive
+  //   ..registerAdapter(SenderTypeAdapter())
+  //   ..registerAdapter(MessageBubbleModelAdapter());
   Bloc.observer = SimpleBlocObserver();
   await setupAllDependencies();
   Gemini.init(apiKey: 'AIzaSyA_ehqc-SrrKJDn5jO77Fgy_ae00UvevaM');
