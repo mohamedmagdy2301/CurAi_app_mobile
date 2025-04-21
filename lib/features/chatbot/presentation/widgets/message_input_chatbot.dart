@@ -1,12 +1,12 @@
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
-import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MessageInput extends StatefulWidget {
   const MessageInput({
@@ -14,7 +14,7 @@ class MessageInput extends StatefulWidget {
     super.key,
   });
 
-  final void Function(String message) onMessageSent;
+  final void Function({String? message, XFile? image}) onMessageSent;
 
   @override
   State<MessageInput> createState() => _MessageInputState();
@@ -24,7 +24,7 @@ class _MessageInputState extends State<MessageInput> {
   final TextEditingController _controllerMessage = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isSentMessage = false;
-
+  XFile image = XFile('');
   @override
   void dispose() {
     _controllerMessage.dispose();
@@ -32,21 +32,34 @@ class _MessageInputState extends State<MessageInput> {
   }
 
   void _sendMessage() {
+    if (image.path.isNotEmpty) {
+      widget.onMessageSent(image: image);
+      setState(() {
+        image = XFile('');
+        isSentMessage = false;
+      });
+      return;
+    }
+
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
       final messageText = _controllerMessage.text.trim();
       if (messageText.isNotEmpty) {
-        widget.onMessageSent(messageText);
-        if (kDebugMode) {
-          LoggerHelper.info('Message sent: $messageText');
-        }
+        widget.onMessageSent(message: messageText);
         _controllerMessage.clear();
-        setState(() {
-          isSentMessage = false;
-        });
+        setState(() => isSentMessage = false);
         hideKeyboard();
       }
+    }
+  }
+
+  Future<void> pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    image = await picker.pickImage(source: source) ?? XFile('');
+    if (image.path.isNotEmpty) {
+      setState(() {
+        isSentMessage = true;
+      });
     }
   }
 
@@ -55,45 +68,116 @@ class _MessageInputState extends State<MessageInput> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: context.padding(horizontal: 10, vertical: 10),
+        padding: context.padding(horizontal: 15, vertical: 10),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Expanded(
-              child: TextFormField(
-                controller: _controllerMessage,
-                onChanged: (value) {
-                  setState(() => isSentMessage = value.trim().isNotEmpty);
-                },
-                minLines: 1,
-                maxLines: 5,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: context.onSecondaryColor.withAlpha(20),
-                  contentPadding: context.padding(horizontal: 20, vertical: 10),
-                  enabledBorder: buildBorder(),
-                  focusedBorder: buildBorder(),
-                  border: buildBorder(),
-                  hintText: context.isStateArabic
-                      ? 'ماذا يمكنني مساعدتك؟'
-                      : 'What can I help you with?',
-                  hintStyle: TextStyleApp.regular14().copyWith(
-                    color: context.onSecondaryColor,
+            if (image.path.isNotEmpty)
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.file(
+                      File(image.path),
+                      width: 50.w,
+                      height: 50.h,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  suffixIcon: isSentMessage
-                      ? null
-                      : IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.attach_file,
-                            color: context.primaryColor,
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          image = XFile('');
+                          isSentMessage = false;
+                        });
+                      },
+                      child: CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.red,
+                        child:
+                            Icon(Icons.close, size: 12.sp, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            else
+              Expanded(
+                child: TextFormField(
+                  controller: _controllerMessage,
+                  onChanged: (value) {
+                    setState(() => isSentMessage = value.trim().isNotEmpty);
+                  },
+                  minLines: 1,
+                  maxLines: 5,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: context.onSecondaryColor.withAlpha(20),
+                    contentPadding:
+                        context.padding(horizontal: 20, vertical: 10),
+                    enabledBorder: buildBorder(),
+                    focusedBorder: buildBorder(),
+                    border: buildBorder(),
+                    hintText: context.isStateArabic
+                        ? 'ماذا يمكنني مساعدتك؟'
+                        : 'What can I help you with?',
+                    hintStyle: TextStyleApp.regular14().copyWith(
+                      color: context.onSecondaryColor,
+                    ),
+                    suffixIcon: isSentMessage
+                        ? null
+                        : IconButton(
+                            onPressed: () {
+                              showModalBottomSheet<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SafeArea(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: const Icon(Icons.photo),
+                                          title: Text(
+                                            context.isStateArabic
+                                                ? 'اختر صورة'
+                                                : 'Choose a photo',
+                                          ),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            pickImage(ImageSource.gallery);
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: const Icon(Icons.camera),
+                                          title: Text(
+                                            context.isStateArabic
+                                                ? 'التقاط صورة'
+                                                : 'Take a photo',
+                                          ),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            pickImage(ImageSource.camera);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            icon: Icon(
+                              Icons.attach_file,
+                              color: context.primaryColor,
+                            ),
                           ),
-                        ),
+                  ),
                 ),
               ),
-            ),
-            10.wSpace,
             InkWell(
               onTap: isSentMessage ? _sendMessage : null,
               child: CircleAvatar(

@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_mod
 import 'package:curai_app_mobile/features/chatbot/domain/usecases/diagnosis_usecase.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatBotCubit extends Cubit<ChatBotState> {
   ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
@@ -188,7 +189,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       messagesList.insert(
         0,
         MessageBubbleModel(
-          messageText: 'جاري معالجة طلبك...',
+          messageText: 'جاري معالجة طلبك 🔃...',
           date: DateTime.now(),
           sender: SenderType.bot,
         ),
@@ -197,7 +198,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       messagesList.insert(
         0,
         MessageBubbleModel(
-          messageText: 'Processing your request...',
+          messageText: '🔃 Processing your request...',
           date: DateTime.now(),
           sender: SenderType.bot,
         ),
@@ -212,12 +213,11 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   void removeLoadingMessage() {
     if (isArabic) {
       messagesList.removeWhere(
-        (message) => message.messageText.contains('جاري معالجة طلبك 🔃...'),
+        (message) => message.messageText.contains('جاري معالجة طلبك'),
       );
     } else {
       messagesList.removeWhere(
-        (message) =>
-            message.messageText.contains('🔃 Processing your request...'),
+        (message) => message.messageText.contains('Processing your request'),
       );
     }
     if (isClosed) return;
@@ -233,6 +233,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       sender: SenderType.bot,
     );
 
+    removeLoadingMessage();
+
     messagesList.insert(0, errorMessageModel);
     if (isClosed) return;
 
@@ -245,7 +247,58 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     if (isClosed) return;
     emit(ChatBotInitial());
   }
+
+  /// Add an image message
+  Future<void> addImageMessage(XFile image) async {
+    final imageMessage = MessageBubbleModel(
+      messageText: '',
+      date: DateTime.now(),
+      sender: SenderType.user,
+      image: image,
+    );
+    final generateImageMessage = MessageBubbleModel(
+      messageText: isArabic
+          ? 'سيتم معالجة الصورة الخاصة بك قريبًا.  🔜'
+          : 'Your image will be processed soon.  🔜',
+      date: DateTime.now(),
+      sender: SenderType.bot,
+    );
+    messagesList.insert(0, imageMessage);
+    emit(ChatBotDone(messagesList: List.from(messagesList)));
+    addLoadingMessage();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    removeLoadingMessage();
+    messagesList.insert(0, generateImageMessage);
+    if (isClosed) return;
+    emit(ChatBotDone(messagesList: List.from(messagesList)));
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  // late Box<MessageBubbleModel> chatBox;
 
   /// Open and initialize the chat box

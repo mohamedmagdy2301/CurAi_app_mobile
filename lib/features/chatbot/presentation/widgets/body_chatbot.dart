@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/features/chatbot/presentation/widgets/chat_bubb
 import 'package:curai_app_mobile/features/chatbot/presentation/widgets/message_input_chatbot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class BodyChatbot extends StatefulWidget {
   const BodyChatbot({super.key});
@@ -68,8 +69,13 @@ class _BodyChatbotState extends State<BodyChatbot> {
           ),
         ),
         MessageInput(
-          onMessageSent: (String messageText) {
-            context.read<ChatBotCubit>().addNewMessage(messageText);
+          onMessageSent: ({String? message, XFile? image}) {
+            if (message != null) {
+              context.read<ChatBotCubit>().addNewMessage(message);
+            }
+            if (image != null) {
+              context.read<ChatBotCubit>().addImageMessage(image);
+            }
             _jampToLastMessage();
           },
         ),
