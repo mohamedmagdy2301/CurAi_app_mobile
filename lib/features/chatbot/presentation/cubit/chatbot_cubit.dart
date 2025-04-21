@@ -1,5 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation, missing_whitespace_between_adjacent_strings
 
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';
@@ -9,7 +11,9 @@ import 'package:curai_app_mobile/features/chatbot/domain/usecases/diagnosis_usec
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ChatBotCubit extends Cubit<ChatBotState> {
   ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
@@ -18,6 +22,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   List<MessageBubbleModel> messagesList = [];
   final DiagnosisUsecase _diagnosisUsecase;
   final bool isArabic;
+  final Box<MessageBubbleModel> _chatBox =
+      Hive.box<MessageBubbleModel>('chat_messages');
 
   /// get the username from Cache Data Local
   String getUsername() {
@@ -26,10 +32,29 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     return userName is String ? userName : '';
   }
 
-  /// Add a message and emit the updated state
+  /// Check if the chat box is closed
+  Future<void> loadPreviousMessages() async {
+    messagesList = _chatBox.values.toList().reversed.toList();
+    emit(ChatBotDone(messagesList: List.from(messagesList)));
+
+    // Add welcome only if no previous messages
+    if (messagesList.isEmpty) {
+      await addWelcomeMessage();
+    }
+  }
+
+  /// clear the chat box
+  Future<void> clearChatBot() async {
+    await _chatBox.clear();
+    messagesList.clear();
+    emit(ChatBotInitial());
+  }
+
+  /// Add a new message to the chat box
   Future<void> addMessage(MessageBubbleModel message) async {
     await Future.delayed(const Duration(milliseconds: 600));
     messagesList.insert(0, message);
+    await _chatBox.add(message);
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }
@@ -145,23 +170,31 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   Future<void> addNewMessage({String? message, XFile? image}) async {
     Either<String, DiagnosisModel> response;
     emit(ChatBotLoading());
+
+    String? imagePath;
+    if (image != null) {
+      final appDir = await getApplicationDocumentsDirectory();
+      final savedImage = await File(image.path).copy(
+        '${appDir.path}/${DateTime.now().millisecondsSinceEpoch}_${image.name}',
+      );
+      imagePath = savedImage.path;
+    }
+
     final newUserMessage = MessageBubbleModel(
       messageText: message ?? '',
       date: DateTime.now(),
       sender: SenderType.user,
-      image: image,
+      imagePath: imagePath,
     );
+
     await addMessage(newUserMessage);
     addLoadingMessage();
 
     if (image != null) {
-      response = await _diagnosisUsecase.call(
-        DiagnosisRequest(image: image),
-      );
+      response = await _diagnosisUsecase.call(DiagnosisRequest(image: image));
     } else {
-      response = await _diagnosisUsecase.call(
-        DiagnosisRequest(inputText: message),
-      );
+      response =
+          await _diagnosisUsecase.call(DiagnosisRequest(inputText: message));
     }
 
     removeLoadingMessage();
@@ -228,55 +261,3 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     emit(ChatBotInitial());
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- // late Box<MessageBubbleModel> chatBox;
-
-  /// Open and initialize the chat box
-  // Future<void> _initializeChatBox() async {
-  //   if (!Hive.isBoxOpen('chatMessages')) {
-  //     chatBox = await Hive.openBox<MessageBubbleModel>('chatMessages');
-  //   } else {
-  //     chatBox = Hive.box<MessageBubbleModel>('chatMessages');
-  //   }
-  //   await loadMessagesLocally();
-  // }
-
-  /// Save a message to Hive
-  // Future<void> saveMessageLocally(MessageBubbleModel message) async {
-  //   await chatBox.add(message);
-  // }
-
-  /// Load all messages from Hive
-  // Future<void> loadMessagesLocally() async {
-  //   if (!Hive.isBoxOpen('chatMessages')) {
-  //     // Wait for initialization if not yet initialized
-  //     await _initializeChatBox();
-  //   }
-  //   final messages = chatBox.values.toList();
-  //   emit(ChatBotDone(messagesList: List.from(messages)));
-  // }

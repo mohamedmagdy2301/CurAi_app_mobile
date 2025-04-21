@@ -54,11 +54,11 @@ class MessageBubbleWidget extends StatelessWidget {
             : context.onPrimaryColor.withAlpha(80),
         borderRadius: _bubbleBorderRadius(context),
       ),
-      child: messageModel.image != null
+      child: messageModel.imagePath != null
           ? ClipRRect(
               borderRadius: _bubbleBorderRadius(context),
               child: Image.file(
-                File(messageModel.image!.path),
+                File(messageModel.imagePath!),
                 width: 200.w,
                 height: 200.h,
                 fit: BoxFit.cover,

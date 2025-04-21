@@ -13,6 +13,7 @@ import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
 import 'package:curai_app_mobile/core/utils/helper/bolc_observer.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
+import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:curai_app_mobile/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -20,6 +21,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -65,10 +68,14 @@ void setCustomErrorWidget() {
 Future<void> initializeDependencies() async {
   hideKeyboard();
   setCustomErrorWidget();
-  // await Hive.initFlutter();
-  // Hive
-  //   ..registerAdapter(SenderTypeAdapter())
-  //   ..registerAdapter(MessageBubbleModelAdapter());
+  final appDocumentDir = await getApplicationDocumentsDirectory();
+  Hive
+    ..init(appDocumentDir.path)
+    ..registerAdapter(MessageBubbleModelAdapter())
+    ..registerAdapter(SenderTypeAdapter());
+
+  await Hive.openBox<MessageBubbleModel>('chat_messages');
+
   Bloc.observer = SimpleBlocObserver();
   await setupAllDependencies();
   Gemini.init(apiKey: 'AIzaSyA_ehqc-SrrKJDn5jO77Fgy_ae00UvevaM');

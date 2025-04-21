@@ -23,8 +23,7 @@ class _BodyChatbotState extends State<BodyChatbot> {
   @override
   void initState() {
     super.initState();
-    // إرسال رسالة الترحيب عند فتح الشات
-    context.read<ChatBotCubit>().addWelcomeMessage();
+    context.read<ChatBotCubit>().loadPreviousMessages();
   }
 
   @override
