@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocProvider<HomeCubit>(
       create: (context) => di.sl<HomeCubit>()
-        ..getAllDoctor()
+        ..getAllDoctor(page: 2)
         ..getSpecializations(),
       child: SafeArea(
         bottom: false,

@@ -1,5 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -122,7 +124,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                           ),
                         );
                   },
-                );
+                ).paddingBottom(Platform.isIOS ? 15.h : 0);
               },
             ),
           ],

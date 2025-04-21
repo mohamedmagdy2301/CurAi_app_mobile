@@ -31,10 +31,13 @@ dependencies:
   flutter_markdown:
   flutter_rating: 
   flutter_screenutil:
+  flutter_steps: ^1.0.5
   flutter_svg: 
   geocoding: 
   geolocator:
   get_it:
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
   http: 
   image_picker:
   intl: 
@@ -53,6 +56,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis:
+  build_runner:
+  hive_generator:
  
 flutter:
   uses-material-design: true

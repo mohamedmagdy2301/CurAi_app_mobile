@@ -145,5 +145,10 @@
   "no_bio":  "لا يوجد بيو لهذا الطبيب",
   "consultation_price":  "سعر الاستشارة",
   "medical_specialization":  "التخصص الطبي",
-  "doctor_not_have_location_info_maps":  "لا يوجد معلومات عن الموقع لهذا الطبيب"
+  "doctor_not_have_location_info_maps":  "لا يوجد معلومات عن الموقع لهذا الطبيب",
+"set_manual":  "تحديد يدوي",
+  "select_date":  " حدد التاريخ",
+  "select_time":  "حدد الوقت",
+  "available_time":  "الوقت المتاح"
+
  }

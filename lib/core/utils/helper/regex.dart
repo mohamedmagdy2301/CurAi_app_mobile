@@ -1,5 +1,13 @@
 bool isArabicFormat(String text) {
   if (text.isEmpty) return false;
-  final arabicRegex = RegExp(r'[\u0600-\u06FF]');
-  return arabicRegex.hasMatch(text[0]);
+  // Check if the average character is Arabic
+  final arabicCharCount = text.runes.where((rune) {
+    final character = String.fromCharCode(rune);
+    return RegExp(r'[\u0600-\u06FF]').hasMatch(character);
+  }).length;
+  final englishCharCount = text.runes.where((rune) {
+    final character = String.fromCharCode(rune);
+    return RegExp('[a-zA-Z]').hasMatch(character);
+  }).length;
+  return arabicCharCount > englishCharCount;
 }
