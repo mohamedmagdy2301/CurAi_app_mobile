@@ -28,6 +28,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   /// Add a message and emit the updated state
   Future<void> addMessage(MessageBubbleModel message) async {
+    await Future.delayed(const Duration(milliseconds: 600));
     messagesList.insert(0, message);
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
@@ -44,7 +45,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       await addMessage(botMessage);
     } else {
       final botMessageDiagnosis = MessageBubbleModel(
-        messageText: result.responseMessage,
+        messageText: result.responseMessage(isArabic),
         date: DateTime.now(),
         sender: SenderType.bot,
       );
