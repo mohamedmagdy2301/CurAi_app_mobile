@@ -8,7 +8,6 @@ import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/core/utils/helper/regex.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageBubbleWidget extends StatelessWidget {
   const MessageBubbleWidget({
@@ -59,8 +58,8 @@ class MessageBubbleWidget extends StatelessWidget {
               borderRadius: _bubbleBorderRadius(context),
               child: Image.file(
                 File(messageModel.imagePath!),
-                width: 200.w,
-                height: 200.h,
+                width: context.W * 0.5,
+                height: context.H * 0.25,
                 fit: BoxFit.cover,
               ),
             )
