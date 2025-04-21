@@ -21,12 +21,12 @@ class MessageBubbleWidget extends StatelessWidget {
   EdgeInsets _bubbleMargin(BuildContext context) {
     return isUserMessage
         ? EdgeInsets.only(
-            right: context.isStateArabic ? 0 : 40,
-            left: context.isStateArabic ? 20 : 0,
+            right: !context.isStateArabic ? 0 : 40,
+            left: !context.isStateArabic ? 20 : 0,
           )
         : EdgeInsets.only(
-            right: context.isStateArabic ? 20 : 0,
-            left: context.isStateArabic ? 0 : 20,
+            right: !context.isStateArabic ? 20 : 0,
+            left: !context.isStateArabic ? 0 : 20,
           );
   }
 
@@ -35,23 +35,23 @@ class MessageBubbleWidget extends StatelessWidget {
       topLeft: const Radius.circular(10),
       topRight: const Radius.circular(10),
       bottomRight: isUserMessage
-          ? Radius.circular(context.isStateArabic ? 0 : 10)
-          : Radius.circular(context.isStateArabic ? 10 : 0),
+          ? Radius.circular(!context.isStateArabic ? 0 : 25)
+          : Radius.circular(!context.isStateArabic ? 25 : 0),
       bottomLeft: isUserMessage
-          ? Radius.circular(context.isStateArabic ? 10 : 0)
-          : Radius.circular(context.isStateArabic ? 0 : 10),
+          ? Radius.circular(!context.isStateArabic ? 25 : 0)
+          : Radius.circular(!context.isStateArabic ? 0 : 25),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: context.padding(vertical: 12, horizontal: 10),
+      padding: context.padding(vertical: 13, horizontal: 13),
       margin: _bubbleMargin(context),
       decoration: BoxDecoration(
         color: !isUserMessage
-            ? context.primaryColor.withAlpha(120)
-            : context.onPrimaryColor.withAlpha(80),
+            ? context.primaryColor
+            : const Color.fromARGB(255, 102, 102, 102),
         borderRadius: _bubbleBorderRadius(context),
       ),
       child: messageModel.imagePath != null

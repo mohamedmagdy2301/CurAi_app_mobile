@@ -19,7 +19,7 @@ class ChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment:
-          isUserMessage ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+          isUserMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         MessageBubbleWidget(messageModel: messageModel),
         5.hSpace,

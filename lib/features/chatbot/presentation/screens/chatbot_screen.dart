@@ -18,15 +18,10 @@ class ChatbotScreen extends StatelessWidget {
         sl<DiagnosisUsecase>(),
         isArabic: context.isStateArabic,
       )..loadPreviousMessages(),
-      child: LockOrientation(
-        child: SafeArea(
-          child: Container(
-            constraints: const BoxConstraints.expand(),
-            child: const Scaffold(
-              appBar: CustomAppBarChatBot(),
-              body: BodyChatbot(),
-            ),
-          ),
+      child: const LockOrientation(
+        child: Scaffold(
+          appBar: CustomAppBarChatBot(),
+          body: BodyChatbot(),
         ),
       ),
     );

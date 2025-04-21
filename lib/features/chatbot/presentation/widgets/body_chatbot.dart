@@ -59,7 +59,7 @@ class _BodyChatbotState extends State<BodyChatbot> {
                     itemBuilder: (context, index) {
                       if (messages[index].sender == SenderType.bot) {
                         return Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ChatBubble(messageModel: messages[index]),
                           ],
