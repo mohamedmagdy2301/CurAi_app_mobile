@@ -1,8 +1,10 @@
 class DiagnosisModel {
   DiagnosisModel({
     this.code,
-    this.isMedical,
+    this.inputType,
     this.message,
+    this.messageAr,
+    this.messageEn,
     this.prediction,
     this.status,
     this.time,
@@ -10,21 +12,27 @@ class DiagnosisModel {
 
   factory DiagnosisModel.fromJson(Map<String, dynamic> json) => DiagnosisModel(
         code: json['code'] as int?,
-        isMedical: json['is_medical'] as bool?,
+        inputType: json['input_type'] as String?,
         message: json['message'] as String?,
+        messageAr: json['messageAr'] as String?,
+        messageEn: json['messageEn'] as String?,
         prediction: json['prediction'] as String?,
         status: json['status'] as String?,
         time: json['time'] as String?,
       );
 
   final int? code;
-  final bool? isMedical;
+  final String? inputType;
   final String? message;
+  final String? messageAr;
+  final String? messageEn;
   final String? prediction;
   final String? status;
   final String? time;
 
-  List<String> get diagnosisParts => (prediction ?? '').split(' - ');
+  List<String> get diagnosisParts => (prediction?.contains(' - ') ?? false)
+      ? prediction!.split(' - ')
+      : [prediction ?? ''];
 
   String get diagnosis => diagnosisParts.first.trim();
 
@@ -32,9 +40,25 @@ class DiagnosisModel {
       ? diagnosisParts.last.replaceFirst('Specialization:', '').trim()
       : 'Not specified';
 
-  String get botResponseDiagnosis => '🧠 Diagnosis: $diagnosis';
+  String get botResponseDiagnosisEn => '🧠 Diagnosis: $diagnosis';
+  String get botResponseDiagnosisAr => '🧠 التشخيص: $diagnosis';
+  String get botResponseSpecialtyEn => '🏥 Recommended Specialty: $specialty';
+  String get botResponseSpecialtyAr => '🏥 التخصص الموصى به: $specialty';
 
-  String get botResponseSpecialty => '🏥 Recommended Specialty: $specialty';
+  String get botResponseEn =>
+      '$botResponseDiagnosisEn\n$botResponseSpecialtyEn';
+  String get botResponseAr =>
+      '$botResponseDiagnosisAr\n$botResponseSpecialtyAr';
 
-  String get botResponse => '$botResponseDiagnosis\n$botResponseSpecialty';
+  // Method to handle the response based on input type
+  String responseMessage(bool isArabic) {
+    if (inputType == 'image') {
+      return isArabic ? (messageAr ?? diagnosis) : (messageEn ?? diagnosis);
+    } else if (inputType == 'text') {
+      return isArabic ? botResponseAr : botResponseEn;
+    }
+    return isArabic
+        ? 'لا يوجد تشخيص صحيح متاح'
+        : 'No valid diagnosis available';
+  }
 }
