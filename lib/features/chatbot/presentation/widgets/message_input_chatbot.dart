@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -113,7 +116,7 @@ class _MessageInputState extends State<MessageInput> {
                     setState(() => isSentMessage = value.trim().isNotEmpty);
                   },
                   minLines: 1,
-                  maxLines: 5,
+                  maxLines: 6,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     filled: true,
@@ -133,64 +136,79 @@ class _MessageInputState extends State<MessageInput> {
                         ? null
                         : IconButton(
                             onPressed: () {
-                              showModalBottomSheet<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return SafeArea(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: const Icon(Icons.photo),
-                                          title: Text(
-                                            context.isStateArabic
-                                                ? 'اختر صورة'
-                                                : 'Choose a photo',
-                                          ),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            pickImage(ImageSource.gallery);
-                                          },
-                                        ),
-                                        ListTile(
-                                          leading: const Icon(Icons.camera),
-                                          title: Text(
-                                            context.isStateArabic
-                                                ? 'التقاط صورة'
-                                                : 'Take a photo',
-                                          ),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            pickImage(ImageSource.camera);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
+                              showBottomSheetSelectImage(context);
                             },
                             icon: Icon(
-                              Icons.attach_file,
+                              CupertinoIcons.photo,
+                              size: 20.sp,
                               color: context.primaryColor,
                             ),
                           ),
                   ),
                 ),
               ),
+            10.wSpace,
             InkWell(
               onTap: isSentMessage ? _sendMessage : null,
               child: CircleAvatar(
-                backgroundColor: context.primaryColor,
-                radius: 22,
-                child: isSentMessage
-                    ? Icon(Icons.send, size: 22.sp, color: Colors.white)
-                    : Icon(Icons.mic, size: 24.sp, color: Colors.white),
+                backgroundColor:
+                    isSentMessage ? context.primaryColor : Colors.grey,
+                radius: 22.r,
+                child: Icon(
+                  CupertinoIcons.paperplane,
+                  size: 22.sp,
+                  color: isSentMessage ? Colors.white : Colors.grey[300],
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> showBottomSheetSelectImage(BuildContext context) {
+    return showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(CupertinoIcons.photo),
+                title: Text(
+                  context.isStateArabic ? 'اختر صورة' : 'Choose a photo',
+                  style: TextStyleApp.bold16().copyWith(
+                    color: context.onSecondaryColor,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(CupertinoIcons.camera),
+                title: Text(
+                  context.isStateArabic ? 'التقاط صورة' : 'Take a photo',
+                  style: TextStyleApp.bold16().copyWith(
+                    color: context.onSecondaryColor,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ).paddingSymmetric(
+            vertical: 20,
+            horizontal: 20,
+          ),
+        );
+      },
     );
   }
 

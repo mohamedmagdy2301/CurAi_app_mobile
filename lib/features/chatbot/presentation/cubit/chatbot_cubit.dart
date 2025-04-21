@@ -267,7 +267,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
     addLoadingMessage();
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 3000));
     removeLoadingMessage();
     messagesList.insert(0, generateImageMessage);
     if (isClosed) return;
