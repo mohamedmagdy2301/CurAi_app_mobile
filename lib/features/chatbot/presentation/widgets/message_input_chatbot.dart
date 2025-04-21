@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
+    as int_ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
@@ -77,36 +78,48 @@ class _MessageInputState extends State<MessageInput> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             if (image.path.isNotEmpty)
-              Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.file(
-                      File(image.path),
-                      width: 50.w,
-                      height: 50.h,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          image = XFile('');
-                          isSentMessage = false;
-                        });
-                      },
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: Colors.red,
-                        child:
-                            Icon(Icons.close, size: 12.sp, color: Colors.white),
+              Container(
+                width: context.W * 0.77,
+                height: context.H * 0.06,
+                decoration: BoxDecoration(
+                  color: context.onSecondaryColor.withAlpha(20),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: context.padding(horizontal: 10, vertical: 5),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.file(
+                        File(image.path),
+                        width: 50.w,
+                        height: 50.h,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            image = XFile('');
+                            isSentMessage = false;
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: 10,
+                          backgroundColor: Colors.red,
+                          child: Icon(
+                            Icons.close,
+                            size: 12.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               )
             else
               Expanded(
@@ -140,8 +153,8 @@ class _MessageInputState extends State<MessageInput> {
                             },
                             icon: Icon(
                               CupertinoIcons.photo,
-                              size: 20.sp,
-                              color: context.primaryColor,
+                              size: 23.sp,
+                              color: context.onSecondaryColor,
                             ),
                           ),
                   ),
@@ -153,11 +166,11 @@ class _MessageInputState extends State<MessageInput> {
               child: CircleAvatar(
                 backgroundColor:
                     isSentMessage ? context.primaryColor : Colors.grey,
-                radius: 22.r,
+                radius: 25.r,
                 child: Icon(
                   CupertinoIcons.paperplane,
-                  size: 22.sp,
-                  color: isSentMessage ? Colors.white : Colors.grey[300],
+                  size: 25.sp,
+                  color: isSentMessage ? Colors.white : Colors.grey[200],
                 ),
               ),
             ),
