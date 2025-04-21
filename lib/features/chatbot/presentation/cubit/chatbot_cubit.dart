@@ -2,22 +2,20 @@
 
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:curai_app_mobile/features/chatbot/domain/usecases/diagnosis_usecase.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_state.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChatBotCubit extends Cubit<ChatBotState> {
   ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
       : super(ChatBotInitial());
-  //     {
-  // _initializeChatBox();
-  // }
 
   List<MessageBubbleModel> messagesList = [];
-
   final DiagnosisUsecase _diagnosisUsecase;
   final bool isArabic;
 
@@ -28,11 +26,55 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     return userName is String ? userName : '';
   }
 
+  /// Add a message and emit the updated state
+  Future<void> addMessage(MessageBubbleModel message) async {
+    messagesList.insert(0, message);
+    if (isClosed) return;
+    emit(ChatBotDone(messagesList: List.from(messagesList)));
+  }
+
+  /// Handle diagnosis response and display appropriate messages
+  Future<void> handleDiagnosisResponse(DiagnosisModel result) async {
+    if (result.prediction == '') {
+      final botMessage = MessageBubbleModel(
+        messageText: result.message,
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      await addMessage(botMessage);
+    } else {
+      final botMessageDiagnosis = MessageBubbleModel(
+        messageText: result.responseMessage,
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      await addMessage(botMessageDiagnosis);
+
+      final goodbyeMessage = MessageBubbleModel(
+        messageText: isArabic
+            ? 'شكرًا لك يا ${getUsername()} على استخدامك CurAi.\nنتمنى لك الشفاء العاجل!. 😊'
+            : 'Thank you, ${getUsername()}, for using CurAi.\nWe wish you a speedy recovery! 😊',
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      await addMessage(goodbyeMessage);
+
+      final restartMessage = MessageBubbleModel(
+        messageText: isArabic
+            ? 'هل هناك أعراض أخرى تحب تخبرني بها؟'
+            : "Any other symptoms you'd like to share?",
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      await addMessage(restartMessage);
+    }
+  }
+
   /// Add welcome and suggestion messages
   Future<void> addWelcomeMessage() async {
-    MessageBubbleModel? welcomeMessage;
-    MessageBubbleModel? suggestionsMessage;
-    MessageBubbleModel? startDescribingMessage;
+    MessageBubbleModel welcomeMessage;
+    MessageBubbleModel startDescribingMessage;
+    MessageBubbleModel suggestionsMessage;
 
     if (isArabic) {
       welcomeMessage = MessageBubbleModel(
@@ -41,6 +83,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         date: DateTime.now(),
         sender: SenderType.bot,
       );
+
       startDescribingMessage = MessageBubbleModel(
         messageText: 'من فضلك، ابدأ بوصف الأعراض التي تشعر بها.❗',
         date: DateTime.now(),
@@ -81,6 +124,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         date: DateTime.now(),
         sender: SenderType.bot,
       );
+
       startDescribingMessage = MessageBubbleModel(
         messageText: 'Please start describing your symptoms.❗',
         date: DateTime.now(),
@@ -89,101 +133,41 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     }
 
     await Future.delayed(const Duration(milliseconds: 600));
-    messagesList.insert(0, welcomeMessage);
-    // await saveMessageLocally(welcomeMessage);
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
+    await addMessage(welcomeMessage);
     await Future.delayed(const Duration(milliseconds: 1000));
-    messagesList.insert(0, startDescribingMessage);
-    // await saveMessageLocally(
-    //   startDescribingMessage,
-    // );
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
+    await addMessage(startDescribingMessage);
     await Future.delayed(const Duration(milliseconds: 1600));
-    messagesList.insert(0, suggestionsMessage);
-    // await saveMessageLocally(suggestionsMessage);
-
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
+    await addMessage(suggestionsMessage);
   }
 
   /// Add a new user message and perform a diagnosis
-  Future<void> addNewMessage(String newMessage) async {
+  Future<void> addNewMessage({String? message, XFile? image}) async {
+    Either<String, DiagnosisModel> response;
     emit(ChatBotLoading());
     final newUserMessage = MessageBubbleModel(
-      messageText: newMessage,
+      messageText: message ?? '',
       date: DateTime.now(),
       sender: SenderType.user,
+      image: image,
     );
-    messagesList.insert(0, newUserMessage);
-    // await saveMessageLocally(newUserMessage);
-
+    await addMessage(newUserMessage);
     addLoadingMessage();
 
-    final response = await _diagnosisUsecase.call(
-      DiagnosisRequest(
-        input: newMessage,
-      ),
-    );
+    if (image != null) {
+      response = await _diagnosisUsecase.call(
+        DiagnosisRequest(image: image),
+      );
+    } else {
+      response = await _diagnosisUsecase.call(
+        DiagnosisRequest(inputText: message),
+      );
+    }
 
     removeLoadingMessage();
-
-    response.fold(addErrorMessage, (result) async {
-      if (result.prediction == '') {
-        final botMessage = MessageBubbleModel(
-          messageText: result.message!,
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-        messagesList.insert(0, botMessage);
-        // await saveMessageLocally(botMessage);
-      } else {
-        final botMessageDiagnosis = MessageBubbleModel(
-          messageText: result.botResponse,
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-        final goodbyeMessage = MessageBubbleModel(
-          messageText: isArabic
-              ? 'شكرًا لك يا ${getUsername()} على استخدامك CurAi.'
-                  '\nنتمنى لك الشفاء العاجل!. 😊'
-              : 'Thank you, ${getUsername()}, for using CurAi.'
-                  '\nWe wish you a speedy recovery! 😊',
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-        final restartMessage = MessageBubbleModel(
-          messageText: isArabic
-              ? 'هل هناك أعراض أخرى تحب تخبرني بها؟'
-              : "Any other symptoms you'd like to share?",
-          date: DateTime.now(),
-          sender: SenderType.bot,
-        );
-
-        messagesList.insert(0, botMessageDiagnosis);
-        // await saveMessageLocally(botMessageDiagnosis);
-
-        if (isClosed) return;
-        emit(ChatBotDone(messagesList: List.from(messagesList)));
-        await Future.delayed(const Duration(milliseconds: 1500));
-        messagesList.insert(0, goodbyeMessage);
-        // await saveMessageLocally(goodbyeMessage); // Save goodbye message
-
-        if (isClosed) return;
-        emit(ChatBotDone(messagesList: List.from(messagesList)));
-        await Future.delayed(const Duration(milliseconds: 1500));
-        messagesList.insert(0, restartMessage);
-        // await saveMessageLocally(restartMessage); // Save restart message
-
-        if (isClosed) return;
-        emit(ChatBotDone(messagesList: List.from(messagesList)));
-      }
-    });
-    await resetSuccessMessage();
+    response.fold(addErrorMessage, handleDiagnosisResponse);
   }
 
-  // Add loading message
+  /// Add loading message
   void addLoadingMessage() {
     if (isArabic) {
       messagesList.insert(
@@ -205,73 +189,42 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
     }
     if (isClosed) return;
-
     emit(ChatBotLoading());
   }
 
-  // Remove loading message
+  /// Remove loading message
   void removeLoadingMessage() {
     if (isArabic) {
       messagesList.removeWhere(
-        (message) => message.messageText.contains('جاري معالجة طلبك'),
+        (message) => message.messageText!.contains('جاري معالجة طلبك'),
       );
     } else {
       messagesList.removeWhere(
-        (message) => message.messageText.contains('Processing your request'),
+        (message) => message.messageText!.contains('Processing your request'),
       );
     }
     if (isClosed) return;
-
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }
 
-  // Add error message
+  /// Add error message
   void addErrorMessage(String errorMessage) {
     final errorMessageModel = MessageBubbleModel(
       messageText: errorMessage,
       date: DateTime.now(),
       sender: SenderType.bot,
     );
-
     removeLoadingMessage();
-
     messagesList.insert(0, errorMessageModel);
     if (isClosed) return;
-
     emit(ChatBotFialure(message: errorMessage));
   }
 
-  // Reset success message
+  /// Reset success message
   Future<void> resetSuccessMessage() async {
     await Future.delayed(const Duration(seconds: 1));
     if (isClosed) return;
     emit(ChatBotInitial());
-  }
-
-  /// Add an image message
-  Future<void> addImageMessage(XFile image) async {
-    final imageMessage = MessageBubbleModel(
-      messageText: '',
-      date: DateTime.now(),
-      sender: SenderType.user,
-      image: image,
-    );
-    final generateImageMessage = MessageBubbleModel(
-      messageText: isArabic
-          ? 'سيتم معالجة الصورة الخاصة بك قريبًا.  🔜'
-          : 'Your image will be processed soon.  🔜',
-      date: DateTime.now(),
-      sender: SenderType.bot,
-    );
-    messagesList.insert(0, imageMessage);
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
-    addLoadingMessage();
-    await Future.delayed(const Duration(milliseconds: 3000));
-    removeLoadingMessage();
-    messagesList.insert(0, generateImageMessage);
-    if (isClosed) return;
-    emit(ChatBotDone(messagesList: List.from(messagesList)));
   }
 }
 

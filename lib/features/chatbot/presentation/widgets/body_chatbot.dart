@@ -70,11 +70,11 @@ class _BodyChatbotState extends State<BodyChatbot> {
         ),
         MessageInput(
           onMessageSent: ({String? message, XFile? image}) {
-            if (message != null) {
-              context.read<ChatBotCubit>().addNewMessage(message);
-            }
             if (image != null) {
-              context.read<ChatBotCubit>().addImageMessage(image);
+              context.read<ChatBotCubit>().addNewMessage(image: image);
+            }
+            if (message != null) {
+              context.read<ChatBotCubit>().addNewMessage(message: message);
             }
             _jampToLastMessage();
           },

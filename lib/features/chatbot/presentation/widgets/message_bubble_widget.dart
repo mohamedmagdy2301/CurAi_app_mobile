@@ -66,9 +66,9 @@ class MessageBubbleWidget extends StatelessWidget {
             )
           : isUserMessage
               ? AutoSizeText(
-                  messageModel.messageText,
-                  textDirection: textDirection(messageModel.messageText),
-                  textAlign: isArabicFormat(messageModel.messageText)
+                  messageModel.messageText ?? '',
+                  textDirection: textDirection(messageModel.messageText ?? ''),
+                  textAlign: isArabicFormat(messageModel.messageText ?? '')
                       ? TextAlign.right
                       : TextAlign.left,
                   style: TextStyleApp.medium16().copyWith(
@@ -77,9 +77,9 @@ class MessageBubbleWidget extends StatelessWidget {
                   ),
                 )
               : SelectableText(
-                  messageModel.messageText,
-                  textDirection: textDirection(messageModel.messageText),
-                  textAlign: isArabicFormat(messageModel.messageText)
+                  messageModel.messageText ?? '',
+                  textDirection: textDirection(messageModel.messageText ?? ''),
+                  textAlign: isArabicFormat(messageModel.messageText ?? '')
                       ? TextAlign.right
                       : TextAlign.left,
                   style: TextStyleApp.medium16().copyWith(

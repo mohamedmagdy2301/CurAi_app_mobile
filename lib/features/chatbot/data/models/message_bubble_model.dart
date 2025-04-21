@@ -5,13 +5,13 @@ import 'package:image_picker/image_picker.dart';
 
 class MessageBubbleModel {
   MessageBubbleModel({
-    required this.messageText,
     required this.date,
     required this.sender,
+    this.messageText,
     this.image,
   });
   // @HiveField(0)
-  final String messageText;
+  final String? messageText;
 
   // @HiveField(1)
   final DateTime date;

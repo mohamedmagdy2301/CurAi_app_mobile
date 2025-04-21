@@ -1,7 +1,7 @@
 class DiagnosisModel {
   DiagnosisModel({
     this.code,
-    this.isMedical,
+    this.inputType,
     this.message,
     this.prediction,
     this.status,
@@ -10,7 +10,7 @@ class DiagnosisModel {
 
   factory DiagnosisModel.fromJson(Map<String, dynamic> json) => DiagnosisModel(
         code: json['code'] as int?,
-        isMedical: json['is_medical'] as bool?,
+        inputType: json['input_type'] as String?, // new field
         message: json['message'] as String?,
         prediction: json['prediction'] as String?,
         status: json['status'] as String?,
@@ -18,7 +18,7 @@ class DiagnosisModel {
       );
 
   final int? code;
-  final bool? isMedical;
+  final String? inputType; // new field to check input type (image or text)
   final String? message;
   final String? prediction;
   final String? status;
@@ -37,4 +37,14 @@ class DiagnosisModel {
   String get botResponseSpecialty => '🏥 Recommended Specialty: $specialty';
 
   String get botResponse => '$botResponseDiagnosis\n$botResponseSpecialty';
+
+  // Method to handle the response based on input type
+  String get responseMessage {
+    if (inputType == 'image') {
+      return '🧠 Brain Tumor Detected: $diagnosis';
+    } else if (inputType == 'text') {
+      return botResponse;
+    }
+    return 'No valid diagnosis available';
+  }
 }
