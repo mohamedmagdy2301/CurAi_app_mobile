@@ -51,20 +51,29 @@ class MessageBubbleWidget extends StatelessWidget {
             : context.onPrimaryColor.withAlpha(80),
         borderRadius: _bubbleBorderRadius(context),
       ),
-      child:
-          // isUserMessage          ?
-          AutoSizeText(
-        messageModel.messageText,
-        textDirection: textDirection(messageModel.messageText),
-        textAlign: isArabicFormat(messageModel.messageText)
-            ? TextAlign.right
-            : TextAlign.left,
-        style: TextStyleApp.medium16().copyWith(
-          color: Colors.white,
-          height: 1.55,
-        ),
-      ),
-      // : ChatBotMarkdownBubble(messageText: messageModel.messageText),
+      child: isUserMessage
+          ? AutoSizeText(
+              messageModel.messageText,
+              textDirection: textDirection(messageModel.messageText),
+              textAlign: isArabicFormat(messageModel.messageText)
+                  ? TextAlign.right
+                  : TextAlign.left,
+              style: TextStyleApp.medium16().copyWith(
+                color: Colors.white,
+                height: 1.55,
+              ),
+            )
+          : SelectableText(
+              messageModel.messageText,
+              textDirection: textDirection(messageModel.messageText),
+              textAlign: isArabicFormat(messageModel.messageText)
+                  ? TextAlign.right
+                  : TextAlign.left,
+              style: TextStyleApp.medium16().copyWith(
+                color: Colors.white,
+                height: 1.55,
+              ),
+            ),
     );
   }
 }
