@@ -253,7 +253,9 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     removeLoadingMessage();
     messagesList.insert(0, errorMessageModel);
     if (isClosed) return;
-    emit(ChatBotFialure(message: errorMessage));
+    emit(ChatBotDone(
+      messagesList: List.from(messagesList),
+    ));
   }
 
   /// Reset success message
