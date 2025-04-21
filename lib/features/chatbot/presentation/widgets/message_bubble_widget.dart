@@ -19,11 +19,11 @@ class MessageBubbleWidget extends StatelessWidget {
     return isUserMessage
         ? EdgeInsets.only(
             right: context.isStateArabic ? 0 : 40,
-            left: context.isStateArabic ? 40 : 0,
+            left: context.isStateArabic ? 20 : 0,
           )
         : EdgeInsets.only(
             right: context.isStateArabic ? 20 : 0,
-            left: context.isStateArabic ? 0 : 40,
+            left: context.isStateArabic ? 0 : 20,
           );
   }
 
@@ -43,10 +43,12 @@ class MessageBubbleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: context.padding(vertical: 12, horizontal: 15),
+      padding: context.padding(vertical: 12, horizontal: 10),
       margin: _bubbleMargin(context),
       decoration: BoxDecoration(
-        color: !isUserMessage ? context.primaryColor : Colors.green,
+        color: !isUserMessage
+            ? context.primaryColor
+            : context.onPrimaryColor.withAlpha(80),
         borderRadius: _bubbleBorderRadius(context),
       ),
       child:
@@ -59,7 +61,7 @@ class MessageBubbleWidget extends StatelessWidget {
             : TextAlign.left,
         style: TextStyleApp.medium16().copyWith(
           color: Colors.white,
-          height: 2,
+          height: 1.6,
         ),
       ),
       // : ChatBotMarkdownBubble(messageText: messageModel.messageText),

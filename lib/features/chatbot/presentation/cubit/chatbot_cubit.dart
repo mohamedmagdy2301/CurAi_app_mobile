@@ -32,13 +32,22 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
 
       suggestionsMessage = MessageBubbleModel(
-        messageText: '💡 أمثلة لما يمكنك كتابته:\n'
-            '- أعاني من صداع مستمر منذ عدة أيام\n'
-            '- أشعر بدوخة وتعب عام\n'
-            '- أعاني من كحة شديدة وسخونية\n'
-            '- عندي آلام في المعدة بعد الأكل\n'
-            '- أشعر بألم في الصدر عند التنفس\n'
-            '- لا أستطيع النوم جيدًا خلال الليل',
+        messageText: '💡 جرّب تكتب أعراض زي:\n'
+            '- صداع مستمر\n'
+            '- دوخة وتعب\n'
+            '- كحة وسخونية\n'
+            '- ألم في المعدة بعد الأكل\n'
+            '- ألم في الصدر عند التنفس\n'
+            '- صعوبة في النوم\n'
+            '- وجع في الظهر\n'
+            '- حرارة عالية\n'
+            '- زغللة في العين\n'
+            '- خمول طول اليوم\n'
+            '- قيء أو غثيان\n'
+            '- صعوبة في التنفس\n'
+            '- رعشة في الجسم\n'
+            '- فقدان شهية\n'
+            '- ألم في الحلق',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -52,13 +61,22 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
 
       suggestionsMessage = MessageBubbleModel(
-        messageText: '💡 Here are some examples you can start with:\n'
-            '- I have had a persistent headache for several days\n'
-            '- I feel dizzy and extremely tired\n'
-            '- I have a bad cough and high fever\n'
-            '- I feel stomach pain after eating\n'
-            '- I experience chest pain when breathing\n'
-            '- I can’t sleep well at night',
+        messageText: '💡 Try writing symptoms like:\n'
+            '- Persistent headache\n'
+            '- Dizziness and fatigue\n'
+            '- Cough and high fever\n'
+            '- Stomach pain after eating\n'
+            '- Chest pain when breathing\n'
+            '- Trouble sleeping\n'
+            '- Back pain\n'
+            '- High temperature\n'
+            '- Blurry vision\n'
+            '- Feeling tired all day\n'
+            '- Nausea or vomiting\n'
+            '- Shortness of breath\n'
+            '- Body shivering\n'
+            '- Loss of appetite\n'
+            '- Sore throat',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
