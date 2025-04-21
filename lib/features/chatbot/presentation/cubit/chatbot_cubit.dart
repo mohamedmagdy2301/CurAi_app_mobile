@@ -1,4 +1,4 @@
-// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation
+// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation, missing_whitespace_between_adjacent_strings
 
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
@@ -24,9 +24,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
     if (isArabic) {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 أهلاً $userName '
-            'في CurAi.'
-            '\n\nأنا مساعدك الطبي الذكي، هنا لمساعدتك في تحليل الأعراض وتوجيهك للتخصص المناسب.\n\n'
+        messageText: '👋 أهلاً $userName في CurAi.'
+            '\nأنا مساعدك الطبي الذكي، هنا لمساعدتك في تحليل الأعراض وتوجيهك للتخصص المناسب.'
             'من فضلك، ابدأ بوصف الأعراض التي تشعر بها.',
         date: DateTime.now(),
         sender: SenderType.bot,
@@ -45,9 +44,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
     } else {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 Welcome $userName '
-            'to CurAi.\n '
-            "I'm your smart medical assistant, here to help analyze your symptoms and guide you to the appropriate specialty.\n"
+        messageText: '👋 Welcome $userName to CurAi.'
+            "\nI'm your smart medical assistant, here to help analyze your symptoms and guide you to the appropriate specialty.\n"
             'Please start by describing the symptoms you are experiencing.',
         date: DateTime.now(),
         sender: SenderType.bot,

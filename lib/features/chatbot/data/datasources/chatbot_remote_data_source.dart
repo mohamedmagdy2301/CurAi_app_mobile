@@ -19,7 +19,7 @@ class ChatbotRemoteDataSourceImpl implements ChatbotRemoteDataSource {
     required DiagnosisRequest diagnosisRequest,
   }) async {
     final response = await dioConsumer.post(
-      'https://aa6c-156-199-179-208.ngrok-free.app${EndPoints.predict}',
+      'https://76f1-156-199-179-208.ngrok-free.app${EndPoints.predict}',
       body: diagnosisRequest.toJson(),
     );
     return response.fold(

@@ -3,8 +3,8 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
+import 'package:curai_app_mobile/core/utils/helper/regex.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
-import 'package:curai_app_mobile/features/chatbot/presentation/widgets/chatbot_markdown_bubble.dart';
 import 'package:flutter/material.dart';
 
 class MessageBubbleWidget extends StatelessWidget {
@@ -22,7 +22,7 @@ class MessageBubbleWidget extends StatelessWidget {
             left: context.isStateArabic ? 40 : 0,
           )
         : EdgeInsets.only(
-            right: context.isStateArabic ? 40 : 0,
+            right: context.isStateArabic ? 20 : 0,
             left: context.isStateArabic ? 0 : 40,
           );
   }
@@ -46,21 +46,23 @@ class MessageBubbleWidget extends StatelessWidget {
       padding: context.padding(vertical: 12, horizontal: 15),
       margin: _bubbleMargin(context),
       decoration: BoxDecoration(
-        color: isUserMessage ? context.primaryColor : Colors.green,
+        color: !isUserMessage ? context.primaryColor : Colors.green,
         borderRadius: _bubbleBorderRadius(context),
       ),
-      child: isUserMessage
-          ? AutoSizeText(
-              messageModel.messageText,
-              textDirection: textDirection(messageModel.messageText),
-              textAlign:
-                  context.isStateArabic ? TextAlign.right : TextAlign.left,
-              style: TextStyleApp.regular14().copyWith(
-                color: context.onPrimaryColor,
-                height: 1.5,
-              ),
-            )
-          : ChatBotMarkdownBubble(messageText: messageModel.messageText),
+      child:
+          // isUserMessage          ?
+          AutoSizeText(
+        messageModel.messageText,
+        textDirection: textDirection(messageModel.messageText),
+        textAlign: isArabicFormat(messageModel.messageText)
+            ? TextAlign.right
+            : TextAlign.left,
+        style: TextStyleApp.medium16().copyWith(
+          color: Colors.white,
+          height: 2,
+        ),
+      ),
+      // : ChatBotMarkdownBubble(messageText: messageModel.messageText),
     );
   }
 }
