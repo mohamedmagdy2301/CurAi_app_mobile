@@ -2,7 +2,6 @@ class DiagnosisModel {
   DiagnosisModel({
     this.code,
     this.inputType,
-    this.message,
     this.messageAr,
     this.messageEn,
     this.prediction,
@@ -13,7 +12,6 @@ class DiagnosisModel {
   factory DiagnosisModel.fromJson(Map<String, dynamic> json) => DiagnosisModel(
         code: json['code'] as int?,
         inputType: json['input_type'] as String?,
-        message: json['message'] as String?,
         messageAr: json['messageAr'] as String?,
         messageEn: json['messageEn'] as String?,
         prediction: json['prediction'] as String?,
@@ -23,7 +21,6 @@ class DiagnosisModel {
 
   final int? code;
   final String? inputType;
-  final String? message;
   final String? messageAr;
   final String? messageEn;
   final String? prediction;

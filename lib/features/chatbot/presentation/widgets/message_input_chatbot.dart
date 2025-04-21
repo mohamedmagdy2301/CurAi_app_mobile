@@ -72,7 +72,8 @@ class _MessageInputState extends State<MessageInput> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: context.padding(horizontal: 15, vertical: 10),
+        padding:
+            context.padding(horizontal: 15, vertical: Platform.isIOS ? 20 : 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,

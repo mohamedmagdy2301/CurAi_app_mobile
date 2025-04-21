@@ -61,13 +61,16 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   /// Handle diagnosis response and display appropriate messages
   Future<void> handleDiagnosisResponse(DiagnosisModel result) async {
     if (result.prediction == '') {
+      removeLoadingMessage();
       final botMessage = MessageBubbleModel(
-        messageText: result.message,
+        messageText: isArabic ? result.messageAr : result.messageEn,
         date: DateTime.now(),
         sender: SenderType.bot,
       );
       await addMessage(botMessage);
     } else {
+      removeLoadingMessage();
+
       final botMessageDiagnosis = MessageBubbleModel(
         messageText: result.responseMessage(isArabic),
         date: DateTime.now(),
@@ -253,9 +256,9 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     removeLoadingMessage();
     messagesList.insert(0, errorMessageModel);
     if (isClosed) return;
-    emit(ChatBotDone(
-      messagesList: List.from(messagesList),
-    ));
+    emit(
+      ChatBotDone(messagesList: List.from(messagesList)),
+    );
   }
 
   /// Reset success message
