@@ -52,7 +52,6 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   /// Add a new message to the chat box
   Future<void> addMessage(MessageBubbleModel message) async {
-    await Future.delayed(const Duration(milliseconds: 600));
     messagesList.insert(0, message);
     await _chatBox.add(message);
     if (isClosed) return;
@@ -83,15 +82,18 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         date: DateTime.now(),
         sender: SenderType.bot,
       );
+      await Future.delayed(const Duration(milliseconds: 1000));
       await addMessage(goodbyeMessage);
 
       final restartMessage = MessageBubbleModel(
         messageText: isArabic
-            ? 'هل هناك أعراض أخرى تحب تخبرني بها؟'
+            ? 'هل لديك أي أعراض أخرى تود مشاركتها؟'
             : "Any other symptoms you'd like to share?",
         date: DateTime.now(),
         sender: SenderType.bot,
       );
+      await Future.delayed(const Duration(milliseconds: 1400));
+
       await addMessage(restartMessage);
     }
   }
