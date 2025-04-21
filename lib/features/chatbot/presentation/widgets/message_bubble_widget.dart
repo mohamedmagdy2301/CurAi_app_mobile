@@ -56,7 +56,7 @@ class MessageBubbleWidget extends StatelessWidget {
       ),
       child: messageModel.image != null
           ? ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: _bubbleBorderRadius(context),
               child: Image.file(
                 File(messageModel.image!.path),
                 width: 200.w,
