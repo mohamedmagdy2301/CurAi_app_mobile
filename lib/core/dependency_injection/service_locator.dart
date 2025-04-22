@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/dependency_injection/appointment_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/auth_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/chatbot_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/core_di.dart';
@@ -24,4 +25,7 @@ Future<void> setupAllDependencies() async {
 
   /// Chatbot feature dependencies
   setupChatbotDI();
+
+  /// appointment feature dependencies
+  setupAppointmentDI();
 }
