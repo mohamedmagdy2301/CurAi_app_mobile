@@ -16,7 +16,6 @@ import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cub
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -44,13 +43,6 @@ class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
       elevation: 0,
       backgroundColor:
           context.isDark ? const Color(0xff113746) : const Color(0xffe8f1f5),
-      systemOverlayStyle: context.isDark
-          ? SystemUiOverlayStyle.light.copyWith(
-              statusBarColor: const Color(0xff113746),
-            )
-          : SystemUiOverlayStyle.dark.copyWith(
-              statusBarColor: const Color(0xffe8f1f5),
-            ),
       flexibleSpace: Container(
         color:
             context.isDark ? const Color(0xff113746) : const Color(0xffe8f1f5),
