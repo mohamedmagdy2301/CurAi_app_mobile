@@ -33,8 +33,11 @@ class CustomAppBarChatBot extends StatefulWidget
 
 class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
   TextEditingController controllerServerAddress = TextEditingController(
-    text: serverAddress.isNotEmpty ? serverAddress : '',
+    text: serverAddress.isNotEmpty
+        ? serverAddress
+        : 'https://-156-199-179-208.ngrok-free.app',
   );
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -55,38 +58,45 @@ class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
       title: _buildTitleText(context),
       leading: _buildBackButton(context),
       actions: [
-        IconButton(
-          icon: Icon(
-            CupertinoIcons.add,
-            size: 32.sp,
-            color: context.onPrimaryColor,
-          ),
-          onPressed: () {
-            AdaptiveDialogs.showAlertDialogWithWidget(
-              context: context,
-              title: context.isStateArabic
-                  ? 'أدخل عنوان السيرفر'
-                  : 'Enter server address',
-              widget: Column(
-                children: [
-                  CustomTextFeild(
-                    labelText: context.isStateArabic
-                        ? 'عنوان السيرفر'
-                        : 'Server Address',
-                    controller: controllerServerAddress,
-                  ),
-                  10.hSpace,
-                  CustomButton(
-                    title: LangKeys.send,
-                    onPressed: () {
-                      serverAddress = controllerServerAddress.text.trim();
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+        if (serverAddress == '')
+          IconButton(
+            icon: Icon(
+              CupertinoIcons.add,
+              size: 32.sp,
+              color: context.onPrimaryColor,
+            ),
+            onPressed: () {
+              AdaptiveDialogs.showAlertDialogWithWidget(
+                context: context,
+                title: context.isStateArabic
+                    ? 'أدخل عنوان السيرفر'
+                    : 'Enter server address',
+                widget: Column(
+                  children: [
+                    CustomTextFeild(
+                      labelText: context.isStateArabic
+                          ? 'عنوان السيرفر'
+                          : 'Server Address',
+                      controller: controllerServerAddress,
+                    ),
+                    10.hSpace,
+                    CustomButton(
+                      title: LangKeys.send,
+                      onPressed: () {
+                        setState(() {
+                          serverAddress = controllerServerAddress.text.trim();
+                        });
+                        hideKeyboard();
+                        context.pop();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          )
+        else
+          const SizedBox(),
         IconButton(
           icon: Icon(
             CupertinoIcons.add_circled_solid,
@@ -131,9 +141,20 @@ class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
   }
 
   Widget _buildTitleText(BuildContext context) {
-    return AutoSizeText(
-      context.isStateArabic ? 'مساعدك الشخصى' : 'ChatBot Assistant',
-      maxLines: 1,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          backgroundColor:
+              serverAddress == '' ? context.onSecondaryColor : Colors.green,
+          radius: 5.r,
+        ),
+        8.wSpace,
+        AutoSizeText(
+          context.isStateArabic ? 'مساعدك الشخصى' : 'ChatBot Assistant',
+          maxLines: 1,
+        ),
+      ],
     );
   }
 
