@@ -6,7 +6,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/regex.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/widgets/working_time_details_doctor_widget.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/widgets/working_time_details_doctor/working_time_details_doctor_widget%20copy.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/doctor_speciality/specialization_widget.dart';
 import 'package:flutter/material.dart';
