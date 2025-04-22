@@ -1,0 +1,26 @@
+import 'package:curai_app_mobile/features/appointment/data/datasources/appointment_remote_data_source.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
+import 'package:curai_app_mobile/features/appointment/domain/repositories/appointment_repo.dart';
+import 'package:dartz/dartz.dart';
+
+class AppointmentRepoImpl extends AppointmentRepo {
+  AppointmentRepoImpl({required this.remoteDataSource});
+  final AppointmentRemoteDataSource remoteDataSource;
+
+  @override
+  Future<Either<String, AppointmentAvailableModel>> getAppointmentAvailable({
+    required int doctorId,
+  }) async {
+    final response = await remoteDataSource.getAppointmentAvailable(
+      doctorId: doctorId,
+    );
+    return response.fold(
+      (failure) {
+        return left(failure.message);
+      },
+      (responseData) {
+        return right(AppointmentAvailableModel.fromJson(responseData));
+      },
+    );
+  }
+}
