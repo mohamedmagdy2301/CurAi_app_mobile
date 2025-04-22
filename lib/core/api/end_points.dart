@@ -10,4 +10,6 @@ class EndPoints {
   static const String addReview = '/review/';
   static const String contactUs = '/api/contact-us/';
   static const String predict = '/predict';
+  static const String getAppointmentAvailable =
+      '/patient_panal_appointments/doctor_availability/';
 }
