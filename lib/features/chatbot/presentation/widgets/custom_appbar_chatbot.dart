@@ -5,9 +5,13 @@ import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
+import 'package:curai_app_mobile/features/chatbot/data/datasources/chatbot_remote_data_source.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
 import 'package:curai_app_mobile/features/user/presentation/cubit/navigation_cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,10 +20,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomAppBarChatBot extends StatelessWidget
+class CustomAppBarChatBot extends StatefulWidget
     implements PreferredSizeWidget {
   const CustomAppBarChatBot({super.key});
 
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  State<CustomAppBarChatBot> createState() => _CustomAppBarChatBotState();
+}
+
+class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
+  TextEditingController controllerServerAddress = TextEditingController(
+    text: serverAddress.isNotEmpty ? serverAddress : '',
+  );
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -40,6 +55,38 @@ class CustomAppBarChatBot extends StatelessWidget
       title: _buildTitleText(context),
       leading: _buildBackButton(context),
       actions: [
+        IconButton(
+          icon: Icon(
+            CupertinoIcons.add,
+            size: 32.sp,
+            color: context.onPrimaryColor,
+          ),
+          onPressed: () {
+            AdaptiveDialogs.showAlertDialogWithWidget(
+              context: context,
+              title: context.isStateArabic
+                  ? 'أدخل عنوان السيرفر'
+                  : 'Enter server address',
+              widget: Column(
+                children: [
+                  CustomTextFeild(
+                    labelText: context.isStateArabic
+                        ? 'عنوان السيرفر'
+                        : 'Server Address',
+                    controller: controllerServerAddress,
+                  ),
+                  10.hSpace,
+                  CustomButton(
+                    title: LangKeys.send,
+                    onPressed: () {
+                      serverAddress = controllerServerAddress.text.trim();
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
         IconButton(
           icon: Icon(
             CupertinoIcons.add_circled_solid,
@@ -99,7 +146,4 @@ class CustomAppBarChatBot extends StatelessWidget
       },
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
