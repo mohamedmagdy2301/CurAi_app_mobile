@@ -9,8 +9,8 @@ import 'package:curai_app_mobile/features/appointment/presentation/cubit/appoint
 void setupAppointmentDI() {
   //! Cubit
   sl
-    ..registerFactory<AppointmentAvalibleCubit>(
-      () => AppointmentAvalibleCubit(
+    ..registerFactory<AppointmentAvailbleCubit>(
+      () => AppointmentAvailbleCubit(
         sl<GetAppointmentAvailableUsecase>(),
       ),
     )

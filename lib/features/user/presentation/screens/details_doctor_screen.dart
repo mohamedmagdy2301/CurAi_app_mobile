@@ -28,8 +28,8 @@ class DoctorDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AppointmentAvalibleCubit>(
-      create: (context) => sl<AppointmentAvalibleCubit>(),
+    return BlocProvider<AppointmentAvailbleCubit>(
+      create: (context) => sl<AppointmentAvailbleCubit>(),
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
