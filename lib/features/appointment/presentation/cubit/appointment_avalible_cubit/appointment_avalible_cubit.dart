@@ -1,4 +1,3 @@
-import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appointment_available_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_avalible_cubit/appointment_avalible_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +19,7 @@ class AppointmentAvailbleCubit extends Cubit<AppointmentAvailbleState> {
         emit(AppointmentAvailableFailure(message: errMessage));
       },
       (resulte) {
-        if (resulte.doctorAvailability == <DoctorAvailability>[]) {
+        if (resulte.doctorAvailability!.isEmpty) {
           if (isClosed) return;
           emit(AppointmentAvailableEmpty());
         } else {

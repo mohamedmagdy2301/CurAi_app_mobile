@@ -35,7 +35,8 @@ class _BuildWorkingTimeDetailsDoctorWidgetState
       buildWhen: (previous, current) =>
           current is AppointmentAvailableFailure ||
           current is AppointmentAvailableSuccess ||
-          current is AppointmentAvailableLoading,
+          current is AppointmentAvailableLoading ||
+          current is AppointmentAvailableEmpty,
       builder: (context, state) {
         if (state is AppointmentAvailableFailure) {
           return Center(
