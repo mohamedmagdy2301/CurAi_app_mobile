@@ -24,16 +24,20 @@ class DoctorAvailability {
   });
 
   DoctorAvailability.fromJson(Map<String, dynamic> json) {
-    day = json['day'] as String;
-    availableFrom = json['available_from'] as String;
-    availableTo = json['available_to'] as String;
-    if (json['dates'] != null) {
-      dates = <Dates>[];
-      json['dates'].forEach((v) {
-        dates!.add(Dates.fromJson(v as Map<String, dynamic>));
-      });
+    day = json['day'] as String?;
+    availableFrom = json['available_from'] as String?;
+    availableTo = json['available_to'] as String?;
+
+    if (json['dates'] is List) {
+      dates = (json['dates'] as List)
+          .whereType<Map<String, dynamic>>()
+          .map(Dates.fromJson)
+          .toList();
+    } else {
+      dates = [];
     }
   }
+
   String? day;
   String? availableFrom;
   String? availableTo;
@@ -74,13 +78,16 @@ class MergedDateAvailability {
   final DateTime date;
   final String availableFrom;
   final String availableTo;
-  final List<String> freeSlots;
+  List<String> freeSlots;
 }
 
 List<MergedDateAvailability> mergeAndSortByDate(
   AppointmentAvailableModel model,
 ) {
   final mergedList = <MergedDateAvailability>[];
+
+  // Set لتخزين التواريخ المتكررة
+  final seenDates = <String>{};
   DoctorAvailability doctor;
   Dates dateEntry;
   for (doctor in model.doctorAvailability ?? []) {
@@ -91,17 +98,42 @@ List<MergedDateAvailability> mergeAndSortByDate(
     for (dateEntry in doctor.dates ?? []) {
       final dateStr = dateEntry.date ?? '';
       final parsedDate = DateTime.tryParse(dateStr);
+
       if (parsedDate != null) {
-        mergedList.add(
-          MergedDateAvailability(
-            day: day,
-            dateString: dateStr,
-            date: parsedDate,
-            availableFrom: from,
-            availableTo: to,
-            freeSlots: dateEntry.freeSlots ?? [],
-          ),
-        );
+        // إذا كان التاريخ لم يتم إضافته من قبل
+        if (!seenDates.contains(dateStr)) {
+          seenDates.add(dateStr);
+
+          mergedList.add(
+            MergedDateAvailability(
+              day: day,
+              dateString: dateStr,
+              date: parsedDate,
+              availableFrom: from,
+              availableTo: to,
+              freeSlots: dateEntry.freeSlots ?? [],
+            ),
+          );
+        } else {
+          // إذا كان التاريخ موجود مسبقًا، ندمج الـ freeSlots
+          final existingEntry = mergedList.firstWhere(
+            (e) => e.dateString == dateStr,
+            orElse: () => MergedDateAvailability(
+              day: day,
+              dateString: dateStr,
+              date: parsedDate,
+              availableFrom: from,
+              availableTo: to,
+              freeSlots: [],
+            ),
+          );
+
+          // دمج الـ freeSlots وحذف التكرار
+          existingEntry.freeSlots.addAll(dateEntry.freeSlots ?? []);
+          // إزالة التكرار باستخدام toSet()
+          existingEntry.freeSlots = existingEntry.freeSlots.toSet().toList();
+          existingEntry.freeSlots.sort();
+        }
       }
     }
   }
