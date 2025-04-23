@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/available_time_widget.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/custom_appbar_book_appointment.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/date_selector_horizontal.dart';
@@ -24,6 +25,9 @@ class BookAppointmentScreen extends StatefulWidget {
 }
 
 class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
+  DateTime selectedDate =
+      DateTime.now(); // هنا سنخزن التاريخ المحدد من الـ DateSelectorHorizontal
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,18 +47,24 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {
-                  showDatePicker(
+                onTap: () async {
+                  final pickedDate = await showDatePicker(
                     context: context,
                     firstDate: DateTime.now(),
                     lastDate: DateTime.now().add(const Duration(days: 30)),
-                    initialDate: DateTime.now(),
+                    initialDate: selectedDate,
                     currentDate: DateTime.now(),
                     cancelText: context.translate(LangKeys.cancel),
                     confirmText: context.translate(LangKeys.ok),
                     helpText: context.translate(LangKeys.selectDate),
                     keyboardType: TextInputType.number,
                   );
+
+                  if (pickedDate != null && pickedDate != selectedDate) {
+                    setState(() {
+                      selectedDate = pickedDate;
+                    });
+                  }
                 },
                 child: AutoSizeText(
                   context.translate(LangKeys.setManual),
@@ -67,12 +77,22 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             ],
           ).paddingSymmetric(horizontal: 15),
           20.hSpace,
-          const DateSelectorHorizontal(),
+          DateSelectorHorizontal(
+            onSelect: (MergedDateAvailability selected) {
+              setState(() {
+                selectedDate = selected.date;
+              });
+            },
+          ),
           30.hSpace,
-          AvailableTimeWidget(doctorResults: widget.doctorResults),
+          AvailableTimeWidget(
+            doctorResults: widget.doctorResults,
+          ),
           CustomButton(
             title: LangKeys.bookAppointment,
-            onPressed: () {},
+            onPressed: () {
+              // تنفيذ عملية حجز الموعد هنا باستخدام selectedDate
+            },
           )
               .paddingSymmetric(horizontal: 15)
               .paddingOnly(bottom: Platform.isIOS ? 17 : 10),

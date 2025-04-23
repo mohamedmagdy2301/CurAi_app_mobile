@@ -149,6 +149,7 @@
 "set_manual":  "تحديد يدوي",
   "select_date":  " حدد التاريخ",
   "select_time":  "حدد الوقت",
-  "available_time":  "الوقت المتاح"
+  "available_time":  "الوقت المتاح",
+  "not_available_to_book":  "غير متاح للحجز"
 
  }

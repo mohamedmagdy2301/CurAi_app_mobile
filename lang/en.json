@@ -148,5 +148,6 @@
   "set_manual": "Set Manual",
   "select_date": "Select  Date",
   "select_time": "Select Time",
-  "available_time": "Available Time"
+  "available_time": "Available Time",
+  "not_available_to_book": "Not available to book"
 }

@@ -120,6 +120,8 @@ class LangKeys {
   static const String consultationPrice = 'consultation_price';
   static const String medicalSpecialization = 'medical_specialization';
 
+//! Book Appointment
+
 //! Profile
   static const String profile = 'profile';
   static const String yourProfile = 'your_profile';
@@ -172,4 +174,5 @@ class LangKeys {
   static const String selectDate = 'select_date';
   static const String selectTime = 'select_time';
   static const String availableTime = 'available_time';
+  static const String notAvailableToBook = 'not_available_to_book';
 }

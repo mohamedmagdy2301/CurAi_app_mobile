@@ -52,3 +52,56 @@ class Dates {
   List<String>? bookedSlots;
   List<String>? freeSlots;
 }
+
+class MergedDateAvailability {
+  MergedDateAvailability({
+    required this.day,
+    required this.dateString,
+    required this.date,
+    required this.availableFrom,
+    required this.availableTo,
+    required this.freeSlots,
+  });
+  final String day;
+  final String dateString;
+  final DateTime date;
+  final String availableFrom;
+  final String availableTo;
+  final List<String> freeSlots;
+}
+
+List<MergedDateAvailability> mergeAndSortByDate(
+  AppointmentAvailableModel model,
+) {
+  final mergedList = <MergedDateAvailability>[];
+
+  for (final (doctor as DoctorAvailability) in model.doctorAvailability ?? []) {
+    final day = doctor.day ?? '';
+    final from = doctor.availableFrom ?? '';
+    final to = doctor.availableTo ?? '';
+
+    for (final (dateEntry as Dates) in doctor.dates ?? []) {
+      final dateStr = dateEntry.date ?? '';
+      final parsedDate = DateTime.tryParse(dateStr);
+      if (parsedDate != null) {
+        mergedList.add(
+          MergedDateAvailability(
+            day: day,
+            dateString: dateStr,
+            date: parsedDate,
+            availableFrom: from,
+            availableTo: to,
+            freeSlots: dateEntry.freeSlots ?? [],
+          ),
+        );
+      }
+    }
+  }
+
+  mergedList.sort((a, b) => a.date.compareTo(b.date));
+  final now = DateTime.now();
+
+  final upcomingDates = mergedList.where((e) => !e.date.isBefore(now)).toList();
+
+  return upcomingDates;
+}
