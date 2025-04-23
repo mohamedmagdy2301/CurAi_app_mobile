@@ -34,42 +34,15 @@ class WorkingTimeDetailsDoctorWidget extends StatelessWidget {
           color: context.onSecondaryColor.withAlpha(80),
           thickness: .3,
         ),
-        const TimeRowWidget(
-          day: LangKeys.saturday,
-          startTime: '10:00',
-          endTime: '5:00',
-        ),
-        const TimeRowWidget(
-          day: LangKeys.sunday,
-          startTime: '10:00',
-          endTime: '5:00',
-        ),
-        const TimeRowWidget(
-          day: LangKeys.monday,
-          startTime: '10:00',
-          endTime: '5:00',
-          isWork: false,
-        ),
-        const TimeRowWidget(
-          day: LangKeys.tuesday,
-          startTime: '10:00',
-          endTime: '5:00',
-        ),
-        const TimeRowWidget(
-          day: LangKeys.wednesday,
-          startTime: '10:00',
-          endTime: '5:00',
-        ),
-        const TimeRowWidget(
-          day: LangKeys.thursday,
-          startTime: '10:00',
-          endTime: '5:00',
-        ),
-        const TimeRowWidget(
-          day: LangKeys.friday,
-          startTime: '10:00',
-          endTime: '5:00',
-          isWork: false,
+        5.hSpace,
+        Column(
+          children: doctorAvailability
+              .map(
+                (doctorAvailability) => TimeRowWidget(
+                  doctorAvailability: doctorAvailability,
+                ),
+              )
+              .toList(),
         ),
       ],
     );
