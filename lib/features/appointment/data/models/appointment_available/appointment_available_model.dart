@@ -44,10 +44,17 @@ class Dates {
   Dates({this.date, this.bookedSlots, this.freeSlots});
 
   Dates.fromJson(Map<String, dynamic> json) {
-    date = json['date'] as String;
-    bookedSlots = json['booked_slots'].cast<String>() as List<String>;
-    freeSlots = json['free_slots'].cast<String>() as List<String>;
+    date = json['date'] as String?;
+    bookedSlots = (json['booked_slots'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .toList() ??
+        [];
+    freeSlots = (json['free_slots'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .toList() ??
+        [];
   }
+
   String? date;
   List<String>? bookedSlots;
   List<String>? freeSlots;
@@ -74,13 +81,14 @@ List<MergedDateAvailability> mergeAndSortByDate(
   AppointmentAvailableModel model,
 ) {
   final mergedList = <MergedDateAvailability>[];
-
-  for (final (doctor as DoctorAvailability) in model.doctorAvailability ?? []) {
+  DoctorAvailability doctor;
+  Dates dateEntry;
+  for (doctor in model.doctorAvailability ?? []) {
     final day = doctor.day ?? '';
     final from = doctor.availableFrom ?? '';
     final to = doctor.availableTo ?? '';
 
-    for (final (dateEntry as Dates) in doctor.dates ?? []) {
+    for (dateEntry in doctor.dates ?? []) {
       final dateStr = dateEntry.date ?? '';
       final parsedDate = DateTime.tryParse(dateStr);
       if (parsedDate != null) {
@@ -98,10 +106,19 @@ List<MergedDateAvailability> mergeAndSortByDate(
     }
   }
 
+  // ترتيب حسب التاريخ وتصفيه للمستقبل
   mergedList.sort((a, b) => a.date.compareTo(b.date));
   final now = DateTime.now();
-
-  final upcomingDates = mergedList.where((e) => !e.date.isBefore(now)).toList();
+  final upcomingDates = mergedList
+      .where(
+        (e) =>
+            e.date.year > now.year ||
+            (e.date.year == now.year && e.date.month > now.month) ||
+            (e.date.year == now.year &&
+                e.date.month == now.month &&
+                e.date.day >= now.day),
+      )
+      .toList();
 
   return upcomingDates;
 }
