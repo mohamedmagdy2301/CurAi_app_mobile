@@ -100,6 +100,8 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                           context.push(
                             BookAppointmentScreen(
                               doctorResults: widget.doctorResults,
+                              appointmentAvailableModel:
+                                  state.appointmentAvailableModel,
                             ),
                           );
                         },

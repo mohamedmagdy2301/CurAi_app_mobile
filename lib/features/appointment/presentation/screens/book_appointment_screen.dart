@@ -17,8 +17,13 @@ import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.d
 import 'package:flutter/material.dart';
 
 class BookAppointmentScreen extends StatefulWidget {
-  const BookAppointmentScreen({required this.doctorResults, super.key});
+  const BookAppointmentScreen({
+    required this.doctorResults,
+    required this.appointmentAvailableModel,
+    super.key,
+  });
   final DoctorResults doctorResults;
+  final AppointmentAvailableModel appointmentAvailableModel;
 
   @override
   State<BookAppointmentScreen> createState() => _BookAppointmentScreenState();
@@ -27,6 +32,14 @@ class BookAppointmentScreen extends StatefulWidget {
 class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   DateTime selectedDate = DateTime.now();
   List<String> availableTimes = [];
+  List<DateTime> availableDates = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final merged = mergeAndSortByDate(widget.appointmentAvailableModel);
+    availableDates = merged.map((e) => e.date).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +61,7 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
               const Spacer(),
               InkWell(
                 onTap: () async {
-                  final pickedDate = await showDatePicker(
+                  final picked = await showDatePicker(
                     context: context,
                     firstDate: DateTime.now(),
                     lastDate: DateTime.now().add(const Duration(days: 30)),
@@ -58,11 +71,36 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                     confirmText: context.translate(LangKeys.ok),
                     helpText: context.translate(LangKeys.selectDate),
                     keyboardType: TextInputType.number,
+                    selectableDayPredicate: (DateTime day) {
+                      return availableDates.any(
+                        (available) =>
+                            available.year == day.year &&
+                            available.month == day.month &&
+                            available.day == day.day,
+                      );
+                    },
                   );
 
-                  if (pickedDate != null && pickedDate != selectedDate) {
+                  if (picked != null) {
+                    final matched =
+                        mergeAndSortByDate(widget.appointmentAvailableModel)
+                            .firstWhere(
+                      (element) =>
+                          element.date.year == picked.year &&
+                          element.date.month == picked.month &&
+                          element.date.day == picked.day,
+                      orElse: () => MergedDateAvailability(
+                        day: '',
+                        dateString: '',
+                        date: picked,
+                        availableFrom: '',
+                        availableTo: '',
+                        freeSlots: [],
+                      ),
+                    );
                     setState(() {
-                      selectedDate = pickedDate;
+                      selectedDate = picked;
+                      availableTimes = matched.freeSlots;
                     });
                   }
                 },
@@ -93,7 +131,7 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
           CustomButton(
             title: LangKeys.bookAppointment,
             onPressed: () {
-              // تنفيذ عملية حجز الموعد هنا باستخدام selectedDate
+              // تنفيذ الحجز
             },
           )
               .paddingSymmetric(horizontal: 15)
