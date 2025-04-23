@@ -6,44 +6,27 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/helper/formatted_time.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AvailableTimeWidget extends StatefulWidget {
-  const AvailableTimeWidget({required this.doctorResults, super.key});
+  const AvailableTimeWidget({
+    required this.doctorResults,
+    required this.availableTimes,
+    super.key,
+  });
   final DoctorResults doctorResults;
-
+  final List<String> availableTimes;
   @override
   State<AvailableTimeWidget> createState() => _AvailableTimeWidgetState();
 }
 
 class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
-  List<AvailableTime> availableTimes = [];
-
-  @override
-  void initState() {
-    super.initState();
-    availableTimes = [
-      AvailableTime(time: '9:00 AM'),
-      AvailableTime(time: '10:00 AM'),
-      AvailableTime(time: '11:00 AM'),
-      AvailableTime(time: '12:00 PM'),
-      AvailableTime(time: '1:00 PM'),
-      AvailableTime(time: '2:00 PM'),
-      AvailableTime(time: '3:00 PM'),
-      AvailableTime(time: '4:00 PM'),
-      AvailableTime(time: '5:00 PM'),
-      AvailableTime(time: '6:00 PM'),
-      AvailableTime(time: '4:00 PM'),
-      AvailableTime(time: '5:00 PM'),
-      AvailableTime(time: '6:00 PM'),
-    ];
-  }
-
-  void selectAvailableTime(AvailableTime selectedTime) {
+  void selectAvailableTime(String selectedTime) {
     setState(() {
-      selectedIndex = availableTimes.indexOf(selectedTime);
+      selectedIndex = widget.availableTimes.indexOf(selectedTime);
     });
   }
 
@@ -63,7 +46,7 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
         ).paddingSymmetric(horizontal: 15),
         10.hSpace,
         GridView.builder(
-          itemCount: availableTimes.length,
+          itemCount: widget.availableTimes.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 12,
@@ -72,7 +55,7 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
           ),
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () => selectAvailableTime(availableTimes[index]),
+              onTap: () => selectAvailableTime(widget.availableTimes[index]),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.r),
@@ -82,7 +65,7 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
                 ),
                 alignment: Alignment.center,
                 child: AutoSizeText(
-                  availableTimes[index].time,
+                  formattedTime(context, time: widget.availableTimes[index]),
                   maxLines: 1,
                   style: TextStyleApp.medium18().copyWith(
                     color: index == selectedIndex

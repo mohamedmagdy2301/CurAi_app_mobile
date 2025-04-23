@@ -25,8 +25,8 @@ class BookAppointmentScreen extends StatefulWidget {
 }
 
 class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
-  DateTime selectedDate =
-      DateTime.now(); // هنا سنخزن التاريخ المحدد من الـ DateSelectorHorizontal
+  DateTime selectedDate = DateTime.now();
+  List<String> availableTimes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +81,14 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             onSelect: (MergedDateAvailability selected) {
               setState(() {
                 selectedDate = selected.date;
+                availableTimes = selected.freeSlots;
               });
             },
           ),
           30.hSpace,
           AvailableTimeWidget(
             doctorResults: widget.doctorResults,
+            availableTimes: availableTimes,
           ),
           CustomButton(
             title: LangKeys.bookAppointment,
