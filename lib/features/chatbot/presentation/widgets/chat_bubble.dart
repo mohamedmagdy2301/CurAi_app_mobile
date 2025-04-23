@@ -30,7 +30,7 @@ class ChatBubble extends StatelessWidget {
 
   Widget _buildMessageTime(BuildContext context) {
     return AutoSizeText(
-      formattedTime(context, messageModel.date),
+      formattedTime(context, dateTime: messageModel.date),
       style: TextStyleApp.regular12().copyWith(
         color: context.onPrimaryColor.withAlpha(220),
       ),
