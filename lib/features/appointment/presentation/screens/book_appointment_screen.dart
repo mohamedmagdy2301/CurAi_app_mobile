@@ -37,8 +37,14 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   @override
   void initState() {
     super.initState();
+
     final merged = mergeAndSortByDate(widget.appointmentAvailableModel);
     availableDates = merged.map((e) => e.date).toList();
+
+    if (merged.isNotEmpty) {
+      selectedDate = merged.first.date;
+      availableTimes = merged.first.freeSlots;
+    }
   }
 
   @override
@@ -80,7 +86,6 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                       );
                     },
                   );
-
                   if (picked != null) {
                     final matched =
                         mergeAndSortByDate(widget.appointmentAvailableModel)
@@ -116,6 +121,9 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
           ).paddingSymmetric(horizontal: 15),
           20.hSpace,
           DateSelectorHorizontal(
+            selectedDate: selectedDate,
+            availableDates:
+                mergeAndSortByDate(widget.appointmentAvailableModel),
             onSelect: (MergedDateAvailability selected) {
               setState(() {
                 selectedDate = selected.date;

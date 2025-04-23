@@ -4,18 +4,20 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_avalible_cubit/appointment_avalible_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DateSelectorHorizontal extends StatefulWidget {
   const DateSelectorHorizontal({
     required this.onSelect,
+    required this.selectedDate,
+    required this.availableDates,
     super.key,
   });
 
   final void Function(MergedDateAvailability selected) onSelect;
+  final DateTime selectedDate;
+  final List<MergedDateAvailability> availableDates;
 
   @override
   _DateSelectorHorizontalState createState() => _DateSelectorHorizontalState();
@@ -57,16 +59,42 @@ class _DateSelectorHorizontalState extends State<DateSelectorHorizontal> {
   }
 
   final List<GlobalKey> _itemKeys = [];
-
   @override
   void initState() {
     super.initState();
-    dates = context.read<AppointmentAvailbleCubit>().dates;
-
+    dates = widget.availableDates;
     _itemKeys.addAll(List.generate(dates!.length, (_) => GlobalKey()));
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      selectDay(selectedIndex);
-    });
+  }
+
+  @override
+  void didUpdateWidget(covariant DateSelectorHorizontal oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.selectedDate != oldWidget.selectedDate) {
+      final newIndex = dates!.indexWhere(
+        (element) =>
+            element.date.year == widget.selectedDate.year &&
+            element.date.month == widget.selectedDate.month &&
+            element.date.day == widget.selectedDate.day,
+      );
+
+      if (newIndex != -1 && newIndex != selectedIndex) {
+        setState(() {
+          selectedIndex = newIndex;
+        });
+
+        final key = _itemKeys[newIndex];
+        final ctx = key.currentContext;
+        if (ctx != null) {
+          Scrollable.ensureVisible(
+            ctx,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            alignment: 0.5,
+          );
+        }
+      }
+    }
   }
 
   @override
