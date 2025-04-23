@@ -146,7 +146,7 @@ class _DateSelectorHorizontalState extends State<DateSelectorHorizontal> {
                   onTap: () => selectDay(index),
                   child: Container(
                     key: _itemKeys[index],
-                    width: 70.w,
+                    width: context.W * 0.165,
                     margin: EdgeInsets.symmetric(horizontal: 6.w),
                     decoration: BoxDecoration(
                       color: isSelected
@@ -157,15 +157,21 @@ class _DateSelectorHorizontalState extends State<DateSelectorHorizontal> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          context.isStateArabic ? weekdayAr : weekdayEn,
-                          style: TextStyleApp.medium16().copyWith(
-                            color: isSelected
-                                ? context.onPrimaryColor
-                                : context.onPrimaryColor.withAlpha(180),
+                        SizedBox(
+                          width: context.W * 0.15,
+                          child: AutoSizeText(
+                            context.isStateArabic ? weekdayAr : weekdayEn,
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyleApp.medium16().copyWith(
+                              color: isSelected
+                                  ? Colors.white
+                                  : context.onPrimaryColor.withAlpha(180),
+                            ),
                           ),
                         ),
-                        5.hSpace,
+                        3.hSpace,
                         SizedBox(
                           width: context.W * 0.15,
                           child: AutoSizeText(
@@ -173,9 +179,9 @@ class _DateSelectorHorizontalState extends State<DateSelectorHorizontal> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
-                            style: TextStyleApp.bold16().copyWith(
+                            style: TextStyleApp.medium16().copyWith(
                               color: isSelected
-                                  ? context.onPrimaryColor
+                                  ? Colors.white
                                   : context.onPrimaryColor.withAlpha(180),
                             ),
                           ),

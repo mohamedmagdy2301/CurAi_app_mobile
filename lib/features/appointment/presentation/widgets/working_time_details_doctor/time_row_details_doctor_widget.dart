@@ -45,7 +45,7 @@ class _TimeRowWidgetState extends State<TimeRowWidget> {
             ),
             const Spacer(),
             SizedBox(
-              width: context.W * 0.11,
+              width: context.W * 0.14,
               child: AutoSizeText(
                 formattedTime(
                   context,
@@ -71,7 +71,7 @@ class _TimeRowWidgetState extends State<TimeRowWidget> {
             ),
             8.wSpace,
             SizedBox(
-              width: context.W * 0.11,
+              width: context.W * 0.14,
               child: AutoSizeText(
                 formattedTime(
                   context,
