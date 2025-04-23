@@ -36,15 +36,44 @@ class WorkingTimeDetailsDoctorWidget extends StatelessWidget {
         ),
         5.hSpace,
         Column(
-          children: doctorAvailability
-              .map(
-                (doctorAvailability) => TimeRowWidget(
-                  doctorAvailability: doctorAvailability,
-                ),
-              )
-              .toList(),
+          children: _buildUniqueDayWidgets(),
         ),
       ],
     );
+  }
+
+  List<Widget> _buildUniqueDayWidgets() {
+    final seenDays = <String>{};
+    final widgets = <Widget>[];
+
+    final weekDaysOrder = [
+      'SATURDAY',
+      'SUNDAY',
+      'MONDAY',
+      'TUESDAY',
+      'WEDNESDAY',
+      'THURSDAY',
+      'FRIDAY',
+    ];
+
+    // ترتيب القائمة حسب ترتيب أيام الأسبوع
+    final sortedList = doctorAvailability.toList()
+      ..sort((a, b) {
+        final dayA = a.day?.toUpperCase() ?? '';
+        final dayB = b.day?.toUpperCase() ?? '';
+        return weekDaysOrder
+            .indexOf(dayA)
+            .compareTo(weekDaysOrder.indexOf(dayB));
+      });
+
+    for (final date in sortedList) {
+      final day = date.day?.toUpperCase() ?? '';
+      if (!seenDays.contains(day)) {
+        seenDays.add(day);
+        widgets.add(TimeRowWidget(doctorAvailability: date));
+      }
+    }
+
+    return widgets;
   }
 }
