@@ -150,14 +150,17 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
               return CustomButton(
                 title: LangKeys.bookAppointment,
                 onPressed: () {
-                  context.read<AppointmentPatientCubit>().addAppointmentPatient(
-                        params: AddAppointmentPatientRequest(
-                          doctorId: widget.doctorResults.id!,
-                          appointmentDate:
-                              selectedDate.toString().split(' ')[0],
-                          appointmentTime: selectedTime ?? availableTimes.first,
-                        ),
-                      );
+                  context.read<AppointmentPatientCubit>()
+                    ..addAppointmentPatient(
+                      params: AddAppointmentPatientRequest(
+                        doctorId: widget.doctorResults.id!,
+                        appointmentDate: selectedDate.toString().split(' ')[0],
+                        appointmentTime: selectedTime ?? availableTimes.first,
+                      ),
+                    )
+                    ..getAppointmentAvailable(
+                      doctorId: widget.doctorResults.id!,
+                    );
                 },
               )
                   .paddingSymmetric(horizontal: 15)

@@ -38,7 +38,8 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     return Scaffold(
       appBar: const CustomAppbarPaymentAppointment(),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AutoSizeText(
             context.translate(LangKeys.paymentMethod),
@@ -51,9 +52,9 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
           20.hSpace,
           AutoSizeText(
             '${widget.doctorResults.firstName} ${widget.doctorResults.lastName}'
-            '\n'
+            '\n\n'
             'Appointment id ---> ${widget.appointmentId}',
-            maxLines: 1,
+            maxLines: 4,
             overflow: TextOverflow.ellipsis,
             style: TextStyleApp.medium14().copyWith(
               color: context.onSecondaryColor,
@@ -103,13 +104,13 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                   //     .read<AppointmentPatientCubit>()
                   //     .sumbitPayment(appointmentId: widget.appointmentId);
                 },
-              )
-                  .paddingSymmetric(horizontal: 15)
-                  .paddingOnly(bottom: Platform.isIOS ? 17 : 10);
+              );
             },
           ),
         ],
-      ),
+      )
+          .paddingSymmetric(horizontal: 15)
+          .paddingOnly(bottom: Platform.isIOS ? 17 : 10),
     );
   }
 }
