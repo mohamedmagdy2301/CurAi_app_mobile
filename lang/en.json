@@ -149,5 +149,6 @@
   "select_date": "Select  Date",
   "select_time": "Select Time",
   "available_time": "Available Time",
-  "not_available_to_book": "Not available to book"
+  "not_available_to_book": "Not available to book",
+  "payment_book": "Payment Book"
 }

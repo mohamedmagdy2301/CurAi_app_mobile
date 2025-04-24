@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/screens/book_appointment_screen.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/screens/payment_appointment_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/build_your_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
@@ -86,6 +87,25 @@ class AppRoutes {
           }
         }
         return BaseRoute(page: const PageUnderBuildScreen());
+
+      case Routes.paymentAppointmentScreen:
+        if (arg is Map<String, dynamic>) {
+          final doctorResults = arg['doctorResults'] as DoctorResults?;
+          final appointmentId = arg['appointmentId'] as int?;
+
+          if (doctorResults != null && appointmentId != null) {
+            return BaseRoute(
+              page: PaymentAppointmentScreen(
+                doctorResults: doctorResults,
+                appointmentId: appointmentId,
+              ),
+            );
+          } else {
+            return BaseRoute(page: const PageUnderBuildScreen());
+          }
+        }
+        return BaseRoute(page: const PageUnderBuildScreen());
+
       case Routes.yourProfileScreen:
         return BaseRoute(page: const BuildYourProfileScreen());
       default:

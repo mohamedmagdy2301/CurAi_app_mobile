@@ -1,21 +1,28 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/widgets/available_time_widget.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/widgets/custom_appbar_book_appointment.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/widgets/date_selector_horizontal.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/widgets/book_appointment/available_time_widget.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/widgets/book_appointment/custom_appbar_book_appointment.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/widgets/book_appointment/date_selector_horizontal.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookAppointmentScreen extends StatefulWidget {
   const BookAppointmentScreen({
@@ -97,17 +104,66 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             },
             initialSelectedTime: selectedTime,
           ),
-          CustomButton(
-            title: LangKeys.bookAppointment,
-            onPressed: () {
-              log(selectedDate.toString().split(' ')[0]);
-              log('------------------------');
-              log(selectedTime.toString());
-              log('------------------------');
+          BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
+            listenWhen: (previous, current) =>
+                current is AddAppointmentPatientFailure ||
+                current is AddAppointmentPatientLoading ||
+                current is AddAppointmentPatientSuccess,
+            buildWhen: (previous, current) =>
+                current is AddAppointmentPatientLoading ||
+                current is AddAppointmentPatientSuccess ||
+                current is AddAppointmentPatientFailure,
+            listener: (context, state) {
+              if (state is AddAppointmentPatientFailure) {
+                Navigator.pop(context);
+                showMessage(
+                  context,
+                  message: state.message,
+                  type: SnackBarType.error,
+                );
+              } else if (state is AddAppointmentPatientSuccess) {
+                Navigator.pop(context);
+                if (state.addAppointmentPatientModel.message != null) {
+                  showMessage(
+                    context,
+                    message: state.addAppointmentPatientModel.message!,
+                    type: SnackBarType.success,
+                  );
+                }
+
+                context.pushNamed(
+                  Routes.paymentAppointmentScreen,
+                  arguments: {
+                    'doctorResults': widget.doctorResults,
+                    'appointmentId':
+                        state.addAppointmentPatientModel.appointmentId,
+                  },
+                );
+              } else if (state is AddAppointmentPatientLoading) {
+                AdaptiveDialogs.showLoadingAlertDialog(
+                  context: context,
+                  title: context.translate(LangKeys.login),
+                );
+              }
             },
-          )
-              .paddingSymmetric(horizontal: 15)
-              .paddingOnly(bottom: Platform.isIOS ? 17 : 10),
+            builder: (context, state) {
+              return CustomButton(
+                title: LangKeys.bookAppointment,
+                onPressed: () {
+                  context.read<AppointmentPatientCubit>().addAppointmentPatient(
+                        params: AddAppointmentPatientRequest(
+                          doctorId: widget.doctorResults.id!,
+                          appointmentDate:
+                              selectedDate.toString().split(' ')[0],
+                          appointmentTime: selectedTime ?? availableTimes.first,
+                        ),
+                      );
+                },
+              )
+                  .paddingSymmetric(horizontal: 15)
+                  .paddingOnly(bottom: Platform.isIOS ? 17 : 10);
+            },
+          ),
         ],
       ),
     );

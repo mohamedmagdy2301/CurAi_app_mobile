@@ -1,6 +1,6 @@
 class AddAppointmentPatientRequest {
-  AddAppointmentPatientRequest(
-    this.doctorId, {
+  AddAppointmentPatientRequest({
+    required this.doctorId,
     required this.appointmentDate,
     required this.appointmentTime,
   });

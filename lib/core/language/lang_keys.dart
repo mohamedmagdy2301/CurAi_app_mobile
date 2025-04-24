@@ -175,4 +175,5 @@ class LangKeys {
   static const String selectTime = 'select_time';
   static const String availableTime = 'available_time';
   static const String notAvailableToBook = 'not_available_to_book';
+  static const String paymentBook = 'payment_book';
 }

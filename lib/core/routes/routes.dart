@@ -16,4 +16,5 @@ class Routes {
   static const String helpCenterScreen = '/helpCenterScreen';
   static const String addReviewScreen = '/addReviewScreen';
   static const String bookAppointmentScreen = '/bookAppointmentScreen';
+  static const String paymentAppointmentScreen = '/paymentAppointmentScreen';
 }

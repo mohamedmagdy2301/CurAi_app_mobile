@@ -150,6 +150,8 @@
   "select_date":  " حدد التاريخ",
   "select_time":  "حدد الوقت",
   "available_time":  "الوقت المتاح",
-  "not_available_to_book":  "غير متاح للحجز"
+  "not_available_to_book":  "غير متاح للحجز",
+  "payment_book":  "دفع الحجز"
+  
 
  }
