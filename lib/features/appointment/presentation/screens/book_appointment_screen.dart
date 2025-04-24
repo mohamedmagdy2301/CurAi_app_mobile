@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -31,6 +32,8 @@ class BookAppointmentScreen extends StatefulWidget {
 
 class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   DateTime selectedDate = DateTime.now();
+  String? selectedTime;
+
   List<String> availableTimes = [];
   List<DateTime> availableDates = [];
 
@@ -40,10 +43,13 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
 
     final merged = mergeAndSortByDate(widget.appointmentAvailableModel);
     availableDates = merged.map((e) => e.date).toList();
-
     if (merged.isNotEmpty) {
       selectedDate = merged.first.date;
       availableTimes = merged.first.freeSlots;
+
+      if (availableTimes.isNotEmpty) {
+        selectedTime = availableTimes.first;
+      }
     }
   }
 
@@ -65,58 +71,7 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                 ),
               ),
               const Spacer(),
-              InkWell(
-                onTap: () async {
-                  final picked = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime.now().add(const Duration(days: 30)),
-                    initialDate: selectedDate,
-                    currentDate: DateTime.now(),
-                    cancelText: context.translate(LangKeys.cancel),
-                    confirmText: context.translate(LangKeys.ok),
-                    helpText: context.translate(LangKeys.selectDate),
-                    keyboardType: TextInputType.number,
-                    selectableDayPredicate: (DateTime day) {
-                      return availableDates.any(
-                        (available) =>
-                            available.year == day.year &&
-                            available.month == day.month &&
-                            available.day == day.day,
-                      );
-                    },
-                  );
-                  if (picked != null) {
-                    final matched =
-                        mergeAndSortByDate(widget.appointmentAvailableModel)
-                            .firstWhere(
-                      (element) =>
-                          element.date.year == picked.year &&
-                          element.date.month == picked.month &&
-                          element.date.day == picked.day,
-                      orElse: () => MergedDateAvailability(
-                        day: '',
-                        dateString: '',
-                        date: picked,
-                        availableFrom: '',
-                        availableTo: '',
-                        freeSlots: [],
-                      ),
-                    );
-                    setState(() {
-                      selectedDate = picked;
-                      availableTimes = matched.freeSlots;
-                    });
-                  }
-                },
-                child: AutoSizeText(
-                  context.translate(LangKeys.setManual),
-                  maxLines: 1,
-                  style: TextStyleApp.medium16().copyWith(
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
+              selectDateManualWidget(context),
             ],
           ).paddingSymmetric(horizontal: 15),
           20.hSpace,
@@ -128,6 +83,8 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
               setState(() {
                 selectedDate = selected.date;
                 availableTimes = selected.freeSlots;
+                selectedTime =
+                    availableTimes.isNotEmpty ? availableTimes.first : null;
               });
             },
           ),
@@ -135,16 +92,79 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
           AvailableTimeWidget(
             doctorResults: widget.doctorResults,
             availableTimes: availableTimes,
+            onTimeSelected: (time) {
+              selectedTime = time;
+            },
+            initialSelectedTime: selectedTime,
           ),
           CustomButton(
             title: LangKeys.bookAppointment,
             onPressed: () {
-              // تنفيذ الحجز
+              log(selectedDate.toString().split(' ')[0]);
+              log('------------------------');
+              log(selectedTime.toString());
+              log('------------------------');
             },
           )
               .paddingSymmetric(horizontal: 15)
               .paddingOnly(bottom: Platform.isIOS ? 17 : 10),
         ],
+      ),
+    );
+  }
+
+  InkWell selectDateManualWidget(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        final picked = await showDatePicker(
+          context: context,
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(const Duration(days: 30)),
+          initialDate: selectedDate,
+          currentDate: DateTime.now(),
+          cancelText: context.translate(LangKeys.cancel),
+          confirmText: context.translate(LangKeys.ok),
+          helpText: context.translate(LangKeys.selectDate),
+          keyboardType: TextInputType.number,
+          selectableDayPredicate: (DateTime day) {
+            return availableDates.any(
+              (available) =>
+                  available.year == day.year &&
+                  available.month == day.month &&
+                  available.day == day.day,
+            );
+          },
+        );
+        if (picked != null) {
+          final matched =
+              mergeAndSortByDate(widget.appointmentAvailableModel).firstWhere(
+            (element) =>
+                element.date.year == picked.year &&
+                element.date.month == picked.month &&
+                element.date.day == picked.day,
+            orElse: () => MergedDateAvailability(
+              day: '',
+              dateString: '',
+              date: picked,
+              availableFrom: '',
+              availableTo: '',
+              freeSlots: [],
+            ),
+          );
+          setState(() {
+            selectedDate = picked;
+            availableTimes = matched.freeSlots;
+            selectedTime =
+                availableTimes.isNotEmpty ? availableTimes.first : null;
+          });
+        }
+      },
+      child: AutoSizeText(
+        context.translate(LangKeys.setManual),
+        maxLines: 1,
+        style: TextStyleApp.medium16().copyWith(
+          color: Colors.blue,
+        ),
       ),
     );
   }

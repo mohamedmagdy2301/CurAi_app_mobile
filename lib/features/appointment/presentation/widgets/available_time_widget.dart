@@ -15,22 +15,57 @@ class AvailableTimeWidget extends StatefulWidget {
   const AvailableTimeWidget({
     required this.doctorResults,
     required this.availableTimes,
+    required this.onTimeSelected,
     super.key,
+    this.initialSelectedTime,
   });
+  final String? initialSelectedTime;
+
   final DoctorResults doctorResults;
   final List<String> availableTimes;
+  final ValueChanged<String> onTimeSelected;
+
   @override
   State<AvailableTimeWidget> createState() => _AvailableTimeWidgetState();
 }
 
 class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
+  int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateSelectedIndex();
+  }
+
+  @override
+  void didUpdateWidget(covariant AvailableTimeWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.availableTimes != oldWidget.availableTimes ||
+        widget.initialSelectedTime != oldWidget.initialSelectedTime) {
+      _updateSelectedIndex();
+    }
+  }
+
+  void _updateSelectedIndex() {
+    final index =
+        widget.availableTimes.indexOf(widget.initialSelectedTime ?? '');
+    setState(() {
+      selectedIndex = index >= 0 ? index : 0;
+    });
+
+    if (widget.availableTimes.isNotEmpty) {
+      widget.onTimeSelected(widget.availableTimes[selectedIndex]);
+    }
+  }
+
   void selectAvailableTime(String selectedTime) {
     setState(() {
       selectedIndex = widget.availableTimes.indexOf(selectedTime);
     });
+    widget.onTimeSelected(selectedTime);
   }
-
-  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
