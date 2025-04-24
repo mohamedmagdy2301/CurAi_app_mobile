@@ -13,11 +13,9 @@ void setupAppointmentDI() {
     ..registerFactory<AppointmentPatientCubit>(
       () => AppointmentPatientCubit(
         sl<GetAppointmentAvailableUsecase>(),
+        sl<AddAppointmentPatientUsecase>(),
       ),
     )
-    // ..registerFactory(
-    //   () => Add(),
-    // )
 
     //! Usecases
     ..registerLazySingleton(

@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 
 abstract class AppointmentPatientState {}
@@ -16,5 +17,18 @@ class AppointmentPatientAvailableSuccess extends AppointmentPatientState {
 
 class AppointmentPatientAvailableFailure extends AppointmentPatientState {
   AppointmentPatientAvailableFailure({required this.message});
+  final String message;
+}
+
+//! Add Appointment Patient Booking
+class AddAppointmentPatientLoading extends AppointmentPatientState {}
+
+class AddAppointmentPatientSuccess extends AppointmentPatientState {
+  AddAppointmentPatientSuccess({required this.addAppointmentPatientModel});
+  final AddAppointmentPatientModel addAppointmentPatientModel;
+}
+
+class AddAppointmentPatientFailure extends AppointmentPatientState {
+  AddAppointmentPatientFailure({required this.message});
   final String message;
 }
