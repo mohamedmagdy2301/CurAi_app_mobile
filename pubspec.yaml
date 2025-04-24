@@ -70,6 +70,7 @@ flutter:
     - assets/images/doctor_specialties/
     - assets/svg/
     - assets/svg/doctor_speciality/
+    - assets/svg/payment/
     - .env.prod
     - .env.dev
     - lang/en.json

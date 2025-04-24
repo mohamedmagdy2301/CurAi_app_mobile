@@ -19,6 +19,8 @@ import 'package:curai_app_mobile/features/appointment/presentation/widgets/payme
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PaymentAppointmentScreen extends StatefulWidget {
   const PaymentAppointmentScreen({
@@ -41,7 +43,6 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
       appBar: const CustomAppbarPaymentAppointment(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AutoSizeText(
             context.translate(LangKeys.paymentMethod),
@@ -52,17 +53,8 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
             ),
           ),
           20.hSpace,
-          AutoSizeText(
-            '${widget.doctorResults.firstName} ${widget.doctorResults.lastName}'
-            '\n\n'
-            'Appointment id ---> ${widget.appointmentId}',
-            maxLines: 4,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyleApp.medium14().copyWith(
-              color: context.onSecondaryColor,
-            ),
-          ),
-          30.hSpace,
+          const PaymentSelectionWidget(),
+          const Spacer(),
           BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
             listenWhen: (previous, current) =>
                 current is PaymentAppointmentFailure ||
@@ -113,6 +105,107 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
       )
           .paddingSymmetric(horizontal: 15)
           .paddingOnly(bottom: Platform.isIOS ? 17 : 10),
+    );
+  }
+}
+
+class PaymentSelectionWidget extends StatefulWidget {
+  const PaymentSelectionWidget({super.key});
+
+  @override
+  _PaymentSelectionWidgetState createState() => _PaymentSelectionWidgetState();
+}
+
+class _PaymentSelectionWidgetState extends State<PaymentSelectionWidget> {
+  String selectedPayment = 'Credit Card';
+  String selectedCard = 'Master Card';
+
+  final List<String> creditCards = [
+    'Master Card',
+    'Visa',
+    'PayPal',
+    'Apple Pay',
+  ];
+
+  final Map<String, String> cardLogos = {
+    'Master Card': 'assets/svg/payment/mastercard.svg',
+    'Visa': 'assets/svg/payment/visa.svg',
+    'PayPal': 'assets/svg/payment/paypal.svg',
+    'Apple Pay': 'assets/svg/payment/applepay.svg',
+  };
+
+  Widget _buildCardItem(String name) {
+    return ListTile(
+      leading: SvgPicture.asset(
+        cardLogos[name]!,
+        height: 24.h,
+      ),
+      title: AutoSizeText(
+        name,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyleApp.medium16().copyWith(
+          color: context.onSecondaryColor,
+        ),
+      ),
+      onTap: () => setState(() => selectedCard = name),
+      selected: selectedCard == name,
+      selectedTileColor: context.primaryColor.withAlpha(40),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+    ).paddingSymmetric(vertical: 4, horizontal: 40);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RadioListTile<String>(
+          fillColor: WidgetStateProperty.all(context.primaryColor),
+          title: AutoSizeText(
+            context.isStateArabic ? 'بطاقة بنكية' : 'Credit Card',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyleApp.bold18().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ),
+          value: 'Credit Card',
+          groupValue: selectedPayment,
+          onChanged: (value) => setState(() => selectedPayment = value!),
+        ).paddingOnly(bottom: 12),
+        ...creditCards.map(_buildCardItem),
+        RadioListTile<String>(
+          fillColor: WidgetStateProperty.all(context.primaryColor),
+          title: AutoSizeText(
+            context.isStateArabic ? 'تحويل بنكي' : 'Bank Transfer',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyleApp.bold18().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ),
+          value: 'Bank Transfer',
+          groupValue: selectedPayment,
+          onChanged: (value) => setState(() => selectedPayment = value!),
+        ).paddingSymmetric(vertical: 8),
+        RadioListTile<String>(
+          fillColor: WidgetStateProperty.all(context.primaryColor),
+          title: AutoSizeText(
+            context.isStateArabic ? 'نقدا' : 'Cash',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyleApp.bold18().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ),
+          value: 'Cash',
+          groupValue: selectedPayment,
+          onChanged: (value) => setState(() => selectedPayment = value!),
+        ).paddingOnly(bottom: 8.h),
+      ],
     );
   }
 }
