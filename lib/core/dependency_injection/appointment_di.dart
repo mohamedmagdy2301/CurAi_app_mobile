@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/features/appointment/data/repositories/appointm
 import 'package:curai_app_mobile/features/appointment/domain/repositories/appointment_repo.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/add_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appointment_available_usecase.dart';
+import 'package:curai_app_mobile/features/appointment/domain/usecases/payment_appointment_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 
 void setupAppointmentDI() {
@@ -14,6 +15,7 @@ void setupAppointmentDI() {
       () => AppointmentPatientCubit(
         sl<GetAppointmentAvailableUsecase>(),
         sl<AddAppointmentPatientUsecase>(),
+        sl<PaymentAppointmentUsecase>(),
       ),
     )
 
@@ -23,6 +25,9 @@ void setupAppointmentDI() {
     )
     ..registerLazySingleton(
       () => AddAppointmentPatientUsecase(repository: sl()),
+    )
+    ..registerLazySingleton(
+      () => PaymentAppointmentUsecase(repository: sl()),
     )
 
     //! Repository
