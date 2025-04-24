@@ -1,11 +1,16 @@
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AppointmentRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getAppointmentAvailable({
     required int doctorId,
+  });
+  Future<Either<Failure, AddAppointmentPatientModel>> addAppointmentPatient({
+    required AddAppointmentPatientRequest addAppointmentPatientRequest,
   });
 }
 
@@ -26,6 +31,26 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
       left,
       (r) {
         return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, AddAppointmentPatientModel>> addAppointmentPatient({
+    required AddAppointmentPatientRequest addAppointmentPatientRequest,
+  }) async {
+    final response = await dioConsumer.post(
+      EndPoints.getAppointmentAvailable,
+      body: addAppointmentPatientRequest.toJson(),
+      queryParameters: {'doctor_id': addAppointmentPatientRequest.doctorId},
+    );
+
+    return response.fold(
+      left,
+      (r) {
+        return right(
+          AddAppointmentPatientModel.fromJson(r as Map<String, dynamic>),
+        );
       },
     );
   }
