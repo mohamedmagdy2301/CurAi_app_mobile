@@ -10,6 +10,8 @@ class EndPoints {
   static const String addReview = '/review/';
   static const String contactUs = '/api/contact-us/';
   static const String predict = '/predict';
+  static const String appointmentPatient = '/patient_panal_appointments';
   static const String getAppointmentAvailable =
-      '/patient_panal_appointments/doctor_availability/';
+      '$appointmentPatient/doctor_availability/';
+  static const String simulateAppointmentPayment = '/simulate_payment/';
 }
