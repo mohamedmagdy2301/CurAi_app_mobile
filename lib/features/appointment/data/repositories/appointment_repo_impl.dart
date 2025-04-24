@@ -2,6 +2,7 @@ import 'package:curai_app_mobile/features/appointment/data/datasources/appointme
 import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/patment_appointment/payment_appointment_model.dart';
 import 'package:curai_app_mobile/features/appointment/domain/repositories/appointment_repo.dart';
 import 'package:dartz/dartz.dart';
 
@@ -39,6 +40,23 @@ class AppointmentRepoImpl extends AppointmentRepo {
       },
       (responseData) {
         return right(AddAppointmentPatientModel.fromJson(responseData));
+      },
+    );
+  }
+
+  @override
+  Future<Either<String, PaymentAppointmentModel>> simulateAppointmentPayment({
+    required int appointmentId,
+  }) async {
+    final response = await remoteDataSource.simulateAppointmentPayment(
+      appointmentId: appointmentId,
+    );
+    return response.fold(
+      (failure) {
+        return left(failure.message);
+      },
+      (responseData) {
+        return right(PaymentAppointmentModel.fromJson(responseData));
       },
     );
   }
