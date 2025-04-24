@@ -4,9 +4,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
@@ -63,33 +65,31 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
           30.hSpace,
           BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
             listenWhen: (previous, current) =>
-                current is AddAppointmentPatientFailure ||
-                current is AddAppointmentPatientLoading ||
-                current is AddAppointmentPatientSuccess,
+                current is PaymentAppointmentFailure ||
+                current is PaymentAppointmentLoading ||
+                current is PaymentAppointmentSuccess,
             buildWhen: (previous, current) =>
-                current is AddAppointmentPatientLoading ||
-                current is AddAppointmentPatientSuccess ||
-                current is AddAppointmentPatientFailure,
+                current is PaymentAppointmentLoading ||
+                current is PaymentAppointmentSuccess ||
+                current is PaymentAppointmentFailure,
             listener: (context, state) {
-              if (state is AddAppointmentPatientFailure) {
+              if (state is PaymentAppointmentFailure) {
                 Navigator.pop(context);
                 showMessage(
                   context,
                   message: state.message,
                   type: SnackBarType.error,
                 );
-              } else if (state is AddAppointmentPatientSuccess) {
+              } else if (state is PaymentAppointmentSuccess) {
                 Navigator.pop(context);
-                if (state.addAppointmentPatientModel.message != null) {
-                  showMessage(
-                    context,
-                    message: state.addAppointmentPatientModel.message!,
-                    type: SnackBarType.success,
-                  );
-                }
+                showMessage(
+                  context,
+                  message: state.paymentAppointmentModel.message,
+                  type: SnackBarType.success,
+                );
 
-                // context.pushNamed(Routes.mainScaffoldUser);
-              } else if (state is AddAppointmentPatientLoading) {
+                context.pushNamed(Routes.mainScaffoldUser);
+              } else if (state is PaymentAppointmentLoading) {
                 AdaptiveDialogs.showLoadingAlertDialog(
                   context: context,
                   title: context.translate(LangKeys.login),
@@ -100,9 +100,11 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
               return CustomButton(
                 title: LangKeys.bookAppointment,
                 onPressed: () {
-                  // context
-                  //     .read<AppointmentPatientCubit>()
-                  //     .sumbitPayment(appointmentId: widget.appointmentId);
+                  context
+                      .read<AppointmentPatientCubit>()
+                      .simulatePaymentAppointment(
+                        appointmentId: widget.appointmentId,
+                      );
                 },
               );
             },

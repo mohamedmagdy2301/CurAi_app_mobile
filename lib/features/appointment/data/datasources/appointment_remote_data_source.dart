@@ -59,7 +59,7 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> simulateAppointmentPayment({
     required int appointmentId,
   }) async {
-    final response = await dioConsumer.get(
+    final response = await dioConsumer.post(
       '${EndPoints.appointmentPatient}/$appointmentId'
       '${EndPoints.simulateAppointmentPayment}',
     );
