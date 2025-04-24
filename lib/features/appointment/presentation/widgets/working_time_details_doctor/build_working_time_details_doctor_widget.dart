@@ -1,7 +1,7 @@
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_avalible_cubit/appointment_avalible_cubit.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_avalible_cubit/appointment_avalible_state.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/working_time_details_doctor/working_time_details_doctor_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,30 +24,30 @@ class _BuildWorkingTimeDetailsDoctorWidgetState
   @override
   void initState() {
     context
-        .read<AppointmentAvailbleCubit>()
+        .read<AppointmentPatientCubit>()
         .getAppointmentAvailable(doctorId: widget.doctorId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppointmentAvailbleCubit, AppointmentAvailbleState>(
+    return BlocBuilder<AppointmentPatientCubit, AppointmentPatientState>(
       buildWhen: (previous, current) =>
-          current is AppointmentAvailableFailure ||
-          current is AppointmentAvailableSuccess ||
-          current is AppointmentAvailableLoading ||
-          current is AppointmentAvailableEmpty,
+          current is AppointmentPatientAvailableFailure ||
+          current is AppointmentPatientAvailableSuccess ||
+          current is AppointmentPatientAvailableLoading ||
+          current is AppointmentPatientAvailableEmpty,
       builder: (context, state) {
-        if (state is AppointmentAvailableFailure) {
+        if (state is AppointmentPatientAvailableFailure) {
           return Center(
             child: Text(
               state.message,
               style: const TextStyle(color: Colors.red),
             ),
           );
-        } else if (state is AppointmentAvailableEmpty) {
+        } else if (state is AppointmentPatientAvailableEmpty) {
           return const SizedBox();
-        } else if (state is AppointmentAvailableSuccess) {
+        } else if (state is AppointmentPatientAvailableSuccess) {
           return WorkingTimeDetailsDoctorWidget(
             doctorAvailability:
                 state.appointmentAvailableModel.doctorAvailability!,

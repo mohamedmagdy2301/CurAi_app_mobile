@@ -1,32 +1,33 @@
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appointment_available_usecase.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_avalible_cubit/appointment_avalible_state.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AppointmentAvailbleCubit extends Cubit<AppointmentAvailbleState> {
-  AppointmentAvailbleCubit(this._getAppointmentAvailableUsecase)
-      : super(AppointmentInitial());
+class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
+  AppointmentPatientCubit(this._getAppointmentAvailableUsecase)
+      : super(AppointmentPatientInitial());
 
   final GetAppointmentAvailableUsecase _getAppointmentAvailableUsecase;
   List<MergedDateAvailability> dates = [];
   Future<void> getAppointmentAvailable({required int doctorId}) async {
-    emit(AppointmentAvailableLoading());
+    emit(AppointmentPatientAvailableLoading());
 
     final result = await _getAppointmentAvailableUsecase.call(doctorId);
 
     result.fold(
       (errMessage) {
         if (isClosed) return;
-        emit(AppointmentAvailableFailure(message: errMessage));
+        emit(AppointmentPatientAvailableFailure(message: errMessage));
       },
       (resulte) {
         if (resulte.doctorAvailability!.isEmpty) {
           if (isClosed) return;
-          emit(AppointmentAvailableEmpty());
+          emit(AppointmentPatientAvailableEmpty());
         } else {
           dates = mergeAndSortByDate(resulte);
           if (isClosed) return;
-          emit(AppointmentAvailableSuccess(appointmentAvailableModel: resulte));
+          emit(AppointmentPatientAvailableSuccess(
+              appointmentAvailableModel: resulte));
         }
       },
     );

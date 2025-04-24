@@ -8,8 +8,8 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_avalible_cubit/appointment_avalible_cubit.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_avalible_cubit/appointment_avalible_state.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/screens/book_appointment_screen.dart';
 import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
 import 'package:curai_app_mobile/features/user/presentation/widgets/home/details_doctor/about_tap.dart';
@@ -37,7 +37,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AppointmentAvailbleCubit>().getAppointmentAvailable(
+    context.read<AppointmentPatientCubit>().getAppointmentAvailable(
           doctorId: widget.doctorResults.id!,
         );
   }
@@ -84,17 +84,17 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                 ],
               ),
             ),
-            BlocBuilder<AppointmentAvailbleCubit, AppointmentAvailbleState>(
+            BlocBuilder<AppointmentPatientCubit, AppointmentPatientState>(
               builder: (context, state) {
                 return CustomButton(
-                  title: state is! AppointmentAvailableSuccess
+                  title: state is! AppointmentPatientAvailableSuccess
                       ? LangKeys.notAvailableToBook
                       : LangKeys.bookAppointment,
-                  isLoading: state is AppointmentAvailableLoading,
-                  colorBackground: state is! AppointmentAvailableSuccess
+                  isLoading: state is AppointmentPatientAvailableLoading,
+                  colorBackground: state is! AppointmentPatientAvailableSuccess
                       ? Colors.grey
                       : context.primaryColor,
-                  onPressed: state is! AppointmentAvailableSuccess
+                  onPressed: state is! AppointmentPatientAvailableSuccess
                       ? () {}
                       : () {
                           context.push(
