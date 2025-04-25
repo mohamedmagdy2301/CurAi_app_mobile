@@ -150,5 +150,8 @@
   "select_time": "Select Time",
   "available_time": "Available Time",
   "not_available_to_book": "Not available to book",
-  "payment_book": "Payment Book"
+  "payment_book": "Payment Book",
+  "my_appointments": "My Appointments",
+  "pending": "Pending",
+  "paided" : "Paided"
 }

@@ -151,7 +151,8 @@
   "select_time":  "حدد الوقت",
   "available_time":  "الوقت المتاح",
   "not_available_to_book":  "غير متاح للحجز",
-  "payment_book":  "دفع الحجز"
-  
-
+  "payment_book":  "دفع الحجز",
+  "my_appointments":  "مواعيدي",
+   "pending":  "قيد الانتظار",
+  "paided" : "مدفوع"
  }
