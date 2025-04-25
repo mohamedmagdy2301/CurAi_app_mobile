@@ -1,4 +1,4 @@
-// ignore_for_file: lines_longer_than_80_chars, unused_element
+// ignore_for_file: lines_longer_than_80_chars, document_ignores
 
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -160,26 +160,26 @@ class PrivacyPolicyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAgreementButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Implement agreement logic (e.g., store user consent)
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: context.primaryColor,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          ),
-          child: Text(
-            'Accept & Continue',
-            style: TextStyleApp.semiBold16().copyWith(
-              color: context.onPrimaryColor,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildAgreementButton(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: 20),
+  //     child: Center(
+  //       child: ElevatedButton(
+  //         onPressed: () {
+  //           // Implement agreement logic (e.g., store user consent)
+  //         },
+  //         style: ElevatedButton.styleFrom(
+  //           backgroundColor: context.primaryColor,
+  //           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+  //         ),
+  //         child: Text(
+  //           'Accept & Continue',
+  //           style: TextStyleApp.semiBold16().copyWith(
+  //             color: context.onPrimaryColor,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

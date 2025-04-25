@@ -1,3 +1,5 @@
+// ignore_for_file: one_member_abstracts, document_ignores
+
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';

@@ -1,4 +1,4 @@
-// ignore_for_file: inference_failure_on_function_invocation, inference_failure_on_instance_creation, use_build_context_synchronously
+// ignore_for_file: inference_failure_on_function_invocation,// inference_failure_on_instance_creation, use_build_context_synchronously
 
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -46,6 +46,7 @@ class LogoutWidget extends StatelessWidget {
             await CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
             await CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
             await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
+            if (!context.mounted) return;
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutError) {
             context.pop();
@@ -59,6 +60,7 @@ class LogoutWidget extends StatelessWidget {
             await CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
             await CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
             await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
+            if (!context.mounted) return;
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           } else if (state is LogoutLoading) {
             await AdaptiveDialogs.showLoadingAlertDialog(

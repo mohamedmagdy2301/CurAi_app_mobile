@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_dynamic_calls, avoid_catches_without_on_clauses
+// ignore_for_file: avoid_dynamic_calls,// avoid_catches_without_on_clauses, document_ignores
 
 import 'dart:io';
 

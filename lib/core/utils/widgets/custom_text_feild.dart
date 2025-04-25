@@ -65,7 +65,8 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       validator: widget.isValidator ?? true
           ? (value) {
               if (value == '') {
-                return '${widget.labelText} ${context.translate(LangKeys.isRequired)}';
+                return '${widget.labelText} '
+                    '${context.translate(LangKeys.isRequired)}';
               }
               return null;
             }

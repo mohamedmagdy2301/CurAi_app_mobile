@@ -228,17 +228,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               return CustomButton(
                 title: LangKeys.updateProfile,
                 colorBackground: isChanged ? context.primaryColor : Colors.grey,
-                onPressed: () {
-                  isChanged
-                      ? AdaptiveDialogs.showOkCancelAlertDialog(
+                onPressed: isChanged
+                    ? () {
+                        AdaptiveDialogs.showOkCancelAlertDialog(
                           context: context,
                           title: context.translate(LangKeys.updateProfile),
                           message:
                               context.translate(LangKeys.updateProfileMessage),
                           onPressedOk: _updateProfileOnTap,
-                        )
-                      : null;
-                },
+                        );
+                      }
+                    : () {},
               );
             },
           ).paddingSymmetric(horizontal: 20, vertical: 10),

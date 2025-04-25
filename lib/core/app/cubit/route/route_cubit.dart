@@ -1,12 +1,12 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_dynamic_calls, document_ignores, lines_longer_than_80_chars
 
 import 'dart:convert';
 
-import 'package:bloc/bloc.dart';
 import 'package:curai_app_mobile/core/app/cubit/get_loction/get_loction_cubit.dart';
 import 'package:curai_app_mobile/core/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -63,8 +63,8 @@ class RouteCubit extends Cubit<RouteState> {
     final response = await http.get(
       Uri.parse(
         '$orsApiUrl?api_key=$orsApiKey'
-        '&start=${currentLocation.longitude},'
-        '${currentLocation.latitude}&end=${destination.longitude},${destination.latitude}',
+        '&start=${currentLocation.longitude},${currentLocation.latitude}'
+        '&end=${destination.longitude},${destination.latitude}',
       ),
     );
     await getDestinationRoute(

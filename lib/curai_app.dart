@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, document_ignores
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
 import 'package:curai_app_mobile/core/app/cubit/localization_state.dart';

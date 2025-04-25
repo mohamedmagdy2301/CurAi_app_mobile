@@ -1,5 +1,3 @@
-// ignore_for_file: flutter_style_todos, use_build_context_synchronously
-
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -69,10 +67,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             imageFile = File(xFilePhoto!.path);
                             imageUrl = imageFile!.path;
                           });
-                          await context.read<AuthCubit>().editPhotoProfile(
-                                imageFile: imageFile,
-                              );
-                          await context.read<AuthCubit>().getProfile();
+                          if (context.mounted) {
+                            await context.read<AuthCubit>().editPhotoProfile(
+                                  imageFile: imageFile,
+                                );
+                          }
+                          if (context.mounted) {
+                            await context.read<AuthCubit>().getProfile();
+                          }
                         }
                       },
                     );

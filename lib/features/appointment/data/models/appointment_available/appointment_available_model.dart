@@ -1,4 +1,5 @@
-// ignore_for_file: avoid_dynamic_calls, inference_failure_on_untyped_parameter
+// ignore_for_file: avoid_dynamic_calls,, document_ignores
+// inference_failure_on_untyped_parameter
 
 class AppointmentAvailableModel {
   AppointmentAvailableModel({this.doctorAvailability});
@@ -6,10 +7,10 @@ class AppointmentAvailableModel {
   AppointmentAvailableModel.fromJson(Map<String, dynamic> json) {
     if (json['doctor_availability'] != null) {
       doctorAvailability = <DoctorAvailability>[];
-      json['doctor_availability'].forEach((v) {
-        doctorAvailability!
-            .add(DoctorAvailability.fromJson(v as Map<String, dynamic>));
-      });
+      json['doctor_availability'].forEach(
+        (Map<String, dynamic> v) =>
+            doctorAvailability!.add(DoctorAvailability.fromJson(v)),
+      );
     }
   }
   List<DoctorAvailability>? doctorAvailability;

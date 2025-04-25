@@ -1,5 +1,3 @@
-// ignore_for_file: inference_failure_on_function_invocation
-
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
@@ -156,7 +154,7 @@ class AdaptiveDialogs {
     required ValueChanged<int> onSelected,
   }) async {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
-      await showCupertinoModalPopup(
+      await showCupertinoModalPopup<void>(
         context: context,
         builder: (BuildContext context) {
           return CupertinoActionSheet(
@@ -187,7 +185,7 @@ class AdaptiveDialogs {
       );
     } else {
       // Android-style bottom sheet
-      await showModalBottomSheet(
+      await showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
           return Wrap(
@@ -230,7 +228,7 @@ class AdaptiveDialogs {
     final textController = TextEditingController();
     String? userInput;
 
-    await _showPlatformDialog(
+    await _showPlatformDialog<void>(
       context: context,
       title: title,
       message: const Text(''),

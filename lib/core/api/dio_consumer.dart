@@ -162,8 +162,8 @@ class DioConsumer implements ApiConsumer {
         : response.data;
 
     final isJwtExpired = data is Map &&
-        (data['detail']?.toString().toLowerCase().contains('expired') == true ||
-            data['detail']?.toString().toLowerCase().contains('jwt') == true);
+        (data['detail'].toString().toLowerCase().contains('expired') == true ||
+            data['detail'].toString().toLowerCase().contains('jwt') == true);
 
     if (response.statusCode == StatusCode.ok ||
         response.statusCode == StatusCode.okCreated) {

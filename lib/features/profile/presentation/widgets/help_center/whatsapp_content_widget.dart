@@ -1,4 +1,4 @@
-// ignore_for_file: inference_failure_on_function_invocation
+// ignore_for_file: inference_failure_on_function_invocation, document_ignores
 
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as a;
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';

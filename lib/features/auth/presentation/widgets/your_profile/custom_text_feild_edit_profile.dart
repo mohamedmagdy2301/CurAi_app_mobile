@@ -39,7 +39,8 @@ class CustomTextFeildEditProfile extends StatelessWidget {
           keyboardType: keyboardType ?? TextInputType.text,
           validator: (value) {
             if (value == '') {
-              return '${context.translate(title)} ${context.translate(LangKeys.isRequired)}';
+              return '${context.translate(title)} '
+                  '${context.translate(LangKeys.isRequired)}';
             }
             return null;
           },

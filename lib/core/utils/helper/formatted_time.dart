@@ -1,5 +1,3 @@
-// ignore_for_file: comment_references
-
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +8,7 @@ import 'package:intl/intl.dart';
 /// - If [time] is provided, it will be parsed as a time (hour:minute) and
 ///   combined with today's date to construct a full [DateTime] object.
 /// - If [dateTime] is provided instead, it will be formatted directly.
-/// - If [context.isStateArabic] is true, Arabic time format will be used.
+/// - If context.isStateArabic is true, Arabic time format will be used.
 /// - If neither [time] nor [dateTime] is provided, an empty string is returned.
 ///
 /// Example usage:

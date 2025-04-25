@@ -48,7 +48,7 @@ class DiagnosisModel {
       '$botResponseDiagnosisAr\n$botResponseSpecialtyAr';
 
   // Method to handle the response based on input type
-  String responseMessage(bool isArabic) {
+  String responseMessage({required bool isArabic}) {
     if (inputType == 'image') {
       return isArabic ? (messageAr ?? diagnosis) : (messageEn ?? diagnosis);
     } else if (inputType == 'text') {

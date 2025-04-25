@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, document_ignores
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;

@@ -1,8 +1,7 @@
-// ignore_for_file: inference_failure_on_instance_creation
+// ignore_for_file: inference_failure_on_instance_creation, document_ignores
 
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
@@ -18,6 +17,7 @@ import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dar
 import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'auth_state.dart';
 

@@ -1,4 +1,4 @@
-// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation, missing_whitespace_between_adjacent_strings
+// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation, missing_whitespace_between_adjacent_strings, document_ignores
 
 import 'dart:io';
 
@@ -72,7 +72,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       removeLoadingMessage();
 
       final botMessageDiagnosis = MessageBubbleModel(
-        messageText: result.responseMessage(isArabic),
+        messageText: result.responseMessage(isArabic: isArabic),
         date: DateTime.now(),
         sender: SenderType.bot,
       );

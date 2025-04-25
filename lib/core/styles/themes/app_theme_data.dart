@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_positional_boolean_parameters
-
 import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';

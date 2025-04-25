@@ -12,11 +12,10 @@ class PaymentAppointmentModel {
   }
   final String message;
   final int newBonus;
-} 
-
-
+}
 
 // {
-//     "message": "Payment has been made successfully and the appointment has been confirmed ✅.",
+//     "message": "Payment has been made successfully and the"
+// appointment has been confirmed ✅.",
 //     "new_bonus": 10
 // }
