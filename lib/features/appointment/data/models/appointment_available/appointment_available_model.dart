@@ -8,8 +8,8 @@ class AppointmentAvailableModel {
     if (json['doctor_availability'] != null) {
       doctorAvailability = <DoctorAvailability>[];
       json['doctor_availability'].forEach(
-        (Map<String, dynamic> v) =>
-            doctorAvailability!.add(DoctorAvailability.fromJson(v)),
+        (v) => doctorAvailability!
+            .add(DoctorAvailability.fromJson(v as Map<String, dynamic>)),
       );
     }
   }

@@ -15,9 +15,11 @@ class RateingDoctorWidget extends StatefulWidget {
   const RateingDoctorWidget({
     required this.doctorResults,
     super.key,
+    this.isToAppointmentScreen = false,
   });
 
   final DoctorResults doctorResults;
+  final bool isToAppointmentScreen;
 
   @override
   State<RateingDoctorWidget> createState() => _RateingDoctorWidgetState();
@@ -35,19 +37,26 @@ class _RateingDoctorWidgetState extends State<RateingDoctorWidget> {
   @override
   Widget build(BuildContext context) {
     return widget.doctorResults.reviews!.isEmpty
-        ? SizedBox(height: 15.h)
+        ? 15.hSpace
         : Row(
             spacing: 3.w,
             children: [
-              StarRating(
-                rating: _avarageRateingDoctor(),
-                size: 20.r,
-                color: Colors.orangeAccent,
-                mainAxisAlignment: MainAxisAlignment.end,
-                filledIcon: CupertinoIcons.star_fill,
-                emptyIcon: CupertinoIcons.star,
-                borderColor: context.onSecondaryColor.withAlpha(50),
-              ),
+              if (widget.isToAppointmentScreen == true)
+                Icon(
+                  CupertinoIcons.star_fill,
+                  color: Colors.orangeAccent,
+                  size: 20.r,
+                )
+              else
+                StarRating(
+                  rating: _avarageRateingDoctor(),
+                  size: 20.r,
+                  color: Colors.orangeAccent,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  filledIcon: CupertinoIcons.star_fill,
+                  emptyIcon: CupertinoIcons.star,
+                  borderColor: context.onSecondaryColor.withAlpha(50),
+                ),
               4.wSpace,
               AutoSizeText(
                 _avarageRateingDoctor().toString(),

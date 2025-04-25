@@ -2,10 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart '
     as int_ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/utils/helper/formatted_time.dart';
 import 'package:curai_app_mobile/core/utils/helper/get_day_of_week_format.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +47,8 @@ class _TimeRowWidgetState extends State<TimeRowWidget> {
             SizedBox(
               width: context.W * 0.14,
               child: AutoSizeText(
-                formattedTime(
-                  context,
-                  time: widget.doctorAvailability.availableFrom,
-                ),
+                widget.doctorAvailability.availableFrom!
+                    .toLocalizedTime(context),
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
@@ -73,10 +71,7 @@ class _TimeRowWidgetState extends State<TimeRowWidget> {
             SizedBox(
               width: context.W * 0.14,
               child: AutoSizeText(
-                formattedTime(
-                  context,
-                  time: widget.doctorAvailability.availableTo,
-                ),
+                widget.doctorAvailability.availableTo!.toLocalizedTime(context),
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,

@@ -2,11 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/utils/helper/formatted_time.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -100,7 +100,7 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
                 ),
                 alignment: Alignment.center,
                 child: AutoSizeText(
-                  formattedTime(context, time: widget.availableTimes[index]),
+                  widget.availableTimes[index].toLocalizedTime(context),
                   maxLines: 1,
                   style: TextStyleApp.medium18().copyWith(
                     color: index == selectedIndex
