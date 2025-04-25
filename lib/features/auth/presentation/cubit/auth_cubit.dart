@@ -46,10 +46,15 @@ class AuthCubit extends Cubit<AuthState> {
     emit(RegisterLoading());
 
     final result = await _registerUsecase.call(registerRequest);
-
     result.fold(
-      (errorMessage) => emit(RegisterError(message: errorMessage)),
-      (successMessage) => emit(RegisterSuccess(message: successMessage)),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(RegisterError(message: errorMessage));
+      },
+      (successMessage) {
+        if (isClosed) return;
+        emit(RegisterSuccess(message: successMessage));
+      },
     );
   }
 
@@ -57,14 +62,19 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LoginLoading());
     await Future.delayed(const Duration(seconds: 2));
     final result = await _loginUsecase.call(loginRequest);
-
     result.fold(
-      (errorMessage) => emit(LoginError(message: errorMessage)),
-      (successMessage) => emit(
-        LoginSuccess(
-          message: 'Welcome ${successMessage.username} in CurAi ☺️',
-        ),
-      ),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(LoginError(message: errorMessage));
+      },
+      (successMessage) {
+        if (isClosed) return;
+        emit(
+          LoginSuccess(
+            message: 'Welcome ${successMessage.username} in CurAi ☺️',
+          ),
+        );
+      },
     );
   }
 
@@ -74,8 +84,14 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await _logoutUsecase.call('');
 
     result.fold(
-      (errorMessage) => emit(LogoutError(message: errorMessage)),
-      (successMessage) => emit(LogoutSuccess(message: successMessage)),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(LogoutError(message: errorMessage));
+      },
+      (successMessage) {
+        if (isClosed) return;
+        emit(LogoutSuccess(message: successMessage));
+      },
     );
   }
 
@@ -87,8 +103,14 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await _changePasswordUsecase.call(changePasswordRequest);
 
     result.fold(
-      (errorMessage) => emit(ChangePasswordError(message: errorMessage)),
-      (successMessage) => emit(ChangePasswordSuccess(message: successMessage)),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(ChangePasswordError(message: errorMessage));
+      },
+      (successMessage) {
+        if (isClosed) return;
+        emit(ChangePasswordSuccess(message: successMessage));
+      },
     );
   }
 
@@ -98,8 +120,14 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await _getProfileUsecase.call('');
 
     result.fold(
-      (errorMessage) => emit(GetProfileError(message: errorMessage)),
-      (profileModel) => emit(GetProfileSuccess(profileModel: profileModel)),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(GetProfileError(message: errorMessage));
+      },
+      (profileModel) {
+        if (isClosed) return;
+        emit(GetProfileSuccess(profileModel: profileModel));
+      },
     );
   }
 
@@ -110,10 +138,15 @@ class AuthCubit extends Cubit<AuthState> {
     emit(EditProfileLoading());
 
     final result = await _editProfileUsecase.call(profileRequest, imageFile);
-
     result.fold(
-      (errorMessage) => emit(EditProfileError(message: errorMessage)),
-      (profileModel) => emit(EditProfileSuccess(profileModel: profileModel)),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(EditProfileError(message: errorMessage));
+      },
+      (profileModel) {
+        if (isClosed) return;
+        emit(EditProfileSuccess(profileModel: profileModel));
+      },
     );
   }
 
@@ -123,11 +156,15 @@ class AuthCubit extends Cubit<AuthState> {
     emit(EditPhotoProfileLoading());
 
     final result = await _editPhotoProfileUsecase.call(imageFile);
-
     result.fold(
-      (errorMessage) => emit(EditPhotoProfileError(message: errorMessage)),
-      (profileModel) =>
-          emit(EditPhotoProfileSuccess(profileModel: profileModel)),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(EditPhotoProfileError(message: errorMessage));
+      },
+      (profileModel) {
+        if (isClosed) return;
+        emit(EditPhotoProfileSuccess(profileModel: profileModel));
+      },
     );
   }
 
@@ -135,10 +172,15 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ContactUsLoading());
 
     final result = await _contactUsUsecase.call(contactUsRequest);
-
     result.fold(
-      (errorMessage) => emit(ContactUsError(message: errorMessage)),
-      (successMessage) => emit(ContactUsSuccess(message: successMessage)),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(ContactUsError(message: errorMessage));
+      },
+      (successMessage) {
+        if (isClosed) return;
+        emit(ContactUsSuccess(message: successMessage));
+      },
     );
   }
 }

@@ -71,6 +71,7 @@ flutter:
     - assets/svg/
     - assets/svg/doctor_speciality/
     - assets/svg/payment/
+    - assets/svg/layout/
     - .env.prod
     - .env.dev
     - lang/en.json

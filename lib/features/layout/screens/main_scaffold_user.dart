@@ -1,14 +1,15 @@
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart%20';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
-import 'package:curai_app_mobile/features/layout/screens/notification_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MainScaffoldUser extends StatelessWidget {
   const MainScaffoldUser({super.key});
@@ -17,33 +18,59 @@ class MainScaffoldUser extends StatelessWidget {
   Widget build(BuildContext context) {
     final destinations = [
       NavigationDestination(
-        icon: Icon(CupertinoIcons.house_alt, size: 25.sp),
-        selectedIcon:
-            selectedIconCustom(CupertinoIcons.house_alt_fill, context),
+        icon: customIconNavBar(
+          context,
+          icon: CupertinoIcons.house_alt,
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.house_alt_fill,
+        ),
         label: 'Home',
       ),
       NavigationDestination(
-        icon: Icon(CupertinoIcons.chat_bubble, size: 25.sp),
-        selectedIcon:
-            selectedIconCustom(CupertinoIcons.chat_bubble_fill, context),
+        icon: customIconNavBar(
+          context,
+          icon: CupertinoIcons.chat_bubble,
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.chat_bubble_fill,
+        ),
         label: 'Chat',
       ),
       NavigationDestination(
-        icon: Icon(CupertinoIcons.bell, size: 25.sp),
-        selectedIcon: selectedIconCustom(CupertinoIcons.bell_solid, context),
+        icon: customIconNavBar(
+          context,
+          image: 'assets/svg/layout/calendar.svg',
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          image: 'assets/svg/layout/calendar2.svg',
+        ),
         label: 'Notification',
       ),
       NavigationDestination(
-        icon: Icon(CupertinoIcons.person, size: 25.sp),
-        selectedIcon: selectedIconCustom(CupertinoIcons.person_alt, context),
-        label: 'Profile',
+        icon: customIconNavBar(
+          context,
+          icon: CupertinoIcons.person,
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.person_alt,
+        ),
+        label: 'Chat',
       ),
     ];
 
     const screens = [
       HomeScreen(),
       ChatbotScreen(),
-      NotificationScreen(),
+      MyAppointmentPatientScreen(),
       ProfileScreen(),
     ];
 
@@ -83,20 +110,44 @@ class MainScaffoldUser extends StatelessWidget {
     );
   }
 
-  Column selectedIconCustom(IconData icon, BuildContext context) {
+  Column customIconNavBar(
+    BuildContext context, {
+    bool isIcon = true,
+    bool isActive = false,
+    IconData? icon,
+    String? image,
+  }) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, color: context.primaryColor, size: 28.sp),
-        15.hSpace,
-        Divider(
-          height: 1.sp,
-          thickness: 3,
-          color: context.primaryColor,
-          indent: 30.w,
-          endIndent: 30.w,
-        ),
-        15.hSpace,
+        if (isActive) 10.hSpace else 0.hSpace,
+        if (isIcon == true && icon != null)
+          Icon(
+            icon,
+            color: !isActive ? context.onSecondaryColor : context.primaryColor,
+            size: 28.sp,
+          )
+        else if (image != null)
+          SvgPicture.asset(
+            image,
+            colorFilter: ColorFilter.mode(
+              !isActive ? context.onSecondaryColor : context.primaryColor,
+              BlendMode.srcIn,
+            ),
+            width: 28.sp,
+            height: 28.sp,
+          )
+        else
+          const SizedBox(),
+        if (isActive == true) ...[
+          Divider(
+            height: 20.sp,
+            thickness: 3,
+            color: context.primaryColor,
+            indent: 30.w,
+            endIndent: 30.w,
+          ),
+        ],
       ],
     );
   }
