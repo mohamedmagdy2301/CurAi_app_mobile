@@ -154,5 +154,9 @@
   "payment_book":  "دفع الحجز",
   "my_appointments":  "مواعيدي",
    "pending":  "قيد الانتظار",
-  "paided" : "مدفوع"
+  "paided" : "مدفوع",
+  "payment" : "دفع",
+  "reschedule" : "اعادة الجدولة",
+   "cancel_appointment" : "الغاء الحجز",
+   "cancel_appointment_message" : "هل أنت متأكد من أنك تريد الغاء الحجز؟"
  }

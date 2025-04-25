@@ -153,5 +153,9 @@
   "payment_book": "Payment Book",
   "my_appointments": "My Appointments",
   "pending": "Pending",
-  "paided" : "Paided"
+  "paided" : "Paided",
+  "payment" : "Payment",
+  "reschedule" : "Reschedule",
+  "cancel_appointment" : "Cancel Appointment",
+  "cancel_appointment_message" : "Are you sure you want to cancel the appointment?"
 }

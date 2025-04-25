@@ -10,6 +10,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     required this.title,
     this.isLoading = false,
+    this.isHalf = false,
     super.key,
     this.onPressed,
     this.colorBackground,
@@ -19,6 +20,7 @@ class CustomButton extends StatelessWidget {
   final String title;
   final void Function()? onPressed;
   final bool isLoading;
+  final bool isHalf;
   final Color? colorBackground;
   final Color? colorBorder;
   final Color? colorText;
@@ -45,9 +47,13 @@ class CustomButton extends StatelessWidget {
               context.translate(title),
               maxLines: 1,
               textAlign: TextAlign.center,
-              style: TextStyleApp.bold20().copyWith(
-                color: colorText ?? Colors.white,
-              ),
+              style: isHalf
+                  ? TextStyleApp.medium16().copyWith(
+                      color: colorText ?? Colors.white,
+                    )
+                  : TextStyleApp.bold20().copyWith(
+                      color: colorText ?? Colors.white,
+                    ),
             ),
     );
   }

@@ -82,7 +82,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                   type: SnackBarType.success,
                 );
 
-                context.pushNamed(Routes.mainScaffoldUser);
+                context.pushNamed(Routes.myAppointmentPatientScreen);
               } else if (state is PaymentAppointmentLoading) {
                 AdaptiveDialogs.showLoadingAlertDialog(
                   context: context,

@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/paided_card_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class PaidedBodyWidget extends StatelessWidget {
@@ -5,10 +6,11 @@ class PaidedBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Text('Paided'),
-      ],
+    return ListView.builder(
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return const PaidedCardItemWidget();
+      },
     );
   }
 }
