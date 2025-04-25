@@ -20,7 +20,7 @@ import 'package:curai_app_mobile/features/appointment/presentation/cubit/appoint
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/book_appointment/available_time_widget.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/book_appointment/custom_appbar_book_appointment.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/book_appointment/date_selector_horizontal.dart';
-import 'package:curai_app_mobile/features/user/data/models/doctor/doctor_model.dart';
+import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

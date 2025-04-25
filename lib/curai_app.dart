@@ -15,7 +15,7 @@ import 'package:curai_app_mobile/core/styles/themes/app_theme_data.dart';
 import 'package:curai_app_mobile/core/utils/helper/build_app_connectivity_controller.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
-import 'package:curai_app_mobile/features/user/presentation/screens/main_scaffold_user.dart';
+import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
