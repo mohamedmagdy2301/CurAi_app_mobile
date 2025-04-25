@@ -6,21 +6,18 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomAppbarMyAppointment extends StatefulWidget
+class CustomAppbarMyAppointment extends StatelessWidget
     implements PreferredSizeWidget {
   const CustomAppbarMyAppointment({
     required this.tabController,
     super.key,
   });
+
   final TabController tabController;
+
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight + 60.h);
-  @override
-  State<CustomAppbarMyAppointment> createState() =>
-      _CustomAppbarMyAppointmentState();
-}
 
-class _CustomAppbarMyAppointmentState extends State<CustomAppbarMyAppointment> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -47,11 +44,7 @@ class _CustomAppbarMyAppointmentState extends State<CustomAppbarMyAppointment> {
         overlayColor: WidgetStateProperty.all(
           context.primaryColor.withAlpha(25),
         ),
-        controller: widget.tabController,
-        onTap: (value) {
-          setState(() {});
-          widget.tabController.index = value;
-        },
+        controller: tabController,
         tabs: [
           Tab(text: context.translate(LangKeys.pending)),
           Tab(text: context.translate(LangKeys.paided)),
