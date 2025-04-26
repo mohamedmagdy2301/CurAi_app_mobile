@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/payment_appointment/payment_appointment_model.dart';
 
 abstract class AppointmentPatientState {}
@@ -44,5 +45,20 @@ class PaymentAppointmentSuccess extends AppointmentPatientState {
 
 class PaymentAppointmentFailure extends AppointmentPatientState {
   PaymentAppointmentFailure({required this.message});
+  final String message;
+}
+
+//! Get My Appointment Patient
+class GetMyAppointmentPatientLoading extends AppointmentPatientState {}
+
+class GetMyAppointmentPatientEmpty extends AppointmentPatientState {}
+
+class GetMyAppointmentPatientSuccess extends AppointmentPatientState {
+  GetMyAppointmentPatientSuccess({required this.myAppointmentPatientModel});
+  final MyAppointmentPatientModel myAppointmentPatientModel;
+}
+
+class GetMyAppointmentPatientFailure extends AppointmentPatientState {
+  GetMyAppointmentPatientFailure({required this.message});
   final String message;
 }
