@@ -33,7 +33,7 @@ class PendingCardItemWidget extends StatelessWidget {
           Row(
             children: [
               AutoSizeText(
-                '2025-04-29'.toReadableDate(context),
+                pendingAppointment.appointmentDate!.toReadableDate(context),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyleApp.semiBold18().copyWith(
@@ -42,7 +42,7 @@ class PendingCardItemWidget extends StatelessWidget {
               ),
               10.wSpace,
               AutoSizeText(
-                '11:00:00:00'.toLocalizedTime(context),
+                pendingAppointment.appointmentTime!.toLocalizedTime(context),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyleApp.semiBold16().copyWith(
