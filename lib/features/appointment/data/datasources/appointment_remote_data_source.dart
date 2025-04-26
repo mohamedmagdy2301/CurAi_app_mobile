@@ -14,6 +14,10 @@ abstract class AppointmentRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> simulateAppointmentPayment({
     required int appointmentId,
   });
+
+  Future<Either<Failure, Map<String, dynamic>>> getMyAppointmentPatient({
+    int page = 1,
+  });
 }
 
 class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
@@ -63,6 +67,23 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
       '${EndPoints.appointmentPatient}/$appointmentId'
       '${EndPoints.simulateAppointmentPayment}',
     );
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getMyAppointmentPatient({
+    int page = 1,
+  }) async {
+    final response = await dioConsumer.get(
+      '${EndPoints.appointmentPatient}/',
+      queryParameters: {'page': page},
+    );
+
     return response.fold(
       left,
       (r) {
