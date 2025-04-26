@@ -37,3 +37,16 @@ class GetSpecializationsFailure extends HomeState {
   GetSpecializationsFailure({required this.message});
   final String message;
 }
+
+//! get doctor by id
+class GetDoctorByIdLoading extends HomeState {}
+
+class GetDoctorByIdSuccess extends HomeState {
+  GetDoctorByIdSuccess({required this.doctorResults});
+  final DoctorResults doctorResults;
+}
+
+class GetDoctorByIdFailure extends HomeState {
+  GetDoctorByIdFailure({required this.message});
+  final String message;
+}
