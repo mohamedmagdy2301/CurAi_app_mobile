@@ -1,5 +1,4 @@
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
-import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
@@ -14,7 +13,6 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcat
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
@@ -24,7 +22,6 @@ import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_p
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/screens/add_review_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRoutes {
   static Route<void> onGenerateRoute(RouteSettings settings) {
@@ -48,17 +45,11 @@ class AppRoutes {
         return BaseRoute(page: const NotificationScreen());
       case Routes.doctorSpeciality:
         return BaseRoute(
-          page: BlocProvider(
-            create: (context) => sl<HomeCubit>(),
-            child: const DoctorSpecialitiesScreen(),
-          ),
+          page: const DoctorSpecialitiesScreen(),
         );
       case Routes.allDoctors:
         return BaseRoute(
-          page: BlocProvider<HomeCubit>(
-            create: (context) => sl<HomeCubit>(),
-            child: AllDoctorScreen(specialityName: (arg ?? '') as String),
-          ),
+          page: AllDoctorScreen(specialityName: (arg ?? '') as String),
         );
       case Routes.settingsScreen:
         return BaseRoute(page: const SettingsScreen());

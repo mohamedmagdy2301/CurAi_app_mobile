@@ -29,7 +29,7 @@ class HomeRepoImpl extends HomeRepo {
         try {
           final allDoctorModel = AllDoctorModel.fromJson(responseData);
           return right(allDoctorModel);
-        } catch (e) {
+        } on Exception catch (e) {
           return left('Error parsing response: $e');
         }
       },
@@ -55,6 +55,24 @@ class HomeRepoImpl extends HomeRepo {
           );
         }
         return right(specializationsList);
+      },
+    );
+  }
+
+  @override
+  Future<Either<String, DoctorResults>> getDoctorById({int? id}) async {
+    final response = await remoteDataSource.getDoctorById(id: id);
+    return response.fold(
+      (failure) {
+        return left(failure.message);
+      },
+      (responseData) {
+        try {
+          final allDoctorModel = DoctorResults.fromJson(responseData);
+          return right(allDoctorModel);
+        } on Exception catch (e) {
+          return left('Error parsing response: $e');
+        }
       },
     );
   }
