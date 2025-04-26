@@ -12,13 +12,18 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PaidedCardItemWidget extends StatefulWidget {
-  const PaidedCardItemWidget({super.key});
+  const PaidedCardItemWidget({
+    required this.paidAppointment,
+    super.key,
+  });
+  final ResultsMyAppointmentPatient paidAppointment;
 
   @override
   State<PaidedCardItemWidget> createState() => _PaidedCardItemWidgetState();

@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/add_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appointment_available_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_my_appointment_patient_usecase.dart';
@@ -19,7 +20,11 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   final AddAppointmentPatientUsecase _addAppointmentPatientUsecase;
   final PaymentAppointmentUsecase _paymentAppointmentUsecase;
   final GetMyAppointmentPatientUsecase _getMyAppointmentPatientUsecase;
+
   List<MergedDateAvailability> dates = [];
+  List<ResultsMyAppointmentPatient> pendingAppointments = [];
+  List<ResultsMyAppointmentPatient> paidAppointments = [];
+
   Future<void> getAppointmentAvailable({required int doctorId}) async {
     emit(AppointmentPatientAvailableLoading());
 
@@ -84,14 +89,32 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   Future<void> getMyAppointmentPatient({int? page}) async {
     emit(GetMyAppointmentPatientLoading());
 
-    final result = await _getMyAppointmentPatientUsecase.call(page = 1);
+    final result = await _getMyAppointmentPatientUsecase.call(page ?? 1);
 
-    result.fold((errMessage) {
-      if (isClosed) return;
-      emit(GetMyAppointmentPatientFailure(message: errMessage));
-    }, (resulte) {
-      if (isClosed) return;
-      emit(GetMyAppointmentPatientSuccess(myAppointmentPatientModel: resulte));
-    });
+    result.fold(
+      (errMessage) {
+        if (isClosed) return;
+        emit(GetMyAppointmentPatientFailure(message: errMessage));
+      },
+      (resulte) {
+        // هنا هنفصلهم حسب paymentStatus
+        pendingAppointments = resulte.results
+                ?.where((appointment) => appointment.paymentStatus == 'pending')
+                .toList() ??
+            [];
+
+        paidAppointments = resulte.results
+                ?.where((appointment) => appointment.paymentStatus == 'paid')
+                .toList() ??
+            [];
+
+        if (isClosed) return;
+        emit(
+          GetMyAppointmentPatientSuccess(
+            myAppointmentPatientModel: resulte,
+          ),
+        );
+      },
+    );
   }
 }

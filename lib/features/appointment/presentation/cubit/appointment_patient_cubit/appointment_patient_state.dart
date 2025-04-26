@@ -51,8 +51,6 @@ class PaymentAppointmentFailure extends AppointmentPatientState {
 //! Get My Appointment Patient
 class GetMyAppointmentPatientLoading extends AppointmentPatientState {}
 
-class GetMyAppointmentPatientEmpty extends AppointmentPatientState {}
-
 class GetMyAppointmentPatientSuccess extends AppointmentPatientState {
   GetMyAppointmentPatientSuccess({required this.myAppointmentPatientModel});
   final MyAppointmentPatientModel myAppointmentPatientModel;
