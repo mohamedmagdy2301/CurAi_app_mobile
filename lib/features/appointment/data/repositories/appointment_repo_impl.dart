@@ -2,7 +2,7 @@ import 'package:curai_app_mobile/features/appointment/data/datasources/appointme
 import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
-import 'package:curai_app_mobile/features/appointment/data/models/patment_appointment/payment_appointment_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/payment_appointment/payment_appointment_model.dart';
 import 'package:curai_app_mobile/features/appointment/domain/repositories/appointment_repo.dart';
 import 'package:dartz/dartz.dart';
 
