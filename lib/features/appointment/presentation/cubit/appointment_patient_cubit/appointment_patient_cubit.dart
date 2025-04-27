@@ -29,8 +29,8 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   List<ResultsMyAppointmentPatient> pendingAppointments = [];
   List<ResultsMyAppointmentPatient> paidAppointments = [];
   Map<int, DoctorResults> doctorsData = {};
-  int lastPage = 1;
-
+  int _currentPage = 1;
+  bool isLast = false;
   Future<void> getAppointmentAvailable({required int doctorId}) async {
     emit(AppointmentPatientAvailableLoading());
 
@@ -93,34 +93,40 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   }
 
   Future<void> getMyAppointmentPatient({int? page}) async {
-    if (page == 1) {
+    if (page != null) {
+      _currentPage = page;
+      isLast = false;
+    }
+
+    final isInitialLoad = _currentPage == 1;
+
+    if (isInitialLoad) {
       if (isClosed) return;
+
       emit(GetMyAppointmentPatientLoading());
     } else {
       if (isClosed) return;
+
       emit(GetMyAppointmentPatientPagenationLoading());
     }
-    final result = await _getMyAppointmentPatientUsecase.call(page ?? 1);
+
+    final result = await _getMyAppointmentPatientUsecase.call(_currentPage);
 
     await result.fold(
       (errMessage) {
-        if (page == 1) {
-          if (isClosed) return;
-          emit(GetMyAppointmentPatientFailure(message: errMessage));
-        } else {
-          if (isClosed) return;
-          emit(
-            GetMyAppointmentPatientPagenationFailure(message: errMessage),
-          );
-        }
+        if (isClosed) return;
+
+        emit(
+          isInitialLoad
+              ? GetMyAppointmentPatientFailure(message: errMessage)
+              : GetMyAppointmentPatientPagenationFailure(message: errMessage),
+        );
       },
       (resulte) async {
-        lastPage = (resulte.count! / 10).ceil();
+        isLast = resulte.next == null;
 
         final tempPending = resulte.results
-                ?.where(
-                  (appointment) => appointment.paymentStatus == 'pending',
-                )
+                ?.where((appointment) => appointment.paymentStatus == 'pending')
                 .toList() ??
             [];
 
@@ -129,19 +135,30 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
                 .toList() ??
             [];
 
+        if (isInitialLoad) {
+          paidAppointments = tempPaid;
+        } else {
+          paidAppointments.addAll(tempPaid);
+        }
+
+        if (isInitialLoad) {
+          pendingAppointments = tempPending;
+        } else {
+          pendingAppointments.addAll(tempPending);
+        }
+
         await _fetchDoctorsForAppointments(tempPending);
         await _fetchDoctorsForAppointments(tempPaid);
 
-        if (!isClosed) {
-          pendingAppointments = tempPending;
-          paidAppointments = tempPaid;
-
-          emit(
-            GetMyAppointmentPatientSuccess(
-              myAppointmentPatientModel: resulte,
-            ),
-          );
+        if (!isLast) {
+          _currentPage++;
         }
+        if (isClosed) return;
+        emit(
+          GetMyAppointmentPatientSuccess(
+            myAppointmentPatientModel: resulte,
+          ),
+        );
       },
     );
   }
