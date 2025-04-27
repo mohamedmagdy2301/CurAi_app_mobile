@@ -183,4 +183,6 @@ class LangKeys {
   static const String myAppointments = 'my_appointments';
   static const String pending = 'pending';
   static const String paided = 'paided';
+
+  static const String tryAgain = 'try_again';
 }

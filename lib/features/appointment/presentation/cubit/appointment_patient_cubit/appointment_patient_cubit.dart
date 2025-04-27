@@ -93,74 +93,84 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   }
 
   Future<void> getMyAppointmentPatient({int? page}) async {
-    if (page != null) {
-      _currentPage = page;
-      isLast = false;
-    }
+    try {
+      if (page != null) {
+        _currentPage = page;
+        isLast = false;
+      }
 
-    final isInitialLoad = _currentPage == 1;
+      final isInitialLoad = _currentPage == 1;
+
+      if (isInitialLoad) {
+        if (isClosed) return;
+        emit(GetMyAppointmentPatientLoading());
+      } else {
+        if (isClosed) return;
+        emit(GetMyAppointmentPatientPaginationLoading());
+      }
+
+      final result = await _getMyAppointmentPatientUsecase.call(_currentPage);
+
+      result.fold(
+        (errMessage) =>
+            emitErrorState(errMessage, isInitialLoad: isInitialLoad),
+        (result) async =>
+            handleSuccessResponse(result, isInitialLoad: isInitialLoad),
+      );
+    } on Exception {
+      if (isClosed) return;
+      emit(GetMyAppointmentPatientFailure(message: 'حدث خطأ غير متوقع'));
+    }
+  }
+
+  void emitErrorState(String errMessage, {required bool isInitialLoad}) {
+    if (isClosed) return;
+    emit(
+      isInitialLoad
+          ? GetMyAppointmentPatientFailure(message: errMessage)
+          : GetMyAppointmentPatientPaginationFailure(message: errMessage),
+    );
+  }
+
+  Future<void> handleSuccessResponse(
+    MyAppointmentPatientModel result, {
+    required bool isInitialLoad,
+  }) async {
+    isLast = result.next == null;
+
+    final tempPending = result.results
+            ?.where((appointment) => appointment.paymentStatus == 'pending')
+            .toList() ??
+        [];
+
+    final tempPaid = result.results
+            ?.where((appointment) => appointment.paymentStatus == 'paid')
+            .toList() ??
+        [];
 
     if (isInitialLoad) {
-      if (isClosed) return;
-
-      emit(GetMyAppointmentPatientLoading());
+      paidAppointments = tempPaid;
+      pendingAppointments = tempPending;
     } else {
-      if (isClosed) return;
-
-      emit(GetMyAppointmentPatientPagenationLoading());
+      paidAppointments.addAll(tempPaid);
+      pendingAppointments.addAll(tempPending);
     }
 
-    final result = await _getMyAppointmentPatientUsecase.call(_currentPage);
+    await Future.wait([
+      _fetchDoctorsForAppointments(tempPending),
+      _fetchDoctorsForAppointments(tempPaid),
+    ]);
 
-    await result.fold(
-      (errMessage) {
-        if (isClosed) return;
+    if (!isLast) _currentPage++;
 
-        emit(
-          isInitialLoad
-              ? GetMyAppointmentPatientFailure(message: errMessage)
-              : GetMyAppointmentPatientPagenationFailure(message: errMessage),
-        );
-      },
-      (resulte) async {
-        isLast = resulte.next == null;
+    if (isClosed) return;
+    emit(GetMyAppointmentPatientSuccess(myAppointmentPatientModel: result));
+  }
 
-        final tempPending = resulte.results
-                ?.where((appointment) => appointment.paymentStatus == 'pending')
-                .toList() ??
-            [];
-
-        final tempPaid = resulte.results
-                ?.where((appointment) => appointment.paymentStatus == 'paid')
-                .toList() ??
-            [];
-
-        if (isInitialLoad) {
-          paidAppointments = tempPaid;
-        } else {
-          paidAppointments.addAll(tempPaid);
-        }
-
-        if (isInitialLoad) {
-          pendingAppointments = tempPending;
-        } else {
-          pendingAppointments.addAll(tempPending);
-        }
-
-        await _fetchDoctorsForAppointments(tempPending);
-        await _fetchDoctorsForAppointments(tempPaid);
-
-        if (!isLast) {
-          _currentPage++;
-        }
-        if (isClosed) return;
-        emit(
-          GetMyAppointmentPatientSuccess(
-            myAppointmentPatientModel: resulte,
-          ),
-        );
-      },
-    );
+  Future<void> refreshAppointments() async {
+    _currentPage = 1;
+    isLast = false;
+    await getMyAppointmentPatient(page: 1);
   }
 
   Future<void> _fetchDoctorsForAppointments(

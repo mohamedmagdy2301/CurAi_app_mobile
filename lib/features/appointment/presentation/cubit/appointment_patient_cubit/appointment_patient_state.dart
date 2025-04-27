@@ -51,7 +51,7 @@ class PaymentAppointmentFailure extends AppointmentPatientState {
 //! Get My Appointment Patient
 class GetMyAppointmentPatientLoading extends AppointmentPatientState {}
 
-class GetMyAppointmentPatientPagenationLoading
+class GetMyAppointmentPatientPaginationLoading
     extends AppointmentPatientState {}
 
 class GetMyAppointmentPatientSuccess extends AppointmentPatientState {
@@ -64,8 +64,8 @@ class GetMyAppointmentPatientFailure extends AppointmentPatientState {
   final String message;
 }
 
-class GetMyAppointmentPatientPagenationFailure extends AppointmentPatientState {
-  GetMyAppointmentPatientPagenationFailure({
+class GetMyAppointmentPatientPaginationFailure extends AppointmentPatientState {
+  GetMyAppointmentPatientPaginationFailure({
     required this.message,
   });
   final String message;

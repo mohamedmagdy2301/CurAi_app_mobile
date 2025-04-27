@@ -8,12 +8,14 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class MyAppointmentCardLoading extends StatelessWidget {
   const MyAppointmentCardLoading({super.key});
@@ -158,6 +160,21 @@ class MyAppointmentCardLoading extends StatelessWidget {
       height: 30.h,
       thickness: .2,
       color: context.onSecondaryColor.withAlpha(120),
+    );
+  }
+}
+
+class MyAppointmentCardLoadingList extends StatelessWidget {
+  const MyAppointmentCardLoadingList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Skeletonizer(
+      effect: shimmerEffect(context),
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (_, index) => const MyAppointmentCardLoading(),
+      ),
     );
   }
 }
