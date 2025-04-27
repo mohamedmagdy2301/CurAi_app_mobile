@@ -29,6 +29,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   List<ResultsMyAppointmentPatient> pendingAppointments = [];
   List<ResultsMyAppointmentPatient> paidAppointments = [];
   Map<int, DoctorResults> doctorsData = {};
+  int lastPage = 1;
 
   Future<void> getAppointmentAvailable({required int doctorId}) async {
     emit(AppointmentPatientAvailableLoading());
@@ -92,18 +93,30 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   }
 
   Future<void> getMyAppointmentPatient({int? page}) async {
-    if (isClosed) return;
-    emit(GetMyAppointmentPatientLoading());
-
+    if (page == 1) {
+      if (isClosed) return;
+      emit(GetMyAppointmentPatientLoading());
+    } else {
+      if (isClosed) return;
+      emit(GetMyAppointmentPatientPagenationLoading());
+    }
     final result = await _getMyAppointmentPatientUsecase.call(page ?? 1);
 
     await result.fold(
       (errMessage) {
-        if (!isClosed) {
+        if (page == 1) {
+          if (isClosed) return;
           emit(GetMyAppointmentPatientFailure(message: errMessage));
+        } else {
+          if (isClosed) return;
+          emit(
+            GetMyAppointmentPatientPagenationFailure(message: errMessage),
+          );
         }
       },
       (resulte) async {
+        lastPage = (resulte.count! / 10).ceil();
+
         final tempPending = resulte.results
                 ?.where(
                   (appointment) => appointment.paymentStatus == 'pending',
@@ -115,8 +128,6 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
                 ?.where((appointment) => appointment.paymentStatus == 'paid')
                 .toList() ??
             [];
-        if (isClosed) return;
-        emit(GetMyAppointmentPatientLoading());
 
         await _fetchDoctorsForAppointments(tempPending);
         await _fetchDoctorsForAppointments(tempPaid);
