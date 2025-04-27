@@ -1,6 +1,7 @@
-import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
+import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/my_appointment_loading_card.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/paided_card_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,12 +82,11 @@ class _PaidedBodyWidgetState extends State<PaidedBodyWidget> {
           );
         }
         return Skeletonizer(
+          effect: shimmerEffect(context),
           child: ListView.builder(
-            itemCount: dummyMyAppointments.length,
+            itemCount: 5,
             itemBuilder: (context, index) {
-              return PaidedCardItemWidget(
-                paidAppointment: dummyMyAppointments[index],
-              );
+              return const MyAppointmentCardLoading();
             },
           ),
         );
