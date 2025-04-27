@@ -19,6 +19,6 @@ abstract class AppointmentRepo {
   });
 
   Future<Either<String, MyAppointmentPatientModel>> getMyAppointmentPatient({
-    int? page,
+    required int page,
   });
 }

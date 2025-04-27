@@ -64,10 +64,10 @@ class AppointmentRepoImpl extends AppointmentRepo {
 
   @override
   Future<Either<String, MyAppointmentPatientModel>> getMyAppointmentPatient({
-    int? page,
+    required int page,
   }) async {
     final response = await remoteDataSource.getMyAppointmentPatient(
-      page: page = 1,
+      page: page,
     );
     return response.fold(
       (failure) {

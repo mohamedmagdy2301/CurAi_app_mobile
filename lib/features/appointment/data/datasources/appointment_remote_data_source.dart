@@ -16,7 +16,7 @@ abstract class AppointmentRemoteDataSource {
   });
 
   Future<Either<Failure, Map<String, dynamic>>> getMyAppointmentPatient({
-    int page = 1,
+    required int page,
   });
 }
 
@@ -77,7 +77,7 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> getMyAppointmentPatient({
-    int page = 1,
+    required int page,
   }) async {
     final response = await dioConsumer.get(
       '${EndPoints.appointmentPatient}/',

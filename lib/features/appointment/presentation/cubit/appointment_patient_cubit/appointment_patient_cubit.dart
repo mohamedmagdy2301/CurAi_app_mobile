@@ -95,53 +95,44 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     if (isClosed) return;
     emit(GetMyAppointmentPatientLoading());
 
-    try {
-      final result = await _getMyAppointmentPatientUsecase.call(page ?? 1);
+    final result = await _getMyAppointmentPatientUsecase.call(page ?? 1);
 
-      await result.fold(
-        (errMessage) {
-          if (!isClosed) {
-            emit(GetMyAppointmentPatientFailure(message: errMessage));
-          }
-        },
-        (resulte) async {
-          // تحديث القوائم المؤقتة أولاً
-          final tempPending = resulte.results
-                  ?.where(
-                    (appointment) => appointment.paymentStatus == 'pending',
-                  )
-                  .toList() ??
-              [];
+    await result.fold(
+      (errMessage) {
+        if (!isClosed) {
+          emit(GetMyAppointmentPatientFailure(message: errMessage));
+        }
+      },
+      (resulte) async {
+        final tempPending = resulte.results
+                ?.where(
+                  (appointment) => appointment.paymentStatus == 'pending',
+                )
+                .toList() ??
+            [];
 
-          final tempPaid = resulte.results
-                  ?.where((appointment) => appointment.paymentStatus == 'paid')
-                  .toList() ??
-              [];
-          if (isClosed) return;
-          emit(GetMyAppointmentPatientLoading());
+        final tempPaid = resulte.results
+                ?.where((appointment) => appointment.paymentStatus == 'paid')
+                .toList() ??
+            [];
+        if (isClosed) return;
+        emit(GetMyAppointmentPatientLoading());
 
-          // جلب بيانات الأطباء أولاً
-          await _fetchDoctorsForAppointments(tempPending);
-          await _fetchDoctorsForAppointments(tempPaid);
+        await _fetchDoctorsForAppointments(tempPending);
+        await _fetchDoctorsForAppointments(tempPaid);
 
-          // التحديث النهائي للبيانات بعد اكتمال كل شيء
-          if (!isClosed) {
-            pendingAppointments = tempPending;
-            paidAppointments = tempPaid;
+        if (!isClosed) {
+          pendingAppointments = tempPending;
+          paidAppointments = tempPaid;
 
-            emit(
-              GetMyAppointmentPatientSuccess(
-                myAppointmentPatientModel: resulte,
-              ),
-            );
-          }
-        },
-      );
-    } catch (e) {
-      if (!isClosed) {
-        emit(GetMyAppointmentPatientFailure(message: e.toString()));
-      }
-    }
+          emit(
+            GetMyAppointmentPatientSuccess(
+              myAppointmentPatientModel: resulte,
+            ),
+          );
+        }
+      },
+    );
   }
 
   Future<void> _fetchDoctorsForAppointments(
