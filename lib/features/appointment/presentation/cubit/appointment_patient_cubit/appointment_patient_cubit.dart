@@ -6,6 +6,8 @@ import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appoin
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_my_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/payment_appointment_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
+import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
@@ -14,16 +16,19 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     this._addAppointmentPatientUsecase,
     this._paymentAppointmentUsecase,
     this._getMyAppointmentPatientUsecase,
+    this._getDoctorByIdUsecase,
   ) : super(AppointmentPatientInitial());
 
   final GetAppointmentAvailableUsecase _getAppointmentAvailableUsecase;
   final AddAppointmentPatientUsecase _addAppointmentPatientUsecase;
   final PaymentAppointmentUsecase _paymentAppointmentUsecase;
   final GetMyAppointmentPatientUsecase _getMyAppointmentPatientUsecase;
+  final GetDoctorByIdUsecase _getDoctorByIdUsecase;
 
   List<MergedDateAvailability> dates = [];
   List<ResultsMyAppointmentPatient> pendingAppointments = [];
   List<ResultsMyAppointmentPatient> paidAppointments = [];
+  Map<int, DoctorResults> doctorsData = {};
 
   Future<void> getAppointmentAvailable({required int doctorId}) async {
     emit(AppointmentPatientAvailableLoading());
@@ -91,15 +96,17 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
 
     final result = await _getMyAppointmentPatientUsecase.call(page ?? 1);
 
-    result.fold(
+    await result.fold(
       (errMessage) {
-        if (isClosed) return;
-        emit(GetMyAppointmentPatientFailure(message: errMessage));
+        if (!isClosed) {
+          emit(GetMyAppointmentPatientFailure(message: errMessage));
+        }
       },
-      (resulte) {
-        // هنا هنفصلهم حسب paymentStatus
+      (resulte) async {
         pendingAppointments = resulte.results
-                ?.where((appointment) => appointment.paymentStatus == 'pending')
+                ?.where(
+                  (appointment) => appointment.paymentStatus == 'pending',
+                )
                 .toList() ??
             [];
 
@@ -108,13 +115,40 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
                 .toList() ??
             [];
 
-        if (isClosed) return;
-        emit(
-          GetMyAppointmentPatientSuccess(
-            myAppointmentPatientModel: resulte,
-          ),
-        );
+        await _fetchDoctorsForAppointments(pendingAppointments);
+        await _fetchDoctorsForAppointments(paidAppointments);
+
+        if (!isClosed) {
+          emit(
+            GetMyAppointmentPatientSuccess(
+              myAppointmentPatientModel: resulte,
+            ),
+          );
+        }
       },
     );
+  }
+
+  Future<void> _fetchDoctorsForAppointments(
+    List<ResultsMyAppointmentPatient> appointments,
+  ) async {
+    final doctorIds = appointments
+        .map((appointment) => appointment.doctorId)
+        .whereType<int>()
+        .toSet();
+
+    final futures = doctorIds.map((doctorId) async {
+      if (!doctorsData.containsKey(doctorId)) {
+        final result = await _getDoctorByIdUsecase.call(doctorId);
+        result.fold(
+          (errMessage) {},
+          (doctorResult) {
+            doctorsData[doctorId] = doctorResult;
+          },
+        );
+      }
+    }).toList();
+
+    await Future.wait(futures);
   }
 }

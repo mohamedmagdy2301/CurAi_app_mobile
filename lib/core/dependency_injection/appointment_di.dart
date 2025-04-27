@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appoin
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_my_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/payment_appointment_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
+import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 
 void setupAppointmentDI() {
   //! Cubit
@@ -18,6 +19,7 @@ void setupAppointmentDI() {
         sl<AddAppointmentPatientUsecase>(),
         sl<PaymentAppointmentUsecase>(),
         sl<GetMyAppointmentPatientUsecase>(),
+        sl<GetDoctorByIdUsecase>(),
       ),
     )
 

@@ -13,9 +13,11 @@ import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PendingCardItemWidget extends StatelessWidget {
@@ -24,6 +26,14 @@ class PendingCardItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final doctorResults =
+        context.select<AppointmentPatientCubit, DoctorResults?>(
+      (cubit) => cubit.doctorsData[pendingAppointment.doctorId],
+    );
+
+    if (doctorResults == null) {
+      return const SizedBox();
+    }
     return Card(
       color: context.isDark ? Colors.black : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
@@ -55,7 +65,7 @@ class PendingCardItemWidget extends StatelessWidget {
           Row(
             children: [
               CustomCachedNetworkImage(
-                imgUrl: doctorResults(context).profilePicture ?? '',
+                imgUrl: doctorResults.profilePicture ?? '',
                 height: context.H * 0.13,
                 width: context.H * 0.13,
                 errorIconSize: 60.sp,
@@ -71,8 +81,8 @@ class PendingCardItemWidget extends StatelessWidget {
                     width: context.W * .5,
                     child: AutoSizeText(
                       '${context.translate(LangKeys.dr)}/ '
-                              '${doctorResults(context).firstName}'
-                              ' ${doctorResults(context).lastName}'
+                              '${doctorResults.firstName}'
+                              ' ${doctorResults.lastName}'
                           .capitalizeFirstChar,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -87,7 +97,7 @@ class PendingCardItemWidget extends StatelessWidget {
                       SizedBox(
                         width: context.W * .28,
                         child: AutoSizeText(
-                          doctorResults(context).specialization ?? '',
+                          doctorResults.specialization ?? '',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyleApp.semiBold16().copyWith(
@@ -98,7 +108,7 @@ class PendingCardItemWidget extends StatelessWidget {
                       SizedBox(
                         width: context.W * .23,
                         child: AutoSizeText(
-                          '${doctorResults(context).consultationPrice} '
+                          '${doctorResults.consultationPrice} '
                           '${context.translate(LangKeys.egp)}',
                           maxLines: 1,
                           textAlign: TextAlign.start,
@@ -112,7 +122,7 @@ class PendingCardItemWidget extends StatelessWidget {
                   ),
                   RateingDoctorWidget(
                     isToAppointmentScreen: true,
-                    doctorResults: doctorResults(context),
+                    doctorResults: doctorResults,
                   ),
                 ],
               ),
@@ -128,8 +138,8 @@ class PendingCardItemWidget extends StatelessWidget {
                   context.pushNamed(
                     Routes.paymentAppointmentScreen,
                     arguments: {
-                      'doctorResults': doctorResults(context),
-                      'appointmentId': 1,
+                      'doctorResults': doctorResults,
+                      'appointmentId': pendingAppointment.id,
                     },
                   );
                 },
@@ -153,24 +163,6 @@ class PendingCardItemWidget extends StatelessWidget {
           ),
         ],
       ).paddingSymmetric(horizontal: 16, vertical: 16),
-    );
-  }
-
-  DoctorResults doctorResults(BuildContext context) {
-    return DoctorResults(
-      id: 1,
-      firstName: context.isStateArabic ? 'أحمد' : 'John',
-      lastName: context.isStateArabic ? 'محمد' : 'Smith',
-      specialization: context.isStateArabic ? 'طبيب أطفال' : 'Dentist',
-      consultationPrice: '1000',
-      profilePicture:
-          'https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      reviews: [
-        Reviews(
-          id: 1,
-          rating: 5,
-        ),
-      ],
     );
   }
 
