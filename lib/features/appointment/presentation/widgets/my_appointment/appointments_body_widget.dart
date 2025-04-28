@@ -8,14 +8,15 @@ import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_ap
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PendingBodyWidget extends StatefulWidget {
-  const PendingBodyWidget({super.key});
+class AppointmentsBodyWidget extends StatefulWidget {
+  const AppointmentsBodyWidget({required this.isPending, super.key});
+  final bool isPending;
 
   @override
-  State<PendingBodyWidget> createState() => _PendingBodyWidgetState();
+  State<AppointmentsBodyWidget> createState() => _AppointmentsBodyWidgetState();
 }
 
-class _PendingBodyWidgetState extends State<PendingBodyWidget> {
+class _AppointmentsBodyWidgetState extends State<AppointmentsBodyWidget> {
   final ScrollController _scrollController = ScrollController();
   late AppointmentPatientCubit cubit;
 
@@ -35,7 +36,10 @@ class _PendingBodyWidgetState extends State<PendingBodyWidget> {
   }
 
   Future<void> _initialLoad() async {
-    if (cubit.pendingAppointments.isEmpty && !hasFetchedInitialData) {
+    final appointments =
+        widget.isPending ? cubit.pendingAppointments : cubit.paidAppointments;
+
+    if (appointments.isEmpty && !hasFetchedInitialData) {
       hasFetchedInitialData = true;
       await cubit.getMyAppointmentPatient(page: 1);
     }
@@ -52,11 +56,6 @@ class _PendingBodyWidgetState extends State<PendingBodyWidget> {
       await cubit.getMyAppointmentPatient();
       if (mounted) setState(() => isLoadingMore = false);
     }
-    // if (cubit.pendingAppointments.isEmpty) {
-    //   setState(() => isLoadingMore = true);
-    //   await cubit.getMyAppointmentPatient();
-    //   if (mounted) setState(() => isLoadingMore = false);
-    // }
   }
 
   @override
@@ -75,8 +74,13 @@ class _PendingBodyWidgetState extends State<PendingBodyWidget> {
           current is GetMyAppointmentPatientPaginationFailure ||
           current is GetMyAppointmentPatientPaginationLoading,
       listener: (context, state) async {
+        final appointments = widget.isPending
+            ? cubit.pendingAppointments
+            : cubit.paidAppointments;
+
         if (state is GetMyAppointmentPatientSuccess &&
-            cubit.pendingAppointments.isEmpty) {
+            appointments.isEmpty &&
+            !cubit.isLast) {
           setState(() => isLoadingMore = true);
           await cubit.getMyAppointmentPatient();
           if (mounted) setState(() => isLoadingMore = false);
@@ -91,8 +95,9 @@ class _PendingBodyWidgetState extends State<PendingBodyWidget> {
         }
       },
       builder: (context, state) {
-        final cubit = context.read<AppointmentPatientCubit>();
-        final appointments = cubit.pendingAppointments;
+        final appointments = widget.isPending
+            ? cubit.pendingAppointments
+            : cubit.paidAppointments;
 
         if (state is GetMyAppointmentPatientLoading) {
           return const MyAppointmentCardLoadingList();
@@ -100,11 +105,10 @@ class _PendingBodyWidgetState extends State<PendingBodyWidget> {
           return BuildAppointmentsErrorWidget(state: state);
         } else if (appointments.isEmpty && cubit.isLast) {
           return const BuildAppointmentsEmptyList();
-        } else if (state is GetMyAppointmentPatientSuccess &&
-            cubit.pendingAppointments.isNotEmpty) {
+        } else if (appointments.isNotEmpty) {
           return BuildAppointmentsList(
             cubit: cubit,
-            isPending: true,
+            isPending: widget.isPending,
             appointments: appointments,
             isLoadingMore: isLoadingMore,
             scrollController: _scrollController,

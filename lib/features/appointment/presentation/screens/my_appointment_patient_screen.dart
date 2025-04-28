@@ -1,6 +1,5 @@
+import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/appointments_body_widget.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/custom_appbar_my_appointment.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/paided_body_widget.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/pending_body_widget.dart';
 import 'package:flutter/material.dart';
 
 class MyAppointmentPatientScreen extends StatefulWidget {
@@ -34,8 +33,8 @@ class _MyAppointmentPatientScreenState extends State<MyAppointmentPatientScreen>
       body: TabBarView(
         controller: tabController,
         children: const [
-          PendingBodyWidget(),
-          PaidedBodyWidget(),
+          AppointmentsBodyWidget(isPending: true),
+          AppointmentsBodyWidget(isPending: false),
         ],
       ),
     );

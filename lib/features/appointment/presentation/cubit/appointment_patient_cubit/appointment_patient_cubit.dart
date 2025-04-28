@@ -46,7 +46,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
           if (isClosed) return;
           emit(AppointmentPatientAvailableEmpty());
         } else {
-          dates = mergeAndSortByDate(resulte);
+          dates = mergeAndSortByDate(resulte).toList();
           if (isClosed) return;
           emit(
             AppointmentPatientAvailableSuccess(
@@ -147,17 +147,17 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
       paidAppointments = tempPaid;
       pendingAppointments = tempPending;
     } else {
-      // إضافة العناصر الجديدة فقط (منع التكرار)
-      for (final item in tempPending) {
-        if (!pendingAppointments.any((element) => element.id == item.id)) {
-          pendingAppointments.add(item);
-        }
-      }
-      for (final item in tempPaid) {
-        if (!paidAppointments.any((element) => element.id == item.id)) {
-          paidAppointments.add(item);
-        }
-      }
+      pendingAppointments = [
+        ...pendingAppointments,
+        ...tempPending
+            .where((item) => !pendingAppointments.any((e) => e.id == item.id)),
+      ];
+
+      paidAppointments = [
+        ...paidAppointments,
+        ...tempPaid
+            .where((item) => !paidAppointments.any((e) => e.id == item.id)),
+      ];
     }
 
     await Future.wait([
@@ -183,6 +183,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   Future<void> _fetchDoctorsForAppointments(
     List<ResultsMyAppointmentPatient> appointments,
   ) async {
+    if (isClosed) return;
     final doctorIds = appointments
         .map((appointment) => appointment.doctorId)
         .whereType<int>()
@@ -195,14 +196,13 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     final results = await Future.wait(
       doctorIds.map(_getDoctorByIdUsecase.call),
     );
-
+    if (isClosed) return;
     for (final result in results) {
       result.fold(
         (error) {},
         (doctor) {
-          if (!isClosed) {
-            doctorsData[doctor.id!] = doctor;
-          }
+          if (isClosed) return;
+          doctorsData[doctor.id!] = doctor;
         },
       );
     }
