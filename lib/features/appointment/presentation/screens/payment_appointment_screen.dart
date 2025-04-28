@@ -83,6 +83,9 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                 );
 
                 context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
+                context
+                    .read<AppointmentPatientCubit>()
+                    .refreshMyAppointmentPatient();
               } else if (state is PaymentAppointmentLoading) {
                 AdaptiveDialogs.showLoadingAlertDialog(
                   context: context,

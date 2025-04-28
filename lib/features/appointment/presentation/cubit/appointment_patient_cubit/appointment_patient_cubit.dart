@@ -96,6 +96,12 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     return _currentPage + 1;
   }
 
+  Future<void> refreshMyAppointmentPatient() async {
+    _currentPage = 1;
+    isLast = false;
+    await getMyAppointmentPatient();
+  }
+
   Future<void> getMyAppointmentPatient({int? page}) async {
     try {
       if (page != null) {

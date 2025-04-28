@@ -37,7 +37,7 @@ class BuildAppointmentsList extends StatelessWidget {
     return CustomRefreshIndicator(
       onRefresh: () async {
         await Future.delayed(const Duration(milliseconds: 500));
-        await cubit.getMyAppointmentPatient();
+        await cubit.refreshMyAppointmentPatient();
       },
       builder: (context, child, controller) {
         return AnimatedBuilder(

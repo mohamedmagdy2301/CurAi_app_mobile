@@ -41,7 +41,7 @@ class _AppointmentsBodyWidgetState extends State<AppointmentsBodyWidget> {
 
     if (appointments.isEmpty && !hasFetchedInitialData) {
       hasFetchedInitialData = true;
-      await cubit.getMyAppointmentPatient(page: 1);
+      await cubit.refreshMyAppointmentPatient();
     }
   }
 
