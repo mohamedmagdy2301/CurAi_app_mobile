@@ -46,8 +46,8 @@ class CustomAppbarMyAppointment extends StatelessWidget
         ),
         controller: tabController,
         tabs: [
-          Tab(text: context.translate(LangKeys.pending)),
           Tab(text: context.translate(LangKeys.paided)),
+          Tab(text: context.translate(LangKeys.pending)),
         ],
       ),
     );
