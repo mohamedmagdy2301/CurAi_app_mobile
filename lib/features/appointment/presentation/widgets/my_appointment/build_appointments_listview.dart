@@ -1,10 +1,6 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
-    as int_ext;
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
-import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
@@ -14,10 +10,9 @@ import 'package:curai_app_mobile/features/appointment/data/models/my_appointment
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/appointment_card_widget.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/my_appointment_loading_card.dart';
+import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BuildAppointmentsList extends StatefulWidget {
   const BuildAppointmentsList({
@@ -107,105 +102,90 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
                 appointment: appointment,
                 doctorResults: doctorResults,
                 topTrailingWidget: const Spacer(),
-                bottomButtons: [
-                  CustomButton(
-                    isHalf: true,
-                    title: LangKeys.paymentBook,
-                    onPressed: () {
-                      context.pushNamed(
-                        Routes.paymentAppointmentScreen,
-                        arguments: {
-                          'doctorResults': doctorResults,
-                          'appointmentId': appointment.id,
-                        },
-                      );
-                    },
-                  ).expand(),
-                  15.wSpace,
-                  InkWell(
-                    onTap: () {
-                      showMessage(
-                        context,
-                        type: SnackBarType.success,
-                        message: 'Delete appointment successfully',
-                      );
-                    },
-                    child: Container(
-                      padding: context.padding(horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(color: Colors.redAccent),
-                        color: context.backgroundColor,
-                      ),
-                      child: const Icon(
-                        CupertinoIcons.trash,
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                  ),
-                ],
+                bottomButton: _buildPaymentBookButton(
+                  context,
+                  doctorResults,
+                  appointment,
+                ),
               );
             } else {
               return AppointmentCardWidget(
                 appointment: appointment,
                 doctorResults: doctorResults,
-                topTrailingWidget: Switch.adaptive(
-                  value: isSwitched,
-                  onChanged: (value) {
-                    setState(() {
-                      isSwitchedMap[appointment.id!] = value;
-                    });
-
-                    showMessage(
-                      context,
-                      type: SnackBarType.success,
-                      message: value
-                          ? 'You have successfully enabled notifications 🔔'
-                          : 'You have successfully disabled notifications 🔕',
-                    );
-                  },
+                topTrailingWidget:
+                    _buildNotificationSwitch(isSwitched, appointment, context),
+                bottomButton: _buildRescheduleButton(
+                  context,
+                  doctorResults,
+                  appointment,
                 ),
-                bottomButtons: [
-                  CustomButton(
-                    isHalf: true,
-                    title: LangKeys.reschedule,
-                    onPressed: () {
-                      showMessage(
-                        context,
-                        type: SnackBarType.success,
-                        message: 'Reschedule appointment successfully',
-                      );
-                    },
-                  ).expand(),
-                  15.wSpace,
-                  InkWell(
-                    onTap: () {
-                      showMessage(
-                        context,
-                        type: SnackBarType.success,
-                        message: 'Delete appointment successfully',
-                      );
-                    },
-                    child: Container(
-                      padding: context.padding(horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(color: Colors.redAccent),
-                        color: context.backgroundColor,
-                      ),
-                      child: const Icon(
-                        Icons.delete,
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                  ),
-                ],
               );
             }
           }
           return const MyAppointmentCardLoadingList();
         },
       ),
+    );
+  }
+
+  CustomButton _buildRescheduleButton(
+    BuildContext context,
+    DoctorResults doctorResults,
+    ResultsMyAppointmentPatient appointment,
+  ) {
+    return CustomButton(
+      isHalf: true,
+      title: LangKeys.reschedule,
+      onPressed: () {
+        showMessage(
+          context,
+          type: SnackBarType.success,
+          message: 'Reschedule appointment successfully',
+        );
+      },
+    );
+  }
+
+  CustomButton _buildPaymentBookButton(
+    BuildContext context,
+    DoctorResults doctorResults,
+    ResultsMyAppointmentPatient appointment,
+  ) {
+    return CustomButton(
+      isHalf: true,
+      title: LangKeys.paymentBook,
+      onPressed: () {
+        context.pushNamed(
+          Routes.paymentAppointmentScreen,
+          arguments: {
+            'doctorResults': doctorResults,
+            'appointmentId': appointment.id,
+          },
+        );
+      },
+    );
+  }
+
+  Switch _buildNotificationSwitch(
+    bool isSwitched,
+    ResultsMyAppointmentPatient appointment,
+    BuildContext context,
+  ) {
+    return Switch.adaptive(
+      value: isSwitched,
+      onChanged: (value) {
+        setState(() {
+          isSwitchedMap[appointment.id!] = value;
+        });
+
+        showMessage(
+          context,
+          type: SnackBarType.success,
+          message: value
+              ? 'You have successfully enabled notifications 🔔'
+              : 'You have successfully disabled notifications 🔕',
+        );
+      },
     );
   }
 }

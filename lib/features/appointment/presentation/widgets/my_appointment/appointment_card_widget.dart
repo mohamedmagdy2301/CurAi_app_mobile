@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
@@ -19,13 +20,13 @@ class AppointmentCardWidget extends StatelessWidget {
     required this.appointment,
     required this.doctorResults,
     required this.topTrailingWidget,
-    required this.bottomButtons,
+    required this.bottomButton,
     super.key,
   });
   final ResultsMyAppointmentPatient appointment;
   final DoctorResults doctorResults;
   final Widget topTrailingWidget;
-  final List<Widget> bottomButtons;
+  final Widget bottomButton;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,33 @@ class AppointmentCardWidget extends StatelessWidget {
             ],
           ),
           _customDivider(context),
-          Row(children: bottomButtons),
+          Row(
+            children: [
+              bottomButton.expand(),
+              15.wSpace,
+              InkWell(
+                onTap: () {
+                  showMessage(
+                    context,
+                    type: SnackBarType.success,
+                    message: 'Delete appointment successfully',
+                  );
+                },
+                child: Container(
+                  padding: context.padding(horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: Border.all(color: Colors.redAccent),
+                    color: context.backgroundColor,
+                  ),
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.redAccent,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ).paddingSymmetric(horizontal: 16, vertical: 16),
     );
