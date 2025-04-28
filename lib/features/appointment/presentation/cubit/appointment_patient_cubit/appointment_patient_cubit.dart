@@ -92,6 +92,10 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     );
   }
 
+  int getNextPage() {
+    return _currentPage + 1;
+  }
+
   Future<void> getMyAppointmentPatient({int? page}) async {
     try {
       if (page != null) {
@@ -123,15 +127,6 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     }
   }
 
-  void emitErrorState(String errMessage, {required bool isInitialLoad}) {
-    if (isClosed) return;
-    emit(
-      isInitialLoad
-          ? GetMyAppointmentPatientFailure(message: errMessage)
-          : GetMyAppointmentPatientPaginationFailure(message: errMessage),
-    );
-  }
-
   Future<void> handleSuccessResponse(
     MyAppointmentPatientModel result, {
     required bool isInitialLoad,
@@ -152,8 +147,17 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
       paidAppointments = tempPaid;
       pendingAppointments = tempPending;
     } else {
-      paidAppointments.addAll(tempPaid);
-      pendingAppointments.addAll(tempPending);
+      // إضافة العناصر الجديدة فقط (منع التكرار)
+      for (final item in tempPending) {
+        if (!pendingAppointments.any((element) => element.id == item.id)) {
+          pendingAppointments.add(item);
+        }
+      }
+      for (final item in tempPaid) {
+        if (!paidAppointments.any((element) => element.id == item.id)) {
+          paidAppointments.add(item);
+        }
+      }
     }
 
     await Future.wait([
@@ -167,10 +171,13 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     emit(GetMyAppointmentPatientSuccess(myAppointmentPatientModel: result));
   }
 
-  Future<void> refreshAppointments() async {
-    _currentPage = 1;
-    isLast = false;
-    await getMyAppointmentPatient(page: 1);
+  void emitErrorState(String errMessage, {required bool isInitialLoad}) {
+    if (isClosed) return;
+    emit(
+      isInitialLoad
+          ? GetMyAppointmentPatientFailure(message: errMessage)
+          : GetMyAppointmentPatientPaginationFailure(message: errMessage),
+    );
   }
 
   Future<void> _fetchDoctorsForAppointments(

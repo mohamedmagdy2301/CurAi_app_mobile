@@ -17,11 +17,15 @@ class PendingBodyWidget extends StatefulWidget {
 
 class _PendingBodyWidgetState extends State<PendingBodyWidget> {
   final ScrollController _scrollController = ScrollController();
+  late AppointmentPatientCubit cubit;
+
   bool isLoadingMore = false;
+  bool hasFetchedInitialData = false;
 
   @override
   void initState() {
     super.initState();
+    cubit = context.read<AppointmentPatientCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _initialLoad();
@@ -31,15 +35,13 @@ class _PendingBodyWidgetState extends State<PendingBodyWidget> {
   }
 
   Future<void> _initialLoad() async {
-    final cubit = context.read<AppointmentPatientCubit>();
-
-    if (cubit.pendingAppointments.isEmpty) {
+    if (cubit.pendingAppointments.isEmpty && !hasFetchedInitialData) {
+      hasFetchedInitialData = true;
       await cubit.getMyAppointmentPatient(page: 1);
     }
   }
 
   Future<void> _scrollListener() async {
-    final cubit = context.read<AppointmentPatientCubit>();
     if (!mounted || isLoadingMore || cubit.isLast) {
       return;
     }
@@ -50,12 +52,36 @@ class _PendingBodyWidgetState extends State<PendingBodyWidget> {
       await cubit.getMyAppointmentPatient();
       if (mounted) setState(() => isLoadingMore = false);
     }
+    // if (cubit.pendingAppointments.isEmpty) {
+    //   setState(() => isLoadingMore = true);
+    //   await cubit.getMyAppointmentPatient();
+    //   if (mounted) setState(() => isLoadingMore = false);
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
-      listener: (context, state) {
+      buildWhen: (previous, current) =>
+          current is GetMyAppointmentPatientFailure ||
+          current is GetMyAppointmentPatientSuccess ||
+          current is GetMyAppointmentPatientLoading ||
+          current is GetMyAppointmentPatientPaginationFailure ||
+          current is GetMyAppointmentPatientPaginationLoading,
+      listenWhen: (previous, current) =>
+          current is GetMyAppointmentPatientFailure ||
+          current is GetMyAppointmentPatientSuccess ||
+          current is GetMyAppointmentPatientLoading ||
+          current is GetMyAppointmentPatientPaginationFailure ||
+          current is GetMyAppointmentPatientPaginationLoading,
+      listener: (context, state) async {
+        if (state is GetMyAppointmentPatientSuccess &&
+            cubit.pendingAppointments.isEmpty) {
+          setState(() => isLoadingMore = true);
+          await cubit.getMyAppointmentPatient();
+          if (mounted) setState(() => isLoadingMore = false);
+        }
+
         if (state is GetMyAppointmentPatientFailure) {
           showMessage(
             context,
@@ -67,19 +93,24 @@ class _PendingBodyWidgetState extends State<PendingBodyWidget> {
       builder: (context, state) {
         final cubit = context.read<AppointmentPatientCubit>();
         final appointments = cubit.pendingAppointments;
+
         if (state is GetMyAppointmentPatientLoading) {
           return const MyAppointmentCardLoadingList();
         } else if (state is GetMyAppointmentPatientFailure) {
           return BuildAppointmentsErrorWidget(state: state);
-        } else if (appointments.isEmpty) {
+        } else if (appointments.isEmpty && cubit.isLast) {
           return const BuildAppointmentsEmptyList();
+        } else if (state is GetMyAppointmentPatientSuccess &&
+            cubit.pendingAppointments.isNotEmpty) {
+          return BuildAppointmentsList(
+            cubit: cubit,
+            isPending: true,
+            appointments: appointments,
+            isLoadingMore: isLoadingMore,
+            scrollController: _scrollController,
+          );
         }
-        return BuildAppointmentsList(
-          scrollController: _scrollController,
-          appointments: appointments,
-          cubit: cubit,
-          isLoadingMore: isLoadingMore,
-        );
+        return const MyAppointmentCardLoadingList();
       },
     );
   }

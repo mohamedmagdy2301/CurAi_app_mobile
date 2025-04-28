@@ -83,7 +83,6 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                 );
 
                 context.pushReplacementNamed(Routes.myAppointmentPatientScreen);
-                context.read<AppointmentPatientCubit>().refreshAppointments();
               } else if (state is PaymentAppointmentLoading) {
                 AdaptiveDialogs.showLoadingAlertDialog(
                   context: context,

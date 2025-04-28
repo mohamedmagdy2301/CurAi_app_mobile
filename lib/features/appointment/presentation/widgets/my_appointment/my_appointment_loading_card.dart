@@ -172,7 +172,9 @@ class MyAppointmentCardLoadingList extends StatelessWidget {
     return Skeletonizer(
       effect: shimmerEffect(context),
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: 5,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (_, index) => const MyAppointmentCardLoading(),
       ),
     );

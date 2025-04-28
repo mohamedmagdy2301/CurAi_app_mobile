@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
@@ -20,24 +21,28 @@ class BuildAppointmentsErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.error, size: 80.sp, color: Colors.redAccent),
-          16.hSpace,
+          Icon(
+            Icons.warning_amber_rounded,
+            size: 150.sp,
+            color: Colors.redAccent,
+          ),
+          50.hSpace,
           AutoSizeText(
             state.message,
             maxLines: 3,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: TextStyleApp.semiBold18().copyWith(
-              color: Colors.redAccent,
+              color: Colors.redAccent.shade100,
             ),
           ),
-          16.hSpace,
+          56.hSpace,
           CustomButton(
             title: LangKeys.tryAgain,
             onPressed: () => context
                 .read<AppointmentPatientCubit>()
                 .getMyAppointmentPatient(page: 1),
-          ),
+          ).paddingSymmetric(horizontal: 40),
         ],
       ),
     );
