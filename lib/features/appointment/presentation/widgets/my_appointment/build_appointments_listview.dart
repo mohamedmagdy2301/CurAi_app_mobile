@@ -2,7 +2,6 @@
 
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
-import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
@@ -16,9 +15,11 @@ import 'package:curai_app_mobile/features/appointment/presentation/cubit/appoint
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/appointment_card_widget.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/my_appointment_loading_card.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BuildAppointmentsList extends StatelessWidget {
+class BuildAppointmentsList extends StatefulWidget {
   const BuildAppointmentsList({
     required this.cubit,
     required this.appointments,
@@ -27,17 +28,37 @@ class BuildAppointmentsList extends StatelessWidget {
     required this.isPending,
     super.key,
   });
+
   final AppointmentPatientCubit cubit;
   final List<ResultsMyAppointmentPatient> appointments;
   final ScrollController scrollController;
   final bool isLoadingMore;
   final bool isPending;
+
+  @override
+  State<BuildAppointmentsList> createState() => _BuildAppointmentsListState();
+}
+
+class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
+  final Map<int, bool> isSwitchedMap = {};
+
+  @override
+  void didUpdateWidget(covariant BuildAppointmentsList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.appointments != oldWidget.appointments) {
+      for (final appointment in widget.appointments) {
+        isSwitchedMap.putIfAbsent(appointment.id!, () => false);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomRefreshIndicator(
       onRefresh: () async {
         await Future.delayed(const Duration(milliseconds: 500));
-        await cubit.refreshMyAppointmentPatient();
+        await widget.cubit.refreshMyAppointmentPatient();
       },
       builder: (context, child, controller) {
         return AnimatedBuilder(
@@ -64,21 +85,24 @@ class BuildAppointmentsList extends StatelessWidget {
         );
       },
       child: ListView.builder(
-        controller: scrollController,
+        controller: widget.scrollController,
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
-        itemCount: appointments.length + (isLoadingMore ? 1 : 0),
+        itemCount: widget.appointments.length + (widget.isLoadingMore ? 1 : 0),
         itemBuilder: (context, index) {
-          if (index < appointments.length) {
-            final appointment = appointments[index];
-            final doctorResults = cubit.doctorsData[appointment.doctorId];
+          if (index < widget.appointments.length) {
+            final appointment = widget.appointments[index];
+            final doctorResults =
+                widget.cubit.doctorsData[appointment.doctorId];
 
             if (doctorResults == null) {
               return const SizedBox();
             }
 
-            if (isPending) {
+            final isSwitched = isSwitchedMap[appointment.id] ?? false;
+
+            if (widget.isPending) {
               return AppointmentCardWidget(
                 appointment: appointment,
                 doctorResults: doctorResults,
@@ -98,54 +122,46 @@ class BuildAppointmentsList extends StatelessWidget {
                     },
                   ).expand(),
                   15.wSpace,
-                  CustomButton(
-                    isHalf: true,
-                    title: LangKeys.cancelAppointment,
-                    colorBackground:
-                        context.isDark ? Colors.black : Colors.white,
-                    colorBorder: Colors.redAccent,
-                    colorText: Colors.redAccent,
-                    onPressed: () {
+                  InkWell(
+                    onTap: () {
                       showMessage(
                         context,
                         type: SnackBarType.success,
-                        message: 'Cancel appointment successfully',
+                        message: 'Delete appointment successfully',
                       );
                     },
-                  ).expand(),
+                    child: Container(
+                      padding: context.padding(horizontal: 10, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.r),
+                        border: Border.all(color: Colors.redAccent),
+                        color: context.backgroundColor,
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.trash,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ),
                 ],
               );
             } else {
               return AppointmentCardWidget(
                 appointment: appointment,
                 doctorResults: doctorResults,
-                topTrailingWidget: StatefulBuilder(
-                  builder: (context, setState) {
-                    var isSwitched = false;
-                    return Switch.adaptive(
-                      value: isSwitched,
-                      onChanged: (_) {
-                        setState(() => isSwitched = !isSwitched);
-                        if (isSwitched) {
-                          showMessage(
-                            context,
-                            type: SnackBarType.success,
-                            message: context.isStateArabic
-                                ? 'تم تفعيل الاشعار للموعد بنجاح 🔔'
-                                : 'You have successfully enabled '
-                                    'notifications for the appointment 🔔',
-                          );
-                        } else {
-                          showMessage(
-                            context,
-                            type: SnackBarType.success,
-                            message: context.isStateArabic
-                                ? 'تم تعطيل الاشعار للموعد بنجاح 🔕'
-                                : 'You have successfully disabled '
-                                    'notifications for the appointment 🔕',
-                          );
-                        }
-                      },
+                topTrailingWidget: Switch.adaptive(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitchedMap[appointment.id!] = value;
+                    });
+
+                    showMessage(
+                      context,
+                      type: SnackBarType.success,
+                      message: value
+                          ? 'You have successfully enabled notifications 🔔'
+                          : 'You have successfully disabled notifications 🔕',
                     );
                   },
                 ),
@@ -162,21 +178,27 @@ class BuildAppointmentsList extends StatelessWidget {
                     },
                   ).expand(),
                   15.wSpace,
-                  CustomButton(
-                    isHalf: true,
-                    title: LangKeys.cancelAppointment,
-                    colorBackground:
-                        context.isDark ? Colors.black : Colors.white,
-                    colorBorder: Colors.redAccent,
-                    colorText: Colors.redAccent,
-                    onPressed: () {
+                  InkWell(
+                    onTap: () {
                       showMessage(
                         context,
                         type: SnackBarType.success,
-                        message: 'Cancel appointment successfully',
+                        message: 'Delete appointment successfully',
                       );
                     },
-                  ).expand(),
+                    child: Container(
+                      padding: context.padding(horizontal: 10, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.r),
+                        border: Border.all(color: Colors.redAccent),
+                        color: context.backgroundColor,
+                      ),
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ),
                 ],
               );
             }
