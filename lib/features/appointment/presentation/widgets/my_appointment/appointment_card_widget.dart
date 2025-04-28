@@ -83,16 +83,16 @@ class AppointmentCardWidget extends StatelessWidget {
                   '${doctorResults.firstName} ${doctorResults.lastName}'
               .capitalizeFirstChar,
           maxLines: 1,
-          style: TextStyleApp.bold22().copyWith(color: context.onPrimaryColor),
-        ),
-        2.hSpace,
+          style:
+              TextStyleApp.medium22().copyWith(color: context.onPrimaryColor),
+        ).withWidth(context.W * .45),
         Row(
           children: [
             AutoSizeText(
               doctorResults.specialization ?? '',
               style: TextStyleApp.semiBold16()
                   .copyWith(color: context.onSecondaryColor),
-            ).withWidth(context.W * .28),
+            ).withWidth(context.W * .25),
             AutoSizeText(
               '${doctorResults.consultationPrice} '
               '${context.translate(LangKeys.egp)}',
@@ -106,12 +106,12 @@ class AppointmentCardWidget extends StatelessWidget {
           doctorResults: doctorResults,
         ),
       ],
-    ).withWidth(context.W * .5);
+    );
   }
 
   Divider _customDivider(BuildContext context) {
     return Divider(
-      height: 35.h,
+      height: 32.h,
       thickness: .2,
       color: context.onSecondaryColor.withAlpha(120),
     );
