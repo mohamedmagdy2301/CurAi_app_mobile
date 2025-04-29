@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
@@ -77,67 +78,7 @@ class AppointmentCardWidget extends StatelessWidget {
             children: [
               bottomButton.expand(),
               15.wSpace,
-              BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
-                buildWhen: (previous, current) =>
-                    current is DeleteAppointmentPatientFailure ||
-                    current is DeleteAppointmentPatientSuccess ||
-                    current is DeleteAppointmentPatientLoading,
-                listenWhen: (previous, current) =>
-                    current is DeleteAppointmentPatientFailure ||
-                    current is DeleteAppointmentPatientSuccess ||
-                    current is DeleteAppointmentPatientLoading,
-                listener: (context, state) {
-                  if (state is DeleteAppointmentPatientFailure) {
-                    Navigator.pop(context);
-                    showMessage(
-                      context,
-                      message: state.message,
-                      type: SnackBarType.error,
-                    );
-                  } else if (state is DeleteAppointmentPatientSuccess) {
-                    Navigator.pop(context);
-                    showMessage(
-                      context,
-                      message: context.isStateArabic
-                          ? 'تم الغاء الموعد بنجاح'
-                          : 'Appointment canceled successfully',
-                      type: SnackBarType.success,
-                    );
-                    context
-                        .read<AppointmentPatientCubit>()
-                        .refreshMyAppointmentPatient();
-                  } else if (state is DeleteAppointmentPatientLoading) {
-                    AdaptiveDialogs.showLoadingAlertDialog(
-                      context: context,
-                      title: context.translate(LangKeys.cancelAppointment),
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return InkWell(
-                    onTap: () {
-                      context
-                          .read<AppointmentPatientCubit>()
-                          .deleteAppointmentPatient(
-                            appointmentId: appointment.id!,
-                          );
-                    },
-                    child: Container(
-                      padding: context.padding(horizontal: 8, vertical: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(color: Colors.redAccent),
-                        color: context.isDark ? Colors.black : Colors.white,
-                      ),
-                      child: Icon(
-                        CupertinoIcons.trash,
-                        size: 28.sp,
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                  );
-                },
-              ),
+              DeleteAppointmentButton(appointment: appointment),
             ],
           ),
         ],
@@ -186,6 +127,88 @@ class AppointmentCardWidget extends StatelessWidget {
       height: 32.h,
       thickness: .2,
       color: context.onSecondaryColor.withAlpha(120),
+    );
+  }
+}
+
+class DeleteAppointmentButton extends StatelessWidget {
+  const DeleteAppointmentButton({
+    required this.appointment,
+    super.key,
+  });
+
+  final ResultsMyAppointmentPatient appointment;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
+      buildWhen: (previous, current) =>
+          current is DeleteAppointmentPatientFailure ||
+          current is DeleteAppointmentPatientSuccess ||
+          current is DeleteAppointmentPatientLoading,
+      listenWhen: (previous, current) =>
+          current is DeleteAppointmentPatientFailure ||
+          current is DeleteAppointmentPatientSuccess ||
+          current is DeleteAppointmentPatientLoading,
+      listener: (context, state) {
+        if (state is DeleteAppointmentPatientFailure) {
+          Navigator.pop(context);
+          showMessage(
+            context,
+            message: state.message,
+            type: SnackBarType.error,
+          );
+        } else if (state is DeleteAppointmentPatientSuccess) {
+          Navigator.pop(context);
+          showMessage(
+            context,
+            message: context.isStateArabic
+                ? 'تم الغاء الموعد بنجاح'
+                : 'Appointment canceled successfully',
+            type: SnackBarType.success,
+          );
+          context.read<AppointmentPatientCubit>().refreshMyAppointmentPatient();
+        } else if (state is DeleteAppointmentPatientLoading) {
+          AdaptiveDialogs.showLoadingAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.cancelAppointment),
+          );
+        }
+      },
+      builder: (context, state) {
+        return InkWell(
+          onTap: () {
+            AdaptiveDialogs.showOkCancelAlertDialog(
+              context: context,
+              title: context.translate(LangKeys.cancelAppointment),
+              message: context.translate(LangKeys.cancelAppointmentMessage),
+              onPressedOk: () {
+                context.pop();
+
+                context
+                    .read<AppointmentPatientCubit>()
+                    .deleteAppointmentPatient(
+                      appointmentId: appointment.id!,
+                    );
+              },
+              onPressedCancel: () => context.pop(),
+            );
+          },
+          child: Container(
+            padding: context.padding(horizontal: 8, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.r),
+              border: Border.all(color: Colors.redAccent),
+              color: context.isDark ? Colors.black : Colors.white,
+            ),
+            child: Icon(
+              CupertinoIcons.trash,
+              size: 28.sp,
+              color: Colors.redAccent,
+            ),
+          ),
+        );
+      },
     );
   }
 }

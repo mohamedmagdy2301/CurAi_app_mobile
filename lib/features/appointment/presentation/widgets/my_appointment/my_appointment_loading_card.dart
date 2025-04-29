@@ -13,6 +13,7 @@ import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -123,11 +124,24 @@ class MyAppointmentCardLoading extends StatelessWidget {
                     title: LangKeys.paymentBook,
                   ).expand(),
                   15.wSpace,
-                  CustomButton(
-                    title: LangKeys.cancel,
-                    colorBackground:
-                        context.isDark ? Colors.black : Colors.white,
-                  ).expand(),
+                  Container(
+                    padding: context.padding(horizontal: 8, vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(
+                        color: context.isDark
+                            ? Colors.grey.shade600
+                            : Colors.grey.shade100,
+                        width: 4,
+                      ),
+                      color: context.isDark ? Colors.black : Colors.white,
+                    ),
+                    child: Icon(
+                      CupertinoIcons.trash,
+                      size: 2.sp,
+                      color: Colors.redAccent,
+                    ),
+                  ),
                 ],
               ),
             ],
