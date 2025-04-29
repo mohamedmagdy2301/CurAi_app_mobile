@@ -132,13 +132,12 @@ class MyAppointmentCardLoading extends StatelessWidget {
                         color: context.isDark
                             ? Colors.grey.shade600
                             : Colors.grey.shade100,
-                        width: 4,
                       ),
                       color: context.isDark ? Colors.black : Colors.white,
                     ),
                     child: Icon(
                       CupertinoIcons.trash,
-                      size: 2.sp,
+                      size: 28.sp,
                       color: Colors.redAccent,
                     ),
                   ),
@@ -171,7 +170,7 @@ class MyAppointmentCardLoading extends StatelessWidget {
 
   Divider _customDivider(BuildContext context) {
     return Divider(
-      height: 30.h,
+      height: 32.h,
       thickness: .2,
       color: context.onSecondaryColor.withAlpha(120),
     );

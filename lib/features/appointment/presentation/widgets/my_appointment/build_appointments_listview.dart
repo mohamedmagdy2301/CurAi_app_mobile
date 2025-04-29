@@ -1,12 +1,13 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
-import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
@@ -14,9 +15,9 @@ import 'package:curai_app_mobile/features/appointment/presentation/cubit/appoint
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/appointment_card_widget.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/my_appointment/my_appointment_loading_card.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class BuildAppointmentsList extends StatefulWidget {
   const BuildAppointmentsList({
@@ -52,41 +53,40 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
     }
   }
 
+  final RefreshController _refreshController = RefreshController();
   @override
   Widget build(BuildContext context) {
-    return CustomRefreshIndicator(
+    return SmartRefresher(
+      // enablePullUp: widget.cubit.isLast,
+      controller: _refreshController,
+      header: const WaterDropHeader(),
+      // footer: const ClassicFooter(),
       onRefresh: () async {
-        await Future.delayed(const Duration(milliseconds: 500));
-        await widget.cubit.refreshMyAppointmentPatient();
+        log(' --------------------------------------------------');
+
+        try {
+          await Future.delayed(const Duration(milliseconds: 500));
+
+          await widget.cubit.refreshMyAppointmentPatient();
+          _refreshController.refreshCompleted();
+        } on Exception {
+          _refreshController.refreshFailed();
+        }
       },
-      builder: (context, child, controller) {
-        return AnimatedBuilder(
-          animation: controller,
-          builder: (context, _) {
-            return Stack(
-              children: [
-                if (!controller.isIdle)
-                  Positioned(
-                    top: controller.value.clamp(0, 1) * 30,
-                    left: MediaQuery.of(context).size.width / 2 - 15,
-                    child: Transform.scale(
-                      scale: controller.value.clamp(0, 1) * 1.5,
-                      child: const CustomLoadingWidget(),
-                    ),
-                  ),
-                Transform.translate(
-                  offset: Offset(0, 90 * controller.value),
-                  child: child,
-                ),
-              ],
-            );
-          },
-        );
-      },
+      // onLoading: () async {
+      //   log('onLoading--------------------------------------------------');
+      //   try {
+      //     await Future.delayed(const Duration(milliseconds: 500));
+      //     await widget.cubit.getMyAppointmentPatient();
+      //     _refreshController.loadComplete();
+      //   } on Exception {
+      //     _refreshController.loadFailed();
+      //   }
+      // },
       child: ListView.builder(
         controller: widget.scrollController,
         physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
+          parent: ClampingScrollPhysics(),
         ),
         itemCount: widget.appointments.length + (widget.isLoadingMore ? 1 : 0),
         itemBuilder: (context, index) {
@@ -116,8 +116,11 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
               return AppointmentCardWidget(
                 appointment: appointment,
                 doctorResults: doctorResults,
-                topTrailingWidget:
-                    _buildNotificationSwitch(isSwitched, appointment, context),
+                topTrailingWidget: _buildNotificationSwitch(
+                  isSwitched,
+                  appointment,
+                  context,
+                ),
                 bottomButton: _buildRescheduleButton(
                   context,
                   doctorResults,
