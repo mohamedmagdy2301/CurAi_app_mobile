@@ -77,6 +77,10 @@ class AppointmentCardWidget extends StatelessWidget {
               bottomButton.expand(),
               15.wSpace,
               BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
+                buildWhen: (previous, current) =>
+                    current is DeleteAppointmentPatientFailure ||
+                    current is DeleteAppointmentPatientSuccess ||
+                    current is DeleteAppointmentPatientLoading,
                 listenWhen: (previous, current) =>
                     current is DeleteAppointmentPatientFailure ||
                     current is DeleteAppointmentPatientSuccess ||
