@@ -1,11 +1,12 @@
-import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
-import 'package:curai_app_mobile/features/appointment/domain/usecases/add_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/delete_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appointment_available_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_my_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/payment_appointment_usecase.dart';
+import 'package:curai_app_mobile/features/appointment/domain/usecases/reschedule_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment/domain/usecases/schedule_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
@@ -14,15 +15,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   AppointmentPatientCubit(
     this._getAppointmentAvailableUsecase,
-    this._addAppointmentPatientUsecase,
+    this._scheduleAppointmentPatientUsecase,
     this._paymentAppointmentUsecase,
     this._getMyAppointmentPatientUsecase,
     this._getDoctorByIdUsecase,
     this._deleteAppointmentPatientUsecase,
+    this._rescheduleAppointmentPatientUsecase,
   ) : super(AppointmentPatientInitial());
 
   final GetAppointmentAvailableUsecase _getAppointmentAvailableUsecase;
-  final AddAppointmentPatientUsecase _addAppointmentPatientUsecase;
+  final ScheduleAppointmentPatientUsecase _scheduleAppointmentPatientUsecase;
+  final RescheduleAppointmentPatientUsecase
+      _rescheduleAppointmentPatientUsecase;
   final PaymentAppointmentUsecase _paymentAppointmentUsecase;
   final GetMyAppointmentPatientUsecase _getMyAppointmentPatientUsecase;
   final GetDoctorByIdUsecase _getDoctorByIdUsecase;
@@ -33,6 +37,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   List<ResultsMyAppointmentPatient> paidAppointments = [];
   Map<int, DoctorResults> doctorsData = {};
   AppointmentAvailableModel? appointmentAvailableModel;
+
   int _currentPage = 1;
   bool isLast = false;
   Future<void> getAppointmentAvailable({required int doctorId}) async {
@@ -63,24 +68,44 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     );
   }
 
-  Future<void> setAppointmentAvailableModel({required int doctorId}) async {
-    await getAppointmentAvailable(doctorId: doctorId);
-  }
-
-  Future<void> addAppointmentPatient({
-    required AddAppointmentPatientRequest params,
+  Future<void> scheduleAppointmentPatient({
+    required ScheduleAppointmentPatientRequest params,
   }) async {
-    emit(AddAppointmentPatientLoading());
-    final result = await _addAppointmentPatientUsecase.call(params);
+    emit(ScheduleAppointmentPatientLoading());
+    final result = await _scheduleAppointmentPatientUsecase.call(params);
 
     result.fold(
       (errMessage) {
         if (isClosed) return;
-        emit(AddAppointmentPatientFailure(message: errMessage));
+        emit(ScheduleAppointmentPatientFailure(message: errMessage));
       },
       (resulte) {
         if (isClosed) return;
-        emit(AddAppointmentPatientSuccess(addAppointmentPatientModel: resulte));
+        emit(
+          ScheduleAppointmentPatientSuccess(
+            scheduleAppointmentPatientModel: resulte,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> rescheduleAppointmentPatient({
+    required int appointmentId,
+    required ScheduleAppointmentPatientRequest params,
+  }) async {
+    emit(RescheduleAppointmentPatientLoading());
+    final result =
+        await _rescheduleAppointmentPatientUsecase.call(appointmentId, params);
+
+    result.fold(
+      (errMessage) {
+        if (isClosed) return;
+        emit(RescheduleAppointmentPatientFailure(message: errMessage));
+      },
+      (resulte) {
+        if (isClosed) return;
+        emit(RescheduleAppointmentPatientSuccess());
       },
     );
   }

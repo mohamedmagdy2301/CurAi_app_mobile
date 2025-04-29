@@ -1,9 +1,9 @@
 import 'package:curai_app_mobile/features/appointment/data/datasources/appointment_remote_data_source.dart';
-import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_model.dart';
-import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/payment_appointment/payment_appointment_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/schedule_appointment_patient/schedule_appointment_patient_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/domain/repositories/appointment_repo.dart';
 import 'package:dartz/dartz.dart';
 
@@ -29,18 +29,20 @@ class AppointmentRepoImpl extends AppointmentRepo {
   }
 
   @override
-  Future<Either<String, AddAppointmentPatientModel>> addAppointmentPatient({
-    required AddAppointmentPatientRequest addAppointmentPatientRequest,
+  Future<Either<String, ScheduleAppointmentPatientModel>>
+      scheduleAppointmentPatient({
+    required ScheduleAppointmentPatientRequest
+        scheduleAppointmentPatientRequest,
   }) async {
-    final response = await remoteDataSource.addAppointmentPatient(
-      addAppointmentPatientRequest: addAppointmentPatientRequest,
+    final response = await remoteDataSource.scheduleAppointmentPatient(
+      scheduleAppointmentPatientRequest: scheduleAppointmentPatientRequest,
     );
     return response.fold(
       (failure) {
         return left(failure.message);
       },
       (responseData) {
-        return right(AddAppointmentPatientModel.fromJson(responseData));
+        return right(ScheduleAppointmentPatientModel.fromJson(responseData));
       },
     );
   }
@@ -92,6 +94,26 @@ class AppointmentRepoImpl extends AppointmentRepo {
       },
       (responseData) {
         return right('Success delete appointment');
+      },
+    );
+  }
+
+  @override
+  Future<Either<String, String>> rescheduleAppointmentPatient({
+    required int appointmentId,
+    required ScheduleAppointmentPatientRequest
+        scheduleAppointmentPatientRequest,
+  }) async {
+    final response = await remoteDataSource.rescheduleAppointmentPatient(
+      appointmentId: appointmentId,
+      scheduleAppointmentPatientRequest: scheduleAppointmentPatientRequest,
+    );
+    return response.fold(
+      (failure) {
+        return left(failure.message);
+      },
+      (responseData) {
+        return right('Success reschedule appointment');
       },
     );
   }

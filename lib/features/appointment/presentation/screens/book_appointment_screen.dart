@@ -13,8 +13,8 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
-import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/book_appointment/available_time_widget.dart';
@@ -30,10 +30,12 @@ class BookAppointmentScreen extends StatefulWidget {
     required this.appointmentAvailableModel,
     required this.isReschedule,
     super.key,
+    this.appointmentId,
   });
   final bool isReschedule;
   final DoctorResults doctorResults;
   final AppointmentAvailableModel appointmentAvailableModel;
+  final int? appointmentId;
 
   @override
   State<BookAppointmentScreen> createState() => _BookAppointmentScreenState();
@@ -200,27 +202,27 @@ class AddAppointmentButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
       listenWhen: (previous, current) =>
-          current is AddAppointmentPatientFailure ||
-          current is AddAppointmentPatientLoading ||
-          current is AddAppointmentPatientSuccess,
+          current is ScheduleAppointmentPatientFailure ||
+          current is ScheduleAppointmentPatientLoading ||
+          current is ScheduleAppointmentPatientSuccess,
       buildWhen: (previous, current) =>
-          current is AddAppointmentPatientLoading ||
-          current is AddAppointmentPatientSuccess ||
-          current is AddAppointmentPatientFailure,
+          current is ScheduleAppointmentPatientLoading ||
+          current is ScheduleAppointmentPatientSuccess ||
+          current is ScheduleAppointmentPatientFailure,
       listener: (context, state) {
-        if (state is AddAppointmentPatientFailure) {
+        if (state is ScheduleAppointmentPatientFailure) {
           Navigator.pop(context);
           showMessage(
             context,
             message: state.message,
             type: SnackBarType.error,
           );
-        } else if (state is AddAppointmentPatientSuccess) {
+        } else if (state is ScheduleAppointmentPatientSuccess) {
           Navigator.pop(context);
-          if (state.addAppointmentPatientModel.message != null) {
+          if (state.scheduleAppointmentPatientModel.message != null) {
             showMessage(
               context,
-              message: state.addAppointmentPatientModel.message!,
+              message: state.scheduleAppointmentPatientModel.message!,
               type: SnackBarType.success,
             );
           }
@@ -228,10 +230,11 @@ class AddAppointmentButton extends StatelessWidget {
             Routes.paymentAppointmentScreen,
             arguments: {
               'doctorResults': widget.doctorResults,
-              'appointmentId': state.addAppointmentPatientModel.appointmentId,
+              'appointmentId':
+                  state.scheduleAppointmentPatientModel.appointmentId,
             },
           );
-        } else if (state is AddAppointmentPatientLoading) {
+        } else if (state is ScheduleAppointmentPatientLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.bookAppointment),
@@ -243,8 +246,8 @@ class AddAppointmentButton extends StatelessWidget {
           title: LangKeys.bookAppointment,
           onPressed: () {
             context.read<AppointmentPatientCubit>()
-              ..addAppointmentPatient(
-                params: AddAppointmentPatientRequest(
+              ..scheduleAppointmentPatient(
+                params: ScheduleAppointmentPatientRequest(
                   doctorId: widget.doctorResults.id!,
                   appointmentDate: selectedDate.toString().split(' ')[0],
                   appointmentTime: selectedTime ?? availableTimes.first,
@@ -280,38 +283,34 @@ class RescheduleAppointmentButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
       listenWhen: (previous, current) =>
-          current is AddAppointmentPatientFailure ||
-          current is AddAppointmentPatientLoading ||
-          current is AddAppointmentPatientSuccess,
+          current is RescheduleAppointmentPatientFailure ||
+          current is RescheduleAppointmentPatientLoading ||
+          current is RescheduleAppointmentPatientSuccess,
       buildWhen: (previous, current) =>
-          current is AddAppointmentPatientLoading ||
-          current is AddAppointmentPatientSuccess ||
-          current is AddAppointmentPatientFailure,
+          current is RescheduleAppointmentPatientLoading ||
+          current is RescheduleAppointmentPatientSuccess ||
+          current is RescheduleAppointmentPatientFailure,
       listener: (context, state) {
-        if (state is AddAppointmentPatientFailure) {
+        if (state is RescheduleAppointmentPatientFailure) {
           Navigator.pop(context);
           showMessage(
             context,
             message: state.message,
             type: SnackBarType.error,
           );
-        } else if (state is AddAppointmentPatientSuccess) {
+        } else if (state is RescheduleAppointmentPatientSuccess) {
           Navigator.pop(context);
-          if (state.addAppointmentPatientModel.message != null) {
-            showMessage(
-              context,
-              message: state.addAppointmentPatientModel.message!,
-              type: SnackBarType.success,
-            );
-          }
-          context.pushNamed(
-            Routes.paymentAppointmentScreen,
-            arguments: {
-              'doctorResults': widget.doctorResults,
-              'appointmentId': state.addAppointmentPatientModel.appointmentId,
-            },
+          showMessage(
+            context,
+            message: context.isStateArabic
+                ? 'تم تغيير الموعد بنجاح'
+                : 'Appointment rescheduled successfully',
+            type: SnackBarType.success,
           );
-        } else if (state is AddAppointmentPatientLoading) {
+
+          context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
+          context.read<AppointmentPatientCubit>().refreshMyAppointmentPatient();
+        } else if (state is RescheduleAppointmentPatientLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.reschedule),
@@ -322,17 +321,16 @@ class RescheduleAppointmentButton extends StatelessWidget {
         return CustomButton(
           title: LangKeys.reschedule,
           onPressed: () {
-            context.read<AppointmentPatientCubit>()
-              ..addAppointmentPatient(
-                params: AddAppointmentPatientRequest(
-                  doctorId: widget.doctorResults.id!,
-                  appointmentDate: selectedDate.toString().split(' ')[0],
-                  appointmentTime: selectedTime ?? availableTimes.first,
-                ),
-              )
-              ..getAppointmentAvailable(
-                doctorId: widget.doctorResults.id!,
-              );
+            context
+                .read<AppointmentPatientCubit>()
+                .rescheduleAppointmentPatient(
+                  appointmentId: widget.appointmentId!,
+                  params: ScheduleAppointmentPatientRequest(
+                    doctorId: widget.appointmentId!,
+                    appointmentDate: selectedDate.toString().split(' ')[0],
+                    appointmentTime: selectedTime ?? availableTimes.first,
+                  ),
+                );
           },
         )
             .paddingSymmetric(horizontal: 15)

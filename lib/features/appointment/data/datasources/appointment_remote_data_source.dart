@@ -1,15 +1,16 @@
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
-import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AppointmentRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getAppointmentAvailable({
     required int doctorId,
   });
-  Future<Either<Failure, Map<String, dynamic>>> addAppointmentPatient({
-    required AddAppointmentPatientRequest addAppointmentPatientRequest,
+  Future<Either<Failure, Map<String, dynamic>>> scheduleAppointmentPatient({
+    required ScheduleAppointmentPatientRequest
+        scheduleAppointmentPatientRequest,
   });
   Future<Either<Failure, Map<String, dynamic>>> simulateAppointmentPayment({
     required int appointmentId,
@@ -20,6 +21,12 @@ abstract class AppointmentRemoteDataSource {
   });
   Future<Either<Failure, Map<String, dynamic>>> deleteMyAppointmentPatient({
     required int appointmentId,
+  });
+
+  Future<Either<Failure, Map<String, dynamic>>> rescheduleAppointmentPatient({
+    required int appointmentId,
+    required ScheduleAppointmentPatientRequest
+        scheduleAppointmentPatientRequest,
   });
 }
 
@@ -45,13 +52,16 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> addAppointmentPatient({
-    required AddAppointmentPatientRequest addAppointmentPatientRequest,
+  Future<Either<Failure, Map<String, dynamic>>> scheduleAppointmentPatient({
+    required ScheduleAppointmentPatientRequest
+        scheduleAppointmentPatientRequest,
   }) async {
     final response = await dioConsumer.post(
       EndPoints.getAppointmentAvailable,
-      body: addAppointmentPatientRequest.toJson(),
-      queryParameters: {'doctor_id': addAppointmentPatientRequest.doctorId},
+      body: scheduleAppointmentPatientRequest.toJson(),
+      queryParameters: {
+        'doctor_id': scheduleAppointmentPatientRequest.doctorId,
+      },
     );
 
     return response.fold(
@@ -101,6 +111,24 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
   }) async {
     final response = await dioConsumer.delete(
       '${EndPoints.appointmentPatient}/$appointmentId/',
+    );
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> rescheduleAppointmentPatient({
+    required int appointmentId,
+    required ScheduleAppointmentPatientRequest
+        scheduleAppointmentPatientRequest,
+  }) async {
+    final response = await dioConsumer.put(
+      '${EndPoints.appointmentPatient}/$appointmentId/',
+      body: scheduleAppointmentPatientRequest.toJson(),
     );
     return response.fold(
       left,

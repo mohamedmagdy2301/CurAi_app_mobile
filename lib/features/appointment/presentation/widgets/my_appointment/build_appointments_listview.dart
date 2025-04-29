@@ -143,7 +143,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
       onPressed: () async {
         await AdaptiveDialogs.showOkCancelAlertDialog(
           context: context,
-          title: LangKeys.reschedule,
+          title: context.translate(LangKeys.reschedule),
           message: context.translate(LangKeys.rescheduleMessage),
           onPressedOk: () async {
             final cubit = context.read<AppointmentPatientCubit>();
@@ -158,6 +158,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
                 Routes.bookAppointmentScreen,
                 arguments: {
                   'isReschedule': true,
+                  'appointmentId': appointment.id,
                   'doctorResults': doctorResults,
                   'appointmentAvailableModel': cubit.appointmentAvailableModel,
                 },
