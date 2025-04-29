@@ -94,7 +94,7 @@
 - ✅ **UI**  
   - ✔️ Search doctors with filters (name, specialty, location, cost)  
   - ✔️ Doctor profile view (rating, specialty, location, etc.)  
-  - 🕓 Appointment booking screen (calendar + available times)
+  - ✔️ Appointment booking screen (calendar + available times)
 
 - ✅ **API Integration**  
   - ✔️ Fetch doctors based on filters  
