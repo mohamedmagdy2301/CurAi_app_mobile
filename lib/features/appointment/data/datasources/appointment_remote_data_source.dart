@@ -18,6 +18,9 @@ abstract class AppointmentRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getMyAppointmentPatient({
     required int page,
   });
+  Future<Either<Failure, Map<String, dynamic>>> deleteMyAppointmentPatient({
+    required int appointmentId,
+  });
 }
 
 class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
@@ -84,6 +87,21 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
       queryParameters: {'page': page},
     );
 
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> deleteMyAppointmentPatient({
+    required int appointmentId,
+  }) async {
+    final response = await dioConsumer.delete(
+      '${EndPoints.appointmentPatient}/$appointmentId/',
+    );
     return response.fold(
       left,
       (r) {
