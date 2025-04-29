@@ -2,10 +2,10 @@ import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
-import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/screens/book_appointment_screen.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/screens/my_appointment_patient_screen.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/screens/payment_appointment_screen.dart';
+import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/book_appointment_patient_screen.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/build_your_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
@@ -65,14 +65,14 @@ class AppRoutes {
         if (arg is Map<String, dynamic>) {
           final appointmentId = arg['appointmentId'] as int?;
           final doctorResults = arg['doctorResults'] as DoctorResults?;
-          final appointmentAvailableModel =
-              arg['appointmentAvailableModel'] as AppointmentAvailableModel?;
+          final appointmentAvailableModel = arg['appointmentAvailableModel']
+              as AppointmentPatientAvailableModel?;
 
           final isReschedule = arg['isReschedule'] as bool;
 
           if (doctorResults != null && appointmentAvailableModel != null) {
             return BaseRoute(
-              page: BookAppointmentScreen(
+              page: BookAppointmentPatientScreen(
                 isReschedule: isReschedule,
                 appointmentId: appointmentId,
                 doctorResults: doctorResults,

@@ -9,8 +9,8 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/about_tap.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/custom_appbar_details_doctor.dart';
@@ -37,7 +37,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AppointmentPatientCubit>().getAppointmentAvailable(
+    context.read<AppointmentPatientCubit>().getAppointmentPatientAvailable(
           doctorId: widget.doctorResults.id!,
         );
   }

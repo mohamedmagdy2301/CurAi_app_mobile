@@ -1,15 +1,15 @@
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
-import 'package:curai_app_mobile/features/appointment/data/datasources/appointment_remote_data_source.dart';
-import 'package:curai_app_mobile/features/appointment/data/repositories/appointment_repo_impl.dart';
-import 'package:curai_app_mobile/features/appointment/domain/repositories/appointment_repo.dart';
-import 'package:curai_app_mobile/features/appointment/domain/usecases/delete_appointment_patient_usecase.dart';
-import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appointment_available_usecase.dart';
-import 'package:curai_app_mobile/features/appointment/domain/usecases/get_my_appointment_patient_usecase.dart';
-import 'package:curai_app_mobile/features/appointment/domain/usecases/payment_appointment_usecase.dart';
-import 'package:curai_app_mobile/features/appointment/domain/usecases/reschedule_appointment_patient_usecase.dart';
-import 'package:curai_app_mobile/features/appointment/domain/usecases/schedule_appointment_patient_usecase.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
+import 'package:curai_app_mobile/features/appointment_patient/data/datasources/appointment_patient_remote_data_source.dart';
+import 'package:curai_app_mobile/features/appointment_patient/data/repositories/appointment_patient_repo_impl.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/repositories/appointment_repo.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/delete_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/get_appointment_available_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/get_my_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/payment_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/reschedule_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/schedule_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 
 void setupAppointmentDI() {
@@ -17,9 +17,9 @@ void setupAppointmentDI() {
   sl
     ..registerFactory<AppointmentPatientCubit>(
       () => AppointmentPatientCubit(
-        sl<GetAppointmentAvailableUsecase>(),
+        sl<GetAppointmentPatientAvailableUsecase>(),
         sl<ScheduleAppointmentPatientUsecase>(),
-        sl<PaymentAppointmentUsecase>(),
+        sl<PaymentAppointmentPatientUsecase>(),
         sl<GetMyAppointmentPatientUsecase>(),
         sl<GetDoctorByIdUsecase>(),
         sl<DeleteAppointmentPatientUsecase>(),
@@ -29,13 +29,13 @@ void setupAppointmentDI() {
 
     //! Usecases
     ..registerLazySingleton(
-      () => GetAppointmentAvailableUsecase(repository: sl()),
+      () => GetAppointmentPatientAvailableUsecase(repository: sl()),
     )
     ..registerLazySingleton(
       () => ScheduleAppointmentPatientUsecase(repository: sl()),
     )
     ..registerLazySingleton(
-      () => PaymentAppointmentUsecase(repository: sl()),
+      () => PaymentAppointmentPatientUsecase(repository: sl()),
     )
     ..registerLazySingleton(
       () => GetMyAppointmentPatientUsecase(repository: sl()),
@@ -47,12 +47,14 @@ void setupAppointmentDI() {
       () => RescheduleAppointmentPatientUsecase(repository: sl()),
     )
     //! Repository
-    ..registerLazySingleton<AppointmentRepo>(
-      () => AppointmentRepoImpl(remoteDataSource: sl()),
+    ..registerLazySingleton<AppointmentPatientRepo>(
+      () => AppointmentPatientRepoImpl(remoteDataSource: sl()),
     )
 
     //! Data Source
-    ..registerLazySingleton<AppointmentRemoteDataSource>(
-      () => AppointmentRemoteDataSourceImpl(dioConsumer: sl<DioConsumer>()),
+    ..registerLazySingleton<AppointmentPatientRemoteDataSource>(
+      () => AppointmentPatientRemoteDataSourceImpl(
+        dioConsumer: sl<DioConsumer>(),
+      ),
     );
 }
