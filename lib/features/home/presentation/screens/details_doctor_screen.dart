@@ -100,6 +100,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                           context.pushNamed(
                             Routes.bookAppointmentScreen,
                             arguments: {
+                              'isReschedule': false,
                               'doctorResults': widget.doctorResults,
                               'appointmentAvailableModel': context
                                   .read<AppointmentPatientCubit>()

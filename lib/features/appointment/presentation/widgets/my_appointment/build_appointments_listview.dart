@@ -1,8 +1,10 @@
-// ignore_for_file: inference_failure_on_instance_creation
+// ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
@@ -139,24 +141,30 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
       isHalf: true,
       title: LangKeys.reschedule,
       onPressed: () async {
-        await context
-            .read<AppointmentPatientCubit>()
-            .getAppointmentAvailable(doctorId: appointment.doctorId!);
-        if (context.mounted &&
-            context.read<AppointmentPatientCubit>().state
-                is AppointmentPatientAvailableSuccess &&
-            context.read<AppointmentPatientCubit>().appointmentAvailableModel !=
-                null) {
-          await context.pushNamed(
-            Routes.bookAppointmentScreen,
-            arguments: {
-              'doctorResults': doctorResults,
-              'appointmentAvailableModel': context
-                  .read<AppointmentPatientCubit>()
-                  .appointmentAvailableModel,
-            },
-          );
-        }
+        await AdaptiveDialogs.showOkCancelAlertDialog(
+          context: context,
+          title: LangKeys.reschedule,
+          message: context.translate(LangKeys.rescheduleMessage),
+          onPressedOk: () async {
+            final cubit = context.read<AppointmentPatientCubit>();
+
+            await cubit.getAppointmentAvailable(
+              doctorId: appointment.doctorId!,
+            );
+
+            if (cubit.state is AppointmentPatientAvailableSuccess &&
+                cubit.appointmentAvailableModel != null) {
+              await context.pushNamed(
+                Routes.bookAppointmentScreen,
+                arguments: {
+                  'isReschedule': true,
+                  'doctorResults': doctorResults,
+                  'appointmentAvailableModel': cubit.appointmentAvailableModel,
+                },
+              );
+            }
+          },
+        );
       },
     );
   }

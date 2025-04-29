@@ -158,5 +158,6 @@
   "reschedule" : "Reschedule",
   "cancel_appointment" : "Cancel Appointment",
   "cancel_appointment_message" : "Are you sure you want to cancel the appointment?",
-  "try_again" : "Try Again"
+  "try_again" : "Try Again",
+  "reschedule_message" : "Are you sure you want to reschedule the appointment?"
 }

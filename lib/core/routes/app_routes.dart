@@ -67,9 +67,12 @@ class AppRoutes {
           final appointmentAvailableModel =
               arg['appointmentAvailableModel'] as AppointmentAvailableModel?;
 
+          final isReschedule = arg['isReschedule'] as bool;
+
           if (doctorResults != null && appointmentAvailableModel != null) {
             return BaseRoute(
               page: BookAppointmentScreen(
+                isReschedule: isReschedule,
                 doctorResults: doctorResults,
                 appointmentAvailableModel: appointmentAvailableModel,
               ),
