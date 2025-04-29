@@ -134,6 +134,17 @@ class DioConsumer implements ApiConsumer {
     );
   }
 
+  /// DELETE request
+  @override
+  Future<Either<Failure, dynamic>> delete(
+    String url, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return _safeApiCall(
+      () => client.delete(url, queryParameters: queryParameters),
+    );
+  }
+
   /// Wraps the API call to handle Dio errors, timeouts, and formatting exceptions.
   Future<Either<Failure, dynamic>> _safeApiCall(
     Future<Response<dynamic>> Function() apiCall,
