@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart%20';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/screens/my_appointment_patient_screen.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/AddAvailabilityScreen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
@@ -17,6 +18,18 @@ class MainScaffoldUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final destinations = [
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          icon: CupertinoIcons.doc_chart,
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.doc_chart,
+        ),
+        label: 'Home',
+      ),
       NavigationDestination(
         icon: customIconNavBar(
           context,
@@ -68,6 +81,7 @@ class MainScaffoldUser extends StatelessWidget {
     ];
 
     const screens = [
+      AddAvailabilityScreen(),
       HomeScreen(),
       ChatbotScreen(),
       MyAppointmentPatientScreen(),
@@ -80,7 +94,7 @@ class MainScaffoldUser extends StatelessWidget {
           canPop: false,
           child: Scaffold(
             backgroundColor: context.backgroundColor,
-            bottomNavigationBar: currentIndex == 1
+            bottomNavigationBar: currentIndex == 2
                 ? null
                 : NavigationBar(
                     labelBehavior:

@@ -11,6 +11,7 @@ class CustomButton extends StatelessWidget {
     required this.title,
     this.isLoading = false,
     this.isHalf = false,
+    this.isNoLang = false,
     super.key,
     this.onPressed,
     this.colorBackground,
@@ -21,6 +22,7 @@ class CustomButton extends StatelessWidget {
   final void Function()? onPressed;
   final bool isLoading;
   final bool isHalf;
+  final bool isNoLang;
   final Color? colorBackground;
   final Color? colorBorder;
   final Color? colorText;
@@ -44,7 +46,7 @@ class CustomButton extends StatelessWidget {
               height: 30.h,
             )
           : AutoSizeText(
-              context.translate(title),
+              isNoLang ? title : context.translate(title),
               maxLines: 1,
               textAlign: TextAlign.center,
               style: isHalf
