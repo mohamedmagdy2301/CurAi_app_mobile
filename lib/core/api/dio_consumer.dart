@@ -168,26 +168,41 @@ class DioConsumer implements ApiConsumer {
     Response<dynamic> response,
     Future<Response<dynamic>> Function()? retryRequest,
   ) async {
-    final data = response.data is String
-        ? jsonDecode(response.data as String)
-        : response.data;
+    if (response.statusCode == StatusCode.okNoContent) {
+      return right(<String, dynamic>{});
+    }
 
+    dynamic data;
+    try {
+      if (response.data != null && response.data.toString().trim().isNotEmpty) {
+        data = response.data is String
+            ? jsonDecode(response.data as String)
+            : response.data;
+      } else {
+        data = <String, dynamic>{};
+      }
+    } catch (e) {
+      data = response.data;
+    }
+
+    // Check for JWT expiration
     final isJwtExpired = data is Map &&
         (data['detail'].toString().toLowerCase().contains('expired') == true ||
             data['detail'].toString().toLowerCase().contains('jwt') == true);
 
+    // Handle successful responses
     if (response.statusCode == StatusCode.ok ||
         response.statusCode == StatusCode.okCreated) {
       return right(data);
     }
 
+    // Handle authorization issues
     if (response.statusCode == StatusCode.unauthorized ||
         response.statusCode == StatusCode.forbidden ||
         isJwtExpired) {
       final refreshToken =
           CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken);
 
-      // If refresh in progress, queue the request.
       if (_isRefreshing) {
         final completer = Completer<Either<Failure, dynamic>>();
         _refreshQueue.add(() async {
@@ -202,7 +217,6 @@ class DioConsumer implements ApiConsumer {
         return completer.future;
       }
 
-      // Otherwise, refresh and retry.
       if (refreshToken != null && refreshToken != '') {
         _isRefreshing = true;
         final refreshed = await _refreshToken(refreshToken as String);

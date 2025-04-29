@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
@@ -69,7 +71,12 @@ class HomeCubit extends Cubit<HomeState> {
     if (isClosed) return;
 
     result.fold(
-      (errMessage) => emit(GetSpecializationsFailure(message: errMessage)),
+      (errMessage) {
+        log(errMessage);
+        if (isClosed) return;
+
+        return emit(GetSpecializationsFailure(message: errMessage));
+      },
       (specializationsList) {
         if (isClosed) return;
 
