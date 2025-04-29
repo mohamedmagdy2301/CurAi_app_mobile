@@ -2,6 +2,7 @@ import 'package:curai_app_mobile/features/appointment/data/models/add_appointmen
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/add_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment/domain/usecases/delete_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_appointment_available_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/get_my_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment/domain/usecases/payment_appointment_usecase.dart';
@@ -17,7 +18,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     this._paymentAppointmentUsecase,
     this._getMyAppointmentPatientUsecase,
     this._getDoctorByIdUsecase,
-    param5,
+    this._deleteAppointmentPatientUsecase,
   ) : super(AppointmentPatientInitial());
 
   final GetAppointmentAvailableUsecase _getAppointmentAvailableUsecase;
@@ -25,6 +26,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   final PaymentAppointmentUsecase _paymentAppointmentUsecase;
   final GetMyAppointmentPatientUsecase _getMyAppointmentPatientUsecase;
   final GetDoctorByIdUsecase _getDoctorByIdUsecase;
+  final DeleteAppointmentPatientUsecase _deleteAppointmentPatientUsecase;
 
   List<MergedDateAvailability> dates = [];
   List<ResultsMyAppointmentPatient> pendingAppointments = [];
@@ -89,6 +91,22 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
       (resulte) {
         if (isClosed) return;
         emit(PaymentAppointmentSuccess(paymentAppointmentModel: resulte));
+      },
+    );
+  }
+
+  Future<void> deleteAppointmentPatient({required int appointmentId}) async {
+    emit(DeleteAppointmentPatientLoading());
+    final result = await _deleteAppointmentPatientUsecase.call(appointmentId);
+
+    result.fold(
+      (errMessage) {
+        if (isClosed) return;
+        emit(DeleteAppointmentPatientFailure(message: errMessage));
+      },
+      (resulte) {
+        if (isClosed) return;
+        emit(DeleteAppointmentPatientSuccess());
       },
     );
   }

@@ -70,3 +70,13 @@ class GetMyAppointmentPatientPaginationFailure extends AppointmentPatientState {
   });
   final String message;
 }
+
+//! Delete Appointment Patient
+class DeleteAppointmentPatientLoading extends AppointmentPatientState {}
+
+class DeleteAppointmentPatientSuccess extends AppointmentPatientState {}
+
+class DeleteAppointmentPatientFailure extends AppointmentPatientState {
+  DeleteAppointmentPatientFailure({required this.message});
+  final String message;
+}
