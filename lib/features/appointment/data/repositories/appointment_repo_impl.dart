@@ -78,4 +78,21 @@ class AppointmentRepoImpl extends AppointmentRepo {
       },
     );
   }
+
+  @override
+  Future<Either<String, String>> deleteAppointmentPatient({
+    required int appointmentId,
+  }) async {
+    final response = await remoteDataSource.deleteMyAppointmentPatient(
+      appointmentId: appointmentId,
+    );
+    return response.fold(
+      (failure) {
+        return left(failure.message);
+      },
+      (responseData) {
+        return right('Success delete appointment');
+      },
+    );
+  }
 }

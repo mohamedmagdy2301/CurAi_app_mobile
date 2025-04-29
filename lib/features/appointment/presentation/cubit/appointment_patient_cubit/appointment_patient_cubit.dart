@@ -17,6 +17,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     this._paymentAppointmentUsecase,
     this._getMyAppointmentPatientUsecase,
     this._getDoctorByIdUsecase,
+    param5,
   ) : super(AppointmentPatientInitial());
 
   final GetAppointmentAvailableUsecase _getAppointmentAvailableUsecase;

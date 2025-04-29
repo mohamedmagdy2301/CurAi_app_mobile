@@ -21,4 +21,8 @@ abstract class AppointmentRepo {
   Future<Either<String, MyAppointmentPatientModel>> getMyAppointmentPatient({
     required int page,
   });
+
+  Future<Either<String, String>> deleteAppointmentPatient({
+    required int appointmentId,
+  });
 }
