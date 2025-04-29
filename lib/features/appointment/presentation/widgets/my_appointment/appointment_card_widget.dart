@@ -45,7 +45,7 @@ class AppointmentCardWidget extends StatelessWidget {
           Row(
             children: [
               AutoSizeText(
-                appointment.appointmentDate!.toReadableDate(context),
+                '${appointment.id}---${appointment.appointmentDate!.toReadableDate(context)}',
                 style: TextStyleApp.semiBold18()
                     .copyWith(color: context.onPrimaryColor),
               ),

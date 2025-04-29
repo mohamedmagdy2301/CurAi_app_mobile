@@ -104,7 +104,9 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             doctorResults: widget.doctorResults,
             availableTimes: availableTimes,
             onTimeSelected: (time) {
-              selectedTime = time;
+              setState(() {
+                selectedTime = time;
+              });
             },
             initialSelectedTime: selectedTime,
           ),
@@ -326,7 +328,7 @@ class RescheduleAppointmentButton extends StatelessWidget {
                 .rescheduleAppointmentPatient(
                   appointmentId: widget.appointmentId!,
                   params: ScheduleAppointmentPatientRequest(
-                    doctorId: widget.appointmentId!,
+                    doctorId: widget.doctorResults.id!,
                     appointmentDate: selectedDate.toString().split(' ')[0],
                     appointmentTime: selectedTime ?? availableTimes.first,
                   ),
