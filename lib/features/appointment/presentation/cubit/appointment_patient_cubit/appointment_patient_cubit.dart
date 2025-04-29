@@ -32,6 +32,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   List<ResultsMyAppointmentPatient> pendingAppointments = [];
   List<ResultsMyAppointmentPatient> paidAppointments = [];
   Map<int, DoctorResults> doctorsData = {};
+  AppointmentAvailableModel? appointmentAvailableModel;
   int _currentPage = 1;
   bool isLast = false;
   Future<void> getAppointmentAvailable({required int doctorId}) async {
@@ -50,6 +51,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
           emit(AppointmentPatientAvailableEmpty());
         } else {
           dates = mergeAndSortByDate(resulte).toList();
+          appointmentAvailableModel = resulte;
           if (isClosed) return;
           emit(
             AppointmentPatientAvailableSuccess(
@@ -59,6 +61,10 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
         }
       },
     );
+  }
+
+  Future<void> setAppointmentAvailableModel({required int doctorId}) async {
+    await getAppointmentAvailable(doctorId: doctorId);
   }
 
   Future<void> addAppointmentPatient({

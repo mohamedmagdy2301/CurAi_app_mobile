@@ -203,7 +203,7 @@ class DeleteAppointmentButton extends StatelessWidget {
             ),
             child: Icon(
               CupertinoIcons.trash,
-              size: 28.sp,
+              size: 26.sp,
               color: Colors.redAccent,
             ),
           ),
