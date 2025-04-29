@@ -177,10 +177,14 @@ class LangKeys {
   static const String notAvailableToBook = 'not_available_to_book';
   static const String paymentBook = 'payment_book';
   static const String reschedule = 'reschedule';
+  static const String rescheduleMessage = 'reschedule_message';
+
   static const String cancelAppointment = 'cancel_appointment';
   static const String cancelAppointmentMessage = 'cancel_appointment_message';
   static const String payment = 'payment';
   static const String myAppointments = 'my_appointments';
   static const String pending = 'pending';
   static const String paided = 'paided';
+
+  static const String tryAgain = 'try_again';
 }

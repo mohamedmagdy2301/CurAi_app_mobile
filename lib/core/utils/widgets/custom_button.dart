@@ -33,7 +33,7 @@ class CustomButton extends StatelessWidget {
                 WidgetStatePropertyAll(colorBackground ?? context.primaryColor),
             side: WidgetStatePropertyAll(
               BorderSide(
-                color: colorBorder ?? context.primaryColor,
+                color: colorBorder ?? Colors.transparent,
               ),
             ),
           ),

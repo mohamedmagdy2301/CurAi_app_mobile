@@ -63,13 +63,18 @@ class AppRoutes {
         );
       case Routes.bookAppointmentScreen:
         if (arg is Map<String, dynamic>) {
+          final appointmentId = arg['appointmentId'] as int?;
           final doctorResults = arg['doctorResults'] as DoctorResults?;
           final appointmentAvailableModel =
               arg['appointmentAvailableModel'] as AppointmentAvailableModel?;
 
+          final isReschedule = arg['isReschedule'] as bool;
+
           if (doctorResults != null && appointmentAvailableModel != null) {
             return BaseRoute(
               page: BookAppointmentScreen(
+                isReschedule: isReschedule,
+                appointmentId: appointmentId,
                 doctorResults: doctorResults,
                 appointmentAvailableModel: appointmentAvailableModel,
               ),

@@ -13,8 +13,8 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
-import 'package:curai_app_mobile/features/appointment/data/models/add_appointment_patient/add_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/appointment_available/appointment_available_model.dart';
+import 'package:curai_app_mobile/features/appointment/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/widgets/book_appointment/available_time_widget.dart';
@@ -28,10 +28,14 @@ class BookAppointmentScreen extends StatefulWidget {
   const BookAppointmentScreen({
     required this.doctorResults,
     required this.appointmentAvailableModel,
+    required this.isReschedule,
     super.key,
+    this.appointmentId,
   });
+  final bool isReschedule;
   final DoctorResults doctorResults;
   final AppointmentAvailableModel appointmentAvailableModel;
+  final int? appointmentId;
 
   @override
   State<BookAppointmentScreen> createState() => _BookAppointmentScreenState();
@@ -63,7 +67,7 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppbarBookAppointment(),
+      appBar: CustomAppbarBookAppointment(isReschedule: widget.isReschedule),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -100,73 +104,26 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             doctorResults: widget.doctorResults,
             availableTimes: availableTimes,
             onTimeSelected: (time) {
-              selectedTime = time;
+              setState(() {
+                selectedTime = time;
+              });
             },
             initialSelectedTime: selectedTime,
           ),
-          BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
-            listenWhen: (previous, current) =>
-                current is AddAppointmentPatientFailure ||
-                current is AddAppointmentPatientLoading ||
-                current is AddAppointmentPatientSuccess,
-            buildWhen: (previous, current) =>
-                current is AddAppointmentPatientLoading ||
-                current is AddAppointmentPatientSuccess ||
-                current is AddAppointmentPatientFailure,
-            listener: (context, state) {
-              if (state is AddAppointmentPatientFailure) {
-                Navigator.pop(context);
-                showMessage(
-                  context,
-                  message: state.message,
-                  type: SnackBarType.error,
-                );
-              } else if (state is AddAppointmentPatientSuccess) {
-                Navigator.pop(context);
-                if (state.addAppointmentPatientModel.message != null) {
-                  showMessage(
-                    context,
-                    message: state.addAppointmentPatientModel.message!,
-                    type: SnackBarType.success,
-                  );
-                }
-
-                context.pushNamed(
-                  Routes.paymentAppointmentScreen,
-                  arguments: {
-                    'doctorResults': widget.doctorResults,
-                    'appointmentId':
-                        state.addAppointmentPatientModel.appointmentId,
-                  },
-                );
-              } else if (state is AddAppointmentPatientLoading) {
-                AdaptiveDialogs.showLoadingAlertDialog(
-                  context: context,
-                  title: context.translate(LangKeys.login),
-                );
-              }
-            },
-            builder: (context, state) {
-              return CustomButton(
-                title: LangKeys.bookAppointment,
-                onPressed: () {
-                  context.read<AppointmentPatientCubit>()
-                    ..addAppointmentPatient(
-                      params: AddAppointmentPatientRequest(
-                        doctorId: widget.doctorResults.id!,
-                        appointmentDate: selectedDate.toString().split(' ')[0],
-                        appointmentTime: selectedTime ?? availableTimes.first,
-                      ),
-                    )
-                    ..getAppointmentAvailable(
-                      doctorId: widget.doctorResults.id!,
-                    );
-                },
-              )
-                  .paddingSymmetric(horizontal: 15)
-                  .paddingOnly(bottom: Platform.isIOS ? 17 : 10);
-            },
-          ),
+          if (widget.isReschedule)
+            RescheduleAppointmentButton(
+              widget: widget,
+              selectedDate: selectedDate,
+              selectedTime: selectedTime,
+              availableTimes: availableTimes,
+            )
+          else
+            AddAppointmentButton(
+              widget: widget,
+              selectedDate: selectedDate,
+              selectedTime: selectedTime,
+              availableTimes: availableTimes,
+            ),
         ],
       ),
     );
@@ -225,6 +182,162 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
           color: Colors.blue,
         ),
       ),
+    );
+  }
+}
+
+class AddAppointmentButton extends StatelessWidget {
+  const AddAppointmentButton({
+    required this.widget,
+    required this.selectedDate,
+    required this.selectedTime,
+    required this.availableTimes,
+    super.key,
+  });
+
+  final BookAppointmentScreen widget;
+  final DateTime selectedDate;
+  final String? selectedTime;
+  final List<String> availableTimes;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
+      listenWhen: (previous, current) =>
+          current is ScheduleAppointmentPatientFailure ||
+          current is ScheduleAppointmentPatientLoading ||
+          current is ScheduleAppointmentPatientSuccess,
+      buildWhen: (previous, current) =>
+          current is ScheduleAppointmentPatientLoading ||
+          current is ScheduleAppointmentPatientSuccess ||
+          current is ScheduleAppointmentPatientFailure,
+      listener: (context, state) {
+        if (state is ScheduleAppointmentPatientFailure) {
+          Navigator.pop(context);
+          showMessage(
+            context,
+            message: state.message,
+            type: SnackBarType.error,
+          );
+        } else if (state is ScheduleAppointmentPatientSuccess) {
+          Navigator.pop(context);
+          if (state.scheduleAppointmentPatientModel.message != null) {
+            showMessage(
+              context,
+              message: state.scheduleAppointmentPatientModel.message!,
+              type: SnackBarType.success,
+            );
+          }
+          context.pushNamed(
+            Routes.paymentAppointmentScreen,
+            arguments: {
+              'doctorResults': widget.doctorResults,
+              'appointmentId':
+                  state.scheduleAppointmentPatientModel.appointmentId,
+            },
+          );
+        } else if (state is ScheduleAppointmentPatientLoading) {
+          AdaptiveDialogs.showLoadingAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.bookAppointment),
+          );
+        }
+      },
+      builder: (context, state) {
+        return CustomButton(
+          title: LangKeys.bookAppointment,
+          onPressed: () {
+            context.read<AppointmentPatientCubit>()
+              ..scheduleAppointmentPatient(
+                params: ScheduleAppointmentPatientRequest(
+                  doctorId: widget.doctorResults.id!,
+                  appointmentDate: selectedDate.toString().split(' ')[0],
+                  appointmentTime: selectedTime ?? availableTimes.first,
+                ),
+              )
+              ..getAppointmentAvailable(
+                doctorId: widget.doctorResults.id!,
+              );
+          },
+        )
+            .paddingSymmetric(horizontal: 15)
+            .paddingOnly(bottom: Platform.isIOS ? 17 : 10);
+      },
+    );
+  }
+}
+
+class RescheduleAppointmentButton extends StatelessWidget {
+  const RescheduleAppointmentButton({
+    required this.widget,
+    required this.selectedDate,
+    required this.selectedTime,
+    required this.availableTimes,
+    super.key,
+  });
+
+  final BookAppointmentScreen widget;
+  final DateTime selectedDate;
+  final String? selectedTime;
+  final List<String> availableTimes;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
+      listenWhen: (previous, current) =>
+          current is RescheduleAppointmentPatientFailure ||
+          current is RescheduleAppointmentPatientLoading ||
+          current is RescheduleAppointmentPatientSuccess,
+      buildWhen: (previous, current) =>
+          current is RescheduleAppointmentPatientLoading ||
+          current is RescheduleAppointmentPatientSuccess ||
+          current is RescheduleAppointmentPatientFailure,
+      listener: (context, state) {
+        if (state is RescheduleAppointmentPatientFailure) {
+          Navigator.pop(context);
+          showMessage(
+            context,
+            message: state.message,
+            type: SnackBarType.error,
+          );
+        } else if (state is RescheduleAppointmentPatientSuccess) {
+          Navigator.pop(context);
+          showMessage(
+            context,
+            message: context.isStateArabic
+                ? 'تم تغيير الموعد بنجاح'
+                : 'Appointment rescheduled successfully',
+            type: SnackBarType.success,
+          );
+
+          context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
+          context.read<AppointmentPatientCubit>().refreshMyAppointmentPatient();
+        } else if (state is RescheduleAppointmentPatientLoading) {
+          AdaptiveDialogs.showLoadingAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.reschedule),
+          );
+        }
+      },
+      builder: (context, state) {
+        return CustomButton(
+          title: LangKeys.reschedule,
+          onPressed: () {
+            context
+                .read<AppointmentPatientCubit>()
+                .rescheduleAppointmentPatient(
+                  appointmentId: widget.appointmentId!,
+                  params: ScheduleAppointmentPatientRequest(
+                    doctorId: widget.doctorResults.id!,
+                    appointmentDate: selectedDate.toString().split(' ')[0],
+                    appointmentTime: selectedTime ?? availableTimes.first,
+                  ),
+                );
+          },
+        )
+            .paddingSymmetric(horizontal: 15)
+            .paddingOnly(bottom: Platform.isIOS ? 17 : 10);
+      },
     );
   }
 }

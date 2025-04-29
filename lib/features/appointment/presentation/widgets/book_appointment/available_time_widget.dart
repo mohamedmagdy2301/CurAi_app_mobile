@@ -48,16 +48,24 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
     }
   }
 
+  // void _updateSelectedIndex() {
+  //   final index =
+  //       widget.availableTimes.indexOf(widget.initialSelectedTime ?? '');
+  //   setState(() {
+  //     selectedIndex = index >= 0 ? index : 0;
+  //   });
+
+  //   if (widget.availableTimes.isNotEmpty) {
+  //     widget.onTimeSelected(widget.availableTimes[selectedIndex]);
+  //   }
+  // }
+
   void _updateSelectedIndex() {
     final index =
         widget.availableTimes.indexOf(widget.initialSelectedTime ?? '');
     setState(() {
       selectedIndex = index >= 0 ? index : 0;
     });
-
-    if (widget.availableTimes.isNotEmpty) {
-      widget.onTimeSelected(widget.availableTimes[selectedIndex]);
-    }
   }
 
   void selectAvailableTime(String selectedTime) {

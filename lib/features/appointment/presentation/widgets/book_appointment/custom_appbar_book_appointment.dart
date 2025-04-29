@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 class CustomAppbarBookAppointment extends StatelessWidget
     implements PreferredSizeWidget {
   const CustomAppbarBookAppointment({
+    required this.isReschedule,
     super.key,
   });
+  final bool isReschedule;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,9 @@ class CustomAppbarBookAppointment extends StatelessWidget
       elevation: 0,
       flexibleSpace: Container(color: context.backgroundColor),
       title: AutoSizeText(
-        context.translate(LangKeys.bookAppointment),
+        context.translate(
+          isReschedule ? LangKeys.reschedule : LangKeys.bookAppointment,
+        ),
         maxLines: 1,
       ),
       centerTitle: true,

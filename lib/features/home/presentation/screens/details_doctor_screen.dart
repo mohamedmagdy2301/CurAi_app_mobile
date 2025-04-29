@@ -6,11 +6,11 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/screens/book_appointment_screen.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/about_tap.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/custom_appbar_details_doctor.dart';
@@ -97,12 +97,15 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                   onPressed: state is! AppointmentPatientAvailableSuccess
                       ? () {}
                       : () {
-                          context.push(
-                            BookAppointmentScreen(
-                              doctorResults: widget.doctorResults,
-                              appointmentAvailableModel:
-                                  state.appointmentAvailableModel,
-                            ),
+                          context.pushNamed(
+                            Routes.bookAppointmentScreen,
+                            arguments: {
+                              'isReschedule': false,
+                              'doctorResults': widget.doctorResults,
+                              'appointmentAvailableModel': context
+                                  .read<AppointmentPatientCubit>()
+                                  .appointmentAvailableModel,
+                            },
                           );
                         },
                 );

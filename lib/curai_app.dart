@@ -16,6 +16,7 @@ import 'package:curai_app_mobile/core/utils/helper/build_app_connectivity_contro
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -77,25 +78,30 @@ class _CuraiAppState extends State<CuraiApp> {
                   widget.savedThemeColor,
                 ),
                 initial: widget.savedThemeMode,
-                builder: (theme, darkTheme) =>
+                builder: (theme, darkTheme) => MultiBlocProvider(
+                  providers: [
                     BlocProvider<AppointmentPatientCubit>(
-                  create: (context) => di.sl<AppointmentPatientCubit>(),
-                  child: BlocProvider<HomeCubit>(
-                    create: (context) => di.sl<HomeCubit>(),
-                    child: MaterialApp(
-                      navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
-                      theme: theme,
-                      darkTheme: darkTheme,
-                      debugShowCheckedModeBanner: widget.environment,
-                      builder: (context, child) =>
-                          setupConnectivityWidget(child),
-                      onGenerateRoute: AppRoutes.onGenerateRoute,
-                      locale: cubit.getLocaleFromState(state.locale),
-                      supportedLocales: AppLocalSetup.supportedLocales,
-                      localeResolutionCallback: AppLocalSetup.resolveUserLocale,
-                      localizationsDelegates: AppLocalSetup.localesDelegates,
-                      home: navigationToInitScreen(),
+                      create: (context) => di.sl<AppointmentPatientCubit>(),
                     ),
+                    BlocProvider<HomeCubit>(
+                      create: (context) => di.sl<HomeCubit>(),
+                    ),
+                    BlocProvider<NavigationCubit>(
+                      create: (context) => NavigationCubit(),
+                    ),
+                  ],
+                  child: MaterialApp(
+                    navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
+                    theme: theme,
+                    darkTheme: darkTheme,
+                    debugShowCheckedModeBanner: widget.environment,
+                    builder: (context, child) => setupConnectivityWidget(child),
+                    onGenerateRoute: AppRoutes.onGenerateRoute,
+                    locale: cubit.getLocaleFromState(state.locale),
+                    supportedLocales: AppLocalSetup.supportedLocales,
+                    localeResolutionCallback: AppLocalSetup.resolveUserLocale,
+                    localizationsDelegates: AppLocalSetup.localesDelegates,
+                    home: navigationToInitScreen(),
                   ),
                 ),
               );

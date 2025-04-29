@@ -13,6 +13,7 @@ dependencies:
   carousel_slider: 
   connectivity_plus:
   cupertino_icons:
+  custom_refresh_indicator: ^4.0.1
   dartz: 
   device_preview:
   dio: 
@@ -46,6 +47,7 @@ dependencies:
   logger:
   path_provider: ^2.1.5
   pin_code_fields:
+  pull_to_refresh: ^2.0.0
   readmore: ^3.0.0
   shared_preferences:
   skeletonizer:

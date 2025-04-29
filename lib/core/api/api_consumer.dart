@@ -43,4 +43,12 @@ abstract class ApiConsumer {
     dynamic body,
     Map<String, dynamic>? queryParameters,
   });
+
+  /// Sends a DELETE request to the specified [url] with optional [queryParameters].
+  ///
+  /// Returns either a [Failure] on error or the response data on success.
+  Future<Either<Failure, dynamic>> delete(
+    String url, {
+    Map<String, dynamic>? queryParameters,
+  });
 }

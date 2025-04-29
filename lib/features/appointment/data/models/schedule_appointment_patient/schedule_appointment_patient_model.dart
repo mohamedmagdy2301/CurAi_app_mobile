@@ -1,7 +1,7 @@
-class AddAppointmentPatientModel {
-  AddAppointmentPatientModel({this.message, this.appointmentId});
+class ScheduleAppointmentPatientModel {
+  ScheduleAppointmentPatientModel({this.message, this.appointmentId});
 
-  AddAppointmentPatientModel.fromJson(Map<String, dynamic> json) {
+  ScheduleAppointmentPatientModel.fromJson(Map<String, dynamic> json) {
     message = json['message'] as String?;
     appointmentId = json['appointment_id'] as int?;
   }

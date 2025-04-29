@@ -158,5 +158,7 @@
   "payment" : "دفع",
   "reschedule" : "اعادة الجدولة",
    "cancel_appointment" : "الغاء الحجز",
-   "cancel_appointment_message" : "هل أنت متأكد من أنك تريد الغاء الحجز؟"
- }
+   "cancel_appointment_message" : "هل أنت متأكد من أنك تريد الغاء الحجز؟",
+   "try_again" : "أعادة المحاولة",
+   "reschedule_message" : "هل أنت متأكد من أنك تريد اعادة جدولة الحجز؟"
+  }

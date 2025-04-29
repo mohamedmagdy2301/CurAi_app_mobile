@@ -74,39 +74,36 @@ class MainScaffoldUser extends StatelessWidget {
       ProfileScreen(),
     ];
 
-    return BlocProvider(
-      create: (context) => NavigationCubit(),
-      child: BlocBuilder<NavigationCubit, int>(
-        builder: (context, currentIndex) {
-          return PopScope(
-            canPop: false,
-            child: Scaffold(
-              backgroundColor: context.backgroundColor,
-              bottomNavigationBar: currentIndex == 1
-                  ? null
-                  : NavigationBar(
-                      labelBehavior:
-                          NavigationDestinationLabelBehavior.alwaysHide,
-                      animationDuration: const Duration(seconds: 1),
-                      height: 60.sp,
-                      indicatorColor: Colors.transparent,
-                      backgroundColor: context.backgroundColor,
-                      overlayColor: WidgetStateProperty.all(
-                        context.primaryColor.withAlpha(20),
-                      ),
-                      indicatorShape: Border.all(style: BorderStyle.none),
-                      elevation: 0,
-                      destinations: destinations,
-                      selectedIndex: currentIndex,
-                      onDestinationSelected: (index) {
-                        context.read<NavigationCubit>().updateIndex(index);
-                      },
+    return BlocBuilder<NavigationCubit, int>(
+      builder: (context, currentIndex) {
+        return PopScope(
+          canPop: false,
+          child: Scaffold(
+            backgroundColor: context.backgroundColor,
+            bottomNavigationBar: currentIndex == 1
+                ? null
+                : NavigationBar(
+                    labelBehavior:
+                        NavigationDestinationLabelBehavior.alwaysHide,
+                    animationDuration: const Duration(seconds: 1),
+                    height: 60.sp,
+                    indicatorColor: Colors.transparent,
+                    backgroundColor: context.backgroundColor,
+                    overlayColor: WidgetStateProperty.all(
+                      context.primaryColor.withAlpha(20),
                     ),
-              body: screens[currentIndex],
-            ),
-          );
-        },
-      ),
+                    indicatorShape: Border.all(style: BorderStyle.none),
+                    elevation: 0,
+                    destinations: destinations,
+                    selectedIndex: currentIndex,
+                    onDestinationSelected: (index) {
+                      context.read<NavigationCubit>().updateIndex(index);
+                    },
+                  ),
+            body: screens[currentIndex],
+          ),
+        );
+      },
     );
   }
 
