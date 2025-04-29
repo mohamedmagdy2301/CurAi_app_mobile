@@ -15,6 +15,7 @@ import 'package:curai_app_mobile/features/appointment/presentation/cubit/appoint
 import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -122,14 +123,15 @@ class AppointmentCardWidget extends StatelessWidget {
                           );
                     },
                     child: Container(
-                      padding: context.padding(horizontal: 10, vertical: 10),
+                      padding: context.padding(horizontal: 8, vertical: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.r),
                         border: Border.all(color: Colors.redAccent),
-                        color: context.backgroundColor,
+                        color: context.isDark ? Colors.black : Colors.white,
                       ),
-                      child: const Icon(
-                        Icons.delete,
+                      child: Icon(
+                        CupertinoIcons.trash,
+                        size: 28.sp,
                         color: Colors.redAccent,
                       ),
                     ),
