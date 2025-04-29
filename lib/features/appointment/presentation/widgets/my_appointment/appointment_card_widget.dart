@@ -7,12 +7,16 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment/data/models/my_appointment/my_appointment_patient_model.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
+import 'package:curai_app_mobile/features/appointment/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppointmentCardWidget extends StatelessWidget {
@@ -72,26 +76,61 @@ class AppointmentCardWidget extends StatelessWidget {
             children: [
               bottomButton.expand(),
               15.wSpace,
-              InkWell(
-                onTap: () {
-                  showMessage(
-                    context,
-                    type: SnackBarType.success,
-                    message: 'Delete appointment successfully',
+              BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
+                listenWhen: (previous, current) =>
+                    current is DeleteAppointmentPatientFailure ||
+                    current is DeleteAppointmentPatientSuccess ||
+                    current is DeleteAppointmentPatientLoading,
+                listener: (context, state) {
+                  if (state is DeleteAppointmentPatientFailure) {
+                    Navigator.pop(context);
+                    showMessage(
+                      context,
+                      message: state.message,
+                      type: SnackBarType.error,
+                    );
+                  } else if (state is DeleteAppointmentPatientSuccess) {
+                    Navigator.pop(context);
+                    showMessage(
+                      context,
+                      message: context.isStateArabic
+                          ? 'تم الغاء الموعد بنجاح'
+                          : 'Appointment canceled successfully',
+                      type: SnackBarType.success,
+                    );
+                    context
+                        .read<AppointmentPatientCubit>()
+                        .refreshMyAppointmentPatient();
+                  } else if (state is DeleteAppointmentPatientLoading) {
+                    AdaptiveDialogs.showLoadingAlertDialog(
+                      context: context,
+                      title: context.translate(LangKeys.cancelAppointment),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return InkWell(
+                    onTap: () {
+                      context
+                          .read<AppointmentPatientCubit>()
+                          .deleteAppointmentPatient(
+                            appointmentId: appointment.id!,
+                          );
+                    },
+                    child: Container(
+                      padding: context.padding(horizontal: 10, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.r),
+                        border: Border.all(color: Colors.redAccent),
+                        color: context.backgroundColor,
+                      ),
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.redAccent,
+                      ),
+                    ),
                   );
                 },
-                child: Container(
-                  padding: context.padding(horizontal: 10, vertical: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(color: Colors.redAccent),
-                    color: context.backgroundColor,
-                  ),
-                  child: const Icon(
-                    Icons.delete,
-                    color: Colors.redAccent,
-                  ),
-                ),
               ),
             ],
           ),
