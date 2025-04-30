@@ -72,7 +72,7 @@ class _AvailabilityBottomSheetState extends State<AvailabilityBottomSheet> {
               hourMinuteTextColor: context.onPrimaryColor,
               dialHandColor: context.primaryColor,
               dialTextColor: context.onPrimaryColor,
-              entryModeIconColor: context.primaryColor,
+              entryModeIconColor: context.onPrimaryColor,
             ),
             colorScheme: Theme.of(context).colorScheme.copyWith(
                   primary: context.primaryColor,
@@ -82,7 +82,10 @@ class _AvailabilityBottomSheetState extends State<AvailabilityBottomSheet> {
                 ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: context.primaryColor,
+                foregroundColor: context.onPrimaryColor,
+                textStyle: TextStyleApp.medium18().copyWith(
+                  color: context.onPrimaryColor,
+                ),
               ),
             ),
           ),
