@@ -1,12 +1,16 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/working_time_doctor_listview_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class BuildWorkingTimeDoctorListview extends StatefulWidget {
@@ -35,10 +39,21 @@ class _BuildWorkingTimeDoctorListviewState
           current is GetWorkingTimeDoctorAvailableLoading,
       builder: (context, state) {
         if (state is GetWorkingTimeDoctorAvailableFailure) {
-          return Text(
-            state.message,
-            style: const TextStyle(color: Colors.red),
-          ).center().expand();
+          return Column(
+            children: [
+              Icon(
+                Icons.warning_rounded,
+                size: 80.sp,
+                color: Colors.red.shade700,
+              ),
+              90.hSpace,
+              AutoSizeText(
+                state.message,
+                textAlign: TextAlign.center,
+                style: TextStyleApp.medium16().copyWith(color: Colors.red),
+              ).center().expand(),
+            ],
+          );
         } else if (state is GetWorkingTimeDoctorAvailableEmpty) {
           return const Text('No Working Time').center().expand();
         } else if (state is GetWorkingTimeDoctorAvailableSuccess) {
