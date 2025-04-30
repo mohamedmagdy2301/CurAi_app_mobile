@@ -1,114 +1,35 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:developer';
 
-import 'package:collection/collection.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
-import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/build_working_time_doctor_listview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddAvailabilityScreen extends StatefulWidget {
-  const AddAvailabilityScreen({super.key});
+class WorkingTimeDoctorAvailableScreen extends StatefulWidget {
+  const WorkingTimeDoctorAvailableScreen({super.key});
 
   @override
-  State<AddAvailabilityScreen> createState() => _AddAvailabilityScreenState();
+  State<WorkingTimeDoctorAvailableScreen> createState() =>
+      _WorkingTimeDoctorAvailableScreenState();
 }
 
-class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() {
-      context.read<AppointmentDoctorCubit>().getWorkingTimeAvailableDoctor();
-    });
-  }
-
+class _WorkingTimeDoctorAvailableScreenState
+    extends State<WorkingTimeDoctorAvailableScreen> {
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<AppointmentDoctorCubit>();
-
     return Scaffold(
-      appBar: AppBar(title: const Text('Doctor Availability')),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            if (cubit.state is GetWorkingTimeDoctorAvailableLoading)
-              const CircularProgressIndicator().center().expand()
-            else if (cubit.state is GetWorkingTimeDoctorAvailableFailure)
-              Text(
-                (cubit.state as GetWorkingTimeDoctorAvailableFailure).message,
-              ).center()
-            else if (cubit.workingTimeList.isEmpty)
-              const Text('No availabilities added yet.').expand()
-            else
-              Expanded(
-                child: ListView.builder(
-                  itemCount: cubit.workingTimeList.length,
-                  itemBuilder: (context, index) {
-                    final groupedData = groupBy(
-                      cubit.workingTimeList,
-                      (item) => item.id,
-                    );
-
-                    final groupedItemsList = groupedData.entries.toList();
-
-                    if (index < groupedItemsList.length) {
-                      final groupedItem = groupedItemsList[index];
-                      final id = groupedItem.key;
-                      final items = groupedItem.value;
-
-                      return ExpansionTile(
-                        title: Text('Availability ID: $id'),
-                        children: [
-                          for (final item in items)
-                            ListTile(
-                              title: Text(
-                                '${item.getLocalizedDays(isArabic: context.isStateArabic).join(', ')} - ${item.availableFrom} to ${item.availableTo}',
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Colors.blue,
-                                  ),
-                                  onPressed: () {
-                                    // TODO: Edit via API
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () {
-                                    // TODO: Delete via API
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-              ),
-          ],
+      appBar: AppBar(
+        title: Text(
+          context.translate(LangKeys.workingTime),
         ),
       ),
+      body: const BuildWorkingTimeDoctorListview(),
     );
   }
 }

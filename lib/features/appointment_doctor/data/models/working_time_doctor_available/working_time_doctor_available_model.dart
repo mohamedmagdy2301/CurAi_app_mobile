@@ -62,14 +62,13 @@ class WorkingTimeDoctorAvailableModel {
   ) {
     // أولاً إزالة العناصر التي تحتوي على أيام فارغة
     models.removeWhere(
-        (model) => model.daysOfWeek == null || model.daysOfWeek!.isEmpty);
+      (model) => model.daysOfWeek == null || model.daysOfWeek!.isEmpty,
+    );
 
-    // تقسيم الأيام عندما تحتوي على أكثر من يوم
     final expandedModels = <WorkingTimeDoctorAvailableModel>[];
     for (final model in models) {
       if (model.daysOfWeek!.length > 1) {
         for (final day in model.daysOfWeek!) {
-          // إنشاء نسخة جديدة لكل يوم مع نفس الوقت
           expandedModels.add(
             WorkingTimeDoctorAvailableModel(
               id: model.id,
@@ -81,22 +80,80 @@ class WorkingTimeDoctorAvailableModel {
           );
         }
       } else {
-        expandedModels.add(model); // إذا كانت الأيام تحتوي على يوم واحد فقط
+        expandedModels.add(model);
       }
     }
 
-    // إزالة التكرار بناءً على اليوم ووقت التوافر
-    final seen = <String>{}; // مجموعة لتخزين الأيام المتكررة
+    final seen = <String>{};
     return expandedModels.where((model) {
       final dayKey = model.daysOfWeek!.join(',') +
           model.availableFrom! +
           model.availableTo!;
       if (seen.contains(dayKey)) {
-        return false; // إذا كان العنصر مكررًا
+        return false;
       } else {
         seen.add(dayKey);
-        return true; // إذا كان العنصر غير مكرر
+        return true;
       }
     }).toList();
   }
 }
+
+final List<WorkingTimeDoctorAvailableModel> workingTimeDoctorListDummy = [
+  WorkingTimeDoctorAvailableModel(
+    id: 15,
+    doctor: 'Mohamed123',
+    availableFrom: '11:30:00',
+    availableTo: '15:36:00',
+    daysOfWeek: ['Wednesday'],
+  ),
+  WorkingTimeDoctorAvailableModel(
+    id: 16,
+    doctor: 'Mohamed123',
+    availableFrom: '10:38:10',
+    availableTo: '16:36:10',
+    daysOfWeek: ['Wednesday'],
+  ),
+  WorkingTimeDoctorAvailableModel(
+    id: 8,
+    doctor: 'Mohamed123',
+    availableFrom: '10:33:00',
+    availableTo: '16:32:00',
+    daysOfWeek: ['Saturday'],
+  ),
+  WorkingTimeDoctorAvailableModel(
+    id: 11,
+    doctor: 'Mohamed123',
+    availableFrom: '10:30:00',
+    availableTo: '16:30:00',
+    daysOfWeek: ['Saturday', 'Sunday'],
+  ),
+  WorkingTimeDoctorAvailableModel(
+    id: 15,
+    doctor: 'Mohamed123',
+    availableFrom: '10:30:00',
+    availableTo: '16:06:00',
+    daysOfWeek: ['Wednesday'],
+  ),
+  WorkingTimeDoctorAvailableModel(
+    id: 16,
+    doctor: 'Mohamed123',
+    availableFrom: '10:18:00',
+    availableTo: '16:36:00',
+    daysOfWeek: ['Wednesday'],
+  ),
+  WorkingTimeDoctorAvailableModel(
+    id: 17,
+    doctor: 'Mohamed123',
+    availableFrom: '10:48:00',
+    availableTo: '16:30:00',
+    daysOfWeek: ['Wednesday'],
+  ),
+  WorkingTimeDoctorAvailableModel(
+    id: 18,
+    doctor: 'Mohamed123',
+    availableFrom: '10:18:00',
+    availableTo: '16:36:00',
+    daysOfWeek: ['Friday'],
+  ),
+];

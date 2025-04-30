@@ -27,9 +27,15 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
           WorkingTimeDoctorAvailableModel.removeDuplicatesAndEmptyDays(
         workingTimeList,
       );
+      if (this.workingTimeList.isEmpty) {
+        if (isClosed) return;
+        emit(GetWorkingTimeDoctorAvailableEmpty());
+      }
       if (isClosed) return;
       emit(
-        GetWorkingTimeDoctorAvailableSuccess(workingTimeList: workingTimeList),
+        GetWorkingTimeDoctorAvailableSuccess(
+          workingTimeList: this.workingTimeList,
+        ),
       );
     });
   }
