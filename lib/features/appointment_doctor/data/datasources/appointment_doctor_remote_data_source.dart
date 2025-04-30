@@ -6,6 +6,9 @@ import 'package:dartz/dartz.dart';
 abstract class AppointmentDoctorRemoteDataSource {
   Future<Either<Failure, List<Map<String, dynamic>>>>
       getWorkingTimeAvailableDoctor();
+  Future<Either<Failure, Map<String, dynamic>>> removeWorkingTimeDoctor({
+    required int wordingTimeId,
+  });
 }
 
 class AppointmentDoctorRemoteDataSourceImpl
@@ -21,6 +24,19 @@ class AppointmentDoctorRemoteDataSourceImpl
     return response.fold(
       left,
       (r) => right((r as List).cast<Map<String, dynamic>>()),
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> removeWorkingTimeDoctor({
+    required int wordingTimeId,
+  }) async {
+    final response = await dioConsumer
+        .delete('${EndPoints.appointmentDoctor}$wordingTimeId/');
+
+    return response.fold(
+      left,
+      (r) => right(r as Map<String, dynamic>),
     );
   }
 }
