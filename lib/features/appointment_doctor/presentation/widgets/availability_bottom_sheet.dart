@@ -57,6 +57,53 @@ class _AvailabilityBottomSheetState extends State<AvailabilityBottomSheet> {
     final picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.input,
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            timePickerTheme: TimePickerThemeData(
+              dayPeriodColor: context.primaryColor.withAlpha(90),
+              dayPeriodBorderSide: BorderSide(
+                width: .6,
+                color: context.onSecondaryColor.withAlpha(190),
+              ),
+              dayPeriodTextColor: context.onPrimaryColor,
+              hourMinuteColor: context.primaryColor.withAlpha(30),
+              hourMinuteTextColor: context.onPrimaryColor,
+              dialHandColor: context.primaryColor,
+              dialTextColor: context.onPrimaryColor,
+              entryModeIconColor: context.primaryColor,
+            ),
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                  primary: context.primaryColor,
+                  onPrimary: context.backgroundColor,
+                  surface: context.backgroundColor,
+                  onSurface: context.onPrimaryColor,
+                ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: context.primaryColor,
+              ),
+            ),
+          ),
+          child: Directionality(
+            textDirection:
+                context.isStateArabic ? TextDirection.rtl : TextDirection.ltr,
+            child: child!,
+          ),
+        );
+      },
+      helpText: isFrom
+          ? context.isStateArabic
+              ? 'اختر الوقت المبدئي'
+              : 'Select start time'
+          : context.isStateArabic
+              ? 'اختر الوقت النهائي'
+              : 'Select end time',
+      cancelText: context.isStateArabic ? 'اغلاق' : 'Close',
+      confirmText: context.isStateArabic ? 'حفظ' : 'Save',
+      hourLabelText: context.isStateArabic ? 'ساعة' : 'Hour',
+      minuteLabelText: context.isStateArabic ? 'دقيقة' : 'Minute',
     );
     if (picked != null) {
       setState(() {
