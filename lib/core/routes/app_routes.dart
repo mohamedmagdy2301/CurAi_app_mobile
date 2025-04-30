@@ -2,6 +2,7 @@ import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/book_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
@@ -105,7 +106,8 @@ class AppRoutes {
 
       case Routes.myAppointmentPatientScreen:
         return BaseRoute(page: const MyAppointmentPatientScreen());
-
+      case Routes.workingTimeDoctorAvailableScreen:
+        return BaseRoute(page: const WorkingTimeDoctorAvailableScreen());
       case Routes.yourProfileScreen:
         return BaseRoute(page: const BuildYourProfileScreen());
       default:

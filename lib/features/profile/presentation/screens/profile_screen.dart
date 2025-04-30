@@ -35,6 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   File? imageFile;
   XFile? xFilePhoto;
   String? imageUrl;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,12 +100,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: LangKeys.yourProfile,
               onTap: () => context.pushNamed(Routes.yourProfileScreen),
             ),
-            _buildDivider(context),
-            RowNavigateProfileWidget(
-              icon: Icons.payment,
-              title: LangKeys.paymentMethod,
-              onTap: () {},
-            ),
+            if (isDoctor) _buildDivider(context),
+            if (isDoctor)
+              RowNavigateProfileWidget(
+                icon: CupertinoIcons.calendar,
+                title: LangKeys.workingTime,
+                onTap: () {
+                  context.pushNamed(Routes.workingTimeDoctorAvailableScreen);
+                },
+              ),
+            if (isPatient) _buildDivider(context),
+            if (isPatient)
+              RowNavigateProfileWidget(
+                icon: Icons.payment,
+                title: LangKeys.paymentMethod,
+                onTap: () {},
+              ),
             _buildDivider(context),
             RowNavigateProfileWidget(
               icon: CupertinoIcons.heart,
@@ -145,3 +156,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         color: context.onSecondaryColor,
       );
 }
+
+bool isDoctor = CacheDataHelper.getData(key: SharedPrefKey.keyRole) == 'doctor';
+
+bool isPatient =
+    CacheDataHelper.getData(key: SharedPrefKey.keyRole) == 'patient';
