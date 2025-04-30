@@ -25,3 +25,15 @@ class GetWorkingTimeDoctorAvailableFailure extends AppointmentDoctorState {
   const GetWorkingTimeDoctorAvailableFailure({required this.message});
   final String message;
 }
+
+//! Remove Working Time Doctor
+class RemoveWorkingTimeDoctorLoading extends AppointmentDoctorState {}
+
+class RemoveWorkingTimeDoctorEmpty extends AppointmentDoctorState {}
+
+class RemoveWorkingTimeDoctorSuccess extends AppointmentDoctorState {}
+
+class RemoveWorkingTimeDoctorFailure extends AppointmentDoctorState {
+  const RemoveWorkingTimeDoctorFailure({required this.message});
+  final String message;
+}
