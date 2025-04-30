@@ -164,5 +164,12 @@
    "work_start_time_from": "وقت البدء من",
    "to": "حتى",
    "day": "يوم",
-   "days": "ايام"
+   "days": "ايام",
+   "from": "من",
+   "add_working_hours": "اضافة ساعات العمل",
+   "select_working_day": "حدد يوم العمل",
+   "back": "رجوع",
+   "save": "حفظ",
+   "start_time": "وقت البدء",
+   "end_time": "وقت الانتهاء"
   }

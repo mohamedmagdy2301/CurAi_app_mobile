@@ -163,6 +163,14 @@
   "work_start_time_from": "Work Start Time From",
   "to": "to",
   "day": "Day",
-  "days": "Days"
+  "days": "Days",
+  "from": "From",
+  "add_working_hours": "Add Working Hours",
+  "select_working_day": "Select Working Day",
+  "back": "Back",
+  "save": "Save",
+  "start_time": "Start Time",
+  "end_time": "End Time"
+
  
 }
