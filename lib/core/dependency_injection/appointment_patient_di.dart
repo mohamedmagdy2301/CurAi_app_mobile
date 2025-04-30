@@ -12,7 +12,7 @@ import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/sc
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 
-void setupAppointmentDI() {
+void setupAppointmentPatinetDI() {
   //! Cubit
   sl
     ..registerFactory<AppointmentPatientCubit>(
