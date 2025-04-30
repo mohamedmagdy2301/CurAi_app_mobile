@@ -21,18 +21,6 @@ class MainScaffoldUser extends StatelessWidget {
       NavigationDestination(
         icon: customIconNavBar(
           context,
-          icon: CupertinoIcons.doc_chart,
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.doc_chart,
-        ),
-        label: 'Home',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
           icon: CupertinoIcons.house_alt,
         ),
         selectedIcon: customIconNavBar(
@@ -80,12 +68,12 @@ class MainScaffoldUser extends StatelessWidget {
       ),
     ];
 
-    const screens = [
-      WorkingTimeDoctorAvailableScreen(),
-      HomeScreen(),
-      ChatbotScreen(),
-      MyAppointmentPatientScreen(),
-      ProfileScreen(),
+    final screens = [
+      const HomeScreen(),
+      const ChatbotScreen(),
+      if (isDoctor) const WorkingTimeDoctorAvailableScreen(),
+      if (isPatient) const MyAppointmentPatientScreen(),
+      const ProfileScreen(),
     ];
 
     return BlocBuilder<NavigationCubit, int>(
@@ -94,7 +82,7 @@ class MainScaffoldUser extends StatelessWidget {
           canPop: false,
           child: Scaffold(
             backgroundColor: context.backgroundColor,
-            bottomNavigationBar: currentIndex == 2
+            bottomNavigationBar: currentIndex == 1
                 ? null
                 : NavigationBar(
                     labelBehavior:
