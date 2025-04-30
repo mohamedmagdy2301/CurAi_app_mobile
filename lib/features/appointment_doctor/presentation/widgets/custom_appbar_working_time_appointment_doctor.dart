@@ -3,10 +3,13 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/availability_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppbarWorkingTimeAppointmentDoctor extends StatefulWidget
@@ -25,6 +28,8 @@ class CustomAppbarWorkingTimeAppointmentDoctor extends StatefulWidget
 
 class _CustomAppbarWorkingTimeAppointmentDoctorState
     extends State<CustomAppbarWorkingTimeAppointmentDoctor> {
+  bool isLoading = false;
+
   Future<void> showAvailabilityBottomSheet(BuildContext context) async {
     final result = await showModalBottomSheet<Map<String, dynamic>>(
       context: context,
@@ -36,43 +41,88 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
     );
 
     if (result != null) {
-      setState(() {
-        showMessage(
-          context,
-          type: SnackBarType.success,
-          message: (result['days_of_week'] +
-              '\n' +
-              result['available_from'] +
-              ' - ' +
-              result['available_to']) as String,
-        );
-      });
+      await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
+            day: result['days_of_week'] as String,
+            startTime: result['available_from'] as String,
+            endTime: result['available_to'] as String,
+          );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      elevation: 0,
-      flexibleSpace: Container(color: context.backgroundColor),
-      title: AutoSizeText(
-        context.translate(LangKeys.workingTime),
-        maxLines: 1,
-        style: TextStyleApp.medium24().copyWith(
-          color: context.onPrimaryColor,
-        ),
-      ),
-      centerTitle: true,
-      actions: [
-        IconButton(
-          onPressed: () => showAvailabilityBottomSheet(context),
-          icon: Icon(
-            CupertinoIcons.add_circled,
-            color: context.onPrimaryColor,
-            size: 30.sp,
+    return BlocConsumer<AppointmentDoctorCubit, AppointmentDoctorState>(
+      listenWhen: (previous, current) =>
+          current is AddWorkingTimeDoctorFailure ||
+          current is AddWorkingTimeDoctorSuccess ||
+          current is AddWorkingTimeDoctorLoading,
+      buildWhen: (previous, current) =>
+          current is AddWorkingTimeDoctorFailure ||
+          current is AddWorkingTimeDoctorSuccess ||
+          current is AddWorkingTimeDoctorLoading,
+      listener: (context, state) {
+        if (state is AddWorkingTimeDoctorSuccess) {
+          showMessage(
+            context,
+            type: SnackBarType.success,
+            message: context.isStateArabic
+                ? 'تمت اضافة المواعيد بنجاح'
+                : 'Working time added successfully',
+          );
+          if (isLoading) {
+            Navigator.pop(context);
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }
+        if (state is AddWorkingTimeDoctorFailure) {
+          showMessage(
+            context,
+            type: SnackBarType.error,
+            message: state.message,
+          );
+          if (isLoading) {
+            Navigator.pop(context);
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }
+        if (state is AddWorkingTimeDoctorLoading && !isLoading) {
+          AdaptiveDialogs.showLoadingAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.workingTime),
+          );
+          setState(() {
+            isLoading = true;
+          });
+        }
+      },
+      builder: (context, state) {
+        return AppBar(
+          elevation: 0,
+          flexibleSpace: Container(color: context.backgroundColor),
+          title: AutoSizeText(
+            context.translate(LangKeys.workingTime),
+            maxLines: 1,
+            style: TextStyleApp.medium24().copyWith(
+              color: context.onPrimaryColor,
+            ),
           ),
-        ),
-      ],
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () => showAvailabilityBottomSheet(context),
+              icon: Icon(
+                CupertinoIcons.add_circled_solid,
+                color: context.onPrimaryColor,
+                size: 30.sp,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
