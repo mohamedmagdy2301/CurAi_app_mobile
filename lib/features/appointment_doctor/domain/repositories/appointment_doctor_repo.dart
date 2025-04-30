@@ -8,4 +8,10 @@ abstract class AppointmentDoctorRepo {
   Future<Either<String, String>> removeWorkingTimeDoctor({
     required int wordingTimeId,
   });
+
+  Future<Either<String, String>> addWorkingTimeDoctor({
+    required String day,
+    required String startTime,
+    required String endTime,
+  });
 }
