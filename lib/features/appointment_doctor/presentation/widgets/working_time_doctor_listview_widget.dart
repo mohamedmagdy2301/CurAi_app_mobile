@@ -31,8 +31,7 @@ class WorkingTimeDoctorAvailabilityListView extends StatefulWidget {
 class _WorkingTimeDoctorAvailabilityListViewState
     extends State<WorkingTimeDoctorAvailabilityListView> {
   bool isLoading = false;
-  late List<WorkingTimeDoctorAvailableModel>
-      _workingTimeList; // Local state copy
+  late List<WorkingTimeDoctorAvailableModel> _workingTimeList;
 
   @override
   void initState() {
@@ -51,7 +50,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
   @override
   Widget build(BuildContext context) {
     final groupedData = groupBy(
-      _workingTimeList, // Use the local state copy
+      _workingTimeList,
       (item) => item.id,
     );
     final groupedItemsList = groupedData.entries.toList();
@@ -109,7 +108,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
       },
       builder: (context, state) {
         return ListView.builder(
-          itemCount: _workingTimeList.length, // Use the local state copy
+          itemCount: _workingTimeList.length,
           itemBuilder: (context, index) {
             if (index < groupedItemsList.length) {
               final groupedItem = groupedItemsList[index];
@@ -133,7 +132,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
                         Text(
                           context.isStateArabic
                               ? 'اسحب للحذف'
-                              : 'Swipe to delete ${groupedItem.key}',
+                              : 'Swipe to delete',
                           style: TextStyleApp.regular18().copyWith(
                             color: Colors.white,
                           ),
@@ -142,7 +141,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
                           CupertinoIcons.trash,
                           color: Colors.white,
                           size: 30.sp,
-                        ).paddingSymmetric(horizontal: 10),
+                        ).paddingSymmetric(horizontal: 14),
                       ],
                     ),
                   ),

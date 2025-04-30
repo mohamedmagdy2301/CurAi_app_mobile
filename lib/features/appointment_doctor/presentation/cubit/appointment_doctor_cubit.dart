@@ -38,13 +38,14 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       if (this.workingTimeList.isEmpty) {
         if (isClosed) return;
         emit(GetWorkingTimeDoctorAvailableEmpty());
+      } else {
+        if (isClosed) return;
+        emit(
+          GetWorkingTimeDoctorAvailableSuccess(
+            workingTimeList: this.workingTimeList,
+          ),
+        );
       }
-      if (isClosed) return;
-      emit(
-        GetWorkingTimeDoctorAvailableSuccess(
-          workingTimeList: this.workingTimeList,
-        ),
-      );
     });
   }
 
