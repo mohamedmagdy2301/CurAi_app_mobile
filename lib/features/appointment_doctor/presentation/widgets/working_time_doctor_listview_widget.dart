@@ -115,8 +115,37 @@ class _WorkingTimeDoctorAvailabilityListViewState
               final items = groupedItem.value;
               return Dismissible(
                 key: ValueKey(groupedItem.key),
-                direction: DismissDirection.endToStart,
                 background: Card(
+                  margin: context.padding(vertical: 10),
+                  elevation: 3,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  color: Colors.blue,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Icon(
+                          CupertinoIcons.pencil,
+                          color: Colors.white,
+                          size: 30.sp,
+                        ).paddingSymmetric(horizontal: 14),
+                        Text(
+                          context.isStateArabic
+                              ? 'اسحب للتعديل'
+                              : 'Swipe to edit',
+                          style: TextStyleApp.regular18().copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                secondaryBackground: Card(
+                  // للسحب من اليمين لليسار = حذف
                   margin: context.padding(vertical: 10),
                   elevation: 3,
                   clipBehavior: Clip.antiAlias,
@@ -147,6 +176,13 @@ class _WorkingTimeDoctorAvailabilityListViewState
                   ),
                 ),
                 confirmDismiss: (direction) async {
+                  if (direction == DismissDirection.startToEnd) {
+                    // final itemId = groupedItem.key;
+                    // final itemsToEdit = groupedItem.value;
+
+                    return false;
+                  }
+
                   if (direction == DismissDirection.endToStart) {
                     final shouldDelete =
                         await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
@@ -176,6 +212,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
                     }
                     return false;
                   }
+
                   return false;
                 },
                 child: WorkingTimeDoctorCardWidget(items: items),

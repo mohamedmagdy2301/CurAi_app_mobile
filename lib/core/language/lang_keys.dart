@@ -194,7 +194,9 @@ class LangKeys {
   static const String endTime = 'end_time';
   static const String from = 'from';
   static const String addWorkingHours = 'add_working_hours';
+  static const String updateWorkingHours = 'update_working_hours';
   static const String selectWorkingDay = 'select_working_day';
   static const String back = 'back';
   static const String save = 'save';
+  static const String update = 'update';
 }
