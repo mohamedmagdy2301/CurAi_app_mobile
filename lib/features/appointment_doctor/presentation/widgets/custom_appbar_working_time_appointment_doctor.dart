@@ -62,6 +62,9 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           current is AddWorkingTimeDoctorLoading,
       listener: (context, state) {
         if (state is AddWorkingTimeDoctorSuccess) {
+          context
+              .read<AppointmentDoctorCubit>()
+              .getWorkingTimeAvailableDoctor();
           showMessage(
             context,
             type: SnackBarType.success,

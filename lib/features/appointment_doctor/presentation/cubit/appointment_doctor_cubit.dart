@@ -58,7 +58,6 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       if (isClosed) return;
       emit(RemoveWorkingTimeDoctorFailure(message: message));
     }, (_) {
-      getWorkingTimeAvailableDoctor();
       emit(RemoveWorkingTimeDoctorSuccess());
     });
   }
@@ -81,7 +80,6 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       if (isClosed) return;
       emit(AddWorkingTimeDoctorFailure(message: message));
     }, (_) {
-      getWorkingTimeAvailableDoctor();
       emit(AddWorkingTimeDoctorSuccess());
     });
   }

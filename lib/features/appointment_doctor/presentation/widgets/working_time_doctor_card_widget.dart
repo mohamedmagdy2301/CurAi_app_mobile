@@ -20,7 +20,7 @@ class WorkingTimeDoctorCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: context.padding(horizontal: 8, vertical: 10),
+      margin: context.padding(vertical: 10),
       elevation: 3,
       clipBehavior: Clip.antiAlias,
       color: context.isDark

@@ -129,7 +129,7 @@ class _AvailabilityBottomSheetState extends State<AvailabilityBottomSheet> {
               }).toList(),
             ),
           ],
-        ).expand();
+        );
       case 1:
         return Row(
           children: [
