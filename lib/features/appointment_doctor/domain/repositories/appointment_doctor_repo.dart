@@ -4,4 +4,8 @@ import 'package:dartz/dartz.dart';
 abstract class AppointmentDoctorRepo {
   Future<Either<String, List<WorkingTimeDoctorAvailableModel>>>
       getWorkingTimeAvailableDoctor();
+
+  Future<Either<String, String>> removeWorkingTimeAvailableDoctor({
+    required int wordingTimeId,
+  });
 }

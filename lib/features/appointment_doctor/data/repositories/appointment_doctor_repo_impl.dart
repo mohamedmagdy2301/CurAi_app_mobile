@@ -20,4 +20,19 @@ class AppointmentDoctorRepoImpl extends AppointmentDoctorRepo {
       },
     );
   }
+
+  @override
+  Future<Either<String, String>> removeWorkingTimeAvailableDoctor({
+    required int wordingTimeId,
+  }) async {
+    final response = await remoteDataSource.removeWorkingTimeDoctor(
+      wordingTimeId: wordingTimeId,
+    );
+    return response.fold(
+      (failure) => left(failure.message),
+      (responseData) {
+        return right('');
+      },
+    );
+  }
 }
