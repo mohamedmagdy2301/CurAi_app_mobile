@@ -6,9 +6,11 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/working_time_doctor_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WorkingTimeDoctorAvailabilityListView extends StatelessWidget {
@@ -20,14 +22,14 @@ class WorkingTimeDoctorAvailabilityListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final groupedData = groupBy(
+      workingTimeList,
+      (item) => item.id,
+    );
+    final groupedItemsList = groupedData.entries.toList();
     return ListView.builder(
       itemCount: workingTimeList.length,
       itemBuilder: (context, index) {
-        final groupedData = groupBy(
-          workingTimeList,
-          (item) => item.id,
-        );
-        final groupedItemsList = groupedData.entries.toList();
         if (index < groupedItemsList.length) {
           final groupedItem = groupedItemsList[index];
           final items = groupedItem.value;
@@ -48,7 +50,9 @@ class WorkingTimeDoctorAvailabilityListView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      context.isStateArabic ? 'اسحب للحذف' : 'Swipe to delete',
+                      context.isStateArabic
+                          ? 'اسحب للحذف'
+                          : 'Swipe to delete ${groupedItem.key}',
                       style: TextStyleApp.regular18().copyWith(
                         color: Colors.white,
                       ),
@@ -62,7 +66,18 @@ class WorkingTimeDoctorAvailabilityListView extends StatelessWidget {
                 ),
               ),
             ),
-            onDismissed: (direction) {},
+            onDismissed: (direction) {
+              if (direction == DismissDirection.endToStart) {
+                final id = groupedItem.key;
+                if (id != null) {
+                  context
+                      .read<AppointmentDoctorCubit>()
+                      .removeWorkingTimeDoctor(
+                        workingTimeId: id,
+                      );
+                }
+              }
+            },
             child: WorkingTimeDoctorCardWidget(items: items),
           );
         } else {

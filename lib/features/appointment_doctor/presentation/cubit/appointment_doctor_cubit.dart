@@ -54,8 +54,8 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
     reslute.fold((message) {
       if (isClosed) return;
       emit(RemoveWorkingTimeDoctorFailure(message: message));
-    }, (workingTimeList) {
-      if (isClosed) return;
+    }, (_) {
+      getWorkingTimeAvailableDoctor();
       emit(RemoveWorkingTimeDoctorSuccess());
     });
   }

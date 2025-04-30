@@ -44,30 +44,33 @@ class WorkingTimeDoctorCardWidget extends StatelessWidget {
                   size: 26.sp,
                 ).paddingTop(4),
                 8.wSpace,
-                Wrap(
-                  children: [
-                    AutoSizeText(
-                      '${context.translate(
-                        items.length == 1 ? LangKeys.day : LangKeys.days,
-                      )} ',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyleApp.medium18().copyWith(
-                        color: context.onPrimaryColor,
-                      ),
-                    ),
-                    for (int i = 0; i < items.length; i++)
+                SizedBox(
+                  width: context.W * .72,
+                  child: Wrap(
+                    children: [
                       AutoSizeText(
-                        '${items[i].getLocalizedDays(isArabic: context.isStateArabic).join(', ')}'
-                        '${i != items.length - 1 ? "${i != items.length - 2 ? "," : " ${context.translate(LangKeys.and)}"} " : ''}',
+                        '${context.translate(
+                          items.length == 1 ? LangKeys.day : LangKeys.days,
+                        )} ',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyleApp.medium18().copyWith(
                           color: context.onPrimaryColor,
                         ),
                       ),
-                  ],
-                ).expand(),
+                      for (int i = 0; i < items.length; i++)
+                        AutoSizeText(
+                          '${items[i].getLocalizedDays(isArabic: context.isStateArabic).join(', ')}'
+                          '${i != items.length - 1 ? "${i != items.length - 2 ? "," : " ${context.translate(LangKeys.and)}"} " : ''}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyleApp.medium18().copyWith(
+                            color: context.onPrimaryColor,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
               ],
             ),
             Divider(
@@ -112,7 +115,7 @@ class WorkingTimeDoctorCardWidget extends StatelessWidget {
               ),
             ),
           ],
-        ).expand(),
+        ),
       ),
     );
   }
