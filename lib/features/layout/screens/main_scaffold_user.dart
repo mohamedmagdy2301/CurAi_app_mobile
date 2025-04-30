@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart%20';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/screens/my_appointment_patient_screen.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
@@ -67,11 +68,12 @@ class MainScaffoldUser extends StatelessWidget {
       ),
     ];
 
-    const screens = [
-      HomeScreen(),
-      ChatbotScreen(),
-      MyAppointmentPatientScreen(),
-      ProfileScreen(),
+    final screens = [
+      const HomeScreen(),
+      const ChatbotScreen(),
+      if (isDoctor) const WorkingTimeDoctorAvailableScreen(),
+      if (isPatient) const MyAppointmentPatientScreen(),
+      const ProfileScreen(),
     ];
 
     return BlocBuilder<NavigationCubit, int>(

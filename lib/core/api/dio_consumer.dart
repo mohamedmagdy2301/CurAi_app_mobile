@@ -187,13 +187,24 @@ class DioConsumer implements ApiConsumer {
 
     // Check for JWT expiration
     final isJwtExpired = data is Map &&
-        (data['detail'].toString().toLowerCase().contains('expired') == true ||
-            data['detail'].toString().toLowerCase().contains('jwt') == true);
+        (data['detail'].toString().toLowerCase().contains('invalid') == true ||
+            data['detail'].toString().toLowerCase().contains('expired') ==
+                true ||
+            data['code'].toString().toLowerCase().contains('token_not_valid') ==
+                true);
 
     // Handle successful responses
     if (response.statusCode == StatusCode.ok ||
         response.statusCode == StatusCode.okCreated) {
       return right(data);
+    }
+
+    if (response.statusCode == StatusCode.forbidden &&
+        data['detail'].toString().toLowerCase().contains(
+                  'permission',
+                ) ==
+            true) {
+      return left(ServerFailure(data['detail'] as String));
     }
 
     // Handle authorization issues

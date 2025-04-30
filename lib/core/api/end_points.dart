@@ -14,4 +14,5 @@ class EndPoints {
   static const String getAppointmentAvailable =
       '$appointmentPatient/doctor_availability/';
   static const String simulateAppointmentPayment = '/simulate_payment/';
+  static const String appointmentDoctor = '/doctor_panal_availabilities/';
 }

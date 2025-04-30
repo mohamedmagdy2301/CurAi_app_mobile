@@ -19,4 +19,6 @@ class Routes {
   static const String paymentAppointmentScreen = '/paymentAppointmentScreen';
   static const String myAppointmentPatientScreen =
       '/myAppointmentPatientScreen';
+  static const String workingTimeDoctorAvailableScreen =
+      '/workingTimeDoctorAvailableScreen';
 }

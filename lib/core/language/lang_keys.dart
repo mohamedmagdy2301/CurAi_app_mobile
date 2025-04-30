@@ -185,6 +185,16 @@ class LangKeys {
   static const String myAppointments = 'my_appointments';
   static const String pending = 'pending';
   static const String paided = 'paided';
-
   static const String tryAgain = 'try_again';
+  static const String day = 'day';
+  static const String days = 'days';
+  static const String workStartTimeFrom = 'work_start_time_from';
+  static const String to = 'to';
+  static const String starTime = 'start_time';
+  static const String endTime = 'end_time';
+  static const String from = 'from';
+  static const String addWorkingHours = 'add_working_hours';
+  static const String selectWorkingDay = 'select_working_day';
+  static const String back = 'back';
+  static const String save = 'save';
 }

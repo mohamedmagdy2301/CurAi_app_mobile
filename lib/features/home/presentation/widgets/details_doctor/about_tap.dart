@@ -6,9 +6,10 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/regex.dart';
-import 'package:curai_app_mobile/features/appointment/presentation/widgets/working_time_details_doctor/build_working_time_details_doctor_widget.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/working_time_details_doctor/build_working_time_details_doctor_widget.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
+import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 
@@ -32,7 +33,8 @@ class AboutTap extends StatelessWidget {
           15.hSpace,
           ConsultationPriceWidget(doctorResults: doctorResults),
           15.hSpace,
-          BuildWorkingTimeDetailsDoctorWidget(doctorId: doctorResults.id!),
+          if (isPatient)
+            BuildWorkingTimeDetailsDoctorWidget(doctorId: doctorResults.id!),
           10.hSpace,
         ],
       ).paddingSymmetric(horizontal: 10, vertical: 10),

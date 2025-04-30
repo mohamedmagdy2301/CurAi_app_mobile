@@ -159,5 +159,18 @@
   "cancel_appointment" : "Cancel Appointment",
   "cancel_appointment_message" : "Are you sure you want to cancel the appointment?",
   "try_again" : "Try Again",
-  "reschedule_message" : "Are you sure you want to reschedule the appointment?"
+  "reschedule_message" : "Are you sure you want to reschedule the appointment?",
+  "work_start_time_from": "Work Start Time From",
+  "to": "to",
+  "day": "Day",
+  "days": "Days",
+  "from": "From",
+  "add_working_hours": "Add Working Hours",
+  "select_working_day": "Select Working Day",
+  "back": "Back",
+  "save": "Save",
+  "start_time": "Start Time",
+  "end_time": "End Time"
+
+ 
 }

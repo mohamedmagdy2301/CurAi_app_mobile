@@ -176,4 +176,46 @@ extension StringExtension on String {
     if (date == null) return this;
     return formatter.format(date);
   }
+
+  /// Converts time string like "7:12 am", "12:22 PM", "7:12 ص", or "7:12 م"
+  /// into a 24-hour format: "HH:mm:ss".
+  ///
+  /// Examples:
+  /// `"7:12 am"` → `"07:12:00"`
+  /// `"7:12 م"`  → `"19:12:00"`
+  String to24HourTimeFormat() {
+    final normalized = toLowerCase()
+        .replaceAll('ص', 'am')
+        .replaceAll('م', 'pm')
+        .replaceAll('٫', ':') // for Arabic decimal separator if used
+        .trim();
+
+    final regex = RegExp(r'^(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?\s*(am|pm)?$');
+    final match = regex.firstMatch(normalized);
+    if (match == null) return this;
+
+    var hour = int.parse(match.group(1)!);
+    final minute = int.parse(match.group(2)!);
+    final second = match.group(3) != null ? int.parse(match.group(3)!) : 0;
+    final period = match.group(4);
+
+    if (period == 'pm' && hour != 12) {
+      hour += 12;
+    } else if (period == 'am' && hour == 12) {
+      hour = 0;
+    }
+
+    final hh = hour.toString().padLeft(2, '0');
+    final mm = minute.toString().padLeft(2, '0');
+    final ss = second.toString().padLeft(2, '0');
+    return '$hh:$mm:$ss';
+  }
+
+  /// Converts time string like "7:12 am", "12:22 PM", "7:12 ص", or "7:12 م"
+  /// into a 12-hour format: "h:mm:ss a".
+  ///
+  /// Examples:
+  /// `"7:12 am"` → `"7:12:00 AM"`
+  /// `"7:12 م"`  → `"7:12:00 ص"`
+  String to12HourTimeFormat() => to24HourTimeFormat().to12HourTimeFormat();
 }
