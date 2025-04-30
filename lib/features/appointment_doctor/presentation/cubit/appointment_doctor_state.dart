@@ -29,11 +29,19 @@ class GetWorkingTimeDoctorAvailableFailure extends AppointmentDoctorState {
 //! Remove Working Time Doctor
 class RemoveWorkingTimeDoctorLoading extends AppointmentDoctorState {}
 
-class RemoveWorkingTimeDoctorEmpty extends AppointmentDoctorState {}
-
 class RemoveWorkingTimeDoctorSuccess extends AppointmentDoctorState {}
 
 class RemoveWorkingTimeDoctorFailure extends AppointmentDoctorState {
   const RemoveWorkingTimeDoctorFailure({required this.message});
+  final String message;
+}
+
+//! Add Working Time Doctor
+class AddWorkingTimeDoctorLoading extends AppointmentDoctorState {}
+
+class AddWorkingTimeDoctorSuccess extends AppointmentDoctorState {}
+
+class AddWorkingTimeDoctorFailure extends AppointmentDoctorState {
+  const AddWorkingTimeDoctorFailure({required this.message});
   final String message;
 }
