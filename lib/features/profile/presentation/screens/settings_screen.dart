@@ -109,7 +109,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.delete_outline_outlined,
               title: LangKeys.deleteAccount,
               onTap: () {
-                AdaptiveDialogs.showOkCancelAlertDialog(
+                AdaptiveDialogs.showOkCancelAlertDialog<bool>(
                   context: context,
                   title: context.translate(LangKeys.deleteAccount),
                   message: context.translate(LangKeys.deleteAccountMessage),

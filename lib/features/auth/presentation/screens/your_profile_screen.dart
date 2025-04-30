@@ -230,7 +230,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                 colorBackground: isChanged ? context.primaryColor : Colors.grey,
                 onPressed: isChanged
                     ? () {
-                        AdaptiveDialogs.showOkCancelAlertDialog(
+                        AdaptiveDialogs.showOkCancelAlertDialog<bool>(
                           context: context,
                           title: context.translate(LangKeys.updateProfile),
                           message:

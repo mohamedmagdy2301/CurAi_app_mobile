@@ -144,7 +144,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
       isHalf: true,
       title: LangKeys.reschedule,
       onPressed: () async {
-        await AdaptiveDialogs.showOkCancelAlertDialog(
+        await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
           context: context,
           title: context.translate(LangKeys.reschedule),
           message: context.translate(LangKeys.rescheduleMessage),

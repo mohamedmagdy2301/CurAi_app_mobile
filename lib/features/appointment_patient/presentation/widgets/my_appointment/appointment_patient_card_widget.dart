@@ -178,7 +178,7 @@ class DeleteAppointmentButton extends StatelessWidget {
       builder: (context, state) {
         return InkWell(
           onTap: () {
-            AdaptiveDialogs.showOkCancelAlertDialog(
+            AdaptiveDialogs.showOkCancelAlertDialog<bool>(
               context: context,
               title: context.translate(LangKeys.cancelAppointment),
               message: context.translate(LangKeys.cancelAppointmentMessage),
