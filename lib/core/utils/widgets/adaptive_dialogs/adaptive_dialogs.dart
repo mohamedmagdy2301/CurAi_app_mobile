@@ -86,7 +86,7 @@ class AdaptiveDialogs {
   }
 
   /// Show an alert with "OK" and "Cancel" buttons.
-  static Future<bool?> showOkCancelAlertDialog({
+  static Future<T?> showOkCancelAlertDialog<T>({
     required BuildContext context,
     required String title,
     required String message,

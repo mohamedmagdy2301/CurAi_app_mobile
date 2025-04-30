@@ -73,7 +73,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
             context,
             type: SnackBarType.success,
             message: context.isStateArabic
-                ? 'تمت اضافة المواعيد بنجاح'
+                ? 'تمت حذف المواعيد بنجاح'
                 : 'Working time Removed successfully',
           );
           if (isLoading) {
@@ -146,20 +146,37 @@ class _WorkingTimeDoctorAvailabilityListViewState
                     ),
                   ),
                 ),
-                onDismissed: (direction) async {
+                confirmDismiss: (direction) async {
                   if (direction == DismissDirection.endToStart) {
-                    final id = groupedItem.key;
-                    if (id != null) {
-                      setState(() {
-                        _workingTimeList.removeWhere((item) => item.id == id);
-                      });
-                      await context
-                          .read<AppointmentDoctorCubit>()
-                          .removeWorkingTimeDoctor(
-                            workingTimeId: id,
-                          );
+                    final shouldDelete =
+                        await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
+                      context: context,
+                      title: context.isStateArabic
+                          ? 'تأكيد الحذف'
+                          : 'Confirm Deletion',
+                      message: context.isStateArabic
+                          ? 'هل أنت متأكد أنك تريد حذف هذا الموعد؟'
+                          : 'Are you sure you want to delete this working time?',
+                      onPressedOk: () => Navigator.of(context).pop(true),
+                      onPressedCancel: () => Navigator.of(context).pop(false),
+                    );
+
+                    if (shouldDelete!) {
+                      final id = groupedItem.key;
+                      if (id != null) {
+                        setState(() {
+                          _workingTimeList.removeWhere((item) => item.id == id);
+                        });
+                        if (context.mounted) {
+                          await context
+                              .read<AppointmentDoctorCubit>()
+                              .removeWorkingTimeDoctor(workingTimeId: id);
+                        }
+                      }
                     }
+                    return false;
                   }
+                  return false;
                 },
                 child: WorkingTimeDoctorCardWidget(items: items),
               );
