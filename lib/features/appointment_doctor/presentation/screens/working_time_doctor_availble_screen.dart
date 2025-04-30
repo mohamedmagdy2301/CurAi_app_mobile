@@ -1,11 +1,15 @@
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as ext;
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddAvailabilityScreen extends StatefulWidget {
   const AddAvailabilityScreen({super.key});
@@ -15,132 +19,93 @@ class AddAvailabilityScreen extends StatefulWidget {
 }
 
 class _AddAvailabilityScreenState extends State<AddAvailabilityScreen> {
-  List<Map<String, dynamic>> scheduleData = [
-    {
-      'id': 8,
-      'doctor': 'Mohamed123',
-      'available_from': '10:30:00',
-      'available_to': '16:30:00',
-      'days_of_week': [
-        'Saturday',
-      ],
-    },
-    {
-      'id': 9,
-      'doctor': 'Mohamed123',
-      'available_from': '10:30:00',
-      'available_to': '16:30:00',
-      'days_of_week': [
-        'Saturday',
-      ],
-    },
-  ];
-
-  Future<void> showAvailabilityBottomSheet(
-    BuildContext context, {
-    int? editIndex,
-    Map<String, dynamic>? existingData,
-  }) async {
-    final result = await showModalBottomSheet<Map<String, dynamic>>(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (_) => AvailabilityBottomSheet(existingData: existingData),
-    );
-
-    if (result != null) {
-      setState(() {
-        if (editIndex != null) {
-          scheduleData[editIndex] = result;
-        } else {
-          scheduleData.add(result);
-        }
-      });
-    }
-  }
-
-  Future<void> confirmDelete(int index) async {
-    final confirm = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content:
-            const Text('Are you sure you want to delete this availability?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      ),
-    );
-
-    if (confirm == true) {
-      setState(() {
-        scheduleData.removeAt(index);
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      context.read<AppointmentDoctorCubit>().getWorkingTimeAvailableDoctor();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<AppointmentDoctorCubit>();
+
     return Scaffold(
       appBar: AppBar(title: const Text('Doctor Availability')),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const SizedBox(height: 24),
-            if (scheduleData.isEmpty)
-              const Text('No availabilities added yet.').expand(),
-            if (scheduleData.isNotEmpty)
+            if (cubit.state is GetWorkingTimeDoctorAvailableLoading)
+              const CircularProgressIndicator().center().expand()
+            else if (cubit.state is GetWorkingTimeDoctorAvailableFailure)
+              Text(
+                (cubit.state as GetWorkingTimeDoctorAvailableFailure).message,
+              ).center()
+            else if (cubit.workingTimeList.isEmpty)
+              const Text('No availabilities added yet.').expand()
+            else
               Expanded(
-                child: ListView.separated(
-                  itemCount: scheduleData.length,
-                  separatorBuilder: (_, __) => const Divider(),
+                child: ListView.builder(
+                  itemCount: cubit.workingTimeList.length,
                   itemBuilder: (context, index) {
-                    final item = scheduleData[index];
-                    var day = item['days_of_week'];
-                    if (day is List<String>) {
-                      day = day[0];
-                    }
-                    return ListTile(
-                      leading: const Icon(Icons.calendar_today),
-                      title: Text(day as String),
-                      subtitle: Text(
-                        "From ${item["available_from"]} to ${item["available_to"]}",
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
+                    final groupedData = groupBy(
+                      cubit.workingTimeList,
+                      (item) => item.id,
+                    );
+
+                    final groupedItemsList = groupedData.entries.toList();
+
+                    if (index < groupedItemsList.length) {
+                      final groupedItem = groupedItemsList[index];
+                      final id = groupedItem.key;
+                      final items = groupedItem.value;
+
+                      return ExpansionTile(
+                        title: Text('Availability ID: $id'),
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.blue),
-                            onPressed: () => showAvailabilityBottomSheet(
-                              context,
-                              editIndex: index,
-                              existingData: item,
+                          for (final item in items)
+                            ListTile(
+                              title: Text(
+                                '${item.getLocalizedDays(isArabic: context.isStateArabic).join(', ')} - ${item.availableFrom} to ${item.availableTo}',
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () {
+                                    // TODO: Edit via API
+                                  },
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () {
+                                    // TODO: Delete via API
+                                  },
+                                ),
+                              ],
                             ),
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => confirmDelete(index),
-                          ),
                         ],
-                      ),
-                    );
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
                   },
                 ),
               ),
-            ElevatedButton(
-              onPressed: () => showAvailabilityBottomSheet(context),
-              child: const Text('Add Availability'),
-            ),
           ],
         ),
       ),

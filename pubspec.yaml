@@ -11,6 +11,7 @@ dependencies:
   auto_size_text: 
   cached_network_image: 
   carousel_slider: 
+  collection: ^1.19.1
   connectivity_plus:
   cupertino_icons:
   custom_refresh_indicator: ^4.0.1
