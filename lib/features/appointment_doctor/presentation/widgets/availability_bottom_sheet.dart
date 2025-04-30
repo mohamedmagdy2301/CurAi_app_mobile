@@ -163,6 +163,18 @@ class _AvailabilityBottomSheetState extends State<AvailabilityBottomSheet> {
               children: daysMap.keys.map((day) {
                 final isSelected = selectedDay == day;
                 return ChoiceChip(
+                  selectedColor: context.primaryColor,
+                  backgroundColor: context.backgroundColor,
+                  labelPadding: EdgeInsets.symmetric(horizontal: 9.w),
+                  elevation: isSelected ? 3 : 0,
+                  avatarBorder: Border.all(
+                    width: .6,
+                    color: context.onSecondaryColor.withAlpha(190),
+                  ),
+                  labelStyle: TextStyleApp.regular14().copyWith(
+                    color: isSelected ? Colors.white : context.onPrimaryColor,
+                  ),
+                  checkmarkColor: Colors.white,
                   label: Text(
                     context.isStateArabic ? daysMap[day]! : day,
                   ),
