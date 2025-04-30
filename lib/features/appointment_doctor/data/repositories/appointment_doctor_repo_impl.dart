@@ -22,7 +22,7 @@ class AppointmentDoctorRepoImpl extends AppointmentDoctorRepo {
   }
 
   @override
-  Future<Either<String, String>> removeWorkingTimeAvailableDoctor({
+  Future<Either<String, String>> removeWorkingTimeDoctor({
     required int wordingTimeId,
   }) async {
     final response = await remoteDataSource.removeWorkingTimeDoctor(

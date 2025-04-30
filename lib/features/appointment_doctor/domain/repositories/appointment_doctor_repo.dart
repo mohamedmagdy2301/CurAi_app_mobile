@@ -5,7 +5,7 @@ abstract class AppointmentDoctorRepo {
   Future<Either<String, List<WorkingTimeDoctorAvailableModel>>>
       getWorkingTimeAvailableDoctor();
 
-  Future<Either<String, String>> removeWorkingTimeAvailableDoctor({
+  Future<Either<String, String>> removeWorkingTimeDoctor({
     required int wordingTimeId,
   });
 }

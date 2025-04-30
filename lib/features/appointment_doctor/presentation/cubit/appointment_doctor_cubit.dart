@@ -1,5 +1,5 @@
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
-import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/working_time_doctor_availble_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_working_time_doctor_availble_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
