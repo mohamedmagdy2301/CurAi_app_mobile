@@ -142,6 +142,9 @@ class LangKeys {
 
 //! Edit Profile
   static const String fullName = 'full_name';
+  static const String firstName = 'first_name';
+  static const String lastName = 'last_name';
+  static const String bio = 'bio';
   static const String phone = 'phone';
   static const String gender = 'gender';
   static const String male = 'male';

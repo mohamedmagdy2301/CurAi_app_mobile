@@ -117,7 +117,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> editProfile({
     required ProfileRequest request,
   }) async {
-    @override
     MultipartFile? photoFile;
     if (request.imageFile != null) {
       final photoName = request.imageFile!.path.split('/').last;
@@ -153,10 +152,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       body: FormData.fromMap(data),
     );
 
-    return response.fold(
-      left,
-      (r) => right(r as Map<String, dynamic>),
-    );
+    return response.fold(left, (r) {
+      if (r is Map<String, dynamic>) {
+        return right(r);
+      } else {
+        return left(const Failure('Unexpected response format'));
+      }
+    });
   }
 
   @override

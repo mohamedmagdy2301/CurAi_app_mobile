@@ -1,7 +1,9 @@
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -10,11 +12,14 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/image_profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CompleteProfileFormWidget extends StatefulWidget {
   const CompleteProfileFormWidget({super.key});
@@ -26,19 +31,20 @@ class CompleteProfileFormWidget extends StatefulWidget {
 
 class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _specializationController =
-      TextEditingController();
-  final TextEditingController _consultationPriceController =
-      TextEditingController();
 
-  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _yourAgeController = TextEditingController();
 
   final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
 
   String? selectedGender;
-
+  final ImagePicker imagePicker = ImagePicker();
+  File? imageFile;
+  String? imageUrl;
+  bool isChanged = false;
+  XFile? xFilePhoto;
   void _validateForm() {
     final isValid = _formKey.currentState?.validate() ?? false;
     _genderErrorText = selectedGender == null
@@ -53,11 +59,19 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
   void _onCompletePressed(BuildContext context) {
     hideKeyboard();
     _validateForm();
-    // if (_isFormValidNotifier.value) {
-    //   _formKey.currentState?.save();
+    if (_isFormValidNotifier.value) {
+      _formKey.currentState?.save();
 
-    context.pushReplacementNamed(Routes.contCompleteProfileScreen);
-    // }
+      final profileRequest = ProfileRequest(
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        phoneNumber: _phoneController.text,
+        age: int.tryParse(_yourAgeController.text),
+        gender: selectedGender,
+        imageFile: imageFile,
+      );
+      context.read<AuthCubit>().editProfile(profileRequest: profileRequest);
+    }
   }
 
   String? _genderErrorText;
@@ -68,12 +82,36 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
       key: _formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
+        spacing: _isFormValidNotifier.value ? 0.h : 6.h,
         children: [
+          ImageProfileWidget(
+            imageUrl: imageUrl,
+            imageFile: imageFile,
+            isEdit: true,
+            onTap: () async {
+              xFilePhoto = await imagePicker.pickImage(
+                source: ImageSource.gallery,
+              );
+              if (xFilePhoto != null) {
+                setState(() {
+                  imageFile = File(xFilePhoto!.path);
+                  imageUrl = imageFile!.path;
+                });
+              }
+            },
+          ).center(),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
-            labelText: context.translate(LangKeys.fullName),
+            labelText: context.translate(LangKeys.firstName),
             keyboardType: TextInputType.name,
-            controller: _fullNameController,
+            controller: _firstNameController,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.lastName),
+            keyboardType: TextInputType.name,
+            controller: _lastNameController,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -83,20 +121,6 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             controller: _phoneController,
             onChanged: (_) => _validateForm(),
           ),
-          // HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          // CustomTextFeild(
-          //   labelText: context.translate(LangKeys.medicalSpecialization),
-          //   keyboardType: TextInputType.number,
-          //   controller: _specializationController,
-          //   onChanged: (_) => _validateForm(),
-          // ),
-          // HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          // CustomTextFeild(
-          //   labelText: context.translate(LangKeys.consultationPrice),
-          //   keyboardType: TextInputType.phone,
-          //   controller: _consultationPriceController,
-          //   onChanged: (_) => _validateForm(),
-          // ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
             labelText: context.translate(LangKeys.yourAge),
@@ -183,45 +207,45 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             ],
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          20.hSpace,
           _buildCompleteButton(),
         ],
       ),
     );
   }
 
-  BlocConsumer<AuthCubit, AuthState> _buildCompleteButton() {
+  Widget _buildCompleteButton() {
     return BlocConsumer<AuthCubit, AuthState>(
       listenWhen: (previous, current) =>
-          current is RegisterLoading ||
-          current is RegisterSuccess ||
-          current is RegisterError,
+          current is EditProfileSuccess ||
+          current is EditProfileError ||
+          current is EditProfileLoading,
+      buildWhen: (previous, current) =>
+          current is EditProfileSuccess ||
+          current is EditProfileError ||
+          current is EditProfileLoading,
       listener: (context, state) {
-        if (state is RegisterError) {
-          Navigator.pop(context);
+        if (state is EditProfileSuccess) {
+          context
+            ..pop()
+            ..pushReplacementNamed(Routes.contCompleteProfileScreen);
+        } else if (state is EditProfileError) {
+          context.pop();
           showMessage(
             context,
-            message: state.message,
             type: SnackBarType.error,
-          );
-        } else if (state is RegisterSuccess) {
-          Navigator.pop(context);
-          showMessage(
-            context,
             message: state.message,
-            type: SnackBarType.success,
           );
-          context.pushNamed(Routes.loginScreen);
-        } else if (state is RegisterLoading) {
+        } else if (state is EditProfileLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
-            title: context.translate(LangKeys.register),
+            title: context.translate(LangKeys.completeProfileTitle),
           );
         }
       },
       builder: (context, state) {
         return CustomButton(
           title: LangKeys.completeProfile,
+          isLoading: state is EditProfileLoading,
           onPressed: () => _onCompletePressed(context),
         );
       },
@@ -230,12 +254,12 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
 
   @override
   void dispose() {
-    _fullNameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
     _phoneController.dispose();
     _yourAgeController.dispose();
-    _consultationPriceController.dispose();
+
     _isFormValidNotifier.dispose();
-    _specializationController.dispose();
     super.dispose();
   }
 }
