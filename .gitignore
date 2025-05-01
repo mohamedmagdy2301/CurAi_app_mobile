@@ -44,5 +44,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-*.bin
-index-*.json
+# Ignore native build artifacts
+android/app/.cxx/
+
+# Ignore fingerprint and index debug files
+**/configure_fingerprint.bin
+**/index-*.json
