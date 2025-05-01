@@ -10,11 +10,9 @@ dependencies:
   adaptive_theme: 
   auto_size_text: 
   cached_network_image: 
-  carousel_slider: 
   collection: ^1.19.1
   connectivity_plus:
   cupertino_icons:
-  custom_refresh_indicator: ^4.0.1
   dartz: 
   device_preview:
   dio: 
@@ -40,19 +38,17 @@ dependencies:
   get_it:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  http: 
   image_picker:
   intl: 
   latlong2: 
   lock_orientation_screen:
   logger:
-  path_provider: ^2.1.5
+  path_provider: 
   pin_code_fields:
-  pull_to_refresh: ^2.0.0
-  readmore: ^3.0.0
+  pull_to_refresh:
+  readmore:
   shared_preferences:
   skeletonizer:
-  translator: ^1.0.3+1
   url_launcher:
 
   
