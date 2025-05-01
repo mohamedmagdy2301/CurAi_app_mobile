@@ -5,8 +5,7 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +22,7 @@ class CustomAppBarHome extends StatefulWidget {
 }
 
 class _CustomAppBarHomeState extends State<CustomAppBarHome> {
-  int count = 5;
+  int count = getBonusPoints();
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -37,8 +36,8 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
       title: ListTile(
         title: AutoSizeText(
           context.isStateArabic
-              ? 'مرحبا, ${CacheDataHelper.getData(key: SharedPrefKey.keyUserName)} 👋'
-              : 'Hi, ${CacheDataHelper.getData(key: SharedPrefKey.keyUserName)} 👋',
+              ? 'مرحبا, ${getFullName()} 👋'
+              : 'Hi, ${getFullName()} 👋',
           style: TextStyleApp.extraBold20().copyWith(
             color: context.primaryColor,
           ),
@@ -68,7 +67,7 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
             ),
             isLabelVisible: count != 0,
             child: Icon(
-              CupertinoIcons.bell,
+              CupertinoIcons.gift,
               size: 27.sp,
               color: context.primaryColor,
             ),

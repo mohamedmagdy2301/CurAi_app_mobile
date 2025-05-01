@@ -2,8 +2,7 @@
 
 import 'dart:io';
 
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
@@ -26,11 +25,6 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       Hive.box<MessageBubbleModel>('chat_messages');
 
   /// get the username from Cache Data Local
-  String getUsername() {
-    final userName =
-        CacheDataHelper.getData(key: SharedPrefKey.keyUserName) ?? '';
-    return userName is String ? userName : '';
-  }
 
   /// Check if the chat box is closed
   Future<void> loadPreviousMessages() async {
@@ -80,8 +74,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
       final goodbyeMessage = MessageBubbleModel(
         messageText: isArabic
-            ? 'شكرًا لك يا ${getUsername()} على استخدامك CurAi.\nنتمنى لك الشفاء العاجل!. 😊'
-            : 'Thank you, ${getUsername()}, for using CurAi.\nWe wish you a speedy recovery! 😊',
+            ? 'شكرًا لك يا ${getFullName()} على استخدامك CurAi.\nنتمنى لك الشفاء العاجل!. 😊'
+            : 'Thank you, ${getFullName()}, for using CurAi.\nWe wish you a speedy recovery! 😊',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -109,7 +103,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
     if (isArabic) {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 أهلاً ${getUsername()} في CurAi.'
+        messageText: '👋 أهلاً ${getFullName()} في CurAi.'
             '\nأنا مساعدك الطبي الذكي، هنا لمساعدتك في تحليل الأعراض وتوجيهك للتخصص المناسب.',
         date: DateTime.now(),
         sender: SenderType.bot,
@@ -136,7 +130,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
     } else {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 Welcome, ${getUsername()} to CurAi!'
+        messageText: '👋 Welcome, ${getFullName()} to CurAi!'
             "\nI'm here to help analyze your symptoms and guide you to the right specialty.",
         date: DateTime.now(),
         sender: SenderType.bot,

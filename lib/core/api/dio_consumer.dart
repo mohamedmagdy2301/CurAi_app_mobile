@@ -14,6 +14,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
@@ -70,10 +71,8 @@ class DioConsumer implements ApiConsumer {
           (status) => status != null && status < StatusCode.internalServerError;
 
     // Attach token if available.
-    final token =
-        CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
-    if ((token as String).isNotEmpty) {
-      dio.options.headers['Authorization'] = 'Bearer $token';
+    if (getAccessToken().isNotEmpty) {
+      dio.options.headers['Authorization'] = 'Bearer ${getAccessToken()}';
     }
 
     // Add logging interceptor in debug mode.
@@ -211,9 +210,6 @@ class DioConsumer implements ApiConsumer {
     if (response.statusCode == StatusCode.unauthorized ||
         response.statusCode == StatusCode.forbidden ||
         isJwtExpired) {
-      final refreshToken =
-          CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken);
-
       if (_isRefreshing) {
         final completer = Completer<Either<Failure, dynamic>>();
         _refreshQueue.add(() async {
@@ -228,9 +224,9 @@ class DioConsumer implements ApiConsumer {
         return completer.future;
       }
 
-      if (refreshToken != null && refreshToken != '') {
+      if (getRefreshToken() != '') {
         _isRefreshing = true;
-        final refreshed = await _refreshToken(refreshToken as String);
+        final refreshed = await _refreshToken(getRefreshToken());
         _isRefreshing = false;
         if (refreshed && retryRequest != null) {
           final retriedResponse = await retryRequest();
@@ -263,12 +259,9 @@ class DioConsumer implements ApiConsumer {
         message: context.isStateArabic
             ? 'انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.'
             : 'Your session has expired. Please log in again.',
-        onPressed: () {
-          CacheDataHelper.removeData(key: SharedPrefKey.keyAccessToken);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyRefreshToken);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
+        onPressed: () async {
+          await clearUserData();
+          await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
           context
             ..pop()
             ..pushNamedAndRemoveUntil(Routes.loginScreen);

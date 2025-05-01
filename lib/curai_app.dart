@@ -8,8 +8,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/app_localizations_setup.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/routes/app_routes.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_theme_data.dart';
 import 'package:curai_app_mobile/core/utils/helper/build_app_connectivity_controller.dart';
@@ -41,15 +40,11 @@ class CuraiApp extends StatefulWidget {
 }
 
 class _CuraiAppState extends State<CuraiApp> {
-  dynamic isLoggedIn =
-      CacheDataHelper.getData(key: SharedPrefKey.keyIsLoggedIn) ?? false;
-  dynamic isFirstLaunch =
-      CacheDataHelper.getData(key: SharedPrefKey.keyIsFirstLaunch) ?? true;
   Widget navigationToInitScreen() {
-    if (isFirstLaunch as bool) {
+    if (getIsFirstLaunch()) {
       return const OnboardingScreen();
     } else {
-      if (isLoggedIn as bool) {
+      if (getIsLogin()) {
         return const MainScaffoldUser();
       } else {
         return const LoginScreen();

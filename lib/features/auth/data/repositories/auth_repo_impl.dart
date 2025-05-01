@@ -2,8 +2,7 @@
 
 import 'dart:io';
 
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
@@ -40,15 +39,10 @@ class AuthRepoImpl extends AuthRepo {
 
     return response.fold(
       (failure) => left(failure.message),
-      (result) {
+      (result) async {
+        await clearUserData();
         final data = LoginModel.fromJson(result);
-        saveDataUser(
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-          role: data.role,
-          userName: data.username,
-          userId: data.userId,
-        );
+        saveDataUser(data: data);
         return right(data);
       },
     );
@@ -129,33 +123,4 @@ class AuthRepoImpl extends AuthRepo {
       (result) => right(result['message'] as String),
     );
   }
-}
-
-void saveDataUser({
-  required String accessToken,
-  required String refreshToken,
-  required String role,
-  required String userName,
-  required int userId,
-}) {
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyAccessToken,
-    value: accessToken,
-  );
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyRefreshToken,
-    value: refreshToken,
-  );
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyUserName,
-    value: userName,
-  );
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyRole,
-    value: role,
-  );
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyUserId,
-    value: userId,
-  );
 }

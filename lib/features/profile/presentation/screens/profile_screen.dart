@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
@@ -88,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             15.hSpace,
             AutoSizeText(
-              CacheDataHelper.getData(key: SharedPrefKey.keyUserName) as String,
+              getFullName(),
               maxLines: 1,
               style: TextStyleApp.medium22().copyWith(
                 color: context.primaryColor,
@@ -156,8 +157,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
         color: context.onSecondaryColor,
       );
 }
-
-bool isDoctor = CacheDataHelper.getData(key: SharedPrefKey.keyRole) == 'doctor';
-
-bool isPatient =
-    CacheDataHelper.getData(key: SharedPrefKey.keyRole) == 'patient';
