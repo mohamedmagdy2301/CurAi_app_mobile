@@ -115,14 +115,14 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
           current is LoginError,
       listener: (context, state) {
         if (state is LoginError) {
-          Navigator.pop(context);
+          context.pop();
           showMessage(
             context,
             message: state.message,
             type: SnackBarType.error,
           );
         } else if (state is LoginSuccess) {
-          Navigator.pop(context);
+          context.pop();
           showMessage(
             context,
             message: state.message,
@@ -132,7 +132,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             key: SharedPrefKey.keyIsLoggedIn,
             value: true,
           );
-          context.pushNamed(Routes.mainScaffoldUser);
+          context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
         } else if (state is LoginLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
