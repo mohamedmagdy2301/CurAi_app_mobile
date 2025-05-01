@@ -36,7 +36,7 @@ class _WorkingTimeDoctorEmptyWidgetState
       builder: (_) => const AddWorkingTimeDoctorBottomSheet(),
     );
 
-    if (context.mounted) {
+    if (result != null && context.mounted) {
       final shouldDelete = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
         context: context,
         title: context.translate(LangKeys.addWorkingTime),
@@ -46,7 +46,7 @@ class _WorkingTimeDoctorEmptyWidgetState
       );
 
       if (shouldDelete!) {
-        if (result != null && context.mounted) {
+        if (context.mounted) {
           await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
                 day: result['days_of_week'] as String,
                 startTime: result['available_from'] as String,
