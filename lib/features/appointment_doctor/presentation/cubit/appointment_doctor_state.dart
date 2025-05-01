@@ -45,3 +45,13 @@ class AddWorkingTimeDoctorFailure extends AppointmentDoctorState {
   const AddWorkingTimeDoctorFailure({required this.message});
   final String message;
 }
+
+//!   Update Working Time Doctor
+class UpdateWorkingTimeDoctorLoading extends AppointmentDoctorState {}
+
+class UpdateWorkingTimeDoctorSuccess extends AppointmentDoctorState {}
+
+class UpdateWorkingTimeDoctorFailure extends AppointmentDoctorState {
+  const UpdateWorkingTimeDoctorFailure({required this.message});
+  final String message;
+}

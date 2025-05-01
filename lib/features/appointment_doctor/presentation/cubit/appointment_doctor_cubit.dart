@@ -2,6 +2,7 @@ import 'package:curai_app_mobile/features/appointment_doctor/data/models/working
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/add_working_time_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_working_time_doctor_availble_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/remove_working_time_doctor_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/update_working_time_doctor_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,11 +13,12 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
     this._getWorkingTimeDoctorAvailableUsecase,
     this._removeWorkingTimeDoctorUsecase,
     this._addWorkingTimeDoctorUsecase,
+    this._updateWorkingTimeDoctorUsecase,
   ) : super(AppointmentDoctorInitial());
 
   final GetWorkingTimeDoctorAvailableUsecase
       _getWorkingTimeDoctorAvailableUsecase;
-
+  final UpdateWorkingTimeDoctorUsecase _updateWorkingTimeDoctorUsecase;
   final AddWorkingTimeDoctorUsecase _addWorkingTimeDoctorUsecase;
   final RemoveWorkingTimeDoctorUsecase _removeWorkingTimeDoctorUsecase;
   List<WorkingTimeDoctorAvailableModel> workingTimeList = [];
@@ -82,6 +84,29 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       emit(AddWorkingTimeDoctorFailure(message: message));
     }, (_) {
       emit(AddWorkingTimeDoctorSuccess());
+    });
+  }
+
+  Future<void> updateWorkingTimeDoctor({
+    required int workingTimeId,
+    required String startTime,
+    required String endTime,
+  }) async {
+    if (isClosed) return;
+    emit(UpdateWorkingTimeDoctorLoading());
+
+    final reslute = await _updateWorkingTimeDoctorUsecase.call(
+      wordingTimeId: workingTimeId,
+      startTime: startTime,
+      endTime: endTime,
+    );
+
+    reslute.fold((message) {
+      if (isClosed) return;
+      emit(UpdateWorkingTimeDoctorFailure(message: message));
+    }, (_) {
+      if (isClosed) return;
+      emit(UpdateWorkingTimeDoctorSuccess());
     });
   }
 }
