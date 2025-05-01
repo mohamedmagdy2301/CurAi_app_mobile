@@ -213,15 +213,14 @@ class _UpdateWorkingTimeDoctorBottomSheetState
           ),
         ).center(),
         AutoSizeText(
-          context.translate(LangKeys.updateWorkingHours),
+          context.translate(LangKeys.updateWorkingTime),
           maxLines: 1,
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
           style: TextStyleApp.bold18().copyWith(
             color: context.onPrimaryColor,
           ),
-        ),
-        20.hSpace,
+        ).paddingBottom(12),
         _buildStep(),
         CustomButton(
           title: LangKeys.update,

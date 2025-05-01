@@ -277,8 +277,7 @@ class _AddWorkingTimeDoctorBottomSheetState
           style: TextStyleApp.bold18().copyWith(
             color: context.onPrimaryColor,
           ),
-        ),
-        20.hSpace,
+        ).paddingBottom(12),
         _buildStep(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -289,7 +288,7 @@ class _AddWorkingTimeDoctorBottomSheetState
                 child: AutoSizeText(
                   context.translate(LangKeys.back),
                   style: TextStyleApp.semiBold16().copyWith(
-                    color: context.primaryColor,
+                    color: context.onPrimaryColor,
                   ),
                   maxLines: 1,
                 ),
