@@ -11,7 +11,6 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
-import 'package:curai_app_mobile/features/auth/data/models/register/register_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/header_auth_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
@@ -94,6 +93,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     title: LangKeys.createAccount,
                     descraption: LangKeys.descriptionRegister,
                   ),
+                  10.hSpace,
+                  chooseUserType(context),
                   const CompleteProfileFormWidget(),
                   35.hSpace,
                   const TermsOfServiceWidget(),
@@ -146,29 +147,22 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
     _validateForm();
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
-      if (_passwordController.text != _confirmPasswordController.text) {
-        showMessage(
-          context,
-          message: context.translate(LangKeys.passwordNotMatch),
-          type: SnackBarType.error,
-        );
-        return;
-      }
-      context.read<AuthCubit>().register(
-            RegisterRequest(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim(),
-              username: _userNameController.text.trim(),
-              confirmPassword: _confirmPasswordController.text.trim(),
-              // firstName: _fullNameController.text,
-              // phoneNumber: _phoneController.text,
-              // location: _addressController.text,
-              // age: int.parse(_yourAgeController.text),
-              // gender: selectedGender ?? 'male',
-              // specialization: '1',
-              // consultationPrice: '100',
-            ),
-          );
+
+      // context.read<AuthCubit>().register(
+      //       RegisterRequest(
+      //         email: _emailController.text.trim(),
+      //         password: _passwordController.text.trim(),
+      //         username: _userNameController.text.trim(),
+      //         confirmPassword: _confirmPasswordController.text.trim(),
+      //         // firstName: _fullNameController.text,
+      //         // phoneNumber: _phoneController.text,
+      //         // location: _addressController.text,
+      //         // age: int.parse(_yourAgeController.text),
+      //         // gender: selectedGender ?? 'male',
+      //         // specialization: '1',
+      //         // consultationPrice: '100',
+      //       ),
+      //     );
     }
   }
 
