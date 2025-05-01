@@ -28,7 +28,7 @@ class LogoutWidget extends StatelessWidget {
             current is LogoutError ||
             current is LogoutLoading,
         listener: (context, state) async {
-          if (state is LogoutSuccess && !context.mounted) {
+          if (state is LogoutSuccess) {
             context.pop();
 
             showMessage(
@@ -42,7 +42,7 @@ class LogoutWidget extends StatelessWidget {
             if (!context.mounted) return;
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
           }
-          if (state is LogoutError && !context.mounted) {
+          if (state is LogoutError) {
             context.pop();
 
             showMessage(

@@ -2,6 +2,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart%20';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
@@ -30,18 +31,6 @@ class MainScaffoldUser extends StatelessWidget {
           context,
           isActive: true,
           icon: CupertinoIcons.house_alt_fill,
-        ),
-        label: 'Home',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          icon: CupertinoIcons.add,
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.ant_circle_fill,
         ),
         label: 'Home',
       ),
@@ -88,9 +77,9 @@ class MainScaffoldUser extends StatelessWidget {
         create: (context) => di.sl<HomeCubit>(),
         child: const HomeScreen(),
       ),
-      const WorkingTimeDoctorAvailableScreen(),
       const ChatbotScreen(),
-      const MyAppointmentPatientScreen(),
+      if (isDoctor) const WorkingTimeDoctorAvailableScreen(),
+      if (isPatient) const MyAppointmentPatientScreen(),
       const ProfileScreen(),
     ];
 
@@ -100,7 +89,7 @@ class MainScaffoldUser extends StatelessWidget {
           canPop: false,
           child: Scaffold(
             backgroundColor: context.backgroundColor,
-            bottomNavigationBar: currentIndex == 2
+            bottomNavigationBar: currentIndex == 1
                 ? null
                 : NavigationBar(
                     labelBehavior:
