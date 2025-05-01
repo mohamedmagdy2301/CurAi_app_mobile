@@ -77,7 +77,7 @@ class DioConsumer implements ApiConsumer {
 
     // Add logging interceptor in debug mode.
     if (kDebugMode) {
-      dio.interceptors.add(di.sl<LogInterceptor>());
+      // dio.interceptors.add(di.sl<LogInterceptor>());
     }
   }
 

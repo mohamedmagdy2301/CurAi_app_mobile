@@ -1,9 +1,11 @@
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart%20';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
-import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
@@ -28,6 +30,18 @@ class MainScaffoldUser extends StatelessWidget {
           context,
           isActive: true,
           icon: CupertinoIcons.house_alt_fill,
+        ),
+        label: 'Home',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          icon: CupertinoIcons.add,
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.ant_circle_fill,
         ),
         label: 'Home',
       ),
@@ -70,10 +84,13 @@ class MainScaffoldUser extends StatelessWidget {
     ];
 
     final screens = [
-      const HomeScreen(),
+      BlocProvider<HomeCubit>(
+        create: (context) => di.sl<HomeCubit>(),
+        child: const HomeScreen(),
+      ),
+      const WorkingTimeDoctorAvailableScreen(),
       const ChatbotScreen(),
-      if (isDoctor) const WorkingTimeDoctorAvailableScreen(),
-      if (isPatient) const MyAppointmentPatientScreen(),
+      const MyAppointmentPatientScreen(),
       const ProfileScreen(),
     ];
 
@@ -83,7 +100,7 @@ class MainScaffoldUser extends StatelessWidget {
           canPop: false,
           child: Scaffold(
             backgroundColor: context.backgroundColor,
-            bottomNavigationBar: currentIndex == 1
+            bottomNavigationBar: currentIndex == 2
                 ? null
                 : NavigationBar(
                     labelBehavior:

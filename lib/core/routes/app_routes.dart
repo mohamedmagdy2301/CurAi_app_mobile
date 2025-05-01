@@ -1,9 +1,12 @@
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/book_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_appointment_patient_screen.dart';
@@ -14,6 +17,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcat
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
@@ -23,6 +27,7 @@ import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_p
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/screens/add_review_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRoutes {
   static Route<void> onGenerateRoute(RouteSettings settings) {
@@ -46,11 +51,17 @@ class AppRoutes {
         return BaseRoute(page: const NotificationScreen());
       case Routes.doctorSpeciality:
         return BaseRoute(
-          page: const DoctorSpecialitiesScreen(),
+          page: BlocProvider<HomeCubit>(
+            create: (context) => di.sl<HomeCubit>(),
+            child: const DoctorSpecialitiesScreen(),
+          ),
         );
       case Routes.allDoctors:
         return BaseRoute(
-          page: AllDoctorScreen(specialityName: (arg ?? '') as String),
+          page: BlocProvider<HomeCubit>(
+            create: (context) => di.sl<HomeCubit>(),
+            child: AllDoctorScreen(specialityName: (arg ?? '') as String),
+          ),
         );
       case Routes.settingsScreen:
         return BaseRoute(page: const SettingsScreen());
@@ -73,11 +84,14 @@ class AppRoutes {
 
           if (doctorResults != null && appointmentAvailableModel != null) {
             return BaseRoute(
-              page: BookAppointmentPatientScreen(
-                isReschedule: isReschedule,
-                appointmentId: appointmentId,
-                doctorResults: doctorResults,
-                appointmentAvailableModel: appointmentAvailableModel,
+              page: BlocProvider<AppointmentPatientCubit>(
+                create: (context) => di.sl<AppointmentPatientCubit>(),
+                child: BookAppointmentPatientScreen(
+                  isReschedule: isReschedule,
+                  appointmentId: appointmentId,
+                  doctorResults: doctorResults,
+                  appointmentAvailableModel: appointmentAvailableModel,
+                ),
               ),
             );
           } else {
@@ -93,9 +107,12 @@ class AppRoutes {
 
           if (doctorResults != null && appointmentId != null) {
             return BaseRoute(
-              page: PaymentAppointmentScreen(
-                doctorResults: doctorResults,
-                appointmentId: appointmentId,
+              page: BlocProvider<AppointmentPatientCubit>(
+                create: (context) => di.sl<AppointmentPatientCubit>(),
+                child: PaymentAppointmentScreen(
+                  doctorResults: doctorResults,
+                  appointmentId: appointmentId,
+                ),
               ),
             );
           } else {
@@ -105,9 +122,13 @@ class AppRoutes {
         return BaseRoute(page: const PageUnderBuildScreen());
 
       case Routes.myAppointmentPatientScreen:
-        return BaseRoute(page: const MyAppointmentPatientScreen());
+        return BaseRoute(
+          page: const MyAppointmentPatientScreen(),
+        );
       case Routes.workingTimeDoctorAvailableScreen:
-        return BaseRoute(page: const WorkingTimeDoctorAvailableScreen());
+        return BaseRoute(
+          page: const WorkingTimeDoctorAvailableScreen(),
+        );
       case Routes.yourProfileScreen:
         return BaseRoute(page: const BuildYourProfileScreen());
       default:

@@ -26,6 +26,8 @@ class _AppointmentsPatientBodyWidgetState
   bool hasFetchedInitialData = false;
 
   @override
+
+  ///
   void initState() {
     super.initState();
     cubit = context.read<AppointmentPatientCubit>();

@@ -12,10 +12,7 @@ import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/routes/app_routes.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_theme_data.dart';
 import 'package:curai_app_mobile/core/utils/helper/build_app_connectivity_controller.dart';
-import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
 import 'package:device_preview/device_preview.dart';
@@ -74,21 +71,8 @@ class _CuraiAppState extends State<CuraiApp> {
                   widget.savedThemeColor,
                 ),
                 initial: widget.savedThemeMode,
-                builder: (theme, darkTheme) => MultiBlocProvider(
-                  providers: [
-                    BlocProvider<AppointmentPatientCubit>(
-                      create: (context) => di.sl<AppointmentPatientCubit>(),
-                    ),
-                    BlocProvider<AppointmentDoctorCubit>(
-                      create: (context) => di.sl<AppointmentDoctorCubit>(),
-                    ),
-                    BlocProvider<HomeCubit>(
-                      create: (context) => di.sl<HomeCubit>(),
-                    ),
-                    BlocProvider<NavigationCubit>(
-                      create: (context) => NavigationCubit(),
-                    ),
-                  ],
+                builder: (theme, darkTheme) => BlocProvider<NavigationCubit>(
+                  create: (context) => NavigationCubit(),
                   child: MaterialApp(
                     navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
                     theme: theme,
