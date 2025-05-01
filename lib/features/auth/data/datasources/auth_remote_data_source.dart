@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
+import 'package:curai_app_mobile/features/auth/data/models/complete_profile/complete_profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
@@ -34,6 +35,10 @@ abstract class AuthRemoteDataSource {
 
   Future<Either<Failure, Map<String, dynamic>>> contactUS({
     required ContactUsRequest contactUsRequest,
+  });
+
+  Future<Either<Failure, Map<String, dynamic>>> completeProfile({
+    required CompleteProfileRequest completeProfileRequest,
   });
 }
 
@@ -192,6 +197,47 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final response = await dioConsumer.post(
       EndPoints.contactUs,
       body: contactUsRequest.toJson(),
+    );
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> completeProfile({
+    required CompleteProfileRequest completeProfileRequest,
+  }) async {
+    MultipartFile? photoFile;
+    var photoName = '';
+
+    if (completeProfileRequest.imageFile != null) {
+      photoName = completeProfileRequest.imageFile!.path.split('/').last;
+      photoFile = await MultipartFile.fromFile(
+        completeProfileRequest.imageFile!.path,
+        filename: photoName,
+      );
+    }
+    final data = FormData.fromMap({
+      'profile_picture': photoFile,
+      'first_name': completeProfileRequest.firstName,
+      'last_name': completeProfileRequest.lastName,
+      'phone_number': completeProfileRequest.phoneNumber,
+      'gender': completeProfileRequest.gender,
+      'age': completeProfileRequest.age,
+      'specialization': completeProfileRequest.specialization,
+      'consultation_price': completeProfileRequest.consultationPrice,
+      'location': completeProfileRequest.location,
+      'bio': completeProfileRequest.bio,
+      'latitude': completeProfileRequest.latitude,
+      'longitude': completeProfileRequest.longitude,
+      'role': completeProfileRequest.role,
+    });
+    final response = await dioConsumer.patch(
+      EndPoints.getProfile,
+      body: data,
     );
     return response.fold(
       left,
