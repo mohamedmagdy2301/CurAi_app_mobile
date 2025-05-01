@@ -82,7 +82,6 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               obscureText: true,
               onChanged: (_) => _validateForm(),
             ),
-            HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -98,7 +97,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                 ),
               ],
             ),
-            15.hSpace,
+            6.hSpace,
             BlocConsumer<AuthCubit, AuthState>(
               listenWhen: (previous, current) =>
                   current is LoginLoading ||
@@ -134,9 +133,8 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               builder: (context, state) {
                 return CustomButton(
                   title: LangKeys.login,
-                  onPressed: () {
-                    _onLoginPressed(context);
-                  },
+                  isLoading: state is LoginLoading,
+                  onPressed: () => _onLoginPressed(context),
                 );
               },
             ),

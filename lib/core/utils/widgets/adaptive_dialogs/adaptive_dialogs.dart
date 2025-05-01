@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdaptiveDialogs {
   /// Show an alert
@@ -15,10 +16,10 @@ class AdaptiveDialogs {
   }) async {
     return _showPlatformDialog(
       context: context,
-      title: '$title...',
-      message: const CustomLoadingWidget(
-        width: 40,
-        height: 40,
+      title: '',
+      message: CustomLoadingWidget(
+        width: 45.w,
+        height: 45.h,
       ),
       actions: [],
     );
