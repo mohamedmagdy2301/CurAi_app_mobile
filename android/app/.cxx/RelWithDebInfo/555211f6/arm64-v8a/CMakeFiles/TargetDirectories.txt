@@ -1,2 +1,0 @@
-F:/Projects/curai_app_mobile/android/app/.cxx/RelWithDebInfo/555211f6/arm64-v8a/CMakeFiles/edit_cache.dir
-F:/Projects/curai_app_mobile/android/app/.cxx/RelWithDebInfo/555211f6/arm64-v8a/CMakeFiles/rebuild_cache.dir
