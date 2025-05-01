@@ -39,13 +39,24 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
       ),
       builder: (_) => const AddWorkingTimeDoctorBottomSheet(),
     );
+    if (context.mounted) {
+      final shouldDelete = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
+        context: context,
+        title: context.translate(LangKeys.addWorkingTime),
+        message: context.translate(LangKeys.addWorkingTimeMessage),
+        onPressedOk: () => Navigator.of(context).pop(true),
+        onPressedCancel: () => Navigator.of(context).pop(false),
+      );
 
-    if (result != null) {
-      await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
-            day: result['days_of_week'] as String,
-            startTime: result['available_from'] as String,
-            endTime: result['available_to'] as String,
-          );
+      if (shouldDelete!) {
+        if (result != null && context.mounted) {
+          await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
+                day: result['days_of_week'] as String,
+                startTime: result['available_from'] as String,
+                endTime: result['available_to'] as String,
+              );
+        }
+      }
     }
   }
 
@@ -68,9 +79,7 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           showMessage(
             context,
             type: SnackBarType.success,
-            message: context.isStateArabic
-                ? 'تمت اضافة المواعيد بنجاح'
-                : 'Working time added successfully',
+            message: context.translate(LangKeys.addWorkingTimeSuccess),
           );
           if (isLoading) {
             Navigator.pop(context);
@@ -83,7 +92,9 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           showMessage(
             context,
             type: SnackBarType.error,
-            message: state.message,
+            message: '${context.translate(LangKeys.addWorkingTimeFailed)}'
+                '\n'
+                '${state.message}',
           );
           if (isLoading) {
             Navigator.pop(context);

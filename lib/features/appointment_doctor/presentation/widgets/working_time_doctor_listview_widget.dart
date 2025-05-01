@@ -66,12 +66,23 @@ class _WorkingTimeDoctorAvailabilityListViewState
         },
       ),
     );
+    if (context.mounted) {
+      final shouldDelete = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
+        context: context,
+        title: context.translate(LangKeys.updateWorkingTime),
+        message: context.translate(LangKeys.updateWorkingTimeMessage),
+        onPressedOk: () => Navigator.of(context).pop(true),
+        onPressedCancel: () => Navigator.of(context).pop(false),
+      );
 
-    if (result != null && context.mounted) {
-      // await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
-      //       startTime: result['available_from'] as String,
-      //       endTime: result['available_to'] as String,
-      //     );
+      if (shouldDelete!) {
+        if (result != null && context.mounted) {
+          // await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
+          //       startTime: result['available_from'] as String,
+          //       endTime: result['available_to'] as String,
+          //     );
+        }
+      }
     }
   }
 
@@ -100,9 +111,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
           showMessage(
             context,
             type: SnackBarType.success,
-            message: context.isStateArabic
-                ? 'تمت حذف المواعيد بنجاح'
-                : 'Working time Removed successfully',
+            message: context.translate(LangKeys.deleteWorkingTimeSuccess),
           );
           if (isLoading) {
             Navigator.pop(context);
@@ -115,7 +124,9 @@ class _WorkingTimeDoctorAvailabilityListViewState
           showMessage(
             context,
             type: SnackBarType.error,
-            message: state.message,
+            message: '${context.translate(LangKeys.deleteWorkingTimeFailed)}'
+                '\n'
+                '${state.message}',
           );
           if (isLoading) {
             Navigator.pop(context);
@@ -161,9 +172,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
                           size: 30.sp,
                         ).paddingSymmetric(horizontal: 14),
                         Text(
-                          context.isStateArabic
-                              ? 'اسحب للتعديل'
-                              : 'Swipe to edit',
+                          context.translate(LangKeys.swipeToUpdate),
                           style: TextStyleApp.regular18().copyWith(
                             color: Colors.white,
                           ),
@@ -186,9 +195,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          context.isStateArabic
-                              ? 'اسحب للحذف'
-                              : 'Swipe to delete',
+                          context.translate(LangKeys.swipeToDelete),
                           style: TextStyleApp.regular18().copyWith(
                             color: Colors.white,
                           ),
@@ -222,12 +229,9 @@ class _WorkingTimeDoctorAvailabilityListViewState
                     final shouldDelete =
                         await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
                       context: context,
-                      title: context.isStateArabic
-                          ? 'تأكيد الحذف'
-                          : 'Confirm Deletion',
-                      message: context.isStateArabic
-                          ? 'هل أنت متأكد أنك تريد حذف هذا الموعد؟'
-                          : 'Are you sure you want to delete this working time?',
+                      title: context.translate(LangKeys.deleteWorkingTime),
+                      message:
+                          context.translate(LangKeys.deleteWorkingTimeMessage),
                       onPressedOk: () => Navigator.of(context).pop(true),
                       onPressedCancel: () => Navigator.of(context).pop(false),
                     );
@@ -247,7 +251,6 @@ class _WorkingTimeDoctorAvailabilityListViewState
                     }
                     return false;
                   }
-
                   return false;
                 },
                 child: WorkingTimeDoctorCardWidget(items: items),

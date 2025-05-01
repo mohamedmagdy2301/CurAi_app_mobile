@@ -199,4 +199,23 @@ class LangKeys {
   static const String back = 'back';
   static const String save = 'save';
   static const String update = 'update';
+
+  static const String swipeToUpdate = 'swipe_to_update';
+  static const String swipeToDelete = 'swipe_to_delete';
+
+  static const String deleteWorkingTime = 'delete_working_time';
+  static const String deleteWorkingTimeMessage = 'delete_working_time_message';
+  static const String deleteWorkingTimeSuccess = 'delete_working_time_success';
+
+  static const String addWorkingTimeFailed = 'add_working_time_failed';
+  static const String updateWorkingTimeFailed = 'update_working_time_failed';
+  static const String deleteWorkingTimeFailed = 'delete_working_time_failed';
+
+  static const String addWorkingTime = 'add_working_time';
+  static const String addWorkingTimeMessage = 'add_working_time_message';
+  static const String addWorkingTimeSuccess = 'add_working_time_success';
+
+  static const String updateWorkingTime = 'update_working_time';
+  static const String updateWorkingTimeMessage = 'update_working_time_message';
+  static const String updateWorkingTimeSuccess = 'update_working_time_success';
 }

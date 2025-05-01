@@ -170,7 +170,21 @@
   "back": "Back",
   "save": "Save",
   "start_time": "Start Time",
-  "end_time": "End Time"
-
+  "end_time": "End Time",
+  "update": "Update",
+  "swipe_to_update": "Swipe to update",
+  "swipe_to_delete": "Swipe to delete",
+  "update_working_time": "Update Working Time",
+  "update_working_time_message": "Are you sure you want to update working time?",
+  "delete_working_time":  "Delete Working Time",
+  "delete_working_time_message":  "Are you sure you want to delete working time?",
+  "add_working_time": "Add Working Time",
+  "add_working_time_message":  "Are you sure you want to add working time?",
+  "delete_working_time_success": "Working time deleted successfully",
+  "update_working_time_success": "Working time updated successfully",
+  "add_working_time_success": "Working time added successfully",
+  "add_working_time_failed": "Failed to add working time",
+  "update_working_time_failed":  "Failed to update working time",
+  "delete_working_time_failed":   "Failed to delete working time"
  
 }

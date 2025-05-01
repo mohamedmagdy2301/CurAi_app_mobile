@@ -171,5 +171,20 @@
    "back": "رجوع",
    "save": "حفظ",
    "start_time": "وقت البدء",
-   "end_time": "وقت الانتهاء"
+   "end_time": "وقت الانتهاء",
+   "update": "تحديث",
+   "swipe_to_update": "اسحب للتعديل",
+   "swipe_to_delete": "اسحب للحذف",
+   "update_working_time": "تحديث ساعات العمل",
+   "update_working_time_message": "هل أنت متأكد من أنك تريد تحديث ساعات العمل؟",
+   "delete_working_time": "حذف ساعات العمل",
+   "delete_working_time_message": "هل أنت متأكد من أنك تريد حذف ساعات العمل؟",
+   "add_working_time": "اضافة ساعات العمل",
+   "add_working_time_message": "هل أنت متأكد من أنك تريد اضافة ساعات العمل؟",
+   "delete_working_time_success": "تم حذف ساعات العمل بنجاح",
+   "update_working_time_success": "تم تحديث ساعات العمل بنجاح",
+   "add_working_time_success": "تم اضافة ساعات العمل بنجاح",
+   "add_working_time_failed": "فشل اضافة ساعات العمل",
+   "update_working_time_failed": "فشل تحديث ساعات العمل",
+   "delete_working_time_failed": "فشل حذف ساعات العمل"
   }
