@@ -13,6 +13,11 @@ abstract class AppointmentDoctorRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> addWorkingTimeDoctor({
     required Map<String, dynamic> data,
   });
+
+  Future<Either<Failure, Map<String, dynamic>>> updateWorkingTimeDoctor({
+    required int wordingTimeId,
+    required Map<String, dynamic> data,
+  });
 }
 
 class AppointmentDoctorRemoteDataSourceImpl
@@ -50,6 +55,20 @@ class AppointmentDoctorRemoteDataSourceImpl
   }) async {
     final response =
         await dioConsumer.post(EndPoints.appointmentDoctor, body: data);
+
+    return response.fold(
+      left,
+      (r) => right(r as Map<String, dynamic>),
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> updateWorkingTimeDoctor({
+    required int wordingTimeId,
+    required Map<String, dynamic> data,
+  }) async {
+    final response = await dioConsumer
+        .patch('${EndPoints.appointmentDoctor}$wordingTimeId/', body: data);
 
     return response.fold(
       left,

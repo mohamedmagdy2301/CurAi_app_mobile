@@ -14,4 +14,10 @@ abstract class AppointmentDoctorRepo {
     required String startTime,
     required String endTime,
   });
+
+  Future<Either<String, String>> updateWorkingTimeDoctor({
+    required int wordingTimeId,
+    required String startTime,
+    required String endTime,
+  });
 }

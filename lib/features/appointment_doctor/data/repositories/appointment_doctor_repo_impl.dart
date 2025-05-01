@@ -56,4 +56,25 @@ class AppointmentDoctorRepoImpl extends AppointmentDoctorRepo {
       },
     );
   }
+
+  @override
+  Future<Either<String, String>> updateWorkingTimeDoctor({
+    required int wordingTimeId,
+    required String startTime,
+    required String endTime,
+  }) async {
+    final response = await remoteDataSource.updateWorkingTimeDoctor(
+      wordingTimeId: wordingTimeId,
+      data: {
+        'available_from': startTime,
+        'available_to': endTime,
+      },
+    );
+    return response.fold(
+      (failure) => left(failure.message),
+      (responseData) {
+        return right('');
+      },
+    );
+  }
 }

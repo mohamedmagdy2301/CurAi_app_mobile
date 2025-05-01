@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/features/appointment_doctor/domain/repositories
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/add_working_time_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_working_time_doctor_availble_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/remove_working_time_doctor_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/update_working_time_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 
 void setupAppointmentDoctorDI() {
@@ -16,6 +17,7 @@ void setupAppointmentDoctorDI() {
         sl<GetWorkingTimeDoctorAvailableUsecase>(),
         sl<RemoveWorkingTimeDoctorUsecase>(),
         sl<AddWorkingTimeDoctorUsecase>(),
+        sl<UpdateWorkingTimeDoctorUsecase>(),
       ),
     )
 
@@ -29,6 +31,10 @@ void setupAppointmentDoctorDI() {
     ..registerLazySingleton(
       () => AddWorkingTimeDoctorUsecase(repository: sl()),
     )
+    ..registerLazySingleton(
+      () => UpdateWorkingTimeDoctorUsecase(repository: sl()),
+    )
+
     //! Repository
     ..registerLazySingleton<AppointmentDoctorRepo>(
       () => AppointmentDoctorRepoImpl(remoteDataSource: sl()),
