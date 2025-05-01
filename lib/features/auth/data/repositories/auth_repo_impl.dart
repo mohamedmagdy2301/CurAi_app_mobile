@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_dynamic_calls,// avoid_catches_without_on_clauses, document_ignores
 
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
@@ -25,7 +27,21 @@ class AuthRepoImpl extends AuthRepo {
 
     return response.fold(
       (failure) => left(failure.message),
-      (result) => right(result['message'] as String),
+      (result) async {
+        await clearUserData();
+        await Future.wait([
+          CacheDataHelper.setData(
+            key: SharedPrefKey.keyAccessToken,
+            value: result['access'],
+          ),
+          CacheDataHelper.setData(
+            key: SharedPrefKey.keyRefreshToken,
+            value: result['refresh'],
+          ),
+        ]);
+
+        return right(result['message'] as String);
+      },
     );
   }
 
