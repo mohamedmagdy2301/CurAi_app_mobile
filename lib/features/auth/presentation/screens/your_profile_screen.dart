@@ -132,12 +132,12 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             controller: _userNameController,
           ),
           CustomTextFeildEditProfile(
-            title: LangKeys.fullName,
+            title: LangKeys.firstName,
             keyboardType: TextInputType.name,
             controller: _firstNameController,
           ),
           CustomTextFeildEditProfile(
-            title: LangKeys.fullName,
+            title: LangKeys.lastName,
             keyboardType: TextInputType.name,
             controller: _lastNameController,
           ),
