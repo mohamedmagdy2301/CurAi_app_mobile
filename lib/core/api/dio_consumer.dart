@@ -75,9 +75,9 @@ class DioConsumer implements ApiConsumer {
       dio.options.headers['Authorization'] = 'Bearer ${getAccessToken()}';
     }
 
-    // Add logging interceptor in debug mode.
+    /// Add logging interceptor in debug mode.
     if (kDebugMode) {
-      // dio.interceptors.add(di.sl<LogInterceptor>());
+      dio.interceptors.add(di.sl<LogInterceptor>());
     }
   }
 

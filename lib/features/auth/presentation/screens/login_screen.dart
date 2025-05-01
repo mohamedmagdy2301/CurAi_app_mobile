@@ -25,6 +25,7 @@ class LoginScreen extends StatelessWidget {
                 ? context.padding(horizontal: 100, vertical: 35)
                 : context.padding(horizontal: 20, vertical: 0),
             child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

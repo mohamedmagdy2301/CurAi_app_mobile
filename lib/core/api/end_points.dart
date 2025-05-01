@@ -1,6 +1,6 @@
 class EndPoints {
   static const String refreshToken = '/api/token/refresh/';
-  static const String register = 'api/register/';
+  static const String register = '/api/register/';
   static const String login = '/api/login/';
   static const String logout = '/api/logout/';
   static const String changePassword = '/api/change-password/';
