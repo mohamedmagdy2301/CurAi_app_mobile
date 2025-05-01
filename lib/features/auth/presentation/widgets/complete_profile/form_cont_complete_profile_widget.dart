@@ -10,6 +10,7 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,7 @@ class ContCompleteProfileFormWidget extends StatefulWidget {
 class _ContCompleteProfileFormWidgetState
     extends State<ContCompleteProfileFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _specializationController =
-      TextEditingController();
+
   final TextEditingController _consultationPriceController =
       TextEditingController();
 
@@ -40,7 +40,7 @@ class _ContCompleteProfileFormWidgetState
 
   int? selectedSpecialization;
 
-  void _validateForm() {
+  void _validateForDoctorForm() {
     final isValid = _formKey.currentState?.validate() ?? false;
     _specializationErrorText = selectedSpecialization == null
         ? context.isStateArabic
@@ -51,14 +51,33 @@ class _ContCompleteProfileFormWidgetState
     _isFormValidNotifier.value = isValid && _specializationErrorText == null;
   }
 
+  void _validateForPatientForm() {
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    _isFormValidNotifier.value = isValid;
+  }
+
   void _onContCompletePressed(BuildContext context) {
     hideKeyboard();
-    _validateForm();
-    // if (_isFormValidNotifier.value) {
-    //   _formKey.currentState?.save();
+    widget.isUserDoctor ? _validateForDoctorForm() : _validateForPatientForm();
 
-    context.pushReplacementNamed(Routes.loginScreen);
-    // }
+    if (_isFormValidNotifier.value) {
+      _formKey.currentState?.save();
+
+      final profileRequest = widget.isUserDoctor
+          ? ProfileRequest(
+              role: 'doctor',
+              consultationPrice: _consultationPriceController.text,
+              specialization: selectedSpecialization,
+              bio: _bioController.text,
+            )
+          : ProfileRequest(
+              role: 'patient',
+              location: _addressController.text,
+              bio: _bioController.text,
+            );
+      context.read<AuthCubit>().editProfile(profileRequest: profileRequest);
+    }
   }
 
   String? _specializationErrorText;
@@ -77,8 +96,9 @@ class _ContCompleteProfileFormWidgetState
               labelText: context.translate(LangKeys.address),
               keyboardType: TextInputType.streetAddress,
               controller: _addressController,
-              maxLines: 2,
-              onChanged: (_) => _validateForm(),
+              onChanged: (_) => widget.isUserDoctor
+                  ? _validateForDoctorForm()
+                  : _validateForPatientForm(),
             ),
           if (widget.isUserDoctor)
             HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -87,7 +107,9 @@ class _ContCompleteProfileFormWidgetState
               labelText: context.translate(LangKeys.consultationPrice),
               keyboardType: TextInputType.number,
               controller: _consultationPriceController,
-              onChanged: (_) => _validateForm(),
+              onChanged: (_) => widget.isUserDoctor
+                  ? _validateForDoctorForm()
+                  : _validateForPatientForm(),
             ),
           if (widget.isUserDoctor)
             HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -130,18 +152,27 @@ class _ContCompleteProfileFormWidgetState
                       ),
                       items: [
                         DropdownMenuItem(
-                          value: 0,
+                          value: 1,
                           child: Text(
-                            'Specialization 1',
+                            'Audiologist',
                             style: TextStyleApp.regular16().copyWith(
                               color: context.onPrimaryColor,
                             ),
                           ),
                         ),
                         DropdownMenuItem(
-                          value: 1,
+                          value: 2,
                           child: Text(
-                            'Specialization 2',
+                            'Allergist',
+                            style: TextStyleApp.regular16().copyWith(
+                              color: context.onPrimaryColor,
+                            ),
+                          ),
+                        ),
+                        DropdownMenuItem(
+                          value: 3,
+                          child: Text(
+                            'Andrologists',
                             style: TextStyleApp.regular16().copyWith(
                               color: context.onPrimaryColor,
                             ),
@@ -171,13 +202,14 @@ class _ContCompleteProfileFormWidgetState
             ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
-            labelText: context.translate(LangKeys.aboutMe),
+            labelText: context.translate(LangKeys.bio),
             keyboardType: TextInputType.text,
             controller: _bioController,
             maxLines: 3,
             isLable: false,
-            isValidator: false,
-            onChanged: (_) => _validateForm(),
+            onChanged: (_) => widget.isUserDoctor
+                ? _validateForDoctorForm()
+                : _validateForPatientForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           10.hSpace,
@@ -190,26 +222,26 @@ class _ContCompleteProfileFormWidgetState
   BlocConsumer<AuthCubit, AuthState> _buildContCompleteButton() {
     return BlocConsumer<AuthCubit, AuthState>(
       listenWhen: (previous, current) =>
-          current is RegisterLoading ||
-          current is RegisterSuccess ||
-          current is RegisterError,
+          current is EditProfileSuccess ||
+          current is EditProfileError ||
+          current is EditProfileLoading,
+      buildWhen: (previous, current) =>
+          current is EditProfileSuccess ||
+          current is EditProfileError ||
+          current is EditProfileLoading,
       listener: (context, state) {
-        if (state is RegisterError) {
-          Navigator.pop(context);
+        if (state is EditProfileSuccess) {
+          context
+            ..pop()
+            ..pushReplacementNamed(Routes.loginScreen);
+        } else if (state is EditProfileError) {
+          context.pop();
           showMessage(
             context,
-            message: state.message,
             type: SnackBarType.error,
-          );
-        } else if (state is RegisterSuccess) {
-          Navigator.pop(context);
-          showMessage(
-            context,
             message: state.message,
-            type: SnackBarType.success,
           );
-          context.pushNamed(Routes.loginScreen);
-        } else if (state is RegisterLoading) {
+        } else if (state is EditProfileLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.completeProfileTitle),
@@ -219,6 +251,7 @@ class _ContCompleteProfileFormWidgetState
       builder: (context, state) {
         return CustomButton(
           title: LangKeys.completeProfile,
+          isLoading: state is EditProfileLoading,
           onPressed: () => _onContCompletePressed(context),
         );
       },
@@ -227,7 +260,6 @@ class _ContCompleteProfileFormWidgetState
 
   @override
   void dispose() {
-    _specializationController.dispose();
     _addressController.dispose();
     _bioController.dispose();
     _consultationPriceController.dispose();

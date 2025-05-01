@@ -24,12 +24,12 @@ class ProfileRequest {
   final String? phoneNumber;
   final String? gender;
   final int? age;
-  final String? specialization;
+  final int? specialization;
   final String? consultationPrice;
   final String? location;
   final String? bio;
-  final String? latitude;
-  final String? longitude;
+  final double? latitude;
+  final double? longitude;
   final String? role;
   final File? imageFile;
 }
