@@ -140,13 +140,6 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
               password: _passwordController.text.trim(),
               username: _userNameController.text.trim(),
               confirmPassword: _confirmPasswordController.text.trim(),
-              fullName: '',
-              phoneNumber: '',
-              location: '',
-              age: 0,
-              gender: 'male',
-              specialization: '1',
-              consultationPrice: '100',
             ),
           );
     }
