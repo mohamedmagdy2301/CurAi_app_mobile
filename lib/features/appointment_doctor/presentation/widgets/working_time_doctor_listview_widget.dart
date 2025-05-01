@@ -10,6 +10,7 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/update_working_time_doctor_bottom_sheet.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/working_time_doctor_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,33 @@ class _WorkingTimeDoctorAvailabilityListViewState
     super.didUpdateWidget(oldWidget);
     if (widget.workingTimeList != oldWidget.workingTimeList) {
       _workingTimeList = widget.workingTimeList;
+    }
+  }
+
+  Future<void> showAvailabilityBottomSheet(
+    BuildContext context,
+    String from,
+    String to,
+  ) async {
+    final result = await showModalBottomSheet<Map<String, dynamic>>(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      ),
+      builder: (_) => UpdateWorkingTimeDoctorBottomSheet(
+        existingData: {
+          'available_from': from,
+          'available_to': to,
+        },
+      ),
+    );
+
+    if (result != null && context.mounted) {
+      // await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
+      //       startTime: result['available_from'] as String,
+      //       endTime: result['available_to'] as String,
+      //     );
     }
   }
 
@@ -145,7 +173,6 @@ class _WorkingTimeDoctorAvailabilityListViewState
                   ),
                 ),
                 secondaryBackground: Card(
-                  // للسحب من اليمين لليسار = حذف
                   margin: context.padding(vertical: 10),
                   elevation: 3,
                   clipBehavior: Clip.antiAlias,
@@ -176,13 +203,21 @@ class _WorkingTimeDoctorAvailabilityListViewState
                   ),
                 ),
                 confirmDismiss: (direction) async {
-                  if (direction == DismissDirection.startToEnd) {
-                    // final itemId = groupedItem.key;
-                    // final itemsToEdit = groupedItem.value;
+                  final itemId = groupedItem.key;
 
+                  /// Edit working time
+                  if (direction == DismissDirection.startToEnd) {
+                    if (itemId != null) {
+                      await showAvailabilityBottomSheet(
+                        context,
+                        items[index].availableFrom!,
+                        items[index].availableTo!,
+                      );
+                    }
                     return false;
                   }
 
+                  /// Delete working time
                   if (direction == DismissDirection.endToStart) {
                     final shouldDelete =
                         await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
@@ -198,15 +233,15 @@ class _WorkingTimeDoctorAvailabilityListViewState
                     );
 
                     if (shouldDelete!) {
-                      final id = groupedItem.key;
-                      if (id != null) {
+                      if (itemId != null) {
                         setState(() {
-                          _workingTimeList.removeWhere((item) => item.id == id);
+                          _workingTimeList
+                              .removeWhere((item) => item.id == itemId);
                         });
                         if (context.mounted) {
                           await context
                               .read<AppointmentDoctorCubit>()
-                              .removeWorkingTimeDoctor(workingTimeId: id);
+                              .removeWorkingTimeDoctor(workingTimeId: itemId);
                         }
                       }
                     }

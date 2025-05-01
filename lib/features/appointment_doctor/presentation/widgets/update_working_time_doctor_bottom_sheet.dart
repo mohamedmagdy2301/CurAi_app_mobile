@@ -13,16 +13,16 @@ import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class UpadateWorkingTimeDoctorBottomSheet extends StatefulWidget {
-  const UpadateWorkingTimeDoctorBottomSheet({super.key, this.existingData});
+class UpdateWorkingTimeDoctorBottomSheet extends StatefulWidget {
+  const UpdateWorkingTimeDoctorBottomSheet({super.key, this.existingData});
   final Map<String, dynamic>? existingData;
   @override
-  State<UpadateWorkingTimeDoctorBottomSheet> createState() =>
-      _UpadateWorkingTimeDoctorBottomSheetState();
+  State<UpdateWorkingTimeDoctorBottomSheet> createState() =>
+      _UpdateWorkingTimeDoctorBottomSheetState();
 }
 
-class _UpadateWorkingTimeDoctorBottomSheetState
-    extends State<UpadateWorkingTimeDoctorBottomSheet> {
+class _UpdateWorkingTimeDoctorBottomSheetState
+    extends State<UpdateWorkingTimeDoctorBottomSheet> {
   TimeOfDay? fromTime;
   TimeOfDay? toTime;
   @override
