@@ -103,7 +103,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             message: state.message,
             type: SnackBarType.success,
           );
-          context.pushNamed(Routes.completeProfileScreen);
+          context.pushReplacementNamed(Routes.completeProfileScreen);
         } else if (state is RegisterLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,

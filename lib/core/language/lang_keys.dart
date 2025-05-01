@@ -52,7 +52,7 @@ class LangKeys {
   static const String or = 'or';
   static const String completeProfile = 'complete_profile';
   static const String completeProfileTitle = 'complete_profile_title';
-  static const String descriptioncompleteProfile =
+  static const String completeProfileDescription =
       'description_complete_profile';
 
   //! OTP and PIN

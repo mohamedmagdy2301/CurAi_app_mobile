@@ -13,6 +13,7 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/scree
 import 'package:curai_app_mobile/features/auth/presentation/screens/build_your_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/complete_profile_screen.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/cont_complete_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
@@ -45,6 +46,8 @@ class AppRoutes {
 
       case Routes.completeProfileScreen:
         return BaseRoute(page: const CompleteProfileScreen());
+      case Routes.contCompleteProfileScreen:
+        return BaseRoute(page: const ContCompleteProfileScreen());
       case Routes.forgetPasswordScreen:
         return BaseRoute(page: const ForgetPasswordScreen());
       case Routes.otpVerification:

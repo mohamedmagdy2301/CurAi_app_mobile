@@ -81,7 +81,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         contentPadding: context.W > 400
             ? EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h)
             : null,
-        errorStyle: TextStyleApp.regular14().copyWith(
+        errorStyle: TextStyleApp.regular12().copyWith(
           color: Colors.redAccent,
         ),
         suffixIcon: widget.suffixIcon ?? changePasswordObscure(),
