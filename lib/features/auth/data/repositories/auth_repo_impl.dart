@@ -133,10 +133,10 @@ class AuthRepoImpl extends AuthRepo {
 
 void saveDataUser({
   required String accessToken,
-  String? refreshToken,
-  String? role,
-  String? userName,
-  int? userId,
+  required String refreshToken,
+  required String role,
+  required String userName,
+  required int userId,
 }) {
   CacheDataHelper.setData(
     key: SharedPrefKey.keyAccessToken,
@@ -144,18 +144,18 @@ void saveDataUser({
   );
   CacheDataHelper.setData(
     key: SharedPrefKey.keyRefreshToken,
-    value: refreshToken ?? '',
+    value: refreshToken,
   );
   CacheDataHelper.setData(
     key: SharedPrefKey.keyUserName,
-    value: userName ?? '',
+    value: userName,
   );
   CacheDataHelper.setData(
     key: SharedPrefKey.keyRole,
-    value: role ?? '',
+    value: role,
   );
   CacheDataHelper.setData(
     key: SharedPrefKey.keyUserId,
-    value: userId ?? '',
+    value: userId,
   );
 }
