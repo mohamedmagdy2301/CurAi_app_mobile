@@ -83,6 +83,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               obscureText: true,
               onChanged: (_) => _validateForm(),
             ),
+            6.hSpace,
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
@@ -98,7 +99,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                 ),
               ),
             ),
-            6.hSpace,
+            8.hSpace,
             _buildLoginButton(),
           ],
         ),
