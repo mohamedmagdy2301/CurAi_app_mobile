@@ -67,7 +67,11 @@ class _WorkingTimeDoctorAvailabilityListViewState
         },
       ),
     );
-    if (context.mounted) {
+
+    if (result != null && context.mounted) {
+      if (result['available_from'] == from && result['available_to'] == to) {
+        return;
+      }
       final shouldDelete = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
         context: context,
         title: context.translate(LangKeys.updateWorkingTime),
@@ -77,13 +81,11 @@ class _WorkingTimeDoctorAvailabilityListViewState
       );
 
       if (shouldDelete!) {
-        if (result != null && context.mounted) {
-          await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
-                workingTimeId: workingTimeId,
-                startTime: result['available_from'] as String,
-                endTime: result['available_to'] as String,
-              );
-        }
+        await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
+              workingTimeId: workingTimeId,
+              startTime: result['available_from'] as String,
+              endTime: result['available_to'] as String,
+            );
       }
     }
   }
@@ -268,8 +270,8 @@ class _WorkingTimeDoctorAvailabilityListViewState
                       await showAvailabilityBottomSheet(
                         context: context,
                         workingTimeId: itemId,
-                        from: items[index].availableFrom!,
-                        to: items[index].availableTo!,
+                        from: items.first.availableFrom!,
+                        to: items.first.availableTo!,
                       );
                     }
                     return false;
