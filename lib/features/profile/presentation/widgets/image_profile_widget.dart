@@ -26,12 +26,17 @@ class ImageProfileWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 70.r,
-          foregroundColor: context.onSecondaryColor,
-          backgroundImage: imageFile != null ? FileImage(imageFile!) : null,
-          child: imageFile == null
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(70.r),
-                  child: CustomCachedNetworkImage(
+          backgroundColor: Colors.grey.shade200,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(70.r),
+            child: imageFile != null
+                ? Image.file(
+                    imageFile!,
+                    width: 140.w,
+                    height: 140.h,
+                    fit: BoxFit.cover,
+                  )
+                : CustomCachedNetworkImage(
                     imgUrl: imageUrl ??
                         'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
                     width: 140.w,
@@ -39,8 +44,7 @@ class ImageProfileWidget extends StatelessWidget {
                     loadingImgPadding: 50.w,
                     errorIconSize: 50.sp,
                   ),
-                )
-              : null,
+          ),
         ),
         if (isEdit ?? false)
           Positioned(

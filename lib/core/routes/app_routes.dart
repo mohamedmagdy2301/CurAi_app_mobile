@@ -10,6 +10,7 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/book_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_appointment_patient_screen.dart';
+import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/build_your_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/complete_profile_screen.dart';
@@ -137,7 +138,12 @@ class AppRoutes {
           page: const WorkingTimeDoctorAvailableScreen(),
         );
       case Routes.yourProfileScreen:
-        return BaseRoute(page: const BuildYourProfileScreen());
+        return BaseRoute(
+          page: BlocProvider(
+            create: (context) => di.sl<AuthCubit>(),
+            child: const BuildYourProfileScreen(),
+          ),
+        );
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }

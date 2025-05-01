@@ -1,32 +1,35 @@
+import 'dart:io';
+
 class ProfileRequest {
   ProfileRequest({
-    required this.username,
-    required this.fullName,
-    required this.phoneNumber,
-    required this.gender,
-    required this.age,
-    required this.specialization,
-    required this.consultationPrice,
-    required this.location,
+    this.username,
+    this.firstName,
+    this.lastName,
+    this.phoneNumber,
+    this.gender,
+    this.age,
+    this.specialization,
+    this.consultationPrice,
+    this.location,
+    this.bio,
+    this.latitude,
+    this.longitude,
+    this.role,
+    this.imageFile,
   });
 
-  Map<String, dynamic> toJson() => {
-        'username': username,
-        'first_name': fullName,
-        'phone_number': phoneNumber,
-        'gender': gender,
-        'age': age,
-        'specialization': specialization,
-        'consultation_price': consultationPrice,
-        'location': location,
-      };
-
-  final String username;
-  final String fullName;
-  final String phoneNumber;
-  final String gender;
-  final int age;
-  final String specialization;
-  final String consultationPrice;
-  final String location;
+  final String? username;
+  final String? firstName;
+  final String? lastName;
+  final String? phoneNumber;
+  final String? gender;
+  final int? age;
+  final String? specialization;
+  final String? consultationPrice;
+  final String? location;
+  final String? bio;
+  final String? latitude;
+  final String? longitude;
+  final String? role;
+  final File? imageFile;
 }

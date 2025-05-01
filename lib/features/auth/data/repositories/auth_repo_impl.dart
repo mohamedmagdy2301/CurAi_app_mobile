@@ -1,11 +1,8 @@
 // ignore_for_file: avoid_dynamic_calls,// avoid_catches_without_on_clauses, document_ignores
 
-import 'dart:io';
-
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
-import 'package:curai_app_mobile/features/auth/data/models/complete_profile/complete_profile_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
@@ -84,26 +81,10 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<String, ProfileModel>> editProfile({
-    required ProfileRequest profileRequest,
-    File? imageFile,
+    required ProfileRequest request,
   }) async {
     final response = await remoteDataSource.editProfile(
-      profileRequest: profileRequest,
-      // imageFile: imageFile,
-    );
-
-    return response.fold(
-      (failure) => left(failure.message),
-      (result) => right(ProfileModel.fromJson(result)),
-    );
-  }
-
-  @override
-  Future<Either<String, ProfileModel>> editPhotoProfile({
-    File? imageFile,
-  }) async {
-    final response = await remoteDataSource.editPhotoProfile(
-      imageFile: imageFile,
+      request: request,
     );
 
     return response.fold(
@@ -122,20 +103,6 @@ class AuthRepoImpl extends AuthRepo {
     return response.fold(
       (failure) => left(failure.message),
       (result) => right(result['message'] as String),
-    );
-  }
-
-  @override
-  Future<Either<String, ProfileModel>> completePhotoProfile({
-    required CompleteProfileRequest completeProfileRequest,
-  }) async {
-    final response = await remoteDataSource.completeProfile(
-      completeProfileRequest: completeProfileRequest,
-    );
-
-    return response.fold(
-      (failure) => left(failure.message),
-      (result) => right(ProfileModel.fromJson(result)),
     );
   }
 }
