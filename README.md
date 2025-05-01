@@ -55,18 +55,16 @@
 - **AI Chatbot (Text + Image input)**
 - **User Profile (Editable)**
 - **Appointment Booking UI & Integration For Patient**
-
+- **Appointment For Doctor**
+- 
 ### 🕓 In Progress
 
-- **Appointment For Doctor**
 - **Payment UI & API Integration**
 - **Push Notifications**
 - **Testing & Deployment**
 
 ### 🔲 To-Do
 
-- Real-time chat between doctor & patient  
-- Video consultations (Telemedicine)  
 - Play Store / App Store Release  
 - Developer & User Documentation
 
@@ -79,14 +77,17 @@
   - ✔️ Registration (email/phone)  
   - ✔️ Login / Logout  
   - ✔️ Social login (Google / Apple / Facebook)
+  - ✔️ OTP verification  
+
 
 - ✅ **API Integration**  
   - ✔️ User registration  
   - ✔️ Login / Logout  
   - ✔️ Password reset  
-  - ✔️ Edit profile  
+  - ✔️ Edit profile
   - 🕓 OTP verification  
-  - 🕓 Social login integration (Google, Apple, Facebook)
+  
+
 
 ---
 
@@ -103,7 +104,7 @@
 
 ---
 
-### **Appointment**
+### **Appointment For Patient**
 - ✅ **UI**  
   - ✔️ Booking with available times Screen 
   - ✔️ Appointment confirmation Screen
@@ -116,6 +117,21 @@
   - ✔️ Get My Appointment history   
   - ✔️ Reschedule booking Appointment
   - ✔️ Cancle booking Appointment
+
+----
+
+### **Appointment For Doctor**
+- ✅ **UI**  
+  - ✔️ Working available times screen 
+  - ✔️ Working times bottom sheet for add
+  - ✔️ Working times bottom sheet for update 
+  - ✔️ Working available times card
+
+- ✅ **API Integration**  
+  - ✔️ Get working available times  
+  - ✔️ Post working available times
+  - ✔️ Patch working available times
+  - ✔️ Delete working available times
 
 ---
 
@@ -182,6 +198,7 @@
 ### **Future Enhancements**
 - 🕓 Real-time chat between patient and doctor  
 - 🕓 Add video consultation (telemedicine) features
+- 🕓 Social login integration (Google, Apple, Facebook)
 
 ---
 
