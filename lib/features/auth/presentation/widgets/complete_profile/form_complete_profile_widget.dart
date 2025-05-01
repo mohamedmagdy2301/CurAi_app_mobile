@@ -59,9 +59,19 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
   void _onCompletePressed(BuildContext context) {
     hideKeyboard();
     _validateForm();
+
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
-
+      if (imageFile == null) {
+        showMessage(
+          context,
+          message: context.isStateArabic
+              ? 'من فضلك اختر صورة'
+              : 'Please select image',
+          type: SnackBarType.error,
+        );
+        return;
+      }
       final profileRequest = ProfileRequest(
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
