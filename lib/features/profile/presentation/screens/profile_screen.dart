@@ -15,7 +15,6 @@ import 'package:curai_app_mobile/features/profile/presentation/widgets/image_pro
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -25,13 +24,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  ImagePicker imagePicker = ImagePicker();
   File? imageFile;
-  XFile? xFilePhoto;
   String? imageUrl;
-
   @override
   Widget build(BuildContext context) {
+    if (getProfilePicture().contains('http')) {
+      imageUrl = getProfilePicture();
+    } else {
+      imageFile = File(getProfilePicture());
+    }
+
     return Scaffold(
       appBar: const CustomAppBarProfile(),
       body: SingleChildScrollView(
@@ -39,7 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             20.hSpace,
             ImageProfileWidget(
-              imageFile: File(getProfilePicture()),
+              imageFile: imageFile,
+              imageUrl: imageUrl,
               isEdit: false,
             ),
             15.hSpace,

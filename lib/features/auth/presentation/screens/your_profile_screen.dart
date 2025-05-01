@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
@@ -228,6 +229,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       ? 'تم تحديث الملف الشخصي بنجاح'
                       : 'Profile updated successfully',
                 );
+
                 CacheDataHelper.removeData(key: SharedPrefKey.keyFullName);
                 CacheDataHelper.removeData(
                   key: SharedPrefKey.keyProfilePicture,
@@ -241,6 +243,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   value:
                       '${_firstNameController.text} ${_lastNameController.text}',
                 );
+                context.pushReplacementNamed(Routes.mainScaffoldUser);
               } else if (state is EditProfileError) {
                 context.pop();
                 showMessage(
