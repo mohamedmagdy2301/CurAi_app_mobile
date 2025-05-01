@@ -257,7 +257,7 @@ class _UpdateWorkingTimeDoctorBottomSheetState
               }
             }
           },
-        ).expand(),
+        ),
       ],
     ).paddingOnly(
       bottom: MediaQuery.of(context).viewInsets.bottom + 16.h,

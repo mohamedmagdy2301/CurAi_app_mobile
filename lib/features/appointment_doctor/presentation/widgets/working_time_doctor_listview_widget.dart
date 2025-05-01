@@ -48,11 +48,12 @@ class _WorkingTimeDoctorAvailabilityListViewState
     }
   }
 
-  Future<void> showAvailabilityBottomSheet(
-    BuildContext context,
-    String from,
-    String to,
-  ) async {
+  Future<void> showAvailabilityBottomSheet({
+    required BuildContext context,
+    required int workingTimeId,
+    required String from,
+    required String to,
+  }) async {
     final result = await showModalBottomSheet<Map<String, dynamic>>(
       context: context,
       isScrollControlled: true,
@@ -77,10 +78,11 @@ class _WorkingTimeDoctorAvailabilityListViewState
 
       if (shouldDelete!) {
         if (result != null && context.mounted) {
-          // await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
-          //       startTime: result['available_from'] as String,
-          //       endTime: result['available_to'] as String,
-          //     );
+          await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
+                workingTimeId: workingTimeId,
+                startTime: result['available_from'] as String,
+                endTime: result['available_to'] as String,
+              );
         }
       }
     }
@@ -98,12 +100,60 @@ class _WorkingTimeDoctorAvailabilityListViewState
       listenWhen: (previous, current) =>
           current is RemoveWorkingTimeDoctorFailure ||
           current is RemoveWorkingTimeDoctorSuccess ||
-          current is RemoveWorkingTimeDoctorLoading,
+          current is RemoveWorkingTimeDoctorLoading ||
+          current is UpdateWorkingTimeDoctorFailure ||
+          current is UpdateWorkingTimeDoctorSuccess ||
+          current is UpdateWorkingTimeDoctorLoading,
       buildWhen: (previous, current) =>
           current is RemoveWorkingTimeDoctorFailure ||
           current is RemoveWorkingTimeDoctorSuccess ||
-          current is RemoveWorkingTimeDoctorLoading,
+          current is RemoveWorkingTimeDoctorLoading ||
+          current is UpdateWorkingTimeDoctorFailure ||
+          current is UpdateWorkingTimeDoctorSuccess ||
+          current is UpdateWorkingTimeDoctorLoading,
       listener: (context, state) {
+        if (state is UpdateWorkingTimeDoctorSuccess) {
+          context
+              .read<AppointmentDoctorCubit>()
+              .getWorkingTimeAvailableDoctor();
+          showMessage(
+            context,
+            type: SnackBarType.success,
+            message: context.translate(LangKeys.updateWorkingTimeSuccess),
+          );
+          if (isLoading) {
+            Navigator.pop(context);
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }
+        if (state is UpdateWorkingTimeDoctorFailure) {
+          showMessage(
+            context,
+            type: SnackBarType.error,
+            message: '${context.translate(LangKeys.updateWorkingTimeFailed)}'
+                '\n'
+                '${state.message}',
+          );
+          if (isLoading) {
+            Navigator.pop(context);
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }
+        if (state is UpdateWorkingTimeDoctorLoading && !isLoading) {
+          AdaptiveDialogs.showLoadingAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.updateWorkingTime),
+          );
+          setState(() {
+            isLoading = true;
+          });
+        }
+
+        /// Delete Working Time Doctor
         if (state is RemoveWorkingTimeDoctorSuccess) {
           context
               .read<AppointmentDoctorCubit>()
@@ -216,9 +266,10 @@ class _WorkingTimeDoctorAvailabilityListViewState
                   if (direction == DismissDirection.startToEnd) {
                     if (itemId != null) {
                       await showAvailabilityBottomSheet(
-                        context,
-                        items[index].availableFrom!,
-                        items[index].availableTo!,
+                        context: context,
+                        workingTimeId: itemId,
+                        from: items[index].availableFrom!,
+                        to: items[index].availableTo!,
                       );
                     }
                     return false;
