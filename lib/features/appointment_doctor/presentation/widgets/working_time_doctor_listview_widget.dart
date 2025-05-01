@@ -188,7 +188,7 @@ class _WorkingTimeDoctorAvailabilityListViewState
         if (state is RemoveWorkingTimeDoctorLoading && !isLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
-            title: context.translate(LangKeys.workingTime),
+            title: context.translate(LangKeys.deleteWorkingTime),
           );
           setState(() {
             isLoading = true;

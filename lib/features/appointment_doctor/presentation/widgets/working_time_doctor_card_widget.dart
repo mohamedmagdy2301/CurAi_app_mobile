@@ -42,7 +42,7 @@ class WorkingTimeDoctorCardWidget extends StatelessWidget {
                   CupertinoIcons.calendar_today,
                   color: context.primaryColor.withAlpha(160),
                   size: 26.sp,
-                ).paddingTop(4),
+                ).paddingSymmetric(vertical: 4),
                 8.wSpace,
                 SizedBox(
                   width: context.W * .72,
@@ -74,7 +74,7 @@ class WorkingTimeDoctorCardWidget extends StatelessWidget {
               ],
             ),
             Divider(
-              height: 28.h,
+              height: 30.h,
               thickness: .2,
               color: context.onSecondaryColor.withAlpha(120),
             ),
@@ -115,7 +115,7 @@ class WorkingTimeDoctorCardWidget extends StatelessWidget {
               ),
             ),
           ],
-        ),
+        ).paddingSymmetric(vertical: 8, horizontal: 8),
       ),
     );
   }

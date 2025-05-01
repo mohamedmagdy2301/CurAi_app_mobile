@@ -103,7 +103,7 @@ class _WorkingTimeDoctorEmptyWidgetState
         if (state is AddWorkingTimeDoctorLoading && !isLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
-            title: context.translate(LangKeys.workingTime),
+            title: context.translate(LangKeys.addWorkingTime),
           );
           setState(() {
             isLoading = true;
