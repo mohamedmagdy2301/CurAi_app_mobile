@@ -9,20 +9,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdaptiveDialogs {
+  static bool _isDialogOpen = false;
+
   /// Show an alert
   static Future<void> showLoadingAlertDialog({
     required BuildContext context,
-    required String title,
+    String? title,
   }) async {
-    return _showPlatformDialog(
+    if (_isDialogOpen) return;
+
+    _isDialogOpen = true;
+
+    await _showPlatformDialog<void>(
       context: context,
-      title: '',
+      title: title ?? '',
       message: CustomLoadingWidget(
         width: 45.w,
         height: 45.h,
       ),
-      actions: [],
+      actions: const [],
     );
+
+    _isDialogOpen = false;
   }
 
   /// Show an alert with only an "OK" button.
@@ -264,48 +272,51 @@ class AdaptiveDialogs {
     required Widget message,
     required List<Widget> actions,
     Widget? content,
+    bool barrierDismissible = true,
   }) {
     return showDialog<T>(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
-        if (Theme.of(context).platform == TargetPlatform.iOS) {
-          return CupertinoAlertDialog(
-            title: Text(
-              title,
-              style: TextStyleApp.bold16().copyWith(
-                color: context.onPrimaryColor,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  message,
-                  if (content != null) content,
-                ],
-              ),
-            ),
-            actions: actions,
-          );
-        } else {
-          return AlertDialog(
-            title: Text(
-              title,
-              style: TextStyleApp.bold16().copyWith(
-                color: context.onPrimaryColor,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  message,
-                  if (content != null) content,
-                ],
-              ),
-            ),
-            actions: actions,
-          );
-        }
+        return PopScope(
+          canPop: barrierDismissible,
+          child: Theme.of(context).platform == TargetPlatform.iOS
+              ? CupertinoAlertDialog(
+                  title: Text(
+                    title,
+                    style: TextStyleApp.bold16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        message,
+                        if (content != null) content,
+                      ],
+                    ),
+                  ),
+                  actions: actions,
+                )
+              : AlertDialog(
+                  title: Text(
+                    title,
+                    style: TextStyleApp.bold16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        message,
+                        if (content != null) content,
+                      ],
+                    ),
+                  ),
+                  actions: actions,
+                ),
+        );
       },
     );
   }
