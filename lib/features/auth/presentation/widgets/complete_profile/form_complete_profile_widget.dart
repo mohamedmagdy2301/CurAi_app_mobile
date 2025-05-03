@@ -132,7 +132,9 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.phone),
             keyboardType: TextInputType.phone,
             controller: _phoneController,
-            hint: 'e.g. 01012345678',
+            hint: context.isStateArabic
+                ? 'مثال: 01012345678'
+                : 'e.g. 01012345678',
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -140,7 +142,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.yourAge),
             keyboardType: TextInputType.number,
             controller: _yourAgeController,
-            hint: 'e.g. 37',
+            hint: context.isStateArabic ? 'مثال: 37' : 'e.g. 37',
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -151,9 +153,12 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           CustomTextFeild(
             labelText: context.translate(LangKeys.bio),
             keyboardType: TextInputType.text,
-            hint: 'e.g. Cardiologist with 10+ years of experience at '
-                'Al Salam Hospital, specialized in hypertension '
-                'and heart diseases.',
+            hint: context.isStateArabic
+                ? 'مثال: أخصائي أمراض القلب مع 10 سنوات من الخبرة في'
+                    'مستشفى السلام ، متخصص في ارتفاع ضغط الدم وأمراض القلب.'
+                : 'e.g. Cardiologist with 10+ years of experience at '
+                    'Al Salam Hospital, specialized in hypertension '
+                    'and heart diseases.',
             controller: _bioController,
             maxLines: 3,
             isLable: false,
