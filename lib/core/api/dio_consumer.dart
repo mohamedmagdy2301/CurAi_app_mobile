@@ -14,6 +14,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
@@ -56,27 +57,31 @@ class DioConsumer implements ApiConsumer {
       return httpClient;
     };
 
-    dio.options
-      ..headers['Accept'] = 'application/json'
-      ..headers['Content-Type'] = 'application/json'
-      ..headers['X-Requested-With'] = 'XMLHttpRequest'
-      ..baseUrl = EnvVariables.baseApiUrl
-      ..sendTimeout = _defaultTimeouts
-      ..connectTimeout = _defaultTimeouts
-      ..receiveTimeout = _defaultTimeouts
-      ..responseType = ResponseType.plain
-      ..followRedirects = false
-      ..validateStatus =
-          (status) => status != null && status < StatusCode.internalServerError;
+    /// Add interceptors
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options
+            ..headers['Accept'] = 'application/json'
+            ..headers['Content-Type'] = 'application/json'
+            ..headers['X-Requested-With'] = 'XMLHttpRequest'
+            ..baseUrl = EnvVariables.baseApiUrl
+            ..sendTimeout = _defaultTimeouts
+            ..connectTimeout = _defaultTimeouts
+            ..receiveTimeout = _defaultTimeouts
+            ..responseType = ResponseType.plain
+            ..followRedirects = false
+            ..validateStatus = (status) =>
+                status != null && status < StatusCode.internalServerError;
+          if (getAccessToken().isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer ${getAccessToken()}';
+          }
+          return handler.next(options);
+        },
+      ),
+    );
 
-    // Attach token if available.
-    final token =
-        CacheDataHelper.getData(key: SharedPrefKey.keyAccessToken) ?? '';
-    if ((token as String).isNotEmpty) {
-      dio.options.headers['Authorization'] = 'Bearer $token';
-    }
-
-    // Add logging interceptor in debug mode.
+    /// Add logging interceptor in debug mode.
     if (kDebugMode) {
       dio.interceptors.add(di.sl<LogInterceptor>());
     }
@@ -134,6 +139,17 @@ class DioConsumer implements ApiConsumer {
     );
   }
 
+  /// DELETE request
+  @override
+  Future<Either<Failure, dynamic>> delete(
+    String url, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return _safeApiCall(
+      () => client.delete(url, queryParameters: queryParameters),
+    );
+  }
+
   /// Wraps the API call to handle Dio errors, timeouts, and formatting exceptions.
   Future<Either<Failure, dynamic>> _safeApiCall(
     Future<Response<dynamic>> Function() apiCall,
@@ -157,26 +173,49 @@ class DioConsumer implements ApiConsumer {
     Response<dynamic> response,
     Future<Response<dynamic>> Function()? retryRequest,
   ) async {
-    final data = response.data is String
-        ? jsonDecode(response.data as String)
-        : response.data;
+    if (response.statusCode == StatusCode.okNoContent) {
+      return right(<String, dynamic>{});
+    }
 
+    dynamic data;
+    try {
+      if (response.data != null && response.data.toString().trim().isNotEmpty) {
+        data = response.data is String
+            ? jsonDecode(response.data as String)
+            : response.data;
+      } else {
+        data = <String, dynamic>{};
+      }
+    } catch (e) {
+      data = response.data;
+    }
+
+    // Check for JWT expiration
     final isJwtExpired = data is Map &&
-        (data['detail']?.toString().toLowerCase().contains('expired') == true ||
-            data['detail']?.toString().toLowerCase().contains('jwt') == true);
+        (data['detail'].toString().toLowerCase().contains('invalid') == true ||
+            data['detail'].toString().toLowerCase().contains('expired') ==
+                true ||
+            data['code'].toString().toLowerCase().contains('token_not_valid') ==
+                true);
 
+    // Handle successful responses
     if (response.statusCode == StatusCode.ok ||
         response.statusCode == StatusCode.okCreated) {
       return right(data);
     }
 
+    if (response.statusCode == StatusCode.forbidden &&
+        data['detail'].toString().toLowerCase().contains(
+                  'permission',
+                ) ==
+            true) {
+      return left(ServerFailure(data['detail'] as String));
+    }
+
+    // Handle authorization issues
     if (response.statusCode == StatusCode.unauthorized ||
         response.statusCode == StatusCode.forbidden ||
         isJwtExpired) {
-      final refreshToken =
-          CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken);
-
-      // If refresh in progress, queue the request.
       if (_isRefreshing) {
         final completer = Completer<Either<Failure, dynamic>>();
         _refreshQueue.add(() async {
@@ -191,10 +230,9 @@ class DioConsumer implements ApiConsumer {
         return completer.future;
       }
 
-      // Otherwise, refresh and retry.
-      if (refreshToken != null && refreshToken != '') {
+      if (getRefreshToken() != '') {
         _isRefreshing = true;
-        final refreshed = await _refreshToken(refreshToken as String);
+        final refreshed = await _refreshToken(getRefreshToken());
         _isRefreshing = false;
         if (refreshed && retryRequest != null) {
           final retriedResponse = await retryRequest();
@@ -227,12 +265,9 @@ class DioConsumer implements ApiConsumer {
         message: context.isStateArabic
             ? 'انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.'
             : 'Your session has expired. Please log in again.',
-        onPressed: () {
-          CacheDataHelper.removeData(key: SharedPrefKey.keyAccessToken);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyRefreshToken);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
-          CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
+        onPressed: () async {
+          await clearUserData();
+          await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
           context
             ..pop()
             ..pushNamedAndRemoveUntil(Routes.loginScreen);

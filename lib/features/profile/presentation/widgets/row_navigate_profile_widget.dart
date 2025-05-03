@@ -1,5 +1,3 @@
-// ignore_for_file: flutter_style_todos
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as a;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';

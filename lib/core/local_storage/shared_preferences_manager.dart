@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_catches_without_on_clauses
-
 import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +7,7 @@ class CacheDataHelper {
   Future<void> sharedPreferencesInitialize() async {
     try {
       _sharedPreferences = await SharedPreferences.getInstance();
-    } catch (e) {
+    } on Exception catch (e) {
       if (kDebugMode) {
         LoggerHelper.error('Error while initializing SharedPreferences: $e');
       }

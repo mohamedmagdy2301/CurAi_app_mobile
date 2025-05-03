@@ -1,8 +1,12 @@
-// ignore_for_file: library_private_types_in_public_api
-
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// Widget for Animated SnackBar
 class AnimatedSnackBar extends StatefulWidget {
   const AnimatedSnackBar({
     required this.message,
@@ -13,6 +17,7 @@ class AnimatedSnackBar extends StatefulWidget {
     this.icon,
     this.labelAction,
     this.onPressedAction,
+    this.showCloseIcon,
   });
 
   final String message;
@@ -22,6 +27,7 @@ class AnimatedSnackBar extends StatefulWidget {
   final String? labelAction;
   final VoidCallback? onPressedAction;
   final SnackBarThemeData snackBarTheme;
+  final bool? showCloseIcon; // ← جديد
 
   @override
   _AnimatedSnackBarState createState() => _AnimatedSnackBarState();
@@ -39,13 +45,12 @@ class _AnimatedSnackBarState extends State<AnimatedSnackBar>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 700), // Smooth duration
+      duration: const Duration(milliseconds: 700),
     );
 
-    // Slide animation (bottom-to-top)
     _offsetAnimation = Tween<Offset>(
-      begin: const Offset(0, -1), // Start below the screen
-      end: Offset.zero, // Slide into view
+      begin: const Offset(0, -1),
+      end: Offset.zero,
     ).animate(
       CurvedAnimation(
         parent: _controller,
@@ -53,7 +58,6 @@ class _AnimatedSnackBarState extends State<AnimatedSnackBar>
       ),
     );
 
-    // Fade-in effect
     _fadeAnimation = Tween<double>(
       begin: 0,
       end: 1,
@@ -61,7 +65,6 @@ class _AnimatedSnackBarState extends State<AnimatedSnackBar>
       CurvedAnimation(parent: _controller, curve: Curves.easeIn),
     );
 
-    // Start the animation
     _controller.forward();
   }
 
@@ -79,34 +82,41 @@ class _AnimatedSnackBarState extends State<AnimatedSnackBar>
         position: _offsetAnimation,
         child: Material(
           elevation: 6,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
           color: widget.backgroundColor,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
             child: Row(
               children: [
                 if (widget.isIconVisible ?? false)
                   Icon(
                     widget.icon,
                     color: widget.snackBarTheme.contentTextStyle?.color,
-                    size: 20,
+                    size: 20.sp,
                   ),
-                if (widget.isIconVisible ?? false) const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    widget.message,
-                    style: widget.snackBarTheme.contentTextStyle,
-                  ),
-                ),
+                if (widget.isIconVisible ?? false) 8.wSpace,
+                AutoSizeText(
+                  widget.message,
+                  style: widget.snackBarTheme.contentTextStyle,
+                ).expand(),
                 if (widget.labelAction != null)
                   TextButton(
                     onPressed: widget.onPressedAction,
                     child: Text(
                       widget.labelAction!,
-                      style: TextStyle(
+                      style: TextStyleApp.bold14().copyWith(
                         color: widget.snackBarTheme.actionTextColor,
                       ),
                     ),
+                  ),
+                if (widget.showCloseIcon ?? false)
+                  IconButton(
+                    icon: Icon(
+                      CupertinoIcons.clear,
+                      color: widget.snackBarTheme.contentTextStyle?.color,
+                      size: 20.sp,
+                    ),
+                    onPressed: () => hideMessage(context),
                   ),
               ],
             ),

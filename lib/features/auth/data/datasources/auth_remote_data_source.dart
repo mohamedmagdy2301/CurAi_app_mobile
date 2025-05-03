@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
@@ -25,12 +22,9 @@ abstract class AuthRemoteDataSource {
   });
   Future<Either<Failure, Map<String, dynamic>>> getProfile();
   Future<Either<Failure, Map<String, dynamic>>> editProfile({
-    required ProfileRequest profileRequest,
-    // File? imageFile,
+    required ProfileRequest request,
   });
-  Future<Either<Failure, Map<String, dynamic>>> editPhotoProfile({
-    File? imageFile,
-  });
+
   Future<Either<Failure, Map<String, dynamic>>> logout();
 
   Future<Either<Failure, Map<String, dynamic>>> contactUS({
@@ -46,6 +40,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> register({
     required RegisterRequest registerRequest,
   }) async {
+    await clearUserData();
     final response = await dioConsumer.post(
       EndPoints.register,
       body: registerRequest.toJson(),
@@ -62,6 +57,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> login({
     required LoginRequest loginRequest,
   }) async {
+    await clearUserData();
     final response = await dioConsumer.post(
       EndPoints.login,
       body: loginRequest.toJson(),
@@ -79,7 +75,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final response = await dioConsumer.post(
       EndPoints.logout,
       body: {
-        'refresh': CacheDataHelper.getData(key: SharedPrefKey.keyRefreshToken),
+        'refresh': getRefreshToken(),
       },
     );
     return response.fold(
@@ -121,69 +117,51 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> editProfile({
-    required ProfileRequest profileRequest,
-    // File? im ageFile,
-  }) async {
-    // MultipartFile? photoFile;
-    // var photoName = '';
-
-    // if (imageFile != null) {
-    //   photoName = imageFile.path.split('/').last;
-    //   photoFile = await MultipartFile.fromFile(
-    //     imageFile.path,
-    //     filename: photoName,
-    //   );
-    // }
-    // final data = FormData.fromMap({
-    //   'first_name': profileRequest.fullName,
-    //   'username': profileRequest.username,
-    //   'phone_number': profileRequest.phoneNumber,
-    //   'location': profileRequest.location,
-    //   'age': profileRequest.age,
-    //   'gender': profileRequest.gender,
-    //   'specialization': profileRequest.specialization,
-    //   'consultation_price': profileRequest.consultationPrice,
-    //   // 'profile_picture': photoFile,
-    // });
-    final response = await dioConsumer.patch(
-      EndPoints.getProfile,
-      body: profileRequest.toJson(),
-    );
-    return response.fold(
-      left,
-      (r) {
-        return right(r as Map<String, dynamic>);
-      },
-    );
-  }
-
-  @override
-  Future<Either<Failure, Map<String, dynamic>>> editPhotoProfile({
-    File? imageFile,
+    required ProfileRequest request,
   }) async {
     MultipartFile? photoFile;
-    var photoName = '';
-
-    if (imageFile != null) {
-      photoName = imageFile.path.split('/').last;
+    if (request.imageFile != null) {
+      final photoName = request.imageFile!.path.split('/').last;
       photoFile = await MultipartFile.fromFile(
-        imageFile.path,
+        request.imageFile!.path,
         filename: photoName,
       );
     }
-    final data = FormData.fromMap({
-      'profile_picture': photoFile,
-    });
+
+    final data = <String, dynamic>{};
+
+    if (request.username != null) data['username'] = request.username;
+    if (photoFile != null) data['profile_picture'] = photoFile;
+    if (request.firstName != null) data['first_name'] = request.firstName;
+    if (request.lastName != null) data['last_name'] = request.lastName;
+    if (request.phoneNumber != null) data['phone_number'] = request.phoneNumber;
+    if (request.gender != null) data['gender'] = request.gender;
+    if (request.age != null) data['age'] = request.age;
+    if (request.specialization != null) {
+      data['specialization'] = request.specialization;
+    }
+    if (request.consultationPrice != null) {
+      data['consultation_price'] = request.consultationPrice;
+    }
+    if (request.location != null) data['location'] = request.location;
+    if (request.bio != null) data['bio'] = request.bio;
+    if (request.latitude != null) data['latitude'] = request.latitude;
+    if (request.longitude != null) data['longitude'] = request.longitude;
+    if (request.role != null) data['role'] = request.role;
+    if (request.isApproved != null) data['is_approved'] = request.isApproved;
+
     final response = await dioConsumer.patch(
       EndPoints.getProfile,
-      body: data,
+      body: FormData.fromMap(data),
     );
-    return response.fold(
-      left,
-      (r) {
-        return right(r as Map<String, dynamic>);
-      },
-    );
+
+    return response.fold(left, (r) {
+      if (r is Map<String, dynamic>) {
+        return right(r);
+      } else {
+        return left(const Failure('Unexpected response format'));
+      }
+    });
   }
 
   @override

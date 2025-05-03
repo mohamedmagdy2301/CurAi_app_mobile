@@ -27,24 +27,130 @@ class RegistrationFormWidget extends StatefulWidget {
 class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _yourAgeController = TextEditingController();
-  // A ValueNotifier to track the form validation status
   final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
-
-  String? selectedGender;
 
   final bool _isPasswordObscure = true;
 
   void _validateForm() {
     final isValid = _formKey.currentState?.validate() ?? false;
     _isFormValidNotifier.value = isValid;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Column(
+        children: [
+          chooseUserType(context),
+          20.hSpace,
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.userName),
+            keyboardType: TextInputType.name,
+            hint: context.isStateArabic ? 'مثال: @username' : 'e.g. @username',
+            controller: _userNameController,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.firstName),
+            keyboardType: TextInputType.name,
+            controller: _firstNameController,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.lastName),
+            keyboardType: TextInputType.name,
+            controller: _lastNameController,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.email),
+            keyboardType: TextInputType.emailAddress,
+            hint: context.isStateArabic
+                ? 'مثال: username.${DateTime.now().year}@example.com'
+                : 'e.g. username.${DateTime.now().year}@example.com',
+            controller: _emailController,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.password),
+            keyboardType: TextInputType.visiblePassword,
+            controller: _passwordController,
+            obscureText: _isPasswordObscure,
+            hint:
+                context.isStateArabic ? 'مثال: XYZ@123xyz' : 'e.g. XYZ@123xyz',
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.confirmPassword),
+            keyboardType: TextInputType.visiblePassword,
+            controller: _confirmPasswordController,
+            obscureText: _isPasswordObscure,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          5.hSpace,
+          _buildRegisterButton(),
+        ],
+      ),
+    );
+  }
+
+  BlocConsumer<AuthCubit, AuthState> _buildRegisterButton() {
+    return BlocConsumer<AuthCubit, AuthState>(
+      listenWhen: (previous, current) =>
+          current is RegisterLoading ||
+          current is RegisterSuccess ||
+          current is RegisterError,
+      listener: (context, state) {
+        if (state is RegisterError) {
+          Navigator.pop(context);
+          showMessage(
+            context,
+            message: state.message,
+            showCloseIcon: true,
+            type: SnackBarType.error,
+          );
+        } else if (state is RegisterSuccess) {
+          Navigator.pop(context);
+          showMessage(
+            context,
+            message: state.message,
+            showCloseIcon: true,
+            type: SnackBarType.success,
+          );
+          if (userType == 'patient') {
+            context.pushReplacementNamed(Routes.loginScreen);
+          } else {
+            context.pushReplacementNamed(Routes.completeProfileScreen);
+          }
+        } else if (state is RegisterLoading) {
+          AdaptiveDialogs.showLoadingAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.register),
+          );
+        }
+      },
+      builder: (context, state) {
+        return CustomButton(
+          title: LangKeys.register,
+          isLoading: state is RegisterLoading,
+          onPressed: () => _onRegisterPressed(context),
+        );
+      },
+    );
   }
 
   void _onRegisterPressed(BuildContext context) {
@@ -61,185 +167,69 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
         return;
       }
       context.read<AuthCubit>().register(
+            context,
             RegisterRequest(
               email: _emailController.text.trim(),
               password: _passwordController.text.trim(),
               username: _userNameController.text.trim(),
               confirmPassword: _confirmPasswordController.text.trim(),
-              fullName: _fullNameController.text,
-              phoneNumber: _phoneController.text,
-              location: _addressController.text,
-              age: int.parse(_yourAgeController.text),
-              gender: selectedGender ?? 'male',
-              specialization: '1',
-              consultationPrice: '100',
+              role: userType,
+              firstName: _firstNameController.text.trim(),
+              lastName: _lastNameController.text.trim(),
             ),
           );
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        children: [
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.userName),
-            keyboardType: TextInputType.name,
-            controller: _userNameController,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.fullName),
-            keyboardType: TextInputType.name,
-            controller: _fullNameController,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.email),
-            keyboardType: TextInputType.emailAddress,
-            controller: _emailController,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.phone),
-            keyboardType: TextInputType.phone,
-            controller: _phoneController,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.address),
-            keyboardType: TextInputType.streetAddress,
-            controller: _addressController,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          SizedBox(
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: context.W * .3,
-                  child: CustomTextFeild(
-                    labelText: context.translate(LangKeys.yourAge),
-                    keyboardType: TextInputType.number,
-                    controller: _yourAgeController,
-                    onChanged: (_) => _validateForm(),
-                  ),
+  String userType = 'patient';
+
+  Widget chooseUserType(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: ['patient', 'doctor'].map((String type) {
+        final isSelected = userType == type;
+        return ChoiceChip(
+          checkmarkColor: Colors.white,
+          label: Row(
+            children: [
+              // if (isSelected) 0.wSpace else 10.wSpace,
+              // Icon(
+              //   isSelected ? Icons.person_2_outlined : Icons.person,
+              //   color: isSelected ? Colors.white : context.primaryColor,
+              // ),
+              if (isSelected) 15.wSpace else 30.wSpace,
+              Text(
+                type == 'patient'
+                    ? context.translate(LangKeys.patient)
+                    : context.translate(LangKeys.doctor),
+                style: TextStyleApp.regular18().copyWith(
+                  color: isSelected ? Colors.white : context.primaryColor,
                 ),
-                Container(
-                  width: context.W * .55,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 15.h,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(
-                      color: context.primaryColor.withAlpha(90),
-                    ),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      borderRadius: BorderRadius.circular(8.r),
-                      elevation: 0,
-                      style: TextStyleApp.regular16().copyWith(
-                        color: context.onPrimaryColor,
-                      ),
-                      isDense: true,
-                      icon: const Icon(Icons.arrow_drop_down),
-                      value: selectedGender,
-                      hint: Text(
-                        context.translate(LangKeys.gender),
-                        style: TextStyleApp.regular16().copyWith(
-                          color: context.primaryColor,
-                        ),
-                      ),
-                      items: [
-                        DropdownMenuItem(
-                          value: 'male',
-                          child: Text(context.translate(LangKeys.male)),
-                        ),
-                        DropdownMenuItem(
-                          value: 'female',
-                          child: Text(context.translate(LangKeys.female)),
-                        ),
-                      ],
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedGender = newValue;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+              if (isSelected) 15.wSpace else 30.wSpace,
+            ],
           ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.password),
-            keyboardType: TextInputType.visiblePassword,
-            controller: _passwordController,
-            obscureText: _isPasswordObscure,
-            onChanged: (_) => _validateForm(),
+          selected: isSelected,
+          selectedColor: context.primaryColor,
+          backgroundColor: context.backgroundColor,
+          elevation: 2,
+          padding:
+              EdgeInsets.symmetric(horizontal: context.W * 0.035, vertical: 8),
+          labelStyle: TextStyleApp.medium20().copyWith(
+            color: isSelected ? Colors.white : context.primaryColor,
           ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.confirmPassword),
-            keyboardType: TextInputType.visiblePassword,
-            controller: _confirmPasswordController,
-            obscureText: _isPasswordObscure,
-            onChanged: (_) => _validateForm(),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+            side: BorderSide(color: context.primaryColor),
           ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          5.hSpace,
-          BlocConsumer<AuthCubit, AuthState>(
-            listenWhen: (previous, current) =>
-                current is RegisterLoading ||
-                current is RegisterSuccess ||
-                current is RegisterError,
-            listener: (context, state) {
-              if (state is RegisterError) {
-                Navigator.pop(context);
-                showMessage(
-                  context,
-                  message: state.message,
-                  type: SnackBarType.error,
-                );
-              } else if (state is RegisterSuccess) {
-                Navigator.pop(context);
-                showMessage(
-                  context,
-                  message: state.message,
-                  type: SnackBarType.success,
-                );
-                context.pushNamed(Routes.loginScreen);
-              } else if (state is RegisterLoading) {
-                AdaptiveDialogs.showLoadingAlertDialog(
-                  context: context,
-                  title: context.translate(LangKeys.register),
-                );
-              }
-            },
-            builder: (context, state) {
-              return CustomButton(
-                title: LangKeys.completeProfile,
-                onPressed: () => _onRegisterPressed(context),
-              );
-            },
-          ),
-        ],
-      ),
+          onSelected: (bool selected) {
+            setState(() {
+              userType =
+                  (selected ? type.toLowerCase() : userType.toLowerCase());
+            });
+          },
+        );
+      }).toList(),
     );
   }
 
@@ -249,6 +239,8 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
     _isFormValidNotifier.dispose();
     super.dispose();
   }

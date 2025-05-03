@@ -1,4 +1,3 @@
-import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
@@ -16,28 +15,31 @@ class BuildYourProfileScreen extends StatefulWidget {
 }
 
 class _BuildYourProfileScreenState extends State<BuildYourProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthCubit>().getProfile(context);
+  }
+
   int? selectedGender;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<AuthCubit>()..getProfile(),
-      child: Scaffold(
-        backgroundColor: context.backgroundColor,
-        appBar: const CustomAppBarYourProfile(),
-        body: BlocBuilder<AuthCubit, AuthState>(
-          buildWhen: (previous, current) =>
-              current is GetProfileLoading ||
-              current is GetProfileError ||
-              current is GetProfileSuccess,
-          builder: (context, state) {
-            if (state is GetProfileSuccess) {
-              return YourProfileScreen(profileModel: state.profileModel);
-            } else if (state is GetProfileError) {
-              return Text(state.message).center();
-            }
-            return const Center(child: CustomLoadingWidget());
-          },
-        ),
+    return Scaffold(
+      backgroundColor: context.backgroundColor,
+      appBar: const CustomAppBarYourProfile(),
+      body: BlocBuilder<AuthCubit, AuthState>(
+        buildWhen: (previous, current) =>
+            current is GetProfileLoading ||
+            current is GetProfileError ||
+            current is GetProfileSuccess,
+        builder: (context, state) {
+          if (state is GetProfileSuccess) {
+            return YourProfileScreen(profileModel: state.profileModel);
+          } else if (state is GetProfileError) {
+            return Text(state.message).center();
+          }
+          return const Center(child: CustomLoadingWidget());
+        },
       ),
     );
   }

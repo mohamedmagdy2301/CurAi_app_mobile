@@ -1,9 +1,10 @@
-// ignore_for_file: inference_failure_on_function_invocation, inference_failure_on_instance_creation, use_build_context_synchronously
+// ignore_for_file: inference_failure_on_function_invocation,// inference_failure_on_instance_creation, use_build_context_synchronously
 
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
@@ -36,34 +37,18 @@ class LogoutWidget extends StatelessWidget {
               message: state.message,
             );
 
-            await CacheDataHelper.removeData(
-              key: SharedPrefKey.keyAccessToken,
-            );
-            await CacheDataHelper.removeData(
-              key: SharedPrefKey.keyRefreshToken,
-            );
-            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
-            await CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
-            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
+            await clearUserData();
             await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
+            if (!context.mounted) return;
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
-          } else if (state is LogoutError) {
+          }
+          if (state is LogoutError) {
             context.pop();
-            await CacheDataHelper.removeData(
-              key: SharedPrefKey.keyAccessToken,
-            );
-            await CacheDataHelper.removeData(
-              key: SharedPrefKey.keyRefreshToken,
-            );
-            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserName);
-            await CacheDataHelper.removeData(key: SharedPrefKey.keyRole);
-            await CacheDataHelper.removeData(key: SharedPrefKey.keyUserId);
-            await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
-            await context.pushNamedAndRemoveUntil(Routes.loginScreen);
-          } else if (state is LogoutLoading) {
-            await AdaptiveDialogs.showLoadingAlertDialog(
-              context: context,
-              title: context.translate(LangKeys.logout),
+
+            showMessage(
+              context,
+              type: SnackBarType.error,
+              message: state.message,
             );
           }
         },
@@ -78,7 +63,7 @@ class LogoutWidget extends StatelessWidget {
                 message: context.translate(LangKeys.logoutMessage),
                 onPressedOk: () {
                   context.pop();
-                  context.read<AuthCubit>().logout();
+                  context.read<AuthCubit>().logout(context);
                 },
                 onPressedCancel: () => context.pop(),
               );

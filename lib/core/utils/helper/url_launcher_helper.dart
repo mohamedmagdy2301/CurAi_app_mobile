@@ -1,3 +1,5 @@
+// ignore_for_file: parameter_assignments, document_ignores
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -67,6 +69,7 @@ class UrlLauncherHelper {
     BuildContext context,
     String websiteUrl,
   ) async {
+    // Add http:// or https:// if missing
     if (!websiteUrl.startsWith('https://') &&
         !websiteUrl.startsWith('http://')) {
       websiteUrl = 'https://$websiteUrl';
@@ -136,11 +139,14 @@ class UrlLauncherHelper {
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
-      showMessage(
-        context,
-        type: SnackBarType.error,
-        message: 'Could not launch $url',
-      );
+      // Handle the error when the URL cannot be launched
+      if (context.mounted) {
+        showMessage(
+          context,
+          type: SnackBarType.error,
+          message: 'Could not launch $url',
+        );
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: flutter_style_todos
+// ignore_for_file: library_private_types_in_public_api, document_ignores
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';

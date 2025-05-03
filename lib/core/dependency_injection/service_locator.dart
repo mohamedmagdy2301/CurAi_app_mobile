@@ -1,3 +1,5 @@
+import 'package:curai_app_mobile/core/dependency_injection/appointment_doctor_di.dart';
+import 'package:curai_app_mobile/core/dependency_injection/appointment_patient_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/auth_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/chatbot_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/core_di.dart';
@@ -24,4 +26,10 @@ Future<void> setupAllDependencies() async {
 
   /// Chatbot feature dependencies
   setupChatbotDI();
+
+  /// appointment patient feature dependencies
+  setupAppointmentPatinetDI();
+
+  /// appointment doctor feature dependencies
+  setupAppointmentDoctorDI();
 }

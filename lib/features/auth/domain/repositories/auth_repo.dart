@@ -1,7 +1,5 @@
 // ignore_for_file: one_member_abstracts, document_ignores
 
-import 'dart:io';
-
 import 'package:curai_app_mobile/features/auth/data/models/change_password/change_password_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/contact_us/contact_us_request.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
@@ -23,12 +21,9 @@ abstract class AuthRepo {
   });
   Future<Either<String, ProfileModel>> getProfile();
   Future<Either<String, ProfileModel>> editProfile({
-    required ProfileRequest profileRequest,
-    File? imageFile,
+    required ProfileRequest request,
   });
-  Future<Either<String, ProfileModel>> editPhotoProfile({
-    File? imageFile,
-  });
+
   Future<Either<String, String>> logout();
   Future<Either<String, String>> contactUs({
     required ContactUsRequest contactUsRequest,

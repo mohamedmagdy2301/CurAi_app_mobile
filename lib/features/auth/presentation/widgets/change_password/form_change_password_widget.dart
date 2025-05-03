@@ -51,6 +51,7 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
         return;
       }
       context.read<AuthCubit>().changePassword(
+            context,
             ChangePasswordRequest(
               currentPassword: _currentPasswordController.text.trim(),
               newPassword: _newPasswordController.text.trim(),

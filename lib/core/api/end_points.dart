@@ -1,6 +1,6 @@
 class EndPoints {
   static const String refreshToken = '/api/token/refresh/';
-  static const String register = 'api/register/';
+  static const String register = '/api/register/';
   static const String login = '/api/login/';
   static const String logout = '/api/logout/';
   static const String changePassword = '/api/change-password/';
@@ -10,4 +10,9 @@ class EndPoints {
   static const String addReview = '/review/';
   static const String contactUs = '/api/contact-us/';
   static const String predict = '/predict';
+  static const String appointmentPatient = '/patient_panal_appointments';
+  static const String getAppointmentAvailable =
+      '$appointmentPatient/doctor_availability/';
+  static const String simulateAppointmentPayment = '/simulate_payment/';
+  static const String appointmentDoctor = '/doctor_panal_availabilities/';
 }

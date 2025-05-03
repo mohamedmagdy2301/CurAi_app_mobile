@@ -1,7 +1,6 @@
-// ignore_for_file: avoid_dynamic_calls, avoid_catches_without_on_clauses
+// ignore_for_file: avoid_dynamic_calls,// avoid_catches_without_on_clauses, document_ignores
 
-import 'dart:io';
-
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/datasources/auth_remote_data_source.dart';
@@ -28,7 +27,21 @@ class AuthRepoImpl extends AuthRepo {
 
     return response.fold(
       (failure) => left(failure.message),
-      (result) => right(result['message'] as String),
+      (result) async {
+        await clearUserData();
+        await Future.wait([
+          CacheDataHelper.setData(
+            key: SharedPrefKey.keyAccessToken,
+            value: result['access'],
+          ),
+          CacheDataHelper.setData(
+            key: SharedPrefKey.keyRefreshToken,
+            value: result['refresh'],
+          ),
+        ]);
+
+        return right(result['message'] as String);
+      },
     );
   }
 
@@ -40,15 +53,10 @@ class AuthRepoImpl extends AuthRepo {
 
     return response.fold(
       (failure) => left(failure.message),
-      (result) {
+      (result) async {
+        await clearUserData();
         final data = LoginModel.fromJson(result);
-        saveDataUser(
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-          role: data.role,
-          userName: data.username,
-          userId: data.userId,
-        );
+        saveDataUser(data: data);
         return right(data);
       },
     );
@@ -89,26 +97,10 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<String, ProfileModel>> editProfile({
-    required ProfileRequest profileRequest,
-    File? imageFile,
+    required ProfileRequest request,
   }) async {
     final response = await remoteDataSource.editProfile(
-      profileRequest: profileRequest,
-      // imageFile: imageFile,
-    );
-
-    return response.fold(
-      (failure) => left(failure.message),
-      (result) => right(ProfileModel.fromJson(result)),
-    );
-  }
-
-  @override
-  Future<Either<String, ProfileModel>> editPhotoProfile({
-    File? imageFile,
-  }) async {
-    final response = await remoteDataSource.editPhotoProfile(
-      imageFile: imageFile,
+      request: request,
     );
 
     return response.fold(
@@ -129,33 +121,4 @@ class AuthRepoImpl extends AuthRepo {
       (result) => right(result['message'] as String),
     );
   }
-}
-
-void saveDataUser({
-  required String accessToken,
-  String? refreshToken,
-  String? role,
-  String? userName,
-  int? userId,
-}) {
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyAccessToken,
-    value: accessToken,
-  );
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyRefreshToken,
-    value: refreshToken ?? '',
-  );
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyUserName,
-    value: userName ?? '',
-  );
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyRole,
-    value: role ?? '',
-  );
-  CacheDataHelper.setData(
-    key: SharedPrefKey.keyUserId,
-    value: userId ?? '',
-  );
 }

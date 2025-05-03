@@ -1,5 +1,5 @@
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as int_ex;
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
@@ -10,9 +10,14 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/terms_and_co
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthCubit>(
@@ -32,10 +37,11 @@ class RegisterScreen extends StatelessWidget {
                     title: LangKeys.createAccount,
                     descraption: LangKeys.descriptionRegister,
                   ),
-                  const RegistrationFormWidget(),
-                  35.hSpace,
-                  const TermsOfServiceWidget(),
                   15.hSpace,
+                  const RegistrationFormWidget(),
+                  20.hSpace,
+                  const TermsOfServiceWidget(),
+                  10.hSpace,
                   const AlreadyHaveAccountWidget(),
                   30.hSpace,
                 ],

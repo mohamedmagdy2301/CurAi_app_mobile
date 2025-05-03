@@ -11,5 +11,8 @@ class SharedPrefKey {
   static const String keyUserName = 'userName';
   static const String keyRole = 'role';
   static const String keyUserId = 'userId';
+  static const String keyFullName = 'fullName';
+  static const String keyBonusPoints = 'bonusPoints';
+  static const String keyProfilePicture = 'profilePicture';
   static const String saveThemeMode = 'themeMode';
 }

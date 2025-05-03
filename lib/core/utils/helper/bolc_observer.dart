@@ -1,5 +1,3 @@
-// ignore_for_file: strict_raw_type
-
 import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +6,7 @@ class SimpleBlocObserver implements BlocObserver {
   static const String tag = 'Bloc Observer';
 
   @override
-  void onChange(BlocBase bloc, Change change) {
+  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     if (kDebugMode) {
       LoggerHelper.info(
         '----- Change in ${bloc.runtimeType}: $change ----',
@@ -18,21 +16,21 @@ class SimpleBlocObserver implements BlocObserver {
   }
 
   @override
-  void onClose(BlocBase bloc) {
+  void onClose(BlocBase<dynamic> bloc) {
     if (kDebugMode) {
       LoggerHelper.info('----- Close in ${bloc.runtimeType} ----', tag: tag);
     }
   }
 
   @override
-  void onCreate(BlocBase bloc) {
+  void onCreate(BlocBase<dynamic> bloc) {
     if (kDebugMode) {
       LoggerHelper.info('----- Create ${bloc.runtimeType} ----', tag: tag);
     }
   }
 
   @override
-  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+  void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
     if (kDebugMode) {
       LoggerHelper.error(
         '----- Error in ${bloc.runtimeType}: $error ----',
@@ -46,7 +44,7 @@ class SimpleBlocObserver implements BlocObserver {
   }
 
   @override
-  void onEvent(Bloc bloc, Object? event) {
+  void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     if (kDebugMode) {
       LoggerHelper.info(
         '----- Event in ${bloc.runtimeType}: $event ----',
@@ -56,7 +54,10 @@ class SimpleBlocObserver implements BlocObserver {
   }
 
   @override
-  void onTransition(Bloc bloc, Transition transition) {
+  void onTransition(
+    Bloc<dynamic, dynamic> bloc,
+    Transition<dynamic, dynamic> transition,
+  ) {
     if (kDebugMode) {
       LoggerHelper.info(
         '----- Transition in ${bloc.runtimeType}: $transition ----',

@@ -1,5 +1,3 @@
-// ignore_for_file: flutter_style_todos
-
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as a;
@@ -15,9 +13,9 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_settings.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_expansion_tile_card.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/localize_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/palette_listview_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
-import 'package:curai_app_mobile/features/profile/presentation/widgets/localize_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -111,7 +109,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.delete_outline_outlined,
               title: LangKeys.deleteAccount,
               onTap: () {
-                AdaptiveDialogs.showOkCancelAlertDialog(
+                AdaptiveDialogs.showOkCancelAlertDialog<bool>(
                   context: context,
                   title: context.translate(LangKeys.deleteAccount),
                   message: context.translate(LangKeys.deleteAccountMessage),

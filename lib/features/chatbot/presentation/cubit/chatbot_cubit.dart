@@ -1,9 +1,8 @@
-// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation, missing_whitespace_between_adjacent_strings
+// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, inference_failure_on_instance_creation, missing_whitespace_between_adjacent_strings, document_ignores
 
 import 'dart:io';
 
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
@@ -14,6 +13,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+
+void clearHistoryChatBot() {
+  final chatBox = Hive.box<MessageBubbleModel>('chat_messages');
+  chatBox.clear();
+}
 
 class ChatBotCubit extends Cubit<ChatBotState> {
   ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
@@ -26,11 +30,6 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       Hive.box<MessageBubbleModel>('chat_messages');
 
   /// get the username from Cache Data Local
-  String getUsername() {
-    final userName =
-        CacheDataHelper.getData(key: SharedPrefKey.keyUserName) ?? '';
-    return userName is String ? userName : '';
-  }
 
   /// Check if the chat box is closed
   Future<void> loadPreviousMessages() async {
@@ -72,7 +71,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       removeLoadingMessage();
 
       final botMessageDiagnosis = MessageBubbleModel(
-        messageText: result.responseMessage(isArabic),
+        messageText: result.responseMessage(isArabic: isArabic),
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -80,8 +79,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
       final goodbyeMessage = MessageBubbleModel(
         messageText: isArabic
-            ? 'شكرًا لك يا ${getUsername()} على استخدامك CurAi.\nنتمنى لك الشفاء العاجل!. 😊'
-            : 'Thank you, ${getUsername()}, for using CurAi.\nWe wish you a speedy recovery! 😊',
+            ? 'شكرًا لك يا ${getFullName()} على استخدامك CurAi.\nنتمنى لك الشفاء العاجل!. 😊'
+            : 'Thank you, ${getFullName()}, for using CurAi.\nWe wish you a speedy recovery! 😊',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -109,7 +108,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
     if (isArabic) {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 أهلاً ${getUsername()} في CurAi.'
+        messageText: '👋 أهلاً ${getFullName()} في CurAi.'
             '\nأنا مساعدك الطبي الذكي، هنا لمساعدتك في تحليل الأعراض وتوجيهك للتخصص المناسب.',
         date: DateTime.now(),
         sender: SenderType.bot,
@@ -136,7 +135,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
     } else {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 Welcome, ${getUsername()} to CurAi!'
+        messageText: '👋 Welcome, ${getFullName()} to CurAi!'
             "\nI'm here to help analyze your symptoms and guide you to the right specialty.",
         date: DateTime.now(),
         sender: SenderType.bot,

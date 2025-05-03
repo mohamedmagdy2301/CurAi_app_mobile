@@ -103,6 +103,7 @@ class _CustomerServiceFormWidgetState extends State<CustomerServiceFormWidget> {
                           return;
                         }
                         context.read<AuthCubit>().contactUs(
+                              context,
                               ContactUsRequest(
                                 subject: 'Customer Service',
                                 name: _fullNameController.text.trim(),

@@ -1,4 +1,5 @@
-// ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
+// ignore: lines_longer_than_80_chars
+// ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously, document_ignores
 
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';

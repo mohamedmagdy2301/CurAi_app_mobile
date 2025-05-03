@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_dynamic_calls, avoid_catches_without_on_clauses
+// ignore_for_file: avoid_dynamic_calls, avoid_catches_without_on_clauses, document_ignores, lines_longer_than_80_chars
 
 import 'package:curai_app_mobile/features/chatbot/data/datasources/chatbot_remote_data_source.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';

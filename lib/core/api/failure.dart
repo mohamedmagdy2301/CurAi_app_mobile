@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_dynamic_calls
+// ignore_for_file: avoid_dynamic_calls, document_ignores
 
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
@@ -51,16 +51,25 @@ class ServerFailure extends Failure {
   factory ServerFailure.fromBadResponse(int statusCode, dynamic error) {
     final isArabic =
         CacheDataHelper.getData(key: SharedPrefKey.keyLocale) == 'ar';
-    if (error is Map<String, dynamic>) {
+    if (error is String) {
+      error = error.replaceAll(RegExp(r'\n'), ' ');
+    } else if (error is List) {
+      error = error.join(', ');
+    } else if (error is int) {
+      error = error.toString();
+    } else if (error is bool) {
+      error = error.toString();
+    } else if (error is double) {
+      error = error.toString();
+    } else if (error is Map<String, dynamic>) {
       error = error.entries.map((e) {
         if (e.value is List) {
           return e.value.join(', ').toString();
         }
         return e.value.toString();
       }).join('\n');
-    }
-    if (error is List) {
-      error = error;
+    } else {
+      error = 'Unknown error';
     }
     switch (statusCode) {
       case 400:

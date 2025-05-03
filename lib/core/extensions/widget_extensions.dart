@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_positional_boolean_parameters
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,7 +65,7 @@ extension WidgetExtension on Widget? {
   }
 
   /// set visibility
-  Widget visible(bool visible, {Widget? defaultWidget}) {
+  Widget visible({required bool visible, Widget? defaultWidget}) {
     return visible ? this! : (defaultWidget ?? const SizedBox());
   }
 

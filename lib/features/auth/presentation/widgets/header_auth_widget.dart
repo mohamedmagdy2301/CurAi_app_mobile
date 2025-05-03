@@ -9,12 +9,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class HeaderAuthWidget extends StatelessWidget {
   const HeaderAuthWidget({
     required this.title,
-    required this.descraption,
+    this.descraption,
     this.isBack = false,
     super.key,
   });
   final String title;
-  final String descraption;
+  final String? descraption;
   final bool isBack;
 
   @override
@@ -22,7 +22,7 @@ class HeaderAuthWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        40.hSpace,
+        12.hSpace,
         Row(
           children: [
             AutoSizeText(
@@ -68,13 +68,14 @@ class HeaderAuthWidget extends StatelessWidget {
           ],
         ),
         10.hSpace,
-        AutoSizeText(
-          context.translate(descraption),
-          style: TextStyleApp.regular16().copyWith(
-            color: context.onSecondaryColor,
+        if (descraption != null)
+          AutoSizeText(
+            context.translate(descraption!),
+            style: TextStyleApp.regular16().copyWith(
+              color: context.onSecondaryColor,
+            ),
+            maxLines: 2,
           ),
-          maxLines: 2,
-        ),
       ],
     );
   }
