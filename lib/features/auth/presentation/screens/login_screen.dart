@@ -30,6 +30,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  20.hSpace,
                   const HeaderAuthWidget(
                     title: LangKeys.welcomeBack,
                     descraption: LangKeys.descriptionLogin,

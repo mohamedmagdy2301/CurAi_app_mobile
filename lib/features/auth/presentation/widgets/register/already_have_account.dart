@@ -30,6 +30,9 @@ class AlreadyHaveAccountWidget extends StatelessWidget {
             context.translate(LangKeys.login),
             style: TextStyleApp.semiBold16().copyWith(
               color: context.primaryColor,
+              decoration: TextDecoration.underline,
+              decorationStyle: TextDecorationStyle.solid,
+              decorationColor: context.primaryColor,
             ),
             maxLines: 1,
           ),

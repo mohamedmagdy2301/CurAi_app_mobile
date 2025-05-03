@@ -33,6 +33,8 @@ class NotHaveAccount extends StatelessWidget {
             style: TextStyleApp.semiBold14().copyWith(
               color: context.primaryColor,
               decoration: TextDecoration.underline,
+              decorationStyle: TextDecorationStyle.solid,
+              decorationColor: context.primaryColor,
             ),
           ),
         ),

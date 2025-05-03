@@ -98,6 +98,8 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyleApp.regular14().copyWith(
                     decoration: TextDecoration.underline,
+                    decorationStyle: TextDecorationStyle.solid,
+                    decorationColor: context.primaryColor,
                     color: context.primaryColor,
                   ),
                 ),
