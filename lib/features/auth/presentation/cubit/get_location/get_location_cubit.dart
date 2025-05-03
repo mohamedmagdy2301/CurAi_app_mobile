@@ -15,7 +15,7 @@ class GetLocationCubit extends Cubit<GetLocationState> {
 
   final MapController mapController = MapController();
   Position? currentLocation;
-  LatLng selectedLocation = const LatLng(29.378586, 47.990341);
+  LatLng selectedLocation = LatLng(0, 0);
   String locationInfo = 'Tap on the map to select a location';
   List<Marker> markers = [];
 

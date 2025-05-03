@@ -51,7 +51,10 @@ class _ContCompleteProfileFormWidgetState
 
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
-      if (latitude == null || longitude == null) {
+      if (latitude == null ||
+          longitude == null ||
+          cubitLocation.latitude == 0 ||
+          cubitLocation.longitude == 0) {
         showMessage(
           context,
           message: context.isStateArabic
