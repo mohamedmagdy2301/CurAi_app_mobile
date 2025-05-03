@@ -21,11 +21,14 @@ class SpecializationsModel {
 }
 
 final List<Map<String, dynamic>> specializationsList = [
-  {'id': 2, 'name': 'Allergist', 'doctor_count': 4},
-  {'id': 3, 'name': 'Andrologists', 'doctor_count': 0},
-  {'id': 4, 'name': 'Anesthesiologist', 'doctor_count': 0},
-  {'id': 1, 'name': 'Audiologist', 'doctor_count': 7},
-  {'id': 5, 'name': 'Cardiologist', 'doctor_count': 2},
+  {
+    'id': 2,
+    'name': 'Allergist',
+  },
+  {'id': 3, 'name': 'Andrologists'},
+  {'id': 4, 'name': 'Anesthesiologist'},
+  {'id': 1, 'name': 'Audiologist'},
+  {'id': 5, 'name': 'Cardiologist'},
   {'id': 7, 'name': 'Dentist', 'doctor_count': 3},
   {'id': 8, 'name': 'Gynecologist', 'doctor_count': 0},
   {'id': 9, 'name': 'Internists', 'doctor_count': 1},

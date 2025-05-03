@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
@@ -15,7 +16,10 @@ import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
+import 'package:curai_app_mobile/features/home/data/models/specializations_model/specializations_model.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/image_profile_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,6 +91,49 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
         );
         return;
       }
+
+      final ageText = _yourAgeController.text;
+
+      if (!RegExp(r'^[0-9]+$').hasMatch(ageText)) {
+        showMessage(
+          context,
+          message: context.isStateArabic
+              ? 'من فضلك أدخل العمر بالأرقام فقط.\n'
+                  'يمكنك اختيار العمر باستخدام الأيقونة'
+              : 'Please enter your age as a number.\n'
+                  'You can select age using the icon',
+          showCloseIcon: true,
+          type: SnackBarType.error,
+        );
+        return;
+      }
+
+      final age = int.parse(ageText);
+
+      if (age < 24 || age > 120) {
+        showMessage(
+          context,
+          message: context.isStateArabic
+              ? 'العمر يجب أن يكون بين 24 و 120 سنة'
+              : 'Age must be between 24 and 120 years',
+          showCloseIcon: true,
+          type: SnackBarType.error,
+        );
+        return;
+      }
+      final phoneRegex = RegExp(r'^(010|011|012|015)[0-9]{8}$');
+
+      if (!phoneRegex.hasMatch(_phoneController.text)) {
+        showMessage(
+          context,
+          message: context.isStateArabic
+              ? 'من فضلك ادخل رقم هاتف صحيح'
+              : 'Please enter a valid phone number',
+          showCloseIcon: true,
+          type: SnackBarType.error,
+        );
+        return;
+      }
       final profileRequest = ProfileRequest(
         consultationPrice: _consultationPriceController.text.trim(),
         specialization: selectedSpecialization,
@@ -144,6 +191,10 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             controller: _yourAgeController,
             hint: context.isStateArabic ? 'مثال: 37' : 'e.g. 37',
             onChanged: (_) => _validateForm(),
+            suffixIcon: InkWell(
+              onTap: () => _showYearPicker(context),
+              child: const Icon(CupertinoIcons.calendar),
+            ),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           _buildSelectSpecilization(context),
@@ -160,7 +211,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                     'Al Salam Hospital, specialized in hypertension '
                     'and heart diseases.',
             controller: _bioController,
-            maxLines: 3,
+            maxLines: 2,
             isLable: false,
             onChanged: (_) => _validateForm(),
           ),
@@ -286,35 +337,22 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                   color: context.primaryColor,
                 ),
               ),
-              items: [
-                DropdownMenuItem(
-                  value: 1,
-                  child: Text(
-                    'Audiologist',
-                    style: TextStyleApp.regular16().copyWith(
-                      color: context.onPrimaryColor,
+              items: specializationsList
+                  .map(
+                    (spec) => DropdownMenuItem<int>(
+                      value: spec['id'] as int,
+                      child: Text(
+                        specializationName(
+                          spec['name'] as String,
+                          context.isStateArabic,
+                        ),
+                        style: TextStyleApp.regular16().copyWith(
+                          color: context.onPrimaryColor,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: 2,
-                  child: Text(
-                    'Allergist',
-                    style: TextStyleApp.regular16().copyWith(
-                      color: context.onPrimaryColor,
-                    ),
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: 3,
-                  child: Text(
-                    'Andrologists',
-                    style: TextStyleApp.regular16().copyWith(
-                      color: context.onPrimaryColor,
-                    ),
-                  ),
-                ),
-              ],
+                  )
+                  .toList(),
               onChanged: (int? newValue) {
                 setState(() {
                   selectedSpecialization = newValue;
@@ -335,6 +373,56 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             ),
           ),
       ],
+    );
+  }
+
+  void _showYearPicker(BuildContext context) {
+    var selectedDate = DateTime.now();
+
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext builder) {
+        return SizedBox(
+          height: context.H * 0.4,
+          child: Column(
+            children: [
+              10.hSpace,
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: const Icon(Icons.check),
+                  iconSize: 30.sp,
+                  color: context.primaryColor,
+                  constraints: BoxConstraints.tight(
+                    Size(context.W * 0.1, context.W * 0.1),
+                  ),
+                  onPressed: () {
+                    final birthYear = selectedDate.year;
+                    final age = DateTime.now().year - birthYear;
+                    _yourAgeController.text = age.toString();
+                    context.pop();
+                  },
+                ).paddingSymmetric(horizontal: 15.w),
+              ),
+              5.hSpace,
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: DateTime(2000),
+                  maximumDate: DateTime(DateTime.now().year - 24),
+                  minimumDate: DateTime(DateTime.now().year - 120),
+                  onDateTimeChanged: (DateTime date) {
+                    setState(() {
+                      selectedDate = date;
+                    });
+                  },
+                ),
+              ),
+              10.hSpace,
+            ],
+          ),
+        );
+      },
     );
   }
 
