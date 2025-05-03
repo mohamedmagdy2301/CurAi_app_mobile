@@ -40,6 +40,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> register({
     required RegisterRequest registerRequest,
   }) async {
+    await clearUserData();
     final response = await dioConsumer.post(
       EndPoints.register,
       body: registerRequest.toJson(),
@@ -56,6 +57,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> login({
     required LoginRequest loginRequest,
   }) async {
+    await clearUserData();
     final response = await dioConsumer.post(
       EndPoints.login,
       body: loginRequest.toJson(),
@@ -146,7 +148,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (request.latitude != null) data['latitude'] = request.latitude;
     if (request.longitude != null) data['longitude'] = request.longitude;
     if (request.role != null) data['role'] = request.role;
-
     final response = await dioConsumer.patch(
       EndPoints.getProfile,
       body: FormData.fromMap(data),

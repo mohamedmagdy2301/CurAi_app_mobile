@@ -57,10 +57,10 @@ class AuthCubit extends Cubit<AuthState> {
       (successMessage) {
         if (isClosed) return;
         displayedMessage = isArabic
-            ? 'تم التسجيل بنجاح! يرجى إكمال بياناتك الآن.\n'
-                'إذا لم تكملها، ستفقد البيانات التي أدخلتها.'
-            : 'Registration successful! Please complete your profile now.\n'
-                'If not completed, you will lose the data you entered.';
+            ? 'تم التسجيل بنجاح!\n'
+                'أكمل بياناتك الآن أو ستفقد ما أدخلته.'
+            : 'Registration successful!\n'
+                'Complete your profile now or you will lose the entered data.';
 
         emit(RegisterSuccess(message: displayedMessage));
       },
