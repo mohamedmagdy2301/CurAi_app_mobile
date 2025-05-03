@@ -63,7 +63,7 @@ class LogoutWidget extends StatelessWidget {
                 message: context.translate(LangKeys.logoutMessage),
                 onPressedOk: () {
                   context.pop();
-                  context.read<AuthCubit>().logout();
+                  context.read<AuthCubit>().logout(context);
                 },
                 onPressedCancel: () => context.pop(),
               );

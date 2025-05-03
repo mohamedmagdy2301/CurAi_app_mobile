@@ -76,7 +76,9 @@ class _ContCompleteProfileFormWidgetState
               location: _addressController.text,
               bio: _bioController.text,
             );
-      context.read<AuthCubit>().editProfile(profileRequest: profileRequest);
+      context
+          .read<AuthCubit>()
+          .editProfile(context, profileRequest: profileRequest);
     }
   }
 

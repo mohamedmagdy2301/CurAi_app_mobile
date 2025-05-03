@@ -98,7 +98,9 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
       consultationPrice: _consultationPriceController.text,
       imageFile: imageFile,
     );
-    context.read<AuthCubit>().editProfile(profileRequest: profileRequest);
+    context
+        .read<AuthCubit>()
+        .editProfile(context, profileRequest: profileRequest);
   }
 
   @override

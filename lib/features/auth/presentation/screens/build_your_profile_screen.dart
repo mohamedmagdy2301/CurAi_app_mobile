@@ -18,7 +18,7 @@ class _BuildYourProfileScreenState extends State<BuildYourProfileScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AuthCubit>().getProfile();
+    context.read<AuthCubit>().getProfile(context);
   }
 
   int? selectedGender;

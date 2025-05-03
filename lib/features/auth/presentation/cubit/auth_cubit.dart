@@ -14,6 +14,7 @@ import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dar
 import 'package:curai_app_mobile/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'auth_state.dart';
@@ -37,7 +38,10 @@ class AuthCubit extends Cubit<AuthState> {
   final EditProfileUsecase _editProfileUsecase;
   final ContactUsUsecase _contactUsUsecase;
 
-  Future<void> register(RegisterRequest registerRequest) async {
+  Future<void> register(
+    BuildContext context,
+    RegisterRequest registerRequest,
+  ) async {
     emit(RegisterLoading());
 
     final result = await _registerUsecase.call(registerRequest);
@@ -53,7 +57,10 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> login(LoginRequest loginRequest) async {
+  Future<void> login(
+    BuildContext context,
+    LoginRequest loginRequest,
+  ) async {
     emit(LoginLoading());
     await Future.delayed(const Duration(seconds: 2));
     final result = await _loginUsecase.call(loginRequest);
@@ -73,7 +80,9 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> logout() async {
+  Future<void> logout(
+    BuildContext context,
+  ) async {
     emit(LogoutLoading());
 
     final result = await _logoutUsecase.call('');
@@ -91,6 +100,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> changePassword(
+    BuildContext context,
     ChangePasswordRequest changePasswordRequest,
   ) async {
     emit(ChangePasswordLoading());
@@ -109,7 +119,9 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> getProfile() async {
+  Future<void> getProfile(
+    BuildContext context,
+  ) async {
     emit(GetProfileLoading());
 
     final result = await _getProfileUsecase.call('');
@@ -126,7 +138,8 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> editProfile({
+  Future<void> editProfile(
+    BuildContext context, {
     required ProfileRequest profileRequest,
   }) async {
     emit(EditProfileLoading());
@@ -144,7 +157,10 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> contactUs(ContactUsRequest contactUsRequest) async {
+  Future<void> contactUs(
+    BuildContext context,
+    ContactUsRequest contactUsRequest,
+  ) async {
     emit(ContactUsLoading());
 
     final result = await _contactUsUsecase.call(contactUsRequest);

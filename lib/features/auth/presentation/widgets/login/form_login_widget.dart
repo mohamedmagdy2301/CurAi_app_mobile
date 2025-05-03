@@ -45,6 +45,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
       TextInput.finishAutofillContext();
       _formKey.currentState?.save();
       context.read<AuthCubit>().login(
+            context,
             LoginRequest(
               email: _emailController.text.trim(),
               password: _passwordController.text.trim(),

@@ -135,6 +135,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
         return;
       }
       context.read<AuthCubit>().register(
+            context,
             RegisterRequest(
               email: _emailController.text.trim(),
               password: _passwordController.text.trim(),

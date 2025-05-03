@@ -80,7 +80,9 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
         gender: selectedGender,
         imageFile: imageFile,
       );
-      context.read<AuthCubit>().editProfile(profileRequest: profileRequest);
+      context
+          .read<AuthCubit>()
+          .editProfile(context, profileRequest: profileRequest);
     }
   }
 
