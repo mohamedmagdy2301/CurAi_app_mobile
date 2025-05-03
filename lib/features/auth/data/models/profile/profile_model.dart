@@ -60,33 +60,3 @@ class ProfileModel {
   double? longitude;
   int? bonusPoints;
 }
-
-final Map<String, String> _governoratesMap = {
-  'Cairo': 'القاهرة',
-  'Giza': 'الجيزة',
-  'Alexandria': 'الإسكندرية',
-  'Sharqia': 'الشرقية',
-  'Dakahlia': 'الدقهلية',
-  'Beheira': 'البحيرة',
-  'Monufia': 'المنوفية',
-  'Qalyubia': 'القليوبية',
-  'Gharbia': 'الغربية',
-  'Kafr El Sheikh': 'كفر الشيخ',
-  'Fayoum': 'الفيوم',
-  'Beni Suef': 'بني سويف',
-  'Minya': 'المنيا',
-  'Assiut': 'أسيوط',
-  'Sohag': 'سوهاج',
-  'Qena': 'قنا',
-  'Luxor': 'الأقصر',
-  'Aswan': 'أسوان',
-  'Damietta': 'دمياط',
-  'Port Said': 'بورسعيد',
-  'Ismailia': 'الإسماعيلية',
-  'Suez': 'السويس',
-  'North Sinai': 'شمال سيناء',
-  'South Sinai': 'جنوب سيناء',
-  'New Valley': 'الوادي الجديد',
-  'Matrouh': 'مطروح',
-  'Red Sea': 'البحر الأحمر',
-};

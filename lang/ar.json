@@ -189,6 +189,14 @@
    "delete_working_time_failed": "فشل حذف ساعات العمل",
    "first_name": "الاسم الاول",
    "last_name": "الاسم الاخير",
-   "bio": "السيرة الذاتية"
+   "bio": "السيرة الذاتية",
+   "doctor": "طبيب",
+   "patient": "مريض",
+   "country": "الدولة",
+   "governorate": "المحافظة",
+   "city": "المدينة",
+   "area": "المنطقة",
+   "street": "الشارع",
+   "special_mark": "علامة خاص"
  
   }

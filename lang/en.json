@@ -188,5 +188,14 @@
   "delete_working_time_failed":   "Failed to delete working time",
   "first_name": "First Name",
   "last_name": "Last Name",
-  "bio": "Bio" 
+  "bio": "Bio",
+  "doctor": "Doctor",
+  "patient":  "Patient",
+  "country":  "Country",
+  "governorate":  "Governorate",
+  "city":  "City",
+  "area":  "Area",
+  "street":  "Street",
+ "special_mark": "Special Mark"
+ 
 }

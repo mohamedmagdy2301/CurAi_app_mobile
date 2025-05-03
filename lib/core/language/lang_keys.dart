@@ -2,8 +2,17 @@ class LangKeys {
   // App General
   static const String appName = 'app_name';
   static const String skip = 'skip';
+  static const String doctor = 'doctor';
+  static const String patient = 'patient';
+//! adress
+  static const String country = 'country';
+  static const String governorate = 'governorate';
+  static const String city = 'city';
+  static const String area = 'area';
+  static const String street = 'street';
+  static const String specialMark = 'special_mark';
 
-  // Onboarding
+  //! Onboarding
   static const String titleOnboarding1 = 'title_onboarding_1';
   static const String titleOnboarding2 = 'title_onboarding_2';
   static const String titleOnboarding3 = 'title_onboarding_3';

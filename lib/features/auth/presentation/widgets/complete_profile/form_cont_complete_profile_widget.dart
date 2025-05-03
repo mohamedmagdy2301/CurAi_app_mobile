@@ -25,14 +25,14 @@ class _ContCompleteProfileFormWidgetState
     extends State<ContCompleteProfileFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _noteController = TextEditingController();
+  final TextEditingController _specialMarkController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _areaController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _governorateController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
-  double latitude = 0;
-  double longitude = 0;
+  double? latitude;
+  double? longitude;
   // A ValueNotifier to track the form validation status
   final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
 
@@ -47,11 +47,21 @@ class _ContCompleteProfileFormWidgetState
     _validateForm();
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
+      if (latitude == null || longitude == null) {
+        showMessage(
+          context,
+          message: context.isStateArabic
+              ? 'من فضلك اختر الموقع'
+              : 'Please select location',
+          type: SnackBarType.error,
+        );
+        return;
+      }
 
       final profileRequest = ProfileRequest(
         location: '${_countryController.text} ${_governorateController.text} '
             '${_cityController.text} ${_areaController.text} '
-            '${_streetController.text} ${_noteController.text}',
+            '${_streetController.text} ${_specialMarkController.text}',
         latitude: latitude,
         longitude: longitude,
       );
@@ -69,23 +79,44 @@ class _ContCompleteProfileFormWidgetState
       child: Column(
         children: [
           CustomTextFeild(
-            labelText: context.translate(LangKeys.address),
+            labelText: context.translate(LangKeys.country),
             keyboardType: TextInputType.streetAddress,
             controller: _countryController,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
-            labelText: context.translate(LangKeys.address),
+            labelText: context.translate(LangKeys.governorate),
             keyboardType: TextInputType.streetAddress,
             controller: _governorateController,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
-            labelText: context.translate(LangKeys.address),
-            keyboardType: TextInputType.text,
+            labelText: context.translate(LangKeys.city),
+            keyboardType: TextInputType.streetAddress,
             controller: _cityController,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.area),
+            keyboardType: TextInputType.streetAddress,
+            controller: _cityController,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.street),
+            keyboardType: TextInputType.streetAddress,
+            controller: _streetController,
+            onChanged: (_) => _validateForm(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.specialMark),
+            keyboardType: TextInputType.streetAddress,
+            controller: _specialMarkController,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -137,7 +168,7 @@ class _ContCompleteProfileFormWidgetState
 
   @override
   void dispose() {
-    _governorateController.dispose();
+    _areaController.dispose();
     _cityController.dispose();
     _streetController.dispose();
     _isFormValidNotifier.dispose();
