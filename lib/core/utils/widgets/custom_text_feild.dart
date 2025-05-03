@@ -20,8 +20,10 @@ class CustomTextFeild extends StatefulWidget {
     this.suffixIcon,
     this.maxLines,
     this.isLable,
+    this.hint,
   });
   final String labelText;
+  final String? hint;
   final TextEditingController? controller;
   final bool? obscureText;
   final bool? isLable;
@@ -79,14 +81,14 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         filled: true,
         fillColor: context.backgroundColor,
         contentPadding: context.W > 400
-            ? EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h)
+            ? EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h)
             : null,
         errorStyle: TextStyleApp.regular12().copyWith(
           color: Colors.redAccent,
         ),
         suffixIcon: widget.suffixIcon ?? changePasswordObscure(),
-        labelText: widget.isLable ?? true ? widget.labelText : null,
-        hintText: widget.labelText,
+        labelText: widget.labelText,
+        hintText: widget.hint ?? widget.labelText,
         labelStyle: TextStyleApp.regular16().copyWith(
           color: context.primaryColor,
         ),

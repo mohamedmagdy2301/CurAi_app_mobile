@@ -4,6 +4,9 @@ class RegisterRequest {
     required this.password,
     required this.confirmPassword,
     required this.username,
+    required this.role,
+    required this.firstName,
+    required this.lastName,
   });
 
   Map<String, dynamic> toJson() => {
@@ -11,10 +14,16 @@ class RegisterRequest {
         'password': password,
         'password_confirm': confirmPassword,
         'username': username,
+        'role': role,
+        'first_name': firstName,
+        'last_name': lastName,
       };
 
   final String email;
   final String password;
   final String confirmPassword;
   final String username;
+  final String role;
+  final String firstName;
+  final String lastName;
 }

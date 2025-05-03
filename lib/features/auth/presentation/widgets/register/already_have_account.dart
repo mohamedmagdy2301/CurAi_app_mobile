@@ -25,7 +25,7 @@ class AlreadyHaveAccountWidget extends StatelessWidget {
           maxLines: 1,
         ),
         TextButton(
-          onPressed: () => context.pushNamed(Routes.completeProfileScreen),
+          onPressed: () => context.pushNamed(Routes.loginScreen),
           child: AutoSizeText(
             context.translate(LangKeys.login),
             style: TextStyleApp.semiBold16().copyWith(
