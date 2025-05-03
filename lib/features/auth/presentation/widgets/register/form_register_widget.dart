@@ -117,6 +117,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           showMessage(
             context,
             message: state.message,
+            showCloseIcon: true,
             type: SnackBarType.error,
           );
         } else if (state is RegisterSuccess) {
@@ -124,10 +125,14 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           showMessage(
             context,
             message: state.message,
+            showCloseIcon: true,
             type: SnackBarType.success,
           );
-
-          context.pushReplacementNamed(Routes.completeProfileScreen);
+          if (userType == 'patient') {
+            context.pushReplacementNamed(Routes.loginScreen);
+          } else {
+            context.pushReplacementNamed(Routes.completeProfileScreen);
+          }
         } else if (state is RegisterLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,

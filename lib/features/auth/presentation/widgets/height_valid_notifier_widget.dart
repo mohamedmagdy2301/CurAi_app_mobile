@@ -14,7 +14,7 @@ class HeightValidNotifier extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: isFormValidNotifier,
       builder: (context, isValid, child) {
-        return isValid ? 10.hSpace : 6.hSpace;
+        return isValid ? 14.hSpace : 6.hSpace;
       },
     );
   }

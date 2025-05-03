@@ -119,6 +119,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
           context.pop();
           showMessage(
             context,
+            showCloseIcon: true,
             message: state.message,
             type: SnackBarType.error,
           );
@@ -127,6 +128,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
           showMessage(
             context,
             message: state.message,
+            showCloseIcon: true,
             type: SnackBarType.success,
           );
           CacheDataHelper.setData(

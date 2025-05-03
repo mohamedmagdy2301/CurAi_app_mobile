@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/animated_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum SnackBarType { error, success, warning, info }
 
@@ -20,6 +21,7 @@ void showAnimatedSnackBar({
   String? labelAction,
   VoidCallback? onPressedAction,
   IconData? icon,
+  bool? showCloseIcon,
 }) {
   final snackBarTheme = Theme.of(context).snackBarTheme;
 
@@ -29,9 +31,9 @@ void showAnimatedSnackBar({
   _currentOverlayEntry = OverlayEntry(
     builder: (context) {
       return Positioned(
-        bottom: 80,
-        left: 16,
-        right: 16,
+        bottom: 80.h,
+        left: 16.w,
+        right: 16.w,
         child: AnimatedSnackBar(
           message: message,
           backgroundColor: backgroundColor,
@@ -40,6 +42,7 @@ void showAnimatedSnackBar({
           labelAction: labelAction,
           onPressedAction: onPressedAction,
           snackBarTheme: snackBarTheme,
+          showCloseIcon: showCloseIcon,
         ),
       );
     },
@@ -48,9 +51,9 @@ void showAnimatedSnackBar({
   // Insert the overlay
   Overlay.of(context).insert(_currentOverlayEntry!);
 
-  // Automatically remove the overlay after a delay 3 seconds
+  // Automatically remove the overlay after 3 seconds
   Future.delayed(
-    const Duration(seconds: 3),
+    const Duration(seconds: 12),
     () {
       _currentOverlayEntry?.remove();
       _currentOverlayEntry = null;
@@ -66,6 +69,7 @@ void showMessage(
   bool? isIconVisible,
   String? labelAction,
   VoidCallback? onPressedAction,
+  bool? showCloseIcon, // ← جديد
 }) {
   final snackBarColors = <SnackBarType, Color>{
     SnackBarType.error: Colors.red,
@@ -90,5 +94,6 @@ void showMessage(
     icon: snackBarIcons[type],
     labelAction: labelAction,
     onPressedAction: onPressedAction,
+    showCloseIcon: showCloseIcon,
   );
 }
