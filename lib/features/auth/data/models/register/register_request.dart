@@ -17,6 +17,9 @@ class RegisterRequest {
         'role': role,
         'first_name': firstName,
         'last_name': lastName,
+        'specialization': 1,
+        'consultation_price': 1,
+        'location': 's',
       };
 
   final String email;
