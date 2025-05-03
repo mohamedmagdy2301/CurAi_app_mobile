@@ -53,7 +53,7 @@ void showAnimatedSnackBar({
 
   // Automatically remove the overlay after 3 seconds
   Future.delayed(
-    const Duration(seconds: 12),
+    Duration(seconds: showCloseIcon ?? false ? 12 : 3),
     () {
       _currentOverlayEntry?.remove();
       _currentOverlayEntry = null;

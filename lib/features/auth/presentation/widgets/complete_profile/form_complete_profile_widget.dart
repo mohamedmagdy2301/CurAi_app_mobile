@@ -31,20 +31,27 @@ class CompleteProfileFormWidget extends StatefulWidget {
 
 class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _consultationPriceController =
+      TextEditingController();
 
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
+
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _yourAgeController = TextEditingController();
 
   final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
-
+  int? selectedSpecialization;
   String? selectedGender;
+
+  String? _specializationErrorText;
+  String? _genderErrorText;
+
   final ImagePicker imagePicker = ImagePicker();
   File? imageFile;
   String? imageUrl;
   bool isChanged = false;
   XFile? xFilePhoto;
+
   void _validateForm() {
     final isValid = _formKey.currentState?.validate() ?? false;
     _genderErrorText = selectedGender == null
@@ -53,7 +60,15 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             : 'Please select gender'
         : null;
     setState(() {});
-    _isFormValidNotifier.value = isValid && _genderErrorText == null;
+
+    _specializationErrorText = selectedSpecialization == null
+        ? context.isStateArabic
+            ? 'من فضلك اختر التخصص'
+            : 'Please select specialization'
+        : null;
+    setState(() {});
+    _isFormValidNotifier.value =
+        isValid && _genderErrorText == null && _specializationErrorText == null;
   }
 
   void _onCompletePressed(BuildContext context) {
@@ -73,10 +88,11 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
         return;
       }
       final profileRequest = ProfileRequest(
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text,
-        phoneNumber: _phoneController.text,
-        age: int.tryParse(_yourAgeController.text),
+        consultationPrice: _consultationPriceController.text.trim(),
+        specialization: selectedSpecialization,
+        bio: _bioController.text.trim(),
+        phoneNumber: _phoneController.text.trim(),
+        age: int.tryParse(_yourAgeController.text.trim()),
         gender: selectedGender,
         imageFile: imageFile,
       );
@@ -85,8 +101,6 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           .editProfile(context, profileRequest: profileRequest);
     }
   }
-
-  String? _genderErrorText;
 
   @override
   Widget build(BuildContext context) {
@@ -114,23 +128,10 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           ).center(),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
-            labelText: context.translate(LangKeys.firstName),
-            keyboardType: TextInputType.name,
-            controller: _firstNameController,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.lastName),
-            keyboardType: TextInputType.name,
-            controller: _lastNameController,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
             labelText: context.translate(LangKeys.phone),
             keyboardType: TextInputType.phone,
             controller: _phoneController,
+            hint: 'e.g. 01012345678',
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -138,90 +139,196 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.yourAge),
             keyboardType: TextInputType.number,
             controller: _yourAgeController,
+            hint: 'e.g. 37',
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 10.h,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.r),
-                  border: Border.all(
-                    color: _genderErrorText != null
-                        ? Colors.redAccent
-                        : context.primaryColor.withAlpha(100),
-                  ),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    borderRadius: BorderRadius.circular(8.r),
-                    elevation: 0,
-                    style: TextStyleApp.regular16().copyWith(
-                      color: context.onPrimaryColor,
-                    ),
-                    icon: Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 30.sp,
-                      color: context.primaryColor,
-                    ),
-                    value: selectedGender,
-                    hint: Text(
-                      context.translate(LangKeys.gender),
-                      style: TextStyleApp.regular16().copyWith(
-                        color: context.primaryColor,
-                      ),
-                    ),
-                    items: [
-                      DropdownMenuItem(
-                        value: 'male',
-                        child: Text(
-                          context.translate(LangKeys.male),
-                          style: TextStyleApp.regular16().copyWith(
-                            color: context.onPrimaryColor,
-                          ),
-                        ),
-                      ),
-                      DropdownMenuItem(
-                        value: 'female',
-                        child: Text(
-                          context.translate(LangKeys.female),
-                          style: TextStyleApp.regular16().copyWith(
-                            color: context.onPrimaryColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedGender = newValue;
-                        _genderErrorText = null;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              if (_genderErrorText != null)
-                Padding(
-                  padding: EdgeInsets.only(top: 5.h, left: 8.w),
-                  child: Text(
-                    _genderErrorText!,
-                    style: TextStyleApp.regular12().copyWith(
-                      color: Colors.redAccent,
-                    ),
-                  ),
-                ),
-            ],
+          _buildSelectSpecilization(context),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          _buildSelectGender(context),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.bio),
+            keyboardType: TextInputType.text,
+            hint: 'e.g. Cardiologist with 10+ years of experience at '
+                'Al Salam Hospital, specialized in hypertension '
+                'and heart diseases.',
+            controller: _bioController,
+            maxLines: 3,
+            isLable: false,
+            onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           _buildCompleteButton(),
         ],
       ),
+    );
+  }
+
+  Column _buildSelectGender(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.r),
+            border: Border.all(
+              color: _genderErrorText != null
+                  ? Colors.redAccent
+                  : context.primaryColor.withAlpha(100),
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              isExpanded: true,
+              borderRadius: BorderRadius.circular(8.r),
+              elevation: 0,
+              style: TextStyleApp.regular16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+              icon: Icon(
+                Icons.keyboard_arrow_down,
+                size: 30.sp,
+                color: context.primaryColor,
+              ),
+              value: selectedGender,
+              hint: Text(
+                context.translate(LangKeys.gender),
+                style: TextStyleApp.regular16().copyWith(
+                  color: context.primaryColor,
+                ),
+              ),
+              items: [
+                DropdownMenuItem(
+                  value: 'male',
+                  child: Text(
+                    context.translate(LangKeys.male),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 'female',
+                  child: Text(
+                    context.translate(LangKeys.female),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                ),
+              ],
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedGender = newValue;
+                  _genderErrorText = null;
+                });
+              },
+            ),
+          ),
+        ),
+        if (_genderErrorText != null)
+          Padding(
+            padding: EdgeInsets.only(top: 5.h, left: 8.w),
+            child: Text(
+              _genderErrorText!,
+              style: TextStyleApp.regular12().copyWith(
+                color: Colors.redAccent,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Column _buildSelectSpecilization(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.r),
+            border: Border.all(
+              color: _specializationErrorText != null
+                  ? Colors.redAccent
+                  : context.primaryColor.withAlpha(100),
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<int>(
+              isExpanded: true,
+              borderRadius: BorderRadius.circular(8.r),
+              elevation: 0,
+              style: TextStyleApp.regular16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+              icon: Icon(
+                Icons.keyboard_arrow_down,
+                size: 30.sp,
+                color: context.primaryColor,
+              ),
+              value: selectedSpecialization,
+              hint: Text(
+                context.translate(LangKeys.medicalSpecialization),
+                style: TextStyleApp.regular16().copyWith(
+                  color: context.primaryColor,
+                ),
+              ),
+              items: [
+                DropdownMenuItem(
+                  value: 1,
+                  child: Text(
+                    'Audiologist',
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 2,
+                  child: Text(
+                    'Allergist',
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 3,
+                  child: Text(
+                    'Andrologists',
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                ),
+              ],
+              onChanged: (int? newValue) {
+                setState(() {
+                  selectedSpecialization = newValue;
+                  _specializationErrorText = null;
+                });
+              },
+            ),
+          ),
+        ),
+        if (_specializationErrorText != null)
+          Padding(
+            padding: EdgeInsets.only(top: 5.h, left: 8.w),
+            child: Text(
+              _specializationErrorText!,
+              style: TextStyleApp.regular12().copyWith(
+                color: Colors.redAccent,
+              ),
+            ),
+          ),
+      ],
     );
   }
 
@@ -266,8 +373,6 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
 
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
     _phoneController.dispose();
     _yourAgeController.dispose();
 

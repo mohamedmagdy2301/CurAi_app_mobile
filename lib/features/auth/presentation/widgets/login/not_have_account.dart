@@ -25,7 +25,7 @@ class NotHaveAccount extends StatelessWidget {
           maxLines: 1,
         ),
         TextButton(
-          onPressed: () => context.pushNamed(Routes.registerScreen),
+          onPressed: () => context.pushNamed(Routes.completeProfileScreen),
           child: AutoSizeText(
             context.translate(LangKeys.register),
             maxLines: 1,
