@@ -54,7 +54,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           CustomTextFeild(
             labelText: context.translate(LangKeys.userName),
             keyboardType: TextInputType.name,
-            hint: 'ex: @username',
+            hint: context.isStateArabic ? 'مثال: @username' : 'e.g. @username',
             controller: _userNameController,
             onChanged: (_) => _validateForm(),
           ),
@@ -76,7 +76,9 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           CustomTextFeild(
             labelText: context.translate(LangKeys.email),
             keyboardType: TextInputType.emailAddress,
-            hint: 'ex: username.${DateTime.now().year}@example.com',
+            hint: context.isStateArabic
+                ? 'مثال: username.${DateTime.now().year}@example.com'
+                : 'e.g. username.${DateTime.now().year}@example.com',
             controller: _emailController,
             onChanged: (_) => _validateForm(),
           ),
@@ -86,7 +88,8 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             keyboardType: TextInputType.visiblePassword,
             controller: _passwordController,
             obscureText: _isPasswordObscure,
-            hint: 'ex: XYZ@123xyz',
+            hint:
+                context.isStateArabic ? 'مثال: XYZ@123xyz' : 'e.g. XYZ@123xyz',
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),

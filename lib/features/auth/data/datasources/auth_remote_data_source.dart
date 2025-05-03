@@ -148,6 +148,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (request.latitude != null) data['latitude'] = request.latitude;
     if (request.longitude != null) data['longitude'] = request.longitude;
     if (request.role != null) data['role'] = request.role;
+    if (request.isApproved != null) data['is_approved'] = request.isApproved;
+
     final response = await dioConsumer.patch(
       EndPoints.getProfile,
       body: FormData.fromMap(data),

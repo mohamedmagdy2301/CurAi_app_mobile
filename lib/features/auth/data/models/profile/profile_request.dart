@@ -16,6 +16,7 @@ class ProfileRequest {
     this.longitude,
     this.role,
     this.imageFile,
+    this.isApproved,
   });
 
   final String? username;
@@ -23,7 +24,7 @@ class ProfileRequest {
   final String? lastName;
   final String? phoneNumber;
   final String? gender;
-  final int? age;
+  final String? age;
   final int? specialization;
   final String? consultationPrice;
   final String? location;
@@ -32,4 +33,5 @@ class ProfileRequest {
   final double? longitude;
   final String? role;
   final File? imageFile;
+  final bool? isApproved;
 }

@@ -88,14 +88,14 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   void _updateProfileOnTap() {
     context.pop();
     final profileRequest = ProfileRequest(
-      username: _userNameController.text,
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text,
-      phoneNumber: _phoneController.text,
-      location: _addressController.text,
-      age: int.tryParse(_yourAgeController.text),
+      username: _userNameController.text.trim(),
+      firstName: _firstNameController.text.trim(),
+      lastName: _lastNameController.text.trim(),
+      phoneNumber: _phoneController.text.trim(),
+      location: _addressController.text.trim(),
+      age: _yourAgeController.text.trim(),
       gender: selectedGender,
-      consultationPrice: _consultationPriceController.text,
+      consultationPrice: _consultationPriceController.text.trim(),
       imageFile: imageFile,
     );
     context

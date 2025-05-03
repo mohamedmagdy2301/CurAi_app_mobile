@@ -70,7 +70,10 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             ),
             CustomTextFeild(
               labelText: context.translate(LangKeys.email),
-              autofillHints: const [AutofillHints.email],
+              autofillHints: const [
+                AutofillHints.email,
+                AutofillHints.username,
+              ],
               keyboardType: TextInputType.emailAddress,
               controller: _emailController,
               onChanged: (_) => _validateForm(),

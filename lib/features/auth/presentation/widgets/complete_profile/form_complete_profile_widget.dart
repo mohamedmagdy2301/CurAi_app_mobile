@@ -92,9 +92,10 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
         specialization: selectedSpecialization,
         bio: _bioController.text.trim(),
         phoneNumber: _phoneController.text.trim(),
-        age: int.tryParse(_yourAgeController.text.trim()),
+        age: _yourAgeController.text.trim(),
         gender: selectedGender,
         imageFile: imageFile,
+        isApproved: true,
       );
       context
           .read<AuthCubit>()
@@ -346,7 +347,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
         if (state is EditProfileSuccess) {
           context
             ..pop()
-            ..pushReplacementNamed(Routes.contCompleteProfileScreen);
+            ..pushReplacementNamed(Routes.loginScreen);
         } else if (state is EditProfileError) {
           context.pop();
           showMessage(
