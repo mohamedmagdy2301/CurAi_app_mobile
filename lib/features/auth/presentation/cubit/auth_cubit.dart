@@ -38,7 +38,6 @@ class AuthCubit extends Cubit<AuthState> {
   final GetProfileUsecase _getProfileUsecase;
   final EditProfileUsecase _editProfileUsecase;
   final ContactUsUsecase _contactUsUsecase;
-
   Future<void> register(
     BuildContext context,
     RegisterRequest registerRequest,
@@ -56,11 +55,20 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (successMessage) {
         if (isClosed) return;
-        displayedMessage = isArabic
-            ? 'تم التسجيل بنجاح!\n'
-                'أكمل بياناتك الآن أو ستفقد ما أدخلته.'
-            : 'Registration successful!\n'
-                'Complete your profile now or you will lose the entered data.';
+
+        final role = registerRequest.role;
+
+        if (role == 'doctor') {
+          displayedMessage = isArabic
+              ? 'تم التسجيل بنجاح!\n'
+                  'يرجى إكمال بياناتك لتفعيل حسابك.'
+              : 'Registration successful!\n'
+                  'Please complete your profile to activate your account.';
+        } else {
+          displayedMessage = isArabic
+              ? 'تم التسجيل بنجاح!\nيرجى تسجيل الدخول للمتابعة.'
+              : 'Registration successful!\nPlease log in to continue.';
+        }
 
         emit(RegisterSuccess(message: displayedMessage));
       },

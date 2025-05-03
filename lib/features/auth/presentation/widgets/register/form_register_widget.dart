@@ -98,6 +98,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          5.hSpace,
           _buildRegisterButton(),
         ],
       ),
@@ -125,6 +126,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             message: state.message,
             type: SnackBarType.success,
           );
+
           context.pushReplacementNamed(Routes.completeProfileScreen);
         } else if (state is RegisterLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
