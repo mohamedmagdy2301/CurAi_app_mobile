@@ -6,6 +6,9 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
@@ -29,43 +32,55 @@ class YourProfileScreen extends StatefulWidget {
 }
 
 class _YourProfileScreenState extends State<YourProfileScreen> {
-  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _yourAgeController = TextEditingController();
+  final TextEditingController _consultationPriceController =
+      TextEditingController();
 
   String? selectedGender;
-  ImagePicker imagePicker = ImagePicker();
+  final ImagePicker imagePicker = ImagePicker();
   File? imageFile;
   String? imageUrl;
   bool isChanged = false;
-
+  XFile? xFilePhoto;
   @override
   void initState() {
     super.initState();
-    _userNameController.text = widget.profileModel.username!;
-    _fullNameController.text = widget.profileModel.firstName!;
-    _phoneController.text = widget.profileModel.phoneNumber!;
-    _addressController.text = widget.profileModel.location!;
-    _yourAgeController.text = widget.profileModel.age.toString();
+    _userNameController.text = widget.profileModel.username ?? '';
+    _firstNameController.text = widget.profileModel.firstName ?? '';
+    _lastNameController.text = widget.profileModel.lastName ?? '';
+    _phoneController.text = widget.profileModel.phoneNumber ?? '';
+    _addressController.text = widget.profileModel.location ?? '';
+    _consultationPriceController.text =
+        widget.profileModel.consultationPrice ?? '';
+    _yourAgeController.text = widget.profileModel.age?.toString() ?? '';
     selectedGender = widget.profileModel.gender;
     imageUrl = widget.profileModel.profilePicture;
 
     _userNameController.addListener(checkIfChanged);
-    _fullNameController.addListener(checkIfChanged);
+    _firstNameController.addListener(checkIfChanged);
+    _lastNameController.addListener(checkIfChanged);
     _phoneController.addListener(checkIfChanged);
     _addressController.addListener(checkIfChanged);
     _yourAgeController.addListener(checkIfChanged);
+    _consultationPriceController.addListener(checkIfChanged);
   }
 
   void checkIfChanged() {
     setState(() {
-      isChanged = widget.profileModel.username! != _userNameController.text ||
-          widget.profileModel.phoneNumber! != _phoneController.text ||
-          widget.profileModel.location! != _addressController.text ||
-          widget.profileModel.age! != int.tryParse(_yourAgeController.text) ||
-          widget.profileModel.gender! != selectedGender ||
+      isChanged = widget.profileModel.username != _userNameController.text ||
+          widget.profileModel.firstName != _firstNameController.text ||
+          widget.profileModel.lastName != _lastNameController.text ||
+          widget.profileModel.phoneNumber != _phoneController.text ||
+          widget.profileModel.location != _addressController.text ||
+          widget.profileModel.age != int.tryParse(_yourAgeController.text) ||
+          widget.profileModel.consultationPrice !=
+              _consultationPriceController.text ||
+          widget.profileModel.gender != selectedGender ||
           imageFile != null;
     });
   }
@@ -73,19 +88,19 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   void _updateProfileOnTap() {
     context.pop();
     final profileRequest = ProfileRequest(
-      fullName: _fullNameController.text,
-      username: _userNameController.text,
-      phoneNumber: _phoneController.text,
-      location: _addressController.text,
-      age: int.parse(_yourAgeController.text),
-      gender: selectedGender ?? 'male',
-      specialization: '',
-      consultationPrice: '',
+      username: _userNameController.text.trim(),
+      firstName: _firstNameController.text.trim(),
+      lastName: _lastNameController.text.trim(),
+      phoneNumber: _phoneController.text.trim(),
+      location: _addressController.text.trim(),
+      age: _yourAgeController.text.trim(),
+      gender: selectedGender,
+      consultationPrice: _consultationPriceController.text.trim(),
+      imageFile: imageFile,
     );
-    context.read<AuthCubit>().editProfile(
-          profileRequest: profileRequest,
-          // imageFile: imageFile,
-        );
+    context
+        .read<AuthCubit>()
+        .editProfile(context, profileRequest: profileRequest);
   }
 
   @override
@@ -98,18 +113,20 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           4.hSpace,
           ImageProfileWidget(
             imageFile: imageFile,
-            imageUrl: imageFile == null ? imageUrl : null,
-            // isEdit: true,
-            // onTap: () async {
-            //   final xFilePhoto =
-            //       await imagePicker.pickImage(source: ImageSource.gallery);
-            //   if (xFilePhoto != null) {
-            //     setState(() {
-            //       imageFile = File(xFilePhoto.path);
-            //       checkIfChanged();
-            //     });
-            // }
-            // },
+            isEdit: true,
+            imageUrl: widget.profileModel.profilePicture,
+            onTap: () async {
+              xFilePhoto = await imagePicker.pickImage(
+                source: ImageSource.gallery,
+              );
+              if (xFilePhoto != null) {
+                setState(() {
+                  imageFile = File(xFilePhoto!.path);
+                  imageUrl = imageFile!.path;
+                  checkIfChanged();
+                });
+              }
+            },
           ),
           CustomTextFeildEditProfile(
             title: LangKeys.userName,
@@ -117,9 +134,14 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             controller: _userNameController,
           ),
           CustomTextFeildEditProfile(
-            title: LangKeys.fullName,
+            title: LangKeys.firstName,
             keyboardType: TextInputType.name,
-            controller: _fullNameController,
+            controller: _firstNameController,
+          ),
+          CustomTextFeildEditProfile(
+            title: LangKeys.lastName,
+            keyboardType: TextInputType.name,
+            controller: _lastNameController,
           ),
           CustomTextFeildEditProfile(
             title: LangKeys.phone,
@@ -143,25 +165,19 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               8.hSpace,
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 8.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                 margin: EdgeInsets.symmetric(horizontal: 20.w),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.r),
-                  border: Border.all(
-                    color: context.primaryColor.withAlpha(90),
-                  ),
+                  border: Border.all(color: context.primaryColor.withAlpha(90)),
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     isExpanded: true,
                     borderRadius: BorderRadius.circular(8.r),
                     elevation: 0,
-                    style: TextStyleApp.regular16().copyWith(
-                      color: context.onPrimaryColor,
-                    ),
+                    style: TextStyleApp.regular16()
+                        .copyWith(color: context.onPrimaryColor),
                     isDense: true,
                     icon: const Icon(Icons.arrow_drop_down),
                     value: selectedGender,
@@ -187,6 +203,11 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             ],
           ),
           CustomTextFeildEditProfile(
+            title: LangKeys.consultationPrice,
+            keyboardType: TextInputType.number,
+            controller: _consultationPriceController,
+          ),
+          CustomTextFeildEditProfile(
             title: LangKeys.yourAge,
             keyboardType: TextInputType.number,
             controller: _yourAgeController,
@@ -210,6 +231,21 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       ? 'تم تحديث الملف الشخصي بنجاح'
                       : 'Profile updated successfully',
                 );
+
+                CacheDataHelper.removeData(key: SharedPrefKey.keyFullName);
+                CacheDataHelper.removeData(
+                  key: SharedPrefKey.keyProfilePicture,
+                );
+                CacheDataHelper.setData(
+                  key: SharedPrefKey.keyProfilePicture,
+                  value: imageFile?.path ?? widget.profileModel.profilePicture,
+                );
+                CacheDataHelper.setData(
+                  key: SharedPrefKey.keyFullName,
+                  value:
+                      '${_firstNameController.text} ${_lastNameController.text}',
+                );
+                context.pushReplacementNamed(Routes.mainScaffoldUser);
               } else if (state is EditProfileError) {
                 context.pop();
                 showMessage(
@@ -249,7 +285,9 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
   @override
   void dispose() {
-    _fullNameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _consultationPriceController.dispose();
     _userNameController.dispose();
     _phoneController.dispose();
     _addressController.dispose();

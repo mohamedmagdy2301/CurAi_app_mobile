@@ -2,8 +2,19 @@ class LangKeys {
   // App General
   static const String appName = 'app_name';
   static const String skip = 'skip';
+  static const String doctor = 'doctor';
+  static const String patient = 'patient';
+//! adress
+  static const String country = 'country';
+  static const String governorate = 'governorate';
+  static const String city = 'city';
+  static const String area = 'area';
+  static const String street = 'street';
+  static const String specialMark = 'special_mark';
+  static const String clinicAddress = 'clinic_address';
+  static const String clinicAddressDescription = 'clinic_address_description';
 
-  // Onboarding
+  //! Onboarding
   static const String titleOnboarding1 = 'title_onboarding_1';
   static const String titleOnboarding2 = 'title_onboarding_2';
   static const String titleOnboarding3 = 'title_onboarding_3';
@@ -52,7 +63,7 @@ class LangKeys {
   static const String or = 'or';
   static const String completeProfile = 'complete_profile';
   static const String completeProfileTitle = 'complete_profile_title';
-  static const String descriptioncompleteProfile =
+  static const String completeProfileDescription =
       'description_complete_profile';
 
   //! OTP and PIN
@@ -142,6 +153,9 @@ class LangKeys {
 
 //! Edit Profile
   static const String fullName = 'full_name';
+  static const String firstName = 'first_name';
+  static const String lastName = 'last_name';
+  static const String bio = 'bio';
   static const String phone = 'phone';
   static const String gender = 'gender';
   static const String male = 'male';

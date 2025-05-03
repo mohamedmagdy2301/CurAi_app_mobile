@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
@@ -44,6 +45,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
       TextInput.finishAutofillContext();
       _formKey.currentState?.save();
       context.read<AuthCubit>().login(
+            context,
             LoginRequest(
               email: _emailController.text.trim(),
               password: _passwordController.text.trim(),
@@ -68,7 +70,10 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             ),
             CustomTextFeild(
               labelText: context.translate(LangKeys.email),
-              autofillHints: const [AutofillHints.email],
+              autofillHints: const [
+                AutofillHints.email,
+                AutofillHints.username,
+              ],
               keyboardType: TextInputType.emailAddress,
               controller: _emailController,
               onChanged: (_) => _validateForm(),
@@ -82,67 +87,74 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               obscureText: true,
               onChanged: (_) => _validateForm(),
             ),
-            HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () =>
-                      context.pushNamed(Routes.forgetPasswordScreen),
-                  child: Text(
-                    context.translate(LangKeys.forgotPassword),
-                    style: TextStyleApp.regular14().copyWith(
-                      color: context.primaryColor,
-                    ),
+            6.hSpace,
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => context.pushNamed(Routes.forgetPasswordScreen),
+                child: AutoSizeText(
+                  context.translate(LangKeys.forgotPassword),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyleApp.regular14().copyWith(
+                    decoration: TextDecoration.underline,
+                    decorationStyle: TextDecorationStyle.solid,
+                    decorationColor: context.primaryColor,
+                    color: context.primaryColor,
                   ),
                 ),
-              ],
+              ),
             ),
-            15.hSpace,
-            BlocConsumer<AuthCubit, AuthState>(
-              listenWhen: (previous, current) =>
-                  current is LoginLoading ||
-                  current is LoginSuccess ||
-                  current is LoginError,
-              listener: (context, state) {
-                if (state is LoginError) {
-                  Navigator.pop(context);
-                  showMessage(
-                    context,
-                    message: state.message,
-                    type: SnackBarType.error,
-                  );
-                } else if (state is LoginSuccess) {
-                  Navigator.pop(context);
-                  showMessage(
-                    context,
-                    message: state.message,
-                    type: SnackBarType.success,
-                  );
-                  CacheDataHelper.setData(
-                    key: SharedPrefKey.keyIsLoggedIn,
-                    value: true,
-                  );
-                  context.pushNamed(Routes.mainScaffoldUser);
-                } else if (state is LoginLoading) {
-                  AdaptiveDialogs.showLoadingAlertDialog(
-                    context: context,
-                    title: context.translate(LangKeys.login),
-                  );
-                }
-              },
-              builder: (context, state) {
-                return CustomButton(
-                  title: LangKeys.login,
-                  onPressed: () {
-                    _onLoginPressed(context);
-                  },
-                );
-              },
-            ),
+            8.hSpace,
+            _buildLoginButton(),
           ],
         ),
       ),
+    );
+  }
+
+  BlocConsumer<AuthCubit, AuthState> _buildLoginButton() {
+    return BlocConsumer<AuthCubit, AuthState>(
+      listenWhen: (previous, current) =>
+          current is LoginLoading ||
+          current is LoginSuccess ||
+          current is LoginError,
+      listener: (context, state) {
+        if (state is LoginError) {
+          context.pop();
+          showMessage(
+            context,
+            showCloseIcon: true,
+            message: state.message,
+            type: SnackBarType.error,
+          );
+        } else if (state is LoginSuccess) {
+          context.pop();
+          showMessage(
+            context,
+            message: state.message,
+            showCloseIcon: true,
+            type: SnackBarType.success,
+          );
+          CacheDataHelper.setData(
+            key: SharedPrefKey.keyIsLoggedIn,
+            value: true,
+          );
+          context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
+        } else if (state is LoginLoading) {
+          AdaptiveDialogs.showLoadingAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.login),
+          );
+        }
+      },
+      builder: (context, state) {
+        return CustomButton(
+          title: LangKeys.login,
+          isLoading: state is LoginLoading,
+          onPressed: () => _onLoginPressed(context),
+        );
+      },
     );
   }
 

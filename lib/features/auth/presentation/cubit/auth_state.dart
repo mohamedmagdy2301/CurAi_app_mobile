@@ -108,8 +108,9 @@ class GetProfileError extends AuthState {
 class EditProfileLoading extends AuthState {}
 
 class EditProfileSuccess extends AuthState {
-  const EditProfileSuccess({required this.profileModel});
+  const EditProfileSuccess({required this.message, required this.profileModel});
   final ProfileModel profileModel;
+  final String message;
 
   @override
   List<Object> get props => [profileModel];

@@ -14,6 +14,10 @@ class ProfileModel {
     this.location,
     this.isApproved,
     this.profilePicture,
+    this.bio,
+    this.latitude,
+    this.longitude,
+    this.bonusPoints,
   });
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -30,7 +34,11 @@ class ProfileModel {
     consultationPrice = (json['consultation_price'] ?? '') as String;
     location = (json['location'] ?? '') as String;
     isApproved = (json['is_approved'] ?? false) as bool;
-    profilePicture = (json['profile_picture'] ?? '') as String;
+    profilePicture = (json['profile_picture'] ?? '') as String?;
+    bio = (json['bio'] ?? '') as String;
+    latitude = (json['latitude'] ?? 0.0) as double;
+    longitude = (json['longitude'] ?? 0.0) as double;
+    bonusPoints = (json['bonus_points'] ?? 0) as int;
   }
 
   int? id;
@@ -47,4 +55,8 @@ class ProfileModel {
   String? location;
   bool? isApproved;
   String? profilePicture;
+  String? bio;
+  double? latitude;
+  double? longitude;
+  int? bonusPoints;
 }

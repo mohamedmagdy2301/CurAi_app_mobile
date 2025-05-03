@@ -14,6 +14,11 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
+void clearHistoryChatBot() {
+  final chatBox = Hive.box<MessageBubbleModel>('chat_messages');
+  chatBox.clear();
+}
+
 class ChatBotCubit extends Cubit<ChatBotState> {
   ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
       : super(ChatBotInitial());

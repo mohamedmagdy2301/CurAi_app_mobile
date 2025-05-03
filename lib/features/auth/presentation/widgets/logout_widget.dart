@@ -28,25 +28,28 @@ class LogoutWidget extends StatelessWidget {
             current is LogoutError ||
             current is LogoutLoading,
         listener: (context, state) async {
-          if (state is LogoutSuccess || state is LogoutError) {
+          if (state is LogoutSuccess) {
             context.pop();
 
             showMessage(
               context,
-              type: state is LogoutSuccess
-                  ? SnackBarType.success
-                  : SnackBarType.error,
-              message: state is LogoutSuccess
-                  ? state.message
-                  : state is LogoutError
-                      ? state.message
-                      : '',
+              type: SnackBarType.success,
+              message: state.message,
             );
 
             await clearUserData();
             await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
             if (!context.mounted) return;
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
+          }
+          if (state is LogoutError) {
+            context.pop();
+
+            showMessage(
+              context,
+              type: SnackBarType.error,
+              message: state.message,
+            );
           }
         },
         builder: (context, state) {
@@ -60,7 +63,7 @@ class LogoutWidget extends StatelessWidget {
                 message: context.translate(LangKeys.logoutMessage),
                 onPressedOk: () {
                   context.pop();
-                  context.read<AuthCubit>().logout();
+                  context.read<AuthCubit>().logout(context);
                 },
                 onPressedCancel: () => context.pop(),
               );

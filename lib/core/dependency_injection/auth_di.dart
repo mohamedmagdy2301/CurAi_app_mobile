@@ -5,7 +5,6 @@ import 'package:curai_app_mobile/features/auth/data/repositories/auth_repo_impl.
 import 'package:curai_app_mobile/features/auth/domain/repositories/auth_repo.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/contact_us_usecase.dart';
-import 'package:curai_app_mobile/features/auth/domain/usecases/edit_photo_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/edit_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/get_profile_usecase.dart';
 import 'package:curai_app_mobile/features/auth/domain/usecases/login_usecase.dart';
@@ -24,7 +23,6 @@ void setupAuthDI() {
         sl<ChangePasswordUsecase>(),
         sl<GetProfileUsecase>(),
         sl<EditProfileUsecase>(),
-        sl<EditPhotoProfileUsecase>(),
         sl<ContactUsUsecase>(),
       ),
     )
@@ -36,7 +34,6 @@ void setupAuthDI() {
     ..registerLazySingleton(() => ChangePasswordUsecase(repository: sl()))
     ..registerLazySingleton(() => GetProfileUsecase(repository: sl()))
     ..registerLazySingleton(() => EditProfileUsecase(repository: sl()))
-    ..registerLazySingleton(() => EditPhotoProfileUsecase(repository: sl()))
     ..registerLazySingleton(() => ContactUsUsecase(repository: sl()))
 
     //! Repository

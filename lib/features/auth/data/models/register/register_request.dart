@@ -4,38 +4,29 @@ class RegisterRequest {
     required this.password,
     required this.confirmPassword,
     required this.username,
-    required this.fullName,
-    required this.phoneNumber,
-    required this.gender,
-    required this.age,
-    required this.specialization,
-    required this.consultationPrice,
-    required this.location,
+    required this.role,
+    required this.firstName,
+    required this.lastName,
   });
 
   Map<String, dynamic> toJson() => {
         'email': email,
         'password': password,
-        'username': username,
         'password_confirm': confirmPassword,
-        'first_name': fullName,
-        'phone_number': phoneNumber,
-        'gender': gender,
-        'age': age,
-        'specialization': specialization,
-        'consultation_price': consultationPrice,
-        'location': location,
+        'username': username,
+        'role': role,
+        'first_name': firstName,
+        'last_name': lastName,
+        'specialization': 1,
+        'consultation_price': 1,
+        'location': 's',
       };
 
   final String email;
   final String password;
   final String confirmPassword;
   final String username;
-  final String fullName;
-  final String phoneNumber;
-  final String gender;
-  final int age;
-  final String specialization;
-  final String consultationPrice;
-  final String location;
+  final String role;
+  final String firstName;
+  final String lastName;
 }

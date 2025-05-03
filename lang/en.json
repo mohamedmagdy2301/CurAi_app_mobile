@@ -185,6 +185,19 @@
   "add_working_time_success": "Working time added successfully",
   "add_working_time_failed": "Failed to add working time",
   "update_working_time_failed":  "Failed to update working time",
-  "delete_working_time_failed":   "Failed to delete working time"
+  "delete_working_time_failed":   "Failed to delete working time",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "bio": "Bio",
+  "doctor": "Doctor",
+  "patient":  "Patient",
+  "country":  "Country",
+  "governorate":  "Governorate",
+  "city":  "City",
+  "area":  "Area",
+  "street":  "Street",
+ "special_mark": "Special Mark",
+  "clinic_address_description": "Please enter your clinic's address accurately, including governorate, city, area, and street name to help patients reach you easily.",
+  "clinic_address": "Clinic Address" 
  
 }

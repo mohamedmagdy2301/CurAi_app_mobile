@@ -28,10 +28,14 @@ class NotHaveAccount extends StatelessWidget {
           onPressed: () => context.pushNamed(Routes.registerScreen),
           child: AutoSizeText(
             context.translate(LangKeys.register),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyleApp.semiBold14().copyWith(
               color: context.primaryColor,
+              decoration: TextDecoration.underline,
+              decorationStyle: TextDecorationStyle.solid,
+              decorationColor: context.primaryColor,
             ),
-            maxLines: 1,
           ),
         ),
       ],

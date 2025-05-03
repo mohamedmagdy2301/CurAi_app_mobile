@@ -57,27 +57,33 @@ class DioConsumer implements ApiConsumer {
       return httpClient;
     };
 
-    dio.options
-      ..headers['Accept'] = 'application/json'
-      ..headers['Content-Type'] = 'application/json'
-      ..headers['X-Requested-With'] = 'XMLHttpRequest'
-      ..baseUrl = EnvVariables.baseApiUrl
-      ..sendTimeout = _defaultTimeouts
-      ..connectTimeout = _defaultTimeouts
-      ..receiveTimeout = _defaultTimeouts
-      ..responseType = ResponseType.plain
-      ..followRedirects = false
-      ..validateStatus =
-          (status) => status != null && status < StatusCode.internalServerError;
+    /// Add interceptors
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options
+            ..headers['Accept'] = 'application/json'
+            ..headers['Content-Type'] = 'application/json'
+            ..headers['X-Requested-With'] = 'XMLHttpRequest'
+            ..baseUrl = EnvVariables.baseApiUrl
+            ..sendTimeout = _defaultTimeouts
+            ..connectTimeout = _defaultTimeouts
+            ..receiveTimeout = _defaultTimeouts
+            ..responseType = ResponseType.plain
+            ..followRedirects = false
+            ..validateStatus = (status) =>
+                status != null && status < StatusCode.internalServerError;
+          if (getAccessToken().isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer ${getAccessToken()}';
+          }
+          return handler.next(options);
+        },
+      ),
+    );
 
-    // Attach token if available.
-    if (getAccessToken().isNotEmpty) {
-      dio.options.headers['Authorization'] = 'Bearer ${getAccessToken()}';
-    }
-
-    // Add logging interceptor in debug mode.
+    /// Add logging interceptor in debug mode.
     if (kDebugMode) {
-      // dio.interceptors.add(di.sl<LogInterceptor>());
+      dio.interceptors.add(di.sl<LogInterceptor>());
     }
   }
 
