@@ -11,6 +11,8 @@ class LangKeys {
   static const String area = 'area';
   static const String street = 'street';
   static const String specialMark = 'special_mark';
+  static const String clinicAddress = 'clinic_address';
+  static const String clinicAddressDescription = 'clinic_address_description';
 
   //! Onboarding
   static const String titleOnboarding1 = 'title_onboarding_1';

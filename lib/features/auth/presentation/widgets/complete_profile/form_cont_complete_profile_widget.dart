@@ -10,6 +10,8 @@ import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:curai_app_mobile/features/auth/presentation/cubit/get_location/get_location_cubit.dart';
+import 'package:curai_app_mobile/features/auth/presentation/widgets/complete_profile/maps_card_add_new_address.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +47,8 @@ class _ContCompleteProfileFormWidgetState
   void _onContCompletePressed(BuildContext context) {
     hideKeyboard();
     _validateForm();
+    final cubitLocation = context.read<GetLocationCubit>().selectedLocation;
+
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
       if (latitude == null || longitude == null) {
@@ -62,8 +66,8 @@ class _ContCompleteProfileFormWidgetState
         location: '${_countryController.text} ${_governorateController.text} '
             '${_cityController.text} ${_areaController.text} '
             '${_streetController.text} ${_specialMarkController.text}',
-        latitude: latitude,
-        longitude: longitude,
+        latitude: cubitLocation.latitude,
+        longitude: cubitLocation.longitude,
       );
       context
           .read<AuthCubit>()
@@ -78,6 +82,8 @@ class _ContCompleteProfileFormWidgetState
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
+          const MapsCardAddNewAddress(),
+          20.hSpace,
           CustomTextFeild(
             labelText: context.translate(LangKeys.country),
             keyboardType: TextInputType.streetAddress,
@@ -117,10 +123,11 @@ class _ContCompleteProfileFormWidgetState
             labelText: context.translate(LangKeys.specialMark),
             keyboardType: TextInputType.streetAddress,
             controller: _specialMarkController,
+            isValidator: false,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          10.hSpace,
+          5.hSpace,
           _buildContCompleteButton(),
         ],
       ),

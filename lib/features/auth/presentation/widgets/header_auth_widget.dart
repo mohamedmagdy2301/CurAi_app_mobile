@@ -22,7 +22,7 @@ class HeaderAuthWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        20.hSpace,
+        12.hSpace,
         Row(
           children: [
             AutoSizeText(
