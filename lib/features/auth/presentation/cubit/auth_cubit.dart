@@ -46,6 +46,9 @@ class AuthCubit extends Cubit<AuthState> {
     emit(RegisterLoading());
 
     final result = await _registerUsecase.call(registerRequest);
+    final isArabic = context.isStateArabic;
+    String displayedMessage;
+
     result.fold(
       (errorMessage) {
         if (isClosed) return;
@@ -53,7 +56,13 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (successMessage) {
         if (isClosed) return;
-        emit(RegisterSuccess(message: successMessage));
+        displayedMessage = isArabic
+            ? 'تم التسجيل بنجاح! يرجى إكمال بياناتك الآن.\n'
+                'إذا لم تكملها، ستفقد البيانات التي أدخلتها.'
+            : 'Registration successful! Please complete your profile now.\n'
+                'If not completed, you will lose the data you entered.';
+
+        emit(RegisterSuccess(message: displayedMessage));
       },
     );
   }
@@ -125,9 +134,9 @@ class AuthCubit extends Cubit<AuthState> {
 
         displayedMessage = isArabic
             ? 'تم تسجيل الخروج بنجاح.\n'
-                ' نأمل أن نراك قريبًا في CurAi!'
+                'نأمل أن نراك قريبًا في CurAi!'
             : 'You have logged out successfully.\n'
-                ' We hope to see you again soon on CurAi!';
+                'We hope to see you again soon on CurAi!';
 
         emit(LogoutSuccess(message: displayedMessage));
       },
@@ -141,6 +150,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ChangePasswordLoading());
 
     final result = await _changePasswordUsecase.call(changePasswordRequest);
+    final isArabic = context.isStateArabic;
+    String displayedMessage;
 
     result.fold(
       (errorMessage) {
@@ -149,7 +160,14 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (successMessage) {
         if (isClosed) return;
-        emit(ChangePasswordSuccess(message: successMessage));
+
+        displayedMessage = isArabic
+            ? 'تم تغيير كلمة المرور بنجاح.\n'
+                'يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.'
+            : 'Password changed successfully.\n'
+                'You can now log in with your new password.';
+
+        emit(ChangePasswordSuccess(message: displayedMessage));
       },
     );
   }
@@ -180,6 +198,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(EditProfileLoading());
 
     final result = await _editProfileUsecase.call(profileRequest);
+    final isArabic = context.isStateArabic;
+    String displayedMessage;
     result.fold(
       (errorMessage) {
         if (isClosed) return;
@@ -187,7 +207,19 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (profileModel) {
         if (isClosed) return;
-        emit(EditProfileSuccess(profileModel: profileModel));
+
+        displayedMessage = isArabic
+            ? 'تم تعديل ملفك الشخصي بنجاح.\n'
+                'البيانات الخاصة بك محدثة الآن!'
+            : 'Your profile has been updated successfully.\n'
+                'Your data is now up to date!';
+
+        emit(
+          EditProfileSuccess(
+            profileModel: profileModel,
+            message: displayedMessage,
+          ),
+        );
       },
     );
   }
@@ -199,6 +231,9 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ContactUsLoading());
 
     final result = await _contactUsUsecase.call(contactUsRequest);
+
+    final isArabic = context.isStateArabic;
+    String displayedMessage;
     result.fold(
       (errorMessage) {
         if (isClosed) return;
@@ -206,7 +241,14 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (successMessage) {
         if (isClosed) return;
-        emit(ContactUsSuccess(message: successMessage));
+
+        displayedMessage = isArabic
+            ? 'شكرًا لتواصلك معنا.\n'
+                'سيتم الرد على استفسارك قريبًا.'
+            : 'Thank you for contacting us.\n'
+                'Your inquiry will be answered soon.';
+
+        emit(ContactUsSuccess(message: displayedMessage));
       },
     );
   }
