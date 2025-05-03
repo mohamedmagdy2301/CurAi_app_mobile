@@ -192,16 +192,21 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           checkmarkColor: Colors.white,
           label: Row(
             children: [
-              if (isSelected) 0.wSpace else 10.wSpace,
-              Icon(
-                isSelected ? Icons.person_2_outlined : Icons.person,
-                color: isSelected ? Colors.white : context.primaryColor,
-              ),
-              if (isSelected) 10.wSpace else 15.wSpace,
+              // if (isSelected) 0.wSpace else 10.wSpace,
+              // Icon(
+              //   isSelected ? Icons.person_2_outlined : Icons.person,
+              //   color: isSelected ? Colors.white : context.primaryColor,
+              // ),
+              if (isSelected) 15.wSpace else 30.wSpace,
               Text(
-                type == 'patient' ? 'Patient' : 'Doctor',
+                type == 'patient'
+                    ? context.translate(LangKeys.patient)
+                    : context.translate(LangKeys.doctor),
+                style: TextStyleApp.regular18().copyWith(
+                  color: isSelected ? Colors.white : context.primaryColor,
+                ),
               ),
-              if (isSelected) 0.wSpace else 5.wSpace,
+              if (isSelected) 15.wSpace else 30.wSpace,
             ],
           ),
           selected: isSelected,
@@ -209,7 +214,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           backgroundColor: context.backgroundColor,
           elevation: 2,
           padding:
-              EdgeInsets.symmetric(horizontal: context.W * 0.035, vertical: 5),
+              EdgeInsets.symmetric(horizontal: context.W * 0.035, vertical: 8),
           labelStyle: TextStyleApp.medium20().copyWith(
             color: isSelected ? Colors.white : context.primaryColor,
           ),
