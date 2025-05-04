@@ -51,15 +51,13 @@ class _ContCompleteProfileFormWidgetState
 
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
-      if (latitude == null ||
-          longitude == null ||
-          cubitLocation.latitude == 0 ||
-          cubitLocation.longitude == 0) {
+      if (cubitLocation.latitude == 0 || cubitLocation.longitude == 0) {
         showMessage(
           context,
           message: context.isStateArabic
               ? 'من فضلك اختر الموقع'
               : 'Please select location',
+          showCloseIcon: true,
           type: SnackBarType.error,
         );
         return;
@@ -111,7 +109,7 @@ class _ContCompleteProfileFormWidgetState
           CustomTextFeild(
             labelText: context.translate(LangKeys.area),
             keyboardType: TextInputType.streetAddress,
-            controller: _cityController,
+            controller: _areaController,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),

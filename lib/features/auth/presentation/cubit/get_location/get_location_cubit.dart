@@ -1,7 +1,11 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/get_location/get_location_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -15,9 +19,10 @@ class GetLocationCubit extends Cubit<GetLocationState> {
 
   final MapController mapController = MapController();
   Position? currentLocation;
-  LatLng selectedLocation = LatLng(0, 0);
+  LatLng selectedLocation = const LatLng(0, 0);
   String locationInfo = 'Tap on the map to select a location';
   List<Marker> markers = [];
+  StreamSubscription<Position>? _locationStreamSubscription;
 
   /// Get current location and add marker
   Future<void> getCurrentLocation(BuildContext context) async {
@@ -32,7 +37,9 @@ class GetLocationCubit extends Cubit<GetLocationState> {
           alignment: Alignment.center,
           child: GestureDetector(
             onTap: () {
-              log('Current Location Marker: $locationInfo');
+              if (kDebugMode) {
+                log('Current Location Marker: $locationInfo');
+              }
             },
             child: Icon(
               CupertinoIcons.pin_fill,
@@ -51,7 +58,7 @@ class GetLocationCubit extends Cubit<GetLocationState> {
   }
 
   /// Handle map tap - Add marker and fetch address
-  Future<void> onMapTap(LatLng position) async {
+  Future<void> onMapTap(BuildContext context, LatLng position) async {
     selectedLocation = position;
 
     markers = [
@@ -60,7 +67,13 @@ class GetLocationCubit extends Cubit<GetLocationState> {
         alignment: Alignment.center,
         child: GestureDetector(
           onTap: () {
-            log('Marker tapped: $locationInfo');
+            showMessage(
+              context,
+              message: context.isStateArabic
+                  ? 'تم اختيار الموقع: $locationInfo'
+                  : 'You selected location: $locationInfo',
+              type: SnackBarType.success,
+            );
           },
           child: Icon(
             CupertinoIcons.pin_fill,
@@ -83,9 +96,36 @@ class GetLocationCubit extends Cubit<GetLocationState> {
         return '${placemarks.first.street}, ${placemarks.first.locality}, ${placemarks.first.country}';
       }
     } catch (e) {
-      log('Failed to fetch address: $e');
+      if (kDebugMode) {
+        log('Failed to fetch address: $e');
+      }
     }
     return 'Unknown location';
+  }
+
+  /// Start listening to location updates
+  void startLocationUpdates() {
+    _locationStreamSubscription =
+        Geolocator.getPositionStream().listen((Position position) {
+      currentLocation = position;
+      selectedLocation = LatLng(position.latitude, position.longitude);
+      markers = [
+        Marker(
+          point: selectedLocation,
+          alignment: Alignment.center,
+          child: Icon(CupertinoIcons.pin_fill, color: Colors.red, size: 30.sp),
+        ),
+      ];
+      mapController.move(selectedLocation, 13);
+      locationInfo = _getLocationName(selectedLocation).toString();
+      emit(GetLocationSuccess(selectedLocation, locationInfo, markers));
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _locationStreamSubscription?.cancel();
+    return super.close();
   }
 }
 

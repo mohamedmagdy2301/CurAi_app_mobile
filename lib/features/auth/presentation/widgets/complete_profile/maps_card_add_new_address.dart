@@ -11,17 +11,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
-class OSMdata {
-  OSMdata({
-    required this.displayname,
-    required this.lat,
-    required this.lon,
-  });
-  final String displayname;
-  final double lat;
-  final double lon;
-}
-
 class MapsCardAddNewAddress extends StatefulWidget {
   const MapsCardAddNewAddress({super.key});
 
@@ -50,7 +39,7 @@ class _MapsCardAddNewAddressState extends State<MapsCardAddNewAddress> {
                   minZoom: 9,
                   maxZoom: 20,
                   onTap: (tapPosition, latLng) {
-                    cubit.onMapTap(latLng);
+                    cubit.onMapTap(context, latLng);
                   },
                 ),
                 children: [
@@ -80,25 +69,6 @@ class _MapsCardAddNewAddressState extends State<MapsCardAddNewAddress> {
             ],
           ),
         ).cornerRadiusWithClipRRect(10);
-        // 12.hSpace,
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 10.w),
-        //   child: state is GetLocationSuccess
-        //       ? Text(
-        //           state.locationInfo,
-        //           textAlign: TextAlign.center,
-        //           style: TextStyle(
-        //             fontSize: 16.sp,
-        //             fontWeight: FontWeight.bold,
-        //             color: context.onSecondaryColor,
-        //           ),
-        //         )
-        //       : Image.asset(
-        //           'assets/images/loading.gif',
-        //           height: 45.h,
-        //           width: 45.w,
-        //         ),
-        // ),
       },
     );
   }
