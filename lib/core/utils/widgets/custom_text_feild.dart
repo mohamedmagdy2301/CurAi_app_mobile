@@ -21,6 +21,7 @@ class CustomTextFeild extends StatefulWidget {
     this.maxLines,
     this.isLable,
     this.hint,
+    this.maxLenght,
   });
   final String labelText;
   final String? hint;
@@ -33,6 +34,7 @@ class CustomTextFeild extends StatefulWidget {
   final bool? isValidator;
   final Widget? suffixIcon;
   final int? maxLines;
+  final int? maxLenght;
 
   @override
   State<CustomTextFeild> createState() => _CustomTextFeildState();
@@ -61,6 +63,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       ),
       // autocorrect: false,
       // enableSuggestions: false,
+      maxLength: widget.maxLenght,
       maxLines: widget.maxLines ?? 1,
       cursorHeight: 26.h,
       cursorWidth: 1.2.w,

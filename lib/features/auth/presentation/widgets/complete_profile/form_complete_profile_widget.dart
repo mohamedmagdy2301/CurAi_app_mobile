@@ -91,7 +91,19 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
         );
         return;
       }
+      final price = _consultationPriceController.text;
 
+      if (!RegExp(r'^[0-9]+$').hasMatch(price)) {
+        showMessage(
+          context,
+          message: context.isStateArabic
+              ? 'من فضلك ادخل السعر بالارقام فقط.'
+              : 'Please enter price as a number.',
+          showCloseIcon: true,
+          type: SnackBarType.error,
+        );
+        return;
+      }
       final ageText = _yourAgeController.text;
 
       if (!RegExp(r'^[0-9]+$').hasMatch(ageText)) {
@@ -179,6 +191,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.phone),
             keyboardType: TextInputType.phone,
             controller: _phoneController,
+            maxLenght: 11,
             hint: context.isStateArabic
                 ? 'مثال: 01012345678'
                 : 'e.g. 01012345678',
@@ -194,6 +207,25 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             suffixIcon: InkWell(
               onTap: () => _showYearPicker(context),
               child: const Icon(CupertinoIcons.calendar),
+            ),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.translate(LangKeys.consultationPrice),
+            keyboardType: TextInputType.number,
+            controller: _consultationPriceController,
+            hint: context.isStateArabic ? 'مثال: 200' : 'e.g. 200',
+            onChanged: (_) => _validateForm(),
+            suffixIcon: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  context.translate(LangKeys.egp),
+                  style: TextStyleApp.medium16()
+                      .copyWith(color: context.primaryColor),
+                ),
+              ],
             ),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -457,7 +489,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
       },
       builder: (context, state) {
         return CustomButton(
-          title: LangKeys.completeProfile,
+          title: LangKeys.complete,
           isLoading: state is EditProfileLoading,
           onPressed: () => _onCompletePressed(context),
         );

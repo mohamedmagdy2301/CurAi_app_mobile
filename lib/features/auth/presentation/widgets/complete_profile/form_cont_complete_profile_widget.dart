@@ -166,7 +166,7 @@ class _ContCompleteProfileFormWidgetState
       },
       builder: (context, state) {
         return CustomButton(
-          title: LangKeys.clinicAddress,
+          title: LangKeys.finish,
           isLoading: state is EditProfileLoading,
           onPressed: () => _onContCompletePressed(context),
         );

@@ -14,6 +14,9 @@ class LangKeys {
   static const String clinicAddress = 'clinic_address';
   static const String clinicAddressDescription = 'clinic_address_description';
 
+  static const String complete = 'complete';
+  static const String finish = 'finish';
+
   //! Onboarding
   static const String titleOnboarding1 = 'title_onboarding_1';
   static const String titleOnboarding2 = 'title_onboarding_2';
