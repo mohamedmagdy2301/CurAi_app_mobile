@@ -1,3 +1,5 @@
+// ignore_for_file: use_if_null_to_convert_nulls_to_bools, use_build_context_synchronously
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
@@ -14,9 +16,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppbarWorkingTimeAppointmentDoctor extends StatefulWidget
     implements PreferredSizeWidget {
-  const CustomAppbarWorkingTimeAppointmentDoctor({
-    super.key,
-  });
+  const CustomAppbarWorkingTimeAppointmentDoctor({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -39,7 +39,14 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
       ),
       builder: (_) => const AddWorkingTimeDoctorBottomSheet(),
     );
+
     if (result != null && context.mounted) {
+      final day = result['days_of_week'];
+      final start = result['available_from'];
+      final end = result['available_to'];
+
+      if (day is! String || start is! String || end is! String) return;
+
       final shouldDelete = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
         context: context,
         title: context.translate(LangKeys.addWorkingTime),
@@ -48,14 +55,12 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
         onPressedCancel: () => Navigator.of(context).pop(false),
       );
 
-      if (shouldDelete!) {
-        if (context.mounted) {
-          await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
-                day: result['days_of_week'] as String,
-                startTime: result['available_from'] as String,
-                endTime: result['available_to'] as String,
-              );
-        }
+      if (shouldDelete == true && context.mounted) {
+        await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
+              day: day,
+              startTime: start,
+              endTime: end,
+            );
       }
     }
   }
@@ -71,9 +76,9 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
           current is AddWorkingTimeDoctorLoading,
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is AddWorkingTimeDoctorSuccess) {
-          context
+          await context
               .read<AppointmentDoctorCubit>()
               .getWorkingTimeAvailableDoctor();
           showMessage(
@@ -81,13 +86,14 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
             type: SnackBarType.success,
             message: context.translate(LangKeys.addWorkingTimeSuccess),
           );
-          if (isLoading) {
+          if (isLoading && Navigator.canPop(context)) {
             Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
+          }
+          if (mounted) {
+            setState(() => isLoading = false);
           }
         }
+
         if (state is AddWorkingTimeDoctorFailure) {
           showMessage(
             context,
@@ -96,21 +102,22 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
                 '\n'
                 '${state.message}',
           );
-          if (isLoading) {
+          if (isLoading && Navigator.canPop(context)) {
             Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
+          }
+          if (mounted) {
+            setState(() => isLoading = false);
           }
         }
+
         if (state is AddWorkingTimeDoctorLoading && !isLoading) {
-          AdaptiveDialogs.showLoadingAlertDialog(
+          await AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.addWorkingTime),
           );
-          setState(() {
-            isLoading = true;
-          });
+          if (mounted) {
+            setState(() => isLoading = true);
+          }
         }
       },
       builder: (context, state) {
