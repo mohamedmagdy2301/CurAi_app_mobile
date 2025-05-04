@@ -2,6 +2,7 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -28,8 +29,6 @@ class CustomAppbarWorkingTimeAppointmentDoctor extends StatefulWidget
 
 class _CustomAppbarWorkingTimeAppointmentDoctorState
     extends State<CustomAppbarWorkingTimeAppointmentDoctor> {
-  bool isLoading = false;
-
   Future<void> showAvailabilityBottomSheet(BuildContext context) async {
     final result = await showModalBottomSheet<Map<String, dynamic>>(
       context: context,
@@ -78,6 +77,7 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           current is AddWorkingTimeDoctorLoading,
       listener: (context, state) async {
         if (state is AddWorkingTimeDoctorSuccess) {
+          context.pop();
           await context
               .read<AppointmentDoctorCubit>()
               .getWorkingTimeAvailableDoctor();
@@ -86,15 +86,11 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
             type: SnackBarType.success,
             message: context.translate(LangKeys.addWorkingTimeSuccess),
           );
-          if (isLoading && Navigator.canPop(context)) {
-            Navigator.pop(context);
-          }
-          if (mounted) {
-            setState(() => isLoading = false);
-          }
         }
 
         if (state is AddWorkingTimeDoctorFailure) {
+          context.pop();
+
           showMessage(
             context,
             type: SnackBarType.error,
@@ -102,22 +98,13 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
                 '\n'
                 '${state.message}',
           );
-          if (isLoading && Navigator.canPop(context)) {
-            Navigator.pop(context);
-          }
-          if (mounted) {
-            setState(() => isLoading = false);
-          }
         }
 
-        if (state is AddWorkingTimeDoctorLoading && !isLoading) {
+        if (state is AddWorkingTimeDoctorLoading) {
           await AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.addWorkingTime),
           );
-          if (mounted) {
-            setState(() => isLoading = true);
-          }
         }
       },
       builder: (context, state) {

@@ -26,8 +26,6 @@ class WorkingTimeDoctorEmptyWidget extends StatefulWidget {
 
 class _WorkingTimeDoctorEmptyWidgetState
     extends State<WorkingTimeDoctorEmptyWidget> {
-  bool isLoading = false;
-
   Future<void> showAvailabilityBottomSheet(BuildContext context) async {
     final result = await showModalBottomSheet<Map<String, dynamic>>(
       context: context,
@@ -80,13 +78,8 @@ class _WorkingTimeDoctorEmptyWidgetState
             type: SnackBarType.success,
             message: context.translate(LangKeys.addWorkingTimeSuccess),
           );
-          if (isLoading) {
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          }
         }
+
         if (state is AddWorkingTimeDoctorFailure) {
           showMessage(
             context,
@@ -95,27 +88,20 @@ class _WorkingTimeDoctorEmptyWidgetState
                 '\n'
                 '${state.message}',
           );
-          if (isLoading) {
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          }
         }
-        if (state is AddWorkingTimeDoctorLoading && !isLoading) {
+
+        if (state is AddWorkingTimeDoctorLoading) {
           await AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.addWorkingTime),
           );
-          setState(() {
-            isLoading = true;
-          });
         }
       },
       builder: (context, state) {
         return Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 CupertinoIcons.calendar_badge_plus,
@@ -131,15 +117,15 @@ class _WorkingTimeDoctorEmptyWidgetState
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyleApp.bold26().copyWith(
-                  color: context.onSecondaryColor.withAlpha(100),
+                  color: context.onSecondaryColor.withAlpha(90),
                 ),
               ).paddingSymmetric(horizontal: 20),
-              56.hSpace,
+              46.hSpace,
               IconButton(
                 onPressed: () => showAvailabilityBottomSheet(context),
                 icon: Icon(
                   CupertinoIcons.add_circled,
-                  color: context.primaryColor,
+                  color: context.primaryColor.withAlpha(90),
                   size: 90.sp,
                 ),
               ),
