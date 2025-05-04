@@ -22,7 +22,7 @@ class AdaptiveDialogs {
 
     await _showPlatformDialog<void>(
       context: context,
-      title: title ?? '',
+      title: '',
       message: CustomLoadingWidget(
         width: 45.w,
         height: 45.h,

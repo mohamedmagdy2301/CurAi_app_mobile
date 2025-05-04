@@ -160,13 +160,13 @@ class _ContCompleteProfileFormWidgetState
         } else if (state is EditProfileLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
-            title: context.translate(LangKeys.completeProfileTitle),
+            title: context.translate(LangKeys.clinicAddress),
           );
         }
       },
       builder: (context, state) {
         return CustomButton(
-          title: LangKeys.completeProfile,
+          title: LangKeys.clinicAddress,
           isLoading: state is EditProfileLoading,
           onPressed: () => _onContCompletePressed(context),
         );
