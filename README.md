@@ -15,6 +15,7 @@
 **CurAi** is a cutting-edge **Flutter-based** mobile application that revolutionizes the way patients connect with doctors. From booking appointments to receiving AI-powered health advice, CurAi makes healthcare more accessible and personalized.
 
 [![wakatime](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/2466cbc6-5345-4522-8a6d-c450b678cfc9.svg)](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/2466cbc6-5345-4522-8a6d-c450b678cfc9)
+[![wakatime](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/9f08f9f0-b19f-4449-ad75-1ee2e05929c8.svg)](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/9f08f9f0-b19f-4449-ad75-1ee2e05929c8)
 [![Flutter Version](https://img.shields.io/badge/Flutter-v3.0-blue.svg)](https://flutter.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
