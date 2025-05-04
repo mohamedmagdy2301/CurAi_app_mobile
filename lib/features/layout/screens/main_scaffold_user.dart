@@ -13,7 +13,6 @@ import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -90,11 +89,13 @@ class MainScaffoldUser extends StatelessWidget {
       child: BlocBuilder<NavigationCubit, int>(
         builder: (context, currentIndex) {
           return PopScope(
+            canPop: false,
             onPopInvokedWithResult: (didPop, result) async {
-              if (didPop) return;
-              final shouldExit = await _showExitDialog(context);
-              if (shouldExit) {
-                await SystemNavigator.pop();
+              if (!didPop) {
+                final shouldExit = await _showExitDialog(context);
+                if (shouldExit) {
+                  Navigator.of(context).maybePop();
+                }
               }
             },
             child: Scaffold(
