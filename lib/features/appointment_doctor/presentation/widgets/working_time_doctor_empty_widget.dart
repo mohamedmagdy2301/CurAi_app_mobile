@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -68,9 +70,9 @@ class _WorkingTimeDoctorEmptyWidgetState
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
           current is AddWorkingTimeDoctorLoading,
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is AddWorkingTimeDoctorSuccess) {
-          context
+          await context
               .read<AppointmentDoctorCubit>()
               .getWorkingTimeAvailableDoctor();
           showMessage(
@@ -101,7 +103,7 @@ class _WorkingTimeDoctorEmptyWidgetState
           }
         }
         if (state is AddWorkingTimeDoctorLoading && !isLoading) {
-          AdaptiveDialogs.showLoadingAlertDialog(
+          await AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.addWorkingTime),
           );
