@@ -79,8 +79,8 @@ class MainScaffoldUser extends StatelessWidget {
         child: const HomeScreen(),
       ),
       const ChatbotScreen(),
-      if (isDoctor) const WorkingTimeDoctorAvailableScreen(),
-      if (isPatient) const MyAppointmentPatientScreen(),
+      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
+      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
       const ProfileScreen(),
     ];
 
