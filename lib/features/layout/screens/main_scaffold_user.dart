@@ -1,8 +1,10 @@
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart%20';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
@@ -78,42 +80,65 @@ class MainScaffoldUser extends StatelessWidget {
         child: const HomeScreen(),
       ),
       const ChatbotScreen(),
-      if (isDoctor) const WorkingTimeDoctorAvailableScreen(),
-      if (isPatient) const MyAppointmentPatientScreen(),
+      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
+      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
       const ProfileScreen(),
     ];
 
-    return BlocBuilder<NavigationCubit, int>(
-      builder: (context, currentIndex) {
-        return PopScope(
-          canPop: false,
-          child: Scaffold(
-            backgroundColor: context.backgroundColor,
-            bottomNavigationBar: currentIndex == 1
-                ? null
-                : NavigationBar(
-                    labelBehavior:
-                        NavigationDestinationLabelBehavior.alwaysHide,
-                    animationDuration: const Duration(seconds: 1),
-                    height: 60.sp,
-                    indicatorColor: Colors.transparent,
-                    backgroundColor: context.backgroundColor,
-                    overlayColor: WidgetStateProperty.all(
-                      context.primaryColor.withAlpha(20),
+    return BlocProvider<NavigationCubit>(
+      create: (context) => NavigationCubit(),
+      child: BlocBuilder<NavigationCubit, int>(
+        builder: (context, currentIndex) {
+          return PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, result) async {
+              if (!didPop) {
+                final shouldExit = await _showExitDialog(context);
+                if (shouldExit) {
+                  Navigator.of(context).maybePop();
+                }
+              }
+            },
+            child: Scaffold(
+              backgroundColor: context.backgroundColor,
+              bottomNavigationBar: currentIndex == 1
+                  ? null
+                  : NavigationBar(
+                      labelBehavior:
+                          NavigationDestinationLabelBehavior.alwaysHide,
+                      animationDuration: const Duration(seconds: 1),
+                      height: 60.sp,
+                      indicatorColor: Colors.transparent,
+                      backgroundColor: context.backgroundColor,
+                      overlayColor: WidgetStateProperty.all(
+                        context.primaryColor.withAlpha(20),
+                      ),
+                      indicatorShape: Border.all(style: BorderStyle.none),
+                      elevation: 0,
+                      destinations: destinations,
+                      selectedIndex: currentIndex,
+                      onDestinationSelected: (index) {
+                        context.read<NavigationCubit>().updateIndex(index);
+                      },
                     ),
-                    indicatorShape: Border.all(style: BorderStyle.none),
-                    elevation: 0,
-                    destinations: destinations,
-                    selectedIndex: currentIndex,
-                    onDestinationSelected: (index) {
-                      context.read<NavigationCubit>().updateIndex(index);
-                    },
-                  ),
-            body: screens[currentIndex],
-          ),
-        );
-      },
+              body: screens[currentIndex],
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  Future<bool> _showExitDialog(BuildContext context) async {
+    final isArabic = context.isStateArabic;
+    return await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
+          context: context,
+          title: isArabic ? 'تأكيد الخروج' : 'Exit Confirmation',
+          message: isArabic ? 'هل ترغب في الخروج؟' : 'Do you want to exit?',
+          onPressedCancel: () => Navigator.of(context).pop(false),
+          onPressedOk: () => Navigator.of(context).pop(true),
+        ) ??
+        false;
   }
 
   Column customIconNavBar(

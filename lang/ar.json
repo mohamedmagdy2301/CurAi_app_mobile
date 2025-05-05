@@ -190,6 +190,7 @@
    "first_name": "الاسم الاول",
    "last_name": "الاسم الاخير",
    "bio": "السيرة الذاتية",
+   "filter": "تصفية",
    "doctor": "طبيب",
    "patient": "مريض",
    "country": "الدولة",
@@ -199,6 +200,8 @@
    "street": "الشارع",
    "special_mark": "علامة خاص",
    "clinic_address_description": "يرجى ادخال عنوان عيادتك بشكل دقيق للمساعدة في الوصول إليك بسهولة للمرضى.",
-   "clinic_address": "عنوان العيادة"
+   "clinic_address": "عنوان العيادة",
+   "complete"  : "مكتمل",
+   "finish" : "انهاء"
  
   }

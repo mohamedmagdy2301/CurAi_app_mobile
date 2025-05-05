@@ -28,7 +28,6 @@ class AuthRepoImpl extends AuthRepo {
     return response.fold(
       (failure) => left(failure.message),
       (result) async {
-        await clearUserData();
         await Future.wait([
           CacheDataHelper.setData(
             key: SharedPrefKey.keyAccessToken,

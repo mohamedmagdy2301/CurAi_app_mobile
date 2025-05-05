@@ -11,10 +11,10 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/scree
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/add_address_clinic_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/build_your_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/complete_profile_screen.dart';
-import 'package:curai_app_mobile/features/auth/presentation/screens/cont_complete_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
@@ -48,7 +48,14 @@ class AppRoutes {
       case Routes.completeProfileScreen:
         return BaseRoute(page: const CompleteProfileScreen());
       case Routes.contCompleteProfileScreen:
-        return BaseRoute(page: const ContCompleteProfileScreen());
+        if (arg is Map<String, dynamic>) {
+          final isEdit = arg['isEdit'] as bool?;
+          return BaseRoute(
+            page: AddAddressClinicScreen(isEdit: isEdit ?? false),
+          );
+        } else {
+          return BaseRoute(page: const PageUnderBuildScreen());
+        }
       case Routes.forgetPasswordScreen:
         return BaseRoute(page: const ForgetPasswordScreen());
       case Routes.otpVerification:
