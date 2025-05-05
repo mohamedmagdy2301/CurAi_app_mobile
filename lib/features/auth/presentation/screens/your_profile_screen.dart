@@ -6,6 +6,7 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
@@ -17,7 +18,10 @@ import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/your_profile/custom_text_feild_edit_profile.dart';
+import 'package:curai_app_mobile/features/home/data/models/specializations_model/specializations_model.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/image_profile_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +40,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _yourAgeController = TextEditingController();
   final TextEditingController _consultationPriceController =
       TextEditingController();
@@ -47,6 +50,9 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   String? imageUrl;
   bool isChanged = false;
   XFile? xFilePhoto;
+
+  int? selectedSpecialization;
+
   @override
   void initState() {
     super.initState();
@@ -54,18 +60,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     _firstNameController.text = widget.profileModel.firstName ?? '';
     _lastNameController.text = widget.profileModel.lastName ?? '';
     _phoneController.text = widget.profileModel.phoneNumber ?? '';
-    _addressController.text = widget.profileModel.location ?? '';
     _consultationPriceController.text =
         widget.profileModel.consultationPrice ?? '';
     _yourAgeController.text = widget.profileModel.age?.toString() ?? '';
     selectedGender = widget.profileModel.gender;
+    selectedSpecialization = widget.profileModel.specialization;
     imageUrl = widget.profileModel.profilePicture;
 
     _userNameController.addListener(checkIfChanged);
     _firstNameController.addListener(checkIfChanged);
     _lastNameController.addListener(checkIfChanged);
     _phoneController.addListener(checkIfChanged);
-    _addressController.addListener(checkIfChanged);
     _yourAgeController.addListener(checkIfChanged);
     _consultationPriceController.addListener(checkIfChanged);
   }
@@ -76,28 +81,41 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           widget.profileModel.firstName != _firstNameController.text ||
           widget.profileModel.lastName != _lastNameController.text ||
           widget.profileModel.phoneNumber != _phoneController.text ||
-          widget.profileModel.location != _addressController.text ||
           widget.profileModel.age != int.tryParse(_yourAgeController.text) ||
           widget.profileModel.consultationPrice !=
               _consultationPriceController.text ||
           widget.profileModel.gender != selectedGender ||
+          widget.profileModel.specialization != selectedSpecialization ||
           imageFile != null;
     });
   }
 
   void _updateProfileOnTap() {
     context.pop();
-    final profileRequest = ProfileRequest(
-      username: _userNameController.text.trim(),
-      firstName: _firstNameController.text.trim(),
-      lastName: _lastNameController.text.trim(),
-      phoneNumber: _phoneController.text.trim(),
-      location: _addressController.text.trim(),
-      age: _yourAgeController.text.trim(),
-      gender: selectedGender,
-      consultationPrice: _consultationPriceController.text.trim(),
-      imageFile: imageFile,
-    );
+    final ProfileRequest profileRequest;
+    if (getRole() == 'doctor') {
+      profileRequest = ProfileRequest(
+        username: _userNameController.text.trim(),
+        firstName: _firstNameController.text.trim(),
+        lastName: _lastNameController.text.trim(),
+        phoneNumber: _phoneController.text.trim(),
+        age: _yourAgeController.text.trim(),
+        gender: selectedGender,
+        consultationPrice: _consultationPriceController.text.trim(),
+        specialization: selectedSpecialization,
+        imageFile: imageFile,
+      );
+    } else {
+      profileRequest = ProfileRequest(
+        username: _userNameController.text.trim(),
+        firstName: _firstNameController.text.trim(),
+        lastName: _lastNameController.text.trim(),
+        phoneNumber: _phoneController.text.trim(),
+        age: _yourAgeController.text.trim(),
+        gender: selectedGender,
+        imageFile: imageFile,
+      );
+    }
     context
         .read<AuthCubit>()
         .editProfile(context, profileRequest: profileRequest);
@@ -144,74 +162,28 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             controller: _lastNameController,
           ),
           CustomTextFeildEditProfile(
-            title: LangKeys.phone,
-            keyboardType: TextInputType.phone,
-            controller: _phoneController,
-          ),
-          CustomTextFeildEditProfile(
-            title: LangKeys.address,
-            keyboardType: TextInputType.streetAddress,
-            controller: _addressController,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.translate(LangKeys.gender),
-                style: TextStyleApp.medium14().copyWith(
-                  color: context.onPrimaryColor,
-                ),
-              ).paddingSymmetric(horizontal: 20),
-              8.hSpace,
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                margin: EdgeInsets.symmetric(horizontal: 20.w),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.r),
-                  border: Border.all(color: context.primaryColor.withAlpha(90)),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    borderRadius: BorderRadius.circular(8.r),
-                    elevation: 0,
-                    style: TextStyleApp.regular16()
-                        .copyWith(color: context.onPrimaryColor),
-                    isDense: true,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    value: selectedGender,
-                    items: [
-                      DropdownMenuItem(
-                        value: 'male',
-                        child: Text(context.translate(LangKeys.male)),
-                      ),
-                      DropdownMenuItem(
-                        value: 'female',
-                        child: Text(context.translate(LangKeys.female)),
-                      ),
-                    ],
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedGender = newValue;
-                        checkIfChanged();
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          CustomTextFeildEditProfile(
-            title: LangKeys.consultationPrice,
-            keyboardType: TextInputType.number,
-            controller: _consultationPriceController,
-          ),
-          CustomTextFeildEditProfile(
             title: LangKeys.yourAge,
             keyboardType: TextInputType.number,
             controller: _yourAgeController,
+            suffixIcon: InkWell(
+              onTap: () => _showYearPicker(context),
+              child: const Icon(CupertinoIcons.calendar),
+            ),
           ),
+          _buildSelectGender(context),
+          CustomTextFeildEditProfile(
+            title: LangKeys.phone,
+            keyboardType: TextInputType.phone,
+            controller: _phoneController,
+            maxLenght: 11,
+          ),
+          if (getRole() == 'doctor')
+            CustomTextFeildEditProfile(
+              title: LangKeys.consultationPrice,
+              keyboardType: TextInputType.number,
+              controller: _consultationPriceController,
+            ),
+          if (getRole() == 'doctor') _buildSelectSpecilization(context),
           BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (previous, current) =>
                 current is EditProfileSuccess ||
@@ -283,6 +255,210 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     );
   }
 
+  Widget _buildSelectGender(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.translate(LangKeys.gender),
+          style: TextStyleApp.medium14().copyWith(
+            color: context.onPrimaryColor,
+          ),
+        ),
+        8.hSpace,
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.r),
+            border: Border.all(
+              color: context.primaryColor.withAlpha(100),
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              isExpanded: true,
+              borderRadius: BorderRadius.circular(8.r),
+              elevation: 0,
+              style: TextStyleApp.regular16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+              icon: Icon(
+                Icons.keyboard_arrow_down,
+                size: 30.sp,
+                color: context.primaryColor,
+              ),
+              value: selectedGender,
+              hint: Text(
+                context.translate(LangKeys.gender),
+                style: TextStyleApp.regular16().copyWith(
+                  color: context.primaryColor,
+                ),
+              ),
+              items: [
+                DropdownMenuItem(
+                  value: 'male',
+                  child: Text(
+                    context.translate(LangKeys.male),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 'female',
+                  child: Text(
+                    context.translate(LangKeys.female),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                ),
+              ],
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedGender = newValue;
+                });
+              },
+            ),
+          ),
+        ),
+      ],
+    ).paddingSymmetric(horizontal: 20);
+  }
+
+  Widget _buildSelectSpecilization(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.translate(LangKeys.medicalSpecialization),
+          style: TextStyleApp.medium14().copyWith(
+            color: context.onPrimaryColor,
+          ),
+        ),
+        8.hSpace,
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.r),
+            border: Border.all(
+              color: context.primaryColor.withAlpha(100),
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<int>(
+              isExpanded: true,
+              borderRadius: BorderRadius.circular(8.r),
+              elevation: 0,
+              style: TextStyleApp.regular16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+              icon: Icon(
+                Icons.keyboard_arrow_down,
+                size: 30.sp,
+                color: context.primaryColor,
+              ),
+              value: selectedSpecialization,
+              hint: selectedSpecialization == null
+                  ? Text(
+                      context.translate(LangKeys.medicalSpecialization),
+                      style: TextStyleApp.regular16().copyWith(
+                        color: context.primaryColor,
+                      ),
+                    )
+                  : Text(
+                      specializationName(
+                        specializationsList.firstWhere(
+                          (element) => element['id'] == selectedSpecialization,
+                        )['name'] as String,
+                        context.isStateArabic,
+                      ),
+                      style: TextStyleApp.regular16().copyWith(
+                        color: context.onPrimaryColor,
+                      ),
+                    ),
+              items: specializationsList
+                  .map(
+                    (spec) => DropdownMenuItem<int>(
+                      value: spec['id'] as int,
+                      child: Text(
+                        specializationName(
+                          spec['name'] as String,
+                          context.isStateArabic,
+                        ),
+                        style: TextStyleApp.regular16().copyWith(
+                          color: context.onPrimaryColor,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (int? newValue) {
+                setState(() {
+                  selectedSpecialization = newValue;
+                });
+              },
+            ),
+          ),
+        ),
+      ],
+    ).paddingSymmetric(horizontal: 20);
+  }
+
+  void _showYearPicker(BuildContext context) {
+    var selectedDate = DateTime.now();
+
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext builder) {
+        return SizedBox(
+          height: context.H * 0.4,
+          child: Column(
+            children: [
+              10.hSpace,
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: const Icon(Icons.check),
+                  iconSize: 30.sp,
+                  color: context.primaryColor,
+                  constraints: BoxConstraints.tight(
+                    Size(context.W * 0.1, context.W * 0.1),
+                  ),
+                  onPressed: () {
+                    final birthYear = selectedDate.year;
+                    final age = DateTime.now().year - birthYear;
+                    _yourAgeController.text = age.toString();
+                    context.pop();
+                  },
+                ).paddingSymmetric(horizontal: 15.w),
+              ),
+              5.hSpace,
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: DateTime(2000),
+                  maximumDate: DateTime(DateTime.now().year - 24),
+                  minimumDate: DateTime(DateTime.now().year - 120),
+                  onDateTimeChanged: (DateTime date) {
+                    setState(() {
+                      selectedDate = date;
+                    });
+                  },
+                ),
+              ),
+              10.hSpace,
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -290,7 +466,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     _consultationPriceController.dispose();
     _userNameController.dispose();
     _phoneController.dispose();
-    _addressController.dispose();
     _yourAgeController.dispose();
     super.dispose();
   }
