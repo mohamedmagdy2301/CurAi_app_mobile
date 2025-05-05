@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart%20';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
@@ -129,9 +130,7 @@ class MainScaffoldUser extends StatelessWidget {
   }
 
   Future<bool> _showExitDialog(BuildContext context) async {
-    // تحديد اللغة بناءً على إعدادات التطبيق
-    final currentLocale = Localizations.localeOf(context);
-    final isArabic = currentLocale.languageCode == 'ar';
+    final isArabic = context.isStateArabic;
     return await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
           context: context,
           title: isArabic ? 'تأكيد الخروج' : 'Exit Confirmation',

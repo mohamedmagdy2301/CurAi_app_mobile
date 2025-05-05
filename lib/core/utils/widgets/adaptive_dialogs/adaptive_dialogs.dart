@@ -107,7 +107,8 @@ class AdaptiveDialogs {
       title: title,
       message: Text(
         message,
-        style: TextStyleApp.medium14().copyWith(
+        textAlign: TextAlign.start,
+        style: TextStyleApp.medium16().copyWith(
           color: context.onPrimaryColor,
         ),
       ),
@@ -284,12 +285,14 @@ class AdaptiveDialogs {
               ? CupertinoAlertDialog(
                   title: Text(
                     title,
+                    textAlign: TextAlign.start,
                     style: TextStyleApp.bold16().copyWith(
                       color: context.onPrimaryColor,
                     ),
                   ),
                   content: SingleChildScrollView(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         message,
                         if (content != null) content,
@@ -301,6 +304,7 @@ class AdaptiveDialogs {
               : AlertDialog(
                   title: Text(
                     title,
+                    textAlign: TextAlign.start,
                     style: TextStyleApp.bold16().copyWith(
                       color: context.onPrimaryColor,
                     ),
@@ -308,6 +312,7 @@ class AdaptiveDialogs {
                   content: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         message,
                         if (content != null) content,
