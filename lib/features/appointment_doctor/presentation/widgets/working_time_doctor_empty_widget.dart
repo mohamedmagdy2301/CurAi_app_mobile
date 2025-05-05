@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/add_working_time_doctor_bottom_sheet.dart';
@@ -36,7 +37,7 @@ class _WorkingTimeDoctorEmptyWidgetState
       builder: (_) => const AddWorkingTimeDoctorBottomSheet(),
     );
 
-    if (result != null && context.mounted) {
+    if (result != null && mounted) {
       final shouldDelete = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
         context: context,
         title: context.translate(LangKeys.addWorkingTime),
@@ -46,7 +47,7 @@ class _WorkingTimeDoctorEmptyWidgetState
       );
 
       if (shouldDelete!) {
-        if (context.mounted) {
+        if (mounted) {
           await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
                 day: result['days_of_week'] as String,
                 startTime: result['available_from'] as String,
@@ -64,39 +65,6 @@ class _WorkingTimeDoctorEmptyWidgetState
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
           current is AddWorkingTimeDoctorLoading,
-      buildWhen: (previous, current) =>
-          current is AddWorkingTimeDoctorFailure ||
-          current is AddWorkingTimeDoctorSuccess ||
-          current is AddWorkingTimeDoctorLoading,
-      listener: (context, state) async {
-        if (state is AddWorkingTimeDoctorSuccess) {
-          await context
-              .read<AppointmentDoctorCubit>()
-              .getWorkingTimeAvailableDoctor();
-          showMessage(
-            context,
-            type: SnackBarType.success,
-            message: context.translate(LangKeys.addWorkingTimeSuccess),
-          );
-        }
-
-        if (state is AddWorkingTimeDoctorFailure) {
-          showMessage(
-            context,
-            type: SnackBarType.error,
-            message: '${context.translate(LangKeys.addWorkingTimeFailed)}'
-                '\n'
-                '${state.message}',
-          );
-        }
-
-        if (state is AddWorkingTimeDoctorLoading) {
-          await AdaptiveDialogs.showLoadingAlertDialog(
-            context: context,
-            title: context.translate(LangKeys.addWorkingTime),
-          );
-        }
-      },
       builder: (context, state) {
         return Center(
           child: Column(
@@ -121,17 +89,49 @@ class _WorkingTimeDoctorEmptyWidgetState
                 ),
               ).paddingSymmetric(horizontal: 20),
               46.hSpace,
-              IconButton(
-                onPressed: () => showAvailabilityBottomSheet(context),
-                icon: Icon(
-                  CupertinoIcons.add_circled,
-                  color: context.primaryColor.withAlpha(90),
-                  size: 90.sp,
+              if (state is AddWorkingTimeDoctorLoading)
+                const CustomLoadingWidget(height: 50, width: 50)
+                    .paddingSymmetric(horizontal: 15)
+              else
+                IconButton(
+                  onPressed: () => showAvailabilityBottomSheet(context),
+                  icon: Icon(
+                    CupertinoIcons.add_circled,
+                    color: context.primaryColor.withAlpha(90),
+                    size: 90.sp,
+                  ),
                 ),
-              ),
             ],
           ),
         );
+      },
+      listener: (context, state) async {
+        if (state is AddWorkingTimeDoctorSuccess) {
+          if (mounted) {
+            await context
+                .read<AppointmentDoctorCubit>()
+                .getWorkingTimeAvailableDoctor();
+            if (mounted) {
+              showMessage(
+                context,
+                type: SnackBarType.success,
+                message: context.translate(LangKeys.addWorkingTimeSuccess),
+              );
+            }
+          }
+        }
+
+        if (state is AddWorkingTimeDoctorFailure) {
+          if (mounted) {
+            showMessage(
+              context,
+              type: SnackBarType.error,
+              message: '${context.translate(LangKeys.addWorkingTimeFailed)}'
+                  '\n'
+                  '${state.message}',
+            );
+          }
+        }
       },
     );
   }

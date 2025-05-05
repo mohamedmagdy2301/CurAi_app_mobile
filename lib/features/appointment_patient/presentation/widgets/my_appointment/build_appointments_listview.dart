@@ -1,7 +1,5 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -62,8 +60,6 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
       header: const WaterDropHeader(),
       // footer: const ClassicFooter(),
       onRefresh: () async {
-        log(' --------------------------------------------------');
-
         try {
           await Future.delayed(const Duration(milliseconds: 500));
 

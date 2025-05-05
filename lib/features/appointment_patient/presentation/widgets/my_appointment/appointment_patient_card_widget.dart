@@ -45,7 +45,7 @@ class AppointmentPatientCardWidget extends StatelessWidget {
           Row(
             children: [
               AutoSizeText(
-                '${appointment.id}---${appointment.appointmentDate!.toReadableDate(context)}',
+                appointment.appointmentDate!.toReadableDate(context),
                 style: TextStyleApp.semiBold18()
                     .copyWith(color: context.onPrimaryColor),
               ),
@@ -150,16 +150,20 @@ class DeleteAppointmentButton extends StatelessWidget {
           current is DeleteAppointmentPatientFailure ||
           current is DeleteAppointmentPatientSuccess ||
           current is DeleteAppointmentPatientLoading,
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is DeleteAppointmentPatientFailure) {
-          Navigator.pop(context);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pop(context);
+          });
           showMessage(
             context,
             message: state.message,
             type: SnackBarType.error,
           );
         } else if (state is DeleteAppointmentPatientSuccess) {
-          Navigator.pop(context);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pop(context);
+          });
           showMessage(
             context,
             message: context.isStateArabic
@@ -167,9 +171,11 @@ class DeleteAppointmentButton extends StatelessWidget {
                 : 'Appointment canceled successfully',
             type: SnackBarType.success,
           );
-          context.read<AppointmentPatientCubit>().refreshMyAppointmentPatient();
+          await context
+              .read<AppointmentPatientCubit>()
+              .refreshMyAppointmentPatient();
         } else if (state is DeleteAppointmentPatientLoading) {
-          AdaptiveDialogs.showLoadingAlertDialog(
+          await AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.cancelAppointment),
           );
@@ -182,10 +188,10 @@ class DeleteAppointmentButton extends StatelessWidget {
               context: context,
               title: context.translate(LangKeys.cancelAppointment),
               message: context.translate(LangKeys.cancelAppointmentMessage),
-              onPressedOk: () {
+              onPressedOk: () async {
                 context.pop();
 
-                context
+                await context
                     .read<AppointmentPatientCubit>()
                     .deleteAppointmentPatient(
                       appointmentId: appointment.id!,
