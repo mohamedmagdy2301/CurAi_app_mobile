@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -17,6 +19,7 @@ import 'package:curai_app_mobile/features/appointment_patient/data/models/my_app
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/features/home/presentation/screens/details_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,57 +41,65 @@ class AppointmentPatientCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: context.isDark ? Colors.black : Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-      margin: context.padding(horizontal: 20, vertical: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              AutoSizeText(
-                appointment.appointmentDate?.toReadableDate(context) ??
-                    (context.isStateArabic
-                        ? 'تاريخ غير محدد'
-                        : 'Date not specified'),
-                style: TextStyleApp.semiBold18()
-                    .copyWith(color: context.onPrimaryColor),
-              ),
-              10.wSpace,
-              AutoSizeText(
-                appointment.appointmentTime!.toLocalizedTime(context),
-                style: TextStyleApp.semiBold16()
-                    .copyWith(color: context.onPrimaryColor),
-              ),
-              const Spacer(),
-              topTrailingWidget,
-            ],
-          ),
-          _customDivider(context),
-          Row(
-            children: [
-              CustomCachedNetworkImage(
-                imgUrl: doctorResults.profilePicture ??
-                    AppImages.imageAvtarDoctorOnLine,
-                height: context.H * 0.13,
-                width: context.H * 0.13,
-                errorIconSize: 60.sp,
-                loadingImgPadding: 60.w,
-              ).cornerRadiusWithClipRRect(8.r),
-              20.wSpace,
-              _doctorInfo(context),
-            ],
-          ),
-          _customDivider(context),
-          Row(
-            children: [
-              bottomButton.expand(),
-              15.wSpace,
-              DeleteAppointmentButton(appointment: appointment),
-            ],
-          ),
-        ],
-      ).paddingSymmetric(horizontal: 16, vertical: 16),
+    return InkWell(
+      onTap: () => context.push(
+        BlocProvider<AppointmentPatientCubit>(
+          create: (context) => di.sl<AppointmentPatientCubit>(),
+          child: DoctorDetailsScreen(doctorResults: doctorResults),
+        ),
+      ),
+      child: Card(
+        color: context.isDark ? Colors.black : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+        margin: context.padding(horizontal: 20, vertical: 10),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                AutoSizeText(
+                  appointment.appointmentDate?.toReadableDate(context) ??
+                      (context.isStateArabic
+                          ? 'تاريخ غير محدد'
+                          : 'Date not specified'),
+                  style: TextStyleApp.semiBold18()
+                      .copyWith(color: context.onPrimaryColor),
+                ),
+                10.wSpace,
+                AutoSizeText(
+                  appointment.appointmentTime!.toLocalizedTime(context),
+                  style: TextStyleApp.semiBold16()
+                      .copyWith(color: context.onPrimaryColor),
+                ),
+                const Spacer(),
+                topTrailingWidget,
+              ],
+            ),
+            _customDivider(context),
+            Row(
+              children: [
+                CustomCachedNetworkImage(
+                  imgUrl: doctorResults.profilePicture ??
+                      AppImages.imageAvtarDoctorOnLine,
+                  height: context.H * 0.13,
+                  width: context.H * 0.13,
+                  errorIconSize: 60.sp,
+                  loadingImgPadding: 60.w,
+                ).cornerRadiusWithClipRRect(8.r),
+                20.wSpace,
+                _doctorInfo(context),
+              ],
+            ),
+            _customDivider(context),
+            Row(
+              children: [
+                bottomButton.expand(),
+                15.wSpace,
+                DeleteAppointmentButton(appointment: appointment),
+              ],
+            ),
+          ],
+        ).paddingSymmetric(horizontal: 16, vertical: 16),
+      ),
     );
   }
 
