@@ -52,7 +52,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
     final currentPosition = _scrollController.position.pixels;
     final maxScrollExtent = _scrollController.position.maxScrollExtent;
 
-    if (currentPosition >= maxScrollExtent * 0.75) {
+    if (currentPosition >= maxScrollExtent * 0.95) {
       setState(() {
         isLoading = true;
       });
@@ -61,7 +61,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
           .getAllDoctor(page: nextPage, speciality: widget.specialityName)
           .then((_) {
         setState(() {
-          if (nextPage >= 2) {
+          if (nextPage >= context.read<HomeCubit>().lastPage) {
             hasReachedMax = true;
           } else {
             nextPage++;
@@ -72,12 +72,18 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
     }
   }
 
+  String lastQuery = '';
+
   void filterDoctors(String query) {
+    if (query == lastQuery) return;
+    lastQuery = query;
+
     if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 200), () {
+    _debounce = Timer(const Duration(milliseconds: 300), () {
       setState(() {
         filteredDoctorsList = [];
         hasReachedMax = false;
+        nextPage = 2;
       });
       context
           .read<HomeCubit>()
@@ -105,6 +111,8 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                       setState(() {
                         filteredDoctorsList = [];
                         hasReachedMax = false;
+                        lastQuery = '';
+                        nextPage = 2;
                       });
                       context
                           .read<HomeCubit>()
@@ -128,7 +136,12 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
           listener: (context, state) {
             if (state is GetAllDoctorSuccess) {
               setState(() {
-                filteredDoctorsList.addAll(state.doctorResults);
+                filteredDoctorsList.addAll(
+                  state.doctorResults.where(
+                    (newDoctor) => !filteredDoctorsList
+                        .any((existing) => existing.id == newDoctor.id),
+                  ),
+                );
               });
               showMessage(
                 context,
@@ -156,7 +169,6 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                 ).center().paddingSymmetric(vertical: 45),
               );
             } else if (state is GetAllDoctorSuccess ||
-                state is GetAllDoctorPagenationLoading ||
                 state is GetAllDoctorPagenationLoading) {
               return filteredDoctorsList.isEmpty
                   ? SliverToBoxAdapter(
@@ -169,11 +181,18 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                       ),
                     )
                   : SliverList.builder(
-                      itemCount: filteredDoctorsList.length,
+                      itemCount:
+                          filteredDoctorsList.length + (isLoading ? 1 : 0),
                       itemBuilder: (context, index) {
-                        return PopularDoctorItemWidget(
-                          doctorResults: filteredDoctorsList[index],
-                        );
+                        if (index < filteredDoctorsList.length) {
+                          return PopularDoctorItemWidget(
+                            doctorResults: filteredDoctorsList[index],
+                          );
+                        } else {
+                          return PopularDoctorItemWidget(
+                            doctorResults: doctorsListDome[0],
+                          );
+                        }
                       },
                     );
             }
