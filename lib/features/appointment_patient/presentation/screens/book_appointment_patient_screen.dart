@@ -219,7 +219,15 @@ class AddAppointmentButton extends StatelessWidget {
           Navigator.pop(context);
           showMessage(
             context,
-            message: state.message,
+            message: state.message
+                    .contains('This appointment slot is already booked')
+                ? context.isStateArabic
+                    ? 'هذا الموعد محجوز بالفعل.\n'
+                        'يرجى اختيار موعد اخر'
+                    : 'Not available.\n'
+                        'Please select another time.'
+                : state.message,
+            showCloseIcon: true,
             type: SnackBarType.error,
           );
         } else if (state is ScheduleAppointmentPatientSuccess) {
