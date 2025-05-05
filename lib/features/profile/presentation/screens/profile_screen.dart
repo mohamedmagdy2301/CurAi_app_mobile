@@ -110,7 +110,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 icon: CupertinoIcons.map,
                 title: LangKeys.clinicAddress,
                 onTap: () {
-                  context.pushNamed(Routes.contCompleteProfileScreen);
+                  context.pushNamed(
+                    Routes.contCompleteProfileScreen,
+                    arguments: {'isEdit': true},
+                  );
                 },
               ),
             if (getRole() == 'patient')
