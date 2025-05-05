@@ -3,6 +3,8 @@ class LangKeys {
   static const String appName = 'app_name';
   static const String skip = 'skip';
   static const String doctor = 'doctor';
+
+  static const String filter = 'filter';
   static const String patient = 'patient';
 //! adress
   static const String country = 'country';

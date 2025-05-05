@@ -189,6 +189,7 @@
   "first_name": "First Name",
   "last_name": "Last Name",
   "bio": "Bio",
+  "filter": "Filter",
   "doctor": "Doctor",
   "patient":  "Patient",
   "country":  "Country",

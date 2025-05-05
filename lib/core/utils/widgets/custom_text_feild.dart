@@ -22,6 +22,7 @@ class CustomTextFeild extends StatefulWidget {
     this.isLable,
     this.hint,
     this.maxLenght,
+    this.prefixIcon,
   });
   final String labelText;
   final String? hint;
@@ -33,6 +34,7 @@ class CustomTextFeild extends StatefulWidget {
   final void Function(String)? onChanged;
   final bool? isValidator;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final int? maxLines;
   final int? maxLenght;
 
@@ -90,6 +92,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
           color: Colors.redAccent,
         ),
         suffixIcon: widget.suffixIcon ?? changePasswordObscure(),
+        prefixIcon: widget.prefixIcon,
         labelText: widget.labelText,
         hintText: widget.hint ?? widget.labelText,
         labelStyle: TextStyleApp.regular16().copyWith(

@@ -25,6 +25,7 @@ class SvgImages {
   static const String google = '$svg/google.svg';
   static const String facebook = '$svg/facebook.svg';
   static const String apple = '$svg/apple.svg';
+  static const String searchEmpty = '$svg/search-empty.svg';
 
   // ! doctor speciailities
   static const String doctorSpeciality = '$svg/doctor_speciality';
