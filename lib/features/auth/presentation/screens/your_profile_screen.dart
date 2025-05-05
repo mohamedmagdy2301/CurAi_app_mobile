@@ -171,12 +171,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             ),
           ),
           _buildSelectGender(context),
-          CustomTextFeildEditProfile(
-            title: LangKeys.phone,
-            keyboardType: TextInputType.phone,
-            controller: _phoneController,
-            maxLenght: 11,
-          ),
           if (getRole() == 'doctor')
             CustomTextFeildEditProfile(
               title: LangKeys.consultationPrice,
@@ -184,6 +178,12 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               controller: _consultationPriceController,
             ),
           if (getRole() == 'doctor') _buildSelectSpecilization(context),
+          CustomTextFeildEditProfile(
+            title: LangKeys.phone,
+            keyboardType: TextInputType.phone,
+            controller: _phoneController,
+            maxLenght: 11,
+          ),
           BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (previous, current) =>
                 current is EditProfileSuccess ||
@@ -319,6 +319,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               onChanged: (String? newValue) {
                 setState(() {
                   selectedGender = newValue;
+                  checkIfChanged();
                 });
               },
             ),
@@ -400,6 +401,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               onChanged: (int? newValue) {
                 setState(() {
                   selectedSpecialization = newValue;
+                  checkIfChanged();
                 });
               },
             ),
