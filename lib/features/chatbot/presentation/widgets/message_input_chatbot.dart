@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/features/chatbot/data/datasources/chatbot_remote_data_source.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -162,15 +163,20 @@ class _MessageInputState extends State<MessageInput> {
               ),
             10.wSpace,
             InkWell(
-              onTap: isSentMessage ? _sendMessage : null,
+              onTap: (serverAddress.isNotEmpty && isSentMessage)
+                  ? _sendMessage
+                  : null,
               child: CircleAvatar(
-                backgroundColor:
-                    isSentMessage ? context.primaryColor : Colors.grey,
+                backgroundColor: (serverAddress.isNotEmpty && isSentMessage)
+                    ? context.primaryColor
+                    : Colors.grey,
                 radius: 25.r,
                 child: Icon(
                   CupertinoIcons.paperplane,
                   size: 25.sp,
-                  color: isSentMessage ? Colors.white : Colors.grey[200],
+                  color: (serverAddress.isNotEmpty && isSentMessage)
+                      ? Colors.white
+                      : Colors.grey[200],
                 ),
               ),
             ),
