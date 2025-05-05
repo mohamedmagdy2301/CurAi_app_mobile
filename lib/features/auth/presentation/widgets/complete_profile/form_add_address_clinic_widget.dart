@@ -16,15 +16,16 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ContCompleteProfileFormWidget extends StatefulWidget {
-  const ContCompleteProfileFormWidget({super.key});
+class AddAddressClinicFormWidget extends StatefulWidget {
+  const AddAddressClinicFormWidget({super.key, this.isEdit});
+  final bool? isEdit;
   @override
-  State<ContCompleteProfileFormWidget> createState() =>
-      _ContCompleteProfileFormWidgetState();
+  State<AddAddressClinicFormWidget> createState() =>
+      _AddAddressClinicFormWidgetState();
 }
 
-class _ContCompleteProfileFormWidgetState
-    extends State<ContCompleteProfileFormWidget> {
+class _AddAddressClinicFormWidgetState
+    extends State<AddAddressClinicFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _specialMarkController = TextEditingController();
@@ -147,9 +148,15 @@ class _ContCompleteProfileFormWidgetState
           current is EditProfileLoading,
       listener: (context, state) {
         if (state is EditProfileSuccess) {
-          context
-            ..pop()
-            ..pushReplacementNamed(Routes.loginScreen);
+          if (widget.isEdit ?? false) {
+            context
+              ..pop()
+              ..pushReplacementNamed(Routes.mainScaffoldUser);
+          } else {
+            context
+              ..pop()
+              ..pushReplacementNamed(Routes.loginScreen);
+          }
         } else if (state is EditProfileError) {
           context.pop();
           showMessage(
@@ -160,13 +167,13 @@ class _ContCompleteProfileFormWidgetState
         } else if (state is EditProfileLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
-            title: context.translate(LangKeys.completeProfileTitle),
+            title: context.translate(LangKeys.clinicAddress),
           );
         }
       },
       builder: (context, state) {
         return CustomButton(
-          title: LangKeys.completeProfile,
+          title: LangKeys.finish,
           isLoading: state is EditProfileLoading,
           onPressed: () => _onContCompletePressed(context),
         );

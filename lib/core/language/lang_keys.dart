@@ -3,6 +3,8 @@ class LangKeys {
   static const String appName = 'app_name';
   static const String skip = 'skip';
   static const String doctor = 'doctor';
+
+  static const String filter = 'filter';
   static const String patient = 'patient';
 //! adress
   static const String country = 'country';
@@ -13,6 +15,9 @@ class LangKeys {
   static const String specialMark = 'special_mark';
   static const String clinicAddress = 'clinic_address';
   static const String clinicAddressDescription = 'clinic_address_description';
+
+  static const String complete = 'complete';
+  static const String finish = 'finish';
 
   //! Onboarding
   static const String titleOnboarding1 = 'title_onboarding_1';

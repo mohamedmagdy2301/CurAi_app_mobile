@@ -189,6 +189,7 @@
   "first_name": "First Name",
   "last_name": "Last Name",
   "bio": "Bio",
+  "filter": "Filter",
   "doctor": "Doctor",
   "patient":  "Patient",
   "country":  "Country",
@@ -198,6 +199,8 @@
   "street":  "Street",
  "special_mark": "Special Mark",
   "clinic_address_description": "Please enter your clinic's address accurately, including governorate, city, area, and street name to help patients reach you easily.",
-  "clinic_address": "Clinic Address" 
+  "clinic_address": "Clinic Address" ,
+  "complete"  : "Complete",
+  "finish" : "Finish"
  
 }

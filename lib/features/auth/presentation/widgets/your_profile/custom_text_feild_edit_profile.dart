@@ -14,12 +14,16 @@ class CustomTextFeildEditProfile extends StatelessWidget {
     super.key,
     this.onChanged,
     this.keyboardType,
+    this.maxLenght,
+    this.suffixIcon,
   });
 
   final TextEditingController controller;
   final String title;
   final void Function(String)? onChanged;
   final TextInputType? keyboardType;
+  final int? maxLenght;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +52,14 @@ class CustomTextFeildEditProfile extends StatelessWidget {
           style: TextStyleApp.regular16().copyWith(
             color: context.onPrimaryColor,
           ),
+          maxLength: maxLenght,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
               horizontal: 15.w,
               vertical: 10.h,
             ),
             isDense: true,
+            suffixIcon: suffixIcon,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(

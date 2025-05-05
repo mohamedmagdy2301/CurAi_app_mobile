@@ -37,7 +37,28 @@ class _RateingDoctorWidgetState extends State<RateingDoctorWidget> {
   @override
   Widget build(BuildContext context) {
     return widget.doctorResults.reviews!.isEmpty
-        ? 15.hSpace
+        ? Row(
+            children: [
+              StarRating(
+                size: 20.r,
+                color: Colors.orangeAccent,
+                mainAxisAlignment: MainAxisAlignment.end,
+                filledIcon: CupertinoIcons.star_fill,
+                emptyIcon: CupertinoIcons.star,
+                borderColor: context.onSecondaryColor.withAlpha(50),
+              ),
+              8.wSpace,
+              AutoSizeText(
+                context.isStateArabic ? 'لا يوجد تقييمات' : 'No Reviews',
+                style: TextStyleApp.regular14().copyWith(
+                  color: context.onSecondaryColor.withAlpha(100),
+                ),
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ],
+          )
         : Row(
             spacing: 3.w,
             children: [

@@ -35,18 +35,22 @@ class PopularDoctorItemWidget extends StatelessWidget {
         ),
       ),
       borderRadius: BorderRadius.circular(10.r),
-      child: Card(
-        elevation: 1,
-        shadowColor: context.onSecondaryColor.withAlpha(70),
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(style: BorderStyle.none),
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.isDark
+              ? const Color.fromARGB(225, 0, 0, 0)
+              : const Color.fromARGB(222, 255, 255, 255),
           borderRadius: BorderRadius.circular(8.r),
+          boxShadow: [
+            BoxShadow(
+              color: context.onSecondaryColor.withAlpha(5),
+            ),
+          ],
         ),
         child: Row(
           children: [
             ImageDoctorWidget(doctorResults: doctorResults),
             Column(
-              spacing: 3.h,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
@@ -58,51 +62,49 @@ class PopularDoctorItemWidget extends StatelessWidget {
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyleApp.extraBold24().copyWith(
+                    style: TextStyleApp.bold22().copyWith(
                       color: context.onPrimaryColor,
                     ),
                   ),
                 ),
-                if (doctorResults.specialization != '')
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: context.W * .55,
-                        child: AutoSizeText(
-                          specializationName(
-                            doctorResults.specialization ?? '',
-                            context.isStateArabic,
-                          ),
-                          maxLines: 1,
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyleApp.bold16().copyWith(
-                            color: context.onPrimaryColor,
-                          ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: context.W * .55,
+                      child: AutoSizeText(
+                        specializationName(
+                          doctorResults.specialization ?? '',
+                          context.isStateArabic,
+                        ),
+                        maxLines: 1,
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyleApp.medium16().copyWith(
+                          color: context.onPrimaryColor,
                         ),
                       ),
-                    ],
-                  ),
-                if (doctorResults.consultationPrice != '')
-                  SizedBox(
-                    width: context.W * .55,
-                    child: AutoSizeText(
-                      '${doctorResults.consultationPrice} '
-                      '${context.translate(LangKeys.egp)}',
-                      maxLines: 1,
-                      textAlign: TextAlign.start,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyleApp.bold16().copyWith(
-                        color: context.onSecondaryColor,
-                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: context.W * .55,
+                  child: AutoSizeText(
+                    '${doctorResults.consultationPrice} '
+                    '${context.translate(LangKeys.egp)}',
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyleApp.bold16().copyWith(
+                      color: context.onSecondaryColor,
                     ),
                   ),
+                ),
                 RateingDoctorWidget(doctorResults: doctorResults),
               ],
             ).paddingSymmetric(horizontal: 12, vertical: 5),
           ],
         ),
       ),
-    ).paddingSymmetric(horizontal: 18, vertical: 3);
+    ).paddingSymmetric(horizontal: 18, vertical: 8);
   }
 }
