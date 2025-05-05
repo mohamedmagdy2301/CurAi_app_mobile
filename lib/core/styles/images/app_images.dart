@@ -13,6 +13,8 @@ class AppImages {
   static const String urologist = '$doctorSpeciality/urologist.png';
   static const String neurologic = '$doctorSpeciality/neurologic.png';
   static const String loading = '$images/loading.gif';
+  static const String imageAvtarOnLine =
+      'https://img.freepik.com/free-photo/young-doctor-with-stethoscope-his-neck-3d-illustration_1057-44836.jpg?t=st=1746407953~exp=1746411553~hmac=0206b243ef8f8d296cb836baeadc68d51e96bb5fe822ed117358266a6814474e&w=826';
 }
 
 class SvgImages {
