@@ -38,7 +38,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    if (isPatient) {
+    if (getRole() == 'patient') {
       context.read<AppointmentPatientCubit>().getAppointmentPatientAvailable(
             doctorId: widget.doctorResults.id!,
           );
@@ -87,7 +87,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                 ],
               ),
             ),
-            if (isPatient)
+            if (getRole() == 'patient')
               BlocBuilder<AppointmentPatientCubit, AppointmentPatientState>(
                 builder: (context, state) {
                   return CustomButton(

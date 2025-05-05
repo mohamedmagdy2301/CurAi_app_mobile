@@ -231,7 +231,7 @@ class AddAppointmentButton extends StatelessWidget {
               type: SnackBarType.success,
             );
           }
-          context.pushNamed(
+          context.pushReplacementNamed(
             Routes.paymentAppointmentScreen,
             arguments: {
               'doctorResults': widget.doctorResults,

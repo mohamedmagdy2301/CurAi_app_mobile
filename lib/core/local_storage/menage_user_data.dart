@@ -130,9 +130,3 @@ bool getIsFirstLaunch() {
     return true;
   }
 }
-
-/// get the isDoctor from Cache Data Local
-bool isDoctor = getRole() == 'doctor';
-
-/// get the isPatient from Cache Data Local
-bool isPatient = getRole() == 'patient';

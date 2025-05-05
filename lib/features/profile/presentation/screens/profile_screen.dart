@@ -59,8 +59,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: LangKeys.yourProfile,
               onTap: () => context.pushNamed(Routes.yourProfileScreen),
             ),
-            if (isDoctor) _buildDivider(context),
-            if (isDoctor)
+            if (getRole() != 'patient') _buildDivider(context),
+            if (getRole() != 'patient')
               RowNavigateProfileWidget(
                 icon: CupertinoIcons.calendar,
                 title: LangKeys.workingTime,
@@ -68,8 +68,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   context.pushNamed(Routes.workingTimeDoctorAvailableScreen);
                 },
               ),
-            if (isPatient) _buildDivider(context),
-            if (isPatient)
+            if (getRole() == 'patient') _buildDivider(context),
+            if (getRole() == 'patient')
               RowNavigateProfileWidget(
                 icon: Icons.payment,
                 title: LangKeys.paymentMethod,
