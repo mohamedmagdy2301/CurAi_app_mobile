@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
@@ -55,7 +56,8 @@ class MyAppointmentPatientCardLoading extends StatelessWidget {
               Row(
                 children: [
                   CustomCachedNetworkImage(
-                    imgUrl: doctorResults(context).profilePicture ?? '',
+                    imgUrl: doctorResults(context).profilePicture ??
+                        AppImages.imageAvtarPatientOnLine,
                     height: context.H * 0.13,
                     width: context.H * 0.13,
                     errorIconSize: 60.sp,

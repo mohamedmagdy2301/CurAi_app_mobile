@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/detect_language_string.dart';
 import 'package:curai_app_mobile/core/utils/helper/to_arabic_data.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
@@ -86,7 +87,7 @@ class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
                 child: CustomCachedNetworkImage(
                   imgUrl: widget.doctorResults.reviews![widget.index]
                           .profilePatientPicture ??
-                      'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                      AppImages.imageAvtarPatientOnLine,
                   width: context.H * 0.045,
                   height: context.H * 0.045,
                   loadingImgPadding: 10.w,
