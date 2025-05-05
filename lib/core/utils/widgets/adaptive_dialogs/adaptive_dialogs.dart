@@ -20,7 +20,7 @@ class AdaptiveDialogs {
 
     _isDialogOpen = true;
 
-    await _showPlatformDialog<void>(
+    await _showLoadingPlatformDialog<void>(
       context: context,
       title: '',
       message: CustomLoadingWidget(
@@ -264,6 +264,65 @@ class AdaptiveDialogs {
       ],
     );
     return userInput;
+  }
+
+  /// Internal function to handle platform-adapted dialogs.
+  static Future<T?> _showLoadingPlatformDialog<T>({
+    required BuildContext context,
+    required String title,
+    required Widget message,
+    required List<Widget> actions,
+    Widget? content,
+    bool barrierDismissible = true,
+  }) {
+    return showDialog<T>(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (BuildContext context) {
+        return PopScope(
+          canPop: barrierDismissible,
+          child: Theme.of(context).platform == TargetPlatform.iOS
+              ? CupertinoAlertDialog(
+                  title: Text(
+                    title,
+                    textAlign: TextAlign.start,
+                    style: TextStyleApp.bold16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        message,
+                        if (content != null) content,
+                      ],
+                    ),
+                  ),
+                  actions: actions,
+                )
+              : AlertDialog(
+                  title: Text(
+                    title,
+                    textAlign: TextAlign.start,
+                    style: TextStyleApp.bold16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        message,
+                        if (content != null) content,
+                      ],
+                    ),
+                  ),
+                  actions: actions,
+                ),
+        );
+      },
+    );
   }
 
   /// Internal function to handle platform-adapted dialogs.

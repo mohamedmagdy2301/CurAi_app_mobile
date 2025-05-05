@@ -472,7 +472,10 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
         if (state is EditProfileSuccess) {
           context
             ..pop()
-            ..pushReplacementNamed(Routes.contCompleteProfileScreen);
+            ..pushReplacementNamed(
+              Routes.contCompleteProfileScreen,
+              arguments: {'isEdit': false},
+            );
         } else if (state is EditProfileError) {
           context.pop();
           showMessage(
