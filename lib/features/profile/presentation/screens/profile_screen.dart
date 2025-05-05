@@ -2,19 +2,23 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as a;
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/logout_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_profile.dart';
-import 'package:curai_app_mobile/features/profile/presentation/widgets/image_profile_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -39,21 +43,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            20.hSpace,
-            ImageProfileWidget(
-              imageFile: imageFile,
-              imageUrl: imageUrl,
-              isEdit: false,
+            10.hSpace,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(1000.r),
+              child: imageFile != null
+                  ? Image.file(
+                      imageFile!,
+                      width: 180.w,
+                      height: 180.h,
+                      fit: BoxFit.cover,
+                    )
+                  : CustomCachedNetworkImage(
+                      imgUrl: imageUrl ??
+                          (getRole() == 'doctor'
+                              ? AppImages.imageAvtarDoctorOnLine
+                              : AppImages.imageAvtarPatientOnLine),
+                      width: context.isTablet
+                          ? context.H * 0.17
+                          : context.H * 0.16,
+                      height: context.isTablet
+                          ? context.H * 0.17
+                          : context.H * 0.16,
+                      loadingImgPadding: 50.w,
+                      errorIconSize: 50.sp,
+                    ),
             ),
-            15.hSpace,
-            AutoSizeText(
-              getFullName(),
-              maxLines: 1,
-              style: TextStyleApp.medium22().copyWith(
-                color: context.primaryColor,
-              ),
-            ),
-            20.hSpace,
+            10.wSpace,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: context.W * .55,
+                  child: AutoSizeText(
+                    getRole() == 'patient'
+                        ? ''
+                        : '${context.translate(LangKeys.dr)}. '
+                            '${getFullName().capitalizeFirstChar}',
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyleApp.extraBold26().copyWith(
+                      color: context.primaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ).paddingSymmetric(horizontal: 12, vertical: 5),
             RowNavigateProfileWidget(
               icon: CupertinoIcons.person,
               title: LangKeys.yourProfile,
@@ -68,7 +104,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   context.pushNamed(Routes.workingTimeDoctorAvailableScreen);
                 },
               ),
-            if (getRole() == 'patient') _buildDivider(context),
+            _buildDivider(context),
+            if (getRole() != 'patient')
+              RowNavigateProfileWidget(
+                icon: CupertinoIcons.map,
+                title: LangKeys.clinicAddress,
+                onTap: () {
+                  context.pushNamed(Routes.contCompleteProfileScreen);
+                },
+              ),
             if (getRole() == 'patient')
               RowNavigateProfileWidget(
                 icon: Icons.payment,
