@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/social_contact_doctor_widget.dart';
@@ -31,7 +32,7 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(1000.r),
           child: CustomCachedNetworkImage(
             imgUrl: doctorResults.profilePicture ??
-                'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                AppImages.imageAvtarDoctorOnLine,
             width: context.isTablet ? context.H * 0.17 : context.H * 0.145,
             height: context.isTablet ? context.H * 0.17 : context.H * 0.145,
             loadingImgPadding: 50.w,

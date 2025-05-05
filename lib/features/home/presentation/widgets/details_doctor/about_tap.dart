@@ -33,7 +33,7 @@ class AboutTap extends StatelessWidget {
           15.hSpace,
           ConsultationPriceWidget(doctorResults: doctorResults),
           15.hSpace,
-          if (isPatient)
+          if (getRole() == 'patient')
             BuildWorkingTimeDetailsDoctorWidget(doctorId: doctorResults.id!),
           10.hSpace,
         ],

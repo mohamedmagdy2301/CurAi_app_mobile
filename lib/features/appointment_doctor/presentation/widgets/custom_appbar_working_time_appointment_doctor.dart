@@ -1,9 +1,13 @@
+// ignore_for_file: use_if_null_to_convert_nulls_to_bools, use_build_context_synchronously
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/add_working_time_doctor_bottom_sheet.dart';
@@ -14,9 +18,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppbarWorkingTimeAppointmentDoctor extends StatefulWidget
     implements PreferredSizeWidget {
-  const CustomAppbarWorkingTimeAppointmentDoctor({
-    super.key,
-  });
+  const CustomAppbarWorkingTimeAppointmentDoctor({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -28,8 +30,6 @@ class CustomAppbarWorkingTimeAppointmentDoctor extends StatefulWidget
 
 class _CustomAppbarWorkingTimeAppointmentDoctorState
     extends State<CustomAppbarWorkingTimeAppointmentDoctor> {
-  bool isLoading = false;
-
   Future<void> showAvailabilityBottomSheet(BuildContext context) async {
     final result = await showModalBottomSheet<Map<String, dynamic>>(
       context: context,
@@ -39,7 +39,14 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
       ),
       builder: (_) => const AddWorkingTimeDoctorBottomSheet(),
     );
+
     if (result != null && context.mounted) {
+      final day = result['days_of_week'];
+      final start = result['available_from'];
+      final end = result['available_to'];
+
+      if (day is! String || start is! String || end is! String) return;
+
       final shouldDelete = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
         context: context,
         title: context.translate(LangKeys.addWorkingTime),
@@ -48,14 +55,12 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
         onPressedCancel: () => Navigator.of(context).pop(false),
       );
 
-      if (shouldDelete!) {
-        if (context.mounted) {
-          await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
-                day: result['days_of_week'] as String,
-                startTime: result['available_from'] as String,
-                endTime: result['available_to'] as String,
-              );
-        }
+      if (shouldDelete == true && context.mounted) {
+        await context.read<AppointmentDoctorCubit>().addWorkingTimeDoctor(
+              day: day,
+              startTime: start,
+              endTime: end,
+            );
       }
     }
   }
@@ -71,9 +76,9 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
           current is AddWorkingTimeDoctorLoading,
-      listener: (context, state) {
-        if (state is AddWorkingTimeDoctorSuccess) {
-          context
+      listener: (context, state) async {
+        if (state is AddWorkingTimeDoctorSuccess && mounted) {
+          await context
               .read<AppointmentDoctorCubit>()
               .getWorkingTimeAvailableDoctor();
           showMessage(
@@ -81,14 +86,9 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
             type: SnackBarType.success,
             message: context.translate(LangKeys.addWorkingTimeSuccess),
           );
-          if (isLoading) {
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          }
         }
-        if (state is AddWorkingTimeDoctorFailure) {
+
+        if (state is AddWorkingTimeDoctorFailure && mounted) {
           showMessage(
             context,
             type: SnackBarType.error,
@@ -96,21 +96,6 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
                 '\n'
                 '${state.message}',
           );
-          if (isLoading) {
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }
-        if (state is AddWorkingTimeDoctorLoading && !isLoading) {
-          AdaptiveDialogs.showLoadingAlertDialog(
-            context: context,
-            title: context.translate(LangKeys.addWorkingTime),
-          );
-          setState(() {
-            isLoading = true;
-          });
         }
       },
       builder: (context, state) {
@@ -126,14 +111,17 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           ),
           centerTitle: true,
           actions: [
-            IconButton(
-              onPressed: () => showAvailabilityBottomSheet(context),
-              icon: Icon(
-                CupertinoIcons.add_circled_solid,
-                color: context.onPrimaryColor,
-                size: 30.sp,
+            if (state is AddWorkingTimeDoctorLoading)
+              const CustomLoadingWidget().paddingSymmetric(horizontal: 15)
+            else
+              IconButton(
+                onPressed: () => showAvailabilityBottomSheet(context),
+                icon: Icon(
+                  CupertinoIcons.add_circled_solid,
+                  color: context.onPrimaryColor,
+                  size: 30.sp,
+                ),
               ),
-            ),
           ],
         );
       },

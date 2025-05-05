@@ -54,7 +54,7 @@ class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
           IconButton(
             icon: Icon(
               CupertinoIcons.add,
-              size: 32.sp,
+              size: 27.sp,
               color: context.onPrimaryColor,
             ),
             onPressed: () {
@@ -141,10 +141,13 @@ class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
               serverAddress == '' ? context.onSecondaryColor : Colors.green,
           radius: 5.r,
         ),
-        8.wSpace,
-        AutoSizeText(
-          context.isStateArabic ? 'مساعدك الشخصى' : 'ChatBot Assistant',
-          maxLines: 1,
+        6.wSpace,
+        SizedBox(
+          width: context.W * 0.47,
+          child: AutoSizeText(
+            context.isStateArabic ? 'مساعدك الشخصى' : 'ChatBot Assistant',
+            maxLines: 1,
+          ),
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +32,8 @@ class ImageDoctorWidget extends StatelessWidget {
         ),
       ),
       child: CustomCachedNetworkImage(
-        imgUrl: doctorResults.profilePicture ??
-            'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+        imgUrl:
+            doctorResults.profilePicture ?? AppImages.imageAvtarDoctorOnLine,
         width: context.W * 0.25,
         height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
         loadingImgPadding: 50.w,

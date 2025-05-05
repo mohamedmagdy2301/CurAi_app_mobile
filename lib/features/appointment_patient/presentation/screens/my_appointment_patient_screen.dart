@@ -38,8 +38,8 @@ class _MyAppointmentPatientScreenState extends State<MyAppointmentPatientScreen>
         body: TabBarView(
           controller: tabController,
           children: const [
-            AppointmentsPatientBodyWidget(isPending: false),
             AppointmentsPatientBodyWidget(isPending: true),
+            AppointmentsPatientBodyWidget(isPending: false),
           ],
         ),
       ),

@@ -2,11 +2,9 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
-import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,27 +48,18 @@ class _CustomAppBarHomeState extends State<CustomAppBarHome> {
           ),
           maxLines: 1,
         ),
-        trailing: IconButton(
-          onPressed: () {
-            setState(() {
-              count = 0;
-              context.pushNamed(Routes.notificationScreen);
-            });
-          },
-          iconSize: 27.sp,
-          icon: Badge.count(
-            count: count,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            textStyle: TextStyleApp.medium8().copyWith(
-              color: Colors.white,
-            ),
-            isLabelVisible: count != 0,
-            child: Icon(
-              CupertinoIcons.gift,
-              size: 27.sp,
-              color: context.primaryColor,
-            ),
+        trailing: Badge.count(
+          count: count,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          textStyle: TextStyleApp.medium8().copyWith(
+            color: Colors.white,
+          ),
+          isLabelVisible: count != 0,
+          child: Icon(
+            CupertinoIcons.gift,
+            size: 27.sp,
+            color: context.primaryColor,
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +33,7 @@ class GetLoctionCubit extends Cubit<GetLoctionState> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(1000.r),
           child: CustomCachedNetworkImage(
-            imgUrl: image ??
-                'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            imgUrl: image ?? AppImages.imageAvtarDoctorOnLine,
             width: 20.w,
             height: 20.h,
             loadingImgPadding: 5.w,

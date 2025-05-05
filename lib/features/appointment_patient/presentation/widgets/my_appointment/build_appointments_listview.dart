@@ -1,7 +1,5 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -56,14 +54,26 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
   final RefreshController _refreshController = RefreshController();
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
+
+    final filteredAppointments = widget.appointments.where((appointment) {
+      final dateStr = appointment.appointmentDate;
+      final timeStr = appointment.appointmentTime;
+
+      if (dateStr == null || timeStr == null) return false;
+
+      try {
+        final appointmentDateTime = DateTime.parse('$dateStr $timeStr');
+        return appointmentDateTime.isAfter(now);
+      } on Exception catch (_) {
+        return false;
+      }
+    }).toList();
+
     return SmartRefresher(
-      // enablePullUp: widget.cubit.isLast,
       controller: _refreshController,
       header: const WaterDropHeader(),
-      // footer: const ClassicFooter(),
       onRefresh: () async {
-        log(' --------------------------------------------------');
-
         try {
           await Future.delayed(const Duration(milliseconds: 500));
 
@@ -73,25 +83,15 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
           _refreshController.refreshFailed();
         }
       },
-      // onLoading: () async {
-      //   log('onLoading--------------------------------------------------');
-      //   try {
-      //     await Future.delayed(const Duration(milliseconds: 500));
-      //     await widget.cubit.getMyAppointmentPatient();
-      //     _refreshController.loadComplete();
-      //   } on Exception {
-      //     _refreshController.loadFailed();
-      //   }
-      // },
       child: ListView.builder(
         controller: widget.scrollController,
         physics: const AlwaysScrollableScrollPhysics(
           parent: ClampingScrollPhysics(),
         ),
-        itemCount: widget.appointments.length + (widget.isLoadingMore ? 1 : 0),
+        itemCount: filteredAppointments.length + (widget.isLoadingMore ? 1 : 0),
         itemBuilder: (context, index) {
-          if (index < widget.appointments.length) {
-            final appointment = widget.appointments[index];
+          if (index < filteredAppointments.length) {
+            final appointment = filteredAppointments[index];
             final doctorResults =
                 widget.cubit.doctorsData[appointment.doctorId];
 

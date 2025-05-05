@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,9 @@ class ImageProfileWidget extends StatelessWidget {
                   )
                 : CustomCachedNetworkImage(
                     imgUrl: imageUrl ??
-                        'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                        (getRole() == 'doctor'
+                            ? AppImages.imageAvtarDoctorOnLine
+                            : AppImages.imageAvtarPatientOnLine),
                     width: 140.w,
                     height: 140.h,
                     loadingImgPadding: 50.w,
