@@ -26,12 +26,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 enum SortType {
+  none,
   firstName,
   speciality,
   maxPrice,
   lowPrice,
   maxRating,
-  lowRating
+  lowRating,
 }
 
 class AllDoctorScreen extends StatefulWidget {
@@ -52,7 +53,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   bool isLoading = false;
   bool hasReachedMax = false;
   String lastQuery = '';
-  SortType currentSort = SortType.firstName;
+  SortType currentSort = SortType.none;
 
   @override
   void initState() {
@@ -117,6 +118,8 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   }
 
   void sortDoctorsList() {
+    if (currentSort == SortType.none) return;
+
     switch (currentSort) {
       case SortType.firstName:
         filteredDoctorsList.sort((a, b) {
@@ -159,6 +162,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
           final bRating = b.avgRating ?? 0.0;
           return aRating.compareTo(bRating);
         });
+
+      case SortType.none:
+        filteredDoctorsList.sort((a, b) => a.id!.compareTo(b.id!));
     }
   }
 
@@ -283,14 +289,14 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
             return SliverList.builder(
               itemCount: filteredDoctorsList.length + (isLoading ? 1 : 0),
               itemBuilder: (context, index) {
-                if (filteredDoctorsList[index].id == null ||
-                    (filteredDoctorsList[index].firstName == null &&
-                        filteredDoctorsList[index].lastName == null) ||
-                    filteredDoctorsList[index].consultationPrice == null ||
-                    filteredDoctorsList[index].specialization == null) {
-                  return const SizedBox();
-                }
                 if (index < filteredDoctorsList.length) {
+                  if (filteredDoctorsList[index].id == null ||
+                      (filteredDoctorsList[index].firstName == null &&
+                          filteredDoctorsList[index].lastName == null) ||
+                      filteredDoctorsList[index].consultationPrice == null ||
+                      filteredDoctorsList[index].specialization == null) {
+                    return const SizedBox();
+                  }
                   return PopularDoctorItemWidget(
                     doctorResults: filteredDoctorsList[index],
                   );
@@ -357,6 +363,11 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               children: [
+                buildSortItem(
+                  SortType.none,
+                  CupertinoIcons.clear,
+                  context.isStateArabic ? 'بدون ترتيب' : 'No Sorting',
+                ),
                 buildSortItem(
                   SortType.firstName,
                   CupertinoIcons.person,
