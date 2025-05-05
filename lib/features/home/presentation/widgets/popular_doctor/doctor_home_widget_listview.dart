@@ -26,10 +26,16 @@ class DoctorListViewHome extends StatelessWidget {
       builder: (context, state) {
         if (state is GetAllDoctorSuccess) {
           final doctorsList = state.doctorResults;
-          return SliverList.separated(
+
+          return SliverList.builder(
             itemCount: doctorsList.length,
-            separatorBuilder: (context, index) => 10.hSpace,
             itemBuilder: (context, index) {
+              if ((doctorsList[index].firstName == null &&
+                      doctorsList[index].lastName == null) ||
+                  doctorsList[index].specialization == null ||
+                  doctorsList[index].consultationPrice == null) {
+                return const SizedBox();
+              }
               return PopularDoctorItemWidget(
                 doctorResults: doctorsList[index],
               );
