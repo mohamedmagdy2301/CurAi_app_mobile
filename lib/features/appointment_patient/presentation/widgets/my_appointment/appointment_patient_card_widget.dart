@@ -10,6 +10,7 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/my_appointment_patient/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
@@ -45,7 +46,10 @@ class AppointmentPatientCardWidget extends StatelessWidget {
           Row(
             children: [
               AutoSizeText(
-                appointment.appointmentDate!.toReadableDate(context),
+                appointment.appointmentDate?.toReadableDate(context) ??
+                    (context.isStateArabic
+                        ? 'تاريخ غير محدد'
+                        : 'Date not specified'),
                 style: TextStyleApp.semiBold18()
                     .copyWith(color: context.onPrimaryColor),
               ),
@@ -152,18 +156,13 @@ class DeleteAppointmentButton extends StatelessWidget {
           current is DeleteAppointmentPatientLoading,
       listener: (context, state) async {
         if (state is DeleteAppointmentPatientFailure) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pop(context);
-          });
           showMessage(
             context,
             message: state.message,
             type: SnackBarType.error,
           );
-        } else if (state is DeleteAppointmentPatientSuccess) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pop(context);
-          });
+        }
+        if (state is DeleteAppointmentPatientSuccess) {
           showMessage(
             context,
             message: context.isStateArabic
@@ -174,11 +173,6 @@ class DeleteAppointmentButton extends StatelessWidget {
           await context
               .read<AppointmentPatientCubit>()
               .refreshMyAppointmentPatient();
-        } else if (state is DeleteAppointmentPatientLoading) {
-          await AdaptiveDialogs.showLoadingAlertDialog(
-            context: context,
-            title: context.translate(LangKeys.cancelAppointment),
-          );
         }
       },
       builder: (context, state) {
@@ -200,19 +194,21 @@ class DeleteAppointmentButton extends StatelessWidget {
               onPressedCancel: () => context.pop(),
             );
           },
-          child: Container(
-            padding: context.padding(horizontal: 8, vertical: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(color: Colors.redAccent),
-              color: context.isDark ? Colors.black : Colors.white,
-            ),
-            child: Icon(
-              CupertinoIcons.trash,
-              size: 26.sp,
-              color: Colors.redAccent,
-            ),
-          ),
+          child: state is DeleteAppointmentPatientLoading
+              ? const CustomLoadingWidget()
+              : Container(
+                  padding: context.padding(horizontal: 8, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: Border.all(color: Colors.redAccent),
+                    color: context.isDark ? Colors.black : Colors.white,
+                  ),
+                  child: Icon(
+                    CupertinoIcons.trash,
+                    size: 26.sp,
+                    color: Colors.redAccent,
+                  ),
+                ),
         );
       },
     );
