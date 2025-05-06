@@ -22,6 +22,7 @@ class WorkingTimeDoctorAvailabilityListView extends StatefulWidget {
     required this.workingTimeList,
     super.key,
   });
+
   final List<WorkingTimeDoctorAvailableModel> workingTimeList;
 
   @override
@@ -31,8 +32,8 @@ class WorkingTimeDoctorAvailabilityListView extends StatefulWidget {
 
 class _WorkingTimeDoctorAvailabilityListViewState
     extends State<WorkingTimeDoctorAvailabilityListView> {
-  bool isLoading = false;
   late List<WorkingTimeDoctorAvailableModel> _workingTimeList;
+  bool _isDialogVisible = false;
 
   @override
   void initState() {
@@ -41,15 +42,16 @@ class _WorkingTimeDoctorAvailabilityListViewState
   }
 
   @override
-  void didUpdateWidget(WorkingTimeDoctorAvailabilityListView oldWidget) {
+  void didUpdateWidget(
+    covariant WorkingTimeDoctorAvailabilityListView oldWidget,
+  ) {
     super.didUpdateWidget(oldWidget);
     if (widget.workingTimeList != oldWidget.workingTimeList) {
       _workingTimeList = widget.workingTimeList;
     }
   }
 
-  Future<void> showAvailabilityBottomSheet({
-    required BuildContext context,
+  Future<void> _showUpdateBottomSheet({
     required int workingTimeId,
     required String from,
     required String to,
@@ -68,252 +70,197 @@ class _WorkingTimeDoctorAvailabilityListViewState
       ),
     );
 
-    if (result != null && context.mounted) {
-      if (result['available_from'] == from && result['available_to'] == to) {
-        return;
-      }
-      final shouldDelete = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
-        context: context,
-        title: context.translate(LangKeys.updateWorkingTime),
-        message: context.translate(LangKeys.updateWorkingTimeMessage),
-        onPressedOk: () => Navigator.of(context).pop(true),
-        onPressedCancel: () => Navigator.of(context).pop(false),
-      );
+    if (!mounted || result == null) return;
 
-      if (shouldDelete!) {
-        await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
-              workingTimeId: workingTimeId,
-              startTime: result['available_from'] as String,
-              endTime: result['available_to'] as String,
-            );
-      }
+    final newFrom = result['available_from'];
+    final newTo = result['available_to'];
+
+    if (newFrom == from && newTo == to) return;
+
+    final confirm = await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
+      context: context,
+      title: context.translate(LangKeys.updateWorkingTime),
+      message: context.translate(LangKeys.updateWorkingTimeMessage),
+      onPressedOk: () => Navigator.of(context).pop(true),
+      onPressedCancel: () => Navigator.of(context).pop(false),
+    );
+
+    if (confirm == true && mounted) {
+      _showLoadingDialog(
+        context,
+        context.translate(LangKeys.updateWorkingTime),
+      );
+      await context.read<AppointmentDoctorCubit>().updateWorkingTimeDoctor(
+            workingTimeId: workingTimeId,
+            startTime: newFrom as String,
+            endTime: newTo as String,
+          );
+    }
+  }
+
+  void _showLoadingDialog(BuildContext context, String title) {
+    if (!_isDialogVisible && context.mounted) {
+      _isDialogVisible = true;
+      AdaptiveDialogs.showLoadingAlertDialog(
+        context: context,
+        title: title,
+      );
+    }
+  }
+
+  void _safePopDialog() {
+    if (_isDialogVisible && mounted) {
+      Navigator.of(context).pop();
+      _isDialogVisible = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final groupedData = groupBy(
-      _workingTimeList,
-      (item) => item.id,
-    );
-    final groupedItemsList = groupedData.entries.toList();
+    final grouped = groupBy(_workingTimeList, (e) => e.id).entries.toList();
 
     return BlocConsumer<AppointmentDoctorCubit, AppointmentDoctorState>(
-      listenWhen: (previous, current) =>
-          current is RemoveWorkingTimeDoctorFailure ||
-          current is RemoveWorkingTimeDoctorSuccess ||
-          current is RemoveWorkingTimeDoctorLoading ||
-          current is UpdateWorkingTimeDoctorFailure ||
-          current is UpdateWorkingTimeDoctorSuccess ||
-          current is UpdateWorkingTimeDoctorLoading,
-      buildWhen: (previous, current) =>
-          current is RemoveWorkingTimeDoctorFailure ||
-          current is RemoveWorkingTimeDoctorSuccess ||
-          current is RemoveWorkingTimeDoctorLoading ||
-          current is UpdateWorkingTimeDoctorFailure ||
-          current is UpdateWorkingTimeDoctorSuccess ||
-          current is UpdateWorkingTimeDoctorLoading,
+      listenWhen: (prev, curr) =>
+          curr is UpdateWorkingTimeDoctorSuccess ||
+          curr is UpdateWorkingTimeDoctorFailure ||
+          curr is RemoveWorkingTimeDoctorSuccess ||
+          curr is RemoveWorkingTimeDoctorFailure,
       listener: (context, state) {
+        _safePopDialog();
+
         if (state is UpdateWorkingTimeDoctorSuccess) {
-          context
-              .read<AppointmentDoctorCubit>()
-              .getWorkingTimeAvailableDoctor();
           showMessage(
             context,
             type: SnackBarType.success,
             message: context.translate(LangKeys.updateWorkingTimeSuccess),
           );
-          if (isLoading) {
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }
-        if (state is UpdateWorkingTimeDoctorFailure) {
-          showMessage(
-            context,
-            type: SnackBarType.error,
-            message: '${context.translate(LangKeys.updateWorkingTimeFailed)}'
-                '\n'
-                '${state.message}',
-          );
-          if (isLoading) {
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }
-        if (state is UpdateWorkingTimeDoctorLoading && !isLoading) {
-          AdaptiveDialogs.showLoadingAlertDialog(
-            context: context,
-            title: context.translate(LangKeys.updateWorkingTime),
-          );
-          setState(() {
-            isLoading = true;
-          });
-        }
-
-        /// Delete Working Time Doctor
-        if (state is RemoveWorkingTimeDoctorSuccess) {
           context
               .read<AppointmentDoctorCubit>()
               .getWorkingTimeAvailableDoctor();
+        } else if (state is UpdateWorkingTimeDoctorFailure) {
+          showMessage(
+            context,
+            type: SnackBarType.error,
+            message:
+                '${context.translate(LangKeys.updateWorkingTimeFailed)}\n${state.message}',
+          );
+        } else if (state is RemoveWorkingTimeDoctorSuccess) {
           showMessage(
             context,
             type: SnackBarType.success,
             message: context.translate(LangKeys.deleteWorkingTimeSuccess),
           );
-          if (isLoading) {
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }
-        if (state is RemoveWorkingTimeDoctorFailure) {
+          context
+              .read<AppointmentDoctorCubit>()
+              .getWorkingTimeAvailableDoctor();
+        } else if (state is RemoveWorkingTimeDoctorFailure) {
           showMessage(
             context,
             type: SnackBarType.error,
-            message: '${context.translate(LangKeys.deleteWorkingTimeFailed)}'
-                '\n'
-                '${state.message}',
+            message:
+                '${context.translate(LangKeys.deleteWorkingTimeFailed)}\n${state.message}',
           );
-          if (isLoading) {
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }
-        if (state is RemoveWorkingTimeDoctorLoading && !isLoading) {
-          AdaptiveDialogs.showLoadingAlertDialog(
-            context: context,
-            title: context.translate(LangKeys.deleteWorkingTime),
-          );
-          setState(() {
-            isLoading = true;
-          });
         }
       },
       builder: (context, state) {
         return ListView.builder(
-          itemCount: _workingTimeList.length,
+          itemCount: grouped.length,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (context, index) {
-            if (index < groupedItemsList.length) {
-              final groupedItem = groupedItemsList[index];
-              final items = groupedItem.value;
-              return Dismissible(
-                key: ValueKey(groupedItem.key),
-                background: Card(
-                  margin: context.padding(vertical: 10),
-                  elevation: 3,
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  color: Colors.blue,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Icon(
-                          CupertinoIcons.pencil,
-                          color: Colors.white,
-                          size: 30.sp,
-                        ).paddingSymmetric(horizontal: 14),
-                        Text(
-                          context.translate(LangKeys.swipeToUpdate),
-                          style: TextStyleApp.regular18().copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                secondaryBackground: Card(
-                  margin: context.padding(vertical: 10),
-                  elevation: 3,
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  color: Colors.red,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          context.translate(LangKeys.swipeToDelete),
-                          style: TextStyleApp.regular18().copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        Icon(
-                          CupertinoIcons.trash,
-                          color: Colors.white,
-                          size: 30.sp,
-                        ).paddingSymmetric(horizontal: 14),
-                      ],
-                    ),
-                  ),
-                ),
-                confirmDismiss: (direction) async {
-                  final itemId = groupedItem.key;
+            final item = grouped[index];
+            final id = item.key;
+            final items = item.value;
 
-                  /// Edit working time
-                  if (direction == DismissDirection.startToEnd) {
-                    if (itemId != null) {
-                      await showAvailabilityBottomSheet(
-                        context: context,
-                        workingTimeId: itemId,
-                        from: items.first.availableFrom!,
-                        to: items.first.availableTo!,
-                      );
-                    }
-                    return false;
-                  }
-
-                  /// Delete working time
-                  if (direction == DismissDirection.endToStart) {
-                    final shouldDelete =
-                        await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
-                      context: context,
-                      title: context.translate(LangKeys.deleteWorkingTime),
-                      message:
-                          context.translate(LangKeys.deleteWorkingTimeMessage),
-                      onPressedOk: () => Navigator.of(context).pop(true),
-                      onPressedCancel: () => Navigator.of(context).pop(false),
+            return Dismissible(
+              key: ValueKey(id),
+              background: _buildSwipeBackground(
+                context,
+                icon: CupertinoIcons.pencil,
+                text: context.translate(LangKeys.swipeToUpdate),
+                alignment: Alignment.centerLeft,
+                color: Colors.blue,
+              ),
+              secondaryBackground: _buildSwipeBackground(
+                context,
+                icon: CupertinoIcons.trash,
+                text: context.translate(LangKeys.swipeToDelete),
+                alignment: Alignment.centerRight,
+                color: Colors.red,
+              ),
+              confirmDismiss: (direction) async {
+                if (direction == DismissDirection.startToEnd) {
+                  await _showUpdateBottomSheet(
+                    workingTimeId: id!,
+                    from: items.first.availableFrom!,
+                    to: items.first.availableTo!,
+                  );
+                  return false;
+                } else if (direction == DismissDirection.endToStart) {
+                  final confirm =
+                      await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
+                    context: context,
+                    title: context.translate(LangKeys.deleteWorkingTime),
+                    message:
+                        context.translate(LangKeys.deleteWorkingTimeMessage),
+                    onPressedOk: () => Navigator.of(context).pop(true),
+                    onPressedCancel: () => Navigator.of(context).pop(false),
+                  );
+                  if (confirm == true && mounted) {
+                    _showLoadingDialog(
+                      context,
+                      context.translate(LangKeys.deleteWorkingTime),
                     );
-
-                    if (shouldDelete!) {
-                      if (itemId != null) {
-                        setState(() {
-                          _workingTimeList
-                              .removeWhere((item) => item.id == itemId);
-                        });
-                        if (context.mounted) {
-                          await context
-                              .read<AppointmentDoctorCubit>()
-                              .removeWorkingTimeDoctor(workingTimeId: itemId);
-                        }
-                      }
-                    }
-                    return false;
+                    context
+                        .read<AppointmentDoctorCubit>()
+                        .removeWorkingTimeDoctor(
+                          workingTimeId: id!,
+                        );
                   }
                   return false;
-                },
-                child: WorkingTimeDoctorCardWidget(items: items),
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
+                }
+                return false;
+              },
+              child: WorkingTimeDoctorCardWidget(items: items),
+            );
           },
         );
       },
-    ).paddingSymmetric(horizontal: 16);
+    );
+  }
+
+  Widget _buildSwipeBackground(
+    BuildContext context, {
+    required IconData icon,
+    required String text,
+    required Alignment alignment,
+    required Color color,
+  }) {
+    return Card(
+      margin: context.padding(vertical: 10),
+      elevation: 3,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+      color: color,
+      child: Align(
+        alignment: alignment,
+        child: Row(
+          mainAxisAlignment: alignment == Alignment.centerLeft
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.end,
+          children: [
+            if (alignment == Alignment.centerLeft)
+              Icon(icon, color: Colors.white, size: 30.sp)
+                  .paddingSymmetric(horizontal: 14),
+            Text(
+              text,
+              style: TextStyleApp.regular18().copyWith(color: Colors.white),
+            ),
+            if (alignment == Alignment.centerRight)
+              Icon(icon, color: Colors.white, size: 30.sp)
+                  .paddingSymmetric(horizontal: 14),
+          ],
+        ),
+      ),
+    );
   }
 }
