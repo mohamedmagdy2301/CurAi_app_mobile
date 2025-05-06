@@ -27,7 +27,8 @@ class CustomExpansionTileCard extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return ExpansionTileCard(
-            key: Key(title), // Add a unique key
+            borderRadius: BorderRadius.circular(10.r),
+            key: Key(title),
             title: Row(
               children: [
                 Icon(
@@ -37,7 +38,6 @@ class CustomExpansionTileCard extends StatelessWidget {
                 ),
                 15.wSpace,
                 Flexible(
-                  // Wrap with Flexible
                   child: AutoSizeText(
                     context.translate(title),
                     maxLines: 1,
@@ -47,7 +47,7 @@ class CustomExpansionTileCard extends StatelessWidget {
                   ),
                 ),
               ],
-            ).paddingSymmetric(horizontal: constraints.maxWidth > 400 ? 18 : 5),
+            ).paddingSymmetric(horizontal: 5),
             trailing: RotatedBox(
               quarterTurns: context.isStateArabic ? 4 : 0,
               child: Icon(

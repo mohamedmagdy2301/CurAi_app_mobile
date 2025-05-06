@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
@@ -56,7 +57,7 @@ class _PalettListViewWidgetState extends State<PalettListViewWidget> {
     final colors = isDark ? darkColors : lightColors;
 
     return SizedBox(
-      height: 80.h,
+      height: context.H * .11,
       width: double.infinity,
       child: ListView(
         shrinkWrap: true,
@@ -75,7 +76,7 @@ class _PalettListViewWidgetState extends State<PalettListViewWidget> {
               ),
             )
             .toList(),
-      ).paddingSymmetric(horizontal: 30),
+      ).paddingBottom(14),
     );
   }
 
