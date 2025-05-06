@@ -73,13 +73,15 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           current is AddWorkingTimeDoctorSuccess ||
           current is AddWorkingTimeDoctorLoading ||
           current is RemoveWorkingTimeDoctorLoading ||
-          current is UpdateWorkingTimeDoctorLoading,
+          current is UpdateWorkingTimeDoctorLoading ||
+          current is GetWorkingTimeDoctorAvailableLoading,
       buildWhen: (previous, current) =>
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
           current is AddWorkingTimeDoctorLoading ||
           current is RemoveWorkingTimeDoctorLoading ||
-          current is UpdateWorkingTimeDoctorLoading,
+          current is UpdateWorkingTimeDoctorLoading ||
+          current is GetWorkingTimeDoctorAvailableLoading,
       listener: (context, state) async {
         if (state is AddWorkingTimeDoctorSuccess && mounted) {
           await context

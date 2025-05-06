@@ -22,6 +22,10 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
   final AddWorkingTimeDoctorUsecase _addWorkingTimeDoctorUsecase;
   final RemoveWorkingTimeDoctorUsecase _removeWorkingTimeDoctorUsecase;
   List<WorkingTimeDoctorAvailableModel> workingTimeList = [];
+  void resetState() {
+    if (isClosed) return;
+    emit(AppointmentDoctorInitial());
+  }
 
   Future<void> getWorkingTimeAvailableDoctor() async {
     if (isClosed) return;
@@ -49,6 +53,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
         );
       }
     });
+    resetState();
   }
 
   Future<void> removeWorkingTimeDoctor({required int workingTimeId}) async {
@@ -63,6 +68,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
     }, (_) {
       emit(RemoveWorkingTimeDoctorSuccess());
     });
+    resetState();
   }
 
   Future<void> addWorkingTimeDoctor({
@@ -85,6 +91,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
     }, (_) {
       emit(AddWorkingTimeDoctorSuccess());
     });
+    resetState();
   }
 
   Future<void> updateWorkingTimeDoctor({
@@ -108,5 +115,6 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       if (isClosed) return;
       emit(UpdateWorkingTimeDoctorSuccess());
     });
+    resetState();
   }
 }
