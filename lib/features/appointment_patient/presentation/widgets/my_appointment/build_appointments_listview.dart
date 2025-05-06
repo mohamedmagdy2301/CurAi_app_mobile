@@ -2,6 +2,7 @@
 
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
@@ -11,6 +12,7 @@ import 'package:curai_app_mobile/features/appointment_patient/data/models/my_app
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/appointment_patient_card_widget.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/build_appointments_patient_empty_listview.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/my_appointment_patient_loading_card.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
@@ -83,55 +85,58 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
           _refreshController.refreshFailed();
         }
       },
-      child: ListView.builder(
-        controller: widget.scrollController,
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: ClampingScrollPhysics(),
-        ),
-        itemCount: filteredAppointments.length + (widget.isLoadingMore ? 1 : 0),
-        itemBuilder: (context, index) {
-          if (index < filteredAppointments.length) {
-            final appointment = filteredAppointments[index];
-            final doctorResults =
-                widget.cubit.doctorsData[appointment.doctorId];
+      child: filteredAppointments.isEmpty
+          ? const BuildAppointmentsPatientEmptyList().center()
+          : ListView.builder(
+              controller: widget.scrollController,
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: ClampingScrollPhysics(),
+              ),
+              itemCount:
+                  filteredAppointments.length + (widget.isLoadingMore ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index < filteredAppointments.length) {
+                  final appointment = filteredAppointments[index];
+                  final doctorResults =
+                      widget.cubit.doctorsData[appointment.doctorId];
 
-            if (doctorResults == null) {
-              return const SizedBox();
-            }
+                  if (doctorResults == null) {
+                    return const SizedBox();
+                  }
 
-            final isSwitched = isSwitchedMap[appointment.id] ?? false;
+                  final isSwitched = isSwitchedMap[appointment.id] ?? false;
 
-            if (widget.isPending) {
-              return AppointmentPatientCardWidget(
-                appointment: appointment,
-                doctorResults: doctorResults,
-                topTrailingWidget: const Spacer(),
-                bottomButton: _buildPaymentBookButton(
-                  context,
-                  doctorResults,
-                  appointment,
-                ),
-              );
-            } else {
-              return AppointmentPatientCardWidget(
-                appointment: appointment,
-                doctorResults: doctorResults,
-                topTrailingWidget: _buildNotificationSwitch(
-                  isSwitched,
-                  appointment,
-                  context,
-                ),
-                bottomButton: _buildRescheduleButton(
-                  context,
-                  doctorResults,
-                  appointment,
-                ),
-              );
-            }
-          }
-          return const MyAppointmentCardLoadingList();
-        },
-      ),
+                  if (widget.isPending) {
+                    return AppointmentPatientCardWidget(
+                      appointment: appointment,
+                      doctorResults: doctorResults,
+                      topTrailingWidget: const Spacer(),
+                      bottomButton: _buildPaymentBookButton(
+                        context,
+                        doctorResults,
+                        appointment,
+                      ),
+                    );
+                  } else {
+                    return AppointmentPatientCardWidget(
+                      appointment: appointment,
+                      doctorResults: doctorResults,
+                      topTrailingWidget: _buildNotificationSwitch(
+                        isSwitched,
+                        appointment,
+                        context,
+                      ),
+                      bottomButton: _buildRescheduleButton(
+                        context,
+                        doctorResults,
+                        appointment,
+                      ),
+                    );
+                  }
+                }
+                return const MyAppointmentCardLoadingList();
+              },
+            ),
     );
   }
 
