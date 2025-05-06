@@ -166,7 +166,6 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         spacing: _isFormValidNotifier.value ? 0.h : 6.h,
         children: [

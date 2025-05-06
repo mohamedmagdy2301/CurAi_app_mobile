@@ -96,12 +96,17 @@ class _CuraiAppState extends State<CuraiApp> {
   @override
   Widget build(BuildContext context) {
     if (!isInitialized) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppThemeData.lightTheme('Poppins', selectedColor),
-        darkTheme: AppThemeData.darkTheme('Poppins', selectedColor),
-        home: Scaffold(
-          body: const CustomLoadingWidget(height: 60, width: 60).center(),
+      return ScreenUtilInit(
+        designSize: const Size(390, 844),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppThemeData.lightTheme('Poppins', selectedColor),
+          darkTheme: AppThemeData.darkTheme('Poppins', selectedColor),
+          home: Scaffold(
+            body: const CustomLoadingWidget(height: 60, width: 60).center(),
+          ),
         ),
       );
     }
