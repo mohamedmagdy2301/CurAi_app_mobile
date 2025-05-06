@@ -170,7 +170,7 @@ class _AddWorkingTimeDoctorBottomSheetState
                 final isSelected = selectedDay == day;
                 return ChoiceChip(
                   selectedColor: context.primaryColor,
-                  backgroundColor: context.backgroundColor,
+                  backgroundColor: context.backgroundColor.withAlpha(10),
                   labelPadding: EdgeInsets.symmetric(horizontal: 9.w),
                   elevation: isSelected ? 3 : 0,
                   avatarBorder: Border.all(
@@ -265,8 +265,8 @@ class _AddWorkingTimeDoctorBottomSheetState
           width: 70.w,
           margin: EdgeInsets.only(bottom: 8.h),
           decoration: BoxDecoration(
-            color: context.backgroundColor.withAlpha(100),
-            borderRadius: BorderRadius.circular(2.r),
+            color: context.onSecondaryColor.withAlpha(160),
+            borderRadius: BorderRadius.circular(2),
           ),
         ).center(),
         AutoSizeText(
