@@ -265,8 +265,8 @@ class _AddWorkingTimeDoctorBottomSheetState
           width: 70.w,
           margin: EdgeInsets.only(bottom: 8.h),
           decoration: BoxDecoration(
-            color: context.onSecondaryColor.withAlpha(160),
-            borderRadius: BorderRadius.circular(2),
+            color: context.backgroundColor.withAlpha(100),
+            borderRadius: BorderRadius.circular(2.r),
           ),
         ).center(),
         AutoSizeText(
