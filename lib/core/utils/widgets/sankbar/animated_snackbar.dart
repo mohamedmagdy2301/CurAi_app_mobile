@@ -87,13 +87,16 @@ class _AnimatedSnackBarState extends State<AnimatedSnackBar>
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (widget.isIconVisible ?? false)
                   Icon(
                     widget.icon,
                     color: widget.snackBarTheme.contentTextStyle?.color,
                     size: 20.sp,
-                  ),
+                  ).paddingTop(3),
                 if (widget.isIconVisible ?? false) 8.wSpace,
                 AutoSizeText(
                   widget.message,
