@@ -4,7 +4,6 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
-import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
@@ -149,25 +148,18 @@ class _AddAddressClinicFormWidgetState
       listener: (context, state) {
         if (state is EditProfileSuccess) {
           if (widget.isEdit ?? false) {
-            context
-              ..pop()
-              ..pushReplacementNamed(Routes.mainScaffoldUser);
+            context.pushReplacementNamed(Routes.mainScaffoldUser);
           } else {
             context
               ..pop()
               ..pushReplacementNamed(Routes.loginScreen);
           }
-        } else if (state is EditProfileError) {
-          context.pop();
+        }
+        if (state is EditProfileError) {
           showMessage(
             context,
             type: SnackBarType.error,
             message: state.message,
-          );
-        } else if (state is EditProfileLoading) {
-          AdaptiveDialogs.showLoadingAlertDialog(
-            context: context,
-            title: context.translate(LangKeys.clinicAddress),
           );
         }
       },
