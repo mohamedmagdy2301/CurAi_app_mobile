@@ -43,6 +43,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
     _validateForm();
     if (_isFormValidNotifier.value) {
       TextInput.finishAutofillContext();
+
       _formKey.currentState?.save();
       context.read<AuthCubit>().login(
             context,

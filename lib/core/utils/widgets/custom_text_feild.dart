@@ -56,7 +56,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
     return TextFormField(
       keyboardType: widget.keyboardType ?? TextInputType.text,
       controller: widget.controller,
-      autofillHints: widget.autofillHints ?? const [],
+      autofillHints: widget.autofillHints,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       cursorColor: context.primaryColor,
       style: TextStyleApp.regular16().copyWith(
@@ -106,6 +106,9 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
           borderSide: BorderSide(color: context.onSecondaryColor, width: 1.w),
         ),
       ),
+      onFieldSubmitted: (value) {
+        FocusScope.of(context).unfocus();
+      },
     );
   }
 
