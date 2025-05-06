@@ -77,11 +77,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: context.W * .55,
                   child: AutoSizeText(
                     getRole() == 'patient'
-                        ? ''
+                        ? getFullName().capitalizeFirstChar
                         : '${context.translate(LangKeys.dr)}. '
                             '${getFullName().capitalizeFirstChar}',
                     maxLines: 1,
-                    textAlign: TextAlign.start,
+                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyleApp.extraBold26().copyWith(
                       color: context.primaryColor,

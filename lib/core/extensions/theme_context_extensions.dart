@@ -30,7 +30,13 @@ extension ContextExtensions on BuildContext {
 
   AdaptiveThemeMode get mode => AdaptiveTheme.of(this).mode;
 
-  bool get isDark => mode.isDark;
+  bool get isDark {
+    if (mode == AdaptiveThemeMode.system) {
+      final brightness = MediaQuery.of(this).platformBrightness;
+      return brightness == Brightness.dark;
+    }
+    return mode == AdaptiveThemeMode.dark;
+  }
 
   // //! Padding symetric
   EdgeInsets padding({

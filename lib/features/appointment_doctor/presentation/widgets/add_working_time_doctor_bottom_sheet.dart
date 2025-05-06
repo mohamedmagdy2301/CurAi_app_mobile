@@ -128,7 +128,8 @@ class _AddWorkingTimeDoctorBottomSheetState
       if (fromMinutes >= toMinutes) {
         showMessage(
           context,
-          type: SnackBarType.warning,
+          type: SnackBarType.info,
+          isIconVisible: true,
           message: context.isStateArabic
               ? 'الوقت المبدئي يجب ان يكون قبل الوقت النهائي'
               : 'Start time must be before end time',
@@ -148,6 +149,7 @@ class _AddWorkingTimeDoctorBottomSheetState
       showMessage(
         context,
         type: SnackBarType.info,
+        isIconVisible: true,
         message: context.isStateArabic
             ? 'من فضلك اختار اليوم والوقت المبدئي والوقت النهائي'
             : 'Please select day, start time and end time',
@@ -303,6 +305,7 @@ class _AddWorkingTimeDoctorBottomSheetState
                     showMessage(
                       context,
                       type: SnackBarType.info,
+                      isIconVisible: true,
                       message: context.isStateArabic
                           ? 'من فضلك اختار اليوم'
                           : 'Please select day first',
@@ -316,6 +319,7 @@ class _AddWorkingTimeDoctorBottomSheetState
                       showMessage(
                         context,
                         type: SnackBarType.info,
+                        isIconVisible: true,
                         message: context.isStateArabic
                             ? 'من فضلك اختار الوقت النهائي'
                             : 'Please select end time',
@@ -326,6 +330,7 @@ class _AddWorkingTimeDoctorBottomSheetState
                       showMessage(
                         context,
                         type: SnackBarType.info,
+                        isIconVisible: true,
                         message: context.isStateArabic
                             ? 'من فضلك اختار الوقت المبدئي والوقت النهائي'
                             : 'Please select start time and end time',
@@ -334,6 +339,7 @@ class _AddWorkingTimeDoctorBottomSheetState
                       showMessage(
                         context,
                         type: SnackBarType.info,
+                        isIconVisible: true,
                         message: context.isStateArabic
                             ? 'من فضلك اختار الوقت المبدئي'
                             : 'Please select start time',

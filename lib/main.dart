@@ -1,15 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
 import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
 import 'package:curai_app_mobile/core/app/env.variables.dart';
 import 'package:curai_app_mobile/core/app/error_widget_main.dart';
 import 'package:curai_app_mobile/core/app/my_app.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
-import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
 import 'package:curai_app_mobile/core/utils/helper/bolc_observer.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
@@ -31,19 +28,12 @@ Future<void> main() async {
     await initializeDependencies();
 
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    final savedThemeMode = await AdaptiveTheme.getThemeMode();
-    final savedThemeColor = await CacheDataHelper.getData(
-          key: SharedPrefKey.keyThemeColor,
-        ) ??
-        AppColors.primary;
 
     runApp(
       BlocProvider(
         create: (context) => LocalizationCubit()..loadSettings(),
         child: MyApp(
           environment: sl<EnvVariables>().debugMode,
-          savedThemeColor: savedThemeColor as Color,
-          savedThemeMode: savedThemeMode ?? AdaptiveThemeMode.light,
         ),
       ),
     );
