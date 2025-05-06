@@ -8,17 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalizationCubit extends Cubit<LocalizationState> {
   LocalizationCubit()
-      : super(
-          LocalizationState(
-            locale: LocalizationStateEnum.system,
-          ),
-        ) {
+      : super(LocalizationState(locale: LocalizationStateEnum.ar)) {
     loadSettings();
   }
 
   Future<void> loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    final locale = prefs.getString(SharedPrefKey.keyLocale) ?? 'system';
+    final locale = prefs.getString(SharedPrefKey.keyLocale) ?? 'ar';
 
     emit(
       LocalizationState(
