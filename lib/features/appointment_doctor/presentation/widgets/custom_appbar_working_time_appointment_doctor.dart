@@ -71,11 +71,15 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
       listenWhen: (previous, current) =>
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
-          current is AddWorkingTimeDoctorLoading,
+          current is AddWorkingTimeDoctorLoading ||
+          current is RemoveWorkingTimeDoctorLoading ||
+          current is UpdateWorkingTimeDoctorLoading,
       buildWhen: (previous, current) =>
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
-          current is AddWorkingTimeDoctorLoading,
+          current is AddWorkingTimeDoctorLoading ||
+          current is RemoveWorkingTimeDoctorLoading ||
+          current is UpdateWorkingTimeDoctorLoading,
       listener: (context, state) async {
         if (state is AddWorkingTimeDoctorSuccess && mounted) {
           await context
@@ -111,7 +115,9 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           ),
           centerTitle: true,
           actions: [
-            if (state is AddWorkingTimeDoctorLoading)
+            if (state is AddWorkingTimeDoctorLoading ||
+                state is RemoveWorkingTimeDoctorLoading ||
+                state is UpdateWorkingTimeDoctorLoading)
               const CustomLoadingWidget().paddingSymmetric(horizontal: 15)
             else
               IconButton(
