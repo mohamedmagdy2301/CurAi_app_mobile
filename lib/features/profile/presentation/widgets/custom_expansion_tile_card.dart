@@ -15,42 +15,54 @@ class CustomExpansionTileCard extends StatelessWidget {
     required this.icon,
     super.key,
   });
+
   final String title;
   final IconData icon;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTileCard(
-      title: Row(
-        children: [
-          Icon(
-            icon,
-            color: context.primaryColor,
-            size: 25.sp,
-          ),
-          15.wSpace,
-          AutoSizeText(
-            context.translate(title),
-            maxLines: 1,
-            style: TextStyleApp.regular16().copyWith(
-              color: context.onPrimaryColor,
-            ),
-          ),
-        ],
-      ).paddingSymmetric(horizontal: context.W > 400 ? 18 : 5),
-      trailing: RotatedBox(
-        quarterTurns: context.isStateArabic ? 4 : 0,
-        child: Icon(
-          size: 18.sp,
-          Icons.arrow_forward_ios,
-          color: context.primaryColor,
-        ),
-      ).paddingSymmetric(horizontal: context.W > 400 ? 10 : 0),
-      baseColor: Colors.transparent,
-      expandedColor: Colors.transparent,
-      elevation: 0,
-      children: children,
+    return Material(
+      type: MaterialType.transparency,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return ExpansionTileCard(
+            borderRadius: BorderRadius.circular(10.r),
+            key: Key(title),
+            title: Row(
+              children: [
+                Icon(
+                  icon,
+                  color: context.primaryColor,
+                  size: 25.sp,
+                ),
+                15.wSpace,
+                Flexible(
+                  child: AutoSizeText(
+                    context.translate(title),
+                    maxLines: 1,
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ).paddingSymmetric(horizontal: 5),
+            trailing: RotatedBox(
+              quarterTurns: context.isStateArabic ? 4 : 0,
+              child: Icon(
+                size: 18.sp,
+                Icons.arrow_forward_ios,
+                color: context.primaryColor,
+              ),
+            ).paddingSymmetric(horizontal: constraints.maxWidth > 400 ? 10 : 0),
+            baseColor: Colors.transparent,
+            expandedColor: Colors.transparent,
+            elevation: 0,
+            children: children,
+          );
+        },
+      ),
     );
   }
 }

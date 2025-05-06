@@ -72,32 +72,13 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Switch.adaptive(
-                  value:
-                      AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
-                  onChanged: (_) {
-                    AdaptiveTheme.of(context).toggleThemeMode();
-
-                    CacheDataHelper.setData(
-                      key: SharedPrefKey.saveThemeMode,
-                      value: AdaptiveTheme.of(context).mode,
-                    );
+                  value: _getIsDarkMode(context),
+                  onChanged: (_) async {
+                    await _toggleTheme(context);
                   },
                 ),
               ],
             ).paddingSymmetric(horizontal: 20, vertical: 5),
-
-            // _buildDivider(context),
-            // RowNavigateProfileWidget(
-            //   icon: Icons.dark_mode_outlined,
-            //   title: LangKeys.changeTheme,
-            //   onTap: () {
-            //     AdaptiveDialogs.showAlertDialogWithWidget(
-            //       context: context,
-            //       title: context.translate(LangKeys.changeTheme),
-            //       widget: const ThemeWidget(),
-            //     );
-            //   },
-            // ),
             _buildDivider(context),
             const CustomExpansionTileCard(
               icon: Icons.color_lens,
@@ -119,6 +100,28 @@ class SettingsScreen extends StatelessWidget {
           ],
         ).center(),
       ).paddingSymmetric(horizontal: context.isLandscape ? 100 : 0),
+    );
+  }
+
+  // Helper method to check if dark mode is enabled
+  bool _getIsDarkMode(BuildContext context) {
+    final themeMode = AdaptiveTheme.of(context).mode;
+    return themeMode == AdaptiveThemeMode.dark ||
+        (themeMode == AdaptiveThemeMode.system &&
+            MediaQuery.of(context).platformBrightness == Brightness.dark);
+  }
+
+  // Helper method to toggle between dark and light mode
+  Future<void> _toggleTheme(BuildContext context) async {
+    final currentMode = AdaptiveTheme.of(context).mode;
+    final newMode = currentMode == AdaptiveThemeMode.dark
+        ? AdaptiveThemeMode.light
+        : AdaptiveThemeMode.dark;
+
+    AdaptiveTheme.of(context).setThemeMode(newMode);
+    await CacheDataHelper.setData(
+      key: SharedPrefKey.saveThemeMode,
+      value: newMode.name,
     );
   }
 
