@@ -136,26 +136,28 @@ class AppThemeData {
       InputDecorationTheme(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor.withAlpha(80)),
+          borderSide: BorderSide(color: seedColor.withAlpha(40)),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: const BorderSide(color: Colors.redAccent),
+          borderSide: BorderSide(color: Colors.redAccent.withAlpha(140)),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: const BorderSide(color: AppColors.red),
+          borderSide: BorderSide(color: AppColors.red.withAlpha(140)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor.withAlpha(80)),
+          borderSide: BorderSide(color: seedColor.withAlpha(40)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor),
+          borderSide: BorderSide(color: seedColor.withAlpha(60)),
         ),
-        errorStyle: TextStyleApp.medium14().copyWith(color: Colors.redAccent),
-        labelStyle: TextStyleApp.medium14().copyWith(color: seedColor),
+        errorStyle: TextStyleApp.regular12()
+            .copyWith(color: Colors.redAccent.withAlpha(140)),
+        labelStyle:
+            TextStyleApp.regular14().copyWith(color: seedColor.withAlpha(190)),
       );
 
   static CardTheme _cardTheme(Color backgroundColor) => CardTheme(

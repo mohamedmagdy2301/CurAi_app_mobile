@@ -88,22 +88,12 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         contentPadding: context.W > 400
             ? EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h)
             : null,
-        errorStyle: TextStyleApp.regular12().copyWith(
-          color: Colors.redAccent,
-        ),
         suffixIcon: widget.suffixIcon ?? changePasswordObscure(),
         prefixIcon: widget.prefixIcon,
         labelText: widget.labelText,
         hintText: widget.hint ?? widget.labelText,
-        labelStyle: TextStyleApp.regular16().copyWith(
-          color: context.primaryColor,
-        ),
-        hintStyle: TextStyleApp.regular16().copyWith(
-          color: context.onSecondaryColor,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.r),
-          borderSide: BorderSide(color: context.onSecondaryColor, width: 1.w),
+        hintStyle: TextStyleApp.regular14().copyWith(
+          color: context.onSecondaryColor.withAlpha(100),
         ),
       ),
       onFieldSubmitted: (value) {
