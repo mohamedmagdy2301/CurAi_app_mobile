@@ -152,7 +152,7 @@ class AppThemeData {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor.withAlpha(60)),
+          borderSide: BorderSide(color: seedColor.withAlpha(80)),
         ),
         errorStyle: TextStyleApp.regular12()
             .copyWith(color: Colors.redAccent.withAlpha(140)),
