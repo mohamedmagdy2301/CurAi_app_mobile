@@ -35,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                     title: LangKeys.welcomeBack,
                     descraption: LangKeys.descriptionLogin,
                   ),
-                  10.hSpace,
+                  15.hSpace,
                   const FormLoginWidget(),
                   40.hSpace,
                   const SocialAuthenticationWidget(),
