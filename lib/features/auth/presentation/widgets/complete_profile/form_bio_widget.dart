@@ -48,7 +48,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
   final List<File> _selectedFiles = [];
   final List<File> _selectedImages = [];
   final ImagePicker _imagePicker = ImagePicker();
-
+  String? _degreeErrorText;
   @override
   void initState() {
     super.initState();
@@ -108,7 +108,12 @@ class _BioFormWidgetState extends State<BioFormWidget> {
 
   void updateBio() {
     final isValid = _formKey.currentState?.validate() ?? false;
-
+    _degreeErrorText = _selectedDegree == null
+        ? context.isStateArabic
+            ? 'من فضلك اختر الدرجة العلمية'
+            : 'Please select degree'
+        : null;
+    setState(() {});
     final bioComponents = <String>[];
 
     // Add degree if available
@@ -150,7 +155,8 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     final newBio = bioComponents.join(separator);
 
     _bioController.text = newBio;
-    _isFormValidNotifier.value = isValid;
+    setState(() {});
+    _isFormValidNotifier.value = isValid && _degreeErrorText == null;
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -286,18 +292,20 @@ class _BioFormWidgetState extends State<BioFormWidget> {
   void onCompletePressed(BuildContext context) {
     hideKeyboard();
     updateBio();
+    if (_isFormValidNotifier.value) {
+      _formKey.currentState?.save();
 
-    final profileRequest = ProfileRequest(
-      bio: _bioController.text.trim(),
-      // Add any files or images to the request
-      // This depends on how your ProfileRequest is structured
-      // profileImages: _selectedImages,
-      // profileFiles: _selectedFiles,
-    );
-
-    context
-        .read<AuthCubit>()
-        .editProfile(context, profileRequest: profileRequest);
+      final profileRequest = ProfileRequest(
+        bio: _bioController.text.trim(),
+        // Add any files or images to the request
+        // This depends on how your ProfileRequest is structured
+        // profileImages: _selectedImages,
+        // profileFiles: _selectedFiles,
+      );
+      context
+          .read<AuthCubit>()
+          .editProfile(context, profileRequest: profileRequest);
+    }
   }
 
   @override
@@ -597,56 +605,75 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     );
   }
 
-  Container _dropdownDergree(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(
-          color: context.primaryColor.withAlpha(100),
-        ),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          isExpanded: true,
-          borderRadius: BorderRadius.circular(8.r),
-          elevation: 0,
-          style: TextStyleApp.regular16().copyWith(
-            color: context.onPrimaryColor,
-          ),
-          icon: Icon(
-            Icons.keyboard_arrow_down,
-            size: 30.sp,
-            color: context.primaryColor,
-          ),
-          value: _selectedDegree,
-          hint: Text(
-            context.isStateArabic ? 'اختر الدرجة العلمية' : 'Select Degree',
-            style: TextStyleApp.regular16().copyWith(
-              color: context.primaryColor,
+  Widget _dropdownDergree(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.r),
+            border: Border.all(
+              color: _degreeErrorText != null
+                  ? Colors.redAccent
+                  : context.onPrimaryColor.withAlpha(60),
             ),
           ),
-          items: getDegrees()
-              .map(
-                (degree) => DropdownMenuItem<String>(
-                  value: degree,
-                  child: Text(
-                    degree,
-                    style: TextStyleApp.regular16().copyWith(
-                      color: context.onPrimaryColor,
-                    ),
-                  ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              isExpanded: true,
+              borderRadius: BorderRadius.circular(8.r),
+              elevation: 0,
+              style: TextStyleApp.regular16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+              icon: Icon(
+                Icons.keyboard_arrow_down,
+                size: 28.sp,
+                color: context.onPrimaryColor.withAlpha(140),
+              ),
+              value: _selectedDegree,
+              hint: Text(
+                context.isStateArabic ? 'اختر الدرجة العلمية' : 'Select Degree',
+                style: TextStyleApp.regular14().copyWith(
+                  color: context.onPrimaryColor.withAlpha(140),
                 ),
-              )
-              .toList(),
-          onChanged: (String? newValue) {
-            setState(() {
-              _selectedDegree = newValue;
-              updateBio();
-            });
-          },
+              ),
+              items: getDegrees()
+                  .map(
+                    (degree) => DropdownMenuItem<String>(
+                      value: degree,
+                      child: Text(
+                        degree,
+                        style: TextStyleApp.regular14().copyWith(
+                          color: context.onPrimaryColor,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedDegree = newValue;
+                  _degreeErrorText = null;
+
+                  updateBio();
+                });
+              },
+            ),
+          ),
         ),
-      ),
+        if (_degreeErrorText != null)
+          Padding(
+            padding: EdgeInsets.only(top: 5.h, left: 8.w),
+            child: Text(
+              _degreeErrorText!,
+              style: TextStyleApp.regular12().copyWith(
+                color: Colors.redAccent,
+              ),
+            ),
+          ),
+      ],
     );
   }
 

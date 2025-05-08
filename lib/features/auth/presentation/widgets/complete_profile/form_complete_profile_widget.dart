@@ -258,7 +258,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             border: Border.all(
               color: _genderErrorText != null
                   ? Colors.redAccent
-                  : context.primaryColor.withAlpha(100),
+                  : context.onPrimaryColor.withAlpha(60),
             ),
           ),
           child: DropdownButtonHideUnderline(
@@ -271,14 +271,14 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                size: 30.sp,
-                color: context.primaryColor,
+                size: 28.sp,
+                color: context.onPrimaryColor.withAlpha(140),
               ),
               value: selectedGender,
               hint: Text(
                 context.translate(LangKeys.gender),
-                style: TextStyleApp.regular16().copyWith(
-                  color: context.primaryColor,
+                style: TextStyleApp.regular14().copyWith(
+                  color: context.onPrimaryColor.withAlpha(140),
                 ),
               ),
               items: [
@@ -286,7 +286,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                   value: 'male',
                   child: Text(
                     context.translate(LangKeys.male),
-                    style: TextStyleApp.regular16().copyWith(
+                    style: TextStyleApp.regular14().copyWith(
                       color: context.onPrimaryColor,
                     ),
                   ),
@@ -295,7 +295,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                   value: 'female',
                   child: Text(
                     context.translate(LangKeys.female),
-                    style: TextStyleApp.regular16().copyWith(
+                    style: TextStyleApp.regular14().copyWith(
                       color: context.onPrimaryColor,
                     ),
                   ),
@@ -337,7 +337,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             border: Border.all(
               color: _specializationErrorText != null
                   ? Colors.redAccent
-                  : context.primaryColor.withAlpha(100),
+                  : context.onPrimaryColor.withAlpha(60),
             ),
           ),
           child: DropdownButtonHideUnderline(
@@ -345,19 +345,19 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               isExpanded: true,
               borderRadius: BorderRadius.circular(8.r),
               elevation: 0,
-              style: TextStyleApp.regular16().copyWith(
-                color: context.onPrimaryColor,
+              style: TextStyleApp.regular14().copyWith(
+                color: context.onPrimaryColor.withAlpha(140),
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                size: 30.sp,
-                color: context.primaryColor,
+                size: 28.sp,
+                color: context.onPrimaryColor.withAlpha(140),
               ),
               value: selectedSpecialization,
               hint: Text(
                 context.translate(LangKeys.medicalSpecialization),
-                style: TextStyleApp.regular16().copyWith(
-                  color: context.primaryColor,
+                style: TextStyleApp.regular14().copyWith(
+                  color: context.onPrimaryColor.withAlpha(140),
                 ),
               ),
               items: specializationsList
@@ -369,7 +369,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                           spec['name'] as String,
                           context.isStateArabic,
                         ),
-                        style: TextStyleApp.regular16().copyWith(
+                        style: TextStyleApp.regular14().copyWith(
                           color: context.onPrimaryColor,
                         ),
                       ),

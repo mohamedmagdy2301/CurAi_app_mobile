@@ -124,10 +124,10 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
             icon: Icon(
               size: 26.sp,
               color: isPasswordObscure
-                  ? context.onSecondaryColor
+                  ? context.onSecondaryColor.withAlpha(120)
                   : context.primaryColor,
               isPasswordObscure
-                  ? CupertinoIcons.eye_slash_fill
+                  ? CupertinoIcons.eye_slash
                   : CupertinoIcons.eye_fill,
             ),
           ).paddingSymmetric(horizontal: 5)
