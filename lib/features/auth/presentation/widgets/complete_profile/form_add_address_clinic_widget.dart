@@ -19,6 +19,7 @@ import 'package:toastification/toastification.dart';
 class AddAddressClinicFormWidget extends StatefulWidget {
   const AddAddressClinicFormWidget({super.key, this.isEdit});
   final bool? isEdit;
+
   @override
   State<AddAddressClinicFormWidget> createState() =>
       _AddAddressClinicFormWidgetState();
@@ -27,6 +28,7 @@ class AddAddressClinicFormWidget extends StatefulWidget {
 class _AddAddressClinicFormWidgetState
     extends State<AddAddressClinicFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
 
   final TextEditingController _specialMarkController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
@@ -34,10 +36,16 @@ class _AddAddressClinicFormWidgetState
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _governorateController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
+
+  final FocusNode _specialMarkFocusNode = FocusNode();
+  final FocusNode _streetFocusNode = FocusNode();
+  final FocusNode _areaFocusNode = FocusNode();
+  final FocusNode _cityFocusNode = FocusNode();
+  final FocusNode _governorateFocusNode = FocusNode();
+  final FocusNode _countryFocusNode = FocusNode();
+
   double? latitude;
   double? longitude;
-  // A ValueNotifier to track the form validation status
-  final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
 
   void _validateForm() {
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -89,6 +97,9 @@ class _AddAddressClinicFormWidgetState
             labelText: context.translate(LangKeys.country),
             keyboardType: TextInputType.streetAddress,
             controller: _countryController,
+            focusNode: _countryFocusNode,
+            textInputAction: TextInputAction.next,
+            nextFocusNode: _governorateFocusNode,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -96,6 +107,9 @@ class _AddAddressClinicFormWidgetState
             labelText: context.translate(LangKeys.governorate),
             keyboardType: TextInputType.streetAddress,
             controller: _governorateController,
+            focusNode: _governorateFocusNode,
+            textInputAction: TextInputAction.next,
+            nextFocusNode: _cityFocusNode,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -103,6 +117,9 @@ class _AddAddressClinicFormWidgetState
             labelText: context.translate(LangKeys.city),
             keyboardType: TextInputType.streetAddress,
             controller: _cityController,
+            focusNode: _cityFocusNode,
+            textInputAction: TextInputAction.next,
+            nextFocusNode: _areaFocusNode,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -110,6 +127,9 @@ class _AddAddressClinicFormWidgetState
             labelText: context.translate(LangKeys.area),
             keyboardType: TextInputType.streetAddress,
             controller: _areaController,
+            focusNode: _areaFocusNode,
+            textInputAction: TextInputAction.next,
+            nextFocusNode: _streetFocusNode,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -117,6 +137,9 @@ class _AddAddressClinicFormWidgetState
             labelText: context.translate(LangKeys.street),
             keyboardType: TextInputType.streetAddress,
             controller: _streetController,
+            focusNode: _streetFocusNode,
+            textInputAction: TextInputAction.next,
+            nextFocusNode: _specialMarkFocusNode,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -124,6 +147,8 @@ class _AddAddressClinicFormWidgetState
             labelText: context.translate(LangKeys.specialMark),
             keyboardType: TextInputType.streetAddress,
             controller: _specialMarkController,
+            focusNode: _specialMarkFocusNode,
+            textInputAction: TextInputAction.done,
             isValidator: false,
             onChanged: (_) => _validateForm(),
           ),
