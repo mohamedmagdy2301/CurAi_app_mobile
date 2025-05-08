@@ -42,6 +42,8 @@ class AuthCubit extends Cubit<AuthState> {
     BuildContext context,
     RegisterRequest registerRequest,
   ) async {
+    if (isClosed) return;
+
     emit(RegisterLoading());
 
     final result = await _registerUsecase.call(registerRequest);
@@ -51,11 +53,10 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (errorMessage) {
         if (isClosed) return;
+
         emit(RegisterError(message: errorMessage));
       },
       (successMessage) {
-        if (isClosed) return;
-
         final role = registerRequest.role;
 
         if (role == 'doctor') {
@@ -69,6 +70,8 @@ class AuthCubit extends Cubit<AuthState> {
               ? 'تم التسجيل بنجاح!\nيرجى تسجيل الدخول للمتابعة.'
               : 'Registration successful!\nPlease log in to continue.';
         }
+
+        if (isClosed) return;
 
         emit(RegisterSuccess(message: displayedMessage));
       },
@@ -101,11 +104,10 @@ class AuthCubit extends Cubit<AuthState> {
         }
 
         if (isClosed) return;
+
         emit(LoginError(message: displayedMessage));
       },
       (successMessage) {
-        if (isClosed) return;
-
         final username =
             '${successMessage.firstName} ${successMessage.lastName}';
         final role = successMessage.role;
@@ -119,6 +121,7 @@ class AuthCubit extends Cubit<AuthState> {
                 : 'Welcome $username, wishing you good health on CurAi ☺️');
 
         if (isClosed) return;
+
         emit(LoginSuccess(message: displayedMessage));
       },
     );
@@ -135,6 +138,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (errorMessage) {
         if (isClosed) return;
+
         emit(LogoutError(message: errorMessage));
       },
       (successMessage) {
@@ -145,6 +149,8 @@ class AuthCubit extends Cubit<AuthState> {
                 'نأمل أن نراك قريبًا في CurAi!'
             : 'You have logged out successfully.\n'
                 'We hope to see you again soon on CurAi!';
+
+        if (isClosed) return;
 
         emit(LogoutSuccess(message: displayedMessage));
       },
@@ -164,6 +170,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (errorMessage) {
         if (isClosed) return;
+
         emit(ChangePasswordError(message: errorMessage));
       },
       (successMessage) {
@@ -174,6 +181,8 @@ class AuthCubit extends Cubit<AuthState> {
                 'يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.'
             : 'Password changed successfully.\n'
                 'You can now log in with your new password.';
+
+        if (isClosed) return;
 
         emit(ChangePasswordSuccess(message: displayedMessage));
       },
@@ -190,10 +199,12 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (errorMessage) {
         if (isClosed) return;
+
         emit(GetProfileError(message: errorMessage));
       },
       (profileModel) {
         if (isClosed) return;
+
         emit(GetProfileSuccess(profileModel: profileModel));
       },
     );
@@ -211,6 +222,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (errorMessage) {
         if (isClosed) return;
+
         emit(EditProfileError(message: errorMessage));
       },
       (profileModel) {
@@ -221,6 +233,8 @@ class AuthCubit extends Cubit<AuthState> {
                 'البيانات الخاصة بك محدثة الآن!'
             : 'Your profile has been updated successfully.\n'
                 'Your data is now up to date!';
+
+        if (isClosed) return;
 
         emit(
           EditProfileSuccess(
@@ -245,6 +259,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (errorMessage) {
         if (isClosed) return;
+
         emit(ContactUsError(message: errorMessage));
       },
       (successMessage) {
@@ -255,6 +270,8 @@ class AuthCubit extends Cubit<AuthState> {
                 'سيتم الرد على استفسارك قريبًا.'
             : 'Thank you for contacting us.\n'
                 'Your inquiry will be answered soon.';
+
+        if (isClosed) return;
 
         emit(ContactUsSuccess(message: displayedMessage));
       },

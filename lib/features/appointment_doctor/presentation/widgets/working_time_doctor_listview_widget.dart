@@ -16,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class WorkingTimeDoctorAvailabilityListView extends StatefulWidget {
   const WorkingTimeDoctorAvailabilityListView({
@@ -119,14 +120,14 @@ class _WorkingTimeDoctorAvailabilityListViewState
               .getWorkingTimeAvailableDoctor();
           showMessage(
             context,
-            type: SnackBarType.success,
+            type: ToastificationType.success,
             message: context.translate(LangKeys.updateWorkingTimeSuccess),
           );
         }
         if (state is UpdateWorkingTimeDoctorFailure) {
           showMessage(
             context,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
             message: '${context.translate(LangKeys.updateWorkingTimeFailed)}'
                 '\n'
                 '${state.message}',
@@ -140,14 +141,14 @@ class _WorkingTimeDoctorAvailabilityListViewState
               .getWorkingTimeAvailableDoctor();
           showMessage(
             context,
-            type: SnackBarType.success,
+            type: ToastificationType.success,
             message: context.translate(LangKeys.deleteWorkingTimeSuccess),
           );
         }
         if (state is RemoveWorkingTimeDoctorFailure) {
           showMessage(
             context,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
             message: '${context.translate(LangKeys.deleteWorkingTimeFailed)}'
                 '\n'
                 '${state.message}',

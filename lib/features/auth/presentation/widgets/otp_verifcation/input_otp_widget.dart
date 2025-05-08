@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:toastification/toastification.dart';
 
 class OtpCodeInput extends StatefulWidget {
   const OtpCodeInput({super.key});
@@ -41,7 +42,7 @@ class _OtpCodeInputState extends State<OtpCodeInput> {
     });
     showMessage(
       context,
-      type: SnackBarType.success,
+      type: ToastificationType.success,
       message: 'PIN is correct, successfully',
     );
   }
@@ -55,7 +56,7 @@ class _OtpCodeInputState extends State<OtpCodeInput> {
     if (context.mounted) {
       showMessage(
         context,
-        type: SnackBarType.error,
+        type: ToastificationType.error,
         message: 'PIN is not correct, try again',
       );
     }

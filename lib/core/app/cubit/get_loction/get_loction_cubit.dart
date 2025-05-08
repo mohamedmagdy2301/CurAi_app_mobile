@@ -43,6 +43,7 @@ class GetLoctionCubit extends Cubit<GetLoctionState> {
       ),
     );
 
+    if (isClosed) return;
     emit(GetLoctionSuccess());
   }
 }

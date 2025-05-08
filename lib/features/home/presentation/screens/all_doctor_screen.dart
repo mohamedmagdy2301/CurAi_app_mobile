@@ -24,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:toastification/toastification.dart';
 
 enum SortType {
   none,
@@ -224,7 +225,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
             if (state is GetAllDoctorPagenationFailure) {
               showMessage(
                 context,
-                type: SnackBarType.error,
+                type: ToastificationType.error,
                 message: state.errMessage,
               );
             }

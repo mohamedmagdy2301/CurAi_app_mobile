@@ -14,6 +14,7 @@ import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dar
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 class LogoutWidget extends StatelessWidget {
   const LogoutWidget({super.key});
@@ -33,7 +34,7 @@ class LogoutWidget extends StatelessWidget {
 
             showMessage(
               context,
-              type: SnackBarType.success,
+              type: ToastificationType.success,
               message: state.message,
             );
 
@@ -47,7 +48,7 @@ class LogoutWidget extends StatelessWidget {
 
             showMessage(
               context,
-              type: SnackBarType.error,
+              type: ToastificationType.error,
               message: state.message,
             );
           }

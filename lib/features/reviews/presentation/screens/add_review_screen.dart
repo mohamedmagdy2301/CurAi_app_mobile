@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class AddReviewScreen extends StatefulWidget {
   const AddReviewScreen({required this.doctorId, super.key});
@@ -82,8 +83,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   showMessage(
                     context,
                     message: errorMessage,
-                    type:
-                        isAlreadyRated ? SnackBarType.info : SnackBarType.error,
+                    type: isAlreadyRated
+                        ? ToastificationType.info
+                        : ToastificationType.error,
                   );
 
                   Navigator.of(context).pop();
@@ -93,7 +95,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   showMessage(
                     context,
                     message: state.message,
-                    type: SnackBarType.success,
+                    type: ToastificationType.success,
                   );
 
                   Navigator.of(context).pop();
@@ -112,7 +114,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                       showMessage(
                         context,
                         message: context.translate(LangKeys.pleaseEnterReview),
-                        type: SnackBarType.error,
+                        type: ToastificationType.error,
                       );
                       return;
                     }

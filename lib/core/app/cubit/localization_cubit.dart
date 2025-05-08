@@ -15,6 +15,7 @@ class LocalizationCubit extends Cubit<LocalizationState> {
   Future<void> loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     final locale = prefs.getString(SharedPrefKey.keyLocale) ?? 'ar';
+    if (isClosed) return;
 
     emit(
       LocalizationState(
@@ -28,6 +29,8 @@ class LocalizationCubit extends Cubit<LocalizationState> {
       SharedPrefKey.keyLocale,
       _getLocaleStateToString(locale),
     );
+    if (isClosed) return;
+
     emit(
       LocalizationState(
         locale: locale,

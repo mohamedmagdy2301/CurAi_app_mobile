@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:toastification/toastification.dart';
 
 class PaymentAppointmentScreen extends StatefulWidget {
   const PaymentAppointmentScreen({
@@ -72,14 +73,14 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                 showMessage(
                   context,
                   message: state.message,
-                  type: SnackBarType.error,
+                  type: ToastificationType.error,
                 );
               } else if (state is PaymentAppointmentSuccess) {
                 Navigator.pop(context);
                 showMessage(
                   context,
                   message: state.paymentAppointmentModel.message,
-                  type: SnackBarType.success,
+                  type: ToastificationType.success,
                 );
 
                 context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);

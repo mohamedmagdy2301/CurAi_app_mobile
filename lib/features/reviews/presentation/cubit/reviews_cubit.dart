@@ -15,13 +15,21 @@ class ReviewsCubit extends Cubit<ReviewsState> {
   final AddReviewsUsecase _addReviewsUsecase;
 
   Future<void> addReviews(AddReviewRequest addReviewRequest) async {
+    if (isClosed) return;
+
     emit(ReviewsLoading());
 
     final result = await _addReviewsUsecase.call(addReviewRequest);
 
     result.fold(
-      (errorMessage) => emit(ReviewsError(message: errorMessage)),
-      (successMessage) => emit(ReviewsSuccess(message: successMessage)),
+      (errorMessage) {
+        if (isClosed) return;
+        emit(ReviewsError(message: errorMessage));
+      },
+      (successMessage) {
+        if (isClosed) return;
+        emit(ReviewsSuccess(message: successMessage));
+      },
     );
   }
 }

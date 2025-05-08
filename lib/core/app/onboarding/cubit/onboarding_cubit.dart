@@ -9,13 +9,17 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   void nextPage() {
     final currentIndex = state.index;
     if (currentIndex < OnboardingInfo.onboardingInfo.length - 1) {
+      if (isClosed) return;
+
       emit(OnboardingUpdated(currentIndex + 1));
     } else {
+      if (isClosed) return;
       emit(OnboardingFinished());
     }
   }
 
   void skip() {
+    if (isClosed) return;
     emit(OnboardingFinished());
   }
 }

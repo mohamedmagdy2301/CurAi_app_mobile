@@ -23,6 +23,9 @@ class CustomTextFeild extends StatefulWidget {
     this.hint,
     this.maxLenght,
     this.prefixIcon,
+    this.focusNode,
+    this.textInputAction,
+    this.nextFocusNode,
   });
   final String labelText;
   final String? hint;
@@ -37,6 +40,9 @@ class CustomTextFeild extends StatefulWidget {
   final Widget? prefixIcon;
   final int? maxLines;
   final int? maxLenght;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+  final FocusNode? nextFocusNode;
 
   @override
   State<CustomTextFeild> createState() => _CustomTextFeildState();
@@ -57,6 +63,8 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       keyboardType: widget.keyboardType ?? TextInputType.text,
       controller: widget.controller,
       autofillHints: widget.autofillHints,
+      focusNode: widget.focusNode,
+      textInputAction: widget.textInputAction ?? TextInputAction.done,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       cursorColor: context.primaryColor,
       style: TextStyleApp.regular16().copyWith(
@@ -82,32 +90,25 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
             },
       onChanged: widget.onChanged,
       obscureText: isPasswordObscure,
+
       decoration: InputDecoration(
         filled: true,
         fillColor: context.backgroundColor,
         contentPadding: context.W > 400
             ? EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h)
             : null,
-        errorStyle: TextStyleApp.regular12().copyWith(
-          color: Colors.redAccent,
-        ),
         suffixIcon: widget.suffixIcon ?? changePasswordObscure(),
         prefixIcon: widget.prefixIcon,
         labelText: widget.labelText,
         hintText: widget.hint ?? widget.labelText,
-        labelStyle: TextStyleApp.regular16().copyWith(
-          color: context.primaryColor,
-        ),
-        hintStyle: TextStyleApp.regular16().copyWith(
-          color: context.onSecondaryColor,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.r),
-          borderSide: BorderSide(color: context.onSecondaryColor, width: 1.w),
-        ),
       ),
       onFieldSubmitted: (value) {
-        FocusScope.of(context).unfocus();
+        if (widget.textInputAction == TextInputAction.next &&
+            widget.nextFocusNode != null) {
+          FocusScope.of(context).requestFocus(widget.nextFocusNode);
+        } else {
+          FocusScope.of(context).unfocus();
+        }
       },
     );
   }
@@ -123,10 +124,10 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
             icon: Icon(
               size: 26.sp,
               color: isPasswordObscure
-                  ? context.onSecondaryColor
+                  ? context.onSecondaryColor.withAlpha(120)
                   : context.primaryColor,
               isPasswordObscure
-                  ? CupertinoIcons.eye_slash_fill
+                  ? CupertinoIcons.eye_slash
                   : CupertinoIcons.eye_fill,
             ),
           ).paddingSymmetric(horizontal: 5)

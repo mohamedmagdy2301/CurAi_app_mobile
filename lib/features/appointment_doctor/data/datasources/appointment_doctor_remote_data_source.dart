@@ -67,8 +67,10 @@ class AppointmentDoctorRemoteDataSourceImpl
     required int wordingTimeId,
     required Map<String, dynamic> data,
   }) async {
-    final response = await dioConsumer
-        .patch('${EndPoints.appointmentDoctor}$wordingTimeId/', body: data);
+    final response = await dioConsumer.patch(
+      '${EndPoints.appointmentDoctor}$wordingTimeId/',
+      body: data,
+    );
 
     return response.fold(
       left,

@@ -35,6 +35,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
 
     reslute.fold((message) {
       if (isClosed) return;
+
       emit(GetWorkingTimeDoctorAvailableFailure(message: message));
     }, (workingTimeList) {
       this.workingTimeList =
@@ -43,9 +44,11 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       );
       if (this.workingTimeList.isEmpty) {
         if (isClosed) return;
+
         emit(GetWorkingTimeDoctorAvailableEmpty());
       } else {
         if (isClosed) return;
+
         emit(
           GetWorkingTimeDoctorAvailableSuccess(
             workingTimeList: this.workingTimeList,
@@ -64,8 +67,11 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
 
     reslute.fold((message) {
       if (isClosed) return;
+
       emit(RemoveWorkingTimeDoctorFailure(message: message));
     }, (_) {
+      if (isClosed) return;
+
       emit(RemoveWorkingTimeDoctorSuccess());
     });
     resetState();
@@ -87,8 +93,10 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
 
     reslute.fold((message) {
       if (isClosed) return;
+
       emit(AddWorkingTimeDoctorFailure(message: message));
     }, (_) {
+      if (isClosed) return;
       emit(AddWorkingTimeDoctorSuccess());
     });
     resetState();
@@ -110,9 +118,11 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
 
     reslute.fold((message) {
       if (isClosed) return;
+
       emit(UpdateWorkingTimeDoctorFailure(message: message));
     }, (_) {
       if (isClosed) return;
+
       emit(UpdateWorkingTimeDoctorSuccess());
     });
     resetState();

@@ -41,6 +41,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   int _currentPage = 1;
   bool isLast = false;
   Future<void> getAppointmentPatientAvailable({required int doctorId}) async {
+    if (isClosed) return;
     emit(AppointmentPatientAvailableLoading());
 
     final result = await _getAppointmentAvailableUsecase.call(doctorId);
@@ -71,6 +72,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   Future<void> scheduleAppointmentPatient({
     required ScheduleAppointmentPatientRequest params,
   }) async {
+    if (isClosed) return;
     emit(ScheduleAppointmentPatientLoading());
     final result = await _scheduleAppointmentPatientUsecase.call(params);
 
@@ -94,6 +96,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     required int appointmentId,
     required ScheduleAppointmentPatientRequest params,
   }) async {
+    if (isClosed) return;
     emit(RescheduleAppointmentPatientLoading());
     final result =
         await _rescheduleAppointmentPatientUsecase.call(appointmentId, params);
@@ -101,42 +104,50 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     result.fold(
       (errMessage) {
         if (isClosed) return;
+
         emit(RescheduleAppointmentPatientFailure(message: errMessage));
       },
       (resulte) {
         if (isClosed) return;
+
         emit(RescheduleAppointmentPatientSuccess());
       },
     );
   }
 
   Future<void> simulatePaymentAppointment({required int appointmentId}) async {
+    if (isClosed) return;
     emit(PaymentAppointmentLoading());
     final result = await _paymentAppointmentUsecase.call(appointmentId);
 
     result.fold(
       (errMessage) {
         if (isClosed) return;
+
         emit(PaymentAppointmentFailure(message: errMessage));
       },
       (resulte) {
         if (isClosed) return;
+
         emit(PaymentAppointmentSuccess(paymentAppointmentModel: resulte));
       },
     );
   }
 
   Future<void> deleteAppointmentPatient({required int appointmentId}) async {
+    if (isClosed) return;
     emit(DeleteAppointmentPatientLoading());
     final result = await _deleteAppointmentPatientUsecase.call(appointmentId);
 
     result.fold(
       (errMessage) {
         if (isClosed) return;
+
         emit(DeleteAppointmentPatientFailure(message: errMessage));
       },
       (resulte) {
         if (isClosed) return;
+
         emit(DeleteAppointmentPatientSuccess());
       },
     );
@@ -163,9 +174,11 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
 
       if (isInitialLoad) {
         if (isClosed) return;
+
         emit(GetMyAppointmentPatientLoading());
       } else {
         if (isClosed) return;
+
         emit(GetMyAppointmentPatientPaginationLoading());
       }
 
@@ -178,6 +191,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
             handleSuccessResponse(result, isInitialLoad: isInitialLoad),
       );
     } on Exception {
+      if (isClosed) return;
       if (isClosed) return;
       emit(GetMyAppointmentPatientFailure(message: 'حدث خطأ غير متوقع'));
     }
@@ -222,13 +236,14 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     ]);
 
     if (!isLast) _currentPage++;
-
     if (isClosed) return;
+
     emit(GetMyAppointmentPatientSuccess(myAppointmentPatientModel: result));
   }
 
   void emitErrorState(String errMessage, {required bool isInitialLoad}) {
     if (isClosed) return;
+
     emit(
       isInitialLoad
           ? GetMyAppointmentPatientFailure(message: errMessage)
