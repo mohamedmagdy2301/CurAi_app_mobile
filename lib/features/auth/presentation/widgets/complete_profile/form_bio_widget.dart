@@ -24,8 +24,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:toastification/toastification.dart';
 
 class BioFormWidget extends StatefulWidget {
-  const BioFormWidget({required this.specialization, super.key});
+  const BioFormWidget({
+    required this.specialization,
+    required this.isEdit,
+    super.key,
+  });
   final String specialization;
+  final bool isEdit;
 
   @override
   State<BioFormWidget> createState() => _BioFormWidgetState();
@@ -359,7 +364,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             onChanged: (_) => updateBio(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          buildUploadSection(),
+          if (widget.isEdit) const SizedBox() else buildUploadSection(),
           30.hSpace,
           buildCompleteButton(),
         ],
@@ -372,7 +377,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.isStateArabic ? 'المستندات والصور' : 'Documents & Images',
+          context.isStateArabic ? 'رفع صور وملفات' : 'Upload Images and Files',
           style: TextStyleApp.medium16().copyWith(
             color: context.onPrimaryColor,
           ),
@@ -389,7 +394,15 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             buildUploadButton(
               icon: Icons.upload_file,
               label: context.isStateArabic ? 'إضافة ملف' : 'Add File',
-              onTap: () {},
+              onTap: () {
+                showMessage(
+                  context,
+                  message: context.isStateArabic
+                      ? 'هذه الخاصية غير متوفرة حاليا'
+                      : 'This feature is not available right now',
+                  type: ToastificationType.info,
+                );
+              },
             ).expand(),
           ],
         ),
@@ -579,12 +592,16 @@ class _BioFormWidgetState extends State<BioFormWidget> {
           current is EditProfileLoading,
       listener: (context, state) {
         if (state is EditProfileSuccess) {
-          context
-            ..pop()
-            ..pushReplacementNamed(
-              Routes.addAddreesClinicScreen,
-              arguments: {'isEdit': false},
-            );
+          if (widget.isEdit) {
+            context.pushReplacementNamed(Routes.mainScaffoldUser);
+          } else {
+            context
+              ..pop()
+              ..pushReplacementNamed(
+                Routes.addAddreesClinicScreen,
+                arguments: {'isEdit': false},
+              );
+          }
         } else if (state is EditProfileError) {
           context.pop();
           showMessage(
