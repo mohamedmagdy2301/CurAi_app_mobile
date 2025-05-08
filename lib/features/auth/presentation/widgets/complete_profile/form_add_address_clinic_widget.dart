@@ -14,6 +14,7 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/complete_pro
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 class AddAddressClinicFormWidget extends StatefulWidget {
   const AddAddressClinicFormWidget({super.key, this.isEdit});
@@ -57,8 +58,7 @@ class _AddAddressClinicFormWidgetState
           message: context.isStateArabic
               ? 'من فضلك اختر الموقع'
               : 'Please select location',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -158,7 +158,7 @@ class _AddAddressClinicFormWidgetState
         if (state is EditProfileError) {
           showMessage(
             context,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
             message: state.message,
           );
         }

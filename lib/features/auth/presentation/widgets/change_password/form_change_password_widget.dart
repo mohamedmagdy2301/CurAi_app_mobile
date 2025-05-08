@@ -13,6 +13,7 @@ import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dar
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 class FormChangePasswordWidget extends StatefulWidget {
   const FormChangePasswordWidget({super.key});
@@ -46,7 +47,7 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
         showMessage(
           context,
           message: context.translate(LangKeys.passwordNotMatch),
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -113,13 +114,13 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
                   showMessage(
                     context,
                     message: state.message,
-                    type: SnackBarType.error,
+                    type: ToastificationType.error,
                   );
                 } else if (state is ChangePasswordSuccess) {
                   showMessage(
                     context,
                     message: state.message,
-                    type: SnackBarType.success,
+                    type: ToastificationType.success,
                   );
                   context.pushNamed(Routes.loginScreen);
                 } else if (state is ChangePasswordLoading) {

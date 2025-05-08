@@ -16,6 +16,7 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class RegistrationFormWidget extends StatefulWidget {
   const RegistrationFormWidget({super.key});
@@ -120,16 +121,14 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           showMessage(
             context,
             message: state.message,
-            showCloseIcon: true,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
           );
         } else if (state is RegisterSuccess) {
           Navigator.pop(context);
           showMessage(
             context,
             message: state.message,
-            showCloseIcon: true,
-            type: SnackBarType.success,
+            type: ToastificationType.success,
           );
           if (userType == 'patient') {
             context.pushReplacementNamed(Routes.loginScreen);
@@ -162,7 +161,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
         showMessage(
           context,
           message: context.translate(LangKeys.passwordNotMatch),
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }

@@ -12,6 +12,7 @@ import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class UpdateWorkingTimeDoctorBottomSheet extends StatefulWidget {
   const UpdateWorkingTimeDoctorBottomSheet({super.key, this.existingData});
@@ -115,7 +116,7 @@ class _UpdateWorkingTimeDoctorBottomSheetState
       if (fromMinutes >= toMinutes) {
         showMessage(
           context,
-          type: SnackBarType.warning,
+          type: ToastificationType.warning,
           message: context.isStateArabic
               ? 'الوقت المبدئي يجب ان يكون قبل الوقت النهائي'
               : 'Start time must be before end time',
@@ -133,7 +134,7 @@ class _UpdateWorkingTimeDoctorBottomSheetState
     } else {
       showMessage(
         context,
-        type: SnackBarType.info,
+        type: ToastificationType.info,
         message: context.isStateArabic
             ? 'من فضلك اختارالوقت المبدئي والوقت النهائي'
             : 'Please select start time and end time',
@@ -231,7 +232,7 @@ class _UpdateWorkingTimeDoctorBottomSheetState
               } else {
                 showMessage(
                   context,
-                  type: SnackBarType.info,
+                  type: ToastificationType.info,
                   message: context.isStateArabic
                       ? 'من فضلك اختار الوقت النهائي'
                       : 'Please select end time',
@@ -241,7 +242,7 @@ class _UpdateWorkingTimeDoctorBottomSheetState
               if (toTime == null) {
                 showMessage(
                   context,
-                  type: SnackBarType.info,
+                  type: ToastificationType.info,
                   message: context.isStateArabic
                       ? 'من فضلك اختار الوقت المبدئي والوقت النهائي'
                       : 'Please select start time and end time',
@@ -249,7 +250,7 @@ class _UpdateWorkingTimeDoctorBottomSheetState
               } else {
                 showMessage(
                   context,
-                  type: SnackBarType.info,
+                  type: ToastificationType.info,
                   message: context.isStateArabic
                       ? 'من فضلك اختار الوقت المبدئي'
                       : 'Please select start time',

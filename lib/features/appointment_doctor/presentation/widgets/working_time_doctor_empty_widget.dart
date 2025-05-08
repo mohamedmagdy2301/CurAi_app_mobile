@@ -16,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class WorkingTimeDoctorEmptyWidget extends StatefulWidget {
   const WorkingTimeDoctorEmptyWidget({super.key});
@@ -114,7 +115,7 @@ class _WorkingTimeDoctorEmptyWidgetState
             if (mounted) {
               showMessage(
                 context,
-                type: SnackBarType.success,
+                type: ToastificationType.success,
                 message: context.translate(LangKeys.addWorkingTimeSuccess),
               );
             }
@@ -125,7 +126,7 @@ class _WorkingTimeDoctorEmptyWidgetState
           if (mounted) {
             showMessage(
               context,
-              type: SnackBarType.error,
+              type: ToastificationType.error,
               message: '${context.translate(LangKeys.addWorkingTimeFailed)}'
                   '\n'
                   '${state.message}',

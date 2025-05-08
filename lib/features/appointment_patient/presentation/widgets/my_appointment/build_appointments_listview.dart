@@ -18,6 +18,7 @@ import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_m
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:toastification/toastification.dart';
 
 class BuildAppointmentsList extends StatefulWidget {
   const BuildAppointmentsList({
@@ -212,7 +213,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
 
         showMessage(
           context,
-          type: SnackBarType.success,
+          type: ToastificationType.success,
           message: value
               ? 'You have successfully enabled notifications 🔔'
               : 'You have successfully disabled notifications 🔕',

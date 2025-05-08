@@ -23,6 +23,7 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/widge
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 class BookAppointmentPatientScreen extends StatefulWidget {
   const BookAppointmentPatientScreen({
@@ -227,8 +228,7 @@ class AddAppointmentButton extends StatelessWidget {
                     : 'Not available.\n'
                         'Please select another time.'
                 : state.message,
-            showCloseIcon: true,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
           );
         } else if (state is ScheduleAppointmentPatientSuccess) {
           Navigator.pop(context);
@@ -236,7 +236,7 @@ class AddAppointmentButton extends StatelessWidget {
             showMessage(
               context,
               message: state.scheduleAppointmentPatientModel.message!,
-              type: SnackBarType.success,
+              type: ToastificationType.success,
             );
           }
           context.pushReplacementNamed(
@@ -309,7 +309,7 @@ class RescheduleAppointmentButton extends StatelessWidget {
           showMessage(
             context,
             message: state.message,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
           );
         } else if (state is RescheduleAppointmentPatientSuccess) {
           Navigator.pop(context);
@@ -318,7 +318,7 @@ class RescheduleAppointmentButton extends StatelessWidget {
             message: context.isStateArabic
                 ? 'تم تغيير الموعد بنجاح'
                 : 'Appointment rescheduled successfully',
-            type: SnackBarType.success,
+            type: ToastificationType.success,
           );
 
           context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);

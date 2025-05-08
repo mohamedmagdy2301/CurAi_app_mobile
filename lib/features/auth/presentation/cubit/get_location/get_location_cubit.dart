@@ -13,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:toastification/toastification.dart';
 
 class GetLocationCubit extends Cubit<GetLocationState> {
   GetLocationCubit() : super(GetLocationInitial());
@@ -72,7 +73,7 @@ class GetLocationCubit extends Cubit<GetLocationState> {
               message: context.isStateArabic
                   ? 'تم اختيار الموقع: $locationInfo'
                   : 'You selected location: $locationInfo',
-              type: SnackBarType.success,
+              type: ToastificationType.success,
             );
           },
           child: Icon(

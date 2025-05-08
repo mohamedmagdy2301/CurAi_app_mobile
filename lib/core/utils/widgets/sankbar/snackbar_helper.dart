@@ -1,8 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/animated_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
-enum SnackBarType { error, success, warning, info }
+// enum ToastificationType { error, success, warning, info }
 
 OverlayEntry? _currentOverlayEntry;
 
@@ -61,39 +64,84 @@ void showAnimatedSnackBar({
   );
 }
 
-//! Show message for user
+// //! Show message for user
+// void showMessage(
+//   BuildContext context, {
+//   required SnackBarType type,
+//   required String message,
+//   bool? isIconVisible,
+//   String? labelAction,
+//   VoidCallback? onPressedAction,
+//   bool? showCloseIcon, // ← جديد
+// }) {
+//   final snackBarColors = <SnackBarType, Color>{
+//     SnackBarType.error: Colors.red,
+//     SnackBarType.success: Colors.green,
+//     SnackBarType.warning: Colors.orange,
+//     SnackBarType.info: Colors.blueGrey,
+//   };
+
+//   final snackBarIcons = <SnackBarType, IconData>{
+//     SnackBarType.error: Icons.error,
+//     SnackBarType.success: Icons.check_circle,
+//     SnackBarType.warning: Icons.warning,
+//     SnackBarType.info: Icons.info,
+//   };
+
+//   // Display the animated snackbar
+//   showAnimatedSnackBar(
+//     context: context,
+//     message: message,
+//     backgroundColor: snackBarColors[type]!,
+//     isIconVisible: isIconVisible,
+//     icon: snackBarIcons[type],
+//     labelAction: labelAction,
+//     onPressedAction: onPressedAction,
+//     showCloseIcon: showCloseIcon,
+//   );
+// }
+
 void showMessage(
   BuildContext context, {
-  required SnackBarType type,
   required String message,
-  bool? isIconVisible,
-  String? labelAction,
-  VoidCallback? onPressedAction,
-  bool? showCloseIcon, // ← جديد
+  required ToastificationType type,
+  AlignmentGeometry? alignment,
 }) {
-  final snackBarColors = <SnackBarType, Color>{
-    SnackBarType.error: Colors.red,
-    SnackBarType.success: Colors.green,
-    SnackBarType.warning: Colors.orange,
-    SnackBarType.info: Colors.blueGrey,
-  };
-
-  final snackBarIcons = <SnackBarType, IconData>{
-    SnackBarType.error: Icons.error,
-    SnackBarType.success: Icons.check_circle,
-    SnackBarType.warning: Icons.warning,
-    SnackBarType.info: Icons.info,
-  };
-
-  // Display the animated snackbar
-  showAnimatedSnackBar(
+  toastification.show(
     context: context,
-    message: message,
-    backgroundColor: snackBarColors[type]!,
-    isIconVisible: isIconVisible,
-    icon: snackBarIcons[type],
-    labelAction: labelAction,
-    onPressedAction: onPressedAction,
-    showCloseIcon: showCloseIcon,
+    type: type,
+    description: AutoSizeText(
+      message,
+      style: TextStyleApp.medium16().copyWith(
+        color: Colors.white,
+      ),
+    ),
+    showIcon: false,
+    primaryColor: Colors.white,
+    autoCloseDuration: const Duration(seconds: 5),
+    progressBarTheme: ProgressIndicatorThemeData(
+      color: type == ToastificationType.success
+          ? Colors.green
+          : type == ToastificationType.info
+              ? Colors.blueGrey
+              : type == ToastificationType.warning
+                  ? Colors.orange
+                  : Colors.red,
+    ),
+    showProgressBar: true,
+    borderSide: BorderSide.none,
+    closeButton: const ToastCloseButton(
+      showType: CloseButtonShowType.none,
+    ),
+    alignment: alignment ?? Alignment.bottomCenter,
+    borderRadius: BorderRadius.all(Radius.circular(10.r)),
+    backgroundColor: type == ToastificationType.success
+        ? Colors.green
+        : type == ToastificationType.info
+            ? Colors.blueGrey
+            : type == ToastificationType.warning
+                ? Colors.orange
+                : Colors.red,
+    foregroundColor: Colors.white,
   );
 }

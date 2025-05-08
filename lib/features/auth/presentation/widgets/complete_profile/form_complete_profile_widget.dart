@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toastification/toastification.dart';
 
 class CompleteProfileFormWidget extends StatefulWidget {
   const CompleteProfileFormWidget({super.key});
@@ -87,7 +88,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           message: context.isStateArabic
               ? 'من فضلك اختر صورة'
               : 'Please select image',
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -99,8 +100,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           message: context.isStateArabic
               ? 'من فضلك ادخل السعر بالارقام فقط.'
               : 'Please enter price as a number.',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -114,8 +114,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                   'يمكنك اختيار العمر باستخدام الأيقونة'
               : 'Please enter your age as a number.\n'
                   'You can select age using the icon',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -128,8 +127,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           message: context.isStateArabic
               ? 'العمر يجب أن يكون بين 24 و 120 سنة'
               : 'Age must be between 24 and 120 years',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -141,8 +139,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           message: context.isStateArabic
               ? 'من فضلك ادخل رقم هاتف صحيح'
               : 'Please enter a valid phone number',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -479,7 +476,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           context.pop();
           showMessage(
             context,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
             message: state.message,
           );
         } else if (state is EditProfileLoading) {

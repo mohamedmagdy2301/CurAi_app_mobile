@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toastification/toastification.dart';
 
 class YourProfileScreen extends StatefulWidget {
   const YourProfileScreen({required this.profileModel, super.key});
@@ -198,7 +199,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                 context.pop();
                 showMessage(
                   context,
-                  type: SnackBarType.success,
+                  type: ToastificationType.success,
                   message: context.isStateArabic
                       ? 'تم تحديث الملف الشخصي بنجاح'
                       : 'Profile updated successfully',
@@ -222,7 +223,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                 context.pop();
                 showMessage(
                   context,
-                  type: SnackBarType.error,
+                  type: ToastificationType.error,
                   message: state.message,
                 );
               } else if (state is EditProfileLoading) {

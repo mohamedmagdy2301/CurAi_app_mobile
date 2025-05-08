@@ -19,6 +19,7 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -123,19 +124,18 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
       listener: (context, state) {
         if (state is LoginError) {
           context.pop();
+
           showMessage(
             context,
-            showCloseIcon: true,
             message: state.message,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
           );
         } else if (state is LoginSuccess) {
           context.pop();
           showMessage(
             context,
             message: state.message,
-            showCloseIcon: true,
-            type: SnackBarType.success,
+            type: ToastificationType.success,
           );
           CacheDataHelper.setData(
             key: SharedPrefKey.keyIsLoggedIn,
