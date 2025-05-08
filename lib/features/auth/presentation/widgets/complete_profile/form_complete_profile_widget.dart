@@ -39,7 +39,6 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _consultationPriceController =
       TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _yourAgeController = TextEditingController();
 
@@ -149,7 +148,6 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
       final profileRequest = ProfileRequest(
         consultationPrice: _consultationPriceController.text.trim(),
         specialization: selectedSpecialization,
-        bio: _bioController.text.trim(),
         phoneNumber: _phoneController.text.trim(),
         age: _yourAgeController.text.trim(),
         gender: selectedGender,
@@ -240,23 +238,6 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           _buildSelectSpecilization(context),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           _buildSelectGender(context),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.bio),
-            keyboardType: TextInputType.text,
-            focusNode: _bioFocus,
-            textInputAction: TextInputAction.done,
-            hint: context.isStateArabic
-                ? 'مثال: أخصائي أمراض القلب مع 10 سنوات من الخبرة في'
-                    'مستشفى السلام ، متخصص في ارتفاع ضغط الدم وأمراض القلب.'
-                : 'e.g. Cardiologist with 10+ years of experience at '
-                    'Al Salam Hospital, specialized in hypertension '
-                    'and heart diseases.',
-            controller: _bioController,
-            maxLines: 2,
-            isLable: false,
-            onChanged: (_) => _validateForm(),
-          ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           _buildCompleteButton(),
         ],
@@ -483,8 +464,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           context
             ..pop()
             ..pushReplacementNamed(
-              Routes.contCompleteProfileScreen,
-              arguments: {'isEdit': false},
+              Routes.bioScreen,
             );
         } else if (state is EditProfileError) {
           context.pop();

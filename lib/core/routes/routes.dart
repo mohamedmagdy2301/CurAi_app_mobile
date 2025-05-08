@@ -21,5 +21,6 @@ class Routes {
       '/myAppointmentPatientScreen';
   static const String workingTimeDoctorAvailableScreen =
       '/workingTimeDoctorAvailableScreen';
-  static const String contCompleteProfileScreen = '/contCompleteProfileScreen';
+  static const String addAddreesClinicScreen = '/addAddreesClinicScreen';
+  static const String bioScreen = '/bioScreen';
 }

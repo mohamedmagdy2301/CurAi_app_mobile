@@ -111,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: LangKeys.clinicAddress,
                 onTap: () {
                   context.pushNamed(
-                    Routes.contCompleteProfileScreen,
+                    Routes.addAddreesClinicScreen,
                     arguments: {'isEdit': true},
                   );
                 },

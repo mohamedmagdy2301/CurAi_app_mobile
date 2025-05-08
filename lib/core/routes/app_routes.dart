@@ -12,6 +12,7 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/scree
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/add_address_clinic_screen.dart';
+import 'package:curai_app_mobile/features/auth/presentation/screens/bio_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/build_your_profile_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/complete_profile_screen.dart';
@@ -47,7 +48,7 @@ class AppRoutes {
 
       case Routes.completeProfileScreen:
         return BaseRoute(page: const CompleteProfileScreen());
-      case Routes.contCompleteProfileScreen:
+      case Routes.addAddreesClinicScreen:
         if (arg is Map<String, dynamic>) {
           final isEdit = arg['isEdit'] as bool?;
           return BaseRoute(
@@ -139,6 +140,10 @@ class AppRoutes {
       case Routes.myAppointmentPatientScreen:
         return BaseRoute(
           page: const MyAppointmentPatientScreen(),
+        );
+      case Routes.bioScreen:
+        return BaseRoute(
+          page: const BioScreen(),
         );
       case Routes.workingTimeDoctorAvailableScreen:
         return BaseRoute(
