@@ -17,7 +17,8 @@ class AppThemeData {
           AppColors.textDarkColor,
           AppColors.backgroundDarkColor,
         ),
-        inputDecorationTheme: _inputDecorationTheme(seedColor),
+        inputDecorationTheme:
+            _inputDecorationTheme(seedColor, AppColors.textDarkColor),
         cardTheme: _cardTheme(AppColors.backgroundDarkColor),
         elevatedButtonTheme: _elevatedButtonTheme(seedColor),
         snackBarTheme: _snackBarTheme(),
@@ -42,7 +43,8 @@ class AppThemeData {
           AppColors.textLightColor,
           AppColors.backgroundLightColor,
         ),
-        inputDecorationTheme: _inputDecorationTheme(seedColor),
+        inputDecorationTheme:
+            _inputDecorationTheme(seedColor, AppColors.textLightColor),
         cardTheme: _cardTheme(AppColors.backgroundLightColor),
         elevatedButtonTheme: _elevatedButtonTheme(seedColor),
         snackBarTheme: _snackBarTheme(),
@@ -132,11 +134,14 @@ class AppThemeData {
         iconTheme: IconThemeData(color: textColor),
       );
 
-  static InputDecorationTheme _inputDecorationTheme(Color seedColor) =>
+  static InputDecorationTheme _inputDecorationTheme(
+    Color seedColor,
+    Color onPrimaryColor,
+  ) =>
       InputDecorationTheme(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor.withAlpha(40)),
+          borderSide: BorderSide(color: onPrimaryColor),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
@@ -144,20 +149,24 @@ class AppThemeData {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: AppColors.red.withAlpha(140)),
+          borderSide: BorderSide(color: AppColors.red.withAlpha(180)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor.withAlpha(40)),
+          borderSide: BorderSide(color: onPrimaryColor.withAlpha(60)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          borderSide: BorderSide(color: seedColor.withAlpha(80)),
+          borderSide: BorderSide(color: seedColor.withAlpha(170)),
         ),
         errorStyle: TextStyleApp.regular12()
-            .copyWith(color: Colors.redAccent.withAlpha(140)),
-        labelStyle:
-            TextStyleApp.regular14().copyWith(color: seedColor.withAlpha(190)),
+            .copyWith(color: Colors.redAccent.withAlpha(200)),
+        hintStyle: TextStyleApp.regular12().copyWith(
+          color: onPrimaryColor.withAlpha(100),
+        ),
+        labelStyle: TextStyleApp.regular12()
+            .copyWith(color: onPrimaryColor.withAlpha(180)),
+        floatingLabelStyle: TextStyleApp.regular16().copyWith(color: seedColor),
       );
 
   static CardTheme _cardTheme(Color backgroundColor) => CardTheme(

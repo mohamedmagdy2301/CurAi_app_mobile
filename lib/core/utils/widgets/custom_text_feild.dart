@@ -82,6 +82,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
             },
       onChanged: widget.onChanged,
       obscureText: isPasswordObscure,
+
       decoration: InputDecoration(
         filled: true,
         fillColor: context.backgroundColor,
@@ -92,9 +93,6 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         prefixIcon: widget.prefixIcon,
         labelText: widget.labelText,
         hintText: widget.hint ?? widget.labelText,
-        hintStyle: TextStyleApp.regular14().copyWith(
-          color: context.onSecondaryColor.withAlpha(100),
-        ),
       ),
       onFieldSubmitted: (value) {
         FocusScope.of(context).unfocus();
