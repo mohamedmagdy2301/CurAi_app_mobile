@@ -226,7 +226,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
                 type == 'patient'
                     ? context.translate(LangKeys.patient)
                     : context.translate(LangKeys.doctor),
-                style: TextStyleApp.regular18().copyWith(
+                style: TextStyleApp.regular20().copyWith(
                   color: isSelected ? Colors.white : context.primaryColor,
                 ),
               ),
@@ -237,8 +237,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           selectedColor: context.primaryColor,
           backgroundColor: context.backgroundColor,
           elevation: 2,
-          padding:
-              EdgeInsets.symmetric(horizontal: context.W * 0.035, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           labelStyle: TextStyleApp.medium20().copyWith(
             color: isSelected ? Colors.white : context.primaryColor,
           ),

@@ -61,9 +61,11 @@ class DioConsumer implements ApiConsumer {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
+          options.headers['Accept'] = 'application/json';
+          if (options.data is! FormData) {
+            options.headers['Content-Type'] = 'application/json';
+          }
           options
-            ..headers['Accept'] = 'application/json'
-            ..headers['Content-Type'] = 'application/json'
             ..headers['X-Requested-With'] = 'XMLHttpRequest'
             ..baseUrl = EnvVariables.baseApiUrl
             ..sendTimeout = _defaultTimeouts
@@ -102,43 +104,62 @@ class DioConsumer implements ApiConsumer {
   @override
   Future<Either<Failure, dynamic>> post(
     String url, {
-    Map<String, dynamic>? body,
+    dynamic body,
     bool formDataIsEnabled = false,
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(
-      () => client.post(
-        url,
-        queryParameters: queryParameters,
-        data: formDataIsEnabled ? FormData.fromMap(body ?? {}) : body,
-      ),
+      () {
+        if (body is FormData) {
+          return client.post(url, queryParameters: queryParameters, data: body);
+        } else if (formDataIsEnabled && body is Map<String, dynamic>) {
+          return client.post(
+            url,
+            queryParameters: queryParameters,
+            data: FormData.fromMap(body),
+          );
+        } else {
+          return client.post(
+            url,
+            queryParameters: queryParameters,
+            data: body,
+          );
+        }
+      },
     );
   }
 
   /// PUT request
   @override
+  @override
   Future<Either<Failure, dynamic>> put(
     String url, {
     dynamic body,
+    bool formDataIsEnabled = false,
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(
-      () => client.put(url, queryParameters: queryParameters, data: body),
+      () {
+        if (body is FormData) {
+          return client.put(url, queryParameters: queryParameters, data: body);
+        } else if (formDataIsEnabled && body is Map<String, dynamic>) {
+          return client.put(
+            url,
+            queryParameters: queryParameters,
+            data: FormData.fromMap(body),
+          );
+        } else {
+          return client.put(
+            url,
+            queryParameters: queryParameters,
+            data: body,
+          );
+        }
+      },
     );
   }
 
   /// PATCH request
-  // @override
-  // Future<Either<Failure, dynamic>> patch(
-  //   String url, {
-  //   dynamic body,
-  //   Map<String, dynamic>? queryParameters,
-  // }) async {
-  //   return _safeApiCall(
-  //     () => client.patch(url, queryParameters: queryParameters, data: body),
-  //   );
-  // }
-
   @override
   Future<Either<Failure, dynamic>> patch(
     String url, {
@@ -147,13 +168,27 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(
-      () => client.patch(
-        url,
-        queryParameters: queryParameters,
-        data: formDataIsEnabled && body is Map<String, dynamic>
-            ? FormData.fromMap(body)
-            : body,
-      ),
+      () {
+        if (body is FormData) {
+          return client.patch(
+            url,
+            queryParameters: queryParameters,
+            data: body,
+          );
+        } else if (formDataIsEnabled && body is Map<String, dynamic>) {
+          return client.patch(
+            url,
+            queryParameters: queryParameters,
+            data: FormData.fromMap(body),
+          );
+        } else {
+          return client.patch(
+            url,
+            queryParameters: queryParameters,
+            data: body,
+          );
+        }
+      },
     );
   }
 

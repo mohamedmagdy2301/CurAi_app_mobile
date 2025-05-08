@@ -70,7 +70,6 @@ class AppointmentDoctorRemoteDataSourceImpl
     final response = await dioConsumer.patch(
       '${EndPoints.appointmentDoctor}$wordingTimeId/',
       body: data,
-      formDataIsEnabled: true,
     );
 
     return response.fold(

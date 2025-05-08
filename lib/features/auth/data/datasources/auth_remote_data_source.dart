@@ -152,7 +152,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
     final response = await dioConsumer.patch(
       EndPoints.getProfile,
-      body: FormData.fromMap(data),
+      body: data,
       formDataIsEnabled: true,
     );
 
