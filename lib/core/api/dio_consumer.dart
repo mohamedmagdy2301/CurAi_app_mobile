@@ -128,14 +128,32 @@ class DioConsumer implements ApiConsumer {
   }
 
   /// PATCH request
+  // @override
+  // Future<Either<Failure, dynamic>> patch(
+  //   String url, {
+  //   dynamic body,
+  //   Map<String, dynamic>? queryParameters,
+  // }) async {
+  //   return _safeApiCall(
+  //     () => client.patch(url, queryParameters: queryParameters, data: body),
+  //   );
+  // }
+
   @override
   Future<Either<Failure, dynamic>> patch(
     String url, {
     dynamic body,
+    bool formDataIsEnabled = false,
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(
-      () => client.patch(url, queryParameters: queryParameters, data: body),
+      () => client.patch(
+        url,
+        queryParameters: queryParameters,
+        data: formDataIsEnabled && body is Map<String, dynamic>
+            ? FormData.fromMap(body)
+            : body,
+      ),
     );
   }
 

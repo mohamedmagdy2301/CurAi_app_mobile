@@ -41,6 +41,7 @@ abstract class ApiConsumer {
   Future<Either<Failure, dynamic>> patch(
     String url, {
     dynamic body,
+    bool formDataIsEnabled,
     Map<String, dynamic>? queryParameters,
   });
 
