@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
@@ -43,10 +41,14 @@ class HomeCubit extends Cubit<HomeState> {
         if (page == 1) {
           if (isClosed) return;
 
+          if (isClosed) return;
+          if (isClosed) return;
           emit(GetAllDoctorFailure(message: errMessage));
         } else {
           if (isClosed) return;
 
+          if (isClosed) return;
+          if (isClosed) return;
           emit(GetAllDoctorPagenationFailure(errMessage: errMessage));
         }
       },
@@ -72,10 +74,8 @@ class HomeCubit extends Cubit<HomeState> {
 
     result.fold(
       (errMessage) {
-        log(errMessage);
         if (isClosed) return;
-
-        return emit(GetSpecializationsFailure(message: errMessage));
+        emit(GetSpecializationsFailure(message: errMessage));
       },
       (specializationsList) {
         if (isClosed) return;
@@ -97,10 +97,12 @@ class HomeCubit extends Cubit<HomeState> {
     result.fold(
       (errMessage) {
         if (isClosed) return;
+
         emit(GetDoctorByIdFailure(message: errMessage));
       },
       (data) {
         if (isClosed) return;
+
         emit(GetDoctorByIdSuccess(doctorResults: data));
       },
     );

@@ -27,6 +27,8 @@ class GetLocationCubit extends Cubit<GetLocationState> {
 
   /// Get current location and add marker
   Future<void> getCurrentLocation(BuildContext context) async {
+    if (isClosed) return;
+
     emit(GetLocationLoading());
     try {
       final userLocation = await determinePosition(context);
@@ -52,8 +54,12 @@ class GetLocationCubit extends Cubit<GetLocationState> {
       ];
       mapController.move(selectedLocation, 13);
       locationInfo = await _getLocationName(selectedLocation);
+      if (isClosed) return;
+
       emit(GetLocationSuccess(selectedLocation, locationInfo, markers));
     } catch (e) {
+      if (isClosed) return;
+
       emit(GetLocationError(e.toString()));
     }
   }
@@ -85,6 +91,8 @@ class GetLocationCubit extends Cubit<GetLocationState> {
       ),
     ];
     locationInfo = await _getLocationName(position);
+    if (isClosed) return;
+
     emit(GetLocationSuccess(position, locationInfo, markers));
   }
 
@@ -119,6 +127,8 @@ class GetLocationCubit extends Cubit<GetLocationState> {
       ];
       mapController.move(selectedLocation, 13);
       locationInfo = _getLocationName(selectedLocation).toString();
+      if (isClosed) return;
+
       emit(GetLocationSuccess(selectedLocation, locationInfo, markers));
     });
   }

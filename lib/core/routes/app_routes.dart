@@ -143,7 +143,7 @@ class AppRoutes {
         );
       case Routes.bioScreen:
         if (arg is Map<String, dynamic>) {
-          final specialization = arg['specialization'] as String;
+          final specialization = arg['specialization'] as String?;
           final isEdit = arg['isEdit'] as bool?;
 
           return BaseRoute(

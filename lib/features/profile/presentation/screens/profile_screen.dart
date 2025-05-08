@@ -98,6 +98,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (getRole() != 'patient') _buildDivider(context),
             if (getRole() != 'patient')
               RowNavigateProfileWidget(
+                icon: CupertinoIcons.person_2_square_stack,
+                title: LangKeys.bio,
+                onTap: () {
+                  context.pushNamed(
+                    Routes.bioScreen,
+                    arguments: {'isEdit': true},
+                  );
+                },
+              ),
+            if (getRole() != 'patient') _buildDivider(context),
+            if (getRole() != 'patient')
+              RowNavigateProfileWidget(
                 icon: CupertinoIcons.calendar,
                 title: LangKeys.workingTime,
                 onTap: () {

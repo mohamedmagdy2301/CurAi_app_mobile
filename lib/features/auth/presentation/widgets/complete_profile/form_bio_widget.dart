@@ -25,11 +25,11 @@ import 'package:toastification/toastification.dart';
 
 class BioFormWidget extends StatefulWidget {
   const BioFormWidget({
-    required this.specialization,
     required this.isEdit,
+    this.specialization,
     super.key,
   });
-  final String specialization;
+  final String? specialization;
   final bool isEdit;
 
   @override

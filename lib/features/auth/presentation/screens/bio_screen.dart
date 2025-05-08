@@ -11,11 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BioScreen extends StatefulWidget {
   const BioScreen({
-    required this.specialization,
     required this.isEdit,
+    this.specialization,
     super.key,
   });
-  final String specialization;
+  final String? specialization;
   final bool isEdit;
 
   @override
@@ -39,9 +39,10 @@ class _BioScreenState extends State<BioScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   20.hSpace,
-                  const HeaderAuthWidget(
+                  HeaderAuthWidget(
                     title: LangKeys.bio,
                     descraption: LangKeys.completeProfileDescription,
+                    isBack: widget.isEdit,
                   ),
                   20.hSpace,
                   BioFormWidget(
