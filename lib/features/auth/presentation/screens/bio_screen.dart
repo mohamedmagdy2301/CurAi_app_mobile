@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BioScreen extends StatefulWidget {
-  const BioScreen({super.key});
+  const BioScreen({required this.specialization, super.key});
+  final String specialization;
 
   @override
   State<BioScreen> createState() => _BioScreenState();
@@ -38,7 +39,7 @@ class _BioScreenState extends State<BioScreen> {
                     descraption: LangKeys.completeProfileDescription,
                   ),
                   20.hSpace,
-                  const BioFormWidget(),
+                  BioFormWidget(specialization: widget.specialization),
                   35.hSpace,
                   const TermsOfServiceWidget(),
                   15.hSpace,

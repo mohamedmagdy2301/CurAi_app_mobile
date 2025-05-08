@@ -24,7 +24,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:toastification/toastification.dart';
 
 class BioFormWidget extends StatefulWidget {
-  const BioFormWidget({super.key});
+  const BioFormWidget({required this.specialization, super.key});
+  final String specialization;
 
   @override
   State<BioFormWidget> createState() => _BioFormWidgetState();
@@ -37,10 +38,15 @@ class _BioFormWidgetState extends State<BioFormWidget> {
   final TextEditingController _universityController = TextEditingController();
   final TextEditingController _hospitalController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
+  final TextEditingController _certificationsController =
+      TextEditingController();
+  final TextEditingController _skillsController = TextEditingController();
 
   final FocusNode _experienceFocus = FocusNode();
   final FocusNode _universityFocus = FocusNode();
   final FocusNode _hospitalFocus = FocusNode();
+  final FocusNode _certificationsFocus = FocusNode();
+  final FocusNode _skillsFocus = FocusNode();
 
   String? _selectedDegree;
 
@@ -114,52 +120,24 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             : 'Please select degree'
         : null;
     setState(() {});
-    final bioComponents = <String>[];
 
-    // Add degree if available
-    if (_selectedDegree != null && _selectedDegree!.isNotEmpty) {
-      bioComponents.add(_selectedDegree!);
-    }
-
-    // Add experience if available
-    if (_experienceController.text.isNotEmpty) {
-      if (context.isStateArabic) {
-        bioComponents.add('مع ${_experienceController.text} سنوات من الخبرة');
-      } else {
-        bioComponents
-            .add('with ${_experienceController.text}+ years of experience');
-      }
-    }
-
-    // Add hospital if available
-    if (_hospitalController.text.isNotEmpty) {
-      if (context.isStateArabic) {
-        bioComponents.add('في مستشفى ${_hospitalController.text}');
-      } else {
-        bioComponents.add('at ${_hospitalController.text} Hospital');
-      }
-    }
-
-    // Add university if available
-    if (_universityController.text.isNotEmpty) {
-      if (context.isStateArabic) {
-        bioComponents.add('متخرج من جامعة ${_universityController.text}');
-      } else {
-        bioComponents
-            .add('graduated from ${_universityController.text} University');
-      }
-    }
-
-    // Join components and update main bio
-    final separator = context.isStateArabic ? '، ' : ', ';
-    final newBio = bioComponents.join(separator);
+    final newBio = DoctorBioParser.generateBio(
+      experience: _experienceController.text,
+      degree: _selectedDegree,
+      university: _universityController.text,
+      hospital: _hospitalController.text,
+      specialization: widget.specialization,
+      certifications: _certificationsController.text,
+      skills: _skillsController.text,
+      isArabic: context.isStateArabic,
+    );
 
     _bioController.text = newBio;
     setState(() {});
     _isFormValidNotifier.value = isValid && _degreeErrorText == null;
   }
 
-  Future<void> _pickImage(ImageSource source) async {
+  Future<void> pickImage(ImageSource source) async {
     try {
       final image = await _imagePicker.pickImage(
         source: source,
@@ -194,7 +172,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     }
   }
 
-  void _showImagePickerOptions() {
+  void showImagePickerOptions() {
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(
@@ -242,10 +220,10 @@ class _BioFormWidgetState extends State<BioFormWidget> {
                       // }
 
                       // حاليًا نفترض أن الأذونات ممنوحة
-                      _pickImage(ImageSource.gallery);
+                      pickImage(ImageSource.gallery);
                     } catch (e) {
                       print('Gallery permission error: $e');
-                      _pickImage(
+                      pickImage(
                         ImageSource.gallery,
                       ); // محاولة الوصول على أي حال
                     }
@@ -272,10 +250,10 @@ class _BioFormWidgetState extends State<BioFormWidget> {
                       // }
 
                       // حاليًا نفترض أن الأذونات ممنوحة
-                      _pickImage(ImageSource.camera);
+                      pickImage(ImageSource.camera);
                     } catch (e) {
                       print('Camera permission error: $e');
-                      _pickImage(
+                      pickImage(
                         ImageSource.camera,
                       ); // محاولة الوصول على أي حال
                     }
@@ -316,20 +294,24 @@ class _BioFormWidgetState extends State<BioFormWidget> {
         spacing: _isFormValidNotifier.value ? 0.h : 6.h,
         children: [
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText:
-                context.isStateArabic ? 'سنوات الخبرة' : 'Years of Experience',
-            keyboardType: TextInputType.number,
-            controller: _experienceController,
-            focusNode: _experienceFocus,
-            textInputAction: TextInputAction.next,
-            hint: context.isStateArabic ? 'مثال: 10' : 'e.g. 10',
-            onChanged: (_) => updateBio(),
+          Row(
+            children: [
+              CustomTextFeild(
+                labelText: context.isStateArabic
+                    ? 'سنوات الخبرة'
+                    : 'Years of Experience',
+                keyboardType: TextInputType.number,
+                controller: _experienceController,
+                focusNode: _experienceFocus,
+                textInputAction: TextInputAction.next,
+                hint: context.isStateArabic ? 'مثال: 10' : 'e.g. 10',
+                onChanged: (_) => updateBio(),
+              ).expand(),
+              10.wSpace,
+              dropdownDergree(context).expand(),
+            ],
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          _dropdownDergree(context),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-
           CustomTextFeild(
             labelText: context.isStateArabic ? 'الجامعة' : 'University',
             keyboardType: TextInputType.text,
@@ -337,33 +319,55 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             focusNode: _universityFocus,
             textInputAction: TextInputAction.next,
             nextFocusNode: _hospitalFocus,
-            hint: context.isStateArabic ? 'مثال: القاهرة' : 'e.g. Cairo',
+            hint: context.isStateArabic
+                ? 'الجامعة التي تم تخرج منها'
+                : 'University you graduated from',
             onChanged: (_) => updateBio(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-
-          // Hospital input
           CustomTextFeild(
             labelText: context.isStateArabic ? 'المستشفى' : 'Hospital',
             keyboardType: TextInputType.text,
             controller: _hospitalController,
             focusNode: _hospitalFocus,
-            textInputAction: TextInputAction.done,
-            hint: context.isStateArabic ? 'مثال: السلام' : 'e.g. Al Salam',
+            nextFocusNode: _skillsFocus,
+            textInputAction: TextInputAction.next,
+            hint: context.isStateArabic
+                ? 'المستشفى التي تعمل فيه'
+                : 'Hospital you work in',
             onChanged: (_) => updateBio(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          // File and image upload section
-          _buildUploadSection(),
+          CustomTextFeild(
+            labelText: context.isStateArabic ? 'المهارات' : 'Skills',
+            keyboardType: TextInputType.text,
+            controller: _skillsController,
+            focusNode: _skillsFocus,
+            nextFocusNode: _certificationsFocus,
+            isValidator: false,
+            textInputAction: TextInputAction.next,
+            onChanged: (_) => updateBio(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          CustomTextFeild(
+            labelText: context.isStateArabic ? 'الشهادات' : 'Certifications',
+            keyboardType: TextInputType.text,
+            controller: _certificationsController,
+            focusNode: _certificationsFocus,
+            isValidator: false,
+            textInputAction: TextInputAction.done,
+            onChanged: (_) => updateBio(),
+          ),
+          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          buildUploadSection(),
           30.hSpace,
-
-          _buildCompleteButton(),
+          buildCompleteButton(),
         ],
       ),
     );
   }
 
-  Widget _buildUploadSection() {
+  Widget buildUploadSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -376,13 +380,13 @@ class _BioFormWidgetState extends State<BioFormWidget> {
         12.hSpace,
         Row(
           children: [
-            _buildUploadButton(
+            buildUploadButton(
               icon: Icons.image,
               label: context.isStateArabic ? 'إضافة صورة' : 'Add Image',
-              onTap: _showImagePickerOptions,
+              onTap: showImagePickerOptions,
             ).expand(),
             16.wSpace,
-            _buildUploadButton(
+            buildUploadButton(
               icon: Icons.upload_file,
               label: context.isStateArabic ? 'إضافة ملف' : 'Add File',
               onTap: () {},
@@ -391,13 +395,13 @@ class _BioFormWidgetState extends State<BioFormWidget> {
         ),
         if (_selectedImages.isNotEmpty || _selectedFiles.isNotEmpty) ...[
           16.hSpace,
-          _buildSelectedFilesList(),
+          buildSelectedFilesList(),
         ],
       ],
     );
   }
 
-  Widget _buildUploadButton({
+  Widget buildUploadButton({
     required IconData icon,
     required String label,
     required VoidCallback onTap,
@@ -432,7 +436,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     );
   }
 
-  Widget _buildSelectedFilesList() {
+  Widget buildSelectedFilesList() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -450,7 +454,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             itemCount: _selectedImages.length,
             separatorBuilder: (_, __) => 8.wSpace,
             itemBuilder: (context, index) {
-              return _buildImageItem(_selectedImages[index], index);
+              return buildImageItem(_selectedImages[index], index);
             },
           ).withHeight(100),
         ],
@@ -471,7 +475,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             itemCount: _selectedFiles.length,
             separatorBuilder: (_, __) => 8.hSpace,
             itemBuilder: (context, index) {
-              return _buildFileItem(_selectedFiles[index], index);
+              return buildFileItem(_selectedFiles[index], index);
             },
           ),
         ],
@@ -479,7 +483,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     );
   }
 
-  Widget _buildImageItem(File image, int index) {
+  Widget buildImageItem(File image, int index) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -497,7 +501,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
         Positioned(
           top: -8.h,
           right: -8.w,
-          child: _buildRemoveButton(() {
+          child: buildRemoveButton(() {
             setState(() {
               _selectedImages.removeAt(index);
             });
@@ -507,7 +511,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     ).paddingSymmetric(horizontal: 8, vertical: 8);
   }
 
-  Widget _buildFileItem(File file, int index) {
+  Widget buildFileItem(File file, int index) {
     final fileName = file.path.split('/').last;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
@@ -534,7 +538,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             ),
           ),
           10.wSpace,
-          _buildRemoveButton(() {
+          buildRemoveButton(() {
             setState(() {
               _selectedFiles.removeAt(index);
             });
@@ -544,7 +548,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     );
   }
 
-  Widget _buildRemoveButton(VoidCallback onTap) {
+  Widget buildRemoveButton(VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12.r),
@@ -563,7 +567,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     );
   }
 
-  Widget _buildCompleteButton() {
+  Widget buildCompleteButton() {
     return BlocConsumer<AuthCubit, AuthState>(
       listenWhen: (previous, current) =>
           current is EditProfileSuccess ||
@@ -605,7 +609,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     );
   }
 
-  Widget _dropdownDergree(BuildContext context) {
+  Widget dropdownDergree(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -629,13 +633,13 @@ class _BioFormWidgetState extends State<BioFormWidget> {
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                size: 28.sp,
+                size: 24.sp,
                 color: context.onPrimaryColor.withAlpha(140),
               ),
               value: _selectedDegree,
               hint: Text(
                 context.isStateArabic ? 'اختر الدرجة العلمية' : 'Select Degree',
-                style: TextStyleApp.regular14().copyWith(
+                style: TextStyleApp.regular12().copyWith(
                   color: context.onPrimaryColor.withAlpha(140),
                 ),
               ),
@@ -686,6 +690,9 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     _experienceFocus.dispose();
     _universityFocus.dispose();
     _hospitalFocus.dispose();
+    _skillsController.dispose();
+    _certificationsController.dispose();
+
     _isFormValidNotifier.dispose();
     super.dispose();
   }

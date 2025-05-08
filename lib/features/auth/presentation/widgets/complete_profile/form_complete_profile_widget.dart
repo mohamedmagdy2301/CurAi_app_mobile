@@ -49,6 +49,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
 
   int? selectedSpecialization;
   String? selectedGender;
+  String? selectedSpecializationName;
 
   String? _specializationErrorText;
   String? _genderErrorText;
@@ -167,6 +168,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
       child: Column(
         spacing: _isFormValidNotifier.value ? 0.h : 6.h,
         children: [
+          10.hSpace,
           ImageProfileWidget(
             imageUrl: imageUrl,
             imageFile: imageFile,
@@ -183,6 +185,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               }
             },
           ).center(),
+          10.hSpace,
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
             labelText: context.translate(LangKeys.phone),
@@ -235,10 +238,15 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             ),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          _buildSelectSpecilization(context),
+          Row(
+            children: [
+              _buildSelectGender(context).withWidth(context.W * 0.3),
+              10.wSpace,
+              _buildSelectSpecilization(context).expand(),
+            ],
+          ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          _buildSelectGender(context),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          10.hSpace,
           _buildCompleteButton(),
         ],
       ),
@@ -379,6 +387,12 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               onChanged: (int? newValue) {
                 setState(() {
                   selectedSpecialization = newValue;
+                  selectedSpecializationName = specializationName(
+                    specializationsList.firstWhere(
+                      (element) => element['id'] == newValue,
+                    )['name'] as String,
+                    context.isStateArabic,
+                  );
                   _specializationErrorText = null;
                 });
               },
@@ -465,6 +479,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             ..pop()
             ..pushReplacementNamed(
               Routes.bioScreen,
+              arguments: {'specialization': selectedSpecializationName},
             );
         } else if (state is EditProfileError) {
           context.pop();

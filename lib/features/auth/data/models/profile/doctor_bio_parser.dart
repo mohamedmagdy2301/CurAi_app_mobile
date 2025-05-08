@@ -8,6 +8,13 @@ class DoctorBioParser {
       'degree': '',
       'university': '',
       'hospital': '',
+      'specialization': '',
+      'certifications': '',
+      'associations': '',
+      'conferences': '',
+      'skills': '',
+      'training': '',
+      'volunteer': '',
     };
 
     // Parse experience (look for patterns like "X years of experience" or "X+ years")
@@ -53,6 +60,76 @@ class DoctorBioParser {
       result['hospital'] = hospitalMatch.group(1)?.trim() ?? '';
     }
 
+    // Specialization
+    final specializationRegex = RegExp(
+      r'(?:specialized in|تخصص في)\s+([A-Za-zأ-ي\s]+)',
+      caseSensitive: false,
+    );
+    final specializationMatch = specializationRegex.firstMatch(bioText);
+    if (specializationMatch != null) {
+      result['specialization'] = specializationMatch.group(1)?.trim() ?? '';
+    }
+
+    // Certifications
+    final certificationsRegex = RegExp(
+      r'(?:certified|شهادة|حاصل على)\s+([A-Za-zأ-ي\s]+)',
+      caseSensitive: false,
+    );
+    final certificationsMatch = certificationsRegex.firstMatch(bioText);
+    if (certificationsMatch != null) {
+      result['certifications'] = certificationsMatch.group(1)?.trim() ?? '';
+    }
+
+    // Associations
+    final associationsRegex = RegExp(
+      r'(?:member of|عضو في)\s+([A-Za-zأ-ي\s]+)',
+      caseSensitive: false,
+    );
+    final associationsMatch = associationsRegex.firstMatch(bioText);
+    if (associationsMatch != null) {
+      result['associations'] = associationsMatch.group(1)?.trim() ?? '';
+    }
+
+    // Conferences
+    final conferencesRegex = RegExp(
+      r'(?:attended|حضر)\s+([A-Za-zأ-ي\s]+)(?:conference|ندوة)',
+      caseSensitive: false,
+    );
+    final conferencesMatch = conferencesRegex.firstMatch(bioText);
+    if (conferencesMatch != null) {
+      result['conferences'] = conferencesMatch.group(1)?.trim() ?? '';
+    }
+
+    // Skills
+    final skillsRegex = RegExp(
+      r'(?:skilled in|مهارات في)\s+([A-Za-zأ-ي\s]+)',
+      caseSensitive: false,
+    );
+    final skillsMatch = skillsRegex.firstMatch(bioText);
+    if (skillsMatch != null) {
+      result['skills'] = skillsMatch.group(1)?.trim() ?? '';
+    }
+
+    // Training
+    final trainingRegex = RegExp(
+      r'(?:trained at|تدريب في)\s+([A-Za-zأ-ي\s]+)',
+      caseSensitive: false,
+    );
+    final trainingMatch = trainingRegex.firstMatch(bioText);
+    if (trainingMatch != null) {
+      result['training'] = trainingMatch.group(1)?.trim() ?? '';
+    }
+
+    // Volunteer work
+    final volunteerRegex = RegExp(
+      r'(?:volunteer|عمل تطوعي)\s+([A-Za-zأ-ي\s]+)',
+      caseSensitive: false,
+    );
+    final volunteerMatch = volunteerRegex.firstMatch(bioText);
+    if (volunteerMatch != null) {
+      result['volunteer'] = volunteerMatch.group(1)?.trim() ?? '';
+    }
+
     return result;
   }
 
@@ -62,6 +139,13 @@ class DoctorBioParser {
     String? degree,
     String? university,
     String? hospital,
+    String? specialization,
+    String? certifications,
+    String? associations,
+    String? conferences,
+    String? skills,
+    String? training,
+    String? volunteer,
     bool isArabic = false,
   }) {
     if (isArabic) {
@@ -70,6 +154,13 @@ class DoctorBioParser {
         degree: degree,
         university: university,
         hospital: hospital,
+        specialization: specialization,
+        certifications: certifications,
+        associations: associations,
+        conferences: conferences,
+        skills: skills,
+        training: training,
+        volunteer: volunteer,
       );
     } else {
       return _generateEnglishBio(
@@ -77,84 +168,119 @@ class DoctorBioParser {
         degree: degree,
         university: university,
         hospital: hospital,
+        specialization: specialization,
+        certifications: certifications,
+        associations: associations,
+        conferences: conferences,
+        skills: skills,
+        training: training,
+        volunteer: volunteer,
       );
     }
   }
 
-  /// Generate English bio from components
   static String _generateEnglishBio({
     String? experience,
     String? degree,
     String? university,
     String? hospital,
+    String? specialization,
+    String? certifications,
+    String? associations,
+    String? conferences,
+    String? skills,
+    String? training,
+    String? volunteer,
   }) {
     final parts = <String>[];
 
-    // Add degree if available
     if (degree != null && degree.isNotEmpty) {
       parts.add(degree);
     }
-
-    // Add experience if available
     if (experience != null && experience.isNotEmpty) {
       parts.add('with $experience+ years of experience');
     }
-
-    // Add hospital if available
+    if (specialization != null && specialization.isNotEmpty) {
+      parts.add('specialized in $specialization');
+    }
+    if (certifications != null && certifications.isNotEmpty) {
+      parts.add('certified in $certifications');
+    }
+    if (associations != null && associations.isNotEmpty) {
+      parts.add('member of $associations');
+    }
+    if (conferences != null && conferences.isNotEmpty) {
+      parts.add('attended $conferences conference');
+    }
+    if (skills != null && skills.isNotEmpty) {
+      parts.add('skilled in $skills');
+    }
+    if (training != null && training.isNotEmpty) {
+      parts.add('trained at $training');
+    }
+    if (volunteer != null && volunteer.isNotEmpty) {
+      parts.add('volunteer work: $volunteer');
+    }
     if (hospital != null && hospital.isNotEmpty) {
       parts.add('at $hospital Hospital');
     }
-
-    // Add university if available
     if (university != null && university.isNotEmpty) {
       parts.add('graduated from $university University');
     }
 
-    // If no parts were added, return empty string
-    if (parts.isEmpty) {
-      return '';
-    }
-
-    // Join parts with commas
     return parts.join(', ');
   }
 
-  /// Generate Arabic bio from components
   static String _generateArabicBio({
     String? experience,
     String? degree,
     String? university,
     String? hospital,
+    String? specialization,
+    String? certifications,
+    String? associations,
+    String? conferences,
+    String? skills,
+    String? training,
+    String? volunteer,
   }) {
     final parts = <String>[];
 
-    // Add degree if available
     if (degree != null && degree.isNotEmpty) {
       parts.add(degree);
     }
-
-    // Add experience if available
     if (experience != null && experience.isNotEmpty) {
       parts.add('مع $experience سنوات من الخبرة');
     }
-
-    // Add hospital if available
+    if (specialization != null && specialization.isNotEmpty) {
+      parts.add('متخصص في $specialization');
+    }
+    if (certifications != null && certifications.isNotEmpty) {
+      parts.add('حاصل على شهادة في $certifications');
+    }
+    if (associations != null && associations.isNotEmpty) {
+      parts.add('عضو في $associations');
+    }
+    if (conferences != null && conferences.isNotEmpty) {
+      parts.add('حضر مؤتمر $conferences');
+    }
+    if (skills != null && skills.isNotEmpty) {
+      parts.add('مهارات في $skills');
+    }
+    if (training != null && training.isNotEmpty) {
+      parts.add('تدريب في $training');
+    }
+    if (volunteer != null && volunteer.isNotEmpty) {
+      parts.add('عمل تطوعي في $volunteer');
+    }
     if (hospital != null && hospital.isNotEmpty) {
       parts.add('في مستشفى $hospital');
     }
-
-    // Add university if available
     if (university != null && university.isNotEmpty) {
       parts.add('متخرج من جامعة $university');
     }
 
-    // If no parts were added, return empty string
-    if (parts.isEmpty) {
-      return '';
-    }
-
-    // Join parts with commas
-    return parts.join('، ');
+    return parts.join(', ');
   }
 }
 

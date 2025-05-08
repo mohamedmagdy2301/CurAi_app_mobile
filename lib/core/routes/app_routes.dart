@@ -142,9 +142,14 @@ class AppRoutes {
           page: const MyAppointmentPatientScreen(),
         );
       case Routes.bioScreen:
-        return BaseRoute(
-          page: const BioScreen(),
-        );
+        if (arg is Map<String, dynamic>) {
+          final specialization = arg['specialization'] as String;
+          return BaseRoute(
+            page: BioScreen(specialization: specialization),
+          );
+        }
+        return BaseRoute(page: const PageUnderBuildScreen());
+
       case Routes.workingTimeDoctorAvailableScreen:
         return BaseRoute(
           page: const WorkingTimeDoctorAvailableScreen(),

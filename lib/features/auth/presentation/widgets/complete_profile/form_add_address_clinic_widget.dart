@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
@@ -14,6 +15,7 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/complete_pro
 import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid_notifier_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toastification/toastification.dart';
 
 class AddAddressClinicFormWidget extends StatefulWidget {
@@ -93,24 +95,28 @@ class _AddAddressClinicFormWidgetState
         children: [
           const MapsCardAddNewAddress(),
           20.hSpace,
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.country),
-            keyboardType: TextInputType.streetAddress,
-            controller: _countryController,
-            focusNode: _countryFocusNode,
-            textInputAction: TextInputAction.next,
-            nextFocusNode: _governorateFocusNode,
-            onChanged: (_) => _validateForm(),
-          ),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.governorate),
-            keyboardType: TextInputType.streetAddress,
-            controller: _governorateController,
-            focusNode: _governorateFocusNode,
-            textInputAction: TextInputAction.next,
-            nextFocusNode: _cityFocusNode,
-            onChanged: (_) => _validateForm(),
+          Row(
+            spacing: 10.w,
+            children: [
+              CustomTextFeild(
+                labelText: context.translate(LangKeys.country),
+                keyboardType: TextInputType.streetAddress,
+                controller: _countryController,
+                focusNode: _countryFocusNode,
+                textInputAction: TextInputAction.next,
+                nextFocusNode: _governorateFocusNode,
+                onChanged: (_) => _validateForm(),
+              ).expand(),
+              CustomTextFeild(
+                labelText: context.translate(LangKeys.governorate),
+                keyboardType: TextInputType.streetAddress,
+                controller: _governorateController,
+                focusNode: _governorateFocusNode,
+                textInputAction: TextInputAction.next,
+                nextFocusNode: _cityFocusNode,
+                onChanged: (_) => _validateForm(),
+              ).expand(),
+            ],
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -148,12 +154,13 @@ class _AddAddressClinicFormWidgetState
             keyboardType: TextInputType.streetAddress,
             controller: _specialMarkController,
             focusNode: _specialMarkFocusNode,
+            maxLines: 2,
             textInputAction: TextInputAction.done,
             isValidator: false,
             onChanged: (_) => _validateForm(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          5.hSpace,
+          10.hSpace,
           _buildContCompleteButton(),
         ],
       ),
