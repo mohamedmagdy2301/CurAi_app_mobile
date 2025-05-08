@@ -16,6 +16,7 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class RegistrationFormWidget extends StatefulWidget {
   const RegistrationFormWidget({super.key});
@@ -26,6 +27,14 @@ class RegistrationFormWidget extends StatefulWidget {
 
 class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final _userNameFocus = FocusNode();
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+  final _emailFocus = FocusNode();
+  final _passwordFocus = FocusNode();
+  final _confirmPasswordFocus = FocusNode();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -54,9 +63,12 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           CustomTextFeild(
             labelText: context.translate(LangKeys.userName),
             keyboardType: TextInputType.name,
-            hint: context.isStateArabic ? 'مثال: @username' : 'e.g. @username',
             controller: _userNameController,
+            hint: context.isStateArabic ? 'مثال: @username' : 'e.g. @username',
             onChanged: (_) => _validateForm(),
+            focusNode: _userNameFocus,
+            nextFocusNode: _firstNameFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -64,6 +76,9 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             keyboardType: TextInputType.name,
             controller: _firstNameController,
             onChanged: (_) => _validateForm(),
+            focusNode: _firstNameFocus,
+            nextFocusNode: _lastNameFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -71,16 +86,22 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             keyboardType: TextInputType.name,
             controller: _lastNameController,
             onChanged: (_) => _validateForm(),
+            focusNode: _lastNameFocus,
+            nextFocusNode: _emailFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
             labelText: context.translate(LangKeys.email),
             keyboardType: TextInputType.emailAddress,
+            controller: _emailController,
             hint: context.isStateArabic
                 ? 'مثال: username.${DateTime.now().year}@example.com'
                 : 'e.g. username.${DateTime.now().year}@example.com',
-            controller: _emailController,
             onChanged: (_) => _validateForm(),
+            focusNode: _emailFocus,
+            nextFocusNode: _passwordFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -91,6 +112,9 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             hint:
                 context.isStateArabic ? 'مثال: XYZ@123xyz' : 'e.g. XYZ@123xyz',
             onChanged: (_) => _validateForm(),
+            focusNode: _passwordFocus,
+            nextFocusNode: _confirmPasswordFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -99,6 +123,8 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             controller: _confirmPasswordController,
             obscureText: _isPasswordObscure,
             onChanged: (_) => _validateForm(),
+            focusNode: _confirmPasswordFocus,
+            textInputAction: TextInputAction.done,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           5.hSpace,
@@ -120,16 +146,14 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           showMessage(
             context,
             message: state.message,
-            showCloseIcon: true,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
           );
         } else if (state is RegisterSuccess) {
           Navigator.pop(context);
           showMessage(
             context,
             message: state.message,
-            showCloseIcon: true,
-            type: SnackBarType.success,
+            type: ToastificationType.success,
           );
           if (userType == 'patient') {
             context.pushReplacementNamed(Routes.loginScreen);
@@ -162,7 +186,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
         showMessage(
           context,
           message: context.translate(LangKeys.passwordNotMatch),
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -202,7 +226,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
                 type == 'patient'
                     ? context.translate(LangKeys.patient)
                     : context.translate(LangKeys.doctor),
-                style: TextStyleApp.regular18().copyWith(
+                style: TextStyleApp.regular20().copyWith(
                   color: isSelected ? Colors.white : context.primaryColor,
                 ),
               ),
@@ -213,8 +237,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           selectedColor: context.primaryColor,
           backgroundColor: context.backgroundColor,
           elevation: 2,
-          padding:
-              EdgeInsets.symmetric(horizontal: context.W * 0.035, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           labelStyle: TextStyleApp.medium20().copyWith(
             color: isSelected ? Colors.white : context.primaryColor,
           ),

@@ -13,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:toastification/toastification.dart';
 
 class GetLocationCubit extends Cubit<GetLocationState> {
   GetLocationCubit() : super(GetLocationInitial());
@@ -26,6 +27,8 @@ class GetLocationCubit extends Cubit<GetLocationState> {
 
   /// Get current location and add marker
   Future<void> getCurrentLocation(BuildContext context) async {
+    if (isClosed) return;
+
     emit(GetLocationLoading());
     try {
       final userLocation = await determinePosition(context);
@@ -51,8 +54,12 @@ class GetLocationCubit extends Cubit<GetLocationState> {
       ];
       mapController.move(selectedLocation, 13);
       locationInfo = await _getLocationName(selectedLocation);
+      if (isClosed) return;
+
       emit(GetLocationSuccess(selectedLocation, locationInfo, markers));
     } catch (e) {
+      if (isClosed) return;
+
       emit(GetLocationError(e.toString()));
     }
   }
@@ -72,7 +79,7 @@ class GetLocationCubit extends Cubit<GetLocationState> {
               message: context.isStateArabic
                   ? 'تم اختيار الموقع: $locationInfo'
                   : 'You selected location: $locationInfo',
-              type: SnackBarType.success,
+              type: ToastificationType.success,
             );
           },
           child: Icon(
@@ -84,6 +91,8 @@ class GetLocationCubit extends Cubit<GetLocationState> {
       ),
     ];
     locationInfo = await _getLocationName(position);
+    if (isClosed) return;
+
     emit(GetLocationSuccess(position, locationInfo, markers));
   }
 
@@ -118,6 +127,8 @@ class GetLocationCubit extends Cubit<GetLocationState> {
       ];
       mapController.move(selectedLocation, 13);
       locationInfo = _getLocationName(selectedLocation).toString();
+      if (isClosed) return;
+
       emit(GetLocationSuccess(selectedLocation, locationInfo, markers));
     });
   }

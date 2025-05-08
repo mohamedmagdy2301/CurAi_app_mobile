@@ -12,6 +12,7 @@ import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class CustomerServiceFormWidget extends StatefulWidget {
   const CustomerServiceFormWidget({
@@ -68,14 +69,14 @@ class _CustomerServiceFormWidgetState extends State<CustomerServiceFormWidget> {
                     showMessage(
                       context,
                       message: state.message,
-                      type: SnackBarType.error,
+                      type: ToastificationType.error,
                     );
                   } else if (state is ContactUsSuccess) {
                     Navigator.pop(context);
                     showMessage(
                       context,
                       message: state.message,
-                      type: SnackBarType.success,
+                      type: ToastificationType.success,
                     );
                     Navigator.pop(context);
                   } else if (state is ContactUsLoading) {
@@ -98,7 +99,7 @@ class _CustomerServiceFormWidgetState extends State<CustomerServiceFormWidget> {
                             message: context.isStateArabic
                                 ? 'البريد الإلكتروني غير صالح'
                                 : 'Email is not valid',
-                            type: SnackBarType.error,
+                            type: ToastificationType.error,
                           );
                           return;
                         }

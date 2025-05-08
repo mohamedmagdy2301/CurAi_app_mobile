@@ -49,6 +49,7 @@ dependencies:
   readmore:
   shared_preferences:
   skeletonizer:
+  toastification: ^3.0.2
   url_launcher:
 
   

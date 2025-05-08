@@ -24,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:toastification/toastification.dart';
 
 enum SortType {
   none,
@@ -224,7 +225,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
             if (state is GetAllDoctorPagenationFailure) {
               showMessage(
                 context,
-                type: SnackBarType.error,
+                type: ToastificationType.error,
                 message: state.errMessage,
               );
             }
@@ -323,9 +324,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30),
-        ), // حواف دائرية كبيرة
+        ),
       ),
-      backgroundColor: Colors.white, // خلفية بيضاء
+      backgroundColor: context.backgroundColor,
       builder: (_) => Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -431,14 +432,14 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
         child: ListTile(
           leading: Icon(
             icon,
-            color: currentSort == type ? context.primaryColor : Colors.black54,
+            color: currentSort == type
+                ? context.primaryColor
+                : context.onPrimaryColor,
           ),
           trailing: currentSort == type
               ? Icon(
                   CupertinoIcons.checkmark_alt,
-                  color: currentSort == type
-                      ? context.primaryColor
-                      : Colors.black54,
+                  color: context.primaryColor,
                 )
               : null,
           title: AutoSizeText(

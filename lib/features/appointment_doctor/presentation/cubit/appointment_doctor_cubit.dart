@@ -22,6 +22,10 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
   final AddWorkingTimeDoctorUsecase _addWorkingTimeDoctorUsecase;
   final RemoveWorkingTimeDoctorUsecase _removeWorkingTimeDoctorUsecase;
   List<WorkingTimeDoctorAvailableModel> workingTimeList = [];
+  void resetState() {
+    if (isClosed) return;
+    emit(AppointmentDoctorInitial());
+  }
 
   Future<void> getWorkingTimeAvailableDoctor() async {
     if (isClosed) return;
@@ -31,6 +35,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
 
     reslute.fold((message) {
       if (isClosed) return;
+
       emit(GetWorkingTimeDoctorAvailableFailure(message: message));
     }, (workingTimeList) {
       this.workingTimeList =
@@ -39,9 +44,11 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       );
       if (this.workingTimeList.isEmpty) {
         if (isClosed) return;
+
         emit(GetWorkingTimeDoctorAvailableEmpty());
       } else {
         if (isClosed) return;
+
         emit(
           GetWorkingTimeDoctorAvailableSuccess(
             workingTimeList: this.workingTimeList,
@@ -49,6 +56,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
         );
       }
     });
+    resetState();
   }
 
   Future<void> removeWorkingTimeDoctor({required int workingTimeId}) async {
@@ -59,10 +67,14 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
 
     reslute.fold((message) {
       if (isClosed) return;
+
       emit(RemoveWorkingTimeDoctorFailure(message: message));
     }, (_) {
+      if (isClosed) return;
+
       emit(RemoveWorkingTimeDoctorSuccess());
     });
+    resetState();
   }
 
   Future<void> addWorkingTimeDoctor({
@@ -81,10 +93,13 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
 
     reslute.fold((message) {
       if (isClosed) return;
+
       emit(AddWorkingTimeDoctorFailure(message: message));
     }, (_) {
+      if (isClosed) return;
       emit(AddWorkingTimeDoctorSuccess());
     });
+    resetState();
   }
 
   Future<void> updateWorkingTimeDoctor({
@@ -103,10 +118,13 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
 
     reslute.fold((message) {
       if (isClosed) return;
+
       emit(UpdateWorkingTimeDoctorFailure(message: message));
     }, (_) {
       if (isClosed) return;
+
       emit(UpdateWorkingTimeDoctorSuccess());
     });
+    resetState();
   }
 }

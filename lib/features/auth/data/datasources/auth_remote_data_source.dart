@@ -119,19 +119,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> editProfile({
     required ProfileRequest request,
   }) async {
-    MultipartFile? photoFile;
+    final data = <String, dynamic>{};
+
     if (request.imageFile != null) {
       final photoName = request.imageFile!.path.split('/').last;
-      photoFile = await MultipartFile.fromFile(
+      data['profile_picture'] = await MultipartFile.fromFile(
         request.imageFile!.path,
         filename: photoName,
       );
     }
 
-    final data = <String, dynamic>{};
-
     if (request.username != null) data['username'] = request.username;
-    if (photoFile != null) data['profile_picture'] = photoFile;
     if (request.firstName != null) data['first_name'] = request.firstName;
     if (request.lastName != null) data['last_name'] = request.lastName;
     if (request.phoneNumber != null) data['phone_number'] = request.phoneNumber;
@@ -152,7 +150,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
     final response = await dioConsumer.patch(
       EndPoints.getProfile,
-      body: FormData.fromMap(data),
+      body: data,
+      formDataIsEnabled: true,
     );
 
     return response.fold(left, (r) {

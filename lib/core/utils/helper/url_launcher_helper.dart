@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlLauncherHelper {
@@ -143,7 +144,7 @@ class UrlLauncherHelper {
       if (context.mounted) {
         showMessage(
           context,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
           message: 'Could not launch $url',
         );
       }

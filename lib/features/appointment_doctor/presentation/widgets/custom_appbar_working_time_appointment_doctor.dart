@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class CustomAppbarWorkingTimeAppointmentDoctor extends StatefulWidget
     implements PreferredSizeWidget {
@@ -71,11 +72,17 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
       listenWhen: (previous, current) =>
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
-          current is AddWorkingTimeDoctorLoading,
+          current is AddWorkingTimeDoctorLoading ||
+          current is RemoveWorkingTimeDoctorLoading ||
+          current is UpdateWorkingTimeDoctorLoading ||
+          current is GetWorkingTimeDoctorAvailableLoading,
       buildWhen: (previous, current) =>
           current is AddWorkingTimeDoctorFailure ||
           current is AddWorkingTimeDoctorSuccess ||
-          current is AddWorkingTimeDoctorLoading,
+          current is AddWorkingTimeDoctorLoading ||
+          current is RemoveWorkingTimeDoctorLoading ||
+          current is UpdateWorkingTimeDoctorLoading ||
+          current is GetWorkingTimeDoctorAvailableLoading,
       listener: (context, state) async {
         if (state is AddWorkingTimeDoctorSuccess && mounted) {
           await context
@@ -83,7 +90,7 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
               .getWorkingTimeAvailableDoctor();
           showMessage(
             context,
-            type: SnackBarType.success,
+            type: ToastificationType.success,
             message: context.translate(LangKeys.addWorkingTimeSuccess),
           );
         }
@@ -91,7 +98,7 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
         if (state is AddWorkingTimeDoctorFailure && mounted) {
           showMessage(
             context,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
             message: '${context.translate(LangKeys.addWorkingTimeFailed)}'
                 '\n'
                 '${state.message}',
@@ -111,7 +118,9 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           ),
           centerTitle: true,
           actions: [
-            if (state is AddWorkingTimeDoctorLoading)
+            if (state is AddWorkingTimeDoctorLoading ||
+                state is RemoveWorkingTimeDoctorLoading ||
+                state is UpdateWorkingTimeDoctorLoading)
               const CustomLoadingWidget().paddingSymmetric(horizontal: 15)
             else
               IconButton(

@@ -17,10 +17,8 @@ import 'package:curai_app_mobile/core/utils/helper/build_app_connectivity_contro
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lock_orientation_screen/lock_orientation_screen.dart';
 
 class CuraiApp extends StatefulWidget {
@@ -98,50 +96,48 @@ class _CuraiAppState extends State<CuraiApp> {
     if (!isInitialized) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: AppThemeData.lightTheme('Poppins', selectedColor),
-        darkTheme: AppThemeData.darkTheme('Poppins', selectedColor),
+        theme: ThemeData(
+          colorScheme: ColorScheme.light(primary: selectedColor),
+          scaffoldBackgroundColor: const Color(0xffF1F1F1),
+        ),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.dark(primary: selectedColor),
+          scaffoldBackgroundColor: const Color(0xff161616),
+        ),
         home: Scaffold(
           body: const CustomLoadingWidget(height: 60, width: 60).center(),
         ),
       );
     }
-    return DevicePreview(
-      enabled: false,
-      builder: (context) => LockOrientation(
-        child: ScreenUtilInit(
-          designSize: const Size(390, 844),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          child: BlocBuilder<LocalizationCubit, LocalizationState>(
-            builder: (context, state) {
-              final cubit = context.read<LocalizationCubit>();
-              return AdaptiveTheme(
-                light: AppThemeData.lightTheme(
-                  context.isStateArabic ? 'Cairo' : 'Poppins',
-                  selectedColor,
-                ),
-                dark: AppThemeData.darkTheme(
-                  context.isStateArabic ? 'Cairo' : 'Poppins',
-                  selectedColor,
-                ),
-                initial: savedThemeMode,
-                builder: (theme, darkTheme) => MaterialApp(
-                  navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
-                  theme: theme,
-                  darkTheme: darkTheme,
-                  debugShowCheckedModeBanner: widget.environment,
-                  builder: (context, child) => setupConnectivityWidget(child),
-                  onGenerateRoute: AppRoutes.onGenerateRoute,
-                  locale: cubit.getLocaleFromState(state.locale),
-                  supportedLocales: AppLocalSetup.supportedLocales,
-                  localeResolutionCallback: AppLocalSetup.resolveUserLocale,
-                  localizationsDelegates: AppLocalSetup.localesDelegates,
-                  home: _getInitialScreen(),
-                ),
-              );
-            },
-          ),
-        ),
+    return LockOrientation(
+      child: BlocBuilder<LocalizationCubit, LocalizationState>(
+        builder: (context, state) {
+          final cubit = context.read<LocalizationCubit>();
+          return AdaptiveTheme(
+            light: AppThemeData.lightTheme(
+              context.isStateArabic ? 'Cairo' : 'Poppins',
+              selectedColor,
+            ),
+            dark: AppThemeData.darkTheme(
+              context.isStateArabic ? 'Cairo' : 'Poppins',
+              selectedColor,
+            ),
+            initial: savedThemeMode,
+            builder: (theme, darkTheme) => MaterialApp(
+              navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
+              theme: theme,
+              darkTheme: darkTheme,
+              debugShowCheckedModeBanner: widget.environment,
+              builder: (context, child) => setupConnectivityWidget(child),
+              onGenerateRoute: AppRoutes.onGenerateRoute,
+              locale: cubit.getLocaleFromState(state.locale),
+              supportedLocales: AppLocalSetup.supportedLocales,
+              localeResolutionCallback: AppLocalSetup.resolveUserLocale,
+              localizationsDelegates: AppLocalSetup.localesDelegates,
+              home: _getInitialScreen(),
+            ),
+          );
+        },
       ),
     );
   }

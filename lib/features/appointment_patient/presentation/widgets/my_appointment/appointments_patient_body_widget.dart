@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/widge
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/my_appointment_patient_loading_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 class AppointmentsPatientBodyWidget extends StatefulWidget {
   const AppointmentsPatientBodyWidget({required this.isPending, super.key});
@@ -93,7 +94,7 @@ class _AppointmentsPatientBodyWidgetState
         if (state is GetMyAppointmentPatientFailure) {
           showMessage(
             context,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
             message: state.message,
           );
         }

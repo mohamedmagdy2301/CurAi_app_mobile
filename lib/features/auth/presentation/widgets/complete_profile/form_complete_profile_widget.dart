@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toastification/toastification.dart';
 
 class CompleteProfileFormWidget extends StatefulWidget {
   const CompleteProfileFormWidget({super.key});
@@ -34,18 +35,21 @@ class CompleteProfileFormWidget extends StatefulWidget {
 }
 
 class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
+  final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _consultationPriceController =
       TextEditingController();
-
-  final TextEditingController _bioController = TextEditingController();
-
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _yourAgeController = TextEditingController();
 
-  final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
+  final FocusNode _phoneFocus = FocusNode();
+  final FocusNode _ageFocus = FocusNode();
+  final FocusNode _priceFocus = FocusNode();
+  final FocusNode _bioFocus = FocusNode();
+
   int? selectedSpecialization;
   String? selectedGender;
+  String? selectedSpecializationName;
 
   String? _specializationErrorText;
   String? _genderErrorText;
@@ -87,7 +91,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           message: context.isStateArabic
               ? 'من فضلك اختر صورة'
               : 'Please select image',
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -99,8 +103,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           message: context.isStateArabic
               ? 'من فضلك ادخل السعر بالارقام فقط.'
               : 'Please enter price as a number.',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -114,8 +117,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                   'يمكنك اختيار العمر باستخدام الأيقونة'
               : 'Please enter your age as a number.\n'
                   'You can select age using the icon',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -128,8 +130,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           message: context.isStateArabic
               ? 'العمر يجب أن يكون بين 24 و 120 سنة'
               : 'Age must be between 24 and 120 years',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
@@ -141,15 +142,13 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           message: context.isStateArabic
               ? 'من فضلك ادخل رقم هاتف صحيح'
               : 'Please enter a valid phone number',
-          showCloseIcon: true,
-          type: SnackBarType.error,
+          type: ToastificationType.error,
         );
         return;
       }
       final profileRequest = ProfileRequest(
         consultationPrice: _consultationPriceController.text.trim(),
         specialization: selectedSpecialization,
-        bio: _bioController.text.trim(),
         phoneNumber: _phoneController.text.trim(),
         age: _yourAgeController.text.trim(),
         gender: selectedGender,
@@ -166,10 +165,10 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         spacing: _isFormValidNotifier.value ? 0.h : 6.h,
         children: [
+          10.hSpace,
           ImageProfileWidget(
             imageUrl: imageUrl,
             imageFile: imageFile,
@@ -186,11 +185,15 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               }
             },
           ).center(),
+          10.hSpace,
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
             labelText: context.translate(LangKeys.phone),
             keyboardType: TextInputType.phone,
             controller: _phoneController,
+            focusNode: _phoneFocus,
+            textInputAction: TextInputAction.next,
+            nextFocusNode: _ageFocus,
             maxLenght: 11,
             hint: context.isStateArabic
                 ? 'مثال: 01012345678'
@@ -202,6 +205,9 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.yourAge),
             keyboardType: TextInputType.number,
             controller: _yourAgeController,
+            textInputAction: TextInputAction.next,
+            focusNode: _ageFocus,
+            nextFocusNode: _priceFocus,
             hint: context.isStateArabic ? 'مثال: 37' : 'e.g. 37',
             onChanged: (_) => _validateForm(),
             suffixIcon: InkWell(
@@ -214,6 +220,9 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.consultationPrice),
             keyboardType: TextInputType.number,
             controller: _consultationPriceController,
+            textInputAction: TextInputAction.next,
+            focusNode: _priceFocus,
+            nextFocusNode: _bioFocus,
             hint: context.isStateArabic ? 'مثال: 200' : 'e.g. 200',
             onChanged: (_) => _validateForm(),
             suffixIcon: Column(
@@ -229,25 +238,15 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             ),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          _buildSelectSpecilization(context),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          _buildSelectGender(context),
-          HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.translate(LangKeys.bio),
-            keyboardType: TextInputType.text,
-            hint: context.isStateArabic
-                ? 'مثال: أخصائي أمراض القلب مع 10 سنوات من الخبرة في'
-                    'مستشفى السلام ، متخصص في ارتفاع ضغط الدم وأمراض القلب.'
-                : 'e.g. Cardiologist with 10+ years of experience at '
-                    'Al Salam Hospital, specialized in hypertension '
-                    'and heart diseases.',
-            controller: _bioController,
-            maxLines: 2,
-            isLable: false,
-            onChanged: (_) => _validateForm(),
+          Row(
+            children: [
+              _buildSelectGender(context).withWidth(context.W * 0.3),
+              10.wSpace,
+              _buildSelectSpecilization(context).expand(),
+            ],
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
+          10.hSpace,
           _buildCompleteButton(),
         ],
       ),
@@ -266,8 +265,8 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(
               color: _genderErrorText != null
-                  ? Colors.redAccent
-                  : context.primaryColor.withAlpha(100),
+                  ? Colors.redAccent.withAlpha(140)
+                  : context.onPrimaryColor.withAlpha(60),
             ),
           ),
           child: DropdownButtonHideUnderline(
@@ -280,14 +279,14 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                size: 30.sp,
-                color: context.primaryColor,
+                size: 28.sp,
+                color: context.onPrimaryColor.withAlpha(140),
               ),
               value: selectedGender,
               hint: Text(
                 context.translate(LangKeys.gender),
-                style: TextStyleApp.regular16().copyWith(
-                  color: context.primaryColor,
+                style: TextStyleApp.regular14().copyWith(
+                  color: context.onPrimaryColor.withAlpha(140),
                 ),
               ),
               items: [
@@ -295,7 +294,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                   value: 'male',
                   child: Text(
                     context.translate(LangKeys.male),
-                    style: TextStyleApp.regular16().copyWith(
+                    style: TextStyleApp.regular14().copyWith(
                       color: context.onPrimaryColor,
                     ),
                   ),
@@ -304,7 +303,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                   value: 'female',
                   child: Text(
                     context.translate(LangKeys.female),
-                    style: TextStyleApp.regular16().copyWith(
+                    style: TextStyleApp.regular14().copyWith(
                       color: context.onPrimaryColor,
                     ),
                   ),
@@ -325,7 +324,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             child: Text(
               _genderErrorText!,
               style: TextStyleApp.regular12().copyWith(
-                color: Colors.redAccent,
+                color: Colors.redAccent.withAlpha(200),
               ),
             ),
           ),
@@ -345,8 +344,8 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(
               color: _specializationErrorText != null
-                  ? Colors.redAccent
-                  : context.primaryColor.withAlpha(100),
+                  ? Colors.redAccent.withAlpha(140)
+                  : context.onPrimaryColor.withAlpha(60),
             ),
           ),
           child: DropdownButtonHideUnderline(
@@ -354,19 +353,19 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               isExpanded: true,
               borderRadius: BorderRadius.circular(8.r),
               elevation: 0,
-              style: TextStyleApp.regular16().copyWith(
-                color: context.onPrimaryColor,
+              style: TextStyleApp.regular14().copyWith(
+                color: context.onPrimaryColor.withAlpha(140),
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                size: 30.sp,
-                color: context.primaryColor,
+                size: 28.sp,
+                color: context.onPrimaryColor.withAlpha(140),
               ),
               value: selectedSpecialization,
               hint: Text(
                 context.translate(LangKeys.medicalSpecialization),
-                style: TextStyleApp.regular16().copyWith(
-                  color: context.primaryColor,
+                style: TextStyleApp.regular14().copyWith(
+                  color: context.onPrimaryColor.withAlpha(140),
                 ),
               ),
               items: specializationsList
@@ -378,7 +377,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                           spec['name'] as String,
                           context.isStateArabic,
                         ),
-                        style: TextStyleApp.regular16().copyWith(
+                        style: TextStyleApp.regular14().copyWith(
                           color: context.onPrimaryColor,
                         ),
                       ),
@@ -388,6 +387,12 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               onChanged: (int? newValue) {
                 setState(() {
                   selectedSpecialization = newValue;
+                  selectedSpecializationName = specializationName(
+                    specializationsList.firstWhere(
+                      (element) => element['id'] == newValue,
+                    )['name'] as String,
+                    context.isStateArabic,
+                  );
                   _specializationErrorText = null;
                 });
               },
@@ -400,7 +405,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             child: Text(
               _specializationErrorText!,
               style: TextStyleApp.regular12().copyWith(
-                color: Colors.redAccent,
+                color: Colors.redAccent.withAlpha(200),
               ),
             ),
           ),
@@ -473,14 +478,14 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           context
             ..pop()
             ..pushReplacementNamed(
-              Routes.contCompleteProfileScreen,
-              arguments: {'isEdit': false},
+              Routes.bioScreen,
+              arguments: {'specialization': selectedSpecializationName},
             );
         } else if (state is EditProfileError) {
           context.pop();
           showMessage(
             context,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
             message: state.message,
           );
         } else if (state is EditProfileLoading) {

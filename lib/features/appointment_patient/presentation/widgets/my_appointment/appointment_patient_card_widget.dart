@@ -25,6 +25,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class AppointmentPatientCardWidget extends StatelessWidget {
   const AppointmentPatientCardWidget({
@@ -172,7 +173,7 @@ class DeleteAppointmentButton extends StatelessWidget {
           showMessage(
             context,
             message: state.message,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
           );
         }
         if (state is DeleteAppointmentPatientSuccess) {
@@ -181,7 +182,7 @@ class DeleteAppointmentButton extends StatelessWidget {
             message: context.isStateArabic
                 ? 'تم الغاء الموعد بنجاح'
                 : 'Appointment canceled successfully',
-            type: SnackBarType.success,
+            type: ToastificationType.success,
           );
           await context
               .read<AppointmentPatientCubit>()

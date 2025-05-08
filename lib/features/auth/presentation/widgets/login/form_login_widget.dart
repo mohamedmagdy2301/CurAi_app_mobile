@@ -19,6 +19,7 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -32,6 +33,8 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
 
   void _validateForm() {
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -43,6 +46,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
     _validateForm();
     if (_isFormValidNotifier.value) {
       TextInput.finishAutofillContext();
+
       _formKey.currentState?.save();
       context.read<AuthCubit>().login(
             context,
@@ -76,6 +80,9 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               ],
               keyboardType: TextInputType.emailAddress,
               controller: _emailController,
+              focusNode: _emailFocusNode,
+              nextFocusNode: _passwordFocusNode,
+              textInputAction: TextInputAction.next,
               onChanged: (_) => _validateForm(),
             ),
             HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -84,10 +91,12 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               autofillHints: const [AutofillHints.password],
               keyboardType: TextInputType.visiblePassword,
               controller: _passwordController,
+              focusNode: _passwordFocusNode,
+              textInputAction: TextInputAction.done,
               obscureText: true,
               onChanged: (_) => _validateForm(),
             ),
-            6.hSpace,
+            5.hSpace,
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
@@ -105,7 +114,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                 ),
               ),
             ),
-            8.hSpace,
+            25.hSpace,
             _buildLoginButton(),
           ],
         ),
@@ -122,19 +131,18 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
       listener: (context, state) {
         if (state is LoginError) {
           context.pop();
+
           showMessage(
             context,
-            showCloseIcon: true,
             message: state.message,
-            type: SnackBarType.error,
+            type: ToastificationType.error,
           );
         } else if (state is LoginSuccess) {
           context.pop();
           showMessage(
             context,
             message: state.message,
-            showCloseIcon: true,
-            type: SnackBarType.success,
+            type: ToastificationType.success,
           );
           CacheDataHelper.setData(
             key: SharedPrefKey.keyIsLoggedIn,

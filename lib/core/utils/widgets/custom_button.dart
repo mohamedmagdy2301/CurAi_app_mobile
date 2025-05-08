@@ -31,8 +31,9 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-            backgroundColor:
-                WidgetStatePropertyAll(colorBackground ?? context.primaryColor),
+            backgroundColor: WidgetStatePropertyAll(
+              colorBackground ?? context.primaryColor.withAlpha(220),
+            ),
             side: WidgetStatePropertyAll(
               BorderSide(
                 color: colorBorder ?? Colors.transparent,
@@ -53,7 +54,7 @@ class CustomButton extends StatelessWidget {
                   ? TextStyleApp.medium16().copyWith(
                       color: colorText ?? Colors.white,
                     )
-                  : TextStyleApp.bold20().copyWith(
+                  : TextStyleApp.bold18().copyWith(
                       color: colorText ?? Colors.white,
                     ),
             ),

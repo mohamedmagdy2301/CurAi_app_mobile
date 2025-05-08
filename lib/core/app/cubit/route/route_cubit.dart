@@ -49,6 +49,7 @@ class RouteCubit extends Cubit<RouteState> {
       ),
     );
 
+    if (isClosed) return;
     emit(DestinationRouteLoaded());
   }
 
@@ -84,6 +85,7 @@ class RouteCubit extends Cubit<RouteState> {
           .map((coord) => LatLng(coord[1] as double, coord[0] as double))
           .toList();
 
+      if (isClosed) return;
       emit(DirectionRouteLoaded(routePoints));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -91,6 +93,7 @@ class RouteCubit extends Cubit<RouteState> {
           content: Text('Failed to fetch route data'),
         ),
       );
+      if (isClosed) return;
       emit(RouteError());
     }
   }
@@ -110,6 +113,7 @@ class RouteCubit extends Cubit<RouteState> {
       ),
       15,
     );
+    if (isClosed) return;
     emit(ClearRouteSuccess());
   }
 }
