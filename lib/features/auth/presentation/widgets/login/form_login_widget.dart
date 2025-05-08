@@ -100,7 +100,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () => context.pushNamed(Routes.forgetPasswordScreen),
+                onPressed: () => context.pushNamed(Routes.bioScreen),
                 child: AutoSizeText(
                   context.translate(LangKeys.forgotPassword),
                   maxLines: 1,

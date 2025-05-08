@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -17,6 +20,7 @@ import 'package:curai_app_mobile/features/auth/presentation/widgets/height_valid
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:toastification/toastification.dart';
 
 class BioFormWidget extends StatefulWidget {
@@ -39,6 +43,11 @@ class _BioFormWidgetState extends State<BioFormWidget> {
   final FocusNode _hospitalFocus = FocusNode();
 
   String? _selectedDegree;
+
+  // Files and images
+  final List<File> _selectedFiles = [];
+  final List<File> _selectedImages = [];
+  final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -144,13 +153,148 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     _isFormValidNotifier.value = isValid;
   }
 
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final image = await _imagePicker.pickImage(
+        source: source,
+        imageQuality: 80,
+      );
+
+      if (image != null) {
+        setState(() {
+          _selectedImages.add(File(image.path));
+        });
+
+        // إظهار رسالة نجاح إذا تم اختيار الصورة بنجاح
+        showMessage(
+          context,
+          type: ToastificationType.success,
+          message: context.isStateArabic
+              ? 'تم إضافة الصورة بنجاح'
+              : 'Image added successfully',
+        );
+      }
+    } catch (e) {
+      print(
+        'Image picking error: $e',
+      ); // إضافة سجل للخطأ للمساعدة في تصحيح الأخطاء
+      showMessage(
+        context,
+        type: ToastificationType.error,
+        message: context.isStateArabic
+            ? 'لم نتمكن من فتح الكاميرا أو معرض الصور، يرجى التأكد من منح التطبيق الأذونات اللازمة'
+            : 'Could not open camera or gallery, please check app permissions',
+      );
+    }
+  }
+
+  void _showImagePickerOptions() {
+    showModalBottomSheet<void>(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+      ),
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: Wrap(
+              children: <Widget>[
+                // عنوان للقائمة
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                  child: Text(
+                    context.isStateArabic
+                        ? 'اختر مصدر الصورة'
+                        : 'Choose image source',
+                    style: TextStyleApp.medium16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const Divider(),
+                ListTile(
+                  leading:
+                      Icon(Icons.photo_library, color: context.primaryColor),
+                  title: Text(
+                    context.isStateArabic ? 'معرض الصور' : 'Gallery',
+                    style: TextStyleApp.regular16(),
+                  ),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    // التحقق من أذونات الوصول إلى المعرض إذا كانت دالة PermissionHelper متاحة
+                    try {
+                      // يمكنك استبدال هذا بالكود الفعلي للتحقق من الأذونات
+                      // bool hasPermission = await PermissionHelper.checkGalleryPermission();
+                      // if (hasPermission) {
+                      //   _pickImage(ImageSource.gallery);
+                      // } else {
+                      //   showMessage(context, type: ToastificationType.warning,
+                      //     message: context.isStateArabic ? 'يرجى منح إذن الوصول للمعرض' : 'Please grant gallery access');
+                      // }
+
+                      // حاليًا نفترض أن الأذونات ممنوحة
+                      _pickImage(ImageSource.gallery);
+                    } catch (e) {
+                      print('Gallery permission error: $e');
+                      _pickImage(
+                        ImageSource.gallery,
+                      ); // محاولة الوصول على أي حال
+                    }
+                  },
+                ),
+                ListTile(
+                  leading:
+                      Icon(Icons.photo_camera, color: context.primaryColor),
+                  title: Text(
+                    context.isStateArabic ? 'الكاميرا' : 'Camera',
+                    style: TextStyleApp.regular16(),
+                  ),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    // التحقق من أذونات الوصول إلى الكاميرا إذا كانت دالة PermissionHelper متاحة
+                    try {
+                      // يمكنك استبدال هذا بالكود الفعلي للتحقق من الأذونات
+                      // bool hasPermission = await PermissionHelper.checkCameraPermission();
+                      // if (hasPermission) {
+                      //   _pickImage(ImageSource.camera);
+                      // } else {
+                      //   showMessage(context, type: ToastificationType.warning,
+                      //     message: context.isStateArabic ? 'يرجى منح إذن الوصول للكاميرا' : 'Please grant camera access');
+                      // }
+
+                      // حاليًا نفترض أن الأذونات ممنوحة
+                      _pickImage(ImageSource.camera);
+                    } catch (e) {
+                      print('Camera permission error: $e');
+                      _pickImage(
+                        ImageSource.camera,
+                      ); // محاولة الوصول على أي حال
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void onCompletePressed(BuildContext context) {
     hideKeyboard();
     updateBio();
 
     final profileRequest = ProfileRequest(
       bio: _bioController.text.trim(),
+      // Add any files or images to the request
+      // This depends on how your ProfileRequest is structured
+      // profileImages: _selectedImages,
+      // profileFiles: _selectedFiles,
     );
+
     context
         .read<AuthCubit>()
         .editProfile(context, profileRequest: profileRequest);
@@ -201,9 +345,212 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             onChanged: (_) => updateBio(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          20.hSpace,
+          // File and image upload section
+          _buildUploadSection(),
+          30.hSpace,
+
           _buildCompleteButton(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildUploadSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.isStateArabic ? 'المستندات والصور' : 'Documents & Images',
+          style: TextStyleApp.medium16().copyWith(
+            color: context.onPrimaryColor,
+          ),
+        ),
+        12.hSpace,
+        Row(
+          children: [
+            _buildUploadButton(
+              icon: Icons.image,
+              label: context.isStateArabic ? 'إضافة صورة' : 'Add Image',
+              onTap: _showImagePickerOptions,
+            ).expand(),
+            16.wSpace,
+            _buildUploadButton(
+              icon: Icons.upload_file,
+              label: context.isStateArabic ? 'إضافة ملف' : 'Add File',
+              onTap: () {},
+            ).expand(),
+          ],
+        ),
+        if (_selectedImages.isNotEmpty || _selectedFiles.isNotEmpty) ...[
+          16.hSpace,
+          _buildSelectedFilesList(),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildUploadButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8.r),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 12.h),
+        decoration: BoxDecoration(
+          border: Border.all(color: context.primaryColor.withAlpha(100)),
+          borderRadius: BorderRadius.circular(8.r),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: context.primaryColor,
+              size: 28.sp,
+            ),
+            8.hSpace,
+            Text(
+              label,
+              style: TextStyleApp.regular14().copyWith(
+                color: context.primaryColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSelectedFilesList() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Images section
+        if (_selectedImages.isNotEmpty) ...[
+          Text(
+            context.isStateArabic ? 'الصور المختارة' : 'Selected Images',
+            style: TextStyleApp.medium14().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ),
+          8.hSpace,
+          ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: _selectedImages.length,
+            separatorBuilder: (_, __) => 8.wSpace,
+            itemBuilder: (context, index) {
+              return _buildImageItem(_selectedImages[index], index);
+            },
+          ).withHeight(100),
+        ],
+
+        // Files section
+        if (_selectedFiles.isNotEmpty) ...[
+          16.hSpace,
+          Text(
+            context.isStateArabic ? 'الملفات المختارة' : 'Selected Files',
+            style: TextStyleApp.medium14().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ),
+          8.hSpace,
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _selectedFiles.length,
+            separatorBuilder: (_, __) => 8.hSpace,
+            itemBuilder: (context, index) {
+              return _buildFileItem(_selectedFiles[index], index);
+            },
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildImageItem(File image, int index) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: 100.w,
+          height: 100.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.r),
+            image: DecorationImage(
+              image: FileImage(image),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Positioned(
+          top: -8.h,
+          right: -8.w,
+          child: _buildRemoveButton(() {
+            setState(() {
+              _selectedImages.removeAt(index);
+            });
+          }),
+        ),
+      ],
+    ).paddingSymmetric(horizontal: 8, vertical: 8);
+  }
+
+  Widget _buildFileItem(File file, int index) {
+    final fileName = file.path.split('/').last;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: context.primaryColor.withAlpha(50)),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.insert_drive_file,
+            color: context.primaryColor,
+            size: 24.sp,
+          ),
+          12.wSpace,
+          Expanded(
+            child: Text(
+              fileName,
+              style: TextStyleApp.regular14().copyWith(
+                color: context.onPrimaryColor,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          10.wSpace,
+          _buildRemoveButton(() {
+            setState(() {
+              _selectedFiles.removeAt(index);
+            });
+          }),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRemoveButton(VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12.r),
+      child: Container(
+        padding: EdgeInsets.all(4.w),
+        decoration: const BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.close,
+          color: Colors.white,
+          size: 16.sp,
+        ),
       ),
     );
   }
@@ -312,7 +659,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     _experienceFocus.dispose();
     _universityFocus.dispose();
     _hospitalFocus.dispose();
-
+    _isFormValidNotifier.dispose();
     super.dispose();
   }
 }

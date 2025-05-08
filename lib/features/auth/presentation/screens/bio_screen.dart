@@ -37,7 +37,7 @@ class _BioScreenState extends State<BioScreen> {
                     title: LangKeys.bio,
                     descraption: LangKeys.completeProfileDescription,
                   ),
-                  40.hSpace,
+                  20.hSpace,
                   const BioFormWidget(),
                   35.hSpace,
                   const TermsOfServiceWidget(),
