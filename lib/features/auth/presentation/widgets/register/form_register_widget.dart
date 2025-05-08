@@ -27,6 +27,14 @@ class RegistrationFormWidget extends StatefulWidget {
 
 class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final _userNameFocus = FocusNode();
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+  final _emailFocus = FocusNode();
+  final _passwordFocus = FocusNode();
+  final _confirmPasswordFocus = FocusNode();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -55,9 +63,12 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           CustomTextFeild(
             labelText: context.translate(LangKeys.userName),
             keyboardType: TextInputType.name,
-            hint: context.isStateArabic ? 'مثال: @username' : 'e.g. @username',
             controller: _userNameController,
+            hint: context.isStateArabic ? 'مثال: @username' : 'e.g. @username',
             onChanged: (_) => _validateForm(),
+            focusNode: _userNameFocus,
+            nextFocusNode: _firstNameFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -65,6 +76,9 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             keyboardType: TextInputType.name,
             controller: _firstNameController,
             onChanged: (_) => _validateForm(),
+            focusNode: _firstNameFocus,
+            nextFocusNode: _lastNameFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -72,16 +86,22 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             keyboardType: TextInputType.name,
             controller: _lastNameController,
             onChanged: (_) => _validateForm(),
+            focusNode: _lastNameFocus,
+            nextFocusNode: _emailFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
             labelText: context.translate(LangKeys.email),
             keyboardType: TextInputType.emailAddress,
+            controller: _emailController,
             hint: context.isStateArabic
                 ? 'مثال: username.${DateTime.now().year}@example.com'
                 : 'e.g. username.${DateTime.now().year}@example.com',
-            controller: _emailController,
             onChanged: (_) => _validateForm(),
+            focusNode: _emailFocus,
+            nextFocusNode: _passwordFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -92,6 +112,9 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             hint:
                 context.isStateArabic ? 'مثال: XYZ@123xyz' : 'e.g. XYZ@123xyz',
             onChanged: (_) => _validateForm(),
+            focusNode: _passwordFocus,
+            nextFocusNode: _confirmPasswordFocus,
+            textInputAction: TextInputAction.next,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           CustomTextFeild(
@@ -100,6 +123,8 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             controller: _confirmPasswordController,
             obscureText: _isPasswordObscure,
             onChanged: (_) => _validateForm(),
+            focusNode: _confirmPasswordFocus,
+            textInputAction: TextInputAction.done,
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           5.hSpace,
