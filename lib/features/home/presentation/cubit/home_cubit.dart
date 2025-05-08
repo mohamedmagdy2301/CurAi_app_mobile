@@ -41,13 +41,8 @@ class HomeCubit extends Cubit<HomeState> {
         if (page == 1) {
           if (isClosed) return;
 
-          if (isClosed) return;
-          if (isClosed) return;
           emit(GetAllDoctorFailure(message: errMessage));
         } else {
-          if (isClosed) return;
-
-          if (isClosed) return;
           if (isClosed) return;
           emit(GetAllDoctorPagenationFailure(errMessage: errMessage));
         }
