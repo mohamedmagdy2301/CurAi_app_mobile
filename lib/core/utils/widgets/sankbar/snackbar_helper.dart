@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/animated_snackbar.dart';
 import 'package:flutter/material.dart';
@@ -115,26 +117,31 @@ void showMessage(
       style: TextStyleApp.medium16().copyWith(
         color: Colors.white,
       ),
-    ),
+    ).paddingBottom(12.h),
     showIcon: false,
     primaryColor: Colors.white,
     autoCloseDuration: const Duration(seconds: 5),
     progressBarTheme: ProgressIndicatorThemeData(
+      refreshBackgroundColor: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(12.r)),
+      circularTrackColor: Colors.red,
+      linearTrackColor: Colors.white,
       color: type == ToastificationType.success
-          ? Colors.green
+          ? Colors.green.shade300
           : type == ToastificationType.info
-              ? Colors.blueGrey
+              ? Colors.blueGrey.shade300
               : type == ToastificationType.warning
-                  ? Colors.orange
-                  : Colors.red,
+                  ? Colors.orange.shade300
+                  : Colors.red.shade300,
     ),
     showProgressBar: true,
     borderSide: BorderSide.none,
     closeButton: const ToastCloseButton(
       showType: CloseButtonShowType.none,
     ),
-    alignment: alignment ?? Alignment.bottomCenter,
-    borderRadius: BorderRadius.all(Radius.circular(10.r)),
+    alignment: alignment ??
+        (context.isStateArabic ? Alignment.topLeft : Alignment.topRight),
+    borderRadius: BorderRadius.all(Radius.circular(12.r)),
     backgroundColor: type == ToastificationType.success
         ? Colors.green
         : type == ToastificationType.info
