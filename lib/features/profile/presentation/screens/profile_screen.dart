@@ -98,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (getRole() != 'patient') _buildDivider(context),
             if (getRole() != 'patient')
               RowNavigateProfileWidget(
-                icon: CupertinoIcons.person_2_square_stack,
+                icon: CupertinoIcons.person_2_square_stack_fill,
                 title: LangKeys.bio,
                 onTap: () {
                   context.pushNamed(
@@ -134,12 +134,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: LangKeys.paymentMethod,
                 onTap: () {},
               ),
-            _buildDivider(context),
-            RowNavigateProfileWidget(
-              icon: CupertinoIcons.heart,
-              title: LangKeys.favorite,
-              onTap: () {},
-            ),
+            if (getRole() == 'patient') _buildDivider(context),
+            if (getRole() == 'patient')
+              RowNavigateProfileWidget(
+                icon: CupertinoIcons.heart,
+                title: LangKeys.favorite,
+                onTap: () {},
+              ),
             _buildDivider(context),
             RowNavigateProfileWidget(
               icon: CupertinoIcons.settings,

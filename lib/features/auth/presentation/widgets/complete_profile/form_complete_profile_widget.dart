@@ -265,7 +265,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(
               color: _genderErrorText != null
-                  ? Colors.redAccent
+                  ? Colors.redAccent.withAlpha(140)
                   : context.onPrimaryColor.withAlpha(60),
             ),
           ),
@@ -324,7 +324,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             child: Text(
               _genderErrorText!,
               style: TextStyleApp.regular12().copyWith(
-                color: Colors.redAccent,
+                color: Colors.redAccent.withAlpha(200),
               ),
             ),
           ),
@@ -344,7 +344,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(
               color: _specializationErrorText != null
-                  ? Colors.redAccent
+                  ? Colors.redAccent.withAlpha(140)
                   : context.onPrimaryColor.withAlpha(60),
             ),
           ),
@@ -405,7 +405,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             child: Text(
               _specializationErrorText!,
               style: TextStyleApp.regular12().copyWith(
-                color: Colors.redAccent,
+                color: Colors.redAccent.withAlpha(200),
               ),
             ),
           ),

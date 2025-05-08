@@ -636,7 +636,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(
               color: _degreeErrorText != null
-                  ? Colors.redAccent
+                  ? Colors.redAccent.withAlpha(140)
                   : context.onPrimaryColor.withAlpha(60),
             ),
           ),
@@ -690,7 +690,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             child: Text(
               _degreeErrorText!,
               style: TextStyleApp.regular12().copyWith(
-                color: Colors.redAccent,
+                color: Colors.redAccent.withAlpha(200),
               ),
             ),
           ),
