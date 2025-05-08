@@ -33,6 +33,8 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
 
   void _validateForm() {
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -78,6 +80,9 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               ],
               keyboardType: TextInputType.emailAddress,
               controller: _emailController,
+              focusNode: _emailFocusNode,
+              nextFocusNode: _passwordFocusNode,
+              textInputAction: TextInputAction.next,
               onChanged: (_) => _validateForm(),
             ),
             HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
@@ -86,6 +91,8 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
               autofillHints: const [AutofillHints.password],
               keyboardType: TextInputType.visiblePassword,
               controller: _passwordController,
+              focusNode: _passwordFocusNode,
+              textInputAction: TextInputAction.done,
               obscureText: true,
               onChanged: (_) => _validateForm(),
             ),

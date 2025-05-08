@@ -23,6 +23,9 @@ class CustomTextFeild extends StatefulWidget {
     this.hint,
     this.maxLenght,
     this.prefixIcon,
+    this.focusNode,
+    this.textInputAction,
+    this.nextFocusNode,
   });
   final String labelText;
   final String? hint;
@@ -37,6 +40,9 @@ class CustomTextFeild extends StatefulWidget {
   final Widget? prefixIcon;
   final int? maxLines;
   final int? maxLenght;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+  final FocusNode? nextFocusNode;
 
   @override
   State<CustomTextFeild> createState() => _CustomTextFeildState();
@@ -57,6 +63,8 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       keyboardType: widget.keyboardType ?? TextInputType.text,
       controller: widget.controller,
       autofillHints: widget.autofillHints,
+      focusNode: widget.focusNode,
+      textInputAction: widget.textInputAction ?? TextInputAction.done,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       cursorColor: context.primaryColor,
       style: TextStyleApp.regular16().copyWith(
@@ -95,7 +103,12 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         hintText: widget.hint ?? widget.labelText,
       ),
       onFieldSubmitted: (value) {
-        FocusScope.of(context).unfocus();
+        if (widget.textInputAction == TextInputAction.next &&
+            widget.nextFocusNode != null) {
+          FocusScope.of(context).requestFocus(widget.nextFocusNode);
+        } else {
+          FocusScope.of(context).unfocus();
+        }
       },
     );
   }
