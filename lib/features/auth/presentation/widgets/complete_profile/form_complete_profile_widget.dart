@@ -35,16 +35,19 @@ class CompleteProfileFormWidget extends StatefulWidget {
 }
 
 class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
+  final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _consultationPriceController =
       TextEditingController();
-
   final TextEditingController _bioController = TextEditingController();
-
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _yourAgeController = TextEditingController();
 
-  final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(true);
+  final FocusNode _phoneFocus = FocusNode();
+  final FocusNode _ageFocus = FocusNode();
+  final FocusNode _priceFocus = FocusNode();
+  final FocusNode _bioFocus = FocusNode();
+
   int? selectedSpecialization;
   String? selectedGender;
 
@@ -187,6 +190,9 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.phone),
             keyboardType: TextInputType.phone,
             controller: _phoneController,
+            focusNode: _phoneFocus,
+            textInputAction: TextInputAction.next,
+            nextFocusNode: _ageFocus,
             maxLenght: 11,
             hint: context.isStateArabic
                 ? 'مثال: 01012345678'
@@ -198,6 +204,9 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.yourAge),
             keyboardType: TextInputType.number,
             controller: _yourAgeController,
+            textInputAction: TextInputAction.next,
+            focusNode: _ageFocus,
+            nextFocusNode: _priceFocus,
             hint: context.isStateArabic ? 'مثال: 37' : 'e.g. 37',
             onChanged: (_) => _validateForm(),
             suffixIcon: InkWell(
@@ -210,6 +219,9 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             labelText: context.translate(LangKeys.consultationPrice),
             keyboardType: TextInputType.number,
             controller: _consultationPriceController,
+            textInputAction: TextInputAction.next,
+            focusNode: _priceFocus,
+            nextFocusNode: _bioFocus,
             hint: context.isStateArabic ? 'مثال: 200' : 'e.g. 200',
             onChanged: (_) => _validateForm(),
             suffixIcon: Column(
@@ -232,6 +244,8 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
           CustomTextFeild(
             labelText: context.translate(LangKeys.bio),
             keyboardType: TextInputType.text,
+            focusNode: _bioFocus,
+            textInputAction: TextInputAction.done,
             hint: context.isStateArabic
                 ? 'مثال: أخصائي أمراض القلب مع 10 سنوات من الخبرة في'
                     'مستشفى السلام ، متخصص في ارتفاع ضغط الدم وأمراض القلب.'
