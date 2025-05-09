@@ -28,30 +28,6 @@ class MainScaffoldUser extends StatelessWidget {
       NavigationDestination(
         icon: customIconNavBar(
           context,
-          icon: CupertinoIcons.house_alt,
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.house_alt_fill,
-        ),
-        label: 'Home',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          icon: CupertinoIcons.house_alt,
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.house_alt_fill,
-        ),
-        label: 'Home',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
           icon: CupertinoIcons.chat_bubble,
         ),
         selectedIcon: customIconNavBar(
@@ -71,7 +47,35 @@ class MainScaffoldUser extends StatelessWidget {
           isActive: true,
           image: 'assets/svg/layout/calendar2.svg',
         ),
-        label: 'Notification',
+        label: 'Appointment',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          isIcon: false,
+          image: 'assets/svg/layout/home.svg',
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          isIcon: false,
+          image: 'assets/svg/layout/home2.svg',
+        ),
+        label: 'Home',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          isIcon: false,
+          image: 'assets/launcher/emergency.png',
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          isIcon: false,
+          image: 'assets/launcher/emergency_fill.png',
+        ),
+        label: 'Emergency',
       ),
       NavigationDestination(
         icon: customIconNavBar(
@@ -83,19 +87,19 @@ class MainScaffoldUser extends StatelessWidget {
           isActive: true,
           icon: CupertinoIcons.person_alt,
         ),
-        label: 'Chat',
+        label: 'Profile',
       ),
     ];
 
     final screens = [
+      const ChatbotScreen(),
+      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
+      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
       BlocProvider<HomeCubit>(
         create: (context) => di.sl<HomeCubit>(),
         child: const HomeScreen(),
       ),
       const EmergencyScreen(),
-      const ChatbotScreen(),
-      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
-      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
       const ProfileScreen(),
     ];
 
@@ -109,13 +113,13 @@ class MainScaffoldUser extends StatelessWidget {
               if (!didPop) {
                 final shouldExit = await _showExitDialog(context);
                 if (shouldExit) {
-                  Navigator.of(context).maybePop();
+                  await Navigator.of(context).maybePop();
                 }
               }
             },
             child: Scaffold(
               backgroundColor: context.backgroundColor,
-              bottomNavigationBar: currentIndex == 2
+              bottomNavigationBar: currentIndex == 0
                   ? null
                   : NavigationBar(
                       labelBehavior:
@@ -170,29 +174,29 @@ class MainScaffoldUser extends StatelessWidget {
           Icon(
             icon,
             color: !isActive ? context.onSecondaryColor : context.primaryColor,
-            size: 28.sp,
+            size: !isActive ? 28.sp : 35.sp,
           )
         else if (image != null)
-          SvgPicture.asset(
-            image,
-            colorFilter: ColorFilter.mode(
-              !isActive ? context.onSecondaryColor : context.primaryColor,
-              BlendMode.srcIn,
-            ),
-            width: 28.sp,
-            height: 28.sp,
-          )
+          if (image.contains('svg'))
+            SvgPicture.asset(
+              image,
+              colorFilter: ColorFilter.mode(
+                !isActive ? context.onSecondaryColor : context.primaryColor,
+                BlendMode.srcIn,
+              ),
+              width: !isActive ? 28.sp : 35.sp,
+              height: !isActive ? 28.sp : 35.sp,
+            )
+          else
+            Image.asset(
+              image,
+              color:
+                  !isActive ? context.onSecondaryColor : context.primaryColor,
+              width: !isActive ? 28.sp : 35.sp,
+              height: !isActive ? 28.sp : 35.sp,
+            )
         else
-          const SizedBox(),
-        if (isActive == true) ...[
-          Divider(
-            height: 20.sp,
-            thickness: 3,
-            color: context.primaryColor,
-            indent: 30.w,
-            endIndent: 30.w,
-          ),
-        ],
+          0.hSpace,
       ],
     );
   }
