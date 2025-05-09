@@ -202,5 +202,6 @@
   "clinic_address": "Clinic Address" ,
   "complete"  : "Complete",
   "finish" : "Finish"
- 
+ ,
+ "emergency_department"  : "Emergency Department"
 }
