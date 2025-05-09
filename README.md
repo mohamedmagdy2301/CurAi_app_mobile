@@ -58,7 +58,8 @@
 - **User Profile (Editable)**
 - **Appointment Booking UI & Integration For Patient**
 - **Appointment For Doctor**
-- 
+- **Emergency Department**
+  
 ### 🕓 In Progress
 
 - **Payment UI & API Integration**
