@@ -1,6 +1,5 @@
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
@@ -8,6 +7,7 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
+import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
@@ -23,68 +23,6 @@ class MainScaffoldUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final destinations = [
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          icon: CupertinoIcons.house_alt,
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.house_alt_fill,
-        ),
-        label: 'Home',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          icon: CupertinoIcons.chat_bubble,
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.chat_bubble_fill,
-        ),
-        label: 'Chat',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          image: 'assets/svg/layout/calendar.svg',
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          image: 'assets/svg/layout/calendar2.svg',
-        ),
-        label: 'Notification',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          icon: CupertinoIcons.person,
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.person_alt,
-        ),
-        label: 'Chat',
-      ),
-    ];
-
-    final screens = [
-      BlocProvider<HomeCubit>(
-        create: (context) => di.sl<HomeCubit>(),
-        child: const HomeScreen(),
-      ),
-      const ChatbotScreen(),
-      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
-      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
-      const ProfileScreen(),
-    ];
-
     return BlocProvider<NavigationCubit>(
       create: (context) => NavigationCubit(),
       child: BlocBuilder<NavigationCubit, int>(
@@ -95,13 +33,13 @@ class MainScaffoldUser extends StatelessWidget {
               if (!didPop) {
                 final shouldExit = await _showExitDialog(context);
                 if (shouldExit) {
-                  Navigator.of(context).maybePop();
+                  await Navigator.of(context).maybePop();
                 }
               }
             },
             child: Scaffold(
               backgroundColor: context.backgroundColor,
-              bottomNavigationBar: currentIndex == 1
+              bottomNavigationBar: currentIndex == 0
                   ? null
                   : NavigationBar(
                       labelBehavior:
@@ -115,18 +53,95 @@ class MainScaffoldUser extends StatelessWidget {
                       ),
                       indicatorShape: Border.all(style: BorderStyle.none),
                       elevation: 0,
-                      destinations: destinations,
+                      destinations: _buildDestinations(context),
                       selectedIndex: currentIndex,
                       onDestinationSelected: (index) {
                         context.read<NavigationCubit>().updateIndex(index);
                       },
                     ),
-              body: screens[currentIndex],
+              body: _buildScreens(context)[currentIndex],
             ),
           );
         },
       ),
     );
+  }
+
+  /// Navigation destinations for the bottom bar
+  List<NavigationDestination> _buildDestinations(BuildContext context) {
+    return [
+      NavigationDestination(
+        icon: customIconNavBar(context, icon: CupertinoIcons.chat_bubble),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.chat_bubble_fill,
+        ),
+        label: 'Chat',
+      ),
+      NavigationDestination(
+        icon:
+            customIconNavBar(context, image: 'assets/svg/layout/calendar.svg'),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          image: 'assets/svg/layout/calendar2.svg',
+        ),
+        label: 'Appointment',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          isIcon: false,
+          image: 'assets/svg/layout/home.svg',
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          isIcon: false,
+          image: 'assets/svg/layout/home2.svg',
+        ),
+        label: 'Home',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          isIcon: false,
+          image: 'assets/launcher/emergency.png',
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          isIcon: false,
+          image: 'assets/launcher/emergency_fill.png',
+        ),
+        label: 'Emergency',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(context, icon: CupertinoIcons.person),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.person_alt,
+        ),
+        label: 'Profile',
+      ),
+    ];
+  }
+
+  /// Screens corresponding to each bottom nav destination
+  List<Widget> _buildScreens(BuildContext context) {
+    return [
+      const ChatbotScreen(),
+      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
+      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
+      BlocProvider<HomeCubit>(
+        create: (context) => di.sl<HomeCubit>(),
+        child: const HomeScreen(),
+      ),
+      const EmergencyScreen(),
+      const ProfileScreen(),
+    ];
   }
 
   Future<bool> _showExitDialog(BuildContext context) async {
@@ -151,34 +166,35 @@ class MainScaffoldUser extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (isActive) 10.hSpace else 0.hSpace,
-        if (isIcon == true && icon != null)
+        SizedBox(height: isActive ? 0 : 5.h),
+        if (isIcon && icon != null)
           Icon(
             icon,
             color: !isActive ? context.onSecondaryColor : context.primaryColor,
-            size: 28.sp,
+            size: !isActive ? 28.sp : 35.sp,
           )
         else if (image != null)
-          SvgPicture.asset(
-            image,
-            colorFilter: ColorFilter.mode(
-              !isActive ? context.onSecondaryColor : context.primaryColor,
-              BlendMode.srcIn,
-            ),
-            width: 28.sp,
-            height: 28.sp,
-          )
+          image.contains('svg')
+              ? SvgPicture.asset(
+                  image,
+                  colorFilter: ColorFilter.mode(
+                    !isActive ? context.onSecondaryColor : context.primaryColor,
+                    BlendMode.srcIn,
+                  ),
+                  width: !isActive ? 28.sp : 35.sp,
+                  height: !isActive ? 28.sp : 35.sp,
+                )
+              : Image.asset(
+                  image,
+                  color: !isActive
+                      ? context.onSecondaryColor
+                      : context.primaryColor,
+                  width: !isActive ? 28.sp : 35.sp,
+                  height: !isActive ? 28.sp : 35.sp,
+                )
         else
           const SizedBox(),
-        if (isActive == true) ...[
-          Divider(
-            height: 20.sp,
-            thickness: 3,
-            color: context.primaryColor,
-            indent: 30.w,
-            endIndent: 30.w,
-          ),
-        ],
+        SizedBox(height: isActive ? 5.h : 0),
       ],
     );
   }
