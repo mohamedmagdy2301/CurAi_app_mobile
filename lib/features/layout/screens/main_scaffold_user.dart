@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
+import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
@@ -24,6 +25,18 @@ class MainScaffoldUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final destinations = [
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          icon: CupertinoIcons.house_alt,
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.house_alt_fill,
+        ),
+        label: 'Home',
+      ),
       NavigationDestination(
         icon: customIconNavBar(
           context,
@@ -79,6 +92,7 @@ class MainScaffoldUser extends StatelessWidget {
         create: (context) => di.sl<HomeCubit>(),
         child: const HomeScreen(),
       ),
+      const EmergencyScreen(),
       const ChatbotScreen(),
       if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
       if (getRole() == 'patient') const MyAppointmentPatientScreen(),
@@ -101,7 +115,7 @@ class MainScaffoldUser extends StatelessWidget {
             },
             child: Scaffold(
               backgroundColor: context.backgroundColor,
-              bottomNavigationBar: currentIndex == 1
+              bottomNavigationBar: currentIndex == 2
                   ? null
                   : NavigationBar(
                       labelBehavior:

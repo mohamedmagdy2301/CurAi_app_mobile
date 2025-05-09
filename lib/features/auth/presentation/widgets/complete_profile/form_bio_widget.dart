@@ -209,7 +209,9 @@ class _BioFormWidgetState extends State<BioFormWidget> {
                       Icon(Icons.photo_library, color: context.primaryColor),
                   title: Text(
                     context.isStateArabic ? 'معرض الصور' : 'Gallery',
-                    style: TextStyleApp.regular16(),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
                   ),
                   onTap: () async {
                     Navigator.pop(context);

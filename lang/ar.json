@@ -202,6 +202,7 @@
    "clinic_address_description": "يرجى ادخال عنوان عيادتك بشكل دقيق للمساعدة في الوصول إليك بسهولة للمرضى.",
    "clinic_address": "عنوان العيادة",
    "complete"  : "مكتمل",
-   "finish" : "انهاء"
+   "finish" : "انهاء",
+   "emergency_department" : "قسم الطوارئ"
  
   }
