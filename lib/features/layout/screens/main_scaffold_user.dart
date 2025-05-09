@@ -1,6 +1,5 @@
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
@@ -24,12 +23,55 @@ class MainScaffoldUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final destinations = [
+    return BlocProvider<NavigationCubit>(
+      create: (context) => NavigationCubit(),
+      child: BlocBuilder<NavigationCubit, int>(
+        builder: (context, currentIndex) {
+          return PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, result) async {
+              if (!didPop) {
+                final shouldExit = await _showExitDialog(context);
+                if (shouldExit) {
+                  await Navigator.of(context).maybePop();
+                }
+              }
+            },
+            child: Scaffold(
+              backgroundColor: context.backgroundColor,
+              bottomNavigationBar: currentIndex == 0
+                  ? null
+                  : NavigationBar(
+                      labelBehavior:
+                          NavigationDestinationLabelBehavior.alwaysHide,
+                      animationDuration: const Duration(seconds: 1),
+                      height: 60.sp,
+                      indicatorColor: Colors.transparent,
+                      backgroundColor: context.backgroundColor,
+                      overlayColor: WidgetStateProperty.all(
+                        context.primaryColor.withAlpha(20),
+                      ),
+                      indicatorShape: Border.all(style: BorderStyle.none),
+                      elevation: 0,
+                      destinations: _buildDestinations(context),
+                      selectedIndex: currentIndex,
+                      onDestinationSelected: (index) {
+                        context.read<NavigationCubit>().updateIndex(index);
+                      },
+                    ),
+              body: _buildScreens(context)[currentIndex],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  /// Navigation destinations for the bottom bar
+  List<NavigationDestination> _buildDestinations(BuildContext context) {
+    return [
       NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          icon: CupertinoIcons.chat_bubble,
-        ),
+        icon: customIconNavBar(context, icon: CupertinoIcons.chat_bubble),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
@@ -38,10 +80,8 @@ class MainScaffoldUser extends StatelessWidget {
         label: 'Chat',
       ),
       NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          image: 'assets/svg/layout/calendar.svg',
-        ),
+        icon:
+            customIconNavBar(context, image: 'assets/svg/layout/calendar.svg'),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
@@ -78,10 +118,7 @@ class MainScaffoldUser extends StatelessWidget {
         label: 'Emergency',
       ),
       NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          icon: CupertinoIcons.person,
-        ),
+        icon: customIconNavBar(context, icon: CupertinoIcons.person),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
@@ -90,8 +127,11 @@ class MainScaffoldUser extends StatelessWidget {
         label: 'Profile',
       ),
     ];
+  }
 
-    final screens = [
+  /// Screens corresponding to each bottom nav destination
+  List<Widget> _buildScreens(BuildContext context) {
+    return [
       const ChatbotScreen(),
       if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
       if (getRole() == 'patient') const MyAppointmentPatientScreen(),
@@ -102,49 +142,6 @@ class MainScaffoldUser extends StatelessWidget {
       const EmergencyScreen(),
       const ProfileScreen(),
     ];
-
-    return BlocProvider<NavigationCubit>(
-      create: (context) => NavigationCubit(),
-      child: BlocBuilder<NavigationCubit, int>(
-        builder: (context, currentIndex) {
-          return PopScope(
-            canPop: false,
-            onPopInvokedWithResult: (didPop, result) async {
-              if (!didPop) {
-                final shouldExit = await _showExitDialog(context);
-                if (shouldExit) {
-                  await Navigator.of(context).maybePop();
-                }
-              }
-            },
-            child: Scaffold(
-              backgroundColor: context.backgroundColor,
-              bottomNavigationBar: currentIndex == 0
-                  ? null
-                  : NavigationBar(
-                      labelBehavior:
-                          NavigationDestinationLabelBehavior.alwaysHide,
-                      animationDuration: const Duration(seconds: 1),
-                      height: 60.sp,
-                      indicatorColor: Colors.transparent,
-                      backgroundColor: context.backgroundColor,
-                      overlayColor: WidgetStateProperty.all(
-                        context.primaryColor.withAlpha(20),
-                      ),
-                      indicatorShape: Border.all(style: BorderStyle.none),
-                      elevation: 0,
-                      destinations: destinations,
-                      selectedIndex: currentIndex,
-                      onDestinationSelected: (index) {
-                        context.read<NavigationCubit>().updateIndex(index);
-                      },
-                    ),
-              body: screens[currentIndex],
-            ),
-          );
-        },
-      ),
-    );
   }
 
   Future<bool> _showExitDialog(BuildContext context) async {
@@ -169,34 +166,35 @@ class MainScaffoldUser extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (isActive) 10.hSpace else 0.hSpace,
-        if (isIcon == true && icon != null)
+        SizedBox(height: isActive ? 0 : 5.h),
+        if (isIcon && icon != null)
           Icon(
             icon,
             color: !isActive ? context.onSecondaryColor : context.primaryColor,
             size: !isActive ? 28.sp : 35.sp,
           )
         else if (image != null)
-          if (image.contains('svg'))
-            SvgPicture.asset(
-              image,
-              colorFilter: ColorFilter.mode(
-                !isActive ? context.onSecondaryColor : context.primaryColor,
-                BlendMode.srcIn,
-              ),
-              width: !isActive ? 28.sp : 35.sp,
-              height: !isActive ? 28.sp : 35.sp,
-            )
-          else
-            Image.asset(
-              image,
-              color:
-                  !isActive ? context.onSecondaryColor : context.primaryColor,
-              width: !isActive ? 28.sp : 35.sp,
-              height: !isActive ? 28.sp : 35.sp,
-            )
+          image.contains('svg')
+              ? SvgPicture.asset(
+                  image,
+                  colorFilter: ColorFilter.mode(
+                    !isActive ? context.onSecondaryColor : context.primaryColor,
+                    BlendMode.srcIn,
+                  ),
+                  width: !isActive ? 28.sp : 35.sp,
+                  height: !isActive ? 28.sp : 35.sp,
+                )
+              : Image.asset(
+                  image,
+                  color: !isActive
+                      ? context.onSecondaryColor
+                      : context.primaryColor,
+                  width: !isActive ? 28.sp : 35.sp,
+                  height: !isActive ? 28.sp : 35.sp,
+                )
         else
-          0.hSpace,
+          const SizedBox(),
+        SizedBox(height: isActive ? 5.h : 0),
       ],
     );
   }
