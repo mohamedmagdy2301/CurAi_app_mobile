@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
+import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
@@ -114,6 +115,22 @@ class MainScaffoldUser extends StatelessWidget {
           isActive: true,
           icon: CupertinoIcons.search,
         ),
+        label: 'Search',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          isIcon: false,
+          size: 25.sp,
+          image: 'assets/launcher/emergency.png',
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          isIcon: false,
+          sizeActive: 32.sp,
+          image: 'assets/launcher/emergency_fill.png',
+        ),
         label: 'Emergency',
       ),
       NavigationDestination(
@@ -137,14 +154,12 @@ class MainScaffoldUser extends StatelessWidget {
       ),
       if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
       if (getRole() == 'patient') const MyAppointmentPatientScreen(),
-
       const ChatbotScreen(),
-
       BlocProvider<HomeCubit>(
         create: (context) => di.sl<HomeCubit>(),
         child: const AllDoctorScreen(),
       ),
-      // const EmergencyScreen(),
+      const EmergencyScreen(),
       const ProfileScreen(),
     ];
   }
@@ -163,6 +178,8 @@ class MainScaffoldUser extends StatelessWidget {
 
   Column customIconNavBar(
     BuildContext context, {
+    double? size,
+    double? sizeActive,
     bool isIcon = true,
     bool isActive = false,
     IconData? icon,
@@ -171,12 +188,12 @@ class MainScaffoldUser extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: isActive ? 0 : 5.h),
+        SizedBox(height: 5.h),
         if (isIcon && icon != null)
           Icon(
             icon,
             color: !isActive ? context.onSecondaryColor : context.primaryColor,
-            size: !isActive ? 28.sp : 35.sp,
+            size: !isActive ? size ?? 28.sp : sizeActive ?? 35.sp,
           )
         else if (image != null)
           image.contains('svg')
@@ -186,16 +203,16 @@ class MainScaffoldUser extends StatelessWidget {
                     !isActive ? context.onSecondaryColor : context.primaryColor,
                     BlendMode.srcIn,
                   ),
-                  width: !isActive ? 28.sp : 35.sp,
-                  height: !isActive ? 28.sp : 35.sp,
+                  width: !isActive ? size ?? 28.sp : sizeActive ?? 35.sp,
+                  height: !isActive ? size ?? 28.sp : sizeActive ?? 35.sp,
                 )
               : Image.asset(
                   image,
                   color: !isActive
                       ? context.onSecondaryColor
                       : context.primaryColor,
-                  width: !isActive ? 28.sp : 35.sp,
-                  height: !isActive ? 28.sp : 35.sp,
+                  width: !isActive ? size ?? 28.sp : sizeActive ?? 35.sp,
+                  height: !isActive ? size ?? 28.sp : sizeActive ?? 35.sp,
                 )
         else
           const SizedBox(),

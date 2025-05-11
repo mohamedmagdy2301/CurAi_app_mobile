@@ -158,7 +158,7 @@ class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
       icon: const Icon(Icons.arrow_back_ios_new),
       onPressed: () {
         hideKeyboard();
-        context.read<NavigationCubit>().updateIndex(2);
+        context.read<NavigationCubit>().updateIndex(0);
       },
     );
   }
