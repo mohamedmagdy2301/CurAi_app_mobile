@@ -69,6 +69,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   void _resetSearch() {
     hideKeyboard();
     searchController.clear();
+    setState(() {});
     context.read<HomeCubit>().resetSearch();
   }
 
@@ -89,6 +90,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    debugPrint('Bottom Inset inside AllDoctorScreen: $bottomInset');
+
     return SmartRefresher(
       controller: _refreshController,
       header: const CustomRefreahHeader(),
@@ -104,8 +108,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               controller: searchController,
               onChanged: (value) {
                 // Update UI to show/hide clear button
-                setState(() {});
-                context.read<HomeCubit>().searchDoctors(value);
+                setState(() {
+                  context.read<HomeCubit>().searchDoctors(value);
+                });
               },
               suffixIcon: searchController.text.isNotEmpty
                   ? IconButton(

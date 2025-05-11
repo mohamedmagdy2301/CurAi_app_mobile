@@ -39,27 +39,38 @@ class MainScaffoldUser extends StatelessWidget {
             },
             child: Scaffold(
               backgroundColor: context.backgroundColor,
-              bottomNavigationBar: currentIndex == 2
-                  ? null
-                  : NavigationBar(
-                      labelBehavior:
-                          NavigationDestinationLabelBehavior.alwaysHide,
-                      animationDuration: const Duration(seconds: 1),
-                      height: context.H * 0.09,
-                      indicatorColor: Colors.transparent,
-                      backgroundColor: context.primaryColor.withAlpha(10),
-                      overlayColor: WidgetStateProperty.all(
-                        context.primaryColor.withAlpha(20),
-                      ),
-                      indicatorShape: Border.all(style: BorderStyle.none),
-                      elevation: 0,
-                      destinations: _buildDestinations(context),
-                      selectedIndex: currentIndex,
-                      onDestinationSelected: (index) {
-                        context.read<NavigationCubit>().updateIndex(index);
-                      },
-                    ),
-              body: _buildScreens(context)[currentIndex],
+              resizeToAvoidBottomInset: true,
+              bottomNavigationBar: Builder(
+                builder: (context) {
+                  final isKeyboardVisible =
+                      MediaQuery.of(context).viewInsets.bottom > 0;
+                  debugPrint('Keyboard visible: $isKeyboardVisible');
+                  return isKeyboardVisible || currentIndex == 2
+                      ? const SizedBox.shrink()
+                      : NavigationBar(
+                          labelBehavior:
+                              NavigationDestinationLabelBehavior.alwaysHide,
+                          animationDuration: const Duration(seconds: 1),
+                          height: context.H * 0.09,
+                          indicatorColor: Colors.transparent,
+                          backgroundColor: context.primaryColor.withAlpha(10),
+                          overlayColor: WidgetStateProperty.all(
+                            context.primaryColor.withAlpha(20),
+                          ),
+                          indicatorShape: Border.all(style: BorderStyle.none),
+                          elevation: 0,
+                          destinations: _buildDestinations(context),
+                          selectedIndex: currentIndex,
+                          onDestinationSelected: (index) {
+                            context.read<NavigationCubit>().updateIndex(index);
+                          },
+                        );
+                },
+              ),
+              body: IndexedStack(
+                index: currentIndex,
+                children: _buildScreens(context),
+              ),
             ),
           );
         },
