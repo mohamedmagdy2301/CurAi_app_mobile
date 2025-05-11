@@ -67,7 +67,7 @@ class BannerHomeWidget extends StatelessWidget {
                   ),
                   Container(
                     height: context.H * 0.05,
-                    width: context.W * 0.3,
+                    padding: context.padding(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50.r),
                       color: context.backgroundColor,

@@ -20,6 +20,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen
 import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcation_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
+import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
@@ -84,6 +85,8 @@ class AppRoutes {
         );
       case Routes.settingsScreen:
         return BaseRoute(page: const SettingsScreen());
+      case Routes.emergencyDepartment:
+        return BaseRoute(page: const EmergencyScreen());
       case Routes.privacyPolicyScreen:
         return BaseRoute(page: const PrivacyPolicyScreen());
       case Routes.helpCenterScreen:
