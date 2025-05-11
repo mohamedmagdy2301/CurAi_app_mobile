@@ -121,10 +121,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }) async {
     final data = <String, dynamic>{};
 
-    if (request.imageFile != null) {
-      final photoName = request.imageFile!.path.split('/').last;
+    if (request.profileImage != null) {
+      final photoName = request.profileImage!.path.split('/').last;
       data['profile_picture'] = await MultipartFile.fromFile(
-        request.imageFile!.path,
+        request.profileImage!.path,
+        filename: photoName,
+      );
+    }
+    if (request.profileCertificate != null) {
+      final photoName = request.profileCertificate!.path.split('/').last;
+      data['profile_certificate'] = await MultipartFile.fromFile(
+        request.profileCertificate!.path,
         filename: photoName,
       );
     }
@@ -147,9 +154,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (request.longitude != null) data['longitude'] = request.longitude;
     if (request.role != null) data['role'] = request.role;
     if (request.isApproved != null) data['is_approved'] = request.isApproved;
-    if (request.profileCertificate != null) {
-      data['profile_certificate'] = request.profileCertificate;
-    }
 
     final response = await dioConsumer.patch(
       EndPoints.getProfile,

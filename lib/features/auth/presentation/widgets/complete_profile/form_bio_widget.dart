@@ -217,7 +217,9 @@ class _BioFormWidgetState extends State<BioFormWidget> {
                       Icon(Icons.photo_camera, color: context.primaryColor),
                   title: Text(
                     context.isStateArabic ? 'الكاميرا' : 'Camera',
-                    style: TextStyleApp.regular16(),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
                   ),
                   onTap: () async {
                     Navigator.pop(context);
@@ -329,15 +331,15 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             onChanged: (_) => updateBio(),
           ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          CustomTextFeild(
-            labelText: context.isStateArabic ? 'الشهادات' : 'Certifications',
-            keyboardType: TextInputType.text,
-            controller: _certificationsController,
-            focusNode: _certificationsFocus,
-            isValidator: false,
-            textInputAction: TextInputAction.done,
-            onChanged: (_) => updateBio(),
-          ),
+          // CustomTextFeild(
+          //   labelText: context.isStateArabic ? 'الشهادات' : 'Certifications',
+          //   keyboardType: TextInputType.text,
+          //   controller: _certificationsController,
+          //   focusNode: _certificationsFocus,
+          //   isValidator: false,
+          //   textInputAction: TextInputAction.done,
+          //   onChanged: (_) => updateBio(),
+          // ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
           if (widget.isEdit) const SizedBox() else buildUploadSection(),
           30.hSpace,
@@ -373,8 +375,8 @@ class _BioFormWidgetState extends State<BioFormWidget> {
                 showMessage(
                   context,
                   message: context.isStateArabic
-                      ? 'هذه الخاصية غير متوفرة حاليا'
-                      : 'This feature is not available right now',
+                      ? 'قريبا\nهذه الميزة غير متوفرة حاليا'
+                      : 'Soon!\nThis feature is not available right now',
                   type: ToastificationType.info,
                 );
               },

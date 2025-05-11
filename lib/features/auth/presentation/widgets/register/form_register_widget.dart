@@ -216,11 +216,6 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           checkmarkColor: Colors.white,
           label: Row(
             children: [
-              // if (isSelected) 0.wSpace else 10.wSpace,
-              // Icon(
-              //   isSelected ? Icons.person_2_outlined : Icons.person,
-              //   color: isSelected ? Colors.white : context.primaryColor,
-              // ),
               if (isSelected) 15.wSpace else 30.wSpace,
               Text(
                 type == 'patient'
@@ -237,7 +232,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           selectedColor: context.primaryColor,
           backgroundColor: context.backgroundColor,
           elevation: 2,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
           labelStyle: TextStyleApp.medium20().copyWith(
             color: isSelected ? Colors.white : context.primaryColor,
           ),

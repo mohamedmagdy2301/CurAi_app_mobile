@@ -152,7 +152,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
         phoneNumber: _phoneController.text.trim(),
         age: _yourAgeController.text.trim(),
         gender: selectedGender,
-        imageFile: imageFile,
+        profileImage: imageFile,
         isApproved: true,
       );
       context
