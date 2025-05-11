@@ -341,7 +341,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
           //   onChanged: (_) => updateBio(),
           // ),
           HeightValidNotifier(isFormValidNotifier: _isFormValidNotifier),
-          if (widget.isEdit) const SizedBox() else buildUploadSection(),
+          buildUploadSection(),
           30.hSpace,
           buildCompleteButton(),
         ],
