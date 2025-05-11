@@ -34,13 +34,14 @@ class BannerHomeWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 10.h,
+              top: 5.h,
               right: context.isStateArabic ? null : 10.w,
               bottom: 0,
+              width: context.W * 0.35,
               left: context.isStateArabic ? 10.w : null,
               child: Image.asset(
                 AppImages.doctorInBanner,
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.cover,
               ),
             ),
             Positioned(

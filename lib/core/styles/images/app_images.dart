@@ -21,6 +21,7 @@ class AppImages {
 
 class SvgImages {
   static const String svg = 'assets/svg';
+  static const String doctorInBanner = '$svg/bannar-home.svg';
 
   static const String google = '$svg/google.svg';
   static const String facebook = '$svg/facebook.svg';

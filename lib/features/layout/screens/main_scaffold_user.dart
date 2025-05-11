@@ -7,7 +7,6 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
-import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
@@ -117,22 +116,22 @@ class MainScaffoldUser extends StatelessWidget {
         ),
         label: 'Search',
       ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          isIcon: false,
-          size: 25.sp,
-          image: 'assets/launcher/emergency.png',
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          isIcon: false,
-          sizeActive: 32.sp,
-          image: 'assets/launcher/emergency_fill.png',
-        ),
-        label: 'Emergency',
-      ),
+      // NavigationDestination(
+      //   icon: customIconNavBar(
+      //     context,
+      //     isIcon: false,
+      //     size: 25.sp,
+      //     image: 'assets/launcher/emergency_fill.png',
+      //   ),
+      //   selectedIcon: customIconNavBar(
+      //     context,
+      //     isActive: true,
+      //     isIcon: false,
+      //     sizeActive: 32.sp,
+      //     image: 'assets/launcher/emergency_fill.png',
+      //   ),
+      //   label: 'Emergency',
+      // ),
       NavigationDestination(
         icon: customIconNavBar(context, icon: CupertinoIcons.person),
         selectedIcon: customIconNavBar(
@@ -159,7 +158,7 @@ class MainScaffoldUser extends StatelessWidget {
         create: (context) => di.sl<HomeCubit>(),
         child: const AllDoctorScreen(),
       ),
-      const EmergencyScreen(),
+      // const EmergencyScreen(),
       const ProfileScreen(),
     ];
   }
