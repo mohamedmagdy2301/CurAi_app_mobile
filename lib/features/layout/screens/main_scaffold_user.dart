@@ -30,11 +30,13 @@ class MainScaffoldUser extends StatelessWidget {
           return PopScope(
             canPop: false,
             onPopInvokedWithResult: (didPop, result) async {
-              if (!didPop) {
+              if (!didPop && currentIndex == 0) {
                 final shouldExit = await _showExitDialog(context);
                 if (shouldExit) {
                   await Navigator.of(context).maybePop();
                 }
+              } else {
+                context.read<NavigationCubit>().updateIndex(0);
               }
             },
             child: Scaffold(
@@ -165,6 +167,7 @@ class MainScaffoldUser extends StatelessWidget {
 
   Future<bool> _showExitDialog(BuildContext context) async {
     final isArabic = context.isStateArabic;
+
     return await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
           context: context,
           title: isArabic ? 'تأكيد الخروج' : 'Exit Confirmation',

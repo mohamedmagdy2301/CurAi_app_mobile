@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottom: false,
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: 20.hSpace),
+          SliverToBoxAdapter(child: 10.hSpace),
           const CustomAppBarHome(),
           SliverToBoxAdapter(child: const BannerHomeWidget().center()),
           SliverToBoxAdapter(child: 5.hSpace),
