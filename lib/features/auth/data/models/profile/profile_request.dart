@@ -15,8 +15,9 @@ class ProfileRequest {
     this.latitude,
     this.longitude,
     this.role,
-    this.imageFile,
+    this.profileImage,
     this.isApproved,
+    this.profileCertificate,
   });
 
   final String? username;
@@ -32,6 +33,7 @@ class ProfileRequest {
   final double? latitude;
   final double? longitude;
   final String? role;
-  final File? imageFile;
+  final File? profileImage;
   final bool? isApproved;
+  final File? profileCertificate;
 }

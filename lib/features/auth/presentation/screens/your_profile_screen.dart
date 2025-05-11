@@ -104,7 +104,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         gender: selectedGender,
         consultationPrice: _consultationPriceController.text.trim(),
         specialization: selectedSpecialization,
-        imageFile: imageFile,
+        profileImage: imageFile,
       );
     } else {
       profileRequest = ProfileRequest(
@@ -114,7 +114,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         phoneNumber: _phoneController.text.trim(),
         age: _yourAgeController.text.trim(),
         gender: selectedGender,
-        imageFile: imageFile,
+        profileImage: imageFile,
       );
     }
     context

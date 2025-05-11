@@ -59,7 +59,7 @@ class BannerEmergencyHomeWidget extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.start,
-                      style: TextStyleApp.bold24().copyWith(
+                      style: TextStyleApp.bold22().copyWith(
                         color: context.backgroundColor,
                       ),
                     ),

@@ -69,6 +69,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   void _resetSearch() {
     hideKeyboard();
     searchController.clear();
+    setState(() {});
     context.read<HomeCubit>().resetSearch();
   }
 
@@ -89,12 +90,16 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    debugPrint('Bottom Inset inside AllDoctorScreen: $bottomInset');
+
     return SmartRefresher(
       controller: _refreshController,
       header: const CustomRefreahHeader(),
       onRefresh: _onRefresh,
       child: CustomScrollView(
         controller: _scrollController,
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           CustomAppBarAllDoctor(title: widget.specialityName),
           SliverPersistentHeader(
@@ -103,8 +108,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               controller: searchController,
               onChanged: (value) {
                 // Update UI to show/hide clear button
-                setState(() {});
-                context.read<HomeCubit>().searchDoctors(value);
+                setState(() {
+                  context.read<HomeCubit>().searchDoctors(value);
+                });
               },
               suffixIcon: searchController.text.isNotEmpty
                   ? IconButton(
@@ -198,13 +204,6 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                 itemCount: doctorsList.length + (cubit.isLoading ? 1 : 0),
                 itemBuilder: (context, index) {
                   if (index < doctorsList.length) {
-                    if (doctorsList[index].id == null ||
-                        (doctorsList[index].firstName == null &&
-                            doctorsList[index].lastName == null) ||
-                        doctorsList[index].consultationPrice == null ||
-                        doctorsList[index].specialization == null) {
-                      return const SizedBox();
-                    }
                     return PopularDoctorItemWidget(
                       doctorResults: doctorsList[index],
                     );
