@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/my_appointment_patient/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
@@ -75,10 +76,10 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
 
     return SmartRefresher(
       controller: _refreshController,
-      header: const WaterDropHeader(),
+      header: const CustomRefreahHeader(),
       onRefresh: () async {
         try {
-          await Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(milliseconds: 800));
 
           await widget.cubit.refreshMyAppointmentPatient();
           _refreshController.refreshCompleted();
