@@ -12,18 +12,19 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
   const DoctorSpecialityItemWidget({
     required this.title,
     required this.image,
-    required this.specialityNameEn,
+    required this.specialityName,
     super.key,
   });
   final String title;
-  final String specialityNameEn;
+  final String specialityName;
+
   final String image;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushNamed(Routes.allDoctors, arguments: specialityNameEn);
+        context.pushNamed(Routes.allDoctors, arguments: specialityName);
       },
       child: Column(
         children: [

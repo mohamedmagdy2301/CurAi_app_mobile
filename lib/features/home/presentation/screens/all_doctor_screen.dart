@@ -198,13 +198,6 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                 itemCount: doctorsList.length + (cubit.isLoading ? 1 : 0),
                 itemBuilder: (context, index) {
                   if (index < doctorsList.length) {
-                    if (doctorsList[index].id == null ||
-                        (doctorsList[index].firstName == null &&
-                            doctorsList[index].lastName == null) ||
-                        doctorsList[index].consultationPrice == null ||
-                        doctorsList[index].specialization == null) {
-                      return const SizedBox();
-                    }
                     return PopularDoctorItemWidget(
                       doctorResults: doctorsList[index],
                     );

@@ -92,7 +92,7 @@ class HomeCubit extends Cubit<HomeState> {
         lastPage = (data.count! / 10).ceil();
 
         // Add new doctors to the list (avoiding duplicates)
-        final newDoctors = data.results ?? [];
+        final newDoctors = _filterValidDoctors(data.results ?? []);
         if (page == 1) {
           allDoctorsList = newDoctors;
         } else {
@@ -119,6 +119,18 @@ class HomeCubit extends Cubit<HomeState> {
         emit(GetAllDoctorSuccess(doctorResults: allDoctorsList));
       },
     );
+  }
+
+  List<DoctorResults> _filterValidDoctors(List<DoctorResults> doctors) {
+    return doctors
+        .where(
+          (doctor) =>
+              doctor.id != null &&
+              (doctor.firstName != null || doctor.lastName != null) &&
+              doctor.consultationPrice != null &&
+              doctor.specialization != null,
+        )
+        .toList();
   }
 
   // Handle search with debounce
