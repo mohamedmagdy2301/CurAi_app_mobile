@@ -42,10 +42,7 @@ class MainScaffoldUser extends StatelessWidget {
               resizeToAvoidBottomInset: true,
               bottomNavigationBar: Builder(
                 builder: (context) {
-                  final isKeyboardVisible =
-                      MediaQuery.of(context).viewInsets.bottom > 0;
-                  debugPrint('Keyboard visible: $isKeyboardVisible');
-                  return isKeyboardVisible || currentIndex == 2
+                  return currentIndex == 2
                       ? const SizedBox.shrink()
                       : NavigationBar(
                           labelBehavior:
