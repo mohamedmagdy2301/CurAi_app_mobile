@@ -7,8 +7,8 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
-import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
@@ -39,7 +39,7 @@ class MainScaffoldUser extends StatelessWidget {
             },
             child: Scaffold(
               backgroundColor: context.backgroundColor,
-              bottomNavigationBar: currentIndex == 0
+              bottomNavigationBar: currentIndex == 2
                   ? null
                   : NavigationBar(
                       labelBehavior:
@@ -71,25 +71,6 @@ class MainScaffoldUser extends StatelessWidget {
   List<NavigationDestination> _buildDestinations(BuildContext context) {
     return [
       NavigationDestination(
-        icon: customIconNavBar(context, icon: CupertinoIcons.chat_bubble),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.chat_bubble_fill,
-        ),
-        label: 'Chat',
-      ),
-      NavigationDestination(
-        icon:
-            customIconNavBar(context, image: 'assets/svg/layout/calendar.svg'),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          image: 'assets/svg/layout/calendar2.svg',
-        ),
-        label: 'Appointment',
-      ),
-      NavigationDestination(
         icon: customIconNavBar(
           context,
           isIcon: false,
@@ -104,16 +85,34 @@ class MainScaffoldUser extends StatelessWidget {
         label: 'Home',
       ),
       NavigationDestination(
+        icon:
+            customIconNavBar(context, image: 'assets/svg/layout/calendar.svg'),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          image: 'assets/svg/layout/calendar2.svg',
+        ),
+        label: 'Appointment',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(context, icon: CupertinoIcons.chat_bubble),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          icon: CupertinoIcons.chat_bubble_fill,
+        ),
+        label: 'Chat',
+      ),
+      NavigationDestination(
         icon: customIconNavBar(
           context,
-          isIcon: false,
-          image: 'assets/launcher/emergency.png',
+          icon: CupertinoIcons.search,
+          // image: 'assets/launcher/emergency.png',
         ),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
-          isIcon: false,
-          image: 'assets/launcher/emergency_fill.png',
+          icon: CupertinoIcons.search,
         ),
         label: 'Emergency',
       ),
@@ -132,14 +131,20 @@ class MainScaffoldUser extends StatelessWidget {
   /// Screens corresponding to each bottom nav destination
   List<Widget> _buildScreens(BuildContext context) {
     return [
-      const ChatbotScreen(),
-      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
-      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
       BlocProvider<HomeCubit>(
         create: (context) => di.sl<HomeCubit>(),
         child: const HomeScreen(),
       ),
-      const EmergencyScreen(),
+      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
+      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
+
+      const ChatbotScreen(),
+
+      BlocProvider<HomeCubit>(
+        create: (context) => di.sl<HomeCubit>(),
+        child: const AllDoctorScreen(),
+      ),
+      // const EmergencyScreen(),
       const ProfileScreen(),
     ];
   }
