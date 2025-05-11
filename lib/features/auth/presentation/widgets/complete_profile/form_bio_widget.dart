@@ -151,28 +151,18 @@ class _BioFormWidgetState extends State<BioFormWidget> {
 
       if (image != null) {
         setState(() {
-          _selectedImages.add(File(image.path));
+          _selectedImages
+            ..clear()
+            ..add(File(image.path));
         });
-
-        // إظهار رسالة نجاح إذا تم اختيار الصورة بنجاح
-        showMessage(
-          context,
-          type: ToastificationType.success,
-          message: context.isStateArabic
-              ? 'تم إضافة الصورة بنجاح'
-              : 'Image added successfully',
-        );
       }
-    } catch (e) {
-      print(
-        'Image picking error: $e',
-      ); // إضافة سجل للخطأ للمساعدة في تصحيح الأخطاء
+    } on Exception catch (_) {
       showMessage(
         context,
         type: ToastificationType.error,
         message: context.isStateArabic
-            ? 'لم نتمكن من فتح الكاميرا أو معرض الصور، يرجى التأكد من منح التطبيق الأذونات اللازمة'
-            : 'Could not open camera or gallery, please check app permissions',
+            ? 'حدث خطأ أثناء اختيار الصورة'
+            : 'An error occurred while selecting the image',
       );
     }
   }
@@ -215,24 +205,10 @@ class _BioFormWidgetState extends State<BioFormWidget> {
                   ),
                   onTap: () async {
                     Navigator.pop(context);
-                    // التحقق من أذونات الوصول إلى المعرض إذا كانت دالة PermissionHelper متاحة
                     try {
-                      // يمكنك استبدال هذا بالكود الفعلي للتحقق من الأذونات
-                      // bool hasPermission = await PermissionHelper.checkGalleryPermission();
-                      // if (hasPermission) {
-                      //   _pickImage(ImageSource.gallery);
-                      // } else {
-                      //   showMessage(context, type: ToastificationType.warning,
-                      //     message: context.isStateArabic ? 'يرجى منح إذن الوصول للمعرض' : 'Please grant gallery access');
-                      // }
-
-                      // حاليًا نفترض أن الأذونات ممنوحة
-                      pickImage(ImageSource.gallery);
-                    } catch (e) {
-                      print('Gallery permission error: $e');
-                      pickImage(
-                        ImageSource.gallery,
-                      ); // محاولة الوصول على أي حال
+                      await pickImage(ImageSource.gallery);
+                    } on Exception catch (_) {
+                      await pickImage(ImageSource.gallery);
                     }
                   },
                 ),
@@ -245,24 +221,10 @@ class _BioFormWidgetState extends State<BioFormWidget> {
                   ),
                   onTap: () async {
                     Navigator.pop(context);
-                    // التحقق من أذونات الوصول إلى الكاميرا إذا كانت دالة PermissionHelper متاحة
                     try {
-                      // يمكنك استبدال هذا بالكود الفعلي للتحقق من الأذونات
-                      // bool hasPermission = await PermissionHelper.checkCameraPermission();
-                      // if (hasPermission) {
-                      //   _pickImage(ImageSource.camera);
-                      // } else {
-                      //   showMessage(context, type: ToastificationType.warning,
-                      //     message: context.isStateArabic ? 'يرجى منح إذن الوصول للكاميرا' : 'Please grant camera access');
-                      // }
-
-                      // حاليًا نفترض أن الأذونات ممنوحة
-                      pickImage(ImageSource.camera);
-                    } catch (e) {
-                      print('Camera permission error: $e');
-                      pickImage(
-                        ImageSource.camera,
-                      ); // محاولة الوصول على أي حال
+                      await pickImage(ImageSource.camera);
+                    } on Exception catch (_) {
+                      await pickImage(ImageSource.camera);
                     }
                   },
                 ),
@@ -280,11 +242,22 @@ class _BioFormWidgetState extends State<BioFormWidget> {
     if (_isFormValidNotifier.value) {
       _formKey.currentState?.save();
 
+      if (_selectedImages.isEmpty) {
+        showMessage(
+          context,
+          type: ToastificationType.error,
+          message: context.isStateArabic
+              ? 'يرجى اختيار صورة'
+              : 'Please select an image',
+        );
+        return;
+      }
+
       final profileRequest = ProfileRequest(
         bio: _bioController.text.trim(),
         // Add any files or images to the request
         // This depends on how your ProfileRequest is structured
-        // profileImages: _selectedImages,
+        profileCertificate: _selectedImages[0],
         // profileFiles: _selectedFiles,
       );
       context

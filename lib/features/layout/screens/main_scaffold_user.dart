@@ -30,13 +30,11 @@ class MainScaffoldUser extends StatelessWidget {
           return PopScope(
             canPop: false,
             onPopInvokedWithResult: (didPop, result) async {
-              if (!didPop && currentIndex == 0) {
+              if (!didPop) {
                 final shouldExit = await _showExitDialog(context);
                 if (shouldExit && context.mounted) {
                   await Navigator.of(context).maybePop();
                 }
-              } else {
-                context.read<NavigationCubit>().updateIndex(0);
               }
             },
             child: Scaffold(

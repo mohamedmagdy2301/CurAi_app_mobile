@@ -17,6 +17,7 @@ class ProfileRequest {
     this.role,
     this.imageFile,
     this.isApproved,
+    this.profileCertificate,
   });
 
   final String? username;
@@ -34,4 +35,5 @@ class ProfileRequest {
   final String? role;
   final File? imageFile;
   final bool? isApproved;
+  final File? profileCertificate;
 }
