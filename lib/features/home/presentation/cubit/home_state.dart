@@ -1,52 +1,79 @@
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/data/models/specializations_model/specializations_model.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class HomeState {}
+abstract class HomeState extends Equatable {
+  const HomeState();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class HomeInitial extends HomeState {}
 
-//! get all doctor
+//! Doctor States
 class GetAllDoctorLoading extends HomeState {}
 
-class GetAllDoctorSuccess extends HomeState {
-  GetAllDoctorSuccess({required this.doctorResults});
-  final List<DoctorResults> doctorResults;
-}
+class GetAllDoctorPagenationLoading extends HomeState {}
 
 class GetAllDoctorFailure extends HomeState {
-  GetAllDoctorFailure({required this.message});
+  const GetAllDoctorFailure({required this.message});
   final String message;
+
+  @override
+  List<Object?> get props => [message];
 }
 
-final class GetAllDoctorPagenationLoading extends HomeState {}
-
-final class GetAllDoctorPagenationFailure extends HomeState {
-  GetAllDoctorPagenationFailure({required this.errMessage});
+class GetAllDoctorPagenationFailure extends HomeState {
+  const GetAllDoctorPagenationFailure({required this.errMessage});
   final String errMessage;
+
+  @override
+  List<Object?> get props => [errMessage];
 }
 
-//! get specializations
+class GetAllDoctorSuccess extends HomeState {
+  const GetAllDoctorSuccess({required this.doctorResults});
+  final List<DoctorResults> doctorResults;
+
+  @override
+  List<Object?> get props => [doctorResults];
+}
+
+//! Specializations States
 class GetSpecializationsLoading extends HomeState {}
 
-class GetSpecializationsSuccess extends HomeState {
-  GetSpecializationsSuccess({required this.specializationsList});
-  final List<SpecializationsModel> specializationsList;
-}
-
 class GetSpecializationsFailure extends HomeState {
-  GetSpecializationsFailure({required this.message});
+  const GetSpecializationsFailure({required this.message});
   final String message;
+
+  @override
+  List<Object?> get props => [message];
 }
 
-//! get doctor by id
+class GetSpecializationsSuccess extends HomeState {
+  const GetSpecializationsSuccess({required this.specializationsList});
+  final List<SpecializationsModel> specializationsList;
+
+  @override
+  List<Object?> get props => [specializationsList];
+}
+
+//! Doctor By ID States
 class GetDoctorByIdLoading extends HomeState {}
 
-class GetDoctorByIdSuccess extends HomeState {
-  GetDoctorByIdSuccess({required this.doctorResults});
-  final DoctorResults doctorResults;
+class GetDoctorByIdFailure extends HomeState {
+  const GetDoctorByIdFailure({required this.message});
+  final String message;
+
+  @override
+  List<Object?> get props => [message];
 }
 
-class GetDoctorByIdFailure extends HomeState {
-  GetDoctorByIdFailure({required this.message});
-  final String message;
+class GetDoctorByIdSuccess extends HomeState {
+  const GetDoctorByIdSuccess({required this.doctorResults});
+  final DoctorResults doctorResults;
+
+  @override
+  List<Object?> get props => [doctorResults];
 }

@@ -34,13 +34,14 @@ class BannerHomeWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 10.h,
+              top: 5.h,
               right: context.isStateArabic ? null : 10.w,
               bottom: 0,
+              width: context.W * 0.35,
               left: context.isStateArabic ? 10.w : null,
               child: Image.asset(
                 AppImages.doctorInBanner,
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.cover,
               ),
             ),
             Positioned(
@@ -66,7 +67,7 @@ class BannerHomeWidget extends StatelessWidget {
                   ),
                   Container(
                     height: context.H * 0.05,
-                    width: context.W * 0.3,
+                    padding: context.padding(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50.r),
                       color: context.backgroundColor,

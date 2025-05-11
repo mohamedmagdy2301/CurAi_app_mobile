@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specializations_home_widget_listview.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/banner_emergency_home_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/banner_home_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/custom_appbar_home.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/title_section.dart';
@@ -36,11 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
       bottom: false,
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: 20.hSpace),
+          SliverToBoxAdapter(child: 10.hSpace),
           const CustomAppBarHome(),
-          SliverToBoxAdapter(child: 0.hSpace),
           SliverToBoxAdapter(child: const BannerHomeWidget().center()),
-          SliverToBoxAdapter(child: 20.hSpace),
+          SliverToBoxAdapter(child: 5.hSpace),
+          SliverToBoxAdapter(child: const BannerEmergencyHomeWidget().center()),
+          SliverToBoxAdapter(child: 10.hSpace),
           SliverToBoxAdapter(
             child: TitleSectionWidget(
               title: context.translate(LangKeys.doctorSpeciality),

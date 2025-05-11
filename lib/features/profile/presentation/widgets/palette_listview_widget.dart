@@ -53,7 +53,7 @@ class _PalettListViewWidgetState extends State<PalettListViewWidget> {
       return const CustomLoadingWidget().paddingSymmetric(vertical: 5);
     }
 
-    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final isDark = context.isDark;
     final colors = isDark ? darkColors : lightColors;
 
     return SizedBox(

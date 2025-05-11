@@ -23,4 +23,5 @@ class Routes {
       '/workingTimeDoctorAvailableScreen';
   static const String addAddreesClinicScreen = '/addAddreesClinicScreen';
   static const String bioScreen = '/bioScreen';
+  static const String emergencyDepartment = '/emergencyDepartment';
 }

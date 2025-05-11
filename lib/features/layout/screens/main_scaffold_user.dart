@@ -7,8 +7,8 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
-import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
@@ -30,24 +30,26 @@ class MainScaffoldUser extends StatelessWidget {
           return PopScope(
             canPop: false,
             onPopInvokedWithResult: (didPop, result) async {
-              if (!didPop) {
+              if (!didPop && currentIndex == 0) {
                 final shouldExit = await _showExitDialog(context);
-                if (shouldExit) {
+                if (shouldExit && context.mounted) {
                   await Navigator.of(context).maybePop();
                 }
+              } else {
+                context.read<NavigationCubit>().updateIndex(0);
               }
             },
             child: Scaffold(
               backgroundColor: context.backgroundColor,
-              bottomNavigationBar: currentIndex == 0
+              bottomNavigationBar: currentIndex == 2
                   ? null
                   : NavigationBar(
                       labelBehavior:
                           NavigationDestinationLabelBehavior.alwaysHide,
                       animationDuration: const Duration(seconds: 1),
-                      height: 60.sp,
+                      height: context.H * 0.09,
                       indicatorColor: Colors.transparent,
-                      backgroundColor: context.backgroundColor,
+                      backgroundColor: context.primaryColor.withAlpha(10),
                       overlayColor: WidgetStateProperty.all(
                         context.primaryColor.withAlpha(20),
                       ),
@@ -67,9 +69,101 @@ class MainScaffoldUser extends StatelessWidget {
     );
   }
 
+  /// Screens corresponding to each bottom nav destination
+  List<Widget> _buildScreens(BuildContext context) {
+    return [
+      BlocProvider<HomeCubit>(
+        create: (context) => di.sl<HomeCubit>(),
+        child: const HomeScreen(),
+      ),
+      BlocProvider<HomeCubit>(
+        create: (context) => di.sl<HomeCubit>(),
+        child: const AllDoctorScreen(),
+      ),
+      const ChatbotScreen(),
+      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
+      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
+      const ProfileScreen(),
+    ];
+  }
+
+  Container customIconNavBar(
+    BuildContext context, {
+    double? size,
+    double? sizeActive,
+    bool isActive = false,
+    IconData? icon,
+    String? image,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(12.sp),
+      decoration: BoxDecoration(
+        color: isActive
+            ? context.onPrimaryColor.withAlpha(36)
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(1002.r),
+      ),
+      child: icon != null
+          ? Icon(
+              icon,
+              color:
+                  !isActive ? context.onSecondaryColor : context.onPrimaryColor,
+              size: size ?? 28.sp,
+            )
+          : (image != null)
+              ? image.contains('svg')
+                  ? SvgPicture.asset(
+                      image,
+                      colorFilter: ColorFilter.mode(
+                        !isActive
+                            ? context.onSecondaryColor
+                            : context.onPrimaryColor,
+                        BlendMode.srcIn,
+                      ),
+                      width: size ?? 28.sp,
+                      height: size ?? 28.sp,
+                    )
+                  : Image.asset(
+                      image,
+                      color: !isActive
+                          ? context.onSecondaryColor
+                          : context.onPrimaryColor,
+                      width: size ?? 28.sp,
+                      height: size ?? 28.sp,
+                    )
+              : Container(),
+    );
+  }
+
   /// Navigation destinations for the bottom bar
   List<NavigationDestination> _buildDestinations(BuildContext context) {
     return [
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          size: 26.sp,
+          image: 'assets/svg/layout/home.svg',
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          size: 26.sp,
+          image: 'assets/svg/layout/home2.svg',
+        ),
+        label: 'Home',
+      ),
+      NavigationDestination(
+        icon: customIconNavBar(
+          context,
+          image: 'assets/svg/layout/search.svg',
+        ),
+        selectedIcon: customIconNavBar(
+          context,
+          isActive: true,
+          image: 'assets/svg/layout/search2.svg',
+        ),
+        label: 'Search',
+      ),
       NavigationDestination(
         icon: customIconNavBar(context, icon: CupertinoIcons.chat_bubble),
         selectedIcon: customIconNavBar(
@@ -80,8 +174,10 @@ class MainScaffoldUser extends StatelessWidget {
         label: 'Chat',
       ),
       NavigationDestination(
-        icon:
-            customIconNavBar(context, image: 'assets/svg/layout/calendar.svg'),
+        icon: customIconNavBar(
+          context,
+          image: 'assets/svg/layout/calendar.svg',
+        ),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
@@ -92,60 +188,21 @@ class MainScaffoldUser extends StatelessWidget {
       NavigationDestination(
         icon: customIconNavBar(
           context,
-          isIcon: false,
-          image: 'assets/svg/layout/home.svg',
+          image: 'assets/svg/layout/profile.svg',
         ),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
-          isIcon: false,
-          image: 'assets/svg/layout/home2.svg',
-        ),
-        label: 'Home',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(
-          context,
-          isIcon: false,
-          image: 'assets/launcher/emergency.png',
-        ),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          isIcon: false,
-          image: 'assets/launcher/emergency_fill.png',
-        ),
-        label: 'Emergency',
-      ),
-      NavigationDestination(
-        icon: customIconNavBar(context, icon: CupertinoIcons.person),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.person_alt,
+          image: 'assets/svg/layout/profile2.svg',
         ),
         label: 'Profile',
       ),
     ];
   }
 
-  /// Screens corresponding to each bottom nav destination
-  List<Widget> _buildScreens(BuildContext context) {
-    return [
-      const ChatbotScreen(),
-      if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
-      if (getRole() == 'patient') const MyAppointmentPatientScreen(),
-      BlocProvider<HomeCubit>(
-        create: (context) => di.sl<HomeCubit>(),
-        child: const HomeScreen(),
-      ),
-      const EmergencyScreen(),
-      const ProfileScreen(),
-    ];
-  }
-
   Future<bool> _showExitDialog(BuildContext context) async {
     final isArabic = context.isStateArabic;
+
     return await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
           context: context,
           title: isArabic ? 'تأكيد الخروج' : 'Exit Confirmation',
@@ -154,48 +211,5 @@ class MainScaffoldUser extends StatelessWidget {
           onPressedOk: () => Navigator.of(context).pop(true),
         ) ??
         false;
-  }
-
-  Column customIconNavBar(
-    BuildContext context, {
-    bool isIcon = true,
-    bool isActive = false,
-    IconData? icon,
-    String? image,
-  }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(height: isActive ? 0 : 5.h),
-        if (isIcon && icon != null)
-          Icon(
-            icon,
-            color: !isActive ? context.onSecondaryColor : context.primaryColor,
-            size: !isActive ? 28.sp : 35.sp,
-          )
-        else if (image != null)
-          image.contains('svg')
-              ? SvgPicture.asset(
-                  image,
-                  colorFilter: ColorFilter.mode(
-                    !isActive ? context.onSecondaryColor : context.primaryColor,
-                    BlendMode.srcIn,
-                  ),
-                  width: !isActive ? 28.sp : 35.sp,
-                  height: !isActive ? 28.sp : 35.sp,
-                )
-              : Image.asset(
-                  image,
-                  color: !isActive
-                      ? context.onSecondaryColor
-                      : context.primaryColor,
-                  width: !isActive ? 28.sp : 35.sp,
-                  height: !isActive ? 28.sp : 35.sp,
-                )
-        else
-          const SizedBox(),
-        SizedBox(height: isActive ? 5.h : 0),
-      ],
-    );
   }
 }

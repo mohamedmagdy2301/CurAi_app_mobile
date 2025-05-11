@@ -29,9 +29,7 @@ class _CustomAppBarAllDoctorState extends State<CustomAppBarAllDoctor> {
       elevation: 0,
       flexibleSpace: Container(color: context.backgroundColor),
       title: AutoSizeText(
-        widget.title != ''
-            ? widget.title!
-            : context.translate(LangKeys.doctors),
+        widget.title ?? context.translate(LangKeys.doctors),
         maxLines: 1,
         style: TextStyleApp.bold20().copyWith(
           color: context.onPrimaryColor,
