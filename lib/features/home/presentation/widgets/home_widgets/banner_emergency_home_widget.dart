@@ -41,22 +41,25 @@ class BannerEmergencyHomeWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Image.asset(
-                    'assets/launcher/emergency_fill.png',
-                    width: 20.h,
-                    height: 20.h,
-                    color: Colors.redAccent,
-                    fit: BoxFit.fill,
-                  ).paddingBottom(5),
+                  CircleAvatar(
+                    backgroundColor: context.backgroundColor,
+                    child: Image.asset(
+                      'assets/launcher/emergency_fill.png',
+                      width: 22.h,
+                      height: 22.h,
+                      color: Colors.redAccent,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                   10.wSpace,
                   SizedBox(
-                    width: context.W * .65,
+                    width: context.W * .62,
                     child: AutoSizeText(
                       context.translate(LangKeys.emergencyDepartment),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.start,
-                      style: TextStyleApp.medium24().copyWith(
+                      style: TextStyleApp.bold24().copyWith(
                         color: context.backgroundColor,
                       ),
                     ),
@@ -68,7 +71,7 @@ class BannerEmergencyHomeWidget extends StatelessWidget {
                     size: 20.sp,
                   ),
                 ],
-              ).paddingSymmetric(vertical: 15, horizontal: 15),
+              ).paddingSymmetric(vertical: 15, horizontal: 10),
             ],
           ),
         ),
