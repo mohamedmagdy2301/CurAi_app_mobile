@@ -73,10 +73,13 @@ class AppRoutes {
           ),
         );
       case Routes.allDoctors:
+        final specialityName = arg as String?;
         return BaseRoute(
           page: BlocProvider<HomeCubit>(
             create: (context) => di.sl<HomeCubit>(),
-            child: AllDoctorScreen(specialityName: (arg ?? '') as String),
+            child: AllDoctorScreen(
+              specialityName: specialityName,
+            ),
           ),
         );
       case Routes.settingsScreen:
