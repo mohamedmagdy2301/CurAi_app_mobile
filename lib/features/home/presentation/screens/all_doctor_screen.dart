@@ -95,6 +95,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
       onRefresh: _onRefresh,
       child: CustomScrollView(
         controller: _scrollController,
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           CustomAppBarAllDoctor(title: widget.specialityName),
           SliverPersistentHeader(
