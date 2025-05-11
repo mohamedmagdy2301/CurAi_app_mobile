@@ -49,7 +49,7 @@ class MainScaffoldUser extends StatelessWidget {
                       animationDuration: const Duration(seconds: 1),
                       height: context.H * 0.09,
                       indicatorColor: Colors.transparent,
-                      backgroundColor: context.backgroundColor,
+                      backgroundColor: context.primaryColor.withAlpha(10),
                       overlayColor: WidgetStateProperty.all(
                         context.primaryColor.withAlpha(20),
                       ),
@@ -98,15 +98,16 @@ class MainScaffoldUser extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12.sp),
       decoration: BoxDecoration(
-        color:
-            isActive ? context.primaryColor.withAlpha(26) : Colors.transparent,
+        color: isActive
+            ? context.onPrimaryColor.withAlpha(36)
+            : Colors.transparent,
         borderRadius: BorderRadius.circular(1002.r),
       ),
       child: icon != null
           ? Icon(
               icon,
               color:
-                  !isActive ? context.onSecondaryColor : context.primaryColor,
+                  !isActive ? context.onSecondaryColor : context.onPrimaryColor,
               size: size ?? 28.sp,
             )
           : (image != null)
@@ -116,7 +117,7 @@ class MainScaffoldUser extends StatelessWidget {
                       colorFilter: ColorFilter.mode(
                         !isActive
                             ? context.onSecondaryColor
-                            : context.primaryColor,
+                            : context.onPrimaryColor,
                         BlendMode.srcIn,
                       ),
                       width: size ?? 28.sp,
@@ -126,7 +127,7 @@ class MainScaffoldUser extends StatelessWidget {
                       image,
                       color: !isActive
                           ? context.onSecondaryColor
-                          : context.primaryColor,
+                          : context.onPrimaryColor,
                       width: size ?? 28.sp,
                       height: size ?? 28.sp,
                     )
