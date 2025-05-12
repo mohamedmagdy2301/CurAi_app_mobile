@@ -20,7 +20,6 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/widge
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/build_appointments_patient_empty_listview.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/my_appointment_patient_loading_card.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -245,20 +244,9 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
     BuildContext context,
   ) {
     return Switch.adaptive(
-      thumbIcon: WidgetStateProperty.all(
-        isSwitched
-            ? Icon(
-                CupertinoIcons.bell,
-                color: context.isDark ? Colors.black : Colors.amber,
-              )
-            : Icon(
-                CupertinoIcons.bell_slash,
-                color: context.isDark ? Colors.black : Colors.amber,
-              ),
-      ),
       activeColor: context.primaryColor,
       inactiveTrackColor: context.onSecondaryColor,
-      thumbColor: WidgetStateProperty.all(context.onPrimaryColor),
+      thumbColor: WidgetStateProperty.all(Colors.white),
       value: isSwitched,
       onChanged: (value) async {
         if (appointment.id == null) {
