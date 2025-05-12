@@ -219,14 +219,18 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       '${_firstNameController.text} ${_lastNameController.text}',
                 );
                 context.pushReplacementNamed(Routes.mainScaffoldUser);
-              } else if (state is EditProfileError) {
+                context.read<AuthCubit>().clearState();
+              }
+              if (state is EditProfileError) {
                 context.pop();
                 showMessage(
                   context,
                   type: ToastificationType.error,
                   message: state.message,
                 );
-              } else if (state is EditProfileLoading) {
+                context.read<AuthCubit>().clearState();
+              }
+              if (state is EditProfileLoading) {
                 AdaptiveDialogs.showLoadingAlertDialog(
                   context: context,
                   title: context.translate(LangKeys.editProfile),

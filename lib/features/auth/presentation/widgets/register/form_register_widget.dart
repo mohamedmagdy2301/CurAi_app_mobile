@@ -167,7 +167,6 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             context: context,
             title: context.translate(LangKeys.register),
           );
-          context.read<AuthCubit>().clearState();
         }
       },
       builder: (context, state) {

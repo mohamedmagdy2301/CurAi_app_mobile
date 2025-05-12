@@ -130,7 +130,6 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
                     context: context,
                     title: context.translate(LangKeys.changePassword),
                   );
-                  context.read<AuthCubit>().clearState();
                 }
               },
               builder: (context, state) {

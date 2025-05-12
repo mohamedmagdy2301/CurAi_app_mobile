@@ -181,13 +181,12 @@ class _AddAddressClinicFormWidgetState
         if (state is EditProfileSuccess) {
           if (widget.isEdit ?? false) {
             context.pushReplacementNamed(Routes.mainScaffoldUser);
-            context.read<AuthCubit>().clearState();
           } else {
             context
               ..pop()
               ..pushReplacementNamed(Routes.loginScreen);
-            context.read<AuthCubit>().clearState();
           }
+          context.read<AuthCubit>().clearState();
         }
         if (state is EditProfileError) {
           showMessage(

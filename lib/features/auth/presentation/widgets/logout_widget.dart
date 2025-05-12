@@ -32,11 +32,11 @@ class LogoutWidget extends StatelessWidget {
           if (state is LogoutSuccess) {
             context.pop();
 
-            showMessage(
-              context,
-              type: ToastificationType.success,
-              message: state.message,
-            );
+            // showMessage(
+            //   context,
+            //   type: ToastificationType.success,
+            //   message: state.message,
+            // );
 
             await clearUserData();
             await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);

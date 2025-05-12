@@ -495,7 +495,6 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             context: context,
             title: context.translate(LangKeys.completeProfileTitle),
           );
-          context.read<AuthCubit>().clearState();
         }
       },
       builder: (context, state) {

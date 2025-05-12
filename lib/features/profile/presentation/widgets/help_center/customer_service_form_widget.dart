@@ -71,7 +71,9 @@ class _CustomerServiceFormWidgetState extends State<CustomerServiceFormWidget> {
                       message: state.message,
                       type: ToastificationType.error,
                     );
-                  } else if (state is ContactUsSuccess) {
+                    context.read<AuthCubit>().clearState();
+                  }
+                  if (state is ContactUsSuccess) {
                     Navigator.pop(context);
                     showMessage(
                       context,
@@ -79,7 +81,9 @@ class _CustomerServiceFormWidgetState extends State<CustomerServiceFormWidget> {
                       type: ToastificationType.success,
                     );
                     Navigator.pop(context);
-                  } else if (state is ContactUsLoading) {
+                    context.read<AuthCubit>().clearState();
+                  }
+                  if (state is ContactUsLoading) {
                     AdaptiveDialogs.showLoadingAlertDialog(
                       context: context,
                       title: context.translate(LangKeys.customerService),
