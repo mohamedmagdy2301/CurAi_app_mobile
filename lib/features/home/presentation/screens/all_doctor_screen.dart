@@ -90,9 +90,6 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-    debugPrint('Bottom Inset inside AllDoctorScreen: $bottomInset');
-
     return SmartRefresher(
       controller: _refreshController,
       header: const CustomRefreahHeader(),

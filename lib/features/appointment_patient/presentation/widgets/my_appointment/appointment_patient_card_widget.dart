@@ -177,13 +177,6 @@ class DeleteAppointmentButton extends StatelessWidget {
           );
         }
         if (state is DeleteAppointmentPatientSuccess) {
-          showMessage(
-            context,
-            message: context.isStateArabic
-                ? 'تم الغاء الموعد بنجاح'
-                : 'Appointment canceled successfully',
-            type: ToastificationType.success,
-          );
           await context
               .read<AppointmentPatientCubit>()
               .refreshMyAppointmentPatient();

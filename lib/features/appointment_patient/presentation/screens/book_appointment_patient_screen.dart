@@ -232,13 +232,7 @@ class AddAppointmentButton extends StatelessWidget {
           );
         } else if (state is ScheduleAppointmentPatientSuccess) {
           Navigator.pop(context);
-          if (state.scheduleAppointmentPatientModel.message != null) {
-            showMessage(
-              context,
-              message: state.scheduleAppointmentPatientModel.message!,
-              type: ToastificationType.success,
-            );
-          }
+
           context.pushReplacementNamed(
             Routes.paymentAppointmentScreen,
             arguments: {

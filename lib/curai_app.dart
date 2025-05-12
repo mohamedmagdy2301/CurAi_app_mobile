@@ -37,6 +37,7 @@ class _CuraiAppState extends State<CuraiApp> {
   @override
   void initState() {
     super.initState();
+
     _loadAppSettings();
   }
 
