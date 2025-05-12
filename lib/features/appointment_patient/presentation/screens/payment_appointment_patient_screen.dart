@@ -79,7 +79,9 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                 Navigator.pop(context);
                 showMessage(
                   context,
-                  message: state.paymentAppointmentModel.message,
+                  message: context.isStateArabic
+                      ? 'تم الدفع بنجاح'
+                      : 'Payment successful',
                   type: ToastificationType.success,
                 );
 
