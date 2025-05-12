@@ -72,6 +72,21 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Switch.adaptive(
+                  padding: EdgeInsets.zero,
+                  thumbIcon: WidgetStateProperty.all(
+                    (_getIsDarkMode(context))
+                        ? Icon(
+                            CupertinoIcons.moon,
+                            color: context.backgroundColor,
+                          )
+                        : const Icon(
+                            CupertinoIcons.sun_max_fill,
+                            color: Colors.amber,
+                          ),
+                  ),
+                  activeColor: context.primaryColor,
+                  inactiveTrackColor: context.onSecondaryColor,
+                  thumbColor: WidgetStateProperty.all(context.onPrimaryColor),
                   value: _getIsDarkMode(context),
                   onChanged: (_) async {
                     await _toggleTheme(context);

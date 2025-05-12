@@ -3,6 +3,7 @@
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/notification/local_notification_manager.dart';
@@ -19,6 +20,7 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/widge
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/build_appointments_patient_empty_listview.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/my_appointment_patient_loading_card.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -243,6 +245,20 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
     BuildContext context,
   ) {
     return Switch.adaptive(
+      thumbIcon: WidgetStateProperty.all(
+        isSwitched
+            ? Icon(
+                CupertinoIcons.bell,
+                color: context.isDark ? Colors.black : Colors.amber,
+              )
+            : Icon(
+                CupertinoIcons.bell_slash,
+                color: context.isDark ? Colors.black : Colors.amber,
+              ),
+      ),
+      activeColor: context.primaryColor,
+      inactiveTrackColor: context.onSecondaryColor,
+      thumbColor: WidgetStateProperty.all(context.onPrimaryColor),
       value: isSwitched,
       onChanged: (value) async {
         if (appointment.id == null) {

@@ -22,6 +22,7 @@ dependencies:
   firebase_core:
   flutter:
     sdk: flutter
+  flutter_advanced_switch: ^3.1.0
   flutter_bloc:
   flutter_dotenv:
   flutter_gemini:

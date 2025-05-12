@@ -37,7 +37,7 @@ class LocalNotificationService {
     tz.setLocalLocation(tz.getLocation(localTimeZone));
 
     const initializationSettings = InitializationSettings(
-      android: AndroidInitializationSettings('@drawable/icon_notification'),
+      android: AndroidInitializationSettings('@drawable/icon_notification2'),
       iOS: DarwinInitializationSettings(),
     );
     await flutterLocalNotificationsPlugin.initialize(
@@ -103,15 +103,13 @@ class LocalNotificationService {
           importance: Importance.max,
           priority: Priority.high,
           enableLights: true,
-          icon: '@drawable/icon_notification',
+          icon: '@drawable/icon_notification2',
           sound: const RawResourceAndroidNotificationSound('sound_test'),
           styleInformation: BigPictureStyleInformation(
             FilePathAndroidBitmap(bigPicturePath),
             largeIcon: const DrawableResourceAndroidBitmap(
-              '@drawable/icon_notification',
+              '@drawable/icon_notification2',
             ),
-            contentTitle: title,
-            summaryText: body,
           ),
         ),
         iOS: const DarwinNotificationDetails(
@@ -229,13 +227,4 @@ class LocalNotificationService {
       getPendingNotifications() async {
     return flutterLocalNotificationsPlugin.pendingNotificationRequests();
   }
-
-  /// Handle notification tap
-  // static void _handleNotificationTap(NotificationResponse response) {
-  // Handle navigation or any action when notification is tapped
-  // debugPrint('Notification tapped: ${response.payload}');
-
-  // You can send this event to a BLoC or StreamController to handle navigation
-  // Example: streamController.add(response);
-  // }
 }
