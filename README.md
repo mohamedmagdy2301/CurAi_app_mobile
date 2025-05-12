@@ -59,11 +59,10 @@
 - **Appointment Booking UI & Integration For Patient**
 - **Appointment For Doctor**
 - **Emergency Department**
+- **Push Notifications**
   
 ### 🕓 In Progress
 
-- **Payment UI & API Integration**
-- **Push Notifications**
 - **Testing & Deployment**
 
 ### 🔲 To-Do
