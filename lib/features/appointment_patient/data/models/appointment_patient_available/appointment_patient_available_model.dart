@@ -87,10 +87,10 @@ List<MergedDateAvailabilityForPatient> mergeAndSortByDate(
 ) {
   final mergedList = <MergedDateAvailabilityForPatient>[];
 
-  // Set لتخزين التواريخ المتكررة
   final seenDates = <String>{};
   DoctorPatientAvailability doctor;
   DatesDoctorPatientAvailability dateEntry;
+
   for (doctor in model.doctorAvailability ?? []) {
     final day = doctor.day ?? '';
     final from = doctor.availableFrom ?? '';
@@ -101,7 +101,6 @@ List<MergedDateAvailabilityForPatient> mergeAndSortByDate(
       final parsedDate = DateTime.tryParse(dateStr);
 
       if (parsedDate != null) {
-        // إذا كان التاريخ لم يتم إضافته من قبل
         if (!seenDates.contains(dateStr)) {
           seenDates.add(dateStr);
 
@@ -116,22 +115,11 @@ List<MergedDateAvailabilityForPatient> mergeAndSortByDate(
             ),
           );
         } else {
-          // إذا كان التاريخ موجود مسبقًا، ندمج الـ freeSlots
           final existingEntry = mergedList.firstWhere(
             (e) => e.dateString == dateStr,
-            orElse: () => MergedDateAvailabilityForPatient(
-              day: day,
-              dateString: dateStr,
-              date: parsedDate,
-              availableFrom: from,
-              availableTo: to,
-              freeSlots: [],
-            ),
           );
 
-          // دمج الـ freeSlots وحذف التكرار
           existingEntry.freeSlots.addAll(dateEntry.freeSlots ?? []);
-          // إزالة التكرار باستخدام toSet()
           existingEntry.freeSlots = existingEntry.freeSlots.toSet().toList();
           existingEntry.freeSlots.sort();
         }
@@ -139,17 +127,18 @@ List<MergedDateAvailabilityForPatient> mergeAndSortByDate(
     }
   }
 
-  // ترتيب حسب التاريخ وتصفيه للمستقبل
   mergedList.sort((a, b) => a.date.compareTo(b.date));
+
   final now = DateTime.now();
+
   final upcomingDates = mergedList
       .where(
         (e) =>
-            e.date.year > now.year ||
-            (e.date.year == now.year && e.date.month > now.month) ||
-            (e.date.year == now.year &&
-                e.date.month == now.month &&
-                e.date.day >= now.day),
+            (e.date.isAfter(
+              DateTime(now.year, now.month, now.day)
+                  .subtract(const Duration(days: 1)),
+            )) &&
+            e.freeSlots.isNotEmpty,
       )
       .toList();
 
