@@ -88,11 +88,11 @@ class _CustomAppbarWorkingTimeAppointmentDoctorState
           await context
               .read<AppointmentDoctorCubit>()
               .getWorkingTimeAvailableDoctor();
-          showMessage(
-            context,
-            type: ToastificationType.success,
-            message: context.translate(LangKeys.addWorkingTimeSuccess),
-          );
+          // showMessage(
+          //   context,
+          //   type: ToastificationType.success,
+          //   message: context.translate(LangKeys.addWorkingTimeSuccess),
+          // );
         }
 
         if (state is AddWorkingTimeDoctorFailure && mounted) {

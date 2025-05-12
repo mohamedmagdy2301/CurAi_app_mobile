@@ -118,11 +118,11 @@ class _WorkingTimeDoctorAvailabilityListViewState
           context
               .read<AppointmentDoctorCubit>()
               .getWorkingTimeAvailableDoctor();
-          showMessage(
-            context,
-            type: ToastificationType.success,
-            message: context.translate(LangKeys.updateWorkingTimeSuccess),
-          );
+          // showMessage(
+          //   context,
+          //   type: ToastificationType.success,
+          //   message: context.translate(LangKeys.updateWorkingTimeSuccess),
+          // );
         }
         if (state is UpdateWorkingTimeDoctorFailure) {
           showMessage(
@@ -139,11 +139,11 @@ class _WorkingTimeDoctorAvailabilityListViewState
           context
               .read<AppointmentDoctorCubit>()
               .getWorkingTimeAvailableDoctor();
-          showMessage(
-            context,
-            type: ToastificationType.success,
-            message: context.translate(LangKeys.deleteWorkingTimeSuccess),
-          );
+          // showMessage(
+          //   context,
+          //   type: ToastificationType.success,
+          //   message: context.translate(LangKeys.deleteWorkingTimeSuccess),
+          // );
         }
         if (state is RemoveWorkingTimeDoctorFailure) {
           showMessage(
