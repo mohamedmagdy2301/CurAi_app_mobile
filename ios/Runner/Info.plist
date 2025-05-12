@@ -90,6 +90,19 @@
 
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We need your location to provide better service even in the background.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+	<string>remote-notification</string>
+	</array>
+
+	<key>NSUserNotificationAlertStyle</key>
+	<string>alert</string>
+
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 
 </dict>
 </plist>
