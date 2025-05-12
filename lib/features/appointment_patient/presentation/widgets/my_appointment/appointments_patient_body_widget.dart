@@ -109,7 +109,7 @@ class _AppointmentsPatientBodyWidgetState
         } else if (state is GetMyAppointmentPatientFailure) {
           return BuildAppointmentsPatientErrorWidget(state: state);
         } else if (appointments.isEmpty && cubit.isLast) {
-          return const BuildAppointmentsPatientEmptyList();
+          return BuildAppointmentsPatientEmptyList(isPending: widget.isPending);
         } else if (appointments.isNotEmpty) {
           return BuildAppointmentsList(
             cubit: cubit,

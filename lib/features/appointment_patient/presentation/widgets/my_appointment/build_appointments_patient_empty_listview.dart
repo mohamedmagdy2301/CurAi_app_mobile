@@ -8,7 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BuildAppointmentsPatientEmptyList extends StatelessWidget {
-  const BuildAppointmentsPatientEmptyList({super.key});
+  const BuildAppointmentsPatientEmptyList({required this.isPending, super.key});
+  final bool isPending;
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,14 @@ class BuildAppointmentsPatientEmptyList extends StatelessWidget {
         ),
         30.hSpace,
         AutoSizeText(
-          context.isStateArabic
-              ? 'لا يوجد مواعيد حالياً'
-              : 'No Appointments yet',
-          maxLines: 1,
+          isPending
+              ? context.isStateArabic
+                  ? 'لا يوجد مواعيد حالياً,\nقيد الانتظار'
+                  : 'No Appointments yet,\nPending'
+              : context.isStateArabic
+                  ? 'لا يوجد مواعيد حالياً,\nمدفوعة'
+                  : 'No Appointments yet,\nPaided',
+          maxLines: 2,
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           style: TextStyleApp.semiBold26().copyWith(

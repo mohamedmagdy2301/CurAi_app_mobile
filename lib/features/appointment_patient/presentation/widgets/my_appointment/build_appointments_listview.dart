@@ -114,7 +114,8 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
         }
       },
       child: filteredAppointments.isEmpty
-          ? const BuildAppointmentsPatientEmptyList().center()
+          ? BuildAppointmentsPatientEmptyList(isPending: widget.isPending)
+              .center()
           : ListView.builder(
               controller: widget.scrollController,
               physics: const AlwaysScrollableScrollPhysics(
