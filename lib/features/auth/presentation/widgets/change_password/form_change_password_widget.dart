@@ -116,6 +116,7 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
                     message: state.message,
                     type: ToastificationType.error,
                   );
+                  context.read<AuthCubit>().clearState();
                 } else if (state is ChangePasswordSuccess) {
                   showMessage(
                     context,
@@ -123,11 +124,13 @@ class _FormChangePasswordWidgetState extends State<FormChangePasswordWidget> {
                     type: ToastificationType.success,
                   );
                   context.pushNamed(Routes.loginScreen);
+                  context.read<AuthCubit>().clearState();
                 } else if (state is ChangePasswordLoading) {
                   AdaptiveDialogs.showLoadingAlertDialog(
                     context: context,
                     title: context.translate(LangKeys.changePassword),
                   );
+                  context.read<AuthCubit>().clearState();
                 }
               },
               builder: (context, state) {

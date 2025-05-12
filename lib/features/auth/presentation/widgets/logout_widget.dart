@@ -42,6 +42,7 @@ class LogoutWidget extends StatelessWidget {
             await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
             if (!context.mounted) return;
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
+            context.read<AuthCubit>().clearState();
           }
           if (state is LogoutError) {
             context.pop();
@@ -51,6 +52,7 @@ class LogoutWidget extends StatelessWidget {
               type: ToastificationType.error,
               message: state.message,
             );
+            context.read<AuthCubit>().clearState();
           }
         },
         builder: (context, state) {

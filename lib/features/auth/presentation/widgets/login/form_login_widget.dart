@@ -137,6 +137,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             message: state.message,
             type: ToastificationType.error,
           );
+          context.read<AuthCubit>().clearState();
         } else if (state is LoginSuccess) {
           context.pop();
           showMessage(
@@ -149,11 +150,13 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
             value: true,
           );
           context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
+          context.read<AuthCubit>().clearState();
         } else if (state is LoginLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.login),
           );
+          context.read<AuthCubit>().clearState();
         }
       },
       builder: (context, state) {

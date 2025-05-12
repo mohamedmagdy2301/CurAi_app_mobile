@@ -571,6 +571,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
         if (state is EditProfileSuccess) {
           if (widget.isEdit) {
             context.pushReplacementNamed(Routes.mainScaffoldUser);
+            context.read<AuthCubit>().clearState();
           } else {
             context
               ..pop()
@@ -578,6 +579,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
                 Routes.addAddreesClinicScreen,
                 arguments: {'isEdit': false},
               );
+            context.read<AuthCubit>().clearState();
           }
         } else if (state is EditProfileError) {
           context.pop();
@@ -586,11 +588,13 @@ class _BioFormWidgetState extends State<BioFormWidget> {
             type: ToastificationType.error,
             message: state.message,
           );
+          context.read<AuthCubit>().clearState();
         } else if (state is EditProfileLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.completeProfileTitle),
           );
+          context.read<AuthCubit>().clearState();
         }
       },
       builder: (context, state) {

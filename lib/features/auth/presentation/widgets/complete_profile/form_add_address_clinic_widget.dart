@@ -181,10 +181,12 @@ class _AddAddressClinicFormWidgetState
         if (state is EditProfileSuccess) {
           if (widget.isEdit ?? false) {
             context.pushReplacementNamed(Routes.mainScaffoldUser);
+            context.read<AuthCubit>().clearState();
           } else {
             context
               ..pop()
               ..pushReplacementNamed(Routes.loginScreen);
+            context.read<AuthCubit>().clearState();
           }
         }
         if (state is EditProfileError) {
@@ -194,6 +196,7 @@ class _AddAddressClinicFormWidgetState
             message: state.message,
           );
         }
+        context.read<AuthCubit>().clearState();
       },
       builder: (context, state) {
         return CustomButton(

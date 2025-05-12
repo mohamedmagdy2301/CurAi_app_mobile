@@ -148,6 +148,7 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
             message: state.message,
             type: ToastificationType.error,
           );
+          context.read<AuthCubit>().clearState();
         } else if (state is RegisterSuccess) {
           Navigator.pop(context);
           showMessage(
@@ -160,11 +161,13 @@ class _RegistrationFormWidgetState extends State<RegistrationFormWidget> {
           } else {
             context.pushReplacementNamed(Routes.completeProfileScreen);
           }
+          context.read<AuthCubit>().clearState();
         } else if (state is RegisterLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.register),
           );
+          context.read<AuthCubit>().clearState();
         }
       },
       builder: (context, state) {

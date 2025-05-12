@@ -38,6 +38,12 @@ class AuthCubit extends Cubit<AuthState> {
   final GetProfileUsecase _getProfileUsecase;
   final EditProfileUsecase _editProfileUsecase;
   final ContactUsUsecase _contactUsUsecase;
+
+  void clearState() {
+    if (isClosed) return;
+    emit(AuthInitial());
+  }
+
   Future<void> register(
     BuildContext context,
     RegisterRequest registerRequest,

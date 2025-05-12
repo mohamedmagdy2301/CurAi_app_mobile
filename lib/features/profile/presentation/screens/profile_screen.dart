@@ -49,8 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: imageFile != null
                   ? Image.file(
                       imageFile!,
-                      width: 180.w,
-                      height: 180.h,
+                      width: context.H * 0.16,
+                      height: context.H * 0.16,
                       fit: BoxFit.cover,
                     )
                   : CustomCachedNetworkImage(
@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: context.W * .55,
+                  width: context.W * .65,
                   child: AutoSizeText(
                     getRole() == 'patient'
                         ? getFullName().capitalizeFirstChar

@@ -481,6 +481,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
               Routes.bioScreen,
               arguments: {'specialization': selectedSpecializationName},
             );
+          context.read<AuthCubit>().clearState();
         } else if (state is EditProfileError) {
           context.pop();
           showMessage(
@@ -488,11 +489,13 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
             type: ToastificationType.error,
             message: state.message,
           );
+          context.read<AuthCubit>().clearState();
         } else if (state is EditProfileLoading) {
           AdaptiveDialogs.showLoadingAlertDialog(
             context: context,
             title: context.translate(LangKeys.completeProfileTitle),
           );
+          context.read<AuthCubit>().clearState();
         }
       },
       builder: (context, state) {
