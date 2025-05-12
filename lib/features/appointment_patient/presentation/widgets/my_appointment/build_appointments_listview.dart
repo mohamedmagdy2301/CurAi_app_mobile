@@ -2,9 +2,12 @@
 
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/notification/local_notification_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
@@ -19,6 +22,7 @@ import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_m
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:timezone/timezone.dart' as tz;
 import 'package:toastification/toastification.dart';
 
 class BuildAppointmentsList extends StatefulWidget {
@@ -45,17 +49,38 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
   final Map<int, bool> isSwitchedMap = {};
 
   @override
+  void initState() {
+    super.initState();
+    _loadNotificationPreferences();
+  }
+
+  Future<void> _loadNotificationPreferences() async {
+    for (final appointment in widget.appointments) {
+      if (appointment.id != null) {
+        final isActive = await LocalNotificationService.getNotificationStatus(
+          id: appointment.id!,
+        );
+        isSwitchedMap[appointment.id!] = isActive;
+      }
+    }
+    setState(() {});
+  }
+
+  @override
   void didUpdateWidget(covariant BuildAppointmentsList oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.appointments != oldWidget.appointments) {
       for (final appointment in widget.appointments) {
-        isSwitchedMap.putIfAbsent(appointment.id!, () => false);
+        if (appointment.id != null) {
+          isSwitchedMap.putIfAbsent(appointment.id!, () => false);
+        }
       }
     }
   }
 
   final RefreshController _refreshController = RefreshController();
+
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -161,7 +186,19 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
             await cubit.getAppointmentPatientAvailable(
               doctorId: appointment.doctorId!,
             );
+            // Cancel existing notification if any
+            if (appointment.id != null) {
+              await LocalNotificationService.cancelNotificationById(
+                appointment.id!,
+              );
+            }
 
+            // Update notification preference to off for this appointment
+            if (appointment.id != null) {
+              setState(() {
+                isSwitchedMap[appointment.id!] = false;
+              });
+            }
             if (cubit.state is AppointmentPatientAvailableSuccess &&
                 cubit.appointmentAvailableModel != null) {
               await context.pushNamed(
@@ -207,19 +244,105 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
   ) {
     return Switch.adaptive(
       value: isSwitched,
-      onChanged: (value) {
+      onChanged: (value) async {
+        if (appointment.id == null) {
+          return;
+        }
+
         setState(() {
           isSwitchedMap[appointment.id!] = value;
         });
 
-        showMessage(
-          context,
-          type: ToastificationType.success,
-          message: value
-              ? 'You have successfully enabled notifications 🔔'
-              : 'You have successfully disabled notifications 🔕',
-        );
+        if (value) {
+          // Enable notification for this appointment
+          await _scheduleNotificationForAppointment(appointment);
+        } else {
+          // Cancel notification for this appointment
+          if (appointment.id != null) {
+            await LocalNotificationService.cancelNotificationById(
+              appointment.id!,
+            );
+          }
+        }
       },
     );
+  }
+
+  // دالة مجدولة علشان تعمل إشعارات لموعد معين
+  Future<void> _scheduleNotificationForAppointment(
+    ResultsMyAppointmentPatient appointment,
+  ) async {
+    try {
+      final dateStr = appointment.appointmentDate;
+      final timeStr = appointment.appointmentTime;
+
+      if (dateStr == null || timeStr == null || appointment.id == null) {
+        return;
+      }
+
+      final appointmentDateTime = DateTime.parse('$dateStr $timeStr');
+
+      final notificationTime =
+          appointmentDateTime.subtract(const Duration(hours: 1));
+
+      final reminderTime =
+          appointmentDateTime.subtract(const Duration(days: 1));
+
+      final doctorName =
+          '${widget.cubit.doctorsData[appointment.doctorId]?.firstName ?? ''} '
+                  '${widget.cubit.doctorsData[appointment.doctorId]?.lastName ?? ''}'
+              .capitalizeFirstChar;
+
+      final now = tz.TZDateTime.now(tz.local);
+
+      // إشعار تجريبي بعد دقيقة (للاختبار)
+      await LocalNotificationService.showScheduledNotification(
+        context,
+        id: appointment.id! + 12345,
+        title: 'إشعار تجريبي',
+        body: 'عندك كشف مع دكتور $doctorName يوم '
+            '${dateStr.substring(0, 10).toFullWithWeekday(context)}',
+        imageUrl:
+            widget.cubit.doctorsData[appointment.doctorId]?.profilePicture ??
+                AppImages.imageAvtarDoctorOnLine,
+        day: now.day,
+        hour: now.hour,
+        minute: now.minute,
+        second: now.second + 10,
+      );
+
+      await LocalNotificationService.showScheduledNotification(
+        context,
+        id: appointment.id!,
+        title: 'تذكير بموعدك',
+        body: 'عندك كشف مع $doctorName بعد ساعة',
+        imageUrl:
+            widget.cubit.doctorsData[appointment.doctorId]?.profilePicture ??
+                AppImages.imageAvtarDoctorOnLine,
+        day: notificationTime.day,
+        hour: notificationTime.hour,
+        minute: notificationTime.minute,
+      );
+
+      await LocalNotificationService.showScheduledNotification(
+        context,
+        id: appointment.id! + 10000,
+        title: 'موعدك غدًا',
+        body: 'فكرك عندك كشف مع $doctorName '
+            'بكرة الساعة ${timeStr.substring(0, 5).toLocalizedTime(context)}',
+        imageUrl:
+            widget.cubit.doctorsData[appointment.doctorId]?.profilePicture ??
+                AppImages.imageAvtarDoctorOnLine,
+        day: reminderTime.day,
+        hour: 9,
+        minute: 0,
+      );
+    } on Exception catch (e) {
+      showMessage(
+        context,
+        message: e.toString(),
+        type: ToastificationType.error,
+      );
+    }
   }
 }

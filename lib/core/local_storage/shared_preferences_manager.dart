@@ -14,6 +14,8 @@ class CacheDataHelper {
     }
   }
 
+  static Set<String> getKeys() => _sharedPreferences.getKeys();
+
   static Future<bool> setData({
     required String key,
     required dynamic value,

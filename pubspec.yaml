@@ -25,6 +25,7 @@ dependencies:
   flutter_bloc:
   flutter_dotenv:
   flutter_gemini:
+  flutter_local_notifications: ^19.2.0
   flutter_localizations:
     sdk: flutter
   flutter_map: 
@@ -33,22 +34,26 @@ dependencies:
   flutter_screenutil:
   flutter_steps: ^1.0.5
   flutter_svg: 
+  flutter_timezone: ^4.1.0
   geocoding: 
   geolocator:
   get_it:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  http: ^1.4.0
   image_picker:
   intl: 
   latlong2: 
   lock_orientation_screen:
   logger:
   path_provider: 
+  permission_handler: ^12.0.0+1
   pin_code_fields:
   pull_to_refresh:
   readmore:
   shared_preferences:
   skeletonizer:
+  timezone: ^0.10.1
   toastification: ^3.0.2
   url_launcher:
 
