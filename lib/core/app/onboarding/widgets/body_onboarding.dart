@@ -11,6 +11,7 @@ import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/asset_preloader_helper.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,6 +76,7 @@ class BodyOnboarding extends StatelessWidget {
                   context.read<OnboardingCubit>().nextPage();
                   if (BlocProvider.of<OnboardingCubit>(context).state
                       is OnboardingFinished) {
+                    AssetImagePreloader.removeOnboardingImagesFromCache();
                     CacheDataHelper.setData(
                       key: SharedPrefKey.keyIsFirstLaunch,
                       value: false,

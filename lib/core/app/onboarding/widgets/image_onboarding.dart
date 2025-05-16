@@ -21,24 +21,47 @@ class ImageOnboarding extends StatelessWidget {
               ? context.padding(horizontal: 25)
               : context.padding(),
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 500),
         switchInCurve: Curves.easeOutCubic,
         switchOutCurve: Curves.easeInCubic,
+        layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
+          return Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              ...previousChildren,
+              if (currentChild != null) currentChild,
+            ],
+          );
+        },
         transitionBuilder: (Widget child, Animation<double> animation) {
           final slideAnimation = Tween<Offset>(
-            begin: const Offset(0, 1),
+            begin: const Offset(1, 0),
             end: Offset.zero,
           ).animate(
             CurvedAnimation(
               parent: animation,
-              curve: Curves.easeInOut,
+              curve: Curves.easeOutQuart,
             ),
           );
+
+          final scaleAnimation = Tween<double>(
+            begin: 0.95,
+            end: 1,
+          ).animate(
+            CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOut,
+            ),
+          );
+
           return FadeTransition(
             opacity: animation,
             child: SlideTransition(
               position: slideAnimation,
-              child: child,
+              child: ScaleTransition(
+                scale: scaleAnimation,
+                child: child,
+              ),
             ),
           );
         },
