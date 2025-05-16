@@ -12,6 +12,7 @@ import 'package:curai_app_mobile/core/utils/helper/bolc_observer.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
+import 'package:curai_app_mobile/features/home/data/models/doctor_model/favorite_doctor.dart';
 import 'package:curai_app_mobile/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -60,7 +61,10 @@ Future<void> initializeDependencies() async {
   Hive
     ..init(appDocumentDir.path)
     ..registerAdapter(MessageBubbleModelAdapter())
-    ..registerAdapter(SenderTypeAdapter());
+    ..registerAdapter(SenderTypeAdapter())
+    // favorite doctor
+    ..registerAdapter(FavoriteDoctorAdapter());
+
   await Hive.openBox<MessageBubbleModel>('chat_messages');
 
   Bloc.observer = SimpleBlocObserver();

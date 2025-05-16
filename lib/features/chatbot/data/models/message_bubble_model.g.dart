@@ -70,8 +70,10 @@ class SenderTypeAdapter extends TypeAdapter<SenderType> {
     switch (obj) {
       case SenderType.user:
         writer.writeByte(0);
+        break;
       case SenderType.bot:
         writer.writeByte(1);
+        break;
     }
   }
 

@@ -139,7 +139,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               RowNavigateProfileWidget(
                 icon: CupertinoIcons.heart,
                 title: LangKeys.favorite,
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(Routes.favoriteScreen);
+                },
               ),
             _buildDivider(context),
             RowNavigateProfileWidget(
