@@ -6,7 +6,7 @@ import 'package:curai_app_mobile/features/home/domain/repositories/home_repo.dar
 import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_specializations_usecase.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/favorites_cubit/favorites_cubit.dart';
+import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 
 void setupHomeDI() {

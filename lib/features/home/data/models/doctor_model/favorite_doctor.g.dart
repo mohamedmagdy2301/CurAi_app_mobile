@@ -22,17 +22,23 @@ class FavoriteDoctorAdapter extends TypeAdapter<FavoriteDoctor> {
       specialization: fields[2] as String?,
       profilePicture: fields[3] as String?,
       consultationPrice: fields[4] as String?,
+      firstName: fields[5] as String?,
+      lastName: fields[6] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, FavoriteDoctor obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.username)
+      ..writeByte(5)
+      ..write(obj.firstName)
+      ..writeByte(6)
+      ..write(obj.lastName)
       ..writeByte(2)
       ..write(obj.specialization)
       ..writeByte(3)

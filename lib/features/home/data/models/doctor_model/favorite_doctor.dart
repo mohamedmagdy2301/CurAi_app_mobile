@@ -11,6 +11,8 @@ class FavoriteDoctor extends HiveObject {
     this.specialization,
     this.profilePicture,
     this.consultationPrice,
+    this.firstName,
+    this.lastName,
   });
 
   // تحويل من DoctorResults إلى FavoriteDoctor
@@ -18,6 +20,8 @@ class FavoriteDoctor extends HiveObject {
     return FavoriteDoctor(
       id: doctor.id!,
       username: doctor.username,
+      firstName: doctor.firstName,
+      lastName: doctor.lastName,
       specialization: doctor.specialization,
       profilePicture: doctor.profilePicture,
       consultationPrice: doctor.consultationPrice,
@@ -29,6 +33,12 @@ class FavoriteDoctor extends HiveObject {
   @HiveField(1)
   String? username;
 
+  @HiveField(5)
+  String? firstName;
+
+  @HiveField(6)
+  String? lastName;
+
   @HiveField(2)
   String? specialization;
 
@@ -38,11 +48,12 @@ class FavoriteDoctor extends HiveObject {
   @HiveField(4)
   String? consultationPrice;
 
-  // تحويل من FavoriteDoctor إلى DoctorResults
   DoctorResults toDoctorResults() {
     return DoctorResults(
       id: id,
       username: username,
+      firstName: firstName,
+      lastName: lastName,
       specialization: specialization,
       profilePicture: profilePicture,
       consultationPrice: consultationPrice,
