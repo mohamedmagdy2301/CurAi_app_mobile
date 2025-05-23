@@ -9,8 +9,8 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/bottom_shee
 import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/home_state.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_state.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/all_doctor_empty_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/all_doctor_listview_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/custom_appbar_all_doctor.dart';
@@ -39,7 +39,9 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeCubit>().getAllDoctor(speciality: widget.specialityName);
+    context
+        .read<SearchDoctorCubit>()
+        .getAllDoctor(speciality: widget.specialityName);
     _scrollController.addListener(_scrollListener);
   }
 
@@ -57,7 +59,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
     final maxScrollExtent = _scrollController.position.maxScrollExtent;
 
     if (currentPosition >= maxScrollExtent * 0.95) {
-      context.read<HomeCubit>().loadMoreDoctors();
+      context.read<SearchDoctorCubit>().loadMoreDoctors();
     }
   }
 
@@ -66,7 +68,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
     hideKeyboard();
     searchController.clear();
     setState(() {});
-    context.read<HomeCubit>().resetSearch();
+    context.read<SearchDoctorCubit>().resetSearch();
   }
 
   // Handle refresh
@@ -75,7 +77,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
       await Future<void>.delayed(const Duration(milliseconds: 800));
 
       // Refresh data
-      await context.read<HomeCubit>().getAllDoctor(
+      await context.read<SearchDoctorCubit>().getAllDoctor(
             speciality: widget.specialityName,
           );
       _refreshController.refreshCompleted();
@@ -102,7 +104,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               onChanged: (value) {
                 // Update UI to show/hide clear button
                 setState(() {
-                  context.read<HomeCubit>().searchDoctors(value);
+                  context.read<SearchDoctorCubit>().searchDoctors(value);
                 });
               },
               suffixIcon: searchController.text.isNotEmpty
@@ -114,7 +116,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               onPressedSort: () => customBottomSheetSortingDoctors(context),
             ),
           ),
-          BlocConsumer<HomeCubit, HomeState>(
+          BlocConsumer<SearchDoctorCubit, SearchDoctorState>(
             buildWhen: (_, current) =>
                 current is GetAllDoctorSuccess ||
                 current is GetAllDoctorFailure ||
@@ -133,7 +135,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               }
             },
             builder: (context, state) {
-              final cubit = context.read<HomeCubit>();
+              final cubit = context.read<SearchDoctorCubit>();
               final doctorsList = cubit.allDoctorsList;
 
               if (state is GetAllDoctorFailure) {

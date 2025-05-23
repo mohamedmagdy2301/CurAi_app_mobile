@@ -2,7 +2,7 @@
 
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/popular_doctor_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class AllDoctorListviewWidget extends StatelessWidget {
   });
 
   final List<DoctorResults> doctorsList;
-  final HomeCubit cubit;
+  final SearchDoctorCubit cubit;
 
   @override
   Widget build(BuildContext context) {

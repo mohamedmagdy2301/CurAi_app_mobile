@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/dependency_injection/chatbot_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/core_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/home_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/reviews_di.dart';
+import 'package:curai_app_mobile/core/dependency_injection/search_doctor_di.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -20,6 +21,9 @@ Future<void> setupAllDependencies() async {
 
   /// Home feature dependencies
   setupHomeDI();
+
+  /// Search Doctor feature dependencies
+  setupSearchDoctorDI();
 
   /// Reviews feature dependencies
   setupReviewsDI();

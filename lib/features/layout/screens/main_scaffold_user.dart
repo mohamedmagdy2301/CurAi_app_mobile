@@ -7,7 +7,8 @@ import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_di
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
@@ -90,8 +91,8 @@ class MainScaffoldUser extends StatelessWidget {
         create: (context) => di.sl<HomeCubit>(),
         child: const HomeScreen(),
       ),
-      BlocProvider<HomeCubit>(
-        create: (context) => di.sl<HomeCubit>(),
+      BlocProvider<SearchDoctorCubit>(
+        create: (context) => di.sl<SearchDoctorCubit>(),
         child: const AllDoctorScreen(),
       ),
       const ChatbotScreen(),

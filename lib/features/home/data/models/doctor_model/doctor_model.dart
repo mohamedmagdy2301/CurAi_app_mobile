@@ -120,7 +120,7 @@ List<DoctorResults> doctorsListDome = List.generate(
   5,
   (index) => DoctorResults(
     id: index,
-    username: 'محمد محمsa دمحمد',
+    username: 'user name mkkm',
     profilePicture:
         'https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
     consultationPrice: index.toString(),

@@ -3,9 +3,7 @@ import 'dart:async';
 
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_usecase.dart';
-import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
-import 'package:curai_app_mobile/features/home/domain/usecases/get_specializations_usecase.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/home_state.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum SortType {
@@ -18,16 +16,12 @@ enum SortType {
   lowRating,
 }
 
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(
+class SearchDoctorCubit extends Cubit<SearchDoctorState> {
+  SearchDoctorCubit(
     this._getAllDoctorUsecase,
-    this._getSpecializationsUsecase,
-    this._getDoctorByIdUsecase,
-  ) : super(HomeInitial());
+  ) : super(SearchDoctorInitial());
 
   final GetAllDoctorUsecase _getAllDoctorUsecase;
-  final GetDoctorByIdUsecase _getDoctorByIdUsecase;
-  final GetSpecializationsUsecase _getSpecializationsUsecase;
 
   // Doctors list and filtering
   List<DoctorResults> allDoctorsList = [];
@@ -229,52 +223,5 @@ class HomeCubit extends Cubit<HomeState> {
       query: currentQuery,
       speciality: currentSpeciality,
     );
-  }
-
-  // Get specializations
-  Future<void> getSpecializations() async {
-    emit(GetSpecializationsLoading());
-
-    final result = await _getSpecializationsUsecase.call(0);
-    if (isClosed) return;
-
-    result.fold(
-      (errMessage) {
-        if (isClosed) return;
-        emit(GetSpecializationsFailure(message: errMessage));
-      },
-      (specializationsList) {
-        if (isClosed) return;
-        emit(
-          GetSpecializationsSuccess(
-            specializationsList: specializationsList,
-          ),
-        );
-      },
-    );
-  }
-
-  // Get doctor by id
-  Future<void> getDoctorById({required int id}) async {
-    emit(GetDoctorByIdLoading());
-
-    final result = await _getDoctorByIdUsecase.call(id);
-
-    result.fold(
-      (errMessage) {
-        if (isClosed) return;
-        emit(GetDoctorByIdFailure(message: errMessage));
-      },
-      (data) {
-        if (isClosed) return;
-        emit(GetDoctorByIdSuccess(doctorResults: data));
-      },
-    );
-  }
-
-  @override
-  Future<void> close() {
-    _debounce?.cancel();
-    return super.close();
   }
 }

@@ -9,14 +9,14 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specializations_home_widget_listview.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/banner_emergency_home_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/banner_home_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/custom_appbar_home.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/title_section.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/doctor_home_widget_listview.dart';
-import 'package:flutter/material.dart'; // مهم علشان RefreshIndicator
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     context.read<HomeCubit>()
-      ..getAllDoctor(page: 2)
+      ..getDoctor()
       ..getSpecializations();
   }
 
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // Refresh data
       await context.read<HomeCubit>().getSpecializations();
-      await context.read<HomeCubit>().getAllDoctor(page: 2);
+      await context.read<HomeCubit>().getDoctor();
 
       _refreshController.refreshCompleted();
     } on Exception {
