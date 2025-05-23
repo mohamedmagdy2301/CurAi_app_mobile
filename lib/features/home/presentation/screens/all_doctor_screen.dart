@@ -1,12 +1,8 @@
 // ignore_for_file: parameter_assignments, use_build_context_synchronously
 
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
-import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/bottom_sheet_sort_doctors.dart';
@@ -15,14 +11,14 @@ import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_state.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/all_doctor_empty_widget.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/all_doctor_listview_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/custom_appbar_all_doctor.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/custom_search_bar.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/popular_doctor_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:toastification/toastification.dart';
@@ -138,6 +134,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
             },
             builder: (context, state) {
               final cubit = context.read<HomeCubit>();
+              final doctorsList = cubit.allDoctorsList;
 
               if (state is GetAllDoctorFailure) {
                 return SliverToBoxAdapter(
@@ -149,70 +146,26 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                     ),
                   ).center().paddingSymmetric(vertical: 45),
                 );
-              }
-
-              if (state is GetAllDoctorLoading) {
+              } else if (state is GetAllDoctorLoading) {
                 return SliverList.builder(
                   itemCount: doctorsListDome.length,
                   itemBuilder: (context, index) {
                     return Skeletonizer(
                       effect: shimmerEffect(context),
-                      child: PopularDoctorItemWidget(
+                      child: DoctorItemWidget(
                         doctorResults: doctorsListDome[index],
                       ),
                     );
                   },
                 );
-              }
-
-              final doctorsList = cubit.allDoctorsList;
-
-              if (doctorsList.isEmpty &&
+              } else if (doctorsList.isEmpty &&
                   (state is GetAllDoctorSuccess ||
                       state is GetAllDoctorPagenationLoading)) {
-                return SliverToBoxAdapter(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      80.hSpace,
-                      SvgPicture.asset(
-                        SvgImages.searchEmpty,
-                        width: 200.w,
-                        height: 200.h,
-                      ),
-                      40.hSpace,
-                      AutoSizeText(
-                        context.isStateArabic
-                            ? 'لا توجد اطباء بعد'
-                            : 'No Doctors found',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: TextStyleApp.regular26().copyWith(
-                          color: context.onSecondaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                return const AllDoctorEmptyWidget();
               }
-
-              return SliverList.builder(
-                itemCount: doctorsList.length + (cubit.isLoading ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index < doctorsList.length) {
-                    return PopularDoctorItemWidget(
-                      doctorResults: doctorsList[index],
-                    );
-                  } else {
-                    return Skeletonizer(
-                      effect: shimmerEffect(context),
-                      child: PopularDoctorItemWidget(
-                        doctorResults: doctorsListDome[0],
-                      ),
-                    );
-                  }
-                },
+              return AllDoctorListviewWidget(
+                doctorsList: doctorsList,
+                cubit: cubit,
               );
             },
           ),

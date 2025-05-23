@@ -20,7 +20,7 @@ class PopularDoctorWidget extends StatelessWidget {
         ListView.builder(
       itemCount: doctorsList.length,
       itemBuilder: (BuildContext context, int itemIndex) {
-        return PopularDoctorItemWidget(
+        return DoctorItemWidget(
           doctorResults: doctorsList[itemIndex],
         );
       },

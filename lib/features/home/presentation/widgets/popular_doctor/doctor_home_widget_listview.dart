@@ -36,7 +36,7 @@ class DoctorListViewHome extends StatelessWidget {
                   doctorsList[index].consultationPrice == null) {
                 return const SizedBox();
               }
-              return PopularDoctorItemWidget(
+              return DoctorItemWidget(
                 doctorResults: doctorsList[index],
               );
             },
@@ -58,7 +58,7 @@ class DoctorListViewHome extends StatelessWidget {
           itemBuilder: (context, index) {
             return Skeletonizer(
               effect: shimmerEffect(context),
-              child: PopularDoctorItemWidget(
+              child: DoctorItemWidget(
                 doctorResults: doctorsListDome[index],
               ),
             );
