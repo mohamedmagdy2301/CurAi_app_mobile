@@ -4,30 +4,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
 class FavoritesCubit extends Cubit<List<DoctorResults>> {
-  FavoritesCubit() : super([]) {
+  FavoritesCubit({required this.userId}) : super([]) {
+    _init();
+  }
+
+  final int userId;
+  late Box<FavoriteDoctor> _box;
+
+  String get _boxName => 'favoriteDoctors_$userId';
+
+  Future<void> _init() async {
+    _box = await Hive.openBox<FavoriteDoctor>(_boxName);
     loadFavorites();
   }
 
-  final String _boxName = 'favoriteDoctors';
-
-  Future<void> loadFavorites() async {
-    final box = await Hive.openBox<FavoriteDoctor>(_boxName);
-    final favorites = box.values.map((e) => e.toDoctorResults()).toList();
+  void loadFavorites() {
+    final favorites = _box.values.map((e) => e.toDoctorResults()).toList();
     emit(favorites);
   }
 
   Future<void> toggleFavorite(FavoriteDoctor doctor) async {
-    final box = await Hive.openBox<FavoriteDoctor>(_boxName);
-    if (box.containsKey(doctor.id)) {
-      await box.delete(doctor.id);
+    if (_box.containsKey(doctor.id)) {
+      await _box.delete(doctor.id);
     } else {
-      await box.put(doctor.id, doctor);
+      await _box.put(doctor.id, doctor);
     }
-    await loadFavorites();
+    loadFavorites();
   }
 
   bool isFavorite(int doctorId) {
-    final current = state;
-    return current.any((element) => element.id == doctorId);
+    return state.any((element) => element.id == doctorId);
   }
 }

@@ -1,5 +1,3 @@
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/favorite_doctor.dart';
-
 class AllDoctorModel {
   AllDoctorModel({
     this.count,

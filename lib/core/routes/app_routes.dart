@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
@@ -22,13 +23,13 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/register_scr
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/doctor_speciality_screen.dart';
-import 'package:curai_app_mobile/features/profile/presentation/screens/favorites_doctor_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
 import 'package:curai_app_mobile/features/layout/screens/notification_screen.dart';
+import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
+import 'package:curai_app_mobile/features/profile/presentation/screens/favorites_doctor_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/help_center_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
@@ -63,12 +64,14 @@ class AppRoutes {
       case Routes.forgetPasswordScreen:
         return BaseRoute(page: const ForgetPasswordScreen());
       case Routes.favoriteScreen:
+        final userId = getUserId();
         return BaseRoute(
           page: BlocProvider(
-            create: (context) => di.sl<FavoritesCubit>(),
+            create: (_) => FavoritesCubit(userId: userId),
             child: const FavoriteDoctorsScreen(),
           ),
         );
+
       case Routes.otpVerification:
         return BaseRoute(page: const OtpVerifcationScreen());
       case Routes.changePasswordScreen:
