@@ -10,10 +10,13 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/features/home/data/models/doctor_model/favorite_doctor.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/details_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/image_doctor_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
+import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,84 +30,118 @@ class DoctorItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => context.push(
-        BlocProvider<AppointmentPatientCubit>(
-          create: (context) => di.sl<AppointmentPatientCubit>(),
-          child: DoctorDetailsScreen(doctorResults: doctorResults),
-        ),
-      ),
-      borderRadius: BorderRadius.circular(10.r),
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.isDark
-              ? const Color.fromARGB(225, 0, 0, 0)
-              : const Color.fromARGB(222, 255, 255, 255),
-          borderRadius: BorderRadius.circular(8.r),
-          boxShadow: [
-            BoxShadow(
-              color: context.onSecondaryColor.withAlpha(5),
+    return BlocProvider(
+      create: (context) => di.sl<FavoritesCubit>(),
+      child: Stack(
+        children: [
+          InkWell(
+            onTap: () => context.push(
+              BlocProvider<AppointmentPatientCubit>(
+                create: (context) => di.sl<AppointmentPatientCubit>(),
+                child: DoctorDetailsScreen(doctorResults: doctorResults),
+              ),
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            ImageDoctorWidget(doctorResults: doctorResults),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: context.W * .55,
-                  child: AutoSizeText(
-                    '${context.translate(LangKeys.dr)} '
-                    '${doctorResults.firstName?.capitalizeFirstChar ?? ''} '
-                    '${doctorResults.lastName?.capitalizeFirstChar ?? ''}',
-                    maxLines: 1,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyleApp.bold22().copyWith(
-                      color: context.onPrimaryColor,
-                    ),
+            borderRadius: BorderRadius.circular(10.r),
+            child: Container(
+              decoration: BoxDecoration(
+                color: context.isDark
+                    ? const Color.fromARGB(225, 0, 0, 0)
+                    : const Color.fromARGB(222, 255, 255, 255),
+                borderRadius: BorderRadius.circular(8.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: context.onSecondaryColor.withAlpha(5),
                   ),
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: context.W * .55,
-                      child: AutoSizeText(
-                        specializationName(
-                          doctorResults.specialization ?? '',
-                          context.isStateArabic,
-                        ),
-                        maxLines: 1,
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleApp.medium16().copyWith(
-                          color: context.onPrimaryColor,
+                ],
+              ),
+              child: Row(
+                children: [
+                  ImageDoctorWidget(doctorResults: doctorResults),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: context.W * .55,
+                        child: AutoSizeText(
+                          '${context.translate(LangKeys.dr)} '
+                          '${doctorResults.firstName?.capitalizeFirstChar ?? ''} '
+                          '${doctorResults.lastName?.capitalizeFirstChar ?? ''}',
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyleApp.bold22().copyWith(
+                            color: context.onPrimaryColor,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: context.W * .55,
-                  child: AutoSizeText(
-                    '${doctorResults.consultationPrice} '
-                    '${context.translate(LangKeys.egp)}',
-                    maxLines: 1,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyleApp.bold16().copyWith(
-                      color: context.onSecondaryColor,
-                    ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: context.W * .55,
+                            child: AutoSizeText(
+                              specializationName(
+                                doctorResults.specialization ?? '',
+                                context.isStateArabic,
+                              ),
+                              maxLines: 1,
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyleApp.medium16().copyWith(
+                                color: context.onPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: context.W * .55,
+                        child: AutoSizeText(
+                          '${doctorResults.consultationPrice} '
+                          '${context.translate(LangKeys.egp)}',
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyleApp.bold16().copyWith(
+                            color: context.onSecondaryColor,
+                          ),
+                        ),
+                      ),
+                      RateingDoctorWidget(doctorResults: doctorResults),
+                    ],
+                  ).paddingSymmetric(horizontal: 12, vertical: 5),
+                ],
+              ),
+            ),
+          ).paddingSymmetric(horizontal: 18, vertical: 8),
+          BlocBuilder<FavoritesCubit, List<DoctorResults>>(
+            builder: (context, state) {
+              final favoriteCubit = context.watch<FavoritesCubit>();
+              final isFav = favoriteCubit.isFavorite(doctorResults.id ?? 0);
+              return Positioned(
+                top: 0.h,
+                right: context.isStateArabic ? null : 16.w,
+                left: context.isStateArabic ? 16.w : null,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  icon: Icon(
+                    isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+                    size: 26.sp,
+                    color: isFav ? Colors.red : context.onSecondaryColor,
                   ),
+                  onPressed: () {
+                    final doctorHive =
+                        FavoriteDoctor.fromDoctorResults(doctorResults);
+                    favoriteCubit.toggleFavorite(doctorHive);
+                  },
                 ),
-                RateingDoctorWidget(doctorResults: doctorResults),
-              ],
-            ).paddingSymmetric(horizontal: 12, vertical: 5),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
       ),
-    ).paddingSymmetric(horizontal: 18, vertical: 8);
+    );
   }
 }
