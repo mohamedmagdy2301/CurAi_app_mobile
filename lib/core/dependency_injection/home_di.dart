@@ -1,5 +1,6 @@
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/home/data/datasources/home_remote_data_source.dart';
 import 'package:curai_app_mobile/features/home/data/repositories/home_repo_impl.dart';
 import 'package:curai_app_mobile/features/home/domain/repositories/home_repo.dart';
@@ -7,6 +8,7 @@ import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_us
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_specializations_usecase.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dart';
+import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 
 void setupHomeDI() {
   //! Cubit
@@ -18,8 +20,7 @@ void setupHomeDI() {
         sl<GetDoctorByIdUsecase>(),
       ),
     )
-    // ..registerFactory<FavoritesCubit>(FavoritesCubit.new)
-
+    ..registerFactory<FavoritesCubit>(() => FavoritesCubit(userId: getUserId()))
     //! Usecases
     ..registerLazySingleton(() => GetAllDoctorUsecase(repository: sl()))
     ..registerLazySingleton(() => GetSpecializationsUsecase(repository: sl()))

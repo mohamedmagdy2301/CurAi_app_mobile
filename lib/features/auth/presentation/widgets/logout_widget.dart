@@ -30,14 +30,11 @@ class LogoutWidget extends StatelessWidget {
             current is LogoutLoading,
         listener: (context, state) async {
           if (state is LogoutSuccess) {
-            context.pop();
-
             // showMessage(
             //   context,
             //   type: ToastificationType.success,
             //   message: state.message,
             // );
-
             await clearUserData();
             await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
             if (!context.mounted) return;
@@ -45,8 +42,6 @@ class LogoutWidget extends StatelessWidget {
             context.read<AuthCubit>().clearState();
           }
           if (state is LogoutError) {
-            context.pop();
-
             showMessage(
               context,
               type: ToastificationType.error,
@@ -65,7 +60,6 @@ class LogoutWidget extends StatelessWidget {
                 title: context.translate(LangKeys.logout),
                 message: context.translate(LangKeys.logoutMessage),
                 onPressedOk: () {
-                  context.pop();
                   context.read<AuthCubit>().logout(context);
                 },
                 onPressedCancel: () => context.pop(),
