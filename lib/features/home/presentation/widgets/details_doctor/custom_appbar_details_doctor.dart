@@ -39,7 +39,9 @@ class CustomAppBarDetailsDoctor extends StatelessWidget
       ),
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios),
-        onPressed: () => context.pop(),
+        onPressed: () {
+          context.pop();
+        },
       ),
       actions: [
         IconButton(

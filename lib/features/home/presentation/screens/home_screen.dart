@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // Refresh data
       await context.read<HomeCubit>().getSpecializations();
       await context.read<HomeCubit>().getAllDoctor(page: 2);
+
       _refreshController.refreshCompleted();
     } on Exception {
       _refreshController.refreshFailed();

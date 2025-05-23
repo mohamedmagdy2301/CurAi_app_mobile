@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DoctorItemWidget extends StatelessWidget {
+class DoctorItemWidget extends StatefulWidget {
   const DoctorItemWidget({
     required this.doctorResults,
     super.key,
@@ -29,119 +29,117 @@ class DoctorItemWidget extends StatelessWidget {
   final DoctorResults doctorResults;
 
   @override
+  State<DoctorItemWidget> createState() => _DoctorItemWidgetState();
+}
+
+class _DoctorItemWidgetState extends State<DoctorItemWidget> {
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di.sl<FavoritesCubit>(),
-      child: Stack(
-        children: [
-          InkWell(
-            onTap: () => context.push(
-              BlocProvider<AppointmentPatientCubit>(
-                create: (context) => di.sl<AppointmentPatientCubit>(),
-                child: DoctorDetailsScreen(doctorResults: doctorResults),
-              ),
+    final favoriteCubit = context.watch<FavoritesCubit>();
+    final isFav = favoriteCubit.isFavorite(widget.doctorResults.id ?? 0);
+    return Stack(
+      children: [
+        InkWell(
+          onTap: () => context.push(
+            BlocProvider<AppointmentPatientCubit>(
+              create: (context) => di.sl<AppointmentPatientCubit>(),
+              child: DoctorDetailsScreen(doctorResults: widget.doctorResults),
             ),
-            borderRadius: BorderRadius.circular(10.r),
-            child: Container(
-              decoration: BoxDecoration(
-                color: context.isDark
-                    ? const Color.fromARGB(225, 0, 0, 0)
-                    : const Color.fromARGB(222, 255, 255, 255),
-                borderRadius: BorderRadius.circular(8.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: context.onSecondaryColor.withAlpha(5),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  ImageDoctorWidget(doctorResults: doctorResults),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: context.W * .55,
-                        child: AutoSizeText(
-                          '${context.translate(LangKeys.dr)} '
-                          '${doctorResults.firstName?.capitalizeFirstChar ?? ''} '
-                          '${doctorResults.lastName?.capitalizeFirstChar ?? ''}',
-                          maxLines: 1,
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyleApp.bold22().copyWith(
-                            color: context.onPrimaryColor,
-                          ),
+          ),
+          borderRadius: BorderRadius.circular(10.r),
+          child: Container(
+            decoration: BoxDecoration(
+              color: context.isDark
+                  ? const Color.fromARGB(225, 0, 0, 0)
+                  : const Color.fromARGB(222, 255, 255, 255),
+              borderRadius: BorderRadius.circular(8.r),
+              boxShadow: [
+                BoxShadow(
+                  color: context.onSecondaryColor.withAlpha(5),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                ImageDoctorWidget(doctorResults: widget.doctorResults),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: context.W * .55,
+                      child: AutoSizeText(
+                        '${context.translate(LangKeys.dr)} '
+                        '${widget.doctorResults.firstName?.capitalizeFirstChar ?? ''} '
+                        '${widget.doctorResults.lastName?.capitalizeFirstChar ?? ''}',
+                        maxLines: 1,
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyleApp.bold22().copyWith(
+                          color: context.onPrimaryColor,
                         ),
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: context.W * .55,
-                            child: AutoSizeText(
-                              specializationName(
-                                doctorResults.specialization ?? '',
-                                context.isStateArabic,
-                              ),
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyleApp.medium16().copyWith(
-                                color: context.onPrimaryColor,
-                              ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: context.W * .55,
+                          child: AutoSizeText(
+                            specializationName(
+                              widget.doctorResults.specialization ?? '',
+                              context.isStateArabic,
+                            ),
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyleApp.medium16().copyWith(
+                              color: context.onPrimaryColor,
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: context.W * .55,
-                        child: AutoSizeText(
-                          '${doctorResults.consultationPrice} '
-                          '${context.translate(LangKeys.egp)}',
-                          maxLines: 1,
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyleApp.bold16().copyWith(
-                            color: context.onSecondaryColor,
-                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: context.W * .55,
+                      child: AutoSizeText(
+                        '${widget.doctorResults.consultationPrice} '
+                        '${context.translate(LangKeys.egp)}',
+                        maxLines: 1,
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyleApp.bold16().copyWith(
+                          color: context.onSecondaryColor,
                         ),
                       ),
-                      RateingDoctorWidget(doctorResults: doctorResults),
-                    ],
-                  ).paddingSymmetric(horizontal: 12, vertical: 5),
-                ],
-              ),
+                    ),
+                    RateingDoctorWidget(doctorResults: widget.doctorResults),
+                  ],
+                ).paddingSymmetric(horizontal: 12, vertical: 5),
+              ],
             ),
-          ).paddingSymmetric(horizontal: 18, vertical: 8),
-          BlocBuilder<FavoritesCubit, List<DoctorResults>>(
-            builder: (context, state) {
-              final favoriteCubit = context.watch<FavoritesCubit>();
-              final isFav = favoriteCubit.isFavorite(doctorResults.id ?? 0);
-              return Positioned(
-                top: 0.h,
-                right: context.isStateArabic ? null : 16.w,
-                left: context.isStateArabic ? 16.w : null,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  icon: Icon(
-                    isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-                    size: 26.sp,
-                    color: isFav ? Colors.red : context.onSecondaryColor,
-                  ),
-                  onPressed: () {
-                    final doctorHive =
-                        FavoriteDoctor.fromDoctorResults(doctorResults);
-                    favoriteCubit.toggleFavorite(doctorHive);
-                  },
-                ),
-              );
+          ),
+        ).paddingSymmetric(horizontal: 18, vertical: 8),
+        Positioned(
+          top: 0.h,
+          right: context.isStateArabic ? null : 16.w,
+          left: context.isStateArabic ? 16.w : null,
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            icon: Icon(
+              isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+              size: 26.sp,
+              color: isFav ? Colors.red : context.onSecondaryColor,
+            ),
+            onPressed: () {
+              final doctorHive =
+                  FavoriteDoctor.fromDoctorResults(widget.doctorResults);
+              favoriteCubit.toggleFavorite(doctorHive);
             },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

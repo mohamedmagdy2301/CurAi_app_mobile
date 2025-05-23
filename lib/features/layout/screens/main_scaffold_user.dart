@@ -11,6 +11,7 @@ import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit.dar
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
+import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,36 +38,43 @@ class MainScaffoldUser extends StatelessWidget {
                 }
               }
             },
-            child: Scaffold(
-              backgroundColor: context.backgroundColor,
-              resizeToAvoidBottomInset: true,
-              bottomNavigationBar: Builder(
-                builder: (context) {
-                  return currentIndex == 2
-                      ? const SizedBox.shrink()
-                      : NavigationBar(
-                          labelBehavior:
-                              NavigationDestinationLabelBehavior.alwaysHide,
-                          animationDuration: const Duration(seconds: 1),
-                          height: context.H * 0.09,
-                          indicatorColor: Colors.transparent,
-                          backgroundColor: context.primaryColor.withAlpha(10),
-                          overlayColor: WidgetStateProperty.all(
-                            context.primaryColor.withAlpha(20),
-                          ),
-                          indicatorShape: Border.all(style: BorderStyle.none),
-                          elevation: 0,
-                          destinations: _buildDestinations(context),
-                          selectedIndex: currentIndex,
-                          onDestinationSelected: (index) {
-                            context.read<NavigationCubit>().updateIndex(index);
-                          },
-                        );
-                },
-              ),
-              body: IndexedStack(
-                index: currentIndex,
-                children: _buildScreens(context),
+            child: BlocProvider(
+              create: (context) => di.sl<FavoritesCubit>(),
+              child: Scaffold(
+                backgroundColor: context.backgroundColor,
+                resizeToAvoidBottomInset: true,
+                bottomNavigationBar: Builder(
+                  builder: (context) {
+                    return currentIndex == 2
+                        ? const SizedBox.shrink()
+                        : NavigationBar(
+                            labelBehavior:
+                                NavigationDestinationLabelBehavior.alwaysHide,
+                            animationDuration: const Duration(seconds: 1),
+                            height: context.H * 0.09,
+                            indicatorColor: Colors.transparent,
+                            backgroundColor: context.primaryColor.withAlpha(10),
+                            overlayColor: WidgetStateProperty.all(
+                              context.primaryColor.withAlpha(20),
+                            ),
+                            indicatorShape: Border.all(style: BorderStyle.none),
+                            elevation: 0,
+                            destinations: _buildDestinations(context),
+                            selectedIndex: currentIndex,
+                            onDestinationSelected: (index) {
+                              context.read<FavoritesCubit>().loadFavorites();
+
+                              context
+                                  .read<NavigationCubit>()
+                                  .updateIndex(index);
+                            },
+                          );
+                  },
+                ),
+                body: IndexedStack(
+                  index: currentIndex,
+                  children: _buildScreens(context),
+                ),
               ),
             ),
           );
