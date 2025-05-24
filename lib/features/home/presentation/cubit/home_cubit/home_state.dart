@@ -11,19 +11,38 @@ abstract class HomeState extends Equatable {
 
 class HomeInitial extends HomeState {}
 
-//! Doctor States
-class GetDoctorLoading extends HomeState {}
+//! Popular Doctor States
+class GetPopularDoctorLoading extends HomeState {}
 
-class GetDoctorFailure extends HomeState {
-  const GetDoctorFailure({required this.message});
+class GetPopularDoctorFailure extends HomeState {
+  const GetPopularDoctorFailure({required this.message});
   final String message;
 
   @override
   List<Object?> get props => [message];
 }
 
-class GetDoctorSuccess extends HomeState {
-  const GetDoctorSuccess({required this.doctorResults});
+class GetPopularDoctorSuccess extends HomeState {
+  const GetPopularDoctorSuccess({required this.doctorResults});
+  final List<DoctorResults> doctorResults;
+
+  @override
+  List<Object?> get props => [doctorResults];
+}
+
+//! Top Doctor States
+class GetTopDoctorLoading extends HomeState {}
+
+class GetTopDoctorFailure extends HomeState {
+  const GetTopDoctorFailure({required this.message});
+  final String message;
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class GetTopDoctorSuccess extends HomeState {
+  const GetTopDoctorSuccess({required this.doctorResults});
   final List<DoctorResults> doctorResults;
 
   @override

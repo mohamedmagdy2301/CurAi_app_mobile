@@ -76,4 +76,24 @@ class HomeRepoImpl extends HomeRepo {
       },
     );
   }
+
+  @override
+  Future<Either<String, List<DoctorResults>>> getTopDoctor() async {
+    final response = await remoteDataSource.getTopDoctor();
+    return response.fold(
+      (failure) {
+        return left(failure.message);
+      },
+      (responseData) {
+        try {
+          final topDoctorModel = (responseData as List)
+              .map((e) => DoctorResults.fromJson(e as Map<String, dynamic>))
+              .toList();
+          return right(topDoctorModel);
+        } on Exception catch (e) {
+          return left('Error parsing response: $e');
+        }
+      },
+    );
+  }
 }

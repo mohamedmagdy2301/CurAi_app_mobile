@@ -358,13 +358,15 @@ class DioConsumer implements ApiConsumer {
           await _processQueue();
           return true;
         } else {
-          log('Failed to extract access token from response');
+          if (kDebugMode) log('Failed to extract access token from response');
         }
       } else {
-        log('Refresh token request failed with status: ${response.statusCode}');
+        if (kDebugMode) {
+          log('Refresh token request failed with status: ${response.statusCode}');
+        }
       }
     } catch (e) {
-      log('Exception during token refresh: $e');
+      if (kDebugMode) log('Exception during token refresh: $e');
     }
 
     await _handleLogout();

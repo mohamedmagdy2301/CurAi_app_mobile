@@ -5,39 +5,67 @@ import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_m
 import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_specializations_usecase.dart';
+import 'package:curai_app_mobile/features/home/domain/usecases/get_top_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(
-    this._getDoctorUsecase,
+    this._getPopularDoctorUsecase,
     this._getSpecializationsUsecase,
     this._getDoctorByIdUsecase,
+    this._getTopDoctorUsecase,
   ) : super(HomeInitial());
 
-  final GetAllDoctorUsecase _getDoctorUsecase;
+  final GetAllDoctorUsecase _getPopularDoctorUsecase;
+  final GetTopDoctorUsecase _getTopDoctorUsecase;
   final GetDoctorByIdUsecase _getDoctorByIdUsecase;
   final GetSpecializationsUsecase _getSpecializationsUsecase;
 
-  // Get all doctors with optional filtering and pagination
-  Future<void> getDoctor() async {
+  // Get popular doctors with optional filtering and pagination
+  Future<void> getPopularDoctor() async {
     if (isClosed) return;
-    emit(GetDoctorLoading());
+    emit(GetPopularDoctorLoading());
 
-    final result = await _getDoctorUsecase.call(2, '', '');
+    final result = await _getPopularDoctorUsecase.call(2, '', '');
 
     if (isClosed) return;
 
     result.fold(
       (errMessage) {
         if (isClosed) return;
-        emit(GetDoctorFailure(message: errMessage));
+        emit(GetPopularDoctorFailure(message: errMessage));
       },
       (data) {
         if (isClosed) return;
         emit(
-          GetDoctorSuccess(
+          GetPopularDoctorSuccess(
             doctorResults: _filterValidDoctors(data.results ?? []),
+          ),
+        );
+      },
+    );
+  }
+
+  // Get top doctors with optional filtering and pagination
+  Future<void> getTopDoctor() async {
+    if (isClosed) return;
+    emit(GetTopDoctorLoading());
+
+    final result = await _getTopDoctorUsecase.call();
+
+    if (isClosed) return;
+
+    result.fold(
+      (errMessage) {
+        if (isClosed) return;
+        emit(GetTopDoctorFailure(message: errMessage));
+      },
+      (data) {
+        if (isClosed) return;
+        emit(
+          GetTopDoctorSuccess(
+            doctorResults: _filterValidDoctors(data),
           ),
         );
       },

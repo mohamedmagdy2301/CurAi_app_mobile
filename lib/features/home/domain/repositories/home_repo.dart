@@ -10,6 +10,7 @@ abstract class HomeRepo {
     String? query,
     String? speciality,
   });
+  Future<Either<String, List<DoctorResults>>> getTopDoctor();
   Future<Either<String, DoctorResults>> getDoctorById({
     int? id,
   });

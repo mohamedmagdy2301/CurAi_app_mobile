@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     context.read<HomeCubit>()
-      ..getDoctor()
+      ..getPopularDoctor()
       ..getSpecializations();
   }
 
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // Refresh data
       await context.read<HomeCubit>().getSpecializations();
-      await context.read<HomeCubit>().getDoctor();
+      await context.read<HomeCubit>().getPopularDoctor();
 
       _refreshController.refreshCompleted();
     } on Exception {

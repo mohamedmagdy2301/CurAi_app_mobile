@@ -9,6 +9,7 @@ abstract class HomeRemoteDataSource {
     String? query,
     String? speciality,
   });
+  Future<Either<Failure, Map<String, dynamic>>> getTopDoctor();
   Future<Either<Failure, Map<String, dynamic>>> getDoctorById({
     int? id,
   });
@@ -33,6 +34,21 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         'specialization': speciality,
       },
     );
+
+    return response.fold(
+      left,
+      (r) {
+        if (r is Map<String, dynamic>) {
+          return right(r);
+        }
+        return left(ServerFailure('Invalid response format'));
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getTopDoctor() async {
+    final response = await dioConsumer.get(EndPoints.getTopDoctor);
 
     return response.fold(
       left,

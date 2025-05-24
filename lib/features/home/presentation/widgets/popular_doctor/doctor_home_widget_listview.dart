@@ -20,11 +20,11 @@ class DoctorListViewHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen: (previous, current) =>
-          current is GetDoctorSuccess ||
-          current is GetDoctorFailure ||
-          current is GetDoctorLoading,
+          current is GetPopularDoctorSuccess ||
+          current is GetPopularDoctorFailure ||
+          current is GetPopularDoctorLoading,
       builder: (context, state) {
-        if (state is GetDoctorSuccess) {
+        if (state is GetPopularDoctorSuccess) {
           final doctorsList = state.doctorResults;
 
           return SliverList.builder(
@@ -35,7 +35,7 @@ class DoctorListViewHome extends StatelessWidget {
               );
             },
           );
-        } else if (state is GetDoctorFailure) {
+        } else if (state is GetPopularDoctorFailure) {
           return SliverToBoxAdapter(
             child: Text(
               state.message,
