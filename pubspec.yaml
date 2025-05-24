@@ -26,6 +26,7 @@ dependencies:
   flutter_bloc:
   flutter_dotenv:
   flutter_gemini:
+  flutter_inappwebview: ^6.1.5
   flutter_local_notifications: ^19.2.0
   flutter_localizations:
     sdk: flutter
