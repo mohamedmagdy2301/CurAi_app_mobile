@@ -14,11 +14,13 @@ import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/payment/paymob_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/payment_appointment/custom_appbar_payment_appointment.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:toastification/toastification.dart';
 
 class PaymentAppointmentScreen extends StatefulWidget {
   const PaymentAppointmentScreen({
@@ -35,17 +37,50 @@ class PaymentAppointmentScreen extends StatefulWidget {
 }
 
 class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
+  final GlobalKey<_PaymentSelectionWidgetState> _paymentSelectionKey =
+      PaymentSelectionWidget.globalKey;
+  bool isLoading = false;
+
   void _pay() {
-    PaymobManager.getPaymentKey(
-      int.parse(widget.doctorResults.consultationPrice!.split('.').first),
-    ).then(
-      (paymentKey) => context.pushNamed(
-        Routes.paymentGatewayScreen,
-        arguments: {
-          'paymentToken': paymentKey,
-          'appointmentId': widget.appointmentId,
-        },
-      ),
+    final priceString = widget.doctorResults.consultationPrice ?? '0';
+    final price = int.tryParse(priceString.split('.').first) ?? 0;
+
+    final selectedPayment = _paymentSelectionKey.currentState!.selectedPayment;
+
+    switch (selectedPayment) {
+      case 'Credit Card':
+        setState(() {
+          isLoading = true;
+        });
+
+        PaymobManager.getCreditCardPaymentKey(price).then((paymentKey) {
+          context.pushNamed(
+            Routes.paymentGatewayScreen,
+            arguments: {
+              'paymentToken': paymentKey,
+              'appointmentId': widget.appointmentId,
+            },
+          );
+          setState(() {
+            isLoading = false;
+          });
+        });
+      case 'Wallet Payment':
+        _showInfoDialog();
+      case 'Bank Transfer':
+        _showInfoDialog();
+      case 'Cash':
+        _showInfoDialog();
+    }
+  }
+
+  void _showInfoDialog() {
+    showMessage(
+      context,
+      message: context.isStateArabic
+          ? 'قريبا سوف نضيف هذه الميزة في CurAi\nالآن يمكنك الدفع باستخدام بطاقة الائتمان'
+          : 'This feature will be added soon in CurAi\nNow you can pay using Credit Card',
+      type: ToastificationType.info,
     );
   }
 
@@ -65,10 +100,11 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
             ),
           ),
           20.hSpace,
-          const PaymentSelectionWidget(),
+          PaymentSelectionWidget(key: PaymentSelectionWidget.globalKey),
           const Spacer(),
           CustomButton(
             title: LangKeys.payment,
+            isLoading: isLoading,
             onPressed: _pay,
           ),
           10.hSpace,
@@ -132,6 +168,8 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
 
 class PaymentSelectionWidget extends StatefulWidget {
   const PaymentSelectionWidget({super.key});
+  static final GlobalKey<_PaymentSelectionWidgetState> globalKey =
+      GlobalKey<_PaymentSelectionWidgetState>();
 
   @override
   _PaymentSelectionWidgetState createState() => _PaymentSelectionWidgetState();
@@ -198,6 +236,20 @@ class _PaymentSelectionWidgetState extends State<PaymentSelectionWidget> {
           onChanged: (value) => setState(() => selectedPayment = value!),
         ).paddingOnly(bottom: 12),
         ...creditCards.map(_buildCardItem),
+        RadioListTile<String>(
+          fillColor: WidgetStateProperty.all(context.primaryColor),
+          title: AutoSizeText(
+            context.isStateArabic ? 'محفظة الدفع' : 'Wallet Payment',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyleApp.bold18().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ),
+          value: 'Wallet Payment',
+          groupValue: selectedPayment,
+          onChanged: (value) => setState(() => selectedPayment = value!),
+        ).paddingSymmetric(vertical: 8),
         RadioListTile<String>(
           fillColor: WidgetStateProperty.all(context.primaryColor),
           title: AutoSizeText(

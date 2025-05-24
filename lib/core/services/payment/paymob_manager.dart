@@ -13,7 +13,7 @@ class PaymobManager {
   static final PaymobManager _instance = PaymobManager._();
 
   static final Dio _dio = Dio();
-  static Future<String> getPaymentKey(int amount) async {
+  static Future<String> getCreditCardPaymentKey(int amount) async {
     if (kDebugMode) {
       _dio.interceptors.add(di.sl<LogInterceptor>());
     }
@@ -63,29 +63,52 @@ class PaymobManager {
     return response.data['id'] as int;
   }
 
+  static Future<String> getWalletPaymentKey(int amount) async {
+    if (kDebugMode) {
+      _dio.interceptors.add(di.sl<LogInterceptor>());
+    }
+    try {
+      final authanticationToken = await _getAuthanticationToken();
+
+      final orderId = await _getOrderId(
+        authanticationToken: authanticationToken,
+        amount: (100 * amount).toString(),
+      );
+
+      final paymentKey = await _getPaymentKey(
+        authanticationToken: authanticationToken,
+        amount: (100 * amount).toString(),
+        orderId: orderId.toString(),
+        isWallet: true,
+      );
+      return paymentKey;
+    } on Exception catch (_) {
+      throw Exception();
+    }
+  }
+
   static Future<String> _getPaymentKey({
     required String authanticationToken,
     required String orderId,
     required String amount,
+    bool isWallet = false,
   }) async {
     final response = await _dio.post(
       EndPointsPayment.getPaymentKey,
       data: {
-        //ALL OF THEM ARE REQIERD
         'expiration': 3600,
         'auth_token': authanticationToken,
         'order_id': orderId,
-        'integration_id': EnvVariables.cardPaymentMethodIntegrationId,
+        'integration_id': isWallet
+            ? EnvVariables.walletPaymentMethodIntegrationId
+            : EnvVariables.cardPaymentMethodIntegrationId,
         'amount_cents': amount,
         'currency': 'EGP',
         'billing_data': {
-          //Have To Be Values
           'first_name': 'Clifford',
           'last_name': 'Nicolas',
           'email': 'claudette09@exa.com',
           'phone_number': '+86(8)9135210487',
-
-          //Can Set "NA"
           'apartment': 'NA',
           'floor': 'NA',
           'street': 'NA',
