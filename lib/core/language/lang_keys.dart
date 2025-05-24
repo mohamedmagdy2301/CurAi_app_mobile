@@ -86,6 +86,7 @@ class LangKeys {
   static const String findNearby = 'find_nearby';
   static const String seeAll = 'see_all';
   static const String doctorSpeciality = 'doctor_speciality';
+  static const String topDoctors = 'top_doctors';
   static const String doctorDetails = 'doctor_details';
   static const String popularDoctor = 'popular_doctor';
   static const String noData = 'no_data';

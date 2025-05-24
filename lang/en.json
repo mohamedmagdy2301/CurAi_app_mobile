@@ -203,5 +203,6 @@
   "complete"  : "Complete",
   "finish" : "Finish"
  ,
- "emergency_department"  : "Emergency Department"
+ "emergency_department"  : "Emergency Department",
+  "top_doctors" : "Top Doctors"
 }

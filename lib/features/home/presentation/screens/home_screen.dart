@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
@@ -77,10 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
             const CustomAppBarHome(),
             SliverToBoxAdapter(child: const BannerHomeWidget().center()),
             SliverToBoxAdapter(child: 5.hSpace),
-            // if (getRole() == 'patient')
-            SliverToBoxAdapter(
-              child: const BannerEmergencyHomeWidget().center(),
-            ),
+            if (getRole() == 'patient')
+              SliverToBoxAdapter(
+                child: const BannerEmergencyHomeWidget().center(),
+              ),
             SliverToBoxAdapter(child: 7.hSpace),
             SliverToBoxAdapter(
               child: TitleSectionWidget(
@@ -92,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SliverToBoxAdapter(child: SpecializationsListViewHome()),
             SliverToBoxAdapter(
               child: AutoSizeText(
-                context.isStateArabic ? 'أفضل الأطباء' : 'Top Doctors',
+                context.translate(LangKeys.topDoctors),
                 maxLines: 1,
                 style: TextStyleApp.bold20().copyWith(
                   color: context.primaryColor,

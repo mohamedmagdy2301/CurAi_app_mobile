@@ -61,6 +61,7 @@ class TopDoctorListviewWidget extends StatelessWidget {
               return Skeletonizer(
                 effect: shimmerEffect(context),
                 child: TopDoctorItemWidget(
+                  isLoading: true,
                   doctorsList: doctorsListDome[index],
                 ),
               );

@@ -25,8 +25,10 @@ class DoctorItemWidget extends StatefulWidget {
   const DoctorItemWidget({
     required this.doctorResults,
     super.key,
+    this.isLoading,
   });
   final DoctorResults doctorResults;
+  final bool? isLoading;
 
   @override
   State<DoctorItemWidget> createState() => _DoctorItemWidgetState();
@@ -61,7 +63,10 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
             ),
             child: Row(
               children: [
-                ImageDoctorWidget(doctorResults: widget.doctorResults),
+                ImageDoctorWidget(
+                  doctorResults: widget.doctorResults,
+                  isLoading: widget.isLoading,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -69,8 +74,8 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       width: context.W * .55,
                       child: AutoSizeText(
                         '${context.translate(LangKeys.dr)} '
-                        '${widget.doctorResults.firstName?.capitalizeFirstChar ?? ''} '
-                        '${widget.doctorResults.lastName?.capitalizeFirstChar ?? ''}',
+                        '${widget.doctorResults.firstName?.capitalizeFirstChar} '
+                        '${widget.doctorResults.lastName?.capitalizeFirstChar}',
                         maxLines: 1,
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.ellipsis,

@@ -53,6 +53,7 @@ class PopularDoctorListViewHome extends StatelessWidget {
             return Skeletonizer(
               effect: shimmerEffect(context),
               child: DoctorItemWidget(
+                isLoading: true,
                 doctorResults: doctorsListDome[index],
               ),
             );

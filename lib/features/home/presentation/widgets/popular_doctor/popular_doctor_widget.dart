@@ -7,17 +7,7 @@ class PopularDoctorWidget extends StatelessWidget {
   final List<DoctorResults> doctorsList;
   @override
   Widget build(BuildContext context) {
-    return
-        //  CarouselSlider.builder(
-        //   options: CarouselOptions(
-        //     height: context.H * 0.16,
-        //     autoPlay: true,
-        //     autoPlayInterval: const Duration(seconds: 10),
-        //     autoPlayCurve: Curves.easeInBack,
-        //     enlargeCenterPage: true,
-        //     viewportFraction: .9,
-        //   ),
-        ListView.builder(
+    return ListView.builder(
       itemCount: doctorsList.length,
       itemBuilder: (BuildContext context, int itemIndex) {
         return DoctorItemWidget(

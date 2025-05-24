@@ -10,9 +10,11 @@ class ImageDoctorWidget extends StatelessWidget {
   const ImageDoctorWidget({
     required this.doctorResults,
     super.key,
+    this.isLoading,
   });
 
   final DoctorResults doctorResults;
+  final bool? isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +33,21 @@ class ImageDoctorWidget extends StatelessWidget {
           context.isStateArabic ? 2.r : 8.r,
         ),
       ),
-      child: CustomCachedNetworkImage(
-        imgUrl:
-            doctorResults.profilePicture ?? AppImages.imageAvtarDoctorOnLine,
-        width: context.W * 0.25,
-        height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
-        loadingImgPadding: 50.w,
-        errorIconSize: 50.sp,
-      ),
-      // Image.asset(
-      //   DoctorResults.imageUrl,
-      //   height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
-      //   width: context.W * 0.25,
-      //   fit: BoxFit.cover,
-      // ),
+      child: isLoading ?? false
+          ? Image.asset(
+              AppImages.onboardingDoctor2,
+              width: context.W * 0.25,
+              height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
+              fit: BoxFit.cover,
+            )
+          : CustomCachedNetworkImage(
+              imgUrl: doctorResults.profilePicture ??
+                  AppImages.imageAvtarDoctorOnLine,
+              width: context.W * 0.25,
+              height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
+              loadingImgPadding: 50.w,
+              errorIconSize: 50.sp,
+            ),
     );
   }
 }

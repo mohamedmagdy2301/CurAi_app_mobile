@@ -203,6 +203,7 @@
    "clinic_address": "عنوان العيادة",
    "complete"  : "مكتمل",
    "finish" : "انهاء",
-   "emergency_department" : "قسم الطوارئ"
- 
+   "emergency_department" : "قسم الطوارئ",
+   "top_doctors" : "أفضل الأطباء"
+
   }

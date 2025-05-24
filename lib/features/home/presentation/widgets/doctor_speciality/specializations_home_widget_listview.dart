@@ -40,6 +40,7 @@ class SpecializationsListViewHome extends StatelessWidget {
         return Skeletonizer(
           effect: shimmerEffect(context),
           child: SpecializationWidget(
+            isLoading: true,
             specializationsList: specializationsListDome,
           ),
         );

@@ -4,6 +4,7 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,11 +15,12 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
     required this.image,
     required this.specialityName,
     super.key,
+    this.isLoading,
   });
   final String title;
   final String specialityName;
-
   final String image;
+  final bool? isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +32,20 @@ class DoctorSpecialityItemWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10000.r),
-            child: CustomCachedNetworkImage(
-              imgUrl: image,
-              width: context.H * 0.08,
-              height: context.H * 0.08,
-              loadingImgPadding: 7.w,
-              errorIconSize: 50.sp,
-            ),
+            child: isLoading ?? false
+                ? Image.asset(
+                    AppImages.onboardingDoctor2,
+                    height: context.H * 0.08,
+                    width: context.H * 0.08,
+                    fit: BoxFit.cover,
+                  )
+                : CustomCachedNetworkImage(
+                    imgUrl: image,
+                    width: context.H * 0.08,
+                    height: context.H * 0.08,
+                    loadingImgPadding: 7.w,
+                    errorIconSize: 50.sp,
+                  ),
             // image.contains('.svg')
             //     ? SvgPicture.asset(
             //         image,

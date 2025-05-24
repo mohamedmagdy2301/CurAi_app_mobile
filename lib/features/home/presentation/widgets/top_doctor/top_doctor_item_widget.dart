@@ -25,9 +25,11 @@ class TopDoctorItemWidget extends StatelessWidget {
   const TopDoctorItemWidget({
     required this.doctorsList,
     super.key,
+    this.isLoading,
   });
 
   final DoctorResults doctorsList;
+  final bool? isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +44,22 @@ class TopDoctorItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomCachedNetworkImage(
-            imgUrl:
-                doctorsList.profilePicture ?? AppImages.imageAvtarDoctorOnLine,
-            width: context.H * 0.22,
-            height: context.H * 0.18,
-            loadingImgPadding: 50.w,
-            errorIconSize: 50.sp,
-          ).cornerRadiusWithClipRRect(15),
+          if (isLoading ?? false)
+            Image.asset(
+              AppImages.onboardingDoctor2,
+              width: context.H * 0.22,
+              height: context.H * 0.18,
+              fit: BoxFit.cover,
+            ).cornerRadiusWithClipRRect(15)
+          else
+            CustomCachedNetworkImage(
+              imgUrl: doctorsList.profilePicture ??
+                  AppImages.imageAvtarDoctorOnLine,
+              width: context.H * 0.22,
+              height: context.H * 0.18,
+              loadingImgPadding: 50.w,
+              errorIconSize: 50.sp,
+            ).cornerRadiusWithClipRRect(15),
           10.hSpace,
           SizedBox(
             width: context.W * .45,

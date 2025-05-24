@@ -6,8 +6,13 @@ import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speci
 import 'package:flutter/material.dart';
 
 class SpecializationWidget extends StatefulWidget {
-  const SpecializationWidget({required this.specializationsList, super.key});
+  const SpecializationWidget({
+    required this.specializationsList,
+    super.key,
+    this.isLoading,
+  });
   final List<SpecializationsModel> specializationsList;
+  final bool? isLoading;
 
   @override
   State<SpecializationWidget> createState() => _SpecializationWidgetState();
@@ -25,6 +30,7 @@ class _SpecializationWidgetState extends State<SpecializationWidget> {
         separatorBuilder: (context, index) => 16.wSpace,
         itemBuilder: (context, index) {
           return DoctorSpecialityItemWidget(
+            isLoading: widget.isLoading ?? false,
             title: specializationName(
               widget.specializationsList[index].name,
               context.isStateArabic,
