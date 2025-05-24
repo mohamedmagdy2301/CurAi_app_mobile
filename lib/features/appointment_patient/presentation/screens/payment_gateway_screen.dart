@@ -9,13 +9,16 @@ import 'package:curai_app_mobile/core/services/payment/end_points_payment.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/payment_cubit/payment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/payment_appointment/custom_appbar_payment_appointment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class PaymentGatewayScreen extends StatefulWidget {
   const PaymentGatewayScreen({
@@ -83,20 +86,30 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
                     final isSuccess = url.queryParameters['success'] == 'true';
 
                     if (isSuccess) {
-                      await context
-                          .read<AppointmentPatientCubit>()
-                          .simulatePaymentAppointment(
-                            appointmentId: widget.appointmentId,
-                          );
-                    }
+                      final appointmentCubit =
+                          context.read<AppointmentPatientCubit>();
 
-                    await Future<void>.delayed(
-                      const Duration(milliseconds: 500),
-                    );
-                    if (!context.mounted) return;
-                    isSuccess
-                        ? context.pushNamed(Routes.mainScaffoldUser)
-                        : context.pop();
+                      await appointmentCubit.simulatePaymentAppointment(
+                        appointmentId: widget.appointmentId,
+                      );
+
+                      final currentState = appointmentCubit.state;
+
+                      if (currentState is PaymentAppointmentSuccess) {
+                        if (!mounted) return;
+                        context.pushNamed(Routes.mainScaffoldUser);
+                      } else if (currentState is PaymentAppointmentFailure) {
+                        if (!mounted) return;
+                        showMessage(
+                          context,
+                          message: currentState.message,
+                          type: ToastificationType.error,
+                        );
+                        context.pop();
+                      } else {
+                        context.pop();
+                      }
+                    }
                   }
                 },
                 onReceivedError: (controller, request, error) {
