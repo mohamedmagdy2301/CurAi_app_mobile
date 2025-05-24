@@ -11,6 +11,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/services/payment/paymob_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
@@ -40,6 +41,17 @@ class PaymentAppointmentScreen extends StatefulWidget {
 }
 
 class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
+  void _pay() {
+    PaymobManager.getPaymentKey(
+      int.parse(widget.doctorResults.consultationPrice!.split('.').first),
+    ).then(
+      (paymentKey) => context.pushNamed(
+        Routes.paymentGatewayScreen,
+        arguments: {'paymentToken': paymentKey},
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +70,11 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
           20.hSpace,
           const PaymentSelectionWidget(),
           const Spacer(),
+          CustomButton(
+            title: LangKeys.payment,
+            onPressed: _pay,
+          ),
+          10.hSpace,
           BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
             listenWhen: (previous, current) =>
                 current is PaymentAppointmentFailure ||

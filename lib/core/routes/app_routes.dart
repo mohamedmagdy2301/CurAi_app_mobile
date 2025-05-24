@@ -10,6 +10,7 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/book_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_appointment_patient_screen.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_gateway_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/add_address_clinic_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/bio_screen.dart';
@@ -47,7 +48,15 @@ class AppRoutes {
         return BaseRoute(page: const LoginScreen());
       case Routes.registerScreen:
         return BaseRoute(page: const RegisterScreen());
-
+      case Routes.paymentGatewayScreen:
+        if (arg is Map<String, dynamic>) {
+          final paymentToken = arg['paymentToken'] as String;
+          return BaseRoute(
+            page: PaymentGatewayScreen(paymentToken: paymentToken),
+          );
+        } else {
+          return BaseRoute(page: const PageUnderBuildScreen());
+        }
       case Routes.completeProfileScreen:
         return BaseRoute(page: const CompleteProfileScreen());
       case Routes.addAddreesClinicScreen:

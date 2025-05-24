@@ -1,4 +1,5 @@
 class Routes {
+  Routes._();
   static const String mainScaffoldUser = '/mainScaffoldUser';
   static const String onboarding = '/onboarding';
   static const String loginScreen = '/loginScreen';
@@ -25,4 +26,5 @@ class Routes {
   static const String bioScreen = '/bioScreen';
   static const String emergencyDepartment = '/emergencyDepartment';
   static const String favoriteScreen = '/favoriteScreen';
+  static const String paymentGatewayScreen = '/paymentGatewayScreen';
 }

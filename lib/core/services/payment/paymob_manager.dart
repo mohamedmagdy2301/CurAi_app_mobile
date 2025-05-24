@@ -1,36 +1,44 @@
-import 'dart:developer';
+// ignore_for_file: inference_failure_on_function_invocation, avoid_dynamic_calls
 
 import 'package:curai_app_mobile/core/app/env.variables.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
+import 'package:curai_app_mobile/core/services/payment/end_points_payment.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 class PaymobManager {
-  Future<String> getPaymentKey(int amount, String currency) async {
+  factory PaymobManager() => _instance;
+  PaymobManager._();
+  static final PaymobManager _instance = PaymobManager._();
+
+  static final Dio _dio = Dio();
+  static Future<String> getPaymentKey(int amount) async {
+    if (kDebugMode) {
+      _dio.interceptors.add(di.sl<LogInterceptor>());
+    }
     try {
       final authanticationToken = await _getAuthanticationToken();
 
       final orderId = await _getOrderId(
         authanticationToken: authanticationToken,
         amount: (100 * amount).toString(),
-        currency: currency,
       );
 
       final paymentKey = await _getPaymentKey(
         authanticationToken: authanticationToken,
         amount: (100 * amount).toString(),
-        currency: currency,
         orderId: orderId.toString(),
       );
       return paymentKey;
-    } catch (e) {
-      log('Exc==========================================');
-      log(e.toString());
+    } on Exception catch (_) {
       throw Exception();
     }
   }
 
-  Future<String> _getAuthanticationToken() async {
-    final response = await Dio().post(
-      'https://accept.paymob.com/api/auth/tokens',
+  static Future<String> _getAuthanticationToken() async {
+    final response = await _dio.post(
+      EndPointsPayment.getAuthanticationToken,
       data: {
         'api_key': EnvVariables.apiKeyPaymob,
       },
@@ -38,43 +46,38 @@ class PaymobManager {
     return response.data['token'] as String;
   }
 
-  Future<int> _getOrderId({
+  static Future<int> _getOrderId({
     required String authanticationToken,
     required String amount,
-    required String currency,
   }) async {
-    final response = await Dio().post(
-      'https://accept.paymob.com/api/ecommerce/orders',
+    final response = await _dio.post(
+      EndPointsPayment.getOrderId,
       data: {
         'auth_token': authanticationToken,
         'amount_cents': amount,
-        'currency': currency,
+        'currency': 'EGP',
         'delivery_needed': 'false',
-        'items': [],
+        'items': <dynamic>[],
       },
     );
     return response.data['id'] as int;
   }
 
-  Future<String> _getPaymentKey({
+  static Future<String> _getPaymentKey({
     required String authanticationToken,
     required String orderId,
     required String amount,
-    required String currency,
   }) async {
-    final response = await Dio().post(
-      'https://accept.paymob.com/api/acceptance/payment_keys',
+    final response = await _dio.post(
+      EndPointsPayment.getPaymentKey,
       data: {
         //ALL OF THEM ARE REQIERD
         'expiration': 3600,
-
         'auth_token': authanticationToken,
         'order_id': orderId,
         'integration_id': EnvVariables.cardPaymentMethodIntegrationId,
-
         'amount_cents': amount,
-        'currency': currency,
-
+        'currency': 'EGP',
         'billing_data': {
           //Have To Be Values
           'first_name': 'Clifford',
