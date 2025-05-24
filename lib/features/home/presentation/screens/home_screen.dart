@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SliverToBoxAdapter(child: 10.hSpace),
-            const DoctorListViewHome(),
+            const PopularDoctorListViewHome(),
             SliverToBoxAdapter(child: 10.hSpace),
           ],
         ),
