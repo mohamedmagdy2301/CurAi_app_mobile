@@ -9,7 +9,7 @@ abstract class HomeRemoteDataSource {
     String? query,
     String? speciality,
   });
-  Future<Either<Failure, Map<String, dynamic>>> getTopDoctor();
+  Future<Either<Failure, dynamic>> getTopDoctor();
   Future<Either<Failure, Map<String, dynamic>>> getDoctorById({
     int? id,
   });
@@ -47,13 +47,16 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getTopDoctor() async {
+  Future<Either<Failure, dynamic>> getTopDoctor() async {
     final response = await dioConsumer.get(EndPoints.getTopDoctor);
 
     return response.fold(
       left,
       (r) {
         if (r is Map<String, dynamic>) {
+          return right(r);
+        }
+        if (r is List) {
           return right(r);
         }
         return left(ServerFailure('Invalid response format'));

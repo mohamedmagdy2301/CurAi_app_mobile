@@ -17,7 +17,7 @@ class _SpecializationWidgetState extends State<SpecializationWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: context.H * 0.15,
+      height: context.H * 0.14,
       child: ListView.separated(
         itemCount: widget.specializationsList.length,
         padding: context.padding(horizontal: 10),

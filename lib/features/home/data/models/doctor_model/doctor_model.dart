@@ -49,7 +49,7 @@ class DoctorResults {
       username: json['username'] as String?,
       email: json['email'] as String?,
       specialization: json['specialization'] as String?,
-      consultationPrice: json['consultation_price'] as String?,
+      consultationPrice: json['consultation_price']?.toString(),
       location: json['location'] as String?,
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,

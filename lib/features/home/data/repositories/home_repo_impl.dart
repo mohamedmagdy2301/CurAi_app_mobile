@@ -89,6 +89,7 @@ class HomeRepoImpl extends HomeRepo {
           final topDoctorModel = (responseData as List)
               .map((e) => DoctorResults.fromJson(e as Map<String, dynamic>))
               .toList();
+
           return right(topDoctorModel);
         } on Exception catch (e) {
           return left('Error parsing response: $e');
