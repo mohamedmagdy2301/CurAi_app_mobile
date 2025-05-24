@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls, document_ignores
 
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:dio/dio.dart';
 
 class Failure {

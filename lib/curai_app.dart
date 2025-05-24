@@ -7,9 +7,9 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/app_localizations_setup.dart';
-import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
+import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/routes/app_routes.dart';
 import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_theme_data.dart';

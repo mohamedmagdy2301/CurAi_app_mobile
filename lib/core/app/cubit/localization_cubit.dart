@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:curai_app_mobile/core/app/cubit/localization_state.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';

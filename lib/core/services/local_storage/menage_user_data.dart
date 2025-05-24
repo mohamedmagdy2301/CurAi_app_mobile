@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/local_storage/shared_pref_key.dart';
-import 'package:curai_app_mobile/core/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
 

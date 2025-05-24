@@ -1,6 +1,6 @@
 import 'package:curai_app_mobile/core/api/dio_consumer.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
-import 'package:curai_app_mobile/core/local_storage/menage_user_data.dart';
+import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/features/home/data/datasources/home_remote_data_source.dart';
 import 'package:curai_app_mobile/features/home/data/repositories/home_repo_impl.dart';
 import 'package:curai_app_mobile/features/home/domain/repositories/home_repo.dart';
