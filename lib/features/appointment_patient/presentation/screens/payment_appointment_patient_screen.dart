@@ -13,18 +13,12 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/payment/paymob_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
-import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/payment_appointment/custom_appbar_payment_appointment.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:toastification/toastification.dart';
 
 class PaymentAppointmentScreen extends StatefulWidget {
   const PaymentAppointmentScreen({
@@ -47,7 +41,10 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     ).then(
       (paymentKey) => context.pushNamed(
         Routes.paymentGatewayScreen,
-        arguments: {'paymentToken': paymentKey},
+        arguments: {
+          'paymentToken': paymentKey,
+          'appointmentId': widget.appointmentId,
+        },
       ),
     );
   }
@@ -75,57 +72,56 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
             onPressed: _pay,
           ),
           10.hSpace,
-          BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
-            listenWhen: (previous, current) =>
-                current is PaymentAppointmentFailure ||
-                current is PaymentAppointmentLoading ||
-                current is PaymentAppointmentSuccess,
-            buildWhen: (previous, current) =>
-                current is PaymentAppointmentLoading ||
-                current is PaymentAppointmentSuccess ||
-                current is PaymentAppointmentFailure,
-            listener: (context, state) {
-              if (state is PaymentAppointmentFailure) {
-                Navigator.pop(context);
-                showMessage(
-                  context,
-                  message: state.message,
-                  type: ToastificationType.error,
-                );
-              } else if (state is PaymentAppointmentSuccess) {
-                Navigator.pop(context);
-                showMessage(
-                  context,
-                  message: context.isStateArabic
-                      ? 'تم الدفع بنجاح'
-                      : 'Payment successful',
-                  type: ToastificationType.success,
-                );
-
-                context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
-                context
-                    .read<AppointmentPatientCubit>()
-                    .refreshMyAppointmentPatient();
-              } else if (state is PaymentAppointmentLoading) {
-                AdaptiveDialogs.showLoadingAlertDialog(
-                  context: context,
-                  title: context.translate(LangKeys.login),
-                );
-              }
-            },
-            builder: (context, state) {
-              return CustomButton(
-                title: LangKeys.bookAppointment,
-                onPressed: () {
-                  context
-                      .read<AppointmentPatientCubit>()
-                      .simulatePaymentAppointment(
-                        appointmentId: widget.appointmentId,
-                      );
-                },
-              );
-            },
-          ),
+          // BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
+          //   listenWhen: (previous, current) =>
+          //       current is PaymentAppointmentFailure ||
+          //       current is PaymentAppointmentLoading ||
+          //       current is PaymentAppointmentSuccess,
+          //   buildWhen: (previous, current) =>
+          //       current is PaymentAppointmentLoading ||
+          //       current is PaymentAppointmentSuccess ||
+          //       current is PaymentAppointmentFailure,
+          //   listener: (context, state) {
+          //     if (state is PaymentAppointmentFailure) {
+          //       Navigator.pop(context);
+          //       showMessage(
+          //         context,
+          //         message: state.message,
+          //         type: ToastificationType.error,
+          //       );
+          //     } else if (state is PaymentAppointmentSuccess) {
+          //       Navigator.pop(context);
+          //       showMessage(
+          //         context,
+          //         message: context.isStateArabic
+          //             ? 'تم الدفع بنجاح'
+          //             : 'Payment successful',
+          //         type: ToastificationType.success,
+          //       );
+          //       context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
+          //       context
+          //           .read<AppointmentPatientCubit>()
+          //           .refreshMyAppointmentPatient();
+          //     } else if (state is PaymentAppointmentLoading) {
+          //       AdaptiveDialogs.showLoadingAlertDialog(
+          //         context: context,
+          //         title: context.translate(LangKeys.login),
+          //       );
+          //     }
+          //   },
+          //   builder: (context, state) {
+          //     return CustomButton(
+          //       title: LangKeys.bookAppointment,
+          //       onPressed: () {
+          //         context
+          //             .read<AppointmentPatientCubit>()
+          //             .simulatePaymentAppointment(
+          //               appointmentId: widget.appointmentId,
+          //             );
+          //       },
+          //     );
+          //   },
+          // ),
         ],
       )
           .paddingSymmetric(horizontal: 15)

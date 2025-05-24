@@ -50,9 +50,16 @@ class AppRoutes {
         return BaseRoute(page: const RegisterScreen());
       case Routes.paymentGatewayScreen:
         if (arg is Map<String, dynamic>) {
-          final paymentToken = arg['paymentToken'] as String;
+          final paymentToken = arg['paymentToken'] as String?;
+          final appointmentId = arg['appointmentId'] as int;
           return BaseRoute(
-            page: PaymentGatewayScreen(paymentToken: paymentToken),
+            page: BlocProvider(
+              create: (context) => di.sl<AppointmentPatientCubit>(),
+              child: PaymentGatewayScreen(
+                paymentToken: paymentToken ?? '',
+                appointmentId: appointmentId,
+              ),
+            ),
           );
         } else {
           return BaseRoute(page: const PageUnderBuildScreen());
