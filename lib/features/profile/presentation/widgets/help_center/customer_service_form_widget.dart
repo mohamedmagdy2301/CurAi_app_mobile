@@ -3,7 +3,6 @@ import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
@@ -80,19 +79,13 @@ class _CustomerServiceFormWidgetState extends State<CustomerServiceFormWidget> {
                       message: state.message,
                       type: ToastificationType.success,
                     );
-                    Navigator.pop(context);
                     context.read<AuthCubit>().clearState();
-                  }
-                  if (state is ContactUsLoading) {
-                    AdaptiveDialogs.showLoadingAlertDialog(
-                      context: context,
-                      title: context.translate(LangKeys.customerService),
-                    );
                   }
                 },
                 builder: (context, state) {
                   return CustomButton(
                     title: LangKeys.send,
+                    isLoading: state is ContactUsLoading,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
