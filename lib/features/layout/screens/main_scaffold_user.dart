@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -16,6 +18,7 @@ import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/f
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,9 +36,20 @@ class MainScaffoldUser extends StatelessWidget {
             canPop: false,
             onPopInvokedWithResult: (didPop, result) async {
               if (!didPop) {
-                final shouldExit = await _showExitDialog(context);
-                if (shouldExit && context.mounted) {
-                  await Navigator.of(context).maybePop();
+                final navCubit = context.read<NavigationCubit>();
+
+                if (navCubit.state != 0) {
+                  navCubit.updateIndex(0);
+                } else {
+                  if (Platform.isAndroid) {
+                    final shouldExit = await _showExitDialog(context);
+                    if (shouldExit) {
+                      Future.delayed(
+                        const Duration(milliseconds: 100),
+                        SystemNavigator.pop,
+                      );
+                    }
+                  }
                 }
               }
             },
