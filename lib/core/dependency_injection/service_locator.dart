@@ -12,7 +12,7 @@ final sl = GetIt.instance;
 
 /// This function initializes all dependency injection modules.
 /// Call it in `main()` before running the app.
-Future<void> setupAllDependencies() async {
+Future<void> initializeServiceLocator() async {
   /// Core services: Dio, SharedPreferences, Connectivity, etc.
   setupCoreDI();
 

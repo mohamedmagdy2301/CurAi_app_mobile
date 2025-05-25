@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
+import 'package:curai_app_mobile/features/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/routes/base_routes.dart';

@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:curai_app_mobile/core/app/cubit/get_loction/get_loction_cubit.dart';
+import 'package:curai_app_mobile/core/cubit/get_loction/get_loction_cubit.dart';
 import 'package:curai_app_mobile/core/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

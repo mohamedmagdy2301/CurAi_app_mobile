@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
+import 'package:curai_app_mobile/features/onboarding/data/onboarding_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'onboarding_state.dart';

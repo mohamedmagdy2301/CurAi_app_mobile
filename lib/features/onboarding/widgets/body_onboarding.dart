@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/app/onboarding/cubit/onboarding_cubit.dart';
-import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
-import 'package:curai_app_mobile/core/app/onboarding/widgets/custom_dot_onboarding.dart';
+import 'package:curai_app_mobile/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:curai_app_mobile/features/onboarding/data/onboarding_info.dart';
+import 'package:curai_app_mobile/features/onboarding/widgets/custom_dot_onboarding.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';

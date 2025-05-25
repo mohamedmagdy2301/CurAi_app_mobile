@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/app/cubit/get_loction/get_loction_cubit.dart';
+import 'package:curai_app_mobile/core/cubit/get_loction/get_loction_cubit.dart';
 import 'package:curai_app_mobile/core/utils/constants.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';

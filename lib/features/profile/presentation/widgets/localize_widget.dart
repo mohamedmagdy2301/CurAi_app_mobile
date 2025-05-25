@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
-import 'package:curai_app_mobile/core/app/cubit/localization_state.dart';
+import 'package:curai_app_mobile/core/language/localization_cubit/localization_cubit.dart';
+import 'package:curai_app_mobile/core/language/localization_cubit/localization_state.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';

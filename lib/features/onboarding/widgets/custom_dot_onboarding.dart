@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/app/onboarding/data/onboarding_info.dart';
+import 'package:curai_app_mobile/features/onboarding/data/onboarding_info.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

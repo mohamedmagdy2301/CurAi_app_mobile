@@ -2,8 +2,8 @@
 
 import 'dart:io';
 
-import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
-import 'package:curai_app_mobile/core/app/cubit/localization_state.dart';
+import 'package:curai_app_mobile/core/language/localization_cubit/localization_cubit.dart';
+import 'package:curai_app_mobile/core/language/localization_cubit/localization_state.dart';
 import 'package:curai_app_mobile/core/language/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/app/cubit/get_loction/get_loction_cubit.dart';
-import 'package:curai_app_mobile/core/app/cubit/route/route_cubit.dart';
+import 'package:curai_app_mobile/core/cubit/get_loction/get_loction_cubit.dart';
+import 'package:curai_app_mobile/core/cubit/route/route_cubit.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';

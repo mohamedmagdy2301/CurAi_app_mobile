@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/app/onboarding/data/model/onboarding_model.dart';
+import 'package:curai_app_mobile/features/onboarding/data/model/onboarding_model.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 

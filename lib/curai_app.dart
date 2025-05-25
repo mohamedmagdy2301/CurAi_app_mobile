@@ -1,29 +1,29 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:curai_app_mobile/core/app/cubit/localization_cubit.dart';
-import 'package:curai_app_mobile/core/app/cubit/localization_state.dart';
-import 'package:curai_app_mobile/core/app/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/app_localizations_setup.dart';
+import 'package:curai_app_mobile/core/language/localization_cubit/localization_cubit.dart';
+import 'package:curai_app_mobile/core/language/localization_cubit/localization_state.dart';
+import 'package:curai_app_mobile/core/routes/app_routes.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
-import 'package:curai_app_mobile/core/routes/app_routes.dart';
 import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_theme_data.dart';
 import 'package:curai_app_mobile/core/utils/helper/build_app_connectivity_controller.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
+import 'package:curai_app_mobile/features/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lock_orientation_screen/lock_orientation_screen.dart';
 
 class CuraiApp extends StatefulWidget {
-  const CuraiApp({required this.environment, super.key});
-  final bool environment;
+  const CuraiApp({required this.isDebugMode, super.key});
+  final bool isDebugMode;
 
   @override
   State<CuraiApp> createState() => _CuraiAppState();
@@ -128,7 +128,7 @@ class _CuraiAppState extends State<CuraiApp> {
               navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
               theme: theme,
               darkTheme: darkTheme,
-              debugShowCheckedModeBanner: widget.environment,
+              debugShowCheckedModeBanner: widget.isDebugMode,
               builder: (context, child) => setupConnectivityWidget(child),
               onGenerateRoute: AppRoutes.onGenerateRoute,
               locale: cubit.getLocaleFromState(state.locale),
