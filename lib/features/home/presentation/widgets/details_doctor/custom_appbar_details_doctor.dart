@@ -12,6 +12,8 @@ import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/f
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:like_button/like_button.dart';
 
 class CustomAppBarDetailsDoctor extends StatelessWidget
     implements PreferredSizeWidget {
@@ -44,14 +46,31 @@ class CustomAppBarDetailsDoctor extends StatelessWidget
         },
       ),
       actions: [
-        IconButton(
-          icon: Icon(
-            isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-            color: isFav ? Colors.red : context.onSecondaryColor,
-          ),
-          onPressed: () {
+        LikeButton(
+          isLiked: isFav,
+          onTap: (bool isCurrentlyLiked) async {
             final doctorHive = FavoriteDoctor.fromDoctorResults(doctor);
-            favoriteCubit.toggleFavorite(doctorHive);
+            await favoriteCubit.toggleFavorite(doctorHive);
+            return !isCurrentlyLiked;
+          },
+          animationDuration: const Duration(milliseconds: 2500),
+          circleColor: const CircleColor(
+            start: Color(0xff00ddff),
+            end: Color(0xff0099cc),
+          ),
+          bubblesColor: const BubblesColor(
+            dotPrimaryColor: Colors.pink,
+            dotSecondaryColor: Colors.white,
+          ),
+          bubblesSize: 70.r,
+          likeBuilder: (bool isLiked) {
+            return Icon(
+              isLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+              color: isLiked
+                  ? Colors.redAccent
+                  : context.onSecondaryColor.withAlpha(100),
+              size: 30.sp,
+            );
           },
         ),
       ],

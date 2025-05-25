@@ -16,6 +16,7 @@ import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speci
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/image_doctor_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -147,37 +148,15 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
             bubblesSize: 70.r,
             likeBuilder: (bool isLiked) {
               return Icon(
-                Icons.favorite,
-                color:
-                    isLiked ? Colors.redAccent : Colors.grey.withOpacity(0.5),
+                isLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+                color: isLiked
+                    ? Colors.redAccent
+                    : context.onSecondaryColor.withAlpha(100),
                 size: 26.sp,
               );
             },
           ),
         ),
-        // Positioned(
-        //   top: 0.h,
-        //   right: context.isStateArabic ? null : 16.w,
-        //   left: context.isStateArabic ? 16.w : null,
-        //   child: IconButton(
-        //     padding: EdgeInsets.zero,
-        //     highlightColor: Colors.transparent,
-        //     splashColor: Colors.transparent,
-        //     hoverColor: Colors.transparent,
-        //     icon: Icon(
-        //       isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-        //       size: 26.sp,
-        //       color: isFav
-        //           ? Colors.redAccent
-        //           : context.onSecondaryColor.withAlpha(70),
-        //     ),
-        //     onPressed: () {
-        //       final doctorHive =
-        //           FavoriteDoctor.fromDoctorResults(widget.doctorResults);
-        //       favoriteCubit.toggleFavorite(doctorHive);
-        //     },
-        //   ),
-        // ),
       ],
     );
   }
