@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/utils/helper/regex.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/working_time_details_doctor/build_working_time_details_doctor_widget.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
@@ -151,11 +151,11 @@ class AboutMeWidget extends StatelessWidget {
           textAlign: TextAlign.start,
           locale:
               context.isStateArabic ? const Locale('ar') : const Locale('en'),
-          textDirection: isArabicFormat(
-            doctorResults.bio ?? context.translate(LangKeys.noBio),
-          )
-              ? TextDirection.rtl
-              : TextDirection.ltr,
+          textDirection:
+              (doctorResults.bio ?? context.translate(LangKeys.noBio))
+                      .isArabicFormat
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
           style: TextStyleApp.medium18().copyWith(
             color: context.onSecondaryColor,
           ),
@@ -188,7 +188,7 @@ class _ExpandableBioTextState extends State<ExpandableBioText> {
   @override
   Widget build(BuildContext context) {
     final textDirection =
-        isArabicFormat(widget.bio) ? TextDirection.rtl : TextDirection.ltr;
+        widget.bio.isArabicFormat ? TextDirection.rtl : TextDirection.ltr;
 
     return ReadMoreText(
       widget.bio,

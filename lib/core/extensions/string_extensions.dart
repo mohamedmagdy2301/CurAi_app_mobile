@@ -5,6 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension StringExtension on String {
+  /// Checks if the string is in Arabic format.
+  bool get isArabicFormat {
+    if (isEmpty) return false;
+    // Check if the average character is Arabic
+    final arabicCharCount = runes.where((rune) {
+      final character = String.fromCharCode(rune);
+      return RegExp(r'[\u0600-\u06FF]').hasMatch(character);
+    }).length;
+    final englishCharCount = runes.where((rune) {
+      final character = String.fromCharCode(rune);
+      return RegExp('[a-zA-Z]').hasMatch(character);
+    }).length;
+    return arabicCharCount > englishCharCount;
+  }
+
   /// Capitalizes the first letter of each word in the string.
   ///
   /// Example:

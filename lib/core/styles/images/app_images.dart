@@ -1,4 +1,5 @@
 class AppImages {
+  AppImages._();
   static const String images = 'assets/images';
   static const String noNetwork = '$images/no-internet-connection.png';
   static const String underBuild = '$images/page_under_build.jpg';
@@ -20,6 +21,7 @@ class AppImages {
 }
 
 class SvgImages {
+  SvgImages._();
   static const String svg = 'assets/svg';
   static const String doctorInBanner = '$svg/bannar-home.svg';
 
