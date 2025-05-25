@@ -56,6 +56,8 @@ class ContactUsBodyListview extends StatelessWidget {
             'assets/svg/website.svg',
             height: 25.h,
             width: 25.h,
+            colorFilter:
+                ColorFilter.mode(context.onPrimaryColor, BlendMode.srcIn),
           ),
           onTap: () =>
               UrlLauncherHelper.launchWebsite(context, 'https://google.com'),

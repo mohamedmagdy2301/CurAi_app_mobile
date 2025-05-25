@@ -8,7 +8,7 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
+import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
@@ -89,26 +89,20 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   );
 
                   Navigator.of(context).pop();
-                } else if (state is ReviewsSuccess) {
+                }
+                if (state is ReviewsSuccess) {
                   Navigator.pop(context);
-
                   showMessage(
                     context,
                     message: state.message,
                     type: ToastificationType.success,
-                  );
-
-                  Navigator.of(context).pop();
-                } else if (state is ReviewsLoading) {
-                  AdaptiveDialogs.showLoadingAlertDialog(
-                    context: context,
-                    title: context.translate(LangKeys.addReview),
                   );
                 }
               },
               builder: (context, state) {
                 return CustomButton(
                   title: LangKeys.addReview,
+                  isLoading: state is ReviewsLoading,
                   onPressed: () {
                     if (_commentController.text.trim().isEmpty) {
                       showMessage(
@@ -125,6 +119,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                             comment: _commentController.text.trim(),
                           ),
                         );
+                    hideKeyboard();
                   },
                 ).paddingBottom(Platform.isIOS ? 15.h : 0);
               },
