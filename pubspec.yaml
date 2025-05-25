@@ -10,11 +10,9 @@ dependencies:
   adaptive_theme: 
   auto_size_text: 
   cached_network_image: 
-  collection: ^1.19.1
+  collection:
   connectivity_plus:
-  cupertino_icons:
   dartz: 
-  device_preview:
   dio: 
   dropdown_button2:
   equatable:
@@ -22,44 +20,40 @@ dependencies:
   firebase_core:
   flutter:
     sdk: flutter
-  flutter_advanced_switch: ^3.1.0
+  flutter_advanced_switch:
   flutter_bloc:
   flutter_dotenv:
-  flutter_gemini:
-  flutter_inappwebview: ^6.1.5
-  flutter_local_notifications: ^19.2.0
+  flutter_inappwebview: 
+  flutter_local_notifications:
   flutter_localizations:
     sdk: flutter
   flutter_map: 
-  flutter_markdown:
   flutter_rating: 
   flutter_screenutil:
-  flutter_steps: ^1.0.5
   flutter_svg: 
-  flutter_timezone: ^4.1.0
+  flutter_timezone:
   geocoding: 
   geolocator:
   get_it:
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  http: ^1.4.0
+  hive:
+  hive_flutter:
+  http:
   image_picker:
   intl: 
   latlong2: 
-  like_button: ^2.1.0
+  like_button:
   lock_orientation_screen:
   logger:
   path_provider: 
-  permission_handler: ^12.0.0+1
+  permission_handler:
   pin_code_fields:
   pull_to_refresh:
   readmore:
   shared_preferences:
   skeletonizer:
-  timezone: ^0.10.1
-  toastification: ^3.0.2
+  timezone:
+  toastification: 
   url_launcher:
-  webview_flutter: ^4.13.0
 
   
 dev_dependencies:
