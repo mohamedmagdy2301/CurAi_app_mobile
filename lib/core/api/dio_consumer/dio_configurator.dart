@@ -12,7 +12,7 @@ import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 
 class DioConfigurator {
-  static const Duration _defaultTimeouts = Duration(seconds: 20);
+  static const Duration _defaultTimeouts = Duration(seconds: 30);
 
   static void configure(Dio dio) {
     _setUpCertificateBypass(dio);
