@@ -32,7 +32,7 @@
 - 🔔 **Smart Notifications**  
   Stay updated with appointment reminders and important doctor announcements.
 
-- 💳 **Secure Payments** *(Upcoming)*  
+- 💳 **Secure Payments**   
   Multiple payment options for hassle-free consultations.
 
 - 🌐 **Multi-language Support**  
@@ -60,6 +60,7 @@
 - **Appointment For Doctor**
 - **Emergency Department**
 - **Push Notifications**
+- **Integrat Payment(paymob)**
   
 ### 🕓 In Progress
 
@@ -162,19 +163,19 @@
 ---
 
 ### **Payment Integration**
-- 🔲 **UI**  
-  - 🕓 Payment methods screen (credit card, wallet, etc.)  
-  - 🕓 Confirmation and success/failure screens
+- ✅ **UI**  
+  - ✔️ Payment methods screen (credit card, wallet, etc.)  
+  - ✔️ Confirmation and success/failure screens
 
-- 🔲 **API Integration**  
-  - 🕓 Connect to payment gateway  
-  - 🕓 Verify payment status and generate receipts
+- ✅ **API Integration**  
+  - ✔️ Connect to payment gateway  
+  - ✔️ Verify payment status and generate receipts
 
 ---
 
 ### **Notifications**
-- 🔲 Push notifications for appointment reminders  
-- 🔲 Updates about doctors and promotions
+- ✅ Push Local notifications for appointment reminders pateint
+
 
 ---
 
@@ -214,6 +215,10 @@
 - **Authentication:** `RESTApi`
 - **AI:** `Custom ML models (Text + Image) via Flask backend`  
 - **Storage:** `Secure Shared Preferences / Hive`
+- **Notification:** `flutter_local_notification`
+- **Payment:** `paymob`
+- **Map:** `flutter_open_street`
+
 
 ---
 
