@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/api/dio_consumer.dart';
+import 'package:curai_app_mobile/core/api/dio_consumer/dio_consumer.dart';
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
 import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';

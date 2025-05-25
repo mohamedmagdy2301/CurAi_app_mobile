@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/api/dio_consumer.dart';
+import 'package:curai_app_mobile/core/api/dio_consumer/dio_consumer.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/features/chatbot/data/datasources/chatbot_remote_data_source.dart';
 import 'package:curai_app_mobile/features/chatbot/data/repositories/chatbot_repo_impl.dart';

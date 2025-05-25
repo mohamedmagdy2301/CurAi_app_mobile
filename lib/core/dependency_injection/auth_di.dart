@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/api/dio_consumer.dart';
+import 'package:curai_app_mobile/core/api/dio_consumer/dio_consumer.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:curai_app_mobile/features/auth/data/repositories/auth_repo_impl.dart';

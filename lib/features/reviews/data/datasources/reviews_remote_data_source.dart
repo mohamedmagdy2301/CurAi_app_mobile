@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/api/dio_consumer.dart';
+import 'package:curai_app_mobile/core/api/dio_consumer/dio_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/features/reviews/data/models/add_review/add_review_request.dart';

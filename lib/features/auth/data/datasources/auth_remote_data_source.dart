@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/api/dio_consumer.dart';
+import 'package:curai_app_mobile/core/api/dio_consumer/dio_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
