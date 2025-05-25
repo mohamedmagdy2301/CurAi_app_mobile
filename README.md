@@ -56,7 +56,7 @@
 - **Doctor Search & Filtering**
 - **AI Chatbot (Text + Image input)**
 - **User Profile (Editable)**
-- **Appointment Booking UI & Integration For Patient**
+- **Appointment Booking For Patient**
 - **Appointment For Doctor**
 - **Emergency Department**
 - **Push Notifications**
