@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
-import 'package:curai_app_mobile/core/app/env.variables.dart';
+import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/app/my_app.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/services/local_notification/local_notification_manager.dart';
@@ -21,7 +21,7 @@ import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   await initializeServices();
-  runApp(MyApp(isDebugMode: sl<EnvVariables>().debugMode));
+  runApp(MyApp(isDebugMode: sl<AppEnvironment>().debugMode));
   FlutterNativeSplash.remove();
 }
 
@@ -48,10 +48,10 @@ Future<void> initializeServices() async {
   await initializeServiceLocator();
 
   await Future.wait([
-    LocalNotificationService.initialize(),
+    sl<LocalNotificationService>().initialize(),
     sl<ConnectivityController>().connectivityControllerInit(),
     sl<CacheDataHelper>().sharedPreferencesInitialize(),
-    sl<EnvVariables>().envVariablesSetup(envType: EnvTypeEnum.dev),
+    sl<AppEnvironment>().initializeEnvironment(envType: EnvTypeEnum.dev),
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
   ]);
   if (kReleaseMode) {

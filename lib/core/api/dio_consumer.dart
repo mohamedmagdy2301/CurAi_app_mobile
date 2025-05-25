@@ -9,15 +9,15 @@ import 'package:curai_app_mobile/core/api/api_consumer.dart';
 import 'package:curai_app_mobile/core/api/end_points.dart';
 import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/core/api/status_code.dart';
-import 'package:curai_app_mobile/core/app/env.variables.dart';
+import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
-import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -67,7 +67,7 @@ class DioConsumer implements ApiConsumer {
           }
           options
             ..headers['X-Requested-With'] = 'XMLHttpRequest'
-            ..baseUrl = EnvVariables.baseApiUrl
+            ..baseUrl = AppEnvironment.baseApiUrl
             ..sendTimeout = _defaultTimeouts
             ..connectTimeout = _defaultTimeouts
             ..receiveTimeout = _defaultTimeouts
@@ -338,7 +338,7 @@ class DioConsumer implements ApiConsumer {
       _configureDio(refreshDio);
 
       final response = await refreshDio.post(
-        '${EnvVariables.baseApiUrl}${EndPoints.refreshToken}',
+        '${AppEnvironment.baseApiUrl}${EndPoints.refreshToken}',
         data: {'refresh': refreshToken},
       );
 

@@ -1,6 +1,6 @@
 // ignore_for_file: inference_failure_on_function_invocation, avoid_dynamic_calls
 
-import 'package:curai_app_mobile/core/app/env.variables.dart';
+import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/services/payment/end_points_payment.dart';
@@ -40,7 +40,7 @@ class PaymobManager {
     final response = await _dio.post(
       EndPointsPayment.getAuthanticationToken,
       data: {
-        'api_key': EnvVariables.apiKeyPaymob,
+        'api_key': AppEnvironment.apiKeyPaymob,
       },
     );
     return response.data['token'] as String;
@@ -100,8 +100,8 @@ class PaymobManager {
         'auth_token': authanticationToken,
         'order_id': orderId,
         'integration_id': isWallet
-            ? EnvVariables.walletPaymentMethodIntegrationId
-            : EnvVariables.cardPaymentMethodIntegrationId,
+            ? AppEnvironment.walletPaymentMethodIntegrationId
+            : AppEnvironment.cardPaymentMethodIntegrationId,
         'amount_cents': amount,
         'currency': 'EGP',
         'billing_data': {

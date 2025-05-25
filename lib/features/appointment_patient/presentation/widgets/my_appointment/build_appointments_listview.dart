@@ -1,13 +1,15 @@
 // ignore_for_file: inference_failure_on_instance_creation, use_build_context_synchronously
 
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/services/local_notification/local_notification_manager.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/services/local_notification/local_notification_manager.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
@@ -58,9 +60,10 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
   Future<void> _loadNotificationPreferences() async {
     for (final appointment in widget.appointments) {
       if (appointment.id != null) {
-        final isActive = await LocalNotificationService.getNotificationStatus(
-          id: appointment.id!,
-        );
+        final isActive =
+            await di.sl<LocalNotificationService>().getNotificationStatus(
+                  id: appointment.id!,
+                );
         isSwitchedMap[appointment.id!] = isActive;
       }
     }
@@ -190,9 +193,9 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
             );
             // Cancel existing notification if any
             if (appointment.id != null) {
-              await LocalNotificationService.cancelNotificationById(
-                appointment.id!,
-              );
+              await di.sl<LocalNotificationService>().cancelNotificationById(
+                    appointment.id!,
+                  );
             }
 
             // Update notification preference to off for this appointment
@@ -264,9 +267,9 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
         } else {
           // Cancel notification for this appointment
           if (appointment.id != null) {
-            await LocalNotificationService.cancelNotificationById(
-              appointment.id!,
-            );
+            await di.sl<LocalNotificationService>().cancelNotificationById(
+                  appointment.id!,
+                );
           }
         }
       },
@@ -300,48 +303,47 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
 
       final now = tz.TZDateTime.now(tz.local);
 
-      // إشعار تجريبي بعد دقيقة (للاختبار)
-      await LocalNotificationService.showScheduledNotification(
-        context,
-        id: appointment.id! + 12345,
-        title: 'إشعار تجريبي',
-        body: 'عندك كشف مع دكتور $doctorName يوم '
-            '${dateStr.substring(0, 10).toFullWithWeekday(context)}',
-        imageUrl:
-            widget.cubit.doctorsData[appointment.doctorId]?.profilePicture ??
+      await di.sl<LocalNotificationService>().showScheduledNotification(
+            context,
+            id: appointment.id! + 12345,
+            title: 'إشعار تجريبي',
+            body: 'عندك كشف مع دكتور $doctorName يوم '
+                '${dateStr.substring(0, 10).toFullWithWeekday(context)}',
+            imageUrl: widget
+                    .cubit.doctorsData[appointment.doctorId]?.profilePicture ??
                 AppImages.imageAvtarDoctorOnLine,
-        day: now.day,
-        hour: now.hour,
-        minute: now.minute,
-        second: now.second + 10,
-      );
+            day: now.day,
+            hour: now.hour,
+            minute: now.minute,
+            second: now.second + 10,
+          );
 
-      await LocalNotificationService.showScheduledNotification(
-        context,
-        id: appointment.id!,
-        title: 'تذكير بموعدك',
-        body: 'عندك كشف مع $doctorName بعد ساعة',
-        imageUrl:
-            widget.cubit.doctorsData[appointment.doctorId]?.profilePicture ??
+      await di.sl<LocalNotificationService>().showScheduledNotification(
+            context,
+            id: appointment.id!,
+            title: 'تذكير بموعدك',
+            body: 'عندك كشف مع $doctorName بعد ساعة',
+            imageUrl: widget
+                    .cubit.doctorsData[appointment.doctorId]?.profilePicture ??
                 AppImages.imageAvtarDoctorOnLine,
-        day: notificationTime.day,
-        hour: notificationTime.hour,
-        minute: notificationTime.minute,
-      );
+            day: notificationTime.day,
+            hour: notificationTime.hour,
+            minute: notificationTime.minute,
+          );
 
-      await LocalNotificationService.showScheduledNotification(
-        context,
-        id: appointment.id! + 10000,
-        title: 'موعدك غدًا',
-        body: 'فكرك عندك كشف مع $doctorName '
-            'بكرة الساعة ${timeStr.substring(0, 5).toLocalizedTime(context)}',
-        imageUrl:
-            widget.cubit.doctorsData[appointment.doctorId]?.profilePicture ??
+      await di.sl<LocalNotificationService>().showScheduledNotification(
+            context,
+            id: appointment.id! + 10000,
+            title: 'موعدك غدًا',
+            body: 'فكرك عندك كشف مع $doctorName '
+                'بكرة الساعة ${timeStr.substring(0, 5).toLocalizedTime(context)}',
+            imageUrl: widget
+                    .cubit.doctorsData[appointment.doctorId]?.profilePicture ??
                 AppImages.imageAvtarDoctorOnLine,
-        day: reminderTime.day,
-        hour: 9,
-        minute: 0,
-      );
+            day: reminderTime.day,
+            hour: 9,
+            minute: 0,
+          );
     } on Exception catch (e) {
       showMessage(
         context,

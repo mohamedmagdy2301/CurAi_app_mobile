@@ -25,13 +25,20 @@ Future<String> _downloadAndSaveFile(String url, String fileName) async {
 }
 
 class LocalNotificationService {
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  /// Factory constructor to ensure singleton instance
+  factory LocalNotificationService() => _instance;
+  LocalNotificationService._();
+  static final LocalNotificationService _instance =
+      LocalNotificationService._();
+
+  /// Flutter Local Notifications Plugin instance
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static const String notificationPrefsKey = 'appointment_notifications';
+  String notificationPrefsKey = 'appointment_notifications';
 
   /// Initialize Local Notification
-  static Future<void> initialize() async {
+  Future<void> initialize() async {
     tz.initializeTimeZones();
     final localTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(localTimeZone));
@@ -60,7 +67,7 @@ class LocalNotificationService {
     await _requestPermissions();
   }
 
-  static Future<void> _requestPermissions() async {
+  Future<void> _requestPermissions() async {
     if (flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin>() !=
         null) {
@@ -81,7 +88,7 @@ class LocalNotificationService {
   }
 
   /// Show Scheduled Notification
-  static Future<void> showScheduledNotification(
+  Future<void> showScheduledNotification(
     BuildContext context, {
     required int id,
     required String title,
@@ -167,7 +174,7 @@ class LocalNotificationService {
   }
 
   /// Save notification status to SharedPreferences
-  static Future<void> _saveNotificationStatus({
+  Future<void> _saveNotificationStatus({
     required int id,
     required bool isActive,
   }) async {
@@ -182,7 +189,7 @@ class LocalNotificationService {
   }
 
   /// Get notification status from SharedPreferences
-  static Future<bool> getNotificationStatus({required int id}) async {
+  Future<bool> getNotificationStatus({required int id}) async {
     try {
       return (CacheDataHelper.getData(key: '$notificationPrefsKey-$id') ??
           false) as bool;
@@ -193,7 +200,7 @@ class LocalNotificationService {
   }
 
   /// Cancel All Notifications
-  static Future<void> cancelAllNotifications() async {
+  Future<void> cancelAllNotifications() async {
     await flutterLocalNotificationsPlugin.cancelAll();
 
     // Clear preferences
@@ -210,7 +217,7 @@ class LocalNotificationService {
   }
 
   /// Cancel Notification By Id
-  static Future<void> cancelNotificationById(int id) async {
+  Future<void> cancelNotificationById(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
 
     // Also cancel the day-before reminder
@@ -223,8 +230,7 @@ class LocalNotificationService {
   }
 
   /// Check if notifications are pending
-  static Future<List<PendingNotificationRequest>>
-      getPendingNotifications() async {
+  Future<List<PendingNotificationRequest>> getPendingNotifications() async {
     return flutterLocalNotificationsPlugin.pendingNotificationRequests();
   }
 }
