@@ -64,9 +64,13 @@ class ResponseHandler {
   }
 
   static bool _requiresTokenRefresh(int statusCode, dynamic data) {
-    return statusCode == StatusCode.unauthorized ||
-        statusCode == StatusCode.forbidden ||
-        TokenManager.isJwtExpired(data as Map);
+    if (statusCode == StatusCode.unauthorized ||
+        statusCode == StatusCode.forbidden) {
+      if (data is Map) {
+        return TokenManager.isJwtExpired(data);
+      }
+    }
+    return false;
   }
 
   static Future<Either<Failure, dynamic>> _handleTokenRefresh(
