@@ -35,7 +35,7 @@ class TopDoctorListviewWidget extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               padding: context.padding(horizontal: 10),
               itemCount: doctorsList.length,
-              separatorBuilder: (context, index) => 10.hSpace,
+              separatorBuilder: (context, index) => 12.wSpace,
               itemBuilder: (context, index) {
                 return TopDoctorItemWidget(doctorsList: doctorsList[index]);
               },
@@ -56,7 +56,7 @@ class TopDoctorListviewWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: context.padding(horizontal: 10),
             itemCount: doctorsListDome.length,
-            separatorBuilder: (context, index) => 10.hSpace,
+            separatorBuilder: (context, index) => 12.wSpace,
             itemBuilder: (context, index) {
               return Skeletonizer(
                 effect: shimmerEffect(context),

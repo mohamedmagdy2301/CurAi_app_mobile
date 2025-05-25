@@ -47,22 +47,22 @@ class TopDoctorItemWidget extends StatelessWidget {
           if (isLoading ?? false)
             Image.asset(
               AppImages.onboardingDoctor2,
-              width: context.H * 0.22,
-              height: context.H * 0.18,
+              width: context.H * 0.21,
+              height: context.H * 0.19,
               fit: BoxFit.cover,
             ).cornerRadiusWithClipRRect(15)
           else
             CustomCachedNetworkImage(
               imgUrl: doctorsList.profilePicture ??
                   AppImages.imageAvtarDoctorOnLine,
-              width: context.H * 0.22,
-              height: context.H * 0.18,
-              loadingImgPadding: 50.w,
+              width: context.H * 0.21,
+              height: context.H * 0.19,
+              loadingImgPadding: 80.w,
               errorIconSize: 50.sp,
             ).cornerRadiusWithClipRRect(15),
           10.hSpace,
           SizedBox(
-            width: context.W * .45,
+            width: context.W * .39,
             child: AutoSizeText(
               '${context.translate(LangKeys.dr)} '
               '${doctorsList.firstName?.capitalizeFirstChar} '
@@ -70,7 +70,7 @@ class TopDoctorItemWidget extends StatelessWidget {
               maxLines: 1,
               textAlign: TextAlign.start,
               overflow: TextOverflow.ellipsis,
-              style: TextStyleApp.bold18().copyWith(
+              style: TextStyleApp.extraBold18().copyWith(
                 color: context.onPrimaryColor,
               ),
             ),
@@ -86,7 +86,7 @@ class TopDoctorItemWidget extends StatelessWidget {
               textAlign: TextAlign.start,
               overflow: TextOverflow.ellipsis,
               style: TextStyleApp.medium16().copyWith(
-                color: context.onPrimaryColor,
+                color: context.onSecondaryColor,
               ),
             ),
           ),

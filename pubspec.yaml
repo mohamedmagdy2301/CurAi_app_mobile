@@ -10,8 +10,8 @@ dependencies:
   adaptive_theme: 
   auto_size_text: 
   cached_network_image: 
-  collection:
   connectivity_plus:
+  cupertino_icons:
   dartz: 
   dio: 
   dropdown_button2:

@@ -20,7 +20,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:like_button/like_button.dart';
 
 class DoctorItemWidget extends StatefulWidget {
   const DoctorItemWidget({
@@ -125,35 +124,25 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
           ),
         ).paddingSymmetric(horizontal: 18, vertical: 8),
         Positioned(
-          top: 10.h,
-          right: context.isStateArabic ? null : 18.w,
-          left: context.isStateArabic ? 18.w : null,
-          child: LikeButton(
-            isLiked: isFav,
-            onTap: (bool isCurrentlyLiked) async {
+          top: 0.h,
+          right: context.isStateArabic ? null : 16.w,
+          left: context.isStateArabic ? 16.w : null,
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            icon: Icon(
+              isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+              size: 26.sp,
+              color: isFav
+                  ? Colors.redAccent
+                  : context.onSecondaryColor.withAlpha(70),
+            ),
+            onPressed: () {
               final doctorHive =
                   FavoriteDoctor.fromDoctorResults(widget.doctorResults);
-              await favoriteCubit.toggleFavorite(doctorHive);
-              return !isCurrentlyLiked;
-            },
-            animationDuration: const Duration(milliseconds: 2500),
-            circleColor: const CircleColor(
-              start: Color(0xff00ddff),
-              end: Color(0xff0099cc),
-            ),
-            bubblesColor: const BubblesColor(
-              dotPrimaryColor: Colors.pink,
-              dotSecondaryColor: Colors.white,
-            ),
-            bubblesSize: 70.r,
-            likeBuilder: (bool isLiked) {
-              return Icon(
-                isLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-                color: isLiked
-                    ? Colors.redAccent
-                    : context.onSecondaryColor.withAlpha(100),
-                size: 26.sp,
-              );
+              favoriteCubit.toggleFavorite(doctorHive);
             },
           ),
         ),

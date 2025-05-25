@@ -1,4 +1,3 @@
-import 'package:curai_app_mobile/features/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
@@ -23,10 +22,12 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/register_scr
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
 import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
+import 'package:curai_app_mobile/features/onboarding/onboarding_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/favorites_doctor_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/help_center_screen.dart';
@@ -90,8 +91,8 @@ class AppRoutes {
         return BaseRoute(page: const ChangePasswordScreen());
       case Routes.doctorSpeciality:
         return BaseRoute(
-          page: BlocProvider<SearchDoctorCubit>(
-            create: (context) => di.sl<SearchDoctorCubit>(),
+          page: BlocProvider<HomeCubit>(
+            create: (context) => di.sl<HomeCubit>(),
             child: const DoctorSpecialitiesScreen(),
           ),
         );
