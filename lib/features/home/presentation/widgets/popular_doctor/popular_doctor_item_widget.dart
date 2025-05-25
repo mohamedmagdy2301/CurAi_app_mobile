@@ -16,10 +16,10 @@ import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speci
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/image_doctor_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:like_button/like_button.dart';
 
 class DoctorItemWidget extends StatefulWidget {
   const DoctorItemWidget({
@@ -124,26 +124,60 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
           ),
         ).paddingSymmetric(horizontal: 18, vertical: 8),
         Positioned(
-          top: 0.h,
-          right: context.isStateArabic ? null : 16.w,
-          left: context.isStateArabic ? 16.w : null,
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            icon: Icon(
-              isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-              size: 26.sp,
-              color: isFav ? Colors.red : context.onSecondaryColor,
-            ),
-            onPressed: () {
+          top: 10.h,
+          right: context.isStateArabic ? null : 18.w,
+          left: context.isStateArabic ? 18.w : null,
+          child: LikeButton(
+            isLiked: isFav,
+            onTap: (bool isCurrentlyLiked) async {
               final doctorHive =
                   FavoriteDoctor.fromDoctorResults(widget.doctorResults);
-              favoriteCubit.toggleFavorite(doctorHive);
+              await favoriteCubit.toggleFavorite(doctorHive);
+              return !isCurrentlyLiked;
+            },
+            animationDuration: const Duration(milliseconds: 2500),
+            circleColor: const CircleColor(
+              start: Color(0xff00ddff),
+              end: Color(0xff0099cc),
+            ),
+            bubblesColor: const BubblesColor(
+              dotPrimaryColor: Colors.pink,
+              dotSecondaryColor: Colors.white,
+            ),
+            bubblesSize: 70.r,
+            likeBuilder: (bool isLiked) {
+              return Icon(
+                Icons.favorite,
+                color:
+                    isLiked ? Colors.redAccent : Colors.grey.withOpacity(0.5),
+                size: 26.sp,
+              );
             },
           ),
         ),
+        // Positioned(
+        //   top: 0.h,
+        //   right: context.isStateArabic ? null : 16.w,
+        //   left: context.isStateArabic ? 16.w : null,
+        //   child: IconButton(
+        //     padding: EdgeInsets.zero,
+        //     highlightColor: Colors.transparent,
+        //     splashColor: Colors.transparent,
+        //     hoverColor: Colors.transparent,
+        //     icon: Icon(
+        //       isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+        //       size: 26.sp,
+        //       color: isFav
+        //           ? Colors.redAccent
+        //           : context.onSecondaryColor.withAlpha(70),
+        //     ),
+        //     onPressed: () {
+        //       final doctorHive =
+        //           FavoriteDoctor.fromDoctorResults(widget.doctorResults);
+        //       favoriteCubit.toggleFavorite(doctorHive);
+        //     },
+        //   ),
+        // ),
       ],
     );
   }

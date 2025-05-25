@@ -46,6 +46,7 @@ dependencies:
   image_picker:
   intl: 
   latlong2: 
+  like_button: ^2.1.0
   lock_orientation_screen:
   logger:
   path_provider: 
