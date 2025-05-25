@@ -50,7 +50,7 @@ Future<void> initializeServices() async {
   await Future.wait([
     sl<LocalNotificationService>().initialize(),
     sl<ConnectivityController>().connectivityControllerInit(),
-    sl<CacheDataHelper>().sharedPreferencesInitialize(),
+    sl<CacheDataManager>().sharedPreferencesInitialize(),
     sl<AppEnvironment>().initializeEnvironment(envType: EnvTypeEnum.dev),
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
   ]);

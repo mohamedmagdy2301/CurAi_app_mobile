@@ -42,8 +42,9 @@ class _CuraiAppState extends State<CuraiApp> {
   }
 
   Future<void> _loadAppSettings() async {
-    final themeModeString =
-        await CacheDataHelper.getData(key: SharedPrefKey.saveThemeMode);
+    final themeModeString = await di
+        .sl<CacheDataManager>()
+        .getData(key: SharedPrefKey.saveThemeMode);
     savedThemeMode = _getThemeModeFromString(themeModeString as String?);
 
     final isDark = savedThemeMode == AdaptiveThemeMode.dark ||
@@ -53,17 +54,18 @@ class _CuraiAppState extends State<CuraiApp> {
 
     final colors = isDark ? darkColors : lightColors;
 
-    final savedColorValue =
-        await CacheDataHelper.getData(key: SharedPrefKey.keyThemeColor);
+    final savedColorValue = await di
+        .sl<CacheDataManager>()
+        .getData(key: SharedPrefKey.keyThemeColor);
 
     if (savedColorValue != null && savedColorValue is int) {
       selectedColor = Color(savedColorValue);
     } else {
       selectedColor = colors.first;
-      await CacheDataHelper.setData(
-        key: SharedPrefKey.keyThemeColor,
-        value: selectedColor.value,
-      );
+      await di.sl<CacheDataManager>().setData(
+            key: SharedPrefKey.keyThemeColor,
+            value: selectedColor.value,
+          );
     }
 
     setState(() {

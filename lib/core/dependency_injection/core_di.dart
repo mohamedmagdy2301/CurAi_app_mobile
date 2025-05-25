@@ -24,7 +24,7 @@ void setupCoreDI() {
     ..registerLazySingleton(() => DioConsumer(client: sl<Dio>()))
 
     //! Shared Preferences Manager
-    ..registerLazySingleton<CacheDataHelper>(CacheDataHelper.new)
+    ..registerLazySingleton<CacheDataManager>(CacheDataManager.new)
 
     //! Connectivity Controller
     ..registerLazySingleton<ConnectivityController>(

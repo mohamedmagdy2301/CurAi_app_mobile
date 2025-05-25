@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls,// avoid_catches_without_on_clauses, document_ignores
 
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
@@ -29,14 +31,14 @@ class AuthRepoImpl extends AuthRepo {
       (failure) => left(failure.message),
       (result) async {
         await Future.wait([
-          CacheDataHelper.setData(
-            key: SharedPrefKey.keyAccessToken,
-            value: result['access'],
-          ),
-          CacheDataHelper.setData(
-            key: SharedPrefKey.keyRefreshToken,
-            value: result['refresh'],
-          ),
+          di.sl<CacheDataManager>().setData(
+                key: SharedPrefKey.keyAccessToken,
+                value: result['access'],
+              ),
+          di.sl<CacheDataManager>().setData(
+                key: SharedPrefKey.keyRefreshToken,
+                value: result['refresh'],
+              ),
         ]);
 
         return right(result['message'] as String);

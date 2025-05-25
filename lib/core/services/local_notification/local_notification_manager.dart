@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:flutter/foundation.dart';
@@ -25,13 +27,12 @@ Future<String> _downloadAndSaveFile(String url, String fileName) async {
 }
 
 class LocalNotificationService {
-  /// Factory constructor to ensure singleton instance
   factory LocalNotificationService() => _instance;
   LocalNotificationService._();
+
   static final LocalNotificationService _instance =
       LocalNotificationService._();
 
-  /// Flutter Local Notifications Plugin instance
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -179,10 +180,10 @@ class LocalNotificationService {
     required bool isActive,
   }) async {
     try {
-      await CacheDataHelper.setData(
-        key: '$notificationPrefsKey-$id',
-        value: isActive,
-      );
+      await di.sl<CacheDataManager>().setData(
+            key: '$notificationPrefsKey-$id',
+            value: isActive,
+          );
     } on Exception catch (e) {
       if (kDebugMode) log('Error saving notification preference: $e');
     }
@@ -191,7 +192,9 @@ class LocalNotificationService {
   /// Get notification status from SharedPreferences
   Future<bool> getNotificationStatus({required int id}) async {
     try {
-      return (CacheDataHelper.getData(key: '$notificationPrefsKey-$id') ??
+      return (di
+              .sl<CacheDataManager>()
+              .getData(key: '$notificationPrefsKey-$id') ??
           false) as bool;
     } on Exception catch (e) {
       if (kDebugMode) log('Error getting notification preference: $e');
@@ -205,10 +208,10 @@ class LocalNotificationService {
 
     // Clear preferences
     try {
-      final keys = CacheDataHelper.getKeys();
+      final keys = di.sl<CacheDataManager>().getKeys();
       for (final key in keys) {
         if (key.startsWith(notificationPrefsKey)) {
-          await CacheDataHelper.removeData(key: key);
+          await di.sl<CacheDataManager>().removeData(key: key);
         }
       }
     } on Exception catch (e) {

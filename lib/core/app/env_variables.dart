@@ -15,16 +15,14 @@ enum EnvTypeEnum { dev, prod }
 /// print(EnvVariables.baseApiUrl);
 /// ```
 class AppEnvironment {
-  /// Factory constructor that returns the same singleton instance.
-  factory AppEnvironment() {
-    return _instance;
-  }
+  /// factory AppEnvironment() => _instance;
+  factory AppEnvironment() => _instance;
 
   /// Private constructor for singleton pattern.
-  AppEnvironment._privateConstructor();
+  AppEnvironment._();
 
-  /// The singleton instance of [AppEnvironment].
-  static final AppEnvironment _instance = AppEnvironment._privateConstructor();
+  // Singleton instance
+  static final AppEnvironment _instance = AppEnvironment._();
 
   /// Internal storage for the environment type (e.g., 'dev' or 'prod').
   String _envType = '';

@@ -1,4 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
@@ -34,8 +36,9 @@ class _PalettListViewWidgetState extends State<PalettListViewWidget> {
     final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     final colors = isDark ? darkColors : lightColors;
 
-    final savedColorValue =
-        await CacheDataHelper.getData(key: SharedPrefKey.keyThemeColor);
+    final savedColorValue = await di
+        .sl<CacheDataManager>()
+        .getData(key: SharedPrefKey.keyThemeColor);
 
     if (mounted) {
       setState(() {
@@ -90,10 +93,10 @@ class _PalettListViewWidgetState extends State<PalettListViewWidget> {
       selectedColor = selected;
     });
 
-    await CacheDataHelper.setData(
-      key: SharedPrefKey.keyThemeColor,
-      value: selected.toARGB32(),
-    );
+    await di.sl<CacheDataManager>().setData(
+          key: SharedPrefKey.keyThemeColor,
+          value: selected.toARGB32(),
+        );
 
     if (context.mounted) {
       AdaptiveTheme.of(context).setTheme(

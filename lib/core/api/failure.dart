@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls, document_ignores
 
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:dio/dio.dart';
@@ -14,7 +16,7 @@ class ServerFailure extends Failure {
 
   factory ServerFailure.fromDioException(DioException dioException) {
     final isArabic =
-        CacheDataHelper.getData(key: SharedPrefKey.keyLocale) == 'ar';
+        di.sl<CacheDataManager>().getData(key: SharedPrefKey.keyLocale) == 'ar';
 
     switch (dioException.type) {
       case DioExceptionType.sendTimeout:
@@ -50,7 +52,7 @@ class ServerFailure extends Failure {
   }
   factory ServerFailure.fromBadResponse(int statusCode, dynamic error) {
     final isArabic =
-        CacheDataHelper.getData(key: SharedPrefKey.keyLocale) == 'ar';
+        di.sl<CacheDataManager>().getData(key: SharedPrefKey.keyLocale) == 'ar';
     if (error is String) {
       error = error.replaceAll(RegExp(r'\n'), ' ');
     } else if (error is List) {

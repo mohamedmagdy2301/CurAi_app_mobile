@@ -1,4 +1,4 @@
-// ignore_for_file: strict_raw_type, document_ignores, lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, avoid_catches_without_on_clauses, inference_failure_on_function_return_type
+// ignore_for_file: strict_raw_type, document_ignores, lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, avoid_catches_without_on_clauses, inference_failure_on_function_return_type, unawaited_futures
 
 import 'dart:async';
 import 'dart:convert';
@@ -320,7 +320,9 @@ class DioConsumer implements ApiConsumer {
             : 'Your session has expired. Please log in again.',
         onPressed: () async {
           await clearUserData();
-          await CacheDataHelper.removeData(key: SharedPrefKey.keyIsLoggedIn);
+          await di
+              .sl<CacheDataManager>()
+              .removeData(key: SharedPrefKey.keyIsLoggedIn);
           context
             ..pop()
             ..pushNamedAndRemoveUntil(Routes.loginScreen);
@@ -349,10 +351,10 @@ class DioConsumer implements ApiConsumer {
 
         if (decoded is Map && decoded.containsKey('access')) {
           final newAccessToken = decoded['access'];
-          await CacheDataHelper.setData(
-            key: SharedPrefKey.keyAccessToken,
-            value: newAccessToken,
-          );
+          await di.sl<CacheDataManager>().setData(
+                key: SharedPrefKey.keyAccessToken,
+                value: newAccessToken,
+              );
 
           client.options.headers['Authorization'] = 'Bearer $newAccessToken';
           await _processQueue();

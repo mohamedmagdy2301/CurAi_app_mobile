@@ -2,8 +2,16 @@ import 'package:curai_app_mobile/core/utils/helper/logger_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CacheDataHelper {
-  static late SharedPreferences _sharedPreferences;
+class CacheDataManager {
+  /// Factory constructor to return the singleton instance of [CacheDataManager].
+  factory CacheDataManager() => _instance;
+  CacheDataManager._();
+
+  /// Singleton instance of [CacheDataManager].
+  static final CacheDataManager _instance = CacheDataManager._();
+
+  late SharedPreferences _sharedPreferences;
+
   Future<void> sharedPreferencesInitialize() async {
     try {
       _sharedPreferences = await SharedPreferences.getInstance();
@@ -14,9 +22,9 @@ class CacheDataHelper {
     }
   }
 
-  static Set<String> getKeys() => _sharedPreferences.getKeys();
+  Set<String> getKeys() => _sharedPreferences.getKeys();
 
-  static Future<bool> setData({
+  Future<bool> setData({
     required String key,
     required dynamic value,
   }) async {
@@ -39,16 +47,16 @@ class CacheDataHelper {
     return false;
   }
 
-  static dynamic getData({required String key}) {
+  dynamic getData({required String key}) {
     return _sharedPreferences.get(key);
   }
 
-  static Future<bool> removeData({required String key}) async {
+  Future<bool> removeData({required String key}) async {
     await _sharedPreferences.remove(key);
     return true;
   }
 
-  static Future<bool> clearAllData() async {
+  Future<bool> clearAllData() async {
     await _sharedPreferences.clear();
     return true;
   }
