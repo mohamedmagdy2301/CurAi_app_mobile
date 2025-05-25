@@ -53,6 +53,7 @@ class _DoctorSpecialitiesScreenState extends State<DoctorSpecialitiesScreen> {
           return Skeletonizer(
             effect: shimmerEffect(context),
             child: FilterDoctorSpeciality(
+              isLoading: true,
               specializationsList: specializationsListDome,
             ),
           );

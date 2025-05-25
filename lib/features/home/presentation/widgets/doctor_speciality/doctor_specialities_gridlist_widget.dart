@@ -12,8 +12,10 @@ import 'package:flutter/material.dart';
 class DoctorSpecialitiesGridList extends StatelessWidget {
   const DoctorSpecialitiesGridList({
     required this.filteredItems,
+    required this.isLoading,
     super.key,
   });
+  final bool isLoading;
 
   final List<SpecializationsModel> filteredItems;
 
@@ -53,6 +55,7 @@ class DoctorSpecialitiesGridList extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         return DoctorSpecialityItemWidget(
+          isLoading: isLoading,
           title: specializationName(
             filteredItems[index].name,
             context.isStateArabic,

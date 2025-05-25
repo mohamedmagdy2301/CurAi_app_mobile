@@ -8,11 +8,15 @@ import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speci
 import 'package:flutter/material.dart';
 
 class FilterDoctorSpeciality extends StatefulWidget {
-  const FilterDoctorSpeciality({required this.specializationsList, super.key});
+  const FilterDoctorSpeciality({
+    required this.specializationsList,
+    this.isLoading,
+    super.key,
+  });
   final List<SpecializationsModel> specializationsList;
-
+  final bool? isLoading;
   @override
-  _FilterDoctorSpecialityState createState() => _FilterDoctorSpecialityState();
+  State<FilterDoctorSpeciality> createState() => _FilterDoctorSpecialityState();
 }
 
 class _FilterDoctorSpecialityState extends State<FilterDoctorSpeciality> {
@@ -51,6 +55,7 @@ class _FilterDoctorSpecialityState extends State<FilterDoctorSpeciality> {
         30.hSpace,
         Expanded(
           child: DoctorSpecialitiesGridList(
+            isLoading: widget.isLoading ?? false,
             filteredItems: filteredDoctorSpecialityList,
           ),
         ),

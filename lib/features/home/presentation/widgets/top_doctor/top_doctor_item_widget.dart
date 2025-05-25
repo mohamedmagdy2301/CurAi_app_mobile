@@ -45,11 +45,10 @@ class TopDoctorItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (isLoading ?? false)
-            Image.asset(
-              AppImages.onboardingDoctor2,
+            Container(
               width: context.H * 0.21,
               height: context.H * 0.19,
-              fit: BoxFit.cover,
+              color: context.onSecondaryColor,
             ).cornerRadiusWithClipRRect(15)
           else
             CustomCachedNetworkImage(

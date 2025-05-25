@@ -34,11 +34,10 @@ class ImageDoctorWidget extends StatelessWidget {
         ),
       ),
       child: isLoading ?? false
-          ? Image.asset(
-              AppImages.onboardingDoctor2,
+          ? Container(
               width: context.W * 0.25,
               height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
-              fit: BoxFit.cover,
+              color: context.onSecondaryColor,
             )
           : CustomCachedNetworkImage(
               imgUrl: doctorResults.profilePicture ??
