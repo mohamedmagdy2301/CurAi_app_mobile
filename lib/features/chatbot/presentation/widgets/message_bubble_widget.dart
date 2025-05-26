@@ -57,7 +57,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                 : isUserMessage
                     ? 20.w
                     : null,
-            top: bubbleOffset.dy - 66,
+            top: bubbleOffset.dy - 69,
             child: Material(
               color: Colors.transparent,
               child: ClipRRect(
@@ -66,7 +66,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                   filter:
                       ImageFilter.blur(sigmaX: 10, sigmaY: 10), // قوة التعتيم
                   child: Container(
-                    padding: context.padding(horizontal: 20, vertical: 20),
+                    padding: context.padding(horizontal: 20, vertical: 17),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.r),
                       gradient: LinearGradient(
