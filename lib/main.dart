@@ -39,8 +39,6 @@ Future<void> initializeServices() async {
     // favorite doctor
     ..registerAdapter(FavoriteDoctorAdapter());
 
-  await Hive.openBox<MessageBubbleModel>('chat_messages');
-
   /// Initialize the Bloc observer
   Bloc.observer = SimpleBlocObserver();
 

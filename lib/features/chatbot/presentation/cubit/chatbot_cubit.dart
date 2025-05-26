@@ -14,26 +14,29 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-void clearHistoryChatBot() {
-  final chatBox = Hive.box<MessageBubbleModel>('chat_messages');
-  chatBox.clear();
-}
-
 class ChatBotCubit extends Cubit<ChatBotState> {
-  ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
-      : super(ChatBotInitial());
+  ChatBotCubit(
+    this._diagnosisUsecase, {
+    required this.userId,
+    required this.isArabic,
+  }) : super(ChatBotInitial());
+
+  final int userId;
+  late Box<MessageBubbleModel> _box;
+  String get _boxName => 'chat_messages_$userId';
 
   List<MessageBubbleModel> messagesList = [];
   final DiagnosisUsecase _diagnosisUsecase;
   final bool isArabic;
-  final Box<MessageBubbleModel> _chatBox =
-      Hive.box<MessageBubbleModel>('chat_messages');
 
-  /// get the username from Cache Data Local
+  Future<void> init() async {
+    _box = await Hive.openBox<MessageBubbleModel>(_boxName);
+    await loadPreviousMessages();
+  }
 
   /// Check if the chat box is closed
   Future<void> loadPreviousMessages() async {
-    messagesList = _chatBox.values.toList().reversed.toList();
+    messagesList = _box.values.toList().reversed.toList();
     emit(ChatBotDone(messagesList: List.from(messagesList)));
 
     // Add welcome only if no previous messages
@@ -44,7 +47,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   /// clear the chat box
   Future<void> clearChatBot() async {
-    await _chatBox.clear();
+    await _box.clear();
     messagesList.clear();
     emit(ChatBotInitial());
   }
@@ -52,7 +55,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   /// Add a new message to the chat box
   Future<void> addMessage(MessageBubbleModel message) async {
     messagesList.insert(0, message);
-    await _chatBox.add(message);
+    await _box.add(message);
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }

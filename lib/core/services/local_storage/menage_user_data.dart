@@ -3,7 +3,6 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
 import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
-import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
 
 void saveDataUser({required LoginModel data}) {
   di.sl<CacheDataManager>().setData(
@@ -54,7 +53,6 @@ Future<void> clearUserData() async {
     di.sl<CacheDataManager>().removeData(key: SharedPrefKey.keyBonusPoints),
     di.sl<CacheDataManager>().removeData(key: SharedPrefKey.keyProfilePicture),
   ]);
-  clearHistoryChatBot();
 }
 
 /// get the username from Cache Data Local
