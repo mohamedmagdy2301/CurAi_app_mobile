@@ -2,7 +2,10 @@
 
 import 'dart:io';
 
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
+import 'package:curai_app_mobile/core/services/translation/translate_manager.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
@@ -187,10 +190,14 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
     await addMessage(newUserMessage);
     addLoadingMessage();
+    // if message arabic we need to translate it to english
 
     if (image != null) {
       response = await _diagnosisUsecase.call(DiagnosisRequest(image: image));
     } else {
+      if (message?.isArabicFormat ?? false) {
+        message = await sl<TranslateManager>().translateToEnglish(message!);
+      }
       response =
           await _diagnosisUsecase.call(DiagnosisRequest(inputText: message));
     }
