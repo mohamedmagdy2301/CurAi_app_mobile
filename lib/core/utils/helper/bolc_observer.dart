@@ -7,12 +7,12 @@ class SimpleBlocObserver implements BlocObserver {
 
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
-    if (kDebugMode) {
-      LoggerHelper.info(
-        '----- Change in ${bloc.runtimeType}: $change ----',
-        tag: tag,
-      );
-    }
+    // if (kDebugMode) {
+    // LoggerHelper.info(
+    //   '----- Change in ${bloc.runtimeType}: $change ----',
+    //   tag: tag,
+    // );
+    // }
   }
 
   @override
@@ -45,12 +45,12 @@ class SimpleBlocObserver implements BlocObserver {
 
   @override
   void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
-    if (kDebugMode) {
-      LoggerHelper.info(
-        '----- Event in ${bloc.runtimeType}: $event ----',
-        tag: tag,
-      );
-    }
+    // if (kDebugMode) {
+    //   LoggerHelper.info(
+    //     '----- Event in ${bloc.runtimeType}: $event ----',
+    //     tag: tag,
+    //   );
+    // }
   }
 
   @override
@@ -58,11 +58,11 @@ class SimpleBlocObserver implements BlocObserver {
     Bloc<dynamic, dynamic> bloc,
     Transition<dynamic, dynamic> transition,
   ) {
-    if (kDebugMode) {
-      LoggerHelper.info(
-        '----- Transition in ${bloc.runtimeType}: $transition ----',
-        tag: tag,
-      );
-    }
+    // if (kDebugMode) {
+    //   LoggerHelper.info(
+    //     '----- Transition in ${bloc.runtimeType}: $transition ----',
+    //     tag: tag,
+    //   );
+    // }
   }
 }

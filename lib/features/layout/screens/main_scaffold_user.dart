@@ -37,7 +37,6 @@ class MainScaffoldUser extends StatelessWidget {
             onPopInvokedWithResult: (didPop, result) async {
               if (!didPop) {
                 final navCubit = context.read<NavigationCubit>();
-
                 if (navCubit.state != 0) {
                   navCubit.updateIndex(0);
                 } else {
@@ -53,44 +52,36 @@ class MainScaffoldUser extends StatelessWidget {
                 }
               }
             },
-            child: BlocProvider(
-              create: (context) => di.sl<FavoritesCubit>(),
-              child: Scaffold(
-                backgroundColor: context.backgroundColor,
-                resizeToAvoidBottomInset: true,
-                bottomNavigationBar: Builder(
-                  builder: (context) {
-                    return currentIndex == 2
-                        ? const SizedBox.shrink()
-                        : NavigationBar(
-                            labelBehavior:
-                                NavigationDestinationLabelBehavior.alwaysHide,
-                            animationDuration: const Duration(seconds: 1),
-                            height: context.H * 0.09,
-                            indicatorColor: Colors.transparent,
-                            backgroundColor: context.primaryColor.withAlpha(10),
-                            overlayColor: WidgetStateProperty.all(
-                              context.primaryColor.withAlpha(20),
-                            ),
-                            indicatorShape: Border.all(style: BorderStyle.none),
-                            elevation: 0,
-                            destinations: _buildDestinations(context),
-                            selectedIndex: currentIndex,
-                            onDestinationSelected: (index) {
-                              context.read<FavoritesCubit>().loadFavorites();
+            child: Scaffold(
+              backgroundColor: context.backgroundColor,
+              resizeToAvoidBottomInset: true,
+              bottomNavigationBar: Builder(
+                builder: (context) {
+                  return currentIndex == 2
+                      ? const SizedBox.shrink()
+                      : NavigationBar(
+                          labelBehavior:
+                              NavigationDestinationLabelBehavior.alwaysHide,
+                          animationDuration: const Duration(seconds: 1),
+                          height: context.H * 0.09,
+                          indicatorColor: Colors.transparent,
+                          backgroundColor: context.primaryColor.withAlpha(10),
+                          overlayColor: WidgetStateProperty.all(
+                            context.primaryColor.withAlpha(20),
+                          ),
+                          indicatorShape: Border.all(style: BorderStyle.none),
+                          elevation: 0,
+                          destinations: _buildDestinations(context),
+                          selectedIndex: currentIndex,
+                          onDestinationSelected: (index) {
+                            context.read<FavoritesCubit>().loadFavorites();
 
-                              context
-                                  .read<NavigationCubit>()
-                                  .updateIndex(index);
-                            },
-                          );
-                  },
-                ),
-                body: IndexedStack(
-                  index: currentIndex,
-                  children: _buildScreens(context),
-                ),
+                            context.read<NavigationCubit>().updateIndex(index);
+                          },
+                        );
+                },
               ),
+              body: _buildScreens(context)[currentIndex],
             ),
           );
         },

@@ -4,12 +4,9 @@ import 'dart:io';
 
 import 'package:curai_app_mobile/core/api/status_code.dart';
 import 'package:curai_app_mobile/core/app/env_variables.dart';
-import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
-    as di;
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:flutter/foundation.dart';
 
 class DioConfigurator {
   static const Duration _defaultTimeouts = Duration(seconds: 30);
@@ -17,7 +14,7 @@ class DioConfigurator {
   static void configure(Dio dio) {
     _setUpCertificateBypass(dio);
     _addBaseInterceptors(dio);
-    if (kDebugMode) dio.interceptors.add(di.sl<LogInterceptor>());
+    // if (kDebugMode) dio.interceptors.add(di.sl<LogInterceptor>());
   }
 
   static void _setUpCertificateBypass(Dio dio) {
