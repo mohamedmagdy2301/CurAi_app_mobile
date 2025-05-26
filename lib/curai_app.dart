@@ -17,6 +17,7 @@ import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
 import 'package:curai_app_mobile/features/onboarding/onboarding_screen.dart';
+import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lock_orientation_screen/lock_orientation_screen.dart';
@@ -37,7 +38,6 @@ class _CuraiAppState extends State<CuraiApp> {
   @override
   void initState() {
     super.initState();
-
     _loadAppSettings();
   }
 
@@ -126,18 +126,21 @@ class _CuraiAppState extends State<CuraiApp> {
               selectedColor,
             ),
             initial: savedThemeMode,
-            builder: (theme, darkTheme) => MaterialApp(
-              navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
-              theme: theme,
-              darkTheme: darkTheme,
-              debugShowCheckedModeBanner: widget.isDebugMode,
-              builder: (context, child) => setupConnectivityWidget(child),
-              onGenerateRoute: AppRoutes.onGenerateRoute,
-              locale: cubit.getLocaleFromState(state.locale),
-              supportedLocales: AppLocalSetup.supportedLocales,
-              localeResolutionCallback: AppLocalSetup.resolveUserLocale,
-              localizationsDelegates: AppLocalSetup.localesDelegates,
-              home: _getInitialScreen(),
+            builder: (theme, darkTheme) => BlocProvider(
+              create: (context) => di.sl<FavoritesCubit>(),
+              child: MaterialApp(
+                navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
+                theme: theme,
+                darkTheme: darkTheme,
+                debugShowCheckedModeBanner: widget.isDebugMode,
+                builder: (context, child) => setupConnectivityWidget(child),
+                onGenerateRoute: AppRoutes.onGenerateRoute,
+                locale: cubit.getLocaleFromState(state.locale),
+                supportedLocales: AppLocalSetup.supportedLocales,
+                localeResolutionCallback: AppLocalSetup.resolveUserLocale,
+                localizationsDelegates: AppLocalSetup.localesDelegates,
+                home: _getInitialScreen(),
+              ),
             ),
           );
         },

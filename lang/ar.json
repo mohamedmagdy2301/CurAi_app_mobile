@@ -204,6 +204,7 @@
    "complete"  : "مكتمل",
    "finish" : "انهاء",
    "emergency_department" : "قسم الطوارئ",
-   "top_doctors" : "أفضل الأطباء"
-
+   "top_doctors" : "أفضل الأطباء",
+   "yesterday" : "أمس",
+  "now" : "الآن"  
   }

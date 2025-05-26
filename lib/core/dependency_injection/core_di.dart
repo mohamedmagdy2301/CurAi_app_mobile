@@ -4,6 +4,8 @@ import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/services/local_notification/local_notification_manager.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
+import 'package:curai_app_mobile/core/services/text_to_speech/text_to_speech_manager.dart';
+import 'package:curai_app_mobile/core/services/translation/translate_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -36,5 +38,15 @@ void setupCoreDI() {
     //! Local Notification Service
     ..registerLazySingleton<LocalNotificationService>(
       LocalNotificationService.new,
+    )
+
+    //! Translation Manager
+    ..registerLazySingleton<TranslateManager>(
+      TranslateManager.new,
+    )
+
+    // ! Text To Speech Manager
+    ..registerLazySingleton<TextToSpeechManager>(
+      TextToSpeechManager.new,
     );
 }

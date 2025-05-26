@@ -2,7 +2,10 @@
 
 import 'dart:io';
 
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
+import 'package:curai_app_mobile/core/services/translation/translate_manager.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
@@ -14,26 +17,35 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-void clearHistoryChatBot() {
-  final chatBox = Hive.box<MessageBubbleModel>('chat_messages');
-  chatBox.clear();
-}
-
 class ChatBotCubit extends Cubit<ChatBotState> {
-  ChatBotCubit(this._diagnosisUsecase, {required this.isArabic})
-      : super(ChatBotInitial());
+  ChatBotCubit(
+    this._diagnosisUsecase, {
+    required this.userId,
+    required this.isArabic,
+  }) : super(ChatBotInitial());
+
+  final int userId;
+  late Box<MessageBubbleModel> _box;
+  String get _boxName => 'chat_messages_$userId';
 
   List<MessageBubbleModel> messagesList = [];
   final DiagnosisUsecase _diagnosisUsecase;
   final bool isArabic;
-  final Box<MessageBubbleModel> _chatBox =
-      Hive.box<MessageBubbleModel>('chat_messages');
 
-  /// get the username from Cache Data Local
+  Future<void> init() async {
+    if (isClosed) return;
+    emit(ChatInitLoading());
+    await Future.delayed(const Duration(milliseconds: 800));
+    _box = await Hive.openBox<MessageBubbleModel>(_boxName);
+    await loadPreviousMessages();
+    if (isClosed) return;
+    emit(ChatInitDone());
+  }
 
   /// Check if the chat box is closed
   Future<void> loadPreviousMessages() async {
-    messagesList = _chatBox.values.toList().reversed.toList();
+    messagesList = _box.values.toList().reversed.toList();
+    if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
 
     // Add welcome only if no previous messages
@@ -44,15 +56,17 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
   /// clear the chat box
   Future<void> clearChatBot() async {
-    await _chatBox.clear();
+    await _box.clear();
     messagesList.clear();
+
+    if (isClosed) return;
     emit(ChatBotInitial());
   }
 
   /// Add a new message to the chat box
   Future<void> addMessage(MessageBubbleModel message) async {
     messagesList.insert(0, message);
-    await _chatBox.add(message);
+    await _box.add(message);
     if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
   }
@@ -79,8 +93,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
       final goodbyeMessage = MessageBubbleModel(
         messageText: isArabic
-            ? 'شكرًا لك يا ${getFullName()} على استخدامك CurAi.\nنتمنى لك الشفاء العاجل!. 😊'
-            : 'Thank you, ${getFullName()}, for using CurAi.\nWe wish you a speedy recovery! 😊',
+            ? 'نتمنى لك الشفاء العاجل! 😊'
+            : 'Wishing you a speedy recovery and continued good health! 😊',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -89,8 +103,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
       final restartMessage = MessageBubbleModel(
         messageText: isArabic
-            ? 'هل لديك أي أعراض أخرى تود مشاركتها؟'
-            : "Any other symptoms you'd like to share?",
+            ? 'هل لديك أي أعراض أخرى\nتود مشاركتها؟'
+            : "Any other symptoms\nyou'd like to share?",
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -103,13 +117,18 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   /// Add welcome and suggestion messages
   Future<void> addWelcomeMessage() async {
     MessageBubbleModel welcomeMessage;
+    MessageBubbleModel iAmBotMessage;
     MessageBubbleModel startDescribingMessage;
-    MessageBubbleModel suggestionsMessage;
 
     if (isArabic) {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 أهلاً ${getFullName()} في CurAi.'
-            '\nأنا مساعدك الطبي الذكي، هنا لمساعدتك في تحليل الأعراض وتوجيهك للتخصص المناسب.',
+        messageText: '👋 أهلاً ${getFullName()} في CurAi.',
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      iAmBotMessage = MessageBubbleModel(
+        messageText:
+            'أنا مساعدك الطبي ، هنا لمساعدتك في توجيهك للتخصص المناسب.',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -119,38 +138,15 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         date: DateTime.now(),
         sender: SenderType.bot,
       );
-
-      suggestionsMessage = MessageBubbleModel(
-        messageText: '💡 جرّب تكتب أعراض زي:\n'
-            '     • صداع مستمر\n'
-            '     • دوخة وتعب\n'
-            '     • كحة وسخونية\n'
-            '     • ألم في المعدة\n'
-            '     • ألم في الصدر\n'
-            '     • حرارة عالية\n'
-            '     • زغللة في العين\n'
-            '     • خمول طول اليوم',
-        date: DateTime.now(),
-        sender: SenderType.bot,
-      );
     } else {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 Welcome, ${getFullName()} to CurAi!'
-            "\nI'm here to help analyze your symptoms and guide you to the right specialty.",
+        messageText: '👋 Welcome, ${getFullName()} to CurAi!',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
-
-      suggestionsMessage = MessageBubbleModel(
-        messageText: '💡 Try writing symptoms like:\n'
-            '     • Persistent headache\n'
-            '     • Dizziness and fatigue\n'
-            '     • Cough and high fever\n'
-            '     • Stomach pain\n'
-            '     • Chest pain\n'
-            '     • High temperature\n'
-            '     • Blurry vision\n'
-            '     • Feeling tired all day',
+      iAmBotMessage = MessageBubbleModel(
+        messageText:
+            "I'm here to help analyze your symptoms and guide you to the right specialty.",
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -162,17 +158,18 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
     }
 
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(const Duration(milliseconds: 500));
     await addMessage(welcomeMessage);
     await Future.delayed(const Duration(milliseconds: 1000));
+    await addMessage(iAmBotMessage);
+    await Future.delayed(const Duration(milliseconds: 1500));
     await addMessage(startDescribingMessage);
-    await Future.delayed(const Duration(milliseconds: 1600));
-    await addMessage(suggestionsMessage);
   }
 
   /// Add a new user message and perform a diagnosis
   Future<void> addNewMessage({String? message, XFile? image}) async {
     Either<String, DiagnosisModel> response;
+    if (isClosed) return;
     emit(ChatBotLoading());
 
     String? imagePath;
@@ -193,10 +190,14 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
     await addMessage(newUserMessage);
     addLoadingMessage();
+    // if message arabic we need to translate it to english
 
     if (image != null) {
       response = await _diagnosisUsecase.call(DiagnosisRequest(image: image));
     } else {
+      if (message?.isArabicFormat ?? false) {
+        message = await sl<TranslateManager>().translateToEnglish(message!);
+      }
       response =
           await _diagnosisUsecase.call(DiagnosisRequest(inputText: message));
     }

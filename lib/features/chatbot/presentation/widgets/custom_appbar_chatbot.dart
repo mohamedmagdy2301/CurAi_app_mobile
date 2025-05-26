@@ -6,13 +6,11 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/features/chatbot/data/datasources/chatbot_remote_data_source.dart';
-import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -89,44 +87,6 @@ class _CustomAppBarChatBotState extends State<CustomAppBarChatBot> {
           )
         else
           const SizedBox(),
-        IconButton(
-          icon: Icon(
-            CupertinoIcons.add_circled_solid,
-            size: 32.sp,
-            color: context.onPrimaryColor,
-          ),
-          onPressed: () {
-            AdaptiveDialogs.showOkAlertDialog(
-              context: context,
-              title: context.isStateArabic
-                  ? 'بدء محادثة جديدة'
-                  : 'Start a new conversation',
-              message: context.isStateArabic
-                  ? Text(
-                      'هل تريد بدء محادثة جديدة؟'
-                      '\nسوف يتم حذف المحادثة الحالية',
-                      style: TextStyleApp.regular16().copyWith(
-                        color: context.onSecondaryColor,
-                      ),
-                    )
-                  : Text(
-                      'Do you want to start a new conversation?'
-                      '\nThe current conversation will be deleted',
-                      style: TextStyleApp.regular16().copyWith(
-                        color: context.onSecondaryColor,
-                      ),
-                    ),
-              onPressed: () {
-                hideKeyboard();
-                context.read<ChatBotCubit>()
-                  ..clearChatBot()
-                  ..addWelcomeMessage();
-                context.pop();
-              },
-            );
-          },
-        ),
-        6.wSpace,
       ],
       centerTitle: true,
     );

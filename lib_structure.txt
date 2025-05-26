@@ -1,0 +1,467 @@
+Folder map of f:\Projects\curai_app_mobile\lib
+==================================================
+
+├── core/
+│   ├── api/
+│   │   ├── dio_consumer/
+│   │   │   ├── dio_configurator.dart
+│   │   │   ├── dio_consumer.dart
+│   │   │   ├── request_data_builder.dart
+│   │   │   ├── response_handler.dart
+│   │   │   ├── session_manager.dart
+│   │   │   └── token_manager.dart
+│   │   ├── api_consumer.dart
+│   │   ├── end_points.dart
+│   │   ├── failure.dart
+│   │   └── status_code.dart
+│   ├── app/
+│   │   ├── connectivity_controller.dart
+│   │   ├── env_variables.dart
+│   │   └── my_app.dart
+│   ├── cubit/
+│   │   ├── get_loction/
+│   │   │   ├── get_loction_cubit.dart
+│   │   │   └── get_loction_state.dart
+│   │   └── route/
+│   │       ├── route_cubit.dart
+│   │       └── route_state.dart
+│   ├── dependency_injection/
+│   │   ├── appointment_doctor_di.dart
+│   │   ├── appointment_patient_di.dart
+│   │   ├── auth_di.dart
+│   │   ├── chatbot_di.dart
+│   │   ├── core_di.dart
+│   │   ├── home_di.dart
+│   │   ├── reviews_di.dart
+│   │   ├── search_doctor_di.dart
+│   │   └── service_locator.dart
+│   ├── extensions/
+│   │   ├── datetime_extensions.dart
+│   │   ├── int_extensions.dart
+│   │   ├── localization_context_extansions.dart
+│   │   ├── navigation_context_extansions.dart
+│   │   ├── string_extensions.dart
+│   │   ├── theme_context_extensions.dart
+│   │   └── widget_extensions.dart
+│   ├── language/
+│   │   ├── localization_cubit/
+│   │   │   ├── localization_cubit.dart
+│   │   │   └── localization_state.dart
+│   │   ├── app_localizations_delegate.dart
+│   │   ├── app_localizations_setup.dart
+│   │   ├── app_localizations.dart
+│   │   └── lang_keys.dart
+│   ├── routes/
+│   │   ├── app_routes.dart
+│   │   ├── base_routes.dart
+│   │   └── routes.dart
+│   ├── services/
+│   │   ├── local_notification/
+│   │   │   └── local_notification_manager.dart
+│   │   ├── local_storage/
+│   │   │   ├── menage_user_data.dart
+│   │   │   ├── shared_pref_key.dart
+│   │   │   └── shared_preferences_manager.dart
+│   │   └── payment/
+│   │       ├── end_points_payment.dart
+│   │       └── paymob_manager.dart
+│   ├── styles/
+│   │   ├── colors/
+│   │   │   └── app_colors.dart
+│   │   ├── fonts/
+│   │   │   ├── app_text_style.dart
+│   │   │   └── text_direction.dart
+│   │   ├── images/
+│   │   │   ├── app_images.dart
+│   │   │   └── asset_preloader_helper.dart
+│   │   └── themes/
+│   │       ├── app_theme_data.dart
+│   │       ├── assets_extension.dart
+│   │       └── color_extension.dart
+│   ├── usecases/
+│   │   └── usecase.dart
+│   └── utils/
+│       ├── helper/
+│       │   ├── bolc_observer.dart
+│       │   ├── build_app_connectivity_controller.dart
+│       │   ├── detect_language_string.dart
+│       │   ├── funcations_helper.dart
+│       │   ├── get_day_of_week_format.dart
+│       │   ├── logger_helper.dart
+│       │   ├── regex.dart
+│       │   ├── shimmer_effect.dart
+│       │   ├── to_arabic_data.dart
+│       │   ├── to_arabic_number.dart
+│       │   └── url_launcher_helper.dart
+│       ├── screens/
+│       │   ├── no_internet_connection.dart
+│       │   └── under_build_screen.dart
+│       ├── widgets/
+│       │   ├── adaptive_dialogs/
+│       │   │   ├── adaptive_dialogs.dart
+│       │   │   └── bottom_sheet_sort_doctors.dart
+│       │   ├── sankbar/
+│       │   │   ├── animated_snackbar.dart
+│       │   │   └── snackbar_helper.dart
+│       │   ├── custom_button.dart
+│       │   ├── custom_cached_network_image.dart
+│       │   ├── custom_loading_widget.dart
+│       │   ├── custom_refreah_header.dart
+│       │   ├── custom_switch.dart
+│       │   └── custom_text_feild.dart
+│       └── constants.dart
+├── features/
+│   ├── appointment_doctor/
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   │   └── appointment_doctor_remote_data_source.dart
+│   │   │   ├── models/
+│   │   │   │   └── working_time_doctor_available/
+│   │   │   │       └── working_time_doctor_available_model.dart
+│   │   │   └── repositories/
+│   │   │       └── appointment_doctor_repo_impl.dart
+│   │   ├── domain/
+│   │   │   ├── repositories/
+│   │   │   │   └── appointment_doctor_repo.dart
+│   │   │   └── usecases/
+│   │   │       ├── add_working_time_doctor_usecase.dart
+│   │   │       ├── get_working_time_doctor_availble_usecase.dart
+│   │   │       ├── remove_working_time_doctor_usecase.dart
+│   │   │       └── update_working_time_doctor_usecase.dart
+│   │   └── presentation/
+│   │       ├── cubit/
+│   │       │   ├── appointment_doctor_cubit.dart
+│   │       │   └── appointment_doctor_state.dart
+│   │       ├── screens/
+│   │       │   └── working_time_doctor_availble_screen.dart
+│   │       └── widgets/
+│   │           ├── add_working_time_doctor_bottom_sheet.dart
+│   │           ├── build_working_time_doctor_listview.dart
+│   │           ├── custom_appbar_working_time_appointment_doctor.dart
+│   │           ├── update_working_time_doctor_bottom_sheet.dart
+│   │           ├── working_time_doctor_card_widget.dart
+│   │           ├── working_time_doctor_empty_widget.dart
+│   │           ├── working_time_doctor_error_widget.dart
+│   │           └── working_time_doctor_listview_widget.dart
+│   ├── appointment_patient/
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   │   └── appointment_patient_remote_data_source.dart
+│   │   │   ├── models/
+│   │   │   │   ├── appointment_patient_available/
+│   │   │   │   │   └── appointment_patient_available_model.dart
+│   │   │   │   ├── my_appointment_patient/
+│   │   │   │   │   └── my_appointment_patient_model.dart
+│   │   │   │   ├── payment_appointment_patient/
+│   │   │   │   │   └── payment_appointment_patient_model.dart
+│   │   │   │   └── schedule_appointment_patient/
+│   │   │   │       ├── schedule_appointment_patient_model.dart
+│   │   │   │       └── schedule_appointment_patient_request.dart
+│   │   │   └── repositories/
+│   │   │       └── appointment_patient_repo_impl.dart
+│   │   ├── domain/
+│   │   │   ├── repositories/
+│   │   │   │   └── appointment_repo.dart
+│   │   │   └── usecases/
+│   │   │       ├── delete_appointment_patient_usecase.dart
+│   │   │       ├── get_appointment_available_usecase.dart
+│   │   │       ├── get_my_appointment_patient_usecase.dart
+│   │   │       ├── payment_appointment_patient_usecase.dart
+│   │   │       ├── reschedule_appointment_patient_usecase.dart
+│   │   │       └── schedule_appointment_patient_usecase.dart
+│   │   └── presentation/
+│   │       ├── cubit/
+│   │       │   ├── appointment_patient_cubit/
+│   │       │   │   ├── appointment_patient_cubit.dart
+│   │       │   │   └── appointment_patient_state.dart
+│   │       │   └── payment_cubit/
+│   │       │       └── payment_patient_cubit.dart
+│   │       ├── screens/
+│   │       │   ├── book_appointment_patient_screen.dart
+│   │       │   ├── my_appointment_patient_screen.dart
+│   │       │   ├── payment_appointment_patient_screen.dart
+│   │       │   └── payment_gateway_screen.dart
+│   │       └── widgets/
+│   │           ├── book_appointment_patient/
+│   │           │   ├── custom_appbar_book_appointment_patient.dart
+│   │           │   ├── patient_available_time_widget.dart
+│   │           │   └── patient_date_selector_horizontal.dart
+│   │           ├── my_appointment/
+│   │           │   ├── appointment_patient_card_widget.dart
+│   │           │   ├── appointments_patient_body_widget.dart
+│   │           │   ├── build_appointments_listview.dart
+│   │           │   ├── build_appointments_patient_empty_listview.dart
+│   │           │   ├── build_appointments_patient_error_widget.dart
+│   │           │   ├── custom_appbar_my_appointment_patient.dart
+│   │           │   └── my_appointment_patient_loading_card.dart
+│   │           ├── payment_appointment/
+│   │           │   └── custom_appbar_payment_appointment.dart
+│   │           └── working_time_details_doctor/
+│   │               ├── build_working_time_details_doctor_widget.dart
+│   │               ├── time_row_details_doctor_widget.dart
+│   │               └── working_time_details_doctor_widget.dart
+│   ├── auth/
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   │   └── auth_remote_data_source.dart
+│   │   │   ├── models/
+│   │   │   │   ├── change_password/
+│   │   │   │   │   └── change_password_request.dart
+│   │   │   │   ├── contact_us/
+│   │   │   │   │   └── contact_us_request.dart
+│   │   │   │   ├── login/
+│   │   │   │   │   ├── login_model.dart
+│   │   │   │   │   └── login_request.dart
+│   │   │   │   ├── profile/
+│   │   │   │   │   ├── doctor_bio_parser.dart
+│   │   │   │   │   ├── profile_model.dart
+│   │   │   │   │   └── profile_request.dart
+│   │   │   │   └── register/
+│   │   │   │       └── register_request.dart
+│   │   │   └── repositories/
+│   │   │       └── auth_repo_impl.dart
+│   │   ├── domain/
+│   │   │   ├── repositories/
+│   │   │   │   └── auth_repo.dart
+│   │   │   └── usecases/
+│   │   │       ├── change_password_usecase.dart
+│   │   │       ├── contact_us_usecase.dart
+│   │   │       ├── edit_profile_usecase.dart
+│   │   │       ├── get_profile_usecase.dart
+│   │   │       ├── login_usecase.dart
+│   │   │       ├── logout_usecase.dart
+│   │   │       └── register_usecase.dart
+│   │   └── presentation/
+│   │       ├── cubit/
+│   │       │   ├── get_location/
+│   │       │   │   ├── get_location_cubit.dart
+│   │       │   │   └── get_location_state.dart
+│   │       │   ├── auth_cubit.dart
+│   │       │   └── auth_state.dart
+│   │       ├── screens/
+│   │       │   ├── add_address_clinic_screen.dart
+│   │       │   ├── bio_screen.dart
+│   │       │   ├── build_your_profile_screen.dart
+│   │       │   ├── change_password_screen.dart
+│   │       │   ├── complete_profile_screen.dart
+│   │       │   ├── login_screen.dart
+│   │       │   ├── otp_verifcation_screen.dart
+│   │       │   ├── register_screen.dart
+│   │       │   ├── reset_password_screen.dart
+│   │       │   └── your_profile_screen.dart
+│   │       └── widgets/
+│   │           ├── change_password/
+│   │           │   ├── change_password_widget.dart
+│   │           │   └── form_change_password_widget.dart
+│   │           ├── complete_profile/
+│   │           │   ├── form_add_address_clinic_widget.dart
+│   │           │   ├── form_bio_widget.dart
+│   │           │   ├── form_complete_profile_widget.dart
+│   │           │   └── maps_card_add_new_address.dart
+│   │           ├── forget_password/
+│   │           │   └── form_forget_password_widget.dart
+│   │           ├── login/
+│   │           │   ├── form_login_widget.dart
+│   │           │   ├── icon_auth_with_social.dart
+│   │           │   └── not_have_account.dart
+│   │           ├── otp_verifcation/
+│   │           │   └── input_otp_widget.dart
+│   │           ├── register/
+│   │           │   ├── already_have_account.dart
+│   │           │   └── form_register_widget.dart
+│   │           ├── your_profile/
+│   │           │   ├── custom_appbar_your_profile.dart
+│   │           │   └── custom_text_feild_edit_profile.dart
+│   │           ├── header_auth_widget.dart
+│   │           ├── height_valid_notifier_widget.dart
+│   │           ├── login_with_social.dart
+│   │           ├── logout_widget.dart
+│   │           └── terms_and_conditions_widget.dart
+│   ├── chatbot/
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   │   └── chatbot_remote_data_source.dart
+│   │   │   ├── models/
+│   │   │   │   ├── diagnosis_model/
+│   │   │   │   │   ├── diagnosis_model.dart
+│   │   │   │   │   └── diagnosis_request.dart
+│   │   │   │   ├── message_bubble_model.dart
+│   │   │   │   └── message_bubble_model.g.dart
+│   │   │   └── repositories/
+│   │   │       └── chatbot_repo_impl.dart
+│   │   ├── domain/
+│   │   │   ├── repositories/
+│   │   │   │   └── chatbot_repo.dart
+│   │   │   └── usecases/
+│   │   │       └── diagnosis_usecase.dart
+│   │   └── presentation/
+│   │       ├── cubit/
+│   │       │   ├── chatbot_cubit.dart
+│   │       │   └── chatbot_state.dart
+│   │       ├── screens/
+│   │       │   └── chatbot_screen.dart
+│   │       └── widgets/
+│   │           ├── body_chatbot.dart
+│   │           ├── build_chat_message.dart
+│   │           ├── chat_bubble.dart
+│   │           ├── custom_appbar_chatbot.dart
+│   │           ├── message_bubble_widget.dart
+│   │           └── message_input_chatbot.dart
+│   ├── emergency/
+│   │   ├── data/
+│   │   │   ├── emergency_data_ar.dart
+│   │   │   └── emergency_data_en.dart
+│   │   └── screens/
+│   │       └── emergency_screen.dart
+│   ├── home/
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   │   └── home_remote_data_source.dart
+│   │   │   ├── models/
+│   │   │   │   ├── doctor_model/
+│   │   │   │   │   ├── doctor_model.dart
+│   │   │   │   │   ├── favorite_doctor.dart
+│   │   │   │   │   └── favorite_doctor.g.dart
+│   │   │   │   └── specializations_model/
+│   │   │   │       └── specializations_model.dart
+│   │   │   └── repositories/
+│   │   │       └── home_repo_impl.dart
+│   │   ├── domain/
+│   │   │   ├── repositories/
+│   │   │   │   └── home_repo.dart
+│   │   │   └── usecases/
+│   │   │       ├── get_all_doctor_usecase.dart
+│   │   │       ├── get_doctor_by_id_usecase.dart
+│   │   │       ├── get_specializations_usecase.dart
+│   │   │       └── get_top_doctor_usecase.dart
+│   │   └── presentation/
+│   │       ├── cubit/
+│   │       │   ├── home_cubit/
+│   │       │   │   ├── home_cubit.dart
+│   │       │   │   └── home_state.dart
+│   │       │   └── search_doctor_cubit/
+│   │       │       ├── search_doctor_cubit.dart
+│   │       │       └── search_doctor_state.dart
+│   │       ├── screens/
+│   │       │   ├── all_doctor_screen.dart
+│   │       │   ├── details_doctor_screen.dart
+│   │       │   ├── doctor_speciality_screen.dart
+│   │       │   └── home_screen.dart
+│   │       └── widgets/
+│   │           ├── all_doctor/
+│   │           │   ├── all_doctor_empty_widget.dart
+│   │           │   ├── all_doctor_listview_widget.dart
+│   │           │   ├── custom_appbar_all_doctor.dart
+│   │           │   └── custom_search_bar.dart
+│   │           ├── details_doctor/
+│   │           │   ├── about_tap.dart
+│   │           │   ├── custom_appbar_details_doctor.dart
+│   │           │   ├── doctor_maps_widget.dart
+│   │           │   ├── flutter_map_builder.dart
+│   │           │   ├── header_details_doctor_widget.dart
+│   │           │   ├── location_tap.dart
+│   │           │   ├── reviews_tap.dart
+│   │           │   └── social_contact_doctor_widget.dart
+│   │           ├── doctor_speciality/
+│   │           │   ├── custom_appbar_doctor_specialities.dart
+│   │           │   ├── doctor_specialities_gridlist_widget.dart
+│   │           │   ├── doctor_speciality_item_widget.dart
+│   │           │   ├── filter_doctor_speciality_widget.dart
+│   │           │   ├── specialization_widget.dart
+│   │           │   └── specializations_home_widget_listview.dart
+│   │           ├── home_widgets/
+│   │           │   ├── banner_emergency_home_widget.dart
+│   │           │   ├── banner_home_widget.dart
+│   │           │   ├── custom_appbar_home.dart
+│   │           │   ├── custom_painter.dart
+│   │           │   └── title_section.dart
+│   │           ├── popular_doctor/
+│   │           │   ├── doctor_home_widget_listview.dart
+│   │           │   ├── image_doctor_widget.dart
+│   │           │   ├── popular_doctor_item_widget.dart
+│   │           │   └── rateing_doctor_widget.dart
+│   │           └── top_doctor/
+│   │               ├── top_doctor_item_widget.dart
+│   │               └── top_doctor_listview_widget.dart
+│   ├── layout/
+│   │   ├── cubit/
+│   │   │   └── navigation_cubit.dart
+│   │   └── screens/
+│   │       └── main_scaffold_user.dart
+│   ├── onboarding/
+│   │   ├── cubit/
+│   │   │   ├── onboarding_cubit.dart
+│   │   │   └── onboarding_state.dart
+│   │   ├── data/
+│   │   │   ├── model/
+│   │   │   │   └── onboarding_model.dart
+│   │   │   └── onboarding_info.dart
+│   │   ├── widgets/
+│   │   │   ├── body_onboarding.dart
+│   │   │   ├── custom_dot_onboarding.dart
+│   │   │   └── image_onboarding.dart
+│   │   └── onboarding_screen.dart
+│   ├── profile/
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   ├── models/
+│   │   │   │   └── faq_list_data.dart
+│   │   │   └── repositories/
+│   │   ├── domain/
+│   │   │   ├── repositories/
+│   │   │   └── usecases/
+│   │   └── presentation/
+│   │       ├── favorites_cubit/
+│   │       │   └── favorites_cubit.dart
+│   │       ├── screens/
+│   │       │   ├── favorites_doctor_screen.dart
+│   │       │   ├── help_center_screen.dart
+│   │       │   ├── privacy_policy_screen.dart
+│   │       │   ├── profile_screen.dart
+│   │       │   └── settings_screen.dart
+│   │       └── widgets/
+│   │           ├── favorites_doctor/
+│   │           │   ├── custom_appbar_favorites.dart
+│   │           │   └── favorite_doctor_empty_widget.dart
+│   │           ├── help_center/
+│   │           │   ├── contact_us_body_listview.dart
+│   │           │   ├── customer_service_form_widget.dart
+│   │           │   ├── faq_body_listview.dart
+│   │           │   ├── row_navigate_contact_us_widget.dart
+│   │           │   └── whatsapp_content_widget.dart
+│   │           ├── build_radio_listtile.dart
+│   │           ├── circle_color_palette_widget.dart
+│   │           ├── custom_appbar_privacy_policy.dart
+│   │           ├── custom_appbar_profile.dart
+│   │           ├── custom_appbar_settings.dart
+│   │           ├── custom_expansion_tile_card.dart
+│   │           ├── image_profile_widget.dart
+│   │           ├── localize_widget.dart
+│   │           ├── palette_listview_widget.dart
+│   │           └── row_navigate_profile_widget.dart
+│   └── reviews/
+│       ├── data/
+│       │   ├── datasources/
+│       │   │   └── reviews_remote_data_source.dart
+│       │   ├── models/
+│       │   │   └── add_review/
+│       │   │       └── add_review_request.dart
+│       │   └── repositories/
+│       │       └── reviews_repo_impl.dart
+│       ├── domain/
+│       │   ├── repositories/
+│       │   │   └── reviews_repo.dart
+│       │   └── usecases/
+│       │       └── add_reviews_usecase.dart
+│       └── presentation/
+│           ├── cubit/
+│           │   ├── reviews_cubit.dart
+│           │   └── reviews_state.dart
+│           ├── screens/
+│           │   └── add_review_screen.dart
+│           └── widgets/
+│               ├── no_reviews_widget.dart
+│               └── reviews_widget.dart
+├── curai_app.dart
+├── firebase_options.dart
+└── main.dart

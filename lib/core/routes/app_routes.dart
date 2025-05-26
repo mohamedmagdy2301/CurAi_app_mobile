@@ -28,7 +28,6 @@ import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_s
 import 'package:curai_app_mobile/features/home/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
 import 'package:curai_app_mobile/features/onboarding/onboarding_screen.dart';
-import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/favorites_doctor_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/help_center_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
@@ -80,10 +79,7 @@ class AppRoutes {
         return BaseRoute(page: const ForgetPasswordScreen());
       case Routes.favoriteScreen:
         return BaseRoute(
-          page: BlocProvider(
-            create: (context) => di.sl<FavoritesCubit>(),
-            child: const FavoriteDoctorsScreen(),
-          ),
+          page: const FavoriteDoctorsScreen(),
         );
       case Routes.otpVerification:
         return BaseRoute(page: const OtpVerifcationScreen());

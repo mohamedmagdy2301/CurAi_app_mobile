@@ -1,7 +1,5 @@
 // ignore_for_file: parameter_assignments, use_build_context_synchronously
 
-import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
-    as di;
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -18,7 +16,6 @@ import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/a
 import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/custom_appbar_all_doctor.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/custom_search_bar.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/popular_doctor_item_widget.dart';
-import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -119,63 +116,60 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
               onPressedSort: () => customBottomSheetSortingDoctors(context),
             ),
           ),
-          BlocProvider<FavoritesCubit>(
-            create: (context) => di.sl<FavoritesCubit>(),
-            child: BlocConsumer<SearchDoctorCubit, SearchDoctorState>(
-              buildWhen: (_, current) =>
-                  current is GetAllDoctorSuccess ||
-                  current is GetAllDoctorFailure ||
-                  current is GetAllDoctorLoading ||
-                  current is GetAllDoctorPagenationLoading,
-              listenWhen: (_, current) =>
-                  current is GetAllDoctorSuccess ||
-                  current is GetAllDoctorPagenationFailure,
-              listener: (context, state) {
-                if (state is GetAllDoctorPagenationFailure) {
-                  showMessage(
-                    context,
-                    type: ToastificationType.error,
-                    message: state.errMessage,
-                  );
-                }
-              },
-              builder: (context, state) {
-                final cubit = context.read<SearchDoctorCubit>();
-                final doctorsList = cubit.allDoctorsList;
-
-                if (state is GetAllDoctorFailure) {
-                  return SliverToBoxAdapter(
-                    child: Text(
-                      state.message,
-                      textAlign: TextAlign.center,
-                      style: TextStyleApp.regular26().copyWith(
-                        color: context.onSecondaryColor,
-                      ),
-                    ).center().paddingSymmetric(vertical: 45),
-                  );
-                } else if (state is GetAllDoctorLoading) {
-                  return SliverList.builder(
-                    itemCount: doctorsListDome.length,
-                    itemBuilder: (context, index) {
-                      return Skeletonizer(
-                        effect: shimmerEffect(context),
-                        child: DoctorItemWidget(
-                          doctorResults: doctorsListDome[index],
-                        ),
-                      );
-                    },
-                  );
-                } else if (doctorsList.isEmpty &&
-                    (state is GetAllDoctorSuccess ||
-                        state is GetAllDoctorPagenationLoading)) {
-                  return const AllDoctorEmptyWidget();
-                }
-                return AllDoctorListviewWidget(
-                  doctorsList: doctorsList,
-                  cubit: cubit,
+          BlocConsumer<SearchDoctorCubit, SearchDoctorState>(
+            buildWhen: (_, current) =>
+                current is GetAllDoctorSuccess ||
+                current is GetAllDoctorFailure ||
+                current is GetAllDoctorLoading ||
+                current is GetAllDoctorPagenationLoading,
+            listenWhen: (_, current) =>
+                current is GetAllDoctorSuccess ||
+                current is GetAllDoctorPagenationFailure,
+            listener: (context, state) {
+              if (state is GetAllDoctorPagenationFailure) {
+                showMessage(
+                  context,
+                  type: ToastificationType.error,
+                  message: state.errMessage,
                 );
-              },
-            ),
+              }
+            },
+            builder: (context, state) {
+              final cubit = context.read<SearchDoctorCubit>();
+              final doctorsList = cubit.allDoctorsList;
+
+              if (state is GetAllDoctorFailure) {
+                return SliverToBoxAdapter(
+                  child: Text(
+                    state.message,
+                    textAlign: TextAlign.center,
+                    style: TextStyleApp.regular26().copyWith(
+                      color: context.onSecondaryColor,
+                    ),
+                  ).center().paddingSymmetric(vertical: 45),
+                );
+              } else if (state is GetAllDoctorLoading) {
+                return SliverList.builder(
+                  itemCount: doctorsListDome.length,
+                  itemBuilder: (context, index) {
+                    return Skeletonizer(
+                      effect: shimmerEffect(context),
+                      child: DoctorItemWidget(
+                        doctorResults: doctorsListDome[index],
+                      ),
+                    );
+                  },
+                );
+              } else if (doctorsList.isEmpty &&
+                  (state is GetAllDoctorSuccess ||
+                      state is GetAllDoctorPagenationLoading)) {
+                return const AllDoctorEmptyWidget();
+              }
+              return AllDoctorListviewWidget(
+                doctorsList: doctorsList,
+                cubit: cubit,
+              );
+            },
           ),
         ],
       ),
