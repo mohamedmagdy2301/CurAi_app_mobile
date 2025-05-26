@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/utils/helper/overlay_manager.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/cubit/chatbot_cubit.dart';
@@ -21,6 +22,15 @@ class BodyChatbot extends StatefulWidget {
 
 class _BodyChatbotState extends State<BodyChatbot> {
   final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (OverlayManager.isOverlayVisible) {
+        OverlayManager.removeOverlay();
+      }
+    });
+  }
 
   @override
   void dispose() {
