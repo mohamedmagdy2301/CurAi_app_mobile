@@ -30,13 +30,19 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   final bool isArabic;
 
   Future<void> init() async {
+    if (isClosed) return;
+    emit(ChatInitLoading());
+    await Future.delayed(const Duration(milliseconds: 800));
     _box = await Hive.openBox<MessageBubbleModel>(_boxName);
     await loadPreviousMessages();
+    if (isClosed) return;
+    emit(ChatInitDone());
   }
 
   /// Check if the chat box is closed
   Future<void> loadPreviousMessages() async {
     messagesList = _box.values.toList().reversed.toList();
+    if (isClosed) return;
     emit(ChatBotDone(messagesList: List.from(messagesList)));
 
     // Add welcome only if no previous messages
@@ -49,6 +55,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   Future<void> clearChatBot() async {
     await _box.clear();
     messagesList.clear();
+
+    if (isClosed) return;
     emit(ChatBotInitial());
   }
 
@@ -158,6 +166,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   /// Add a new user message and perform a diagnosis
   Future<void> addNewMessage({String? message, XFile? image}) async {
     Either<String, DiagnosisModel> response;
+    if (isClosed) return;
     emit(ChatBotLoading());
 
     String? imagePath;

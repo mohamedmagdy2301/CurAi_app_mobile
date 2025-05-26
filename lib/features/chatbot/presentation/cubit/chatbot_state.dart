@@ -27,3 +27,7 @@ class ChatBotFialure extends ChatBotState {
   @override
   List<Object> get props => [message];
 }
+
+class ChatInitLoading extends ChatBotState {}
+
+class ChatInitDone extends ChatBotState {}
