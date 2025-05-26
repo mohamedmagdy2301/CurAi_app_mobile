@@ -232,6 +232,9 @@
 - **Notification:** `flutter_local_notification`
 - **Payment:** `paymob`
 - **Map:** `flutter_open_street`
+- **Text-to-speech** `flutter_tts`
+- **translation** `translator`
+
 
 
 ---
