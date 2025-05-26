@@ -33,6 +33,8 @@ class LangKeys {
   static const String descriptionOnboarding4 = 'description_onboarding_4';
   static const String next = 'next';
   static const String getStarted = 'get_started';
+  static const String yesterday = 'yesterday';
+  static const String now = 'now';
 
   //! Auth
   static const String welcomeBack = 'welcome_back';

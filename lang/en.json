@@ -201,8 +201,10 @@
   "clinic_address_description": "Please enter your clinic's address accurately, including governorate, city, area, and street name to help patients reach you easily.",
   "clinic_address": "Clinic Address" ,
   "complete"  : "Complete",
-  "finish" : "Finish"
- ,
+  "finish" : "Finish" ,
  "emergency_department"  : "Emergency Department",
-  "top_doctors" : "Top Doctors"
+  "top_doctors" : "Top Doctors",
+  "yesterday" : "Yesterday",
+ 
+  "now" : "Now"
 }
