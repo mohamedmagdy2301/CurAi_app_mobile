@@ -225,11 +225,11 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
       topLeft: const Radius.circular(10),
       topRight: const Radius.circular(10),
       bottomRight: isUserMessage
-          ? Radius.circular(!context.isStateArabic ? 0 : 25)
-          : Radius.circular(!context.isStateArabic ? 25 : 0),
+          ? Radius.circular(!context.isStateArabic ? 0 : 20)
+          : Radius.circular(!context.isStateArabic ? 20 : 0),
       bottomLeft: isUserMessage
-          ? Radius.circular(!context.isStateArabic ? 25 : 0)
-          : Radius.circular(!context.isStateArabic ? 0 : 25),
+          ? Radius.circular(!context.isStateArabic ? 20 : 0)
+          : Radius.circular(!context.isStateArabic ? 0 : 20),
     );
   }
 }
