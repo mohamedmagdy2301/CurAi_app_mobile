@@ -32,6 +32,7 @@ dependencies:
   flutter_screenutil:
   flutter_svg: 
   flutter_timezone:
+  flutter_tts: ^4.2.2
   geocoding: 
   geolocator:
   get_it:

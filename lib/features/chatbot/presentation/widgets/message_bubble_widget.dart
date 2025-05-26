@@ -1,20 +1,21 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/services/text_to_speech/text_to_speech_manager.dart';
 import 'package:curai_app_mobile/core/services/translation/translate_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/core/utils/helper/overlay_manager.dart';
-import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toastification/toastification.dart';
 
 class MessageBubbleWidget extends StatefulWidget {
   const MessageBubbleWidget({required this.messageModel, super.key});
@@ -56,57 +57,69 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                 : isUserMessage
                     ? 20.w
                     : null,
-            top: bubbleOffset.dy - 55,
+            top: bubbleOffset.dy - 66,
             child: Material(
               color: Colors.transparent,
-              child: Container(
-                padding: context.padding(horizontal: 15, vertical: 15),
-                decoration: BoxDecoration(
-                  color: context.onPrimaryColor,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  spacing: 20.w,
-                  children: [
-                    _buildOption(
-                      icon: Icons.translate,
-                      onTap: () async {
-                        final translated =
-                            await sl<TranslateManager>().translate(
-                          widget.messageModel.messageText ?? '',
-                        );
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.r),
+                child: BackdropFilter(
+                  filter:
+                      ImageFilter.blur(sigmaX: 10, sigmaY: 10), // قوة التعتيم
+                  child: Container(
+                    padding: context.padding(horizontal: 20, vertical: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.r),
+                      gradient: LinearGradient(
+                        colors: [
+                          context.onSecondaryColor.withAlpha(150),
+                          context.onSecondaryColor.withAlpha(100),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 23.w,
+                      children: [
+                        _buildOption(
+                          icon: CupertinoIcons.volume_up,
+                          onTap: () {
+                            final text = widget.messageModel.messageText ?? '';
+                            sl<TextToSpeechManager>().textToSpeechSpeak(text);
+                          },
+                          isTts: true,
+                        ),
+                        _buildOption(
+                          icon: Icons.translate,
+                          onTap: () async {
+                            final translated =
+                                await sl<TranslateManager>().translate(
+                              widget.messageModel.messageText ?? '',
+                            );
 
-                        setState(() {
-                          widget.messageModel.messageText = translated;
-                        });
+                            setState(() {
+                              widget.messageModel.messageText = translated;
+                            });
 
-                        OverlayManager.removeOverlay();
-                      },
+                            OverlayManager.removeOverlay();
+                          },
+                        ),
+                        _buildOption(
+                          icon: Icons.copy,
+                          onTap: () {
+                            Clipboard.setData(
+                              ClipboardData(
+                                text: widget.messageModel.messageText ?? '',
+                              ),
+                            );
+
+                            OverlayManager.removeOverlay();
+                          },
+                        ),
+                      ],
                     ),
-                    _buildOption(
-                      icon: Icons.volume_up,
-                      onTap: OverlayManager.removeOverlay,
-                    ),
-                    _buildOption(
-                      icon: Icons.copy,
-                      onTap: () {
-                        Clipboard.setData(
-                          ClipboardData(
-                            text: widget.messageModel.messageText ?? '',
-                          ),
-                        );
-                        showMessage(
-                          context,
-                          message: context.isStateArabic
-                              ? 'تم النسخ إلى الحافظة'
-                              : 'Copied to clipboard',
-                          type: ToastificationType.success,
-                        );
-                        OverlayManager.removeOverlay();
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -121,10 +134,29 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
   Widget _buildOption({
     required IconData icon,
     required VoidCallback onTap,
+    bool isTts = false,
   }) {
     return InkWell(
       onTap: onTap,
-      child: Icon(icon, color: context.backgroundColor, size: 22.sp),
+      child: isTts
+          ? ValueListenableBuilder<bool>(
+              valueListenable: sl<TextToSpeechManager>().isSpeaking,
+              builder: (context, isSpeaking, child) {
+                return isSpeaking
+                    ? Image.asset(
+                        'assets/images/sound.gif',
+                        color: context.backgroundColor,
+                        width: 28.sp,
+                        height: 28.sp,
+                      )
+                    : Icon(
+                        icon,
+                        color: context.backgroundColor,
+                        size: 28.sp,
+                      );
+              },
+            )
+          : Icon(icon, color: context.backgroundColor, size: 28.sp),
     );
   }
 
@@ -165,6 +197,10 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                         : TextAlign.left,
                 style: TextStyleApp.medium16().copyWith(
                   color: Colors.white,
+                  fontFamily:
+                      widget.messageModel.messageText?.isArabicFormat ?? true
+                          ? 'Cairo'
+                          : 'Roboto',
                   height: 1.55,
                 ),
               ),
