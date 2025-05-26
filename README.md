@@ -68,7 +68,7 @@
 - **Integrat Payment(paymob)**
 - **Chatbot translate Text-to-speech**
 - **Chatbot translate-message**
-- **Chatbot translate copy-to-clipboard**
+- **Chatbot message copy-to-clipboard**
   
 ### 🕓 In Progress
 
