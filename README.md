@@ -20,26 +20,31 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
+ 
 
 ## 🚀 Features at a Glance
 
-- 🔍 **Doctor Search & Booking**  
-  Find doctors by specialty, location, or cost and book appointments effortlessly.
+* 🔍 **Doctor Search & Booking**
+  Easily find doctors by specialty, location, or cost—and book appointments in just a few taps.
 
-- 🤖 **AI Chatbot**  
-  Get doctor recommendations and initial diagnoses based on symptoms and medical images.
+* 🤖 **AI Chatbot**
+  Get instant doctor recommendations and preliminary diagnoses based on symptoms or medical images (supports Arabic & English).
 
-- 🔔 **Smart Notifications**  
-  Stay updated with appointment reminders and important doctor announcements.
+* 🤖 **Quick Assistant**
+  Access FAQs, text-to-speech chatbot, message translation, and one-tap copy-to-clipboard for chatbot replies.
 
-- 💳 **Secure Payments**   
-  Multiple payment options for hassle-free consultations.
+* 🔔 **Smart Notifications**
+  Receive timely reminders for appointments and important updates from your doctor.
 
-- 🌐 **Multi-language Support**  
-  RTL and LTR languages supported (e.g., Arabic & English).
+* 💳 **Secure Payments**
+  Enjoy hassle-free consultations with multiple secure payment options.
 
-- 🌗 **Light & Dark Mode**  
-  Easily switch themes for a comfortable viewing experience.
+* 🌐 **Multi-language Support**
+  Supports both RTL and LTR languages—perfect for Arabic and English users.
+
+* 🌗 **Light & Dark Mode**
+  Switch between light and dark themes for the most comfortable viewing experience.
+
 
 ---
 
