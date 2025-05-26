@@ -94,7 +94,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       final goodbyeMessage = MessageBubbleModel(
         messageText: isArabic
             ? 'نتمنى لك الشفاء العاجل! 😊'
-            : 'Wishing you a speedy recovery and continued good health',
+            : 'Wishing you a speedy recovery and continued good health! 😊',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -104,7 +104,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       final restartMessage = MessageBubbleModel(
         messageText: isArabic
             ? 'هل لديك أي أعراض أخرى\nتود مشاركتها؟'
-            : "Any other symptoms\nyou'd like to share",
+            : "Any other symptoms\nyou'd like to share?",
         date: DateTime.now(),
         sender: SenderType.bot,
       );
