@@ -78,49 +78,56 @@ class _MessageInputState extends State<MessageInput> {
       key: _formKey,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          InkWell(
-            child: Icon(
-              CupertinoIcons.add_circled_solid,
-              size: 32.sp,
-              color: context.onPrimaryColor,
-            ),
-            onTap: () {
-              AdaptiveDialogs.showOkAlertDialog(
-                context: context,
-                title: context.isStateArabic
-                    ? 'بدء محادثة جديدة'
-                    : 'Start a new conversation',
-                message: context.isStateArabic
-                    ? Text(
-                        'هل تريد بدء محادثة جديدة؟'
-                        '\nسوف يتم حذف المحادثة الحالية',
-                        style: TextStyleApp.regular16().copyWith(
-                          color: context.onSecondaryColor,
-                        ),
-                      )
-                    : Text(
-                        'Do you want to start a new conversation?'
-                        '\nThe current conversation will be deleted',
-                        style: TextStyleApp.regular16().copyWith(
-                          color: context.onSecondaryColor,
-                        ),
-                      ),
-                onPressed: () {
-                  hideKeyboard();
-                  context.read<ChatBotCubit>()
-                    ..clearChatBot()
-                    ..addWelcomeMessage();
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                child: Icon(
+                  CupertinoIcons.add_circled_solid,
+                  size: 32.sp,
+                  color: context.onPrimaryColor,
+                ),
+                onTap: () {
+                  AdaptiveDialogs.showOkAlertDialog(
+                    context: context,
+                    title: context.isStateArabic
+                        ? 'بدء محادثة جديدة'
+                        : 'Start a new conversation',
+                    message: context.isStateArabic
+                        ? Text(
+                            'هل تريد بدء محادثة جديدة؟'
+                            '\nسوف يتم حذف المحادثة الحالية',
+                            style: TextStyleApp.regular16().copyWith(
+                              color: context.onSecondaryColor,
+                            ),
+                          )
+                        : Text(
+                            'Do you want to start a new conversation?'
+                            '\nThe current conversation will be deleted',
+                            style: TextStyleApp.regular16().copyWith(
+                              color: context.onSecondaryColor,
+                            ),
+                          ),
+                    onPressed: () {
+                      hideKeyboard();
+                      context.read<ChatBotCubit>()
+                        ..clearChatBot()
+                        ..addWelcomeMessage();
 
-                  context.pop();
+                      context.pop();
+                    },
+                  );
                 },
-              );
-            },
+              ),
+              6.hSpace,
+            ],
           ),
           5.wSpace,
           if (image.path.isNotEmpty)
             Container(
-              width: context.W * 0.65,
+              width: context.W * 0.7,
               height: context.H * 0.06,
               decoration: BoxDecoration(
                 color: context.onSecondaryColor.withAlpha(20),
