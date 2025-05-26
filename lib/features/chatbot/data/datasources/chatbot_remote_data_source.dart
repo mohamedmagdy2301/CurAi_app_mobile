@@ -6,7 +6,7 @@ import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:dartz/dartz.dart';
 
-String serverAddress = 'https://6324-156-199-121-187.ngrok-free.app';
+String serverAddress = '';
 
 abstract class ChatbotRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> diagnosis({
