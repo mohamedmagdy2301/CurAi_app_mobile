@@ -25,25 +25,25 @@
 ## 🚀 Features at a Glance
 
 * 🔍 **Doctor Search & Booking**
-   Easily find doctors by specialty, location, or cost—and book appointments in just a few taps.
+  - Easily find doctors by specialty, location, or cost—and book appointments in just a few taps.
 
 * 🤖 **AI Chatbot**
-   Get instant doctor recommendations and preliminary diagnoses based on symptoms or medical images (supports Arabic & English).
+  - Get instant doctor recommendations and preliminary diagnoses based on symptoms or medical images (supports Arabic & English).
 
 * 🤖 **Quick Assistant**
-   Access FAQs, text-to-speech chatbot, message translation, and one-tap copy-to-clipboard for chatbot replies.
+  - Access FAQs, text-to-speech chatbot, message translation, and one-tap copy-to-clipboard for chatbot replies.
 
 * 🔔 **Smart Notifications**
-   Receive timely reminders for appointments and important updates from your doctor.
+  - Receive timely reminders for appointments and important updates from your doctor.
 
 * 💳 **Secure Payments**
-   Enjoy hassle-free consultations with multiple secure payment options.
+  - Enjoy hassle-free consultations with multiple secure payment options.
 
 * 🌐 **Multi-language Support**
-   Supports both RTL and LTR languages—perfect for Arabic and English users.
+  - Supports both RTL and LTR languages—perfect for Arabic and English users.
 
 * 🌗 **Light & Dark Mode**
-   Switch between light and dark themes for the most comfortable viewing experience.
+  - Switch between light and dark themes for the most comfortable viewing experience.
 
 
 ---
