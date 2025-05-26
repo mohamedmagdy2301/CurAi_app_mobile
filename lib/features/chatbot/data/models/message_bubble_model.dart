@@ -11,7 +11,7 @@ class MessageBubbleModel extends HiveObject {
     this.imagePath,
   });
   @HiveField(0)
-  final String? messageText;
+  String? messageText;
 
   @HiveField(1)
   final DateTime date;

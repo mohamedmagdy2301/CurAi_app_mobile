@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/services/translation/translate_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/fonts/text_direction.dart';
 import 'package:curai_app_mobile/core/utils/helper/overlay_manager.dart';
@@ -24,7 +26,6 @@ class MessageBubbleWidget extends StatefulWidget {
 
 class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
   final GlobalKey _bubbleKey = GlobalKey();
-
   bool get isUserMessage => widget.messageModel.sender == SenderType.user;
 
   void _showOverlayMenu() {
@@ -41,8 +42,20 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
             child: const SizedBox.expand(),
           ),
           Positioned(
-            left: isUserMessage ? null : 20.w,
-            right: isUserMessage ? 20.w : null,
+            left: context.isStateArabic
+                ? isUserMessage
+                    ? 20.w
+                    : null
+                : isUserMessage
+                    ? null
+                    : 20.w,
+            right: context.isStateArabic
+                ? isUserMessage
+                    ? null
+                    : 20.w
+                : isUserMessage
+                    ? 20.w
+                    : null,
             top: bubbleOffset.dy - 55,
             child: Material(
               color: Colors.transparent,
@@ -58,7 +71,18 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                   children: [
                     _buildOption(
                       icon: Icons.translate,
-                      onTap: OverlayManager.removeOverlay,
+                      onTap: () async {
+                        final translated =
+                            await sl<TranslateManager>().translate(
+                          widget.messageModel.messageText ?? '',
+                        );
+
+                        setState(() {
+                          widget.messageModel.messageText = translated;
+                        });
+
+                        OverlayManager.removeOverlay();
+                      },
                     ),
                     _buildOption(
                       icon: Icons.volume_up,
@@ -107,7 +131,8 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: _showOverlayMenu,
+      onLongPress:
+          widget.messageModel.imagePath != null ? null : _showOverlayMenu,
       child: Container(
         key: _bubbleKey,
         padding: context.padding(vertical: 13, horizontal: 13),
