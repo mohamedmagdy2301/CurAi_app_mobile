@@ -66,6 +66,9 @@
 - **Emergency Department**
 - **Push Notifications**
 - **Integrat Payment(paymob)**
+- **Chatbot translate Text-to-speech**
+- **Chatbot translate-message**
+- **Chatbot translate copy-to-clipboard**
   
 ### 🕓 In Progress
 
