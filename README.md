@@ -143,11 +143,17 @@
   - ✔️ Chat interface for text input  
   - ✔️ Chat interface for image input  
   - ✔️ Display user and bot messages with quick symptom suggestions
-
-- ✅ **API Integration**  
-  - ✔️ Doctor recommendations based on symptoms  
+  - ✔️ Quick Action to copy to clipboard 
+  - ✔️ Quick Action to text to speech
+  - ✔️ Quick Action to translation
+     
+- ✅ **API Integration**
+  - ✔️ Do Backend for models ai with flask
+  - ✔️ Do translation responses 
+  - ✔️ Specialization recommendations based on symptoms  
   - ✔️ Integration with image classification model  
   - ✔️ Handle AI responses and data processing
+  - ✔️ Add symptoms as Arabic 
 
 ---
 
