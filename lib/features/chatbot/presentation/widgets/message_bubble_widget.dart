@@ -77,7 +77,9 @@ class MessageBubbleWidget extends StatelessWidget {
                 )
               : SelectableText(
                   messageModel.messageText ?? '',
-                  textDirection: textDirection(messageModel.messageText ?? ''),
+                  textDirection: messageModel.messageText!.contains('')
+                      ? TextDirection.rtl
+                      : textDirection(messageModel.messageText ?? ''),
                   textAlign: messageModel.messageText?.isArabicFormat ?? true
                       ? TextAlign.right
                       : TextAlign.left,

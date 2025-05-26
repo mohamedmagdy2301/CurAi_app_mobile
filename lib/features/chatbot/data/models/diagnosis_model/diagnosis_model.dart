@@ -52,7 +52,8 @@ class DiagnosisModel {
     if (inputType == 'image') {
       return isArabic ? (messageAr ?? diagnosis) : (messageEn ?? diagnosis);
     } else if (inputType == 'text') {
-      return isArabic ? botResponseAr : botResponseEn;
+      return isArabic ? (messageAr ?? diagnosis) : (messageEn ?? diagnosis);
+      // return isArabic ? botResponseAr : botResponseEn;
     }
     return isArabic
         ? 'لا يوجد تشخيص صحيح متاح'

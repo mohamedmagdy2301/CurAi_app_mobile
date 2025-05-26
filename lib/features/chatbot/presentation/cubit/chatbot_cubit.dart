@@ -82,8 +82,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
       final goodbyeMessage = MessageBubbleModel(
         messageText: isArabic
-            ? 'شكرًا لك يا ${getFullName()} على استخدامك CurAi.\nنتمنى لك الشفاء العاجل!. 😊'
-            : 'Thank you, ${getFullName()}, for using CurAi.\nWe wish you a speedy recovery! 😊',
+            ? 'نتمنى لك الشفاء العاجل!. 😊'
+            : 'We wish you a speedy recovery! 😊',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -92,8 +92,8 @@ class ChatBotCubit extends Cubit<ChatBotState> {
 
       final restartMessage = MessageBubbleModel(
         messageText: isArabic
-            ? 'هل لديك أي أعراض أخرى تود مشاركتها؟'
-            : "Any other symptoms you'd like to share?",
+            ? 'هل لديك أي أعراض أخرى\n تود مشاركتها؟'
+            : "Any other symptoms \nyou'd like to share?",
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -106,13 +106,18 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   /// Add welcome and suggestion messages
   Future<void> addWelcomeMessage() async {
     MessageBubbleModel welcomeMessage;
+    MessageBubbleModel iAmBotMessage;
     MessageBubbleModel startDescribingMessage;
-    MessageBubbleModel suggestionsMessage;
 
     if (isArabic) {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 أهلاً ${getFullName()} في CurAi.'
-            '\nأنا مساعدك الطبي الذكي، هنا لمساعدتك في تحليل الأعراض وتوجيهك للتخصص المناسب.',
+        messageText: '👋 أهلاً ${getFullName()} في CurAi.',
+        date: DateTime.now(),
+        sender: SenderType.bot,
+      );
+      iAmBotMessage = MessageBubbleModel(
+        messageText:
+            'أنا مساعدك الطبي ، هنا لمساعدتك في توجيهك للتخصص المناسب.',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -122,38 +127,15 @@ class ChatBotCubit extends Cubit<ChatBotState> {
         date: DateTime.now(),
         sender: SenderType.bot,
       );
-
-      suggestionsMessage = MessageBubbleModel(
-        messageText: '💡 جرّب تكتب أعراض زي:\n'
-            '     • صداع مستمر\n'
-            '     • دوخة وتعب\n'
-            '     • كحة وسخونية\n'
-            '     • ألم في المعدة\n'
-            '     • ألم في الصدر\n'
-            '     • حرارة عالية\n'
-            '     • زغللة في العين\n'
-            '     • خمول طول اليوم',
-        date: DateTime.now(),
-        sender: SenderType.bot,
-      );
     } else {
       welcomeMessage = MessageBubbleModel(
-        messageText: '👋 Welcome, ${getFullName()} to CurAi!'
-            "\nI'm here to help analyze your symptoms and guide you to the right specialty.",
+        messageText: '👋 Welcome, ${getFullName()} to CurAi!',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
-
-      suggestionsMessage = MessageBubbleModel(
-        messageText: '💡 Try writing symptoms like:\n'
-            '     • Persistent headache\n'
-            '     • Dizziness and fatigue\n'
-            '     • Cough and high fever\n'
-            '     • Stomach pain\n'
-            '     • Chest pain\n'
-            '     • High temperature\n'
-            '     • Blurry vision\n'
-            '     • Feeling tired all day',
+      iAmBotMessage = MessageBubbleModel(
+        messageText:
+            "I'm here to help analyze your symptoms and guide you to the right specialty.",
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -165,12 +147,12 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
     }
 
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(const Duration(milliseconds: 500));
     await addMessage(welcomeMessage);
     await Future.delayed(const Duration(milliseconds: 1000));
+    await addMessage(iAmBotMessage);
+    await Future.delayed(const Duration(milliseconds: 1500));
     await addMessage(startDescribingMessage);
-    await Future.delayed(const Duration(milliseconds: 1600));
-    await addMessage(suggestionsMessage);
   }
 
   /// Add a new user message and perform a diagnosis
