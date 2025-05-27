@@ -18,8 +18,6 @@
 ---
 [![Flutter Version](https://img.shields.io/badge/Flutter-v3.0-blue.svg)](https://flutter.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Sentry](https://img.shields.io/badge/Monitored_by-Sentry-orange.svg)](https://sentry.io)
-[![Flutter](https://img.shields.io/badge/Flutter-3.x-blue.svg)](https://flutter.dev/)
 [![Bloc](https://img.shields.io/badge/State_Management-Bloc%2FCubit-7A1FA2.svg)](https://bloclibrary.dev/#/)
 [![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture%20(MVVM)-FF8C00.svg)](https://en.wikipedia.org/wiki/Model–view–viewmodel)
 [![Localization](https://img.shields.io/badge/Localization-flutter__localization-00C853.svg)](https://pub.dev/packages/flutter_localizations)
