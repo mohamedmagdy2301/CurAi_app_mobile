@@ -15,10 +15,24 @@
 
 [![wakatime](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/2466cbc6-5345-4522-8a6d-c450b678cfc9.svg)](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/2466cbc6-5345-4522-8a6d-c450b678cfc9)
 [![wakatime](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/9f08f9f0-b19f-4449-ad75-1ee2e05929c8.svg)](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/9f08f9f0-b19f-4449-ad75-1ee2e05929c8)
+---
 [![Flutter Version](https://img.shields.io/badge/Flutter-v3.0-blue.svg)](https://flutter.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Sentry](https://img.shields.io/badge/Monitored_by-Sentry-orange.svg)](https://sentry.io)
-
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-blue.svg)](https://flutter.dev/)
+[![Bloc](https://img.shields.io/badge/State_Management-Bloc%2FCubit-7A1FA2.svg)](https://bloclibrary.dev/#/)
+[![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture%20(MVVM)-FF8C00.svg)](https://en.wikipedia.org/wiki/Model–view–viewmodel)
+[![Localization](https://img.shields.io/badge/Localization-flutter__localization-00C853.svg)](https://pub.dev/packages/flutter_localizations)
+[![Dio](https://img.shields.io/badge/Networking-Dio-4FC08D.svg)](https://pub.dev/packages/dio)
+[![Authentication](https://img.shields.io/badge/Auth-REST_API-orange.svg)]()
+[![AI](https://img.shields.io/badge/AI-Flask_Backend_Models-blueviolet.svg)](https://flask.palletsprojects.com/)
+[![Storage](https://img.shields.io/badge/Storage-Hive%20%2F%20Secure_Shared_Pref-yellow.svg)](https://pub.dev/packages/hive)
+[![Notifications](https://img.shields.io/badge/Notifications-flutter__local__notification-FF9800.svg)](https://pub.dev/packages/flutter_local_notifications)
+[![Payment](https://img.shields.io/badge/Payment-Paymob-00BCD4.svg)](https://accept.paymob.com/)
+[![Maps](https://img.shields.io/badge/Maps-flutter__open__street-blue.svg)](https://pub.dev/packages/flutter_map)
+[![Text-to-speech](https://img.shields.io/badge/Text_to_speech-flutter__tts-9C27B0.svg)](https://pub.dev/packages/flutter_tts)
+[![Translation](https://img.shields.io/badge/Translation-translator-green.svg)](https://pub.dev/packages/translator)
+[![Sentry](https://img.shields.io/badge/Crash%20%26%20Error-Sentry-orange.svg)](https://sentry.io)
 ---
 
 ## 🚀 Features at a Glance
