@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:curai_app_mobile/core/api/status_code.dart';
 import 'package:curai_app_mobile/core/app/env_variables.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -50,7 +51,7 @@ class DioConfigurator {
 
   static void _setTimeouts(RequestOptions options) {
     options
-      ..baseUrl = AppEnvironment.baseApiUrl
+      ..baseUrl = sl<AppEnvironment>().baseApiUrl
       ..sendTimeout = _defaultTimeouts
       ..connectTimeout = _defaultTimeouts
       ..receiveTimeout = _defaultTimeouts

@@ -2,7 +2,9 @@
 
 import 'dart:convert';
 
+import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/cubit/get_loction/get_loction_cubit.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +65,7 @@ class RouteCubit extends Cubit<RouteState> {
   ) async {
     final response = await http.get(
       Uri.parse(
-        '${AppConstants.orsApiUrl}?api_key=${AppConstants.orsApiKey}'
+        '${AppConstants.orsApiUrl}?api_key=${sl<AppEnvironment>().orsApiKey}'
         '&start=${currentLocation.longitude},${currentLocation.latitude}'
         '&end=${destination.longitude},${destination.latitude}',
       ),

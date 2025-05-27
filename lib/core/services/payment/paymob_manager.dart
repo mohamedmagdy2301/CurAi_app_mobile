@@ -40,7 +40,7 @@ class PaymobManager {
     final response = await _dio.post(
       EndPointsPayment.getAuthanticationToken,
       data: {
-        'api_key': AppEnvironment.apiKeyPaymob,
+        'api_key': di.sl<AppEnvironment>().apiKeyPaymob,
       },
     );
     return response.data['token'] as String;
@@ -100,8 +100,8 @@ class PaymobManager {
         'auth_token': authanticationToken,
         'order_id': orderId,
         'integration_id': isWallet
-            ? AppEnvironment.walletPaymentMethodIntegrationId
-            : AppEnvironment.cardPaymentMethodIntegrationId,
+            ? di.sl<AppEnvironment>().walletPaymentMethodIntegrationId
+            : di.sl<AppEnvironment>().cardPaymentMethodIntegrationId,
         'amount_cents': amount,
         'currency': 'EGP',
         'billing_data': {

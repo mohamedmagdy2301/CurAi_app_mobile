@@ -30,7 +30,7 @@ class TokenManager {
       DioConfigurator.configure(refreshDio);
 
       final response = await refreshDio.post(
-        '${AppEnvironment.baseApiUrl}${EndPoints.refreshToken}',
+        '${di.sl<AppEnvironment>().baseApiUrl}${EndPoints.refreshToken}',
         data: {'refresh': refreshToken},
       );
 
