@@ -25,7 +25,7 @@ class AllDoctorEmptyWidget extends StatelessWidget {
         children: [
           80.hSpace,
           SvgPicture.asset(
-            SvgImages.searchEmpty,
+            AppImagesSvg.searchEmpty,
             width: 200.w,
             height: 200.h,
           ),

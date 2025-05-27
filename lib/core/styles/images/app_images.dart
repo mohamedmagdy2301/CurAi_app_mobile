@@ -18,10 +18,8 @@ class AppImages {
   static const String splashLogoLight = '$images/splash_light.png';
 }
 
-class SvgImages {
-  SvgImages._();
+class AppImagesSvg {
+  AppImagesSvg._();
   static const String svg = 'assets/svg';
   static const String searchEmpty = '$svg/search-empty.svg';
-  // ! doctor speciailities
-  static const String doctorSpeciality = '$svg/doctor_speciality';
 }
