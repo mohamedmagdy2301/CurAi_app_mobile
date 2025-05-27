@@ -3,10 +3,10 @@ class AppImages {
   static const String images = 'assets/images';
   static const String noNetwork = '$images/no_internet_connection.png';
   static const String underBuild = '$images/page_under_build.jpg';
-  static const String onboardingDoctor1 = '$images/onboarding_doctor_1.png';
-  static const String onboardingDoctor2 = '$images/onboarding_doctor_2.png';
-  static const String onboardingDoctor3 = '$images/onboarding_doctor_3.png';
-  static const String onboardingDoctor4 = '$images/onboarding_doctor_4.png';
+  static const String onboarding1 = '$images/onboarding_doctor_1.png';
+  static const String onboarding2 = '$images/onboarding_doctor_2.png';
+  static const String onboarding3 = '$images/onboarding_doctor_3.png';
+  static const String onboarding4 = '$images/onboarding_doctor_4.png';
   static const String doctorSpeciality = '$images/doctor_specialties';
   static const String doctorInBanner = '$images/doctor-in-banner.png';
   static const String loading = '$images/loading.gif';
