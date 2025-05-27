@@ -205,6 +205,7 @@
  "emergency_department"  : "Emergency Department",
   "top_doctors" : "Top Doctors",
   "yesterday" : "Yesterday",
+  "no_doctors_found" : "No doctors found",
  
   "now" : "Now"
 }

@@ -35,6 +35,7 @@ class LangKeys {
   static const String getStarted = 'get_started';
   static const String yesterday = 'yesterday';
   static const String now = 'now';
+  static const String noDoctorsFound = 'no_doctors_found';
 
   //! Auth
   static const String welcomeBack = 'welcome_back';
