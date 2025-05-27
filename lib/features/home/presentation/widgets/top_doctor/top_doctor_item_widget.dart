@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
@@ -52,8 +50,8 @@ class TopDoctorItemWidget extends StatelessWidget {
             ).cornerRadiusWithClipRRect(15)
           else
             CustomCachedNetworkImage(
-              imgUrl: doctorsList.profilePicture ??
-                  AppImages.imageAvtarDoctorOnLine,
+              imgUrl:
+                  doctorsList.profilePicture ?? AppImages.avatarOnlineDoctor,
               width: context.H * 0.21,
               height: context.H * 0.19,
               loadingImgPadding: 80.w,

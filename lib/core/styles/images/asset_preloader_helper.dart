@@ -28,10 +28,10 @@ class AssetImagePreloader {
     BuildContext context,
   ) async {
     final assetPaths = <String>[
-      AppImages.onboardingDoctor1,
-      AppImages.onboardingDoctor2,
-      AppImages.onboardingDoctor3,
-      AppImages.onboardingDoctor4,
+      AppImages.onboarding1,
+      AppImages.onboarding2,
+      AppImages.onboarding3,
+      AppImages.onboarding4,
     ];
 
     for (final path in assetPaths) {
@@ -41,10 +41,10 @@ class AssetImagePreloader {
 
   static void removeOnboardingImagesFromCache() {
     final images = [
-      AppImages.onboardingDoctor1,
-      AppImages.onboardingDoctor2,
-      AppImages.onboardingDoctor3,
-      AppImages.onboardingDoctor4,
+      AppImages.onboarding1,
+      AppImages.onboarding2,
+      AppImages.onboarding3,
+      AppImages.onboarding4,
     ];
 
     for (final path in images) {

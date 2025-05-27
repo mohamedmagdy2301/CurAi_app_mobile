@@ -1,4 +1,5 @@
-// ignore_for_file: inference_failure_on_function_invocation, avoid_dynamic_calls
+// ignore: lines_longer_than_80_chars
+// ignore_for_file: inference_failure_on_function_invocation, avoid_dynamic_calls, document_ignores
 
 import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
@@ -40,7 +41,7 @@ class PaymobManager {
     final response = await _dio.post(
       EndPointsPayment.getAuthanticationToken,
       data: {
-        'api_key': AppEnvironment.apiKeyPaymob,
+        'api_key': di.sl<AppEnvironment>().apiKeyPaymob,
       },
     );
     return response.data['token'] as String;
@@ -100,8 +101,8 @@ class PaymobManager {
         'auth_token': authanticationToken,
         'order_id': orderId,
         'integration_id': isWallet
-            ? AppEnvironment.walletPaymentMethodIntegrationId
-            : AppEnvironment.cardPaymentMethodIntegrationId,
+            ? di.sl<AppEnvironment>().walletPaymentMethodIntegrationId
+            : di.sl<AppEnvironment>().cardPaymentMethodIntegrationId,
         'amount_cents': amount,
         'currency': 'EGP',
         'billing_data': {

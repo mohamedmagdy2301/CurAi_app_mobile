@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,13 +25,13 @@ class AllDoctorEmptyWidget extends StatelessWidget {
         children: [
           80.hSpace,
           SvgPicture.asset(
-            SvgImages.searchEmpty,
+            AppImagesSvg.searchEmpty,
             width: 200.w,
             height: 200.h,
           ),
           40.hSpace,
           AutoSizeText(
-            context.isStateArabic ? 'لا توجد اطباء بعد' : 'No Doctors found',
+            context.translate(LangKeys.noDoctorsFound),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

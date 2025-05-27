@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
@@ -162,25 +163,25 @@ class MainScaffoldUser extends StatelessWidget {
         icon: customIconNavBar(
           context,
           size: 26.sp,
-          image: 'assets/svg/layout/home.svg',
+          image: AppImagesSvg.home,
         ),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
           size: 26.sp,
-          image: 'assets/svg/layout/home2.svg',
+          image: AppImagesSvg.homeFill,
         ),
         label: 'Home',
       ),
       NavigationDestination(
         icon: customIconNavBar(
           context,
-          image: 'assets/svg/layout/search.svg',
+          image: AppImagesSvg.search,
         ),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
-          image: 'assets/svg/layout/search2.svg',
+          image: AppImagesSvg.searchFill,
         ),
         label: 'Search',
       ),
@@ -196,24 +197,24 @@ class MainScaffoldUser extends StatelessWidget {
       NavigationDestination(
         icon: customIconNavBar(
           context,
-          image: 'assets/svg/layout/calendar.svg',
+          image: AppImagesSvg.calendar,
         ),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
-          image: 'assets/svg/layout/calendar2.svg',
+          image: AppImagesSvg.calendarFill,
         ),
         label: 'Appointment',
       ),
       NavigationDestination(
         icon: customIconNavBar(
           context,
-          image: 'assets/svg/layout/profile.svg',
+          image: AppImagesSvg.profile,
         ),
         selectedIcon: customIconNavBar(
           context,
           isActive: true,
-          image: 'assets/svg/layout/profile2.svg',
+          image: AppImagesSvg.profileFill,
         ),
         label: 'Profile',
       ),

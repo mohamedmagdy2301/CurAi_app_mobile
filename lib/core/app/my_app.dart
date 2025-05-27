@@ -8,11 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    required this.isDebugMode,
-    super.key,
-  });
-  final bool isDebugMode;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +22,7 @@ class MyApp extends StatelessWidget {
           if (value) {
             return BlocProvider(
               create: (context) => LocalizationCubit()..loadSettings(),
-              child: CuraiApp(isDebugMode: isDebugMode),
+              child: const CuraiApp(),
             );
           }
           return const NoInternetConnection();

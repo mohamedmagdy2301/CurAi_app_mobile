@@ -56,8 +56,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   : CustomCachedNetworkImage(
                       imgUrl: imageUrl ??
                           (getRole() == 'doctor'
-                              ? AppImages.imageAvtarDoctorOnLine
-                              : AppImages.imageAvtarPatientOnLine),
+                              ? AppImages.avatarOnlineDoctor
+                              : AppImages.avatarOnlinePatient),
                       width: context.isTablet
                           ? context.H * 0.17
                           : context.H * 0.16,

@@ -1,6 +1,6 @@
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
-import 'package:curai_app_mobile/core/utils/constants.dart' as AppConstant;
+import 'package:curai_app_mobile/core/utils/constants.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/get_location/get_location_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/get_location/get_location_state.dart';
@@ -44,7 +44,7 @@ class _MapsCardAddNewAddressState extends State<MapsCardAddNewAddress> {
                 ),
                 children: [
                   TileLayer(
-                    urlTemplate: AppConstant.urlTemplate,
+                    urlTemplate: AppConstants.urlTemplate,
                   ),
                   if (state is GetLocationSuccess)
                     MarkerLayer(markers: state.markers),

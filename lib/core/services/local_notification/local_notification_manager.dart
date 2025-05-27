@@ -166,11 +166,13 @@ class LocalNotificationService {
       );
       await _saveNotificationStatus(id: id, isActive: true);
     } on Exception catch (e) {
-      showMessage(
-        context,
-        message: e.toString(),
-        type: ToastificationType.error,
-      );
+      if (context.mounted) {
+        showMessage(
+          context,
+          message: e.toString(),
+          type: ToastificationType.error,
+        );
+      }
     }
   }
 

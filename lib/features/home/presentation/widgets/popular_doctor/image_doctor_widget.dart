@@ -40,8 +40,8 @@ class ImageDoctorWidget extends StatelessWidget {
               color: context.onSecondaryColor,
             )
           : CustomCachedNetworkImage(
-              imgUrl: doctorResults.profilePicture ??
-                  AppImages.imageAvtarDoctorOnLine,
+              imgUrl:
+                  doctorResults.profilePicture ?? AppImages.avatarOnlineDoctor,
               width: context.W * 0.25,
               height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
               loadingImgPadding: 50.w,

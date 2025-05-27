@@ -36,7 +36,10 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(() {
-      final data = RequestDataBuilder.buildRequestData(body, formDataIsEnabled);
+      final data = RequestDataBuilder.buildRequestData(
+        body,
+        formDataIsEnabled: formDataIsEnabled,
+      );
       return client.post(url, queryParameters: queryParameters, data: data);
     });
   }
@@ -49,7 +52,10 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(() {
-      final data = RequestDataBuilder.buildRequestData(body, formDataIsEnabled);
+      final data = RequestDataBuilder.buildRequestData(
+        body,
+        formDataIsEnabled: formDataIsEnabled,
+      );
       return client.put(url, queryParameters: queryParameters, data: data);
     });
   }
@@ -62,7 +68,10 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? queryParameters,
   }) async {
     return _safeApiCall(() {
-      final data = RequestDataBuilder.buildRequestData(body, formDataIsEnabled);
+      final data = RequestDataBuilder.buildRequestData(
+        body,
+        formDataIsEnabled: formDataIsEnabled,
+      );
       return client.patch(url, queryParameters: queryParameters, data: data);
     });
   }

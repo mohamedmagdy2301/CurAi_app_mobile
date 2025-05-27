@@ -33,7 +33,7 @@ class GetLoctionCubit extends Cubit<GetLoctionState> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(1000.r),
           child: CustomCachedNetworkImage(
-            imgUrl: image ?? AppImages.imageAvtarDoctorOnLine,
+            imgUrl: image ?? AppImages.avatarOnlineDoctor,
             width: 20.w,
             height: 20.h,
             loadingImgPadding: 5.w,

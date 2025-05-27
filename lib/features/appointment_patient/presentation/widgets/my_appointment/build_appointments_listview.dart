@@ -311,7 +311,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
                 '${dateStr.substring(0, 10).toFullWithWeekday(context)}',
             imageUrl: widget
                     .cubit.doctorsData[appointment.doctorId]?.profilePicture ??
-                AppImages.imageAvtarDoctorOnLine,
+                AppImages.avatarOnlineDoctor,
             day: now.day,
             hour: now.hour,
             minute: now.minute,
@@ -325,7 +325,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
             body: 'عندك كشف مع $doctorName بعد ساعة',
             imageUrl: widget
                     .cubit.doctorsData[appointment.doctorId]?.profilePicture ??
-                AppImages.imageAvtarDoctorOnLine,
+                AppImages.avatarOnlineDoctor,
             day: notificationTime.day,
             hour: notificationTime.hour,
             minute: notificationTime.minute,
@@ -339,7 +339,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
                 'بكرة الساعة ${timeStr.substring(0, 5).toLocalizedTime(context)}',
             imageUrl: widget
                     .cubit.doctorsData[appointment.doctorId]?.profilePicture ??
-                AppImages.imageAvtarDoctorOnLine,
+                AppImages.avatarOnlineDoctor,
             day: reminderTime.day,
             hour: 9,
             minute: 0,

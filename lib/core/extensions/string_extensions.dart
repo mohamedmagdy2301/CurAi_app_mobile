@@ -151,7 +151,7 @@ extension StringExtension on String {
     return null;
   }
 
-  /// Generic formatter helper based on output [pattern] and [isArabic] flag.
+  /// Generic formatter helper based on output [pattern] and [context] flag.
   String _format(String pattern, BuildContext context) {
     final locale = context.isStateArabic ? 'ar' : 'en';
     final date = _tryParseDate();

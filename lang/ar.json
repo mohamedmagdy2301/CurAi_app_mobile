@@ -206,5 +206,6 @@
    "emergency_department" : "قسم الطوارئ",
    "top_doctors" : "أفضل الأطباء",
    "yesterday" : "أمس",
+   "no_doctors_found" : "لم يتم العثور على اطباء",
   "now" : "الآن"  
   }

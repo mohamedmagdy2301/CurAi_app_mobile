@@ -87,7 +87,7 @@ class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
                 child: CustomCachedNetworkImage(
                   imgUrl: widget.doctorResults.reviews![widget.index]
                           .profilePatientPicture ??
-                      AppImages.imageAvtarPatientOnLine,
+                      AppImages.avatarOnlinePatient,
                   width: context.H * 0.045,
                   height: context.H * 0.045,
                   loadingImgPadding: 10.w,

@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/custom_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +45,7 @@ class BannerEmergencyHomeWidget extends StatelessWidget {
                   CircleAvatar(
                     backgroundColor: context.backgroundColor,
                     child: Image.asset(
-                      'assets/launcher/emergency_fill.png',
+                      AppImages.emergency,
                       width: 22.h,
                       height: 22.h,
                       color: Colors.redAccent,

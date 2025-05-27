@@ -45,7 +45,7 @@ class _FlutterMapBuilderState extends State<FlutterMapBuilder> {
             ),
             children: [
               TileLayer(
-                urlTemplate: urlTemplate,
+                urlTemplate: AppConstants.urlTemplate,
               ),
               MarkerLayer(
                 markers: markers,

@@ -4,6 +4,7 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/login/icon_auth_with_social.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,9 +49,9 @@ class SocialAuthenticationWidget extends StatelessWidget {
         const Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconAuthWithSocial(icon: 'assets/svg/Logo-Google.svg'),
-            IconAuthWithSocial(icon: 'assets/svg/Logo-Facebook.svg'),
-            IconAuthWithSocial(icon: 'assets/svg/Logo-Apple.svg'),
+            IconAuthWithSocial(icon: AppImagesSvg.logoGoogle),
+            IconAuthWithSocial(icon: AppImagesSvg.logoFacebook),
+            IconAuthWithSocial(icon: AppImagesSvg.logoApple),
           ],
         ),
       ],
