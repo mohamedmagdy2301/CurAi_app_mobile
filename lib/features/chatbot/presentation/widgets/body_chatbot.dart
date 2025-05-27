@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/overlay_manager.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
@@ -46,8 +47,8 @@ class _BodyChatbotState extends State<BodyChatbot> {
             context.isDark ? const Color(0xff113746) : const Color(0xffe8f1f5),
         image: DecorationImage(
           image: context.isDark
-              ? const AssetImage('assets/images/splash_dark.png')
-              : const AssetImage('assets/images/splash_light.png'),
+              ? const AssetImage(AppImages.splashLogoDark)
+              : const AssetImage(AppImages.splashLogoLight),
           fit: BoxFit.contain,
           alignment: Alignment.topCenter,
           opacity: 0.05,
