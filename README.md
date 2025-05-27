@@ -7,7 +7,6 @@
 <br clear="both">
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Protest+Guerrilla&weight=900&size=45&pause=1000&color=F78918&width=835&height=100&lines=CurAi+App+%F0%9F%98%8A%E2%9C%8C%EF%B8%8F" alt="Typing SVG" /></a>
 
-
 ---
 
 ## 📱 CurAi: Smart Medical Appointment Booking System
@@ -18,9 +17,9 @@
 [![wakatime](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/9f08f9f0-b19f-4449-ad75-1ee2e05929c8.svg)](https://wakatime.com/badge/user/018d50f0-48a3-4cfc-8081-47a7e8de1753/project/9f08f9f0-b19f-4449-ad75-1ee2e05929c8)
 [![Flutter Version](https://img.shields.io/badge/Flutter-v3.0-blue.svg)](https://flutter.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Sentry](https://img.shields.io/badge/Monitored_by-Sentry-orange.svg)](https://sentry.io)
 
 ---
- 
 
 ## 🚀 Features at a Glance
 
@@ -43,8 +42,9 @@
   - Supports both RTL and LTR languages—perfect for Arabic and English users.
 
 * 🌗 **Light & Dark Mode**
-  - Switch between light and dark themes for the most comfortable viewing experience.
 
+* 🛡️ **Crash & Error Monitoring**
+  - Real-time error and crash tracking using **Sentry**.
 
 ---
 
@@ -69,7 +69,8 @@
 - **Chatbot translate Text-to-speech**
 - **Chatbot translate-message**
 - **Chatbot message copy-to-clipboard**
-  
+- **Crash & Error Monitoring (Sentry) ✅**
+
 ### 🕓 In Progress
 
 - **Testing & Deployment**
@@ -90,15 +91,12 @@
   - ✔️ Social login (Google / Apple / Facebook)
   - ✔️ OTP verification  
 
-
 - ✅ **API Integration**  
   - ✔️ User registration  
   - ✔️ Login / Logout  
   - ✔️ Password reset  
-  - ✔️ Edit profile
+  - ✔️ Edit profile  
   - 🕓 OTP verification  
-  
-
 
 ---
 
@@ -117,32 +115,32 @@
 
 ### **Appointment For Patient**
 - ✅ **UI**  
-  - ✔️ Booking with available times Screen 
-  - ✔️ Appointment confirmation Screen
+  - ✔️ Booking with available times Screen  
+  - ✔️ Appointment confirmation Screen  
   - ✔️ My Appointment history Screen  
   - ✔️ Reschedule booking Appointment Screen
 
 - ✅ **API Integration**  
   - ✔️ Get Booking with available times  
-  - ✔️ Schedule booking Appointment
-  - ✔️ Get My Appointment history   
-  - ✔️ Reschedule booking Appointment
+  - ✔️ Schedule booking Appointment  
+  - ✔️ Get My Appointment history  
+  - ✔️ Reschedule booking Appointment  
   - ✔️ Cancle booking Appointment
 
-----
+---
 
 ### **Appointment For Doctor**
 - ✅ **UI**  
-  - ✔️ Working available times screen 
-  - ✔️ Working times bottom sheet for add
-  - ✔️ Working times bottom sheet for update 
-  - ✔️ Working available times card
+  - ✔️ Working available times screen  
+  - ✔️ Working times bottom sheet for add  
+  - ✔️ Working times bottom sheet for update  
+  - ✔️ Working available times card  
 
 - ✅ **API Integration**  
   - ✔️ Get working available times  
-  - ✔️ Post working available times
-  - ✔️ Patch working available times
-  - ✔️ Delete working available times
+  - ✔️ Post working available times  
+  - ✔️ Patch working available times  
+  - ✔️ Delete working available times  
 
 ---
 
@@ -150,71 +148,70 @@
 - ✅ **UI**  
   - ✔️ Chat interface for text input  
   - ✔️ Chat interface for image input  
-  - ✔️ Display user and bot messages with quick symptom suggestions
-  - ✔️ Quick Action to copy to clipboard 
-  - ✔️ Quick Action to text to speech
+  - ✔️ Display user and bot messages with quick symptom suggestions  
+  - ✔️ Quick Action to copy to clipboard  
+  - ✔️ Quick Action to text to speech  
   - ✔️ Quick Action to translation
-     
+
 - ✅ **API Integration**
-  - ✔️ Do Backend for models ai with flask
-  - ✔️ Do translation responses 
+  - ✔️ Do Backend for models AI with Flask  
+  - ✔️ Do translation responses  
   - ✔️ Specialization recommendations based on symptoms  
   - ✔️ Integration with image classification model  
-  - ✔️ Handle AI responses and data processing
-  - ✔️ Add symptoms as Arabic 
+  - ✔️ Handle AI responses and data processing  
+  - ✔️ Add symptoms as Arabic  
 
 ---
 
 ### **User Profile**
 - ✅ **UI**  
   - ✔️ Editable profile screen (name, email, phone)  
-  - 🕓 Appointment history list
+  - 🕓 Appointment history list  
 
 - ✅ **API Integration**  
   - ✔️ Fetch and update profile details  
-  - 🕓 Retrieve appointment history
+  - 🕓 Retrieve appointment history  
 
 ---
 
 ### **Payment Integration**
 - ✅ **UI**  
   - ✔️ Payment methods screen (credit card, wallet, etc.)  
-  - ✔️ Confirmation and success/failure screens
+  - ✔️ Confirmation and success/failure screens  
 
 - ✅ **API Integration**  
   - ✔️ Connect to payment gateway  
-  - ✔️ Verify payment status and generate receipts
+  - ✔️ Verify payment status and generate receipts  
 
 ---
 
 ### **Notifications**
-- ✅ Push Local notifications for appointment reminders pateint
-
+- ✅ Push Local notifications for appointment reminders patient  
 
 ---
 
 ### **Testing**
 - 🔲 Unit testing for core components  
-- 🔲 End-to-end testing on Android & iOS devices
+- 🔲 End-to-end testing on Android & iOS devices  
 
 ---
 
 ### **Deployment**
 - 🔲 Optimize performance for release mode  
-- 🔲 Publish app to Google Play
-- 🔲 Publish app and Apple App Store
+- 🔲 Publish app to Google Play  
+- 🔲 Publish app to Apple App Store  
 
 ---
 
 ### **Documentation**
 - 🔲 Create a detailed user manual  
-- 🔲 Write developer documentation for contributors
+- 🔲 Write developer documentation for contributors  
 
 ---
 
 ### **Future Enhancements**
 - 🕓 Real-time chat between patient and doctor  
-- 🕓 Add video consultation (telemedicine) features
+- 🕓 Add video consultation (telemedicine) features  
 - 🕓 Social login integration (Google, Apple, Facebook)
 
 ---
@@ -223,19 +220,18 @@
 
 - **Frontend:** `Flutter 3.x`  
 - **State Management:** `Bloc/Cubit`  
-- **Architecture Design** `Clean Architecture(MvvM)`
+- **Architecture Design:** `Clean Architecture (MVVM)`  
 - **Localization:** `flutter_localization`  
 - **Networking:** `Dio`  
-- **Authentication:** `RESTApi`
+- **Authentication:** `RESTApi`  
 - **AI:** `Custom ML models (Text + Image) via Flask backend`  
-- **Storage:** `Secure Shared Preferences / Hive`
-- **Notification:** `flutter_local_notification`
-- **Payment:** `paymob`
-- **Map:** `flutter_open_street`
-- **Text-to-speech** `flutter_tts`
-- **translation** `translator`
-
-
+- **Storage:** `Secure Shared Preferences / Hive`  
+- **Notification:** `flutter_local_notification`  
+- **Payment:** `paymob`  
+- **Map:** `flutter_open_street`  
+- **Text-to-speech:** `flutter_tts`  
+- **Translation:** `translator`  
+- **Crash & Error Monitoring:** `Sentry`
 
 ---
 
