@@ -18,16 +18,8 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 
 class InitializeServices {
-  factory InitializeServices() => _instance;
-
-  /// Private constructor for singleton pattern.
-  InitializeServices._();
-
-  /// Singleton instance
-  static final InitializeServices _instance = InitializeServices._();
-
   /// Initializes all necessary services for the application.
-  Future<void> initializeServices() async {
+  static Future<void> initializeServices() async {
     final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
@@ -50,7 +42,7 @@ class InitializeServices {
       sl<LocalNotificationService>().initialize(),
       sl<ConnectivityController>().connectivityControllerInit(),
       sl<CacheDataManager>().sharedPreferencesInitialize(),
-      sl<AppEnvironment>().initializeEnvironment(envType: EnvTypeEnum.dev),
+      sl<AppEnvironment>().initializeEnvironment(),
       Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     ]);
     if (kReleaseMode) {

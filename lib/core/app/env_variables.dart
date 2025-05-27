@@ -1,7 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Enum to define environment types: development and production.
-enum EnvTypeEnum { dev, prod }
 
 /// Singleton class to manage environment-specific variables using .env files.
 ///
@@ -42,18 +42,19 @@ class AppEnvironment {
   /// Returns the dns sentry.
   static String _dsnSentry = '';
 
-  /// Initializes the environment variables based on the specified [envType].
-  ///
-  /// Loads the corresponding `.env` file and populates the static fields.
-  Future<void> initializeEnvironment({
-    required EnvTypeEnum envType,
-  }) async {
-    switch (envType) {
-      case EnvTypeEnum.dev:
-        await dotenv.load(fileName: '.env.dev');
-      case EnvTypeEnum.prod:
-        await dotenv.load(fileName: '.env.prod');
+  /// Returns the current environment type.
+
+  Future<void> _loadEnvFile() async {
+    if (kDebugMode) {
+      await dotenv.load(fileName: '.env.dev');
+    } else {
+      await dotenv.load(fileName: '.env.prod');
     }
+  }
+
+  /// Loads the corresponding `.env` file and populates the static fields.
+  Future<void> initializeEnvironment() async {
+    await _loadEnvFile();
 
     _envType = dotenv.get('ENV_TYPE');
     _baseApiUrl = dotenv.get('BASE_API_URL');

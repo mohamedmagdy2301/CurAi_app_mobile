@@ -1,7 +1,6 @@
 import 'package:curai_app_mobile/core/api/dio_consumer/dio_consumer.dart';
 import 'package:curai_app_mobile/core/app/connectivity_controller.dart';
 import 'package:curai_app_mobile/core/app/env_variables.dart';
-import 'package:curai_app_mobile/core/app/initialize_services.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/services/local_notification/local_notification_manager.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
@@ -49,9 +48,5 @@ void setupCoreDI() {
     // ! Text To Speech Manager
     ..registerLazySingleton<TextToSpeechManager>(
       TextToSpeechManager.new,
-    )
-    // !  Initialize Services Manager
-    ..registerLazySingleton<InitializeServices>(
-      InitializeServices.new,
     );
 }

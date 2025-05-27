@@ -1,5 +1,6 @@
 const String kDefaultLanguage = 'ar';
 const bool kDefaultThemeIsLight = true;
+const String kProduction = 'production';
 const String orsApiKey = '5b3ce3597851110001cf6248f13d025628fd2f04b3'
     '5cdbb25b715af28ed5e3898e6b440b5490c796';
 const String orsApiUrl =
