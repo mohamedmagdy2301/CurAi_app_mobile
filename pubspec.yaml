@@ -50,6 +50,7 @@ dependencies:
   pin_code_fields:
   pull_to_refresh:
   readmore:
+  sentry_flutter: ^8.14.2
   shared_preferences:
   skeletonizer:
   timezone:
@@ -57,7 +58,6 @@ dependencies:
   translator: ^1.0.3+1
   url_launcher:
 
-  
 dev_dependencies:
   build_runner:
   flutter_lints:
@@ -66,7 +66,7 @@ dev_dependencies:
     sdk: flutter
   hive_generator:
   very_good_analysis:
- 
+
 flutter:
   uses-material-design: true
 

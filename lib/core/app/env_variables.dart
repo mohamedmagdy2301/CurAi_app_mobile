@@ -39,6 +39,9 @@ class AppEnvironment {
   /// Paymob wallet payment method integration ID.
   static String _walletPaymentMethodIntegrationId = '';
 
+  /// Returns the dns sentry.
+  static String _dsnSentry = '';
+
   /// Initializes the environment variables based on the specified [envType].
   ///
   /// Loads the corresponding `.env` file and populates the static fields.
@@ -59,6 +62,7 @@ class AppEnvironment {
         dotenv.get('CARD_PAYMENT_METHOD_INTEGRATION_ID');
     _walletPaymentMethodIntegrationId =
         dotenv.get('WALLET_PAYMENT_METHOD_INTEGRATION_ID');
+    _dsnSentry = dotenv.get('DSN_SENTRY');
   }
 
   /// Returns the base API URL.
@@ -74,6 +78,9 @@ class AppEnvironment {
   /// Returns the integration ID for wallet payments.
   static String get walletPaymentMethodIntegrationId =>
       _walletPaymentMethodIntegrationId;
+
+  /// Returns the Sentry DSN for error tracking.
+  String get dsnSentry => _dsnSentry;
 
   /// Returns true if the app is running in development mode.
   bool get debugMode => _envType == 'dev';

@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -23,8 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lock_orientation_screen/lock_orientation_screen.dart';
 
 class CuraiApp extends StatefulWidget {
-  const CuraiApp({required this.isDebugMode, super.key});
-  final bool isDebugMode;
+  const CuraiApp({super.key});
 
   @override
   State<CuraiApp> createState() => _CuraiAppState();
@@ -98,7 +98,7 @@ class _CuraiAppState extends State<CuraiApp> {
   Widget build(BuildContext context) {
     if (!isInitialized) {
       return MaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: di.sl<AppEnvironment>().debugMode,
         theme: ThemeData(
           colorScheme: ColorScheme.light(primary: selectedColor),
           scaffoldBackgroundColor: const Color(0xffF1F1F1),
@@ -132,7 +132,7 @@ class _CuraiAppState extends State<CuraiApp> {
                 navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
                 theme: theme,
                 darkTheme: darkTheme,
-                debugShowCheckedModeBanner: widget.isDebugMode,
+                debugShowCheckedModeBanner: di.sl<AppEnvironment>().debugMode,
                 builder: (context, child) => setupConnectivityWidget(child),
                 onGenerateRoute: AppRoutes.onGenerateRoute,
                 locale: cubit.getLocaleFromState(state.locale),
