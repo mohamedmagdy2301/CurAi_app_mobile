@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/url_launcher_helper.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/help_center/customer_service_form_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/help_center/row_navigate_contact_us_widget.dart';
@@ -53,7 +54,7 @@ class ContactUsBodyListview extends StatelessWidget {
         CustomNavagationTile(
           title: context.translate(LangKeys.website),
           leadingIcon: SvgPicture.asset(
-            'assets/svg/website.svg',
+            AppImagesSvg.logoWebsite,
             height: 25.h,
             width: 25.h,
             colorFilter:
@@ -65,7 +66,7 @@ class ContactUsBodyListview extends StatelessWidget {
         10.hSpace,
         CustomExpansionTile(
           leadingIcon: SvgPicture.asset(
-            'assets/svg/whatsapp.svg',
+            AppImagesSvg.logoWhatsapp,
             height: 25.h,
             width: 25.h,
           ),
@@ -78,7 +79,7 @@ class ContactUsBodyListview extends StatelessWidget {
         CustomNavagationTile(
           title: context.translate(LangKeys.facebook),
           leadingIcon: SvgPicture.asset(
-            'assets/svg/facebook.svg',
+            AppImagesSvg.logoFacebookRect,
             height: 25.h,
             width: 25.h,
           ),
@@ -89,7 +90,7 @@ class ContactUsBodyListview extends StatelessWidget {
         CustomNavagationTile(
           title: context.translate(LangKeys.instagram),
           leadingIcon: Image.asset(
-            'assets/images/Instagram.png',
+            AppImages.logoInstagram,
             height: 25.h,
             width: 25.h,
           ),
@@ -100,7 +101,7 @@ class ContactUsBodyListview extends StatelessWidget {
         CustomNavagationTile(
           title: context.translate(LangKeys.x),
           leadingIcon: SvgPicture.asset(
-            'assets/svg/X.svg',
+            AppImagesSvg.logoX,
             height: 25.h,
             width: 25.h,
           ),
