@@ -87,7 +87,7 @@ class FavoriteDoctorsScreen extends StatelessWidget {
                       ),
                       leading: CustomCachedNetworkImage(
                         imgUrl: doctor.profilePicture ??
-                            AppImages.imageAvtarDoctorOnLine,
+                            AppImages.avatarOnlineDoctor,
                         width: context.H * 0.07,
                         height: context.H * 0.07,
                         loadingImgPadding: 40.sp,

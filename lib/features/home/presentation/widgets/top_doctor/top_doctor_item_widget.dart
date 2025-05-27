@@ -50,8 +50,8 @@ class TopDoctorItemWidget extends StatelessWidget {
             ).cornerRadiusWithClipRRect(15)
           else
             CustomCachedNetworkImage(
-              imgUrl: doctorsList.profilePicture ??
-                  AppImages.imageAvtarDoctorOnLine,
+              imgUrl:
+                  doctorsList.profilePicture ?? AppImages.avatarOnlineDoctor,
               width: context.H * 0.21,
               height: context.H * 0.19,
               loadingImgPadding: 80.w,

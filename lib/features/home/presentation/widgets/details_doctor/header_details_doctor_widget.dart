@@ -31,8 +31,8 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(1000.r),
           child: CustomCachedNetworkImage(
-            imgUrl: doctorResults.profilePicture ??
-                AppImages.imageAvtarDoctorOnLine,
+            imgUrl:
+                doctorResults.profilePicture ?? AppImages.avatarOnlineDoctor,
             width: context.isTablet ? context.H * 0.17 : context.H * 0.145,
             height: context.isTablet ? context.H * 0.17 : context.H * 0.145,
             loadingImgPadding: 50.w,

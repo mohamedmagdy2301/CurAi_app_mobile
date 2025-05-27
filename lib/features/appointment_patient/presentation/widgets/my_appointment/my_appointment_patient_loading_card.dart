@@ -57,7 +57,7 @@ class MyAppointmentPatientCardLoading extends StatelessWidget {
                 children: [
                   CustomCachedNetworkImage(
                     imgUrl: doctorResults(context).profilePicture ??
-                        AppImages.imageAvtarPatientOnLine,
+                        AppImages.avatarOnlinePatient,
                     height: context.H * 0.13,
                     width: context.H * 0.13,
                     errorIconSize: 60.sp,

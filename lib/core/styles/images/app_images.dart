@@ -10,12 +10,16 @@ class AppImages {
   static const String doctorSpeciality = '$images/doctor_specialties';
   static const String doctorInBanner = '$images/doctor-in-banner.png';
   static const String loading = '$images/loading.gif';
-  static const String imageAvtarDoctorOnLine =
-      'https://img.freepik.com/free-photo/young-doctor-with-stethoscope-his-neck-3d-illustration_1057-44836.jpg?t=st=1746407953~exp=1746411553~hmac=0206b243ef8f8d296cb836baeadc68d51e96bb5fe822ed117358266a6814474e&w=826';
-  static const String imageAvtarPatientOnLine =
+  static const String avatarOnlinePatient =
       'https://avatar.iran.liara.run/public/4';
   static const String splashLogoDark = '$images/splash_dark.png';
   static const String splashLogoLight = '$images/splash_light.png';
+  static const String avatarOnlineDoctor =
+      'https://img.freepik.com/free-photo/young-doctor'
+      '-with-stethoscope-his-neck-3d-illustration_1057-'
+      '44836.jpg?t=st=1746407953~exp=1746411553~hmac='
+      '0206b243ef8f8d296cb836baeadc68d51e96bb5fe822ed'
+      '117358266a6814474e&w=826';
 }
 
 class AppImagesSvg {

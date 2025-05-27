@@ -41,8 +41,8 @@ class ImageProfileWidget extends StatelessWidget {
                 : CustomCachedNetworkImage(
                     imgUrl: imageUrl ??
                         (getRole() == 'doctor'
-                            ? AppImages.imageAvtarDoctorOnLine
-                            : AppImages.imageAvtarPatientOnLine),
+                            ? AppImages.avatarOnlineDoctor
+                            : AppImages.avatarOnlinePatient),
                     width: 140.w,
                     height: 140.h,
                     loadingImgPadding: 50.w,
