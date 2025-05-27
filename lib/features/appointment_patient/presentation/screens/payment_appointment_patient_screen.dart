@@ -13,6 +13,7 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/payment/paymob_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/payment_appointment/custom_appbar_payment_appointment.dart';
@@ -187,10 +188,10 @@ class _PaymentSelectionWidgetState extends State<PaymentSelectionWidget> {
   ];
 
   final Map<String, String> cardLogos = {
-    'Master Card': 'assets/svg/payment/mastercard.svg',
-    'Visa': 'assets/svg/payment/visa.svg',
-    'PayPal': 'assets/svg/payment/paypal.svg',
-    'Apple Pay': 'assets/svg/payment/applepay.svg',
+    'Master Card': AppImagesSvg.mastercard,
+    'Visa': AppImagesSvg.visa,
+    'PayPal': AppImagesSvg.paypal,
+    'Apple Pay': AppImagesSvg.applePay,
   };
 
   Widget _buildCardItem(String name) {

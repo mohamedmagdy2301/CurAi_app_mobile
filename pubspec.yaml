@@ -74,6 +74,7 @@ flutter:
     - assets/svg/payment/
     - assets/svg/layout/
     - assets/launcher/
+    - assets/svg/social/
     - .env.prod
     - .env.dev
     - lang/en.json
