@@ -39,9 +39,10 @@
   - Enjoy hassle-free consultations with multiple secure payment options.
 
 * 🌐 **Multi-language Support**
-  - Supports both RTL and LTR languages—perfect for Arabic and English users.
+  - Supports both RTL and LTR languages—perfect for Arabic and English 
 
 * 🌗 **Light & Dark Mode**
+  - Switch between light and dark themes for the most comfortable viewing experience.
 
 * 🛡️ **Crash & Error Monitoring**
   - Real-time error and crash tracking using **Sentry**.
@@ -69,7 +70,7 @@
 - **Chatbot translate Text-to-speech**
 - **Chatbot translate-message**
 - **Chatbot message copy-to-clipboard**
-- **Crash & Error Monitoring (Sentry) ✅**
+- **Crash & Error Monitoring (Sentry)**
 
 ### 🕓 In Progress
 
