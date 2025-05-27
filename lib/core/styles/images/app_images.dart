@@ -30,9 +30,9 @@ class AppImagesSvg {
   static const String searchEmpty = '$svg/search_empty.svg';
   static const String logoFacebook = '$svg/logo_facebook.svg';
   static const String logoGoogle = '$svg/logo_google.svg';
-  static const String logoApple = '$svg/logo_Apple.svg';
+  static const String logoApple = '$svg/logo_apple.svg';
   static const String logoFacebookRect = '$svg/logo_facebook_rectangle.svg';
   static const String logoX = '$svg/logo_x.svg';
   static const String logoWhatsapp = '$svg/logo_whatsapp.svg';
-  static const String logoWebsite = '$svg/logo_website';
+  static const String logoWebsite = '$svg/logo_website.svg';
 }
