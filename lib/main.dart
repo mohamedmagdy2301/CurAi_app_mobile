@@ -17,7 +17,7 @@ Future<void> main() async {
       appRunner: () => runApp(SentryWidget(child: const MyApp())),
       (options) => options
         ..dsn = sl<AppEnvironment>().dsnSentry
-        ..environment = kProduction,
+        ..environment = AppConstants.kProduction,
     );
   }
 }

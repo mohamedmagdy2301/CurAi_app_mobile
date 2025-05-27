@@ -72,9 +72,7 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/doctor_specialties/
     - assets/svg/
-    - assets/svg/doctor_speciality/
     - assets/svg/payment/
     - assets/svg/layout/
     - assets/launcher/

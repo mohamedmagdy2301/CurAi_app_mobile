@@ -63,7 +63,7 @@ class RouteCubit extends Cubit<RouteState> {
   ) async {
     final response = await http.get(
       Uri.parse(
-        '$orsApiUrl?api_key=$orsApiKey'
+        '${AppConstants.orsApiUrl}?api_key=${AppConstants.orsApiKey}'
         '&start=${currentLocation.longitude},${currentLocation.latitude}'
         '&end=${destination.longitude},${destination.latitude}',
       ),

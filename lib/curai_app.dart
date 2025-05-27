@@ -39,8 +39,6 @@ class _CuraiAppState extends State<CuraiApp> {
   void initState() {
     super.initState();
     _loadAppSettings();
-
-    throw Exception('Test Sentry Exception');
   }
 
   Future<void> _loadAppSettings() async {
