@@ -6,7 +6,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 /// Singleton class to manage environment-specific variables using .env files.
 ///
 /// This class loads the correct .env file based on the given environment type
-/// and exposes key configuration variables for the application such as API base URL
 /// and payment integration IDs.
 ///
 /// Example usage:

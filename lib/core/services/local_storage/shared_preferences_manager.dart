@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheDataManager {
-  /// Factory constructor to return the singleton instance of [CacheDataManager].
+  ///Factory constructor to return the singleton instance of [CacheDataManager].
   factory CacheDataManager() => _instance;
   CacheDataManager._();
 

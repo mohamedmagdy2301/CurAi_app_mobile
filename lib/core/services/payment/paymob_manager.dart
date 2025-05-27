@@ -1,4 +1,5 @@
-// ignore_for_file: inference_failure_on_function_invocation, avoid_dynamic_calls
+// ignore: lines_longer_than_80_chars
+// ignore_for_file: inference_failure_on_function_invocation, avoid_dynamic_calls, document_ignores
 
 import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'

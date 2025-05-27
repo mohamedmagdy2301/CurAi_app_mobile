@@ -3,8 +3,10 @@
 import 'package:dio/dio.dart';
 
 class RequestDataBuilder {
-  static dynamic buildRequestData(dynamic body,
-      {required bool formDataIsEnabled}) {
+  static dynamic buildRequestData(
+    dynamic body, {
+    required bool formDataIsEnabled,
+  }) {
     if (body is FormData) return body;
     if (formDataIsEnabled && body is Map<String, dynamic>) {
       return FormData.fromMap(body);
