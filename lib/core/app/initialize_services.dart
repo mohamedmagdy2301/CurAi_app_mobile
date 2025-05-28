@@ -13,9 +13,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 class InitializeServices {
   /// Initializes all necessary services for the application.
@@ -24,18 +23,22 @@ class InitializeServices {
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
     hideKeyboard();
-    final appDocumentDir = await getApplicationDocumentsDirectory();
+
+    if (kIsWeb) {
+      await Hive.initFlutter();
+    } else {
+      final appDocumentDir =
+          await path_provider.getApplicationDocumentsDirectory();
+      Hive.init(appDocumentDir.path);
+    }
+
     Hive
-      ..init(appDocumentDir.path)
       ..registerAdapter(MessageBubbleModelAdapter())
       ..registerAdapter(SenderTypeAdapter())
-      // favorite doctor
       ..registerAdapter(FavoriteDoctorAdapter());
 
-    /// Initialize the Bloc observer
     Bloc.observer = SimpleBlocObserver();
 
-    /// Initialize the service locator
     await initializeServiceLocator();
 
     await Future.wait([
@@ -45,9 +48,11 @@ class InitializeServices {
       sl<AppEnvironment>().initializeEnvironment(),
       Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     ]);
+
     if (kReleaseMode) {
       await Future<void>.delayed(const Duration(microseconds: 300));
     }
+
     FlutterNativeSplash.remove();
   }
 }
