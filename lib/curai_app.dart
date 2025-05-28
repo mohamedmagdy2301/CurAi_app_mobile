@@ -1,9 +1,10 @@
+import 'dart:developer';
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:curai_app_mobile/core/app/env_variables.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/app_localizations_setup.dart';
 import 'package:curai_app_mobile/core/language/localization_cubit/localization_cubit.dart';
 import 'package:curai_app_mobile/core/language/localization_cubit/localization_state.dart';
@@ -38,39 +39,53 @@ class _CuraiAppState extends State<CuraiApp> {
   @override
   void initState() {
     super.initState();
-    _loadAppSettings();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadAppSettings();
+    });
   }
 
   Future<void> _loadAppSettings() async {
-    final themeModeString = await di
-        .sl<CacheDataManager>()
-        .getData(key: SharedPrefKey.saveThemeMode);
-    savedThemeMode = _getThemeModeFromString(themeModeString as String?);
+    try {
+      final themeModeString = await di
+          .sl<CacheDataManager>()
+          .getData(key: SharedPrefKey.saveThemeMode);
+      savedThemeMode = _getThemeModeFromString(themeModeString as String?);
 
-    final isDark = savedThemeMode == AdaptiveThemeMode.dark ||
-        (savedThemeMode == AdaptiveThemeMode.system &&
-            WidgetsBinding.instance.platformDispatcher.platformBrightness ==
-                Brightness.dark);
+      final isDark = savedThemeMode == AdaptiveThemeMode.dark ||
+          (savedThemeMode == AdaptiveThemeMode.system &&
+              WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+                  Brightness.dark);
 
-    final colors = isDark ? darkColors : lightColors;
+      final colors = isDark ? darkColors : lightColors;
 
-    final savedColorValue = await di
-        .sl<CacheDataManager>()
-        .getData(key: SharedPrefKey.keyThemeColor);
+      final savedColorValue = await di
+          .sl<CacheDataManager>()
+          .getData(key: SharedPrefKey.keyThemeColor);
 
-    if (savedColorValue != null && savedColorValue is int) {
-      selectedColor = Color(savedColorValue);
-    } else {
-      selectedColor = colors.first;
-      await di.sl<CacheDataManager>().setData(
-            key: SharedPrefKey.keyThemeColor,
-            value: selectedColor.value,
-          );
+      if (savedColorValue != null && savedColorValue is int) {
+        selectedColor = Color(savedColorValue);
+      } else {
+        selectedColor = colors.first;
+        await di.sl<CacheDataManager>().setData(
+              key: SharedPrefKey.keyThemeColor,
+              value: selectedColor.value,
+            );
+      }
+
+      if (mounted) {
+        setState(() {
+          isInitialized = true;
+        });
+      }
+    } on Exception catch (e) {
+      // Handle initialization errors gracefully
+      log('Error loading app settings: $e');
+      if (mounted) {
+        setState(() {
+          isInitialized = true;
+        });
+      }
     }
-
-    setState(() {
-      isInitialized = true;
-    });
   }
 
   AdaptiveThemeMode _getThemeModeFromString(String? themeModeString) {
@@ -108,10 +123,16 @@ class _CuraiAppState extends State<CuraiApp> {
           scaffoldBackgroundColor: const Color(0xff161616),
         ),
         home: Scaffold(
-          body: const CustomLoadingWidget(height: 60, width: 60).center(),
+          body: Container(
+            constraints: const BoxConstraints.expand(),
+            child: const Center(
+              child: CustomLoadingWidget(height: 60, width: 60),
+            ),
+          ),
         ),
       );
     }
+
     return LockOrientation(
       child: BlocBuilder<LocalizationCubit, LocalizationState>(
         builder: (context, state) {
@@ -133,7 +154,11 @@ class _CuraiAppState extends State<CuraiApp> {
                 theme: theme,
                 darkTheme: darkTheme,
                 debugShowCheckedModeBanner: di.sl<AppEnvironment>().debugMode,
-                builder: (context, child) => setupConnectivityWidget(child),
+                builder: (context, child) {
+                  // Ensure child is properly wrapped before setup
+                  if (child == null) return const SizedBox.shrink();
+                  return setupConnectivityWidget(child);
+                },
                 onGenerateRoute: AppRoutes.onGenerateRoute,
                 locale: cubit.getLocaleFromState(state.locale),
                 supportedLocales: AppLocalSetup.supportedLocales,

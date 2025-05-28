@@ -1,5 +1,6 @@
 // ignore_for_file: strict_raw_type, document_ignores, lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, avoid_catches_without_on_clauses, inference_failure_on_function_return_type
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:curai_app_mobile/core/api/status_code.dart';
@@ -8,6 +9,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:flutter/foundation.dart';
 
 class DioConfigurator {
   static const Duration _defaultTimeouts = Duration(seconds: 30);
@@ -19,11 +21,17 @@ class DioConfigurator {
   }
 
   static void _setUpCertificateBypass(Dio dio) {
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-      final client = HttpClient()
-        ..badCertificateCallback = (_, __, ___) => true;
-      return client;
-    };
+    if (!kIsWeb && dio.httpClientAdapter is IOHttpClientAdapter) {
+      try {
+        (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+          final client = HttpClient()
+            ..badCertificateCallback = (_, __, ___) => true;
+          return client;
+        };
+      } catch (e) {
+        log('Warning: Could not set up certificate bypass: $e');
+      }
+    }
   }
 
   static void _addBaseInterceptors(Dio dio) {

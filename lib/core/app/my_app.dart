@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
+      useInheritedMediaQuery: true,
       builder: (_, child) => ValueListenableBuilder(
         valueListenable: sl<ConnectivityController>().isInternetNotifier,
         builder: (_, value, __) {
