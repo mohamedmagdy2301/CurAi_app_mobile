@@ -3,16 +3,36 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:flutter/material.dart';
 
-GestureDetector setupConnectivityWidget(Widget? child) {
+Widget setupConnectivityWidget(Widget child) {
   return GestureDetector(
     onTap: hideKeyboard,
-    child: Scaffold(
-      body: Builder(
-        builder: (context) {
-          sl<ConnectivityController>().connectivityControllerInit();
-          return child!;
-        },
-      ),
+    child: Builder(
+      builder: (context) {
+        sl<ConnectivityController>().connectivityControllerInit();
+
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final screenWidth = constraints.maxWidth;
+            const maxContentWidth = 480.0;
+
+            final shouldConstrain = screenWidth > maxContentWidth;
+
+            final constrainedContent = shouldConstrain
+                ? Center(
+                    child: ConstrainedBox(
+                      constraints:
+                          const BoxConstraints(maxWidth: maxContentWidth),
+                      child: child,
+                    ),
+                  )
+                : child;
+
+            return Scaffold(
+              body: constrainedContent,
+            );
+          },
+        );
+      },
     ),
   );
 }
