@@ -13,7 +13,7 @@ Widget setupConnectivityWidget(Widget child) {
         return LayoutBuilder(
           builder: (context, constraints) {
             final screenWidth = constraints.maxWidth;
-            const maxContentWidth = 480.0;
+            const maxContentWidth = 500.0;
 
             final shouldConstrain = screenWidth > maxContentWidth;
 
