@@ -59,8 +59,8 @@ Future<void> clearUserData() async {
 
 void clearCachHomeData() {
   di.sl<HomeLocalDataSource>().clearPopularDoctorsCache();
-  // di.sl<HomeLocalDataSource>().clearSpecializationsCache();
-  // di.sl<HomeLocalDataSource>().clearTopDoctorCache();
+  di.sl<HomeLocalDataSource>().clearSpecializationsCache();
+  di.sl<HomeLocalDataSource>().clearTopDoctorsCache();
 }
 
 String getUsername() {

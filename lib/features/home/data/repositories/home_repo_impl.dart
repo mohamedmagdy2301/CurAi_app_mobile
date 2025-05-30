@@ -22,7 +22,6 @@ class HomeRepoImpl extends HomeRepo {
     if (cachedDoctors.isNotEmpty) {
       log('------------------------------');
       log('Returning cached popular doctors');
-      log('Cached doctors count: ${cachedDoctors.length}');
       return right(cachedDoctors);
     }
 
@@ -32,12 +31,39 @@ class HomeRepoImpl extends HomeRepo {
       (failure) => left(failure.message),
       (responseData) {
         try {
-          final allDoctorModel = DoctorsModel.fromJson(responseData);
-          final doctors = allDoctorModel.results ?? [];
+          final doctors = DoctorsModel.fromJson(responseData).results ?? [];
           log('------------------------------');
           log('Returning remote popular doctors');
-          log('Remote doctors count: ${doctors.length}');
           localDataSource.cachePopularDoctors(doctors);
+          return right(doctors);
+        } on Exception catch (e) {
+          return left('Error parsing response: $e');
+        }
+      },
+    );
+  }
+
+  @override
+  Future<Either<String, List<DoctorInfoModel>>> getTopDoctor() async {
+    final cachedDoctors = localDataSource.getCachedTopDoctors();
+
+    if (cachedDoctors.isNotEmpty) {
+      log('------------------------------');
+      log('Returning cached top doctors');
+      return right(cachedDoctors);
+    }
+
+    final response = await remoteDataSource.getTopDoctor();
+
+    return response.fold(
+      (failure) => left(failure.message),
+      (responseData) {
+        try {
+          final doctors = DoctorsModel.fromJson(responseData).results ?? [];
+
+          log('------------------------------');
+          log('Returning remote top doctors');
+          localDataSource.cacheTopDoctors(doctors);
           return right(doctors);
         } on Exception catch (e) {
           return left('Error parsing response: $e');
@@ -49,7 +75,16 @@ class HomeRepoImpl extends HomeRepo {
   @override
   Future<Either<String, List<SpecializationsModel>>>
       getSpecializations() async {
+    final cachedSpecializations = localDataSource.getCachedSpecializations();
+
+    if (cachedSpecializations.isNotEmpty) {
+      log('------------------------------');
+      log('Returning cached specializations');
+      return right(cachedSpecializations);
+    }
+
     final response = await remoteDataSource.getSpecializations();
+
     return response.fold(
       (failure) {
         log(failure.message);
@@ -64,6 +99,9 @@ class HomeRepoImpl extends HomeRepo {
             ),
           );
         }
+        log('------------------------------');
+        log('Returning remote specializations');
+        localDataSource.cacheSpecializations(specializationsList);
         return right(specializationsList);
       },
     );
@@ -80,27 +118,6 @@ class HomeRepoImpl extends HomeRepo {
         try {
           final allDoctorModel = DoctorInfoModel.fromJson(responseData);
           return right(allDoctorModel);
-        } on Exception catch (e) {
-          return left('Error parsing response: $e');
-        }
-      },
-    );
-  }
-
-  @override
-  Future<Either<String, List<DoctorInfoModel>>> getTopDoctor() async {
-    final response = await remoteDataSource.getTopDoctor();
-    return response.fold(
-      (failure) {
-        return left(failure.message);
-      },
-      (responseData) {
-        try {
-          final topDoctorModel = (responseData as List)
-              .map((e) => DoctorInfoModel.fromJson(e as Map<String, dynamic>))
-              .toList();
-
-          return right(topDoctorModel);
         } on Exception catch (e) {
           return left('Error parsing response: $e');
         }

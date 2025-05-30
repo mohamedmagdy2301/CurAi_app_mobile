@@ -1,3 +1,8 @@
+import 'package:hive/hive.dart';
+
+part 'specializations_model.g.dart';
+
+@HiveType(typeId: 5)
 class SpecializationsModel {
   SpecializationsModel({
     required this.id,
@@ -9,14 +14,22 @@ class SpecializationsModel {
   factory SpecializationsModel.fromJson(Map<String, dynamic> json) {
     return SpecializationsModel(
       id: json['id'] as int,
-      image: json['image'] as String,
+      image: json['image'] as String? ?? '',
       name: json['name'] as String,
-      doctorCount: json['doctor_count'] as int,
+      doctorCount: json['doctor_count'] as int? ?? 0,
     );
   }
+
+  @HiveField(0)
   final int id;
+
+  @HiveField(1)
   final String image;
-  String name;
+
+  @HiveField(2)
+  final String name;
+
+  @HiveField(3)
   final int doctorCount;
 }
 

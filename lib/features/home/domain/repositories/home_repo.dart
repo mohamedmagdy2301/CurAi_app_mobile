@@ -7,8 +7,6 @@ import 'package:dartz/dartz.dart';
 abstract class HomeRepo {
   Future<Either<String, List<DoctorInfoModel>>> getPopularDoctor();
   Future<Either<String, List<DoctorInfoModel>>> getTopDoctor();
-  Future<Either<String, DoctorInfoModel>> getDoctorById({
-    int? id,
-  });
+  Future<Either<String, DoctorInfoModel>> getDoctorById({int? id});
   Future<Either<String, List<SpecializationsModel>>> getSpecializations();
 }

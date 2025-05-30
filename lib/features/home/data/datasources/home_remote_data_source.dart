@@ -5,10 +5,8 @@ import 'package:dartz/dartz.dart';
 
 abstract class HomeRemoteDataSource {
   Future<Either<Failure, Map<String, dynamic>>> getPopularDoctor();
-  Future<Either<Failure, dynamic>> getTopDoctor();
-  Future<Either<Failure, Map<String, dynamic>>> getDoctorById({
-    int? id,
-  });
+  Future<Either<Failure, Map<String, dynamic>>> getTopDoctor();
+  Future<Either<Failure, Map<String, dynamic>>> getDoctorById({int? id});
   Future<Either<Failure, List<dynamic>>> getSpecializations();
 }
 
@@ -23,27 +21,21 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     return response.fold(
       left,
       (r) {
-        if (r is Map<String, dynamic>) {
-          return right(r);
-        }
+        if (r is Map<String, dynamic>) return right(r);
         return left(ServerFailure('Invalid response format'));
       },
     );
   }
 
   @override
-  Future<Either<Failure, dynamic>> getTopDoctor() async {
+  Future<Either<Failure, Map<String, dynamic>>> getTopDoctor() async {
     final response = await dioConsumer.get(EndPoints.getTopDoctor);
 
     return response.fold(
       left,
       (r) {
-        if (r is Map<String, dynamic>) {
-          return right(r);
-        }
-        if (r is List) {
-          return right(r);
-        }
+        if (r is Map<String, dynamic>) return right(r);
+        if (r is List) return right({'results': r});
         return left(ServerFailure('Invalid response format'));
       },
     );
