@@ -42,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _onRefresh() async {
     try {
-      await Future<void>.delayed(const Duration(milliseconds: 800));
+      clearCachHomeData();
+      await Future<void>.delayed(const Duration(milliseconds: 400));
 
       // Refresh data
       await context.read<HomeCubit>().getSpecializations();

@@ -3,6 +3,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
 import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
+import 'package:curai_app_mobile/features/home/data/datasources/home_local_data_source.dart';
 
 void saveDataUser({required LoginModel data}) {
   di.sl<CacheDataManager>().setData(
@@ -53,9 +54,15 @@ Future<void> clearUserData() async {
     di.sl<CacheDataManager>().removeData(key: SharedPrefKey.keyBonusPoints),
     di.sl<CacheDataManager>().removeData(key: SharedPrefKey.keyProfilePicture),
   ]);
+  clearCachHomeData();
 }
 
-/// get the username from Cache Data Local
+void clearCachHomeData() {
+  di.sl<HomeLocalDataSource>().clearPopularDoctorsCache();
+  // di.sl<HomeLocalDataSource>().clearSpecializationsCache();
+  // di.sl<HomeLocalDataSource>().clearTopDoctorCache();
+}
+
 String getUsername() {
   final userName =
       di.sl<CacheDataManager>().getData(key: SharedPrefKey.keyUserName) ?? '';

@@ -32,11 +32,6 @@ class LogoutWidget extends StatelessWidget {
             current is LogoutLoading,
         listener: (context, state) async {
           if (state is LogoutSuccess) {
-            // showMessage(
-            //   context,
-            //   type: ToastificationType.success,
-            //   message: state.message,
-            // );
             await clearUserData();
             await di
                 .sl<CacheDataManager>()

@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 abstract class HomeLocalDataSource {
   Future<void> cachePopularDoctors(List<DoctorInfoModel> doctors);
   List<DoctorInfoModel> getCachedPopularDoctors();
+  void clearPopularDoctorsCache() {}
 }
 
 class HomeLocalDataSourceImpl implements HomeLocalDataSource {
@@ -20,5 +21,11 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
   List<DoctorInfoModel> getCachedPopularDoctors() {
     final box = Hive.box<DoctorInfoModel>(boxName);
     return box.values.toList();
+  }
+
+  @override
+  Future<void> clearPopularDoctorsCache() async {
+    final box = await Hive.openBox<DoctorInfoModel>(boxName);
+    await box.clear();
   }
 }

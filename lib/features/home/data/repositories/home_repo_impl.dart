@@ -15,23 +15,30 @@ class HomeRepoImpl extends HomeRepo {
   });
   final HomeRemoteDataSource remoteDataSource;
   final HomeLocalDataSource localDataSource;
-
   @override
   Future<Either<String, List<DoctorInfoModel>>> getPopularDoctor() async {
+    final cachedDoctors = localDataSource.getCachedPopularDoctors();
+
+    if (cachedDoctors.isNotEmpty) {
+      log('------------------------------');
+      log('Returning cached popular doctors');
+      log('Cached doctors count: ${cachedDoctors.length}');
+      return right(cachedDoctors);
+    }
+
     final response = await remoteDataSource.getPopularDoctor();
+
     return response.fold(
-      (failure) {
-        final cachedDoctors = localDataSource.getCachedPopularDoctors();
-        if (cachedDoctors.isNotEmpty) {
-          return right(cachedDoctors);
-        }
-        return left(failure.message);
-      },
+      (failure) => left(failure.message),
       (responseData) {
         try {
           final allDoctorModel = DoctorsModel.fromJson(responseData);
-          localDataSource.cachePopularDoctors(allDoctorModel.results ?? []);
-          return right(allDoctorModel.results ?? []);
+          final doctors = allDoctorModel.results ?? [];
+          log('------------------------------');
+          log('Returning remote popular doctors');
+          log('Remote doctors count: ${doctors.length}');
+          localDataSource.cachePopularDoctors(doctors);
+          return right(doctors);
         } on Exception catch (e) {
           return left('Error parsing response: $e');
         }
