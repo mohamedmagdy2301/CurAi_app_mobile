@@ -43,6 +43,7 @@ class LogoutWidget extends StatelessWidget {
                 .removeData(key: SharedPrefKey.keyIsLoggedIn);
             if (!context.mounted) return;
             await context.pushNamedAndRemoveUntil(Routes.loginScreen);
+            if (!context.mounted) return;
             context.read<AuthCubit>().clearState();
           }
           if (state is LogoutError) {

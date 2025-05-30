@@ -30,7 +30,7 @@ class AnimatedSnackBar extends StatefulWidget {
   final bool? showCloseIcon; // ← جديد
 
   @override
-  _AnimatedSnackBarState createState() => _AnimatedSnackBarState();
+  State<AnimatedSnackBar> createState() => _AnimatedSnackBarState();
 }
 
 class _AnimatedSnackBarState extends State<AnimatedSnackBar>

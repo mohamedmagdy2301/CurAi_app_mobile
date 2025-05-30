@@ -57,7 +57,7 @@ class GetLocationCubit extends Cubit<GetLocationState> {
       if (isClosed) return;
 
       emit(GetLocationSuccess(selectedLocation, locationInfo, markers));
-    } catch (e) {
+    } on Exception catch (e) {
       if (isClosed) return;
 
       emit(GetLocationError(e.toString()));
@@ -104,7 +104,7 @@ class GetLocationCubit extends Cubit<GetLocationState> {
       if (placemarks.isNotEmpty) {
         return '${placemarks.first.street}, ${placemarks.first.locality}, ${placemarks.first.country}';
       }
-    } catch (e) {
+    } on Exception catch (e) {
       if (kDebugMode) {
         log('Failed to fetch address: $e');
       }
@@ -153,6 +153,9 @@ Future<Position> determinePosition(BuildContext context) async {
   }
 
   if (permission == LocationPermission.deniedForever) {
+    if (!context.mounted) {
+      return Future.error('Location permissions are permanently denied.');
+    }
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(

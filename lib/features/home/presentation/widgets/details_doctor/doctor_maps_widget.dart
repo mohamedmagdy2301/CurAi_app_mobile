@@ -4,7 +4,7 @@ import 'package:curai_app_mobile/core/cubit/route/route_cubit.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/flutter_map_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

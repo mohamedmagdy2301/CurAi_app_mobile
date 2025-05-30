@@ -19,7 +19,7 @@ class CustomAdvanceSwitch extends StatelessWidget {
   final double thumbRadius;
   final Widget? activeChild;
   final Widget? inactiveChild;
-  final void Function(bool)? onChanged;
+  final void Function({bool? value})? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +41,9 @@ class CustomAdvanceSwitch extends StatelessWidget {
         ),
       ),
       controller: valueNotifier,
-      onChanged:
-          onChanged != null ? (value) => onChanged!(value as bool) : null,
+      onChanged: onChanged != null
+          ? (value) => onChanged!(value: value as bool)
+          : null,
     );
   }
 }

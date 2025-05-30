@@ -1,5 +1,3 @@
-// ignore_for_file: strict_raw_type, document_ignores, lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, avoid_catches_without_on_clauses, inference_failure_on_function_return_type
-
 import 'dart:developer';
 import 'dart:io';
 
@@ -28,7 +26,7 @@ class DioConfigurator {
             ..badCertificateCallback = (_, __, ___) => true;
           return client;
         };
-      } catch (e) {
+      } on Exception catch (e) {
         log('Warning: Could not set up certificate bypass: $e');
       }
     }

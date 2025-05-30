@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctors_model.dart';
 import 'package:curai_app_mobile/features/search/domain/repositories/search_repo.dart';
 import 'package:dartz/dartz.dart';
 

@@ -10,6 +10,7 @@ dependencies:
   adaptive_theme: 
   auto_size_text: 
   cached_network_image: 
+  collection: ^1.19.1
   connectivity_plus:
   cupertino_icons:
   dartz: 

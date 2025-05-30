@@ -1,29 +1,9 @@
-class DoctorsModel {
-  DoctorsModel({
-    this.count,
-    this.next,
-    this.previous,
-    this.results,
-  });
+import 'package:hive/hive.dart';
 
-  factory DoctorsModel.fromJson(Map<String, dynamic> json) {
-    return DoctorsModel(
-      count: json['count'] as int?,
-      next: json['next'] as String?,
-      previous: json['previous'] as String? ?? '',
-      results: (json['results'] as List<dynamic>?)
-          ?.map((e) => DoctorInfoModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-  }
+part 'doctor_info_model.g.dart';
 
-  int? count;
-  String? next;
-  String? previous;
-  List<DoctorInfoModel>? results;
-}
-
-class DoctorInfoModel {
+@HiveType(typeId: 3)
+class DoctorInfoModel extends HiveObject {
   DoctorInfoModel({
     this.id,
     this.profilePicture,
@@ -63,25 +43,54 @@ class DoctorInfoModel {
           .toList(),
     );
   }
-
+  @HiveField(0)
   int? id;
+
+  @HiveField(1)
   String? profilePicture;
+
+  @HiveField(2)
   String? username;
+
+  @HiveField(3)
   String? email;
+
+  @HiveField(4)
   String? specialization;
+
+  @HiveField(5)
   String? consultationPrice;
+
+  @HiveField(6)
   String? location;
+
+  @HiveField(7)
   List<DoctorReviews>? reviews;
+
+  @HiveField(8)
   String? firstName;
+
+  @HiveField(9)
   String? lastName;
+
+  @HiveField(10)
   String? bio;
+
+  @HiveField(11)
   double? latitude;
+
+  @HiveField(12)
   double? longitude;
+
+  @HiveField(13)
   double? avgRating;
+
+  @HiveField(14)
   int? totalReviews;
 }
 
-class DoctorReviews {
+@HiveType(typeId: 4)
+class DoctorReviews extends HiveObject {
   DoctorReviews({
     this.id,
     this.patientUsername,
@@ -105,14 +114,28 @@ class DoctorReviews {
       lastName: json['last_name'] as String?,
     );
   }
-
+  @HiveField(0)
   int? id;
+
+  @HiveField(1)
   String? patientUsername;
+
+  @HiveField(2)
   int? rating;
+
+  @HiveField(3)
   String? comment;
+
+  @HiveField(4)
   String? createdAt;
+
+  @HiveField(5)
   String? profilePatientPicture;
+
+  @HiveField(6)
   String? firstName;
+
+  @HiveField(7)
   String? lastName;
 }
 

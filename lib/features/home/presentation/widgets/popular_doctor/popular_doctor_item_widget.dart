@@ -8,7 +8,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/home/data/models/favorite_doctor_model/favorite_doctor.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/details_doctor_screen.dart';
@@ -91,7 +91,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                           child: AutoSizeText(
                             specializationName(
                               widget.doctorResults.specialization ?? '',
-                              context.isStateArabic,
+                              isArabic: context.isStateArabic,
                             ),
                             maxLines: 1,
                             textAlign: TextAlign.start,

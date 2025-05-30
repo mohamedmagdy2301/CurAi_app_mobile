@@ -96,18 +96,18 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
                       final currentState = appointmentCubit.state;
 
                       if (currentState is PaymentAppointmentSuccess) {
-                        if (!mounted) return;
-                        context.pushNamed(Routes.mainScaffoldUser);
+                        if (!context.mounted) return;
+                        await context.pushNamed(Routes.mainScaffoldUser);
                       } else if (currentState is PaymentAppointmentFailure) {
-                        if (!mounted) return;
+                        if (!context.mounted) return;
                         showMessage(
                           context,
                           message: currentState.message,
                           type: ToastificationType.error,
                         );
-                        context.pop();
+                        if (context.mounted) context.pop();
                       } else {
-                        context.pop();
+                        if (context.mounted) context.pop();
                       }
                     }
                   }

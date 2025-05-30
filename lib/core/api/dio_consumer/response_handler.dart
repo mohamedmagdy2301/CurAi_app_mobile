@@ -1,5 +1,3 @@
-// ignore_for_file: strict_raw_type, document_ignores, lines_longer_than_80_chars, avoid_dynamic_calls, inference_failure_on_function_invocation, avoid_catches_without_on_clauses, inference_failure_on_function_return_type
-
 import 'dart:async';
 import 'dart:convert';
 
@@ -29,6 +27,7 @@ class ResponseHandler {
 
     // Handle permission errors
     if (_isPermissionError(response.statusCode!, data)) {
+      if (data is! Map) return left(ServerFailure('Permission denied'));
       return left(ServerFailure(data['detail'] as String));
     }
 
@@ -49,7 +48,7 @@ class ResponseHandler {
       } else {
         return <String, dynamic>{};
       }
-    } catch (e) {
+    } on Exception catch (_) {
       return response.data;
     }
   }
@@ -59,6 +58,7 @@ class ResponseHandler {
   }
 
   static bool _isPermissionError(int statusCode, dynamic data) {
+    if (data is! Map) return false;
     return statusCode == StatusCode.forbidden &&
         data['detail'].toString().toLowerCase().contains('permission');
   }
@@ -102,7 +102,7 @@ class ResponseHandler {
         final retried = await retryRequest!();
         final result = await handleResponse(retried, null);
         completer.complete(result);
-      } catch (e) {
+      } on Exception catch (e) {
         completer.complete(left(ServerFailure(e.toString())));
       }
     });

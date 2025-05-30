@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SearchDoctorState extends Equatable {

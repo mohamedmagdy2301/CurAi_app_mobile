@@ -33,7 +33,7 @@ class _SpecializationWidgetState extends State<SpecializationWidget> {
             isLoading: widget.isLoading ?? false,
             title: specializationName(
               widget.specializationsList[index].name,
-              context.isStateArabic,
+              isArabic: context.isStateArabic,
             ),
             image: widget.specializationsList[index].image,
             specialityName: widget.specializationsList[index].name,
@@ -44,7 +44,7 @@ class _SpecializationWidgetState extends State<SpecializationWidget> {
   }
 }
 
-String specializationName(String? name, bool isArabic) {
+String specializationName(String? name, {required bool isArabic}) {
   const specializationsMap = {
     'Allergist': 'أخصائي حساسية',
     'Andrologists': 'أطباء أمراض الذكورة',

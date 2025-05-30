@@ -314,7 +314,7 @@ class DegreeConstants {
   }
 
   // Get a suitable list of degrees based on the current language
-  static List<String> getDegreesByLanguage(bool isArabic) {
+  static List<String> getDegreesByLanguage({required bool isArabic}) {
     return isArabic ? getArabicDegrees() : getEnglishDegrees();
   }
 

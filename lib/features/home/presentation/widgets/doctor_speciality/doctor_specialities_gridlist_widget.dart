@@ -58,7 +58,7 @@ class DoctorSpecialitiesGridList extends StatelessWidget {
           isLoading: isLoading,
           title: specializationName(
             filteredItems[index].name,
-            context.isStateArabic,
+            isArabic: context.isStateArabic,
           ),
           image: filteredItems[index].image,
           specialityName: filteredItems[index].name,

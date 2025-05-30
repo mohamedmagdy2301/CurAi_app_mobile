@@ -27,7 +27,7 @@ class _CustomAppBarAllDoctorState extends State<CustomAppBarAllDoctor> {
     if (widget.title != null) {
       return specializationName(
         widget.title,
-        context.isStateArabic,
+        isArabic: context.isStateArabic,
       );
     }
     return null;

@@ -98,7 +98,7 @@ class DioConsumer implements ApiConsumer {
       return left(ServerFailure(e.toString()));
     } on FormatException catch (e) {
       return left(ServerFailure(e.toString()));
-    } catch (e) {
+    } on Exception catch (e) {
       return left(ServerFailure(e.toString()));
     }
   }

@@ -107,7 +107,7 @@ class FavoriteDoctorsScreen extends StatelessWidget {
                       subtitle: AutoSizeText(
                         specializationName(
                           doctor.specialization ?? '',
-                          context.isStateArabic,
+                          isArabic: context.isStateArabic,
                         ),
                         maxLines: 1,
                         textAlign: TextAlign.start,

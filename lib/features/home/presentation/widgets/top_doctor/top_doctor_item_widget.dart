@@ -10,7 +10,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/details_doctor_screen.dart';
@@ -77,7 +77,7 @@ class TopDoctorItemWidget extends StatelessWidget {
             child: AutoSizeText(
               specializationName(
                 doctorsList.specialization ?? '',
-                context.isStateArabic,
+                isArabic: context.isStateArabic,
               ),
               maxLines: 1,
               textAlign: TextAlign.start,

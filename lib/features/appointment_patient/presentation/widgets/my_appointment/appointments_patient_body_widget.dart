@@ -92,6 +92,7 @@ class _AppointmentsPatientBodyWidgetState
         }
 
         if (state is GetMyAppointmentPatientFailure) {
+          if (!context.mounted) return;
           showMessage(
             context,
             type: ToastificationType.error,

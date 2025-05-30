@@ -383,7 +383,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                         specializationsList.firstWhere(
                           (element) => element['id'] == selectedSpecialization,
                         )['name'] as String,
-                        context.isStateArabic,
+                        isArabic: context.isStateArabic,
                       ),
                       style: TextStyleApp.regular16().copyWith(
                         color: context.onPrimaryColor,
@@ -396,7 +396,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       child: Text(
                         specializationName(
                           spec['name'] as String,
-                          context.isStateArabic,
+                          isArabic: context.isStateArabic,
                         ),
                         style: TextStyleApp.regular16().copyWith(
                           color: context.onPrimaryColor,

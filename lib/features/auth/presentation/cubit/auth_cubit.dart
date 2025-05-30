@@ -53,7 +53,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(RegisterLoading());
 
     final result = await _registerUsecase.call(registerRequest);
-    final isArabic = context.isStateArabic;
+    final isArabic = context.mounted && context.isStateArabic;
     String displayedMessage;
 
     result.fold(
@@ -91,7 +91,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LoginLoading());
     await Future.delayed(const Duration(seconds: 2));
     final result = await _loginUsecase.call(loginRequest);
-    final isArabic = context.isStateArabic;
+    final isArabic = context.mounted && context.isStateArabic;
     String displayedMessage;
 
     result.fold(
@@ -139,7 +139,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LogoutLoading());
 
     final result = await _logoutUsecase.call('');
-    final isArabic = context.isStateArabic;
+    final isArabic = context.mounted && context.isStateArabic;
     String displayedMessage;
     result.fold(
       (errorMessage) {
@@ -170,7 +170,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ChangePasswordLoading());
 
     final result = await _changePasswordUsecase.call(changePasswordRequest);
-    final isArabic = context.isStateArabic;
+    final isArabic = context.mounted && context.isStateArabic;
     String displayedMessage;
 
     result.fold(
@@ -223,7 +223,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(EditProfileLoading());
 
     final result = await _editProfileUsecase.call(profileRequest);
-    final isArabic = context.isStateArabic;
+    final isArabic = context.mounted && context.isStateArabic;
     String displayedMessage;
     result.fold(
       (errorMessage) {
@@ -260,7 +260,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     final result = await _contactUsUsecase.call(contactUsRequest);
 
-    final isArabic = context.isStateArabic;
+    final isArabic = context.mounted && context.isStateArabic;
     String displayedMessage;
     result.fold(
       (errorMessage) {

@@ -1,9 +1,9 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
-import 'package:bloc/bloc.dart';
 import 'package:curai_app_mobile/features/reviews/data/models/add_review/add_review_request.dart';
 import 'package:curai_app_mobile/features/reviews/domain/usecases/add_reviews_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'reviews_state.dart';
 

@@ -7,7 +7,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/working_time_details_doctor/build_working_time_details_doctor_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +104,7 @@ class MedicalDegreeWidget extends StatelessWidget {
         AutoSizeText(
           ' ${specializationName(
             doctorResults.specialization ?? '',
-            context.isStateArabic,
+            isArabic: context.isStateArabic,
           )} ',
           maxLines: 1,
           textAlign: TextAlign.start,

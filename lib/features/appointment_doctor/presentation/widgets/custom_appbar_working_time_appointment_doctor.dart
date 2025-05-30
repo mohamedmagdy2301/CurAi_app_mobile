@@ -1,4 +1,5 @@
-// ignore_for_file: use_if_null_to_convert_nulls_to_bools, use_build_context_synchronously
+// ignore_for_file: use_if_null_to_convert_nulls_to_bools,
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';

@@ -1,8 +1,8 @@
-import 'package:curai_app_mobile/core/language/localization_cubit/localization_cubit.dart';
-import 'package:curai_app_mobile/core/language/localization_cubit/localization_state.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/language/localization_cubit/localization_cubit.dart';
+import 'package:curai_app_mobile/core/language/localization_cubit/localization_state.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/build_radio_listtile.dart';
 import 'package:flutter/material.dart';

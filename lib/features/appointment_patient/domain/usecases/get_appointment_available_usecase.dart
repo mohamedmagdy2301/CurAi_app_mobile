@@ -11,7 +11,8 @@ class GetAppointmentPatientAvailableUsecase
 
   @override
   Future<Either<String, AppointmentPatientAvailableModel>> call(
-      int doctorId) async {
+    int doctorId,
+  ) async {
     return repository.getAppointmentPatientAvailable(doctorId: doctorId);
   }
 }

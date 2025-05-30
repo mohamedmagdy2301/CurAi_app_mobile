@@ -375,7 +375,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                       child: Text(
                         specializationName(
                           spec['name'] as String,
-                          context.isStateArabic,
+                          isArabic: context.isStateArabic,
                         ),
                         style: TextStyleApp.regular14().copyWith(
                           color: context.onPrimaryColor,
@@ -391,7 +391,7 @@ class _CompleteProfileFormWidgetState extends State<CompleteProfileFormWidget> {
                     specializationsList.firstWhere(
                       (element) => element['id'] == newValue,
                     )['name'] as String,
-                    context.isStateArabic,
+                    isArabic: context.isStateArabic,
                   );
                   _specializationErrorText = null;
                 });

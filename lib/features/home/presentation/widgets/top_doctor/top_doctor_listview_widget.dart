@@ -5,7 +5,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/top_doctor/top_doctor_item_widget.dart';

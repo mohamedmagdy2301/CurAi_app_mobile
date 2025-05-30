@@ -114,7 +114,9 @@ class _BioFormWidgetState extends State<BioFormWidget> {
 
   // Get degrees list based on language
   List<String> getDegrees() {
-    return DegreeConstants.getDegreesByLanguage(context.isStateArabic);
+    return DegreeConstants.getDegreesByLanguage(
+      isArabic: context.isStateArabic,
+    );
   }
 
   void updateBio() {
@@ -157,6 +159,7 @@ class _BioFormWidgetState extends State<BioFormWidget> {
         });
       }
     } on Exception catch (_) {
+      if (!mounted) return;
       showMessage(
         context,
         type: ToastificationType.error,

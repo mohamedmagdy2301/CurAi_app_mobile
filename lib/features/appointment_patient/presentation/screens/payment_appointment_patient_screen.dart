@@ -14,7 +14,7 @@ import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/payment/paymob_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/payment_appointment/custom_appbar_payment_appointment.dart';
@@ -55,6 +55,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
         });
 
         PaymobManager.getCreditCardPaymentKey(price).then((paymentKey) {
+          if (!mounted) return;
           context.pushNamed(
             Routes.paymentGatewayScreen,
             arguments: {

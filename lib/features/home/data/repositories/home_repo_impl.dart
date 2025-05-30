@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctors_model.dart';
 import 'package:curai_app_mobile/features/home/data/datasources/home_remote_data_source.dart';
 import 'package:curai_app_mobile/features/home/data/models/specializations_model/specializations_model.dart';
 import 'package:curai_app_mobile/features/home/domain/repositories/home_repo.dart';

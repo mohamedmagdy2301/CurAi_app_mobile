@@ -2,6 +2,8 @@ analyzer:
   errors:
     no_default_cases: ignore
     inference_failure_on_untyped_parameter: ignore   
+    document_ignores: ignore
+    lines_longer_than_80_chars: ignore
 include: package:very_good_analysis/analysis_options.yaml
 linter:
   rules:

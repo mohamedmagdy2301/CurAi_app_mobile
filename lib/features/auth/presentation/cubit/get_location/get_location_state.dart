@@ -8,15 +8,13 @@ class GetLocationInitial extends GetLocationState {}
 class GetLocationLoading extends GetLocationState {}
 
 class GetLocationSuccess extends GetLocationState {
+  GetLocationSuccess(this.location, this.locationInfo, this.markers);
   final LatLng location;
   final String locationInfo;
   final List<Marker> markers;
-
-  GetLocationSuccess(this.location, this.locationInfo, this.markers);
 }
 
 class GetLocationError extends GetLocationState {
-  final String error;
-
   GetLocationError(this.error);
+  final String error;
 }

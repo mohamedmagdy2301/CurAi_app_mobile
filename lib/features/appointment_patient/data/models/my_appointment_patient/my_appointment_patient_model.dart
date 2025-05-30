@@ -12,11 +12,11 @@ class MyAppointmentPatientModel {
     previous = json['previous'] as String? ?? '';
     if (json['results'] != null) {
       results = <ResultsMyAppointmentPatient>[];
-      json['results'].forEach((v) {
+      for (final v in (json['results'] as List)) {
         results!.add(
           ResultsMyAppointmentPatient.fromJson(v as Map<String, dynamic>),
         );
-      });
+      }
     }
   }
 

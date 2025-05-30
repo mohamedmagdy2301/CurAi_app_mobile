@@ -1,5 +1,5 @@
-import 'package:curai_app_mobile/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:flutter/material.dart';
 
 class ImageOnboarding extends StatelessWidget {
