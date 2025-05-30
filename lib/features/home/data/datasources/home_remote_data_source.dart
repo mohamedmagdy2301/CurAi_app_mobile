@@ -4,11 +4,7 @@ import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class HomeRemoteDataSource {
-  Future<Either<Failure, Map<String, dynamic>>> getAllDoctor(
-    int page, {
-    String? query,
-    String? speciality,
-  });
+  Future<Either<Failure, Map<String, dynamic>>> getPopularDoctor();
   Future<Either<Failure, dynamic>> getTopDoctor();
   Future<Either<Failure, Map<String, dynamic>>> getDoctorById({
     int? id,
@@ -21,19 +17,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   final DioConsumer dioConsumer;
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getAllDoctor(
-    int page, {
-    String? query,
-    String? speciality,
-  }) async {
-    final response = await dioConsumer.get(
-      EndPoints.getAllDoctor,
-      queryParameters: {
-        'page': page,
-        'search': query,
-        'specialization': speciality,
-      },
-    );
+  Future<Either<Failure, Map<String, dynamic>>> getPopularDoctor() async {
+    final response = await dioConsumer.get(EndPoints.getAllDoctor);
 
     return response.fold(
       left,

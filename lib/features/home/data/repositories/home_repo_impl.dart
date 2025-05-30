@@ -12,16 +12,8 @@ class HomeRepoImpl extends HomeRepo {
   final HomeRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<String, DoctorsModel>> getAllDoctor({
-    int page = 1,
-    String? query,
-    String? speciality,
-  }) async {
-    final response = await remoteDataSource.getAllDoctor(
-      page,
-      query: query,
-      speciality: speciality,
-    );
+  Future<Either<String, List<DoctorInfoModel>>> getPopularDoctor() async {
+    final response = await remoteDataSource.getPopularDoctor();
     return response.fold(
       (failure) {
         return left(failure.message);
@@ -29,7 +21,7 @@ class HomeRepoImpl extends HomeRepo {
       (responseData) {
         try {
           final allDoctorModel = DoctorsModel.fromJson(responseData);
-          return right(allDoctorModel);
+          return right(allDoctorModel.results ?? []);
         } on Exception catch (e) {
           return left('Error parsing response: $e');
         }

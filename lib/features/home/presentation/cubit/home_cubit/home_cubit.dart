@@ -2,8 +2,8 @@
 import 'dart:async';
 
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
-import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
+import 'package:curai_app_mobile/features/home/domain/usecases/get_popular_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_specializations_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_top_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_state.dart';
@@ -17,17 +17,16 @@ class HomeCubit extends Cubit<HomeState> {
     this._getTopDoctorUsecase,
   ) : super(HomeInitial());
 
-  final GetAllDoctorUsecase _getPopularDoctorUsecase;
+  final GetPopularDoctorUsecase _getPopularDoctorUsecase;
   final GetTopDoctorUsecase _getTopDoctorUsecase;
   final GetDoctorByIdUsecase _getDoctorByIdUsecase;
   final GetSpecializationsUsecase _getSpecializationsUsecase;
 
-  // Get popular doctors with optional filtering and pagination
   Future<void> getPopularDoctor() async {
     if (isClosed) return;
     emit(GetPopularDoctorLoading());
 
-    final result = await _getPopularDoctorUsecase.call(2, '', '');
+    final result = await _getPopularDoctorUsecase.call();
 
     if (isClosed) return;
 
@@ -40,14 +39,13 @@ class HomeCubit extends Cubit<HomeState> {
         if (isClosed) return;
         emit(
           GetPopularDoctorSuccess(
-            doctorResults: _filterValidDoctors(data.results ?? []),
+            doctorResults: _filterValidDoctors(data),
           ),
         );
       },
     );
   }
 
-  // Get top doctors with optional filtering and pagination
   Future<void> getTopDoctor() async {
     if (isClosed) return;
     emit(GetTopDoctorLoading());
@@ -84,7 +82,6 @@ class HomeCubit extends Cubit<HomeState> {
         .toList();
   }
 
-  // Get specializations
   Future<void> getSpecializations() async {
     emit(GetSpecializationsLoading());
 
@@ -107,7 +104,6 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  // Get doctor by id
   Future<void> getDoctorById({required int id}) async {
     emit(GetDoctorByIdLoading());
 
