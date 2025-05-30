@@ -2,25 +2,35 @@ import 'dart:developer';
 
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctors_model.dart';
+import 'package:curai_app_mobile/features/home/data/datasources/home_local_data_source.dart';
 import 'package:curai_app_mobile/features/home/data/datasources/home_remote_data_source.dart';
 import 'package:curai_app_mobile/features/home/data/models/specializations_model/specializations_model.dart';
 import 'package:curai_app_mobile/features/home/domain/repositories/home_repo.dart';
 import 'package:dartz/dartz.dart';
 
 class HomeRepoImpl extends HomeRepo {
-  HomeRepoImpl({required this.remoteDataSource});
+  HomeRepoImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
   final HomeRemoteDataSource remoteDataSource;
+  final HomeLocalDataSource localDataSource;
 
   @override
   Future<Either<String, List<DoctorInfoModel>>> getPopularDoctor() async {
     final response = await remoteDataSource.getPopularDoctor();
     return response.fold(
       (failure) {
+        final cachedDoctors = localDataSource.getCachedPopularDoctors();
+        if (cachedDoctors.isNotEmpty) {
+          return right(cachedDoctors);
+        }
         return left(failure.message);
       },
       (responseData) {
         try {
           final allDoctorModel = DoctorsModel.fromJson(responseData);
+          localDataSource.cachePopularDoctors(allDoctorModel.results ?? []);
           return right(allDoctorModel.results ?? []);
         } on Exception catch (e) {
           return left('Error parsing response: $e');
