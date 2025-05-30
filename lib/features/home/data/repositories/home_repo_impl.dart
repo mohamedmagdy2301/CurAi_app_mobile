@@ -20,8 +20,6 @@ class HomeRepoImpl extends HomeRepo {
     final cachedDoctors = localDataSource.getCachedPopularDoctors();
 
     if (cachedDoctors.isNotEmpty) {
-      log('------------------------------');
-      log('Returning cached popular doctors');
       return right(cachedDoctors);
     }
 
@@ -32,8 +30,6 @@ class HomeRepoImpl extends HomeRepo {
       (responseData) {
         try {
           final doctors = DoctorsModel.fromJson(responseData).results ?? [];
-          log('------------------------------');
-          log('Returning remote popular doctors');
           localDataSource.cachePopularDoctors(doctors);
           return right(doctors);
         } on Exception catch (e) {
@@ -48,8 +44,6 @@ class HomeRepoImpl extends HomeRepo {
     final cachedDoctors = localDataSource.getCachedTopDoctors();
 
     if (cachedDoctors.isNotEmpty) {
-      log('------------------------------');
-      log('Returning cached top doctors');
       return right(cachedDoctors);
     }
 
@@ -60,9 +54,6 @@ class HomeRepoImpl extends HomeRepo {
       (responseData) {
         try {
           final doctors = DoctorsModel.fromJson(responseData).results ?? [];
-
-          log('------------------------------');
-          log('Returning remote top doctors');
           localDataSource.cacheTopDoctors(doctors);
           return right(doctors);
         } on Exception catch (e) {
@@ -78,8 +69,6 @@ class HomeRepoImpl extends HomeRepo {
     final cachedSpecializations = localDataSource.getCachedSpecializations();
 
     if (cachedSpecializations.isNotEmpty) {
-      log('------------------------------');
-      log('Returning cached specializations');
       return right(cachedSpecializations);
     }
 
@@ -99,8 +88,6 @@ class HomeRepoImpl extends HomeRepo {
             ),
           );
         }
-        log('------------------------------');
-        log('Returning remote specializations');
         localDataSource.cacheSpecializations(specializationsList);
         return right(specializationsList);
       },

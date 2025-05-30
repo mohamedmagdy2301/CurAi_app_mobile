@@ -27,9 +27,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
       final box = await Hive.openBox<DoctorInfoModel>(popularDoctorsBox);
       await box.clear();
       await box.addAll(doctors);
-    } on Exception catch (e) {
-      throw Exception('Failed to cache popular doctors: $e');
-    }
+    } on Exception catch (_) {}
   }
 
   @override
@@ -50,9 +48,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
     try {
       final box = await Hive.openBox<DoctorInfoModel>(popularDoctorsBox);
       await box.clear();
-    } on Exception catch (e) {
-      throw Exception('Failed to clear popular doctors cache: $e');
-    }
+    } on Exception catch (_) {}
   }
 
   @override
@@ -61,9 +57,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
       final box = await Hive.openBox<DoctorInfoModel>(topDoctorsBoxName);
       await box.clear();
       await box.addAll(doctors);
-    } catch (e) {
-      throw Exception('Failed to cache top doctors: $e');
-    }
+    } on Exception catch (_) {}
   }
 
   @override
@@ -84,9 +78,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
     try {
       final box = await Hive.openBox<DoctorInfoModel>(topDoctorsBoxName);
       await box.clear();
-    } catch (e) {
-      throw Exception('Failed to clear top doctors cache: $e');
-    }
+    } on Exception catch (_) {}
   }
 
   @override
@@ -97,9 +89,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
       final box = await Hive.openBox<SpecializationsModel>(specializationsBox);
       await box.clear();
       await box.addAll(specializations);
-    } on Exception catch (e) {
-      throw Exception('Failed to cache specializations: $e');
-    }
+    } on Exception catch (_) {}
   }
 
   @override
@@ -120,9 +110,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
     try {
       final box = await Hive.openBox<SpecializationsModel>(specializationsBox);
       await box.clear();
-    } catch (e) {
-      throw Exception('Failed to clear specializations cache: $e');
-    }
+    } on Exception catch (_) {}
   }
 
   Future<void> dispose() async {
