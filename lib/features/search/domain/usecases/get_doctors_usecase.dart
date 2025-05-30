@@ -1,18 +1,18 @@
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/domain/repositories/home_repo.dart';
+import 'package:curai_app_mobile/features/search/domain/repositories/search_repo.dart';
 import 'package:dartz/dartz.dart';
 
-class GetAllDoctorUsecase {
-  GetAllDoctorUsecase({required this.repository});
+class GetDoctorsUsecase {
+  GetDoctorsUsecase({required this.repository});
 
-  final HomeRepo repository;
+  final SearchRepo repository;
 
   Future<Either<String, DoctorsModel>> call(
     int params,
     String? query,
     String? speciality,
   ) async {
-    return repository.getAllDoctor(
+    return repository.getDoctors(
       page: params,
       query: query,
       speciality: speciality,

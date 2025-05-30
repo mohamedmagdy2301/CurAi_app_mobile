@@ -1,7 +1,7 @@
 // home_cubit.dart
 import 'dart:async';
 
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_specializations_usecase.dart';
@@ -72,7 +72,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  List<DoctorResults> _filterValidDoctors(List<DoctorResults> doctors) {
+  List<DoctorInfoModel> _filterValidDoctors(List<DoctorInfoModel> doctors) {
     return doctors
         .where(
           (doctor) =>

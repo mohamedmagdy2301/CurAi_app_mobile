@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/usecases/usecase.dart';
+import 'package:curai_app_mobile/core/utils/usecases/usecase.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/login/login_request.dart';
 import 'package:curai_app_mobile/features/auth/domain/repositories/auth_repo.dart';

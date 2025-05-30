@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/usecases/usecase.dart';
+import 'package:curai_app_mobile/core/utils/usecases/usecase.dart';
 import 'package:curai_app_mobile/features/reviews/data/models/add_review/add_review_request.dart';
 import 'package:curai_app_mobile/features/reviews/domain/repositories/reviews_repo.dart';
 import 'package:dartz/dartz.dart';

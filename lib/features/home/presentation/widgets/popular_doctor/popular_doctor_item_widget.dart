@@ -8,9 +8,9 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/favorite_doctor.dart';
+import 'package:curai_app_mobile/features/home/data/models/favorite_doctor_model/favorite_doctor.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/details_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/image_doctor_widget.dart';
@@ -27,7 +27,7 @@ class DoctorItemWidget extends StatefulWidget {
     super.key,
     this.isLoading,
   });
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
   final bool? isLoading;
 
   @override
@@ -141,7 +141,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
             ),
             onPressed: () {
               final doctorHive =
-                  FavoriteDoctor.fromDoctorResults(widget.doctorResults);
+                  FavoriteDoctor.fromDoctorInfoModel(widget.doctorResults);
               favoriteCubit.toggleFavorite(doctorHive);
             },
           ),

@@ -1,9 +1,9 @@
 // home_cubit.dart
 import 'dart:async';
 
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/domain/usecases/get_all_doctor_usecase.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_state.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/features/search/domain/usecases/get_doctors_usecase.dart';
+import 'package:curai_app_mobile/features/search/presentation/cubit/search_doctor_cubit/search_doctor_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum SortType {
@@ -18,13 +18,13 @@ enum SortType {
 
 class SearchDoctorCubit extends Cubit<SearchDoctorState> {
   SearchDoctorCubit(
-    this._getAllDoctorUsecase,
+    this._getDoctorsUsecase,
   ) : super(SearchDoctorInitial());
 
-  final GetAllDoctorUsecase _getAllDoctorUsecase;
+  final GetDoctorsUsecase _getDoctorsUsecase;
 
   // Doctors list and filtering
-  List<DoctorResults> allDoctorsList = [];
+  List<DoctorInfoModel> allDoctorsList = [];
   String currentQuery = '';
   String? currentSpeciality;
   int lastPage = 1;
@@ -62,7 +62,7 @@ class SearchDoctorCubit extends Cubit<SearchDoctorState> {
       emit(GetAllDoctorPagenationLoading());
     }
 
-    final result = await _getAllDoctorUsecase.call(
+    final result = await _getDoctorsUsecase.call(
       page,
       query ?? currentQuery,
       speciality ?? currentSpeciality,
@@ -115,7 +115,7 @@ class SearchDoctorCubit extends Cubit<SearchDoctorState> {
     );
   }
 
-  List<DoctorResults> _filterValidDoctors(List<DoctorResults> doctors) {
+  List<DoctorInfoModel> _filterValidDoctors(List<DoctorInfoModel> doctors) {
     return doctors
         .where(
           (doctor) =>
@@ -145,7 +145,7 @@ class SearchDoctorCubit extends Cubit<SearchDoctorState> {
     if (allDoctorsList.isEmpty) return;
 
     // Create a copy of the list to avoid direct mutation
-    final sortedList = List<DoctorResults>.from(allDoctorsList);
+    final sortedList = List<DoctorInfoModel>.from(allDoctorsList);
 
     switch (sortType) {
       case SortType.firstName:

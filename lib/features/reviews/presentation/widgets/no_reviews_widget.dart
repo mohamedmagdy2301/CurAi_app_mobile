@@ -28,7 +28,9 @@ class NoReviewsWidget extends StatelessWidget {
         SizedBox(
           width: context.W * 0.8,
           child: AutoSizeText(
-            context.isStateArabic ? 'لا توجد تقييمات بعد' : 'No Reviews Yet',
+            context.isStateArabic
+                ? 'لا توجد تقييمات بعد'
+                : 'No DoctorReviews Yet',
             maxLines: 1,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,

@@ -7,8 +7,8 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/favorite_doctor.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/features/home/data/models/favorite_doctor_model/favorite_doctor.dart';
 import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class CustomAppBarDetailsDoctor extends StatelessWidget
     super.key,
   });
 
-  final DoctorResults doctor;
+  final DoctorInfoModel doctor;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class CustomAppBarDetailsDoctor extends StatelessWidget
             color: isFav ? Colors.red : context.onSecondaryColor,
           ),
           onPressed: () {
-            final doctorHive = FavoriteDoctor.fromDoctorResults(doctor);
+            final doctorHive = FavoriteDoctor.fromDoctorInfoModel(doctor);
             favoriteCubit.toggleFavorite(doctorHive);
           },
         ),

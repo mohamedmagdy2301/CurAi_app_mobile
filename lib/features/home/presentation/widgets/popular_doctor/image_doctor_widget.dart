@@ -1,8 +1,8 @@
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,7 +13,7 @@ class ImageDoctorWidget extends StatelessWidget {
     this.isLoading,
   });
 
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
   final bool? isLoading;
 
   @override

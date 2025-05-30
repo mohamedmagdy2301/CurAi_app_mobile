@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:hive/hive.dart';
 
 part 'favorite_doctor.g.dart';
@@ -15,8 +15,8 @@ class FavoriteDoctor extends HiveObject {
     this.lastName,
   });
 
-  // تحويل من DoctorResults إلى FavoriteDoctor
-  factory FavoriteDoctor.fromDoctorResults(DoctorResults doctor) {
+  // تحويل من DoctorInfoModel إلى FavoriteDoctor
+  factory FavoriteDoctor.fromDoctorInfoModel(DoctorInfoModel doctor) {
     return FavoriteDoctor(
       id: doctor.id!,
       username: doctor.username,
@@ -48,8 +48,8 @@ class FavoriteDoctor extends HiveObject {
   @HiveField(4)
   String? consultationPrice;
 
-  DoctorResults toDoctorResults() {
-    return DoctorResults(
+  DoctorInfoModel toDoctorInfoModel() {
+    return DoctorInfoModel(
       id: id,
       username: username,
       firstName: firstName,

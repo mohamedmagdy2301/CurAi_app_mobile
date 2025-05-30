@@ -5,17 +5,17 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/bottom_sheet_sort_doctors.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_state.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/all_doctor_empty_widget.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/all_doctor_listview_widget.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/custom_appbar_all_doctor.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/all_doctor/custom_search_bar.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/popular_doctor_item_widget.dart';
+import 'package:curai_app_mobile/features/search/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
+import 'package:curai_app_mobile/features/search/presentation/cubit/search_doctor_cubit/search_doctor_state.dart';
+import 'package:curai_app_mobile/features/search/presentation/widgets/all_doctor_empty_widget.dart';
+import 'package:curai_app_mobile/features/search/presentation/widgets/all_doctor_listview_widget.dart';
+import 'package:curai_app_mobile/features/search/presentation/widgets/custom_appbar_all_doctor.dart';
+import 'package:curai_app_mobile/features/search/presentation/widgets/custom_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,15 +23,15 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:toastification/toastification.dart';
 
-class AllDoctorScreen extends StatefulWidget {
-  const AllDoctorScreen({this.specialityName, super.key});
+class SearchDoctorScreen extends StatefulWidget {
+  const SearchDoctorScreen({this.specialityName, super.key});
   final String? specialityName;
 
   @override
-  State<AllDoctorScreen> createState() => _AllDoctorScreenState();
+  State<SearchDoctorScreen> createState() => _SearchDoctorScreenState();
 }
 
-class _AllDoctorScreenState extends State<AllDoctorScreen> {
+class _SearchDoctorScreenState extends State<SearchDoctorScreen> {
   final TextEditingController searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final RefreshController _refreshController = RefreshController();

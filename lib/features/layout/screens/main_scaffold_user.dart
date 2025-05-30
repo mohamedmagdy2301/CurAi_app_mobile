@@ -11,12 +11,12 @@ import 'package:curai_app_mobile/features/appointment_doctor/presentation/screen
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_cubit.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
-import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:curai_app_mobile/features/layout/cubit/navigation_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/profile_screen.dart';
+import 'package:curai_app_mobile/features/search/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
+import 'package:curai_app_mobile/features/search/presentation/screens/search_doctor_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -99,7 +99,7 @@ class MainScaffoldUser extends StatelessWidget {
       ),
       BlocProvider<SearchDoctorCubit>(
         create: (context) => di.sl<SearchDoctorCubit>(),
-        child: const AllDoctorScreen(),
+        child: const SearchDoctorScreen(),
       ),
       const ChatbotScreen(),
       if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),

@@ -1,9 +1,9 @@
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/favorite_doctor.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/features/home/data/models/favorite_doctor_model/favorite_doctor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
-class FavoritesCubit extends Cubit<List<DoctorResults>> {
+class FavoritesCubit extends Cubit<List<DoctorInfoModel>> {
   FavoritesCubit({required this.userId}) : super([]) {
     _init();
   }
@@ -19,7 +19,7 @@ class FavoritesCubit extends Cubit<List<DoctorResults>> {
   }
 
   void loadFavorites() {
-    final favorites = _box.values.map((e) => e.toDoctorResults()).toList();
+    final favorites = _box.values.map((e) => e.toDoctorInfoModel()).toList();
     emit(favorites);
   }
 

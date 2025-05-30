@@ -1,18 +1,18 @@
-class AllDoctorModel {
-  AllDoctorModel({
+class DoctorsModel {
+  DoctorsModel({
     this.count,
     this.next,
     this.previous,
     this.results,
   });
 
-  factory AllDoctorModel.fromJson(Map<String, dynamic> json) {
-    return AllDoctorModel(
+  factory DoctorsModel.fromJson(Map<String, dynamic> json) {
+    return DoctorsModel(
       count: json['count'] as int?,
       next: json['next'] as String?,
       previous: json['previous'] as String? ?? '',
       results: (json['results'] as List<dynamic>?)
-          ?.map((e) => DoctorResults.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DoctorInfoModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }
@@ -20,11 +20,11 @@ class AllDoctorModel {
   int? count;
   String? next;
   String? previous;
-  List<DoctorResults>? results;
+  List<DoctorInfoModel>? results;
 }
 
-class DoctorResults {
-  DoctorResults({
+class DoctorInfoModel {
+  DoctorInfoModel({
     this.id,
     this.profilePicture,
     this.username,
@@ -42,8 +42,8 @@ class DoctorResults {
     this.totalReviews,
   });
 
-  factory DoctorResults.fromJson(Map<String, dynamic> json) {
-    return DoctorResults(
+  factory DoctorInfoModel.fromJson(Map<String, dynamic> json) {
+    return DoctorInfoModel(
       id: json['id'] as int?,
       profilePicture: json['profile_picture'] as String?,
       username: json['username'] as String?,
@@ -59,7 +59,7 @@ class DoctorResults {
       avgRating: (json['avg_rating'] as num?)?.toDouble(),
       totalReviews: json['total_reviews'] as int?,
       reviews: (json['reviews'] as List<dynamic>?)
-          ?.map((e) => Reviews.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DoctorReviews.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }
@@ -71,7 +71,7 @@ class DoctorResults {
   String? specialization;
   String? consultationPrice;
   String? location;
-  List<Reviews>? reviews;
+  List<DoctorReviews>? reviews;
   String? firstName;
   String? lastName;
   String? bio;
@@ -81,8 +81,8 @@ class DoctorResults {
   int? totalReviews;
 }
 
-class Reviews {
-  Reviews({
+class DoctorReviews {
+  DoctorReviews({
     this.id,
     this.patientUsername,
     this.rating,
@@ -93,8 +93,8 @@ class Reviews {
     this.lastName,
   });
 
-  factory Reviews.fromJson(Map<String, dynamic> json) {
-    return Reviews(
+  factory DoctorReviews.fromJson(Map<String, dynamic> json) {
+    return DoctorReviews(
       id: json['id'] as int?,
       patientUsername: json['patient_username'] as String?,
       rating: json['rating'] as int?,
@@ -116,9 +116,9 @@ class Reviews {
   String? lastName;
 }
 
-List<DoctorResults> doctorsListDome = List.generate(
+List<DoctorInfoModel> doctorsListDome = List.generate(
   5,
-  (index) => DoctorResults(
+  (index) => DoctorInfoModel(
     id: index,
     username: 'user name mkkm',
     profilePicture:
@@ -129,7 +129,7 @@ List<DoctorResults> doctorsListDome = List.generate(
     specialization: 'sdnaj sadkldbn ',
     reviews: List.generate(
       5,
-      (index) => Reviews(
+      (index) => DoctorReviews(
         id: index,
         rating: index,
       ),

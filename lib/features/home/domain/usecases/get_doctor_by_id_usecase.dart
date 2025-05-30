@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/domain/repositories/home_repo.dart';
 import 'package:dartz/dartz.dart';
 
@@ -7,7 +7,7 @@ class GetDoctorByIdUsecase {
 
   final HomeRepo repository;
 
-  Future<Either<String, DoctorResults>> call(int? id) async {
+  Future<Either<String, DoctorInfoModel>> call(int? id) async {
     return repository.getDoctorById(id: id);
   }
 }

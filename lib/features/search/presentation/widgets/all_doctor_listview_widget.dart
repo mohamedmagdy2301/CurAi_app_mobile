@@ -1,9 +1,9 @@
 // ignore_for_file: parameter_assignments, use_build_context_synchronously
 
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/popular_doctor_item_widget.dart';
+import 'package:curai_app_mobile/features/search/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -15,7 +15,7 @@ class AllDoctorListviewWidget extends StatelessWidget {
     super.key,
   });
 
-  final List<DoctorResults> doctorsList;
+  final List<DoctorInfoModel> doctorsList;
   final SearchDoctorCubit cubit;
 
   @override

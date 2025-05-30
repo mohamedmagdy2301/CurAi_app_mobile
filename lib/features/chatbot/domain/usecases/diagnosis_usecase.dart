@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/usecases/usecase.dart';
+import 'package:curai_app_mobile/core/utils/usecases/usecase.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_model.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/diagnosis_model/diagnosis_request.dart';
 import 'package:curai_app_mobile/features/chatbot/domain/repositories/chatbot_repo.dart';

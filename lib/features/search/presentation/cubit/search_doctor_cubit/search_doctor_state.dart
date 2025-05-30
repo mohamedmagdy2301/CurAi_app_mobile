@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SearchDoctorState extends Equatable {
@@ -33,7 +33,7 @@ class GetAllDoctorPagenationFailure extends SearchDoctorState {
 
 class GetAllDoctorSuccess extends SearchDoctorState {
   const GetAllDoctorSuccess({required this.doctorResults});
-  final List<DoctorResults> doctorResults;
+  final List<DoctorInfoModel> doctorResults;
 
   @override
   List<Object?> get props => [doctorResults];

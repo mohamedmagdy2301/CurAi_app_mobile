@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/core/usecases/usecase.dart';
+import 'package:curai_app_mobile/core/utils/usecases/usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/repositories/appointment_repo.dart';
 import 'package:dartz/dartz.dart';
 

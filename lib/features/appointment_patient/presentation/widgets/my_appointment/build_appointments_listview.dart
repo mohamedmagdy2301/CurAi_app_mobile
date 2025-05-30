@@ -11,6 +11,7 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/local_notification/local_notification_manager.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
@@ -21,7 +22,6 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/appointment_patient_card_widget.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/build_appointments_patient_empty_listview.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/my_appointment_patient_loading_card.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -174,7 +174,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
 
   CustomButton _buildRescheduleButton(
     BuildContext context,
-    DoctorResults doctorResults,
+    DoctorInfoModel doctorResults,
     ResultsMyAppointmentPatient appointment,
   ) {
     return CustomButton(
@@ -224,7 +224,7 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
 
   CustomButton _buildPaymentBookButton(
     BuildContext context,
-    DoctorResults doctorResults,
+    DoctorInfoModel doctorResults,
     ResultsMyAppointmentPatient appointment,
   ) {
     return CustomButton(

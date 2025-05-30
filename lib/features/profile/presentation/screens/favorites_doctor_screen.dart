@@ -7,7 +7,7 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/favorite_doctor.dart';
+import 'package:curai_app_mobile/features/home/data/models/favorite_doctor_model/favorite_doctor.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/favorites_cubit/favorites_cubit.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/favorites_doctor/custom_appbar_favorites.dart';
@@ -65,7 +65,8 @@ class FavoriteDoctorsScreen extends StatelessWidget {
                     ),
                   ),
                   onDismissed: (direction) async {
-                    final doctorHive = FavoriteDoctor.fromDoctorResults(doctor);
+                    final doctorHive =
+                        FavoriteDoctor.fromDoctorInfoModel(doctor);
                     await context
                         .read<FavoritesCubit>()
                         .toggleFavorite(doctorHive);

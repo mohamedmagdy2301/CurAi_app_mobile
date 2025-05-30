@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/my_appointment_patient/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
@@ -8,7 +9,6 @@ import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/pa
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/reschedule_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/schedule_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/domain/usecases/get_doctor_by_id_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,7 +35,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   List<MergedDateAvailabilityForPatient> dates = [];
   List<ResultsMyAppointmentPatient> pendingAppointments = [];
   List<ResultsMyAppointmentPatient> paidAppointments = [];
-  Map<int, DoctorResults> doctorsData = {};
+  Map<int, DoctorInfoModel> doctorsData = {};
   AppointmentPatientAvailableModel? appointmentAvailableModel;
 
   int _currentPage = 1;

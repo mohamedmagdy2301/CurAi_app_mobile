@@ -6,7 +6,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/doctor_maps_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +17,7 @@ class LocationTap extends StatelessWidget {
     super.key,
   });
 
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class LocationWidget extends StatelessWidget {
     super.key,
   });
 
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
 
   @override
   Widget build(BuildContext context) {

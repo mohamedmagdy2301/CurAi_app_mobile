@@ -1,7 +1,7 @@
 import 'dart:developer';
 
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/data/datasources/home_remote_data_source.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/data/models/specializations_model/specializations_model.dart';
 import 'package:curai_app_mobile/features/home/domain/repositories/home_repo.dart';
 import 'package:dartz/dartz.dart';
@@ -11,7 +11,7 @@ class HomeRepoImpl extends HomeRepo {
   final HomeRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<String, AllDoctorModel>> getAllDoctor({
+  Future<Either<String, DoctorsModel>> getAllDoctor({
     int page = 1,
     String? query,
     String? speciality,
@@ -27,7 +27,7 @@ class HomeRepoImpl extends HomeRepo {
       },
       (responseData) {
         try {
-          final allDoctorModel = AllDoctorModel.fromJson(responseData);
+          final allDoctorModel = DoctorsModel.fromJson(responseData);
           return right(allDoctorModel);
         } on Exception catch (e) {
           return left('Error parsing response: $e');
@@ -60,7 +60,7 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Future<Either<String, DoctorResults>> getDoctorById({int? id}) async {
+  Future<Either<String, DoctorInfoModel>> getDoctorById({int? id}) async {
     final response = await remoteDataSource.getDoctorById(id: id);
     return response.fold(
       (failure) {
@@ -68,7 +68,7 @@ class HomeRepoImpl extends HomeRepo {
       },
       (responseData) {
         try {
-          final allDoctorModel = DoctorResults.fromJson(responseData);
+          final allDoctorModel = DoctorInfoModel.fromJson(responseData);
           return right(allDoctorModel);
         } on Exception catch (e) {
           return left('Error parsing response: $e');
@@ -78,7 +78,7 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Future<Either<String, List<DoctorResults>>> getTopDoctor() async {
+  Future<Either<String, List<DoctorInfoModel>>> getTopDoctor() async {
     final response = await remoteDataSource.getTopDoctor();
     return response.fold(
       (failure) {
@@ -87,7 +87,7 @@ class HomeRepoImpl extends HomeRepo {
       (responseData) {
         try {
           final topDoctorModel = (responseData as List)
-              .map((e) => DoctorResults.fromJson(e as Map<String, dynamic>))
+              .map((e) => DoctorInfoModel.fromJson(e as Map<String, dynamic>))
               .toList();
 
           return right(topDoctorModel);

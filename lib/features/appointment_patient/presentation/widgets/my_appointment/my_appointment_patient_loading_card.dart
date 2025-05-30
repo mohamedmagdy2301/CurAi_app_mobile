@@ -10,9 +10,9 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -152,8 +152,8 @@ class MyAppointmentPatientCardLoading extends StatelessWidget {
     ).paddingSymmetric(horizontal: 15);
   }
 
-  DoctorResults doctorResults(BuildContext context) {
-    return DoctorResults(
+  DoctorInfoModel doctorResults(BuildContext context) {
+    return DoctorInfoModel(
       id: 1,
       firstName: context.isStateArabic ? 'أحمد' : 'John',
       lastName: context.isStateArabic ? 'محمد' : 'Smith',
@@ -162,7 +162,7 @@ class MyAppointmentPatientCardLoading extends StatelessWidget {
       profilePicture:
           'https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
       reviews: [
-        Reviews(
+        DoctorReviews(
           id: 1,
           rating: 5,
         ),

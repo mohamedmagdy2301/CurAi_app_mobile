@@ -2,6 +2,7 @@ import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/routes/base_routes.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
@@ -21,10 +22,7 @@ import 'package:curai_app_mobile/features/auth/presentation/screens/otp_verifcat
 import 'package:curai_app_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:curai_app_mobile/features/emergency/screens/emergency_screen.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_cubit.dart';
-import 'package:curai_app_mobile/features/home/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
-import 'package:curai_app_mobile/features/home/presentation/screens/all_doctor_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
 import 'package:curai_app_mobile/features/onboarding/onboarding_screen.dart';
@@ -33,6 +31,8 @@ import 'package:curai_app_mobile/features/profile/presentation/screens/help_cent
 import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/screens/add_review_screen.dart';
+import 'package:curai_app_mobile/features/search/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
+import 'package:curai_app_mobile/features/search/presentation/screens/search_doctor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -97,7 +97,7 @@ class AppRoutes {
         return BaseRoute(
           page: BlocProvider<SearchDoctorCubit>(
             create: (context) => di.sl<SearchDoctorCubit>(),
-            child: AllDoctorScreen(
+            child: SearchDoctorScreen(
               specialityName: specialityName,
             ),
           ),
@@ -117,7 +117,7 @@ class AppRoutes {
       case Routes.bookAppointmentScreen:
         if (arg is Map<String, dynamic>) {
           final appointmentId = arg['appointmentId'] as int?;
-          final doctorResults = arg['doctorResults'] as DoctorResults?;
+          final doctorResults = arg['doctorResults'] as DoctorInfoModel?;
           final appointmentAvailableModel = arg['appointmentAvailableModel']
               as AppointmentPatientAvailableModel?;
 
@@ -143,7 +143,7 @@ class AppRoutes {
 
       case Routes.paymentAppointmentScreen:
         if (arg is Map<String, dynamic>) {
-          final doctorResults = arg['doctorResults'] as DoctorResults?;
+          final doctorResults = arg['doctorResults'] as DoctorInfoModel?;
           final appointmentId = arg['appointmentId'] as int?;
 
           if (doctorResults != null && appointmentId != null) {

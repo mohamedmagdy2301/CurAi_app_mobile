@@ -10,6 +10,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
@@ -20,7 +21,6 @@ import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/book_appointment_patient/custom_appbar_book_appointment_patient.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/book_appointment_patient/patient_available_time_widget.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/book_appointment_patient/patient_date_selector_horizontal.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
@@ -34,7 +34,7 @@ class BookAppointmentPatientScreen extends StatefulWidget {
     this.appointmentId,
   });
   final bool isReschedule;
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
   final AppointmentPatientAvailableModel appointmentAvailableModel;
   final int? appointmentId;
 

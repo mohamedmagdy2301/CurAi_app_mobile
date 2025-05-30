@@ -8,8 +8,8 @@ import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/detect_language_string.dart';
 import 'package:curai_app_mobile/core/utils/helper/to_arabic_data.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
@@ -20,7 +20,7 @@ class ReviewsListViewWidget extends StatefulWidget {
     required this.doctorResults,
     super.key,
   });
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
 
   @override
   State<ReviewsListViewWidget> createState() => _ReviewsListViewWidgetState();
@@ -52,7 +52,7 @@ class ReviewsItemWidget extends StatefulWidget {
     required this.index,
     super.key,
   });
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
   final int index;
 
   @override
@@ -60,7 +60,7 @@ class ReviewsItemWidget extends StatefulWidget {
 }
 
 class _ReviewsItemWidgetState extends State<ReviewsItemWidget> {
-  late Reviews review;
+  late DoctorReviews review;
   @override
   void initState() {
     review = widget.doctorResults.reviews![widget.index];

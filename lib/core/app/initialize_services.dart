@@ -6,7 +6,7 @@ import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_
 import 'package:curai_app_mobile/core/utils/helper/bolc_observer.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/favorite_doctor.dart';
+import 'package:curai_app_mobile/features/home/data/models/favorite_doctor_model/favorite_doctor.dart';
 import 'package:curai_app_mobile/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';

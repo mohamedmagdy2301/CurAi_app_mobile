@@ -2,7 +2,7 @@
 
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/utils/helper/url_launcher_helper.dart';
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +13,7 @@ class SocialContactDoctorWidget extends StatelessWidget {
     super.key,
   });
 
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
 
   @override
   Widget build(BuildContext context) {

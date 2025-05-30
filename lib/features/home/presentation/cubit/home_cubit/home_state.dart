@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/features/home/data/models/doctor_model/doctor_model.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_model.dart';
 import 'package:curai_app_mobile/features/home/data/models/specializations_model/specializations_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -24,7 +24,7 @@ class GetPopularDoctorFailure extends HomeState {
 
 class GetPopularDoctorSuccess extends HomeState {
   const GetPopularDoctorSuccess({required this.doctorResults});
-  final List<DoctorResults> doctorResults;
+  final List<DoctorInfoModel> doctorResults;
 
   @override
   List<Object?> get props => [doctorResults];
@@ -43,7 +43,7 @@ class GetTopDoctorFailure extends HomeState {
 
 class GetTopDoctorSuccess extends HomeState {
   const GetTopDoctorSuccess({required this.doctorResults});
-  final List<DoctorResults> doctorResults;
+  final List<DoctorInfoModel> doctorResults;
 
   @override
   List<Object?> get props => [doctorResults];
@@ -81,7 +81,7 @@ class GetDoctorByIdFailure extends HomeState {
 
 class GetDoctorByIdSuccess extends HomeState {
   const GetDoctorByIdSuccess({required this.doctorResults});
-  final DoctorResults doctorResults;
+  final DoctorInfoModel doctorResults;
 
   @override
   List<Object?> get props => [doctorResults];
