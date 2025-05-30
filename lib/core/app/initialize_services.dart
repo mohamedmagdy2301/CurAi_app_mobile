@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/services/local_notification/local_notifica
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/utils/helper/bolc_observer.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/chatbot/data/models/message_bubble_model.dart';
 import 'package:curai_app_mobile/features/home/data/models/favorite_doctor_model/favorite_doctor.dart';
 import 'package:curai_app_mobile/firebase_options.dart';
@@ -17,7 +18,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class InitializeServices {
-  /// Initializes all necessary services for the application.
   static Future<void> initializeServices() async {
     final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -35,7 +35,9 @@ class InitializeServices {
     Hive
       ..registerAdapter(MessageBubbleModelAdapter())
       ..registerAdapter(SenderTypeAdapter())
-      ..registerAdapter(FavoriteDoctorAdapter());
+      ..registerAdapter(FavoriteDoctorAdapter())
+      ..registerAdapter(DoctorInfoModelAdapter())
+      ..registerAdapter(DoctorReviewsAdapter());
 
     Bloc.observer = SimpleBlocObserver();
 
