@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:hive/hive.dart';
 
 part 'doctor_info_model.g.dart';
@@ -144,18 +145,25 @@ List<DoctorInfoModel> doctorsListDome = List.generate(
   (index) => DoctorInfoModel(
     id: index,
     username: 'user name mkkm',
-    profilePicture:
-        'https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+    profilePicture: AppImages.avatarOnlineDoctor,
     consultationPrice: index.toString(),
     email: 'nsjka bjba',
     location: 'msabnj hjdgav hdgah',
     specialization: 'sdnaj sadkldbn ',
-    reviews: List.generate(
-      5,
-      (index) => DoctorReviews(
-        id: index,
-        rating: index,
-      ),
-    ),
+    reviews: doctorReviewsListDome,
+  ),
+);
+
+List<DoctorReviews> doctorReviewsListDome = List.generate(
+  2,
+  (index) => DoctorReviews(
+    id: index,
+    rating: index,
+    comment: 'mb ,jkhbhilased gheufi hgiu hgeu gi',
+    createdAt: '2022-10-10',
+    profilePatientPicture: AppImages.avatarOnlinePatient,
+    firstName: 'first name',
+    lastName: 'last name',
+    patientUsername: 'username',
   ),
 );

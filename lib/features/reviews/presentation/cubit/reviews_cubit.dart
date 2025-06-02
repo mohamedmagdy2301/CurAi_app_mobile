@@ -40,6 +40,7 @@ class ReviewsCubit extends Cubit<ReviewsState> {
   Future<void> getReviews({required int doctorId}) async {
     if (isClosed) return;
     emit(GetReviewsLoading());
+    await Future.delayed(const Duration(milliseconds: 300));
 
     final result = await _getReviewsUsecase.call(doctorId);
 

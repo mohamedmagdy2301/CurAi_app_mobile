@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
@@ -34,7 +35,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   int _rating = 1;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<ReviewsCubit>(
       create: (context) => sl<ReviewsCubit>(),
       child: SingleChildScrollView(
         child: Column(
@@ -58,9 +59,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             30.hSpace,
             CustomTextFeild(
               labelText: context.translate(LangKeys.yourReview),
+              hint: context.translate(LangKeys.yourReview),
               keyboardType: TextInputType.text,
               controller: _commentController,
-              isLable: false,
               maxLines: 5,
             ),
             30.hSpace,
@@ -69,16 +70,14 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   current is AddReviewLoading ||
                   current is AddReviewSuccess ||
                   current is AddReviewError,
-              listener: (context, state) {
+              listener: (context, state) async {
                 if (state is AddReviewError) {
-                  Navigator.pop(context);
+                  context.pop();
                   final isAlreadyRated = state.message.contains(
                     'You have already submitted a review for this doctor.',
                   );
                   final errorMessage = isAlreadyRated
-                      ? (context.isStateArabic
-                          ? 'لقد قمت بتقييم هذا الطبيب من قبل، يمكنك تعديل تقييمك'
-                          : 'You have already rated ,You can edit your review')
+                      ? context.translate(LangKeys.alreadyRated)
                       : state.message;
                   showMessage(
                     context,
@@ -88,15 +87,13 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                         : ToastificationType.error,
                   );
 
-                  Navigator.of(context).pop();
+                  context.pop();
                 }
                 if (state is AddReviewSuccess) {
-                  Navigator.pop(context);
-                  showMessage(
-                    context,
-                    message: state.message,
-                    type: ToastificationType.success,
-                  );
+                  context.pop();
+                  await context.read<ReviewsCubit>().getReviews(
+                        doctorId: widget.doctorId,
+                      );
                 }
               },
               builder: (context, state) {
