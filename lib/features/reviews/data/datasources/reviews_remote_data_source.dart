@@ -11,7 +11,7 @@ abstract class ReviewsRemoteDataSource {
     required AddReviewRequest addReviewRequest,
   });
 
-  Future<Either<Failure, Map<String, dynamic>>> getReviews({
+  Future<Either<Failure, List<dynamic>>> getReviews({
     required int doctorId,
   });
 }
@@ -38,7 +38,7 @@ class ReviewsRemoteDataSourceImpl implements ReviewsRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getReviews({
+  Future<Either<Failure, List<dynamic>>> getReviews({
     required int doctorId,
   }) async {
     final response = await dioConsumer.get(EndPoints.getReviews(doctorId));
@@ -46,7 +46,7 @@ class ReviewsRemoteDataSourceImpl implements ReviewsRemoteDataSource {
     return response.fold(
       left,
       (r) {
-        return right(r as Map<String, dynamic>);
+        return right(r as List<dynamic>);
       },
     );
   }

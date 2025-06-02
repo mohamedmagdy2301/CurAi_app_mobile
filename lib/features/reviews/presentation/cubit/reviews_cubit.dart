@@ -1,7 +1,7 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:curai_app_mobile/features/reviews/data/models/add_review/add_review_request.dart';
-import 'package:curai_app_mobile/features/reviews/domain/usecases/add_reviews_usecase.dart';
+import 'package:curai_app_mobile/features/reviews/domain/usecases/add_review_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +12,7 @@ class ReviewsCubit extends Cubit<ReviewsState> {
     this._addReviewsUsecase,
   ) : super(ReviewsInitial());
 
-  final AddReviewsUsecase _addReviewsUsecase;
+  final AddReviewUsecase _addReviewsUsecase;
 
   Future<void> addReviews(AddReviewRequest addReviewRequest) async {
     if (isClosed) return;

@@ -3,15 +3,15 @@ import 'package:curai_app_mobile/features/reviews/data/models/add_review/add_rev
 import 'package:curai_app_mobile/features/reviews/domain/repositories/reviews_repo.dart';
 import 'package:dartz/dartz.dart';
 
-class AddReviewsUsecase
+class AddReviewUsecase
     extends UseCase<Either<String, String>, AddReviewRequest> {
-  AddReviewsUsecase({required this.repository});
+  AddReviewUsecase({required this.repository});
 
   final ReviewsRepo repository;
 
   @override
   Future<Either<String, String>> call(AddReviewRequest params) async {
-    return repository.addReviews(
+    return repository.addReview(
       addReviewRequest: params,
     );
   }
