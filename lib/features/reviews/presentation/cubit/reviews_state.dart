@@ -33,7 +33,7 @@ class GetReviewsLoading extends ReviewsState {}
 
 class GetReviewsSuccess extends ReviewsState {
   const GetReviewsSuccess({required this.reviewsList});
-  final List<GetReviewsModel> reviewsList;
+  final List<DoctorReviews> reviewsList;
 
   @override
   List<Object> get props => reviewsList;

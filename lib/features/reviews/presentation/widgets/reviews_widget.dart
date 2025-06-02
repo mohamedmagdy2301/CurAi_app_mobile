@@ -10,10 +10,12 @@ import 'package:curai_app_mobile/core/utils/helper/detect_language_string.dart';
 import 'package:curai_app_mobile/core/utils/helper/to_arabic_data.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ReviewsListViewWidget extends StatefulWidget {
   const ReviewsListViewWidget({
@@ -27,21 +29,49 @@ class ReviewsListViewWidget extends StatefulWidget {
 }
 
 class _ReviewsListViewWidgetState extends State<ReviewsListViewWidget> {
+  final RefreshController _refreshController = RefreshController();
+
+  List<DoctorReviews> reviews = [];
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> _onRefresh() async {
+    try {
+      await Future<void>.delayed(const Duration(milliseconds: 1000));
+      _refreshController.refreshCompleted();
+    } on Exception {
+      _refreshController.refreshFailed();
+    }
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget.doctorResults.reviews!.length,
-      itemBuilder: (context, index) {
-        return ReviewsItemWidget(
-          doctorResults: widget.doctorResults,
-          index: index,
-        ).paddingOnly(
-          top: index == 0 ? context.H * 0.015 : 0,
-          bottom: index == widget.doctorResults.reviews!.length - 1
-              ? context.H * 0.01
-              : 0,
-        );
-      },
+    return SmartRefresher(
+      controller: _refreshController,
+      header: const CustomRefreahHeader(),
+      onRefresh: _onRefresh,
+      child: ListView.builder(
+        itemCount: widget.doctorResults.reviews!.length,
+        itemBuilder: (context, index) {
+          return ReviewsItemWidget(
+            doctorResults: widget.doctorResults,
+            index: index,
+          ).paddingOnly(
+            top: index == 0 ? context.H * 0.015 : 0,
+            bottom: index == widget.doctorResults.reviews!.length - 1
+                ? context.H * 0.01
+                : 0,
+          );
+        },
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/reviews/data/datasources/reviews_remote_data_source.dart';
 import 'package:curai_app_mobile/features/reviews/data/models/add_review/add_review_request.dart';
-import 'package:curai_app_mobile/features/reviews/data/models/get_reviews/get_reviews_model.dart';
 import 'package:curai_app_mobile/features/reviews/domain/repositories/reviews_repo.dart';
 import 'package:dartz/dartz.dart';
 
@@ -22,7 +22,7 @@ class ReviewsRepoImpl extends ReviewsRepo {
   }
 
   @override
-  Future<Either<String, List<GetReviewsModel>>> getReviews({
+  Future<Either<String, List<DoctorReviews>>> getReviews({
     required int doctorId,
   }) async {
     final response = await remoteDataSource.getReviews(
@@ -33,10 +33,10 @@ class ReviewsRepoImpl extends ReviewsRepo {
         return left(l.message);
       },
       (result) {
-        final reviewsList = <GetReviewsModel>[];
+        final reviewsList = <DoctorReviews>[];
         for (final review in result) {
           reviewsList.add(
-            GetReviewsModel.fromJson(review as Map<String, dynamic>),
+            DoctorReviews.fromJson(review as Map<String, dynamic>),
           );
         }
         return right(reviewsList);

@@ -1,7 +1,7 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/reviews/data/models/add_review/add_review_request.dart';
-import 'package:curai_app_mobile/features/reviews/data/models/get_reviews/get_reviews_model.dart';
 import 'package:curai_app_mobile/features/reviews/domain/usecases/add_review_usecase.dart';
 import 'package:curai_app_mobile/features/reviews/domain/usecases/get_reviews_usecase.dart';
 import 'package:equatable/equatable.dart';
