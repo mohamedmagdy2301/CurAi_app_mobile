@@ -9,19 +9,38 @@ abstract class ReviewsState extends Equatable {
 
 class ReviewsInitial extends ReviewsState {}
 
-// ! Register States
-class ReviewsLoading extends ReviewsState {}
+// ! Add  Review States
+class AddReviewLoading extends ReviewsState {}
 
-class ReviewsSuccess extends ReviewsState {
-  const ReviewsSuccess({required this.message});
+class AddReviewSuccess extends ReviewsState {
+  const AddReviewSuccess({required this.message});
   final String message;
 
   @override
   List<Object> get props => [message];
 }
 
-class ReviewsError extends ReviewsState {
-  const ReviewsError({required this.message});
+class AddReviewError extends ReviewsState {
+  const AddReviewError({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+// ! Get  Review States
+class GetReviewsLoading extends ReviewsState {}
+
+class GetReviewsSuccess extends ReviewsState {
+  const GetReviewsSuccess({required this.reviewsList});
+  final List<GetReviewsModel> reviewsList;
+
+  @override
+  List<Object> get props => reviewsList;
+}
+
+class GetReviewsError extends ReviewsState {
+  const GetReviewsError({required this.message});
   final String message;
 
   @override

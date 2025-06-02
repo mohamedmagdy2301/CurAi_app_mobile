@@ -66,11 +66,11 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             30.hSpace,
             BlocConsumer<ReviewsCubit, ReviewsState>(
               listenWhen: (previous, current) =>
-                  current is ReviewsLoading ||
-                  current is ReviewsSuccess ||
-                  current is ReviewsError,
+                  current is AddReviewLoading ||
+                  current is AddReviewSuccess ||
+                  current is AddReviewError,
               listener: (context, state) {
-                if (state is ReviewsError) {
+                if (state is AddReviewError) {
                   Navigator.pop(context);
                   final isAlreadyRated = state.message.contains(
                     'You have already submitted a review for this doctor.',
@@ -90,7 +90,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
 
                   Navigator.of(context).pop();
                 }
-                if (state is ReviewsSuccess) {
+                if (state is AddReviewSuccess) {
                   Navigator.pop(context);
                   showMessage(
                     context,
@@ -102,7 +102,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               builder: (context, state) {
                 return CustomButton(
                   title: LangKeys.addReview,
-                  isLoading: state is ReviewsLoading,
+                  isLoading: state is AddReviewLoading,
                   onPressed: () {
                     if (_commentController.text.trim().isEmpty) {
                       showMessage(
