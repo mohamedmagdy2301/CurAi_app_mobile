@@ -1,5 +1,5 @@
-class AddReviewRequest {
-  AddReviewRequest({
+class ReviewRequest {
+  ReviewRequest({
     required this.doctor,
     required this.rating,
     required this.comment,

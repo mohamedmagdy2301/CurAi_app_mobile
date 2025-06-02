@@ -30,7 +30,6 @@ import 'package:curai_app_mobile/features/profile/presentation/screens/favorites
 import 'package:curai_app_mobile/features/profile/presentation/screens/help_center_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/settings_screen.dart';
-import 'package:curai_app_mobile/features/reviews/presentation/screens/add_review_screen.dart';
 import 'package:curai_app_mobile/features/search/presentation/cubit/search_doctor_cubit/search_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/search/presentation/screens/search_doctor_screen.dart';
 import 'package:flutter/material.dart';
@@ -110,10 +109,6 @@ class AppRoutes {
         return BaseRoute(page: const PrivacyPolicyScreen());
       case Routes.helpCenterScreen:
         return BaseRoute(page: const HelpCenterScreen());
-      case Routes.addReviewScreen:
-        return BaseRoute(
-          page: AddReviewScreen(doctorId: arg! as int),
-        );
       case Routes.bookAppointmentScreen:
         if (arg is Map<String, dynamic>) {
           final appointmentId = arg['appointmentId'] as int?;

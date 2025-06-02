@@ -5,6 +5,7 @@ class LangKeys {
   static const String doctor = 'doctor';
   static const String filter = 'filter';
   static const String patient = 'patient';
+  static const String you = 'you';
 
   // ! Emergency
   static const String emergencyDepartment = 'emergency_department';
@@ -133,6 +134,7 @@ class LangKeys {
   static const String pm = 'pm';
   static const String medicalDegree = 'medical_degree';
   static const String addReview = 'add_review';
+  static const String alreadyRated = 'already_rated';
   static const String yourReview = 'your_review';
   static const String rate = 'rate';
   static const String pleaseEnterReview = 'please_enter_review';
@@ -142,8 +144,6 @@ class LangKeys {
       'doctor_not_have_location_info_maps';
   static const String consultationPrice = 'consultation_price';
   static const String medicalSpecialization = 'medical_specialization';
-
-//! Book Appointment
 
 //! Profile
   static const String profile = 'profile';
