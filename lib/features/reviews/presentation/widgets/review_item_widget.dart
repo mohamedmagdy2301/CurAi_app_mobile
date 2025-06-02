@@ -17,25 +17,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReviewItemWidget extends StatefulWidget {
   const ReviewItemWidget({
-    required this.doctorResults,
-    required this.index,
+    required this.doctorReviews,
     super.key,
   });
-  final DoctorInfoModel doctorResults;
-  final int index;
+  final DoctorReviews doctorReviews;
 
   @override
   State<ReviewItemWidget> createState() => _ReviewItemWidgetState();
 }
 
 class _ReviewItemWidgetState extends State<ReviewItemWidget> {
-  late DoctorReviews review;
-  @override
-  void initState() {
-    review = widget.doctorResults.reviews![widget.index];
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -54,8 +45,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(1000.r),
                 child: CustomCachedNetworkImage(
-                  imgUrl: widget.doctorResults.reviews![widget.index]
-                          .profilePatientPicture ??
+                  imgUrl: widget.doctorReviews.profilePatientPicture ??
                       AppImages.avatarOnlinePatient,
                   width: context.H * 0.045,
                   height: context.H * 0.045,
@@ -67,8 +57,8 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
               SizedBox(
                 width: context.W * 0.45,
                 child: AutoSizeText(
-                  "${review.firstName?.capitalizeFirstChar ?? ""} "
-                  "${review.lastName?.capitalizeFirstChar ?? ""}",
+                  "${widget.doctorReviews.firstName?.capitalizeFirstChar ?? ""} "
+                  "${widget.doctorReviews.lastName?.capitalizeFirstChar ?? ""}",
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
@@ -81,7 +71,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
               AutoSizeText(
                 toFormattedDate(
                   context: context,
-                  date: review.createdAt!,
+                  date: widget.doctorReviews.createdAt!,
                 ),
                 maxLines: 1,
                 textAlign: TextAlign.start,
@@ -93,7 +83,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
             ],
           ),
           StarRating(
-            rating: (review.rating ?? 0).toDouble(),
+            rating: (widget.doctorReviews.rating ?? 0).toDouble(),
             size: 25.r,
             color: Colors.orangeAccent,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -101,15 +91,16 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
             emptyIcon: CupertinoIcons.star,
             borderColor: context.onSecondaryColor.withAlpha(50),
           ).paddingSymmetric(vertical: 5),
-          if (review.comment != '')
+          if (widget.doctorReviews.comment != '')
             SizedBox(
               width: context.W * 0.9,
               child: AutoSizeText(
-                review.comment!,
+                widget.doctorReviews.comment!,
                 maxLines: 5,
-                textDirection: detectLanguage(review.comment ?? '') == 'ar'
-                    ? TextDirection.rtl
-                    : TextDirection.ltr,
+                textDirection:
+                    detectLanguage(widget.doctorReviews.comment ?? '') == 'ar'
+                        ? TextDirection.rtl
+                        : TextDirection.ltr,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyleApp.regular18().copyWith(
