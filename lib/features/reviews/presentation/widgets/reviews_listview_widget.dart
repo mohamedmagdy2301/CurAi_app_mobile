@@ -83,6 +83,7 @@ class _ReviewsListViewWidgetState extends State<ReviewsListViewWidget> {
               itemCount: doctorReviewsListDome.length,
               itemBuilder: (context, index) {
                 return ReviewItemWidget(
+                  doctorId: widget.doctorResults.id!,
                   doctorReviews: doctorReviewsListDome[index],
                 ).paddingOnly(
                   top: index == 0 ? context.H * 0.015 : 0,
@@ -102,6 +103,7 @@ class _ReviewsListViewWidgetState extends State<ReviewsListViewWidget> {
                   itemCount: reviews.length,
                   itemBuilder: (context, index) {
                     return ReviewItemWidget(
+                      doctorId: widget.doctorResults.id!,
                       doctorReviews: reviews[index],
                     ).paddingOnly(
                       top: index == 0 ? context.H * 0.015 : 0,

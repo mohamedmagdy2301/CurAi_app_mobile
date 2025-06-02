@@ -178,7 +178,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
                   },
                   builder: (context, state) {
                     if (state is DeleteReviewLoading) {
-                      return const CustomLoadingWidget();
+                      return const CustomLoadingWidget().withWidth(100.w);
                     }
                     return TextButton.icon(
                       onPressed: onDelete,

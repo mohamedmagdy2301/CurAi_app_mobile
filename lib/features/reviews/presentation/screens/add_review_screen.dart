@@ -86,14 +86,10 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                         ? ToastificationType.info
                         : ToastificationType.error,
                   );
-
-                  context.pop();
                 }
+
                 if (state is AddReviewSuccess) {
                   context.pop();
-                  await context.read<ReviewsCubit>().getReviews(
-                        doctorId: widget.doctorId,
-                      );
                 }
               },
               builder: (context, state) {

@@ -82,36 +82,32 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
             30.hSpace,
             BlocConsumer<ReviewsCubit, ReviewsState>(
               listenWhen: (previous, current) =>
-                  current is AddReviewLoading ||
-                  current is AddReviewSuccess ||
-                  current is AddReviewError,
+                  current is UpdateReviewLoading ||
+                  current is UpdateReviewSuccess ||
+                  current is UpdateReviewError,
               listener: (context, state) async {
-                if (state is AddReviewError) {
+                if (state is UpdateReviewError) {
                   context.pop();
-                  final isAlreadyRated = state.message.contains(
-                    'You have already submitted a review for this doctor.',
-                  );
-                  final errorMessage = isAlreadyRated
-                      ? context.translate(LangKeys.alreadyRated)
-                      : state.message;
+
                   showMessage(
                     context,
-                    message: errorMessage,
-                    type: isAlreadyRated
-                        ? ToastificationType.info
-                        : ToastificationType.error,
+                    message: state.message,
+                    type: ToastificationType.error,
                   );
 
                   context.pop();
                 }
-                if (state is AddReviewSuccess) {
+                if (state is UpdateReviewSuccess) {
                   context.pop();
+                  await context.read<ReviewsCubit>().getReviews(
+                        doctorId: widget.doctorId,
+                      );
                 }
               },
               builder: (context, state) {
                 return CustomButton(
                   title: LangKeys.update,
-                  isLoading: state is AddReviewLoading,
+                  isLoading: state is UpdateReviewLoading,
                   onPressed: () {
                     context.read<ReviewsCubit>().updateReviews(
                           reviewId: widget.doctorReviews.id!,
@@ -121,6 +117,7 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
                             comment: _commentController.text.trim(),
                           ),
                         );
+
                     hideKeyboard();
                   },
                 ).paddingBottom(Platform.isIOS ? 15.h : 0);
