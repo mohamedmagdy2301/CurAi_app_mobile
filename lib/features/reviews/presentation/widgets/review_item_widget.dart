@@ -1,9 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/detect_language_string.dart';
@@ -18,9 +21,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ReviewItemWidget extends StatefulWidget {
   const ReviewItemWidget({
     required this.doctorReviews,
+    this.onDelete,
+    this.onEdit,
     super.key,
   });
+
   final DoctorReviews doctorReviews;
+  final VoidCallback? onDelete;
+  final VoidCallback? onEdit;
 
   @override
   State<ReviewItemWidget> createState() => _ReviewItemWidgetState();
@@ -29,6 +37,8 @@ class ReviewItemWidget extends StatefulWidget {
 class _ReviewItemWidgetState extends State<ReviewItemWidget> {
   @override
   Widget build(BuildContext context) {
+    final isYouReview = widget.doctorReviews.patientUsername == getUsername();
+
     return Card(
       color: context.primaryColor.withAlpha(1),
       elevation: .02,
@@ -57,8 +67,10 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
               SizedBox(
                 width: context.W * 0.45,
                 child: AutoSizeText(
-                  "${widget.doctorReviews.firstName?.capitalizeFirstChar ?? ""} "
-                  "${widget.doctorReviews.lastName?.capitalizeFirstChar ?? ""}",
+                  isYouReview
+                      ? context.translate(LangKeys.you)
+                      : "${widget.doctorReviews.firstName?.capitalizeFirstChar ?? ""} "
+                          "${widget.doctorReviews.lastName?.capitalizeFirstChar ?? ""}",
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
@@ -108,6 +120,32 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
                 ),
               ),
             ).paddingSymmetric(horizontal: 8, vertical: 4),
+          if (isYouReview)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton.icon(
+                  onPressed: widget.onEdit,
+                  icon: Icon(Icons.edit, color: context.primaryColor),
+                  label: Text(
+                    context.translate(LangKeys.update),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.primaryColor,
+                    ),
+                  ),
+                ),
+                TextButton.icon(
+                  onPressed: widget.onDelete,
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  label: Text(
+                    context.translate(LangKeys.delete),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ],
+            ),
         ],
       ).paddingSymmetric(horizontal: 15, vertical: 15),
     );

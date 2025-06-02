@@ -5,6 +5,7 @@ class LangKeys {
   static const String doctor = 'doctor';
   static const String filter = 'filter';
   static const String patient = 'patient';
+  static const String you = 'you';
 
   // ! Emergency
   static const String emergencyDepartment = 'emergency_department';
