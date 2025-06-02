@@ -46,3 +46,41 @@ class GetReviewsError extends ReviewsState {
   @override
   List<Object> get props => [message];
 }
+
+// ! Update  Review States
+class UpdateReviewLoading extends ReviewsState {}
+
+class UpdateReviewSuccess extends ReviewsState {
+  const UpdateReviewSuccess({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+class UpdateReviewError extends ReviewsState {
+  const UpdateReviewError({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+// !  Delete  Review States
+class DeleteReviewLoading extends ReviewsState {}
+
+class DeleteReviewSuccess extends ReviewsState {
+  const DeleteReviewSuccess({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+class DeleteReviewError extends ReviewsState {
+  const DeleteReviewError({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

@@ -9,6 +9,7 @@ class EndPoints {
   static const String getSpecializations = '/specializations/';
   static const String addReview = '/review/';
   static String getReviews(int id) => '/doctor_reviews/$id/reviews/';
+  static String updateReview(int id) => '/review/$id/';
   static const String contactUs = '/api/contact-us/';
   static const String predict = '/predict';
   static const String appointmentPatient = '/patient_panal_appointments';

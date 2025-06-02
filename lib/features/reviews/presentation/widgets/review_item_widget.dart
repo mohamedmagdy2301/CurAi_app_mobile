@@ -13,28 +13,51 @@ import 'package:curai_app_mobile/core/utils/helper/detect_language_string.dart';
 import 'package:curai_app_mobile/core/utils/helper/to_arabic_data.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
+import 'package:curai_app_mobile/features/reviews/presentation/cubit/reviews_cubit.dart';
+import 'package:curai_app_mobile/features/reviews/presentation/screens/edit_review_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class ReviewItemWidget extends StatefulWidget {
   const ReviewItemWidget({
     required this.doctorReviews,
-    this.onDelete,
-    this.onEdit,
+    required this.doctorId,
     super.key,
   });
 
   final DoctorReviews doctorReviews;
-  final VoidCallback? onDelete;
-  final VoidCallback? onEdit;
+  final int doctorId;
 
   @override
   State<ReviewItemWidget> createState() => _ReviewItemWidgetState();
 }
 
 class _ReviewItemWidgetState extends State<ReviewItemWidget> {
+  void onUpdate() {
+    showModalBottomSheet<void>(
+      context: context,
+      barrierColor: context.onPrimaryColor.withAlpha(60),
+      backgroundColor: context.backgroundColor,
+      isScrollControlled: true,
+      builder: (_) => EditReviewScreen(
+        doctorReviews: widget.doctorReviews,
+        doctorId: widget.doctorId,
+      ).paddingBottom(MediaQuery.of(context).viewInsets.bottom),
+    );
+  }
+
+  void onDelete() {
+    context.read<ReviewsCubit>().deleteReviews(
+          reviewId: widget.doctorReviews.id!,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isYouReview = widget.doctorReviews.patientUsername == getUsername();
@@ -125,7 +148,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton.icon(
-                  onPressed: widget.onEdit,
+                  onPressed: onUpdate,
                   icon: Icon(Icons.edit, color: context.primaryColor),
                   label: Text(
                     context.translate(LangKeys.update),
@@ -134,15 +157,40 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
                     ),
                   ),
                 ),
-                TextButton.icon(
-                  onPressed: widget.onDelete,
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  label: Text(
-                    context.translate(LangKeys.delete),
-                    style: TextStyleApp.regular16().copyWith(
-                      color: Colors.red,
-                    ),
-                  ),
+                BlocConsumer<ReviewsCubit, ReviewsState>(
+                  listenWhen: (previous, current) =>
+                      current is DeleteReviewError ||
+                      current is DeleteReviewSuccess ||
+                      current is DeleteReviewLoading,
+                  listener: (context, state) {
+                    if (state is DeleteReviewSuccess) {
+                      context.read<ReviewsCubit>().getReviews(
+                            doctorId: widget.doctorId,
+                          );
+                    }
+                    if (state is DeleteReviewError) {
+                      showMessage(
+                        context,
+                        message: state.message,
+                        type: ToastificationType.error,
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is DeleteReviewLoading) {
+                      return const CustomLoadingWidget();
+                    }
+                    return TextButton.icon(
+                      onPressed: onDelete,
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      label: Text(
+                        context.translate(LangKeys.delete),
+                        style: TextStyleApp.regular16().copyWith(
+                          color: Colors.red,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

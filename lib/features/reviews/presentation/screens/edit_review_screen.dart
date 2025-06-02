@@ -10,6 +10,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/utils/helper/funcations_helper.dart';
+import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
@@ -22,17 +23,31 @@ import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toastification/toastification.dart';
 
-class AddReviewScreen extends StatefulWidget {
-  const AddReviewScreen({required this.doctorId, super.key});
+class EditReviewScreen extends StatefulWidget {
+  const EditReviewScreen({
+    required this.doctorReviews,
+    required this.doctorId,
+    super.key,
+  });
+  final DoctorReviews doctorReviews;
   final int doctorId;
 
   @override
-  State<AddReviewScreen> createState() => _AddReviewScreenState();
+  State<EditReviewScreen> createState() => _EditReviewScreenState();
 }
 
-class _AddReviewScreenState extends State<AddReviewScreen> {
-  final TextEditingController _commentController = TextEditingController();
-  int _rating = 1;
+class _EditReviewScreenState extends State<EditReviewScreen> {
+  late TextEditingController _commentController;
+  late int _rating;
+
+  @override
+  void initState() {
+    super.initState();
+    _commentController =
+        TextEditingController(text: widget.doctorReviews.comment);
+    _rating = widget.doctorReviews.rating ?? 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ReviewsCubit>(
@@ -91,26 +106,16 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                 }
                 if (state is AddReviewSuccess) {
                   context.pop();
-                  await context.read<ReviewsCubit>().getReviews(
-                        doctorId: widget.doctorId,
-                      );
                 }
               },
               builder: (context, state) {
                 return CustomButton(
-                  title: LangKeys.addReview,
+                  title: LangKeys.update,
                   isLoading: state is AddReviewLoading,
                   onPressed: () {
-                    if (_commentController.text.trim().isEmpty) {
-                      showMessage(
-                        context,
-                        message: context.translate(LangKeys.pleaseEnterReview),
-                        type: ToastificationType.error,
-                      );
-                      return;
-                    }
-                    context.read<ReviewsCubit>().addReviews(
-                          ReviewRequest(
+                    context.read<ReviewsCubit>().updateReviews(
+                          reviewId: widget.doctorReviews.id!,
+                          addReviewRequest: ReviewRequest(
                             doctor: widget.doctorId,
                             rating: _rating,
                             comment: _commentController.text.trim(),

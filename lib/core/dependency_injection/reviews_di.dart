@@ -4,7 +4,9 @@ import 'package:curai_app_mobile/features/reviews/data/datasources/reviews_remot
 import 'package:curai_app_mobile/features/reviews/data/repositories/reviews_repo_impl.dart';
 import 'package:curai_app_mobile/features/reviews/domain/repositories/reviews_repo.dart';
 import 'package:curai_app_mobile/features/reviews/domain/usecases/add_review_usecase.dart';
+import 'package:curai_app_mobile/features/reviews/domain/usecases/delete_review_usecase.dart';
 import 'package:curai_app_mobile/features/reviews/domain/usecases/get_reviews_usecase.dart';
+import 'package:curai_app_mobile/features/reviews/domain/usecases/update_review_usecase.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/cubit/reviews_cubit.dart';
 
 void setupReviewsDI() {
@@ -14,6 +16,8 @@ void setupReviewsDI() {
       () => ReviewsCubit(
         sl<AddReviewUsecase>(),
         sl<GetReviewsUsecase>(),
+        sl<UpdateReviewUsecase>(),
+        sl<DeleteReviewUsecase>(),
       ),
     )
 
@@ -21,8 +25,14 @@ void setupReviewsDI() {
     ..registerLazySingleton<AddReviewUsecase>(
       () => AddReviewUsecase(repository: sl()),
     )
-    ..registerLazySingleton(
+    ..registerLazySingleton<GetReviewsUsecase>(
       () => GetReviewsUsecase(repository: sl()),
+    )
+    ..registerLazySingleton<DeleteReviewUsecase>(
+      () => DeleteReviewUsecase(repository: sl()),
+    )
+    ..registerLazySingleton<UpdateReviewUsecase>(
+      () => UpdateReviewUsecase(repository: sl()),
     )
 
     //! Repository
