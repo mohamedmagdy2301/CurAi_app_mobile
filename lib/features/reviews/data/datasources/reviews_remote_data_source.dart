@@ -7,8 +7,12 @@ import 'package:curai_app_mobile/features/reviews/data/models/add_review/add_rev
 import 'package:dartz/dartz.dart';
 
 abstract class ReviewsRemoteDataSource {
-  Future<Either<Failure, Map<String, dynamic>>> addReviews({
+  Future<Either<Failure, Map<String, dynamic>>> addReview({
     required AddReviewRequest addReviewRequest,
+  });
+
+  Future<Either<Failure, Map<String, dynamic>>> getReviews({
+    required int doctorId,
   });
 }
 
@@ -17,13 +21,27 @@ class ReviewsRemoteDataSourceImpl implements ReviewsRemoteDataSource {
   final DioConsumer dioConsumer;
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> addReviews({
+  Future<Either<Failure, Map<String, dynamic>>> addReview({
     required AddReviewRequest addReviewRequest,
   }) async {
     final response = await dioConsumer.post(
       EndPoints.addReview,
       body: addReviewRequest.toJson(),
     );
+
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getReviews({
+    required int doctorId,
+  }) async {
+    final response = await dioConsumer.get(EndPoints.getReviews(doctorId));
 
     return response.fold(
       left,

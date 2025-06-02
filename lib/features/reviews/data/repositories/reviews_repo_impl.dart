@@ -11,7 +11,7 @@ class ReviewsRepoImpl extends ReviewsRepo {
   Future<Either<String, String>> addReviews({
     required AddReviewRequest addReviewRequest,
   }) async {
-    final response = await remoteDataSource.addReviews(
+    final response = await remoteDataSource.addReview(
       addReviewRequest: addReviewRequest,
     );
     return response.fold(
