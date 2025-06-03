@@ -78,18 +78,15 @@ class LocationWidget extends StatelessWidget {
           ),
         ),
         10.hSpace,
-        SizedBox(
-          height: context.H * .1,
-          child: AutoSizeText(
-            doctorResults.location?.capitalizeFirstChar ?? '',
-            maxLines: 2,
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyleApp.medium20().copyWith(
-              color: context.onSecondaryColor,
-            ),
+        AutoSizeText(
+          doctorResults.location?.capitalizeFirstChar ?? '',
+          maxLines: 2,
+          textAlign: TextAlign.start,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyleApp.medium20().copyWith(
+            color: context.onSecondaryColor,
           ),
-        ),
+        ).withHeight(context.H * .1),
       ],
     );
   }

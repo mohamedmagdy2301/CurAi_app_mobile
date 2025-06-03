@@ -94,7 +94,7 @@ class DoctorDetailsHeader extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyleApp.medium18().copyWith(
-                color: context.onSecondaryColor,
+                color: context.onPrimaryColor.withAlpha(180),
               ),
             ),
             AutoSizeText(
@@ -122,7 +122,7 @@ class DoctorDetailsHeader extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyleApp.medium18().copyWith(
-                color: context.onSecondaryColor,
+                color: context.onPrimaryColor.withAlpha(180),
               ),
             ),
             AutoSizeText(

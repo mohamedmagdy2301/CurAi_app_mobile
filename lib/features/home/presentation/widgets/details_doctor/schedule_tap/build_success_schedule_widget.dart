@@ -75,8 +75,8 @@ class _BuildSuccessScheduleWidgetState
                 AutoSizeText(
                   context.translate(LangKeys.selectDate),
                   maxLines: 1,
-                  style: TextStyleApp.bold20().copyWith(
-                    color: context.onPrimaryColor,
+                  style: TextStyleApp.bold18().copyWith(
+                    color: context.onPrimaryColor.withAlpha(180),
                   ),
                 ),
                 const Spacer(),

@@ -68,8 +68,8 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
         AutoSizeText(
           context.translate(LangKeys.availableTime),
           maxLines: 1,
-          style: TextStyleApp.bold20().copyWith(
-            color: context.onPrimaryColor,
+          style: TextStyleApp.bold18().copyWith(
+            color: context.onPrimaryColor.withAlpha(180),
           ),
         ).paddingSymmetric(horizontal: 15),
         10.hSpace,
