@@ -13,7 +13,7 @@ import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
-import 'package:curai_app_mobile/core/utils/widgets/image_full_screen.dart';
+import 'package:curai_app_mobile/core/utils/widgets/image_viewer_full_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +35,8 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
           onTap: () {
             showImageViewerFullScreen(
               context,
-              imageUrl: doctorResults.profilePicture ?? '',
+              imageUrl:
+                  doctorResults.profilePicture ?? AppImages.avatarOnlineDoctor,
             );
           },
           child: CustomCachedNetworkImage(

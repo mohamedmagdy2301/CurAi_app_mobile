@@ -14,6 +14,7 @@ import 'package:curai_app_mobile/core/utils/helper/to_arabic_data.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
+import 'package:curai_app_mobile/core/utils/widgets/image_viewer_full_screen.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:curai_app_mobile/features/reviews/presentation/screens/edit_review_screen.dart';
@@ -75,16 +76,21 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
         children: [
           Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(1000.r),
+              InkWell(
+                borderRadius: BorderRadius.circular(20.r),
+                onTap: () => showImageViewerFullScreen(
+                  context,
+                  imageUrl: widget.doctorReviews.profilePatientPicture ??
+                      AppImages.avatarOnlinePatient,
+                ),
                 child: CustomCachedNetworkImage(
                   imgUrl: widget.doctorReviews.profilePatientPicture ??
                       AppImages.avatarOnlinePatient,
-                  width: context.H * 0.045,
-                  height: context.H * 0.045,
+                  width: context.H * 0.05,
+                  height: context.H * 0.05,
                   loadingImgPadding: 10.w,
                   errorIconSize: 20.sp,
-                ),
+                ).cornerRadiusWithClipRRect(1000.r),
               ),
               15.wSpace,
               SizedBox(
