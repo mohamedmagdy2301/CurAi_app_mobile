@@ -7,13 +7,11 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AvailableTimePatientWidget extends StatefulWidget {
-  const AvailableTimePatientWidget({
-    required this.doctorResults,
+class AvailableTimeWidget extends StatefulWidget {
+  const AvailableTimeWidget({
     required this.availableTimes,
     required this.onTimeSelected,
     super.key,
@@ -21,17 +19,14 @@ class AvailableTimePatientWidget extends StatefulWidget {
   });
   final String? initialSelectedTime;
 
-  final DoctorInfoModel doctorResults;
   final List<String> availableTimes;
   final ValueChanged<String> onTimeSelected;
 
   @override
-  State<AvailableTimePatientWidget> createState() =>
-      _AvailableTimePatientWidgetState();
+  State<AvailableTimeWidget> createState() => _AvailableTimeWidgetState();
 }
 
-class _AvailableTimePatientWidgetState
-    extends State<AvailableTimePatientWidget> {
+class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
   int selectedIndex = 0;
 
   @override
@@ -41,7 +36,7 @@ class _AvailableTimePatientWidgetState
   }
 
   @override
-  void didUpdateWidget(covariant AvailableTimePatientWidget oldWidget) {
+  void didUpdateWidget(covariant AvailableTimeWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.availableTimes != oldWidget.availableTimes ||
@@ -49,18 +44,6 @@ class _AvailableTimePatientWidgetState
       _updateSelectedIndex();
     }
   }
-
-  // void _updateSelectedIndex() {
-  //   final index =
-  //       widget.availableTimes.indexOf(widget.initialSelectedTime ?? '');
-  //   setState(() {
-  //     selectedIndex = index >= 0 ? index : 0;
-  //   });
-
-  //   if (widget.availableTimes.isNotEmpty) {
-  //     widget.onTimeSelected(widget.availableTimes[selectedIndex]);
-  //   }
-  // }
 
   void _updateSelectedIndex() {
     final index =
@@ -93,10 +76,10 @@ class _AvailableTimePatientWidgetState
         GridView.builder(
           itemCount: widget.availableTimes.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: 3,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
-            childAspectRatio: 2.8,
+            childAspectRatio: 1.6,
           ),
           itemBuilder: (context, index) {
             return InkWell(

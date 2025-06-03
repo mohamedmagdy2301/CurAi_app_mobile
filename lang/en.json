@@ -207,6 +207,9 @@
   "yesterday": "Yesterday",
   "no_doctors_found": "No doctors found",
   "already_rated": "You have already rated ,You can edit your review",
+  "no_availability": "There are no dates available",
+  "already_booked": "This date is already booked.\nPlease choose another date",
+  "schedule": "Schedule",
   "you": "You",
   "now": "Now"
 }

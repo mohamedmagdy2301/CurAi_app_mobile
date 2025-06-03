@@ -7,10 +7,10 @@ import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/book_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_gateway_screen.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/rescahedule_book_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/add_address_clinic_screen.dart';
 import 'package:curai_app_mobile/features/auth/presentation/screens/bio_screen.dart';
@@ -116,14 +116,11 @@ class AppRoutes {
           final appointmentAvailableModel = arg['appointmentAvailableModel']
               as AppointmentPatientAvailableModel?;
 
-          final isReschedule = arg['isReschedule'] as bool;
-
           if (doctorResults != null && appointmentAvailableModel != null) {
             return BaseRoute(
               page: BlocProvider<AppointmentPatientCubit>(
                 create: (context) => di.sl<AppointmentPatientCubit>(),
-                child: BookAppointmentPatientScreen(
-                  isReschedule: isReschedule,
+                child: RescaheduleBookAppointmentScreen(
                   appointmentId: appointmentId,
                   doctorResults: doctorResults,
                   appointmentAvailableModel: appointmentAvailableModel,

@@ -18,33 +18,31 @@ import 'package:curai_app_mobile/features/appointment_patient/data/models/appoin
 import 'package:curai_app_mobile/features/appointment_patient/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/book_appointment_patient/custom_appbar_book_appointment_patient.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/book_appointment_patient/patient_available_time_widget.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/book_appointment_patient/patient_date_selector_horizontal.dart';
+import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/rescahedule_book_appointment_patient/custom_appbar_rescahedule_book_appointment.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/schedule_tap/available_date_widget.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/schedule_tap/available_time_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
-class BookAppointmentPatientScreen extends StatefulWidget {
-  const BookAppointmentPatientScreen({
+class RescaheduleBookAppointmentScreen extends StatefulWidget {
+  const RescaheduleBookAppointmentScreen({
     required this.doctorResults,
     required this.appointmentAvailableModel,
-    required this.isReschedule,
     super.key,
     this.appointmentId,
   });
-  final bool isReschedule;
   final DoctorInfoModel doctorResults;
   final AppointmentPatientAvailableModel appointmentAvailableModel;
   final int? appointmentId;
 
   @override
-  State<BookAppointmentPatientScreen> createState() =>
-      _BookAppointmentPatientScreenState();
+  State<RescaheduleBookAppointmentScreen> createState() =>
+      _RescaheduleBookAppointmentScreenState();
 }
 
-class _BookAppointmentPatientScreenState
-    extends State<BookAppointmentPatientScreen> {
+class _RescaheduleBookAppointmentScreenState
+    extends State<RescaheduleBookAppointmentScreen> {
   DateTime selectedDate = DateTime.now();
   String? selectedTime;
 
@@ -70,8 +68,7 @@ class _BookAppointmentPatientScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomAppbarBookAppointmentPatient(isReschedule: widget.isReschedule),
+      appBar: const CustomAppbarRescaheduleBookAppointment(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -90,7 +87,7 @@ class _BookAppointmentPatientScreenState
             ],
           ).paddingSymmetric(horizontal: 15),
           20.hSpace,
-          DateSelectorHorizontalPatient(
+          AvailbleDatesWidget(
             selectedDate: selectedDate,
             availableDates:
                 mergeAndSortByDate(widget.appointmentAvailableModel),
@@ -104,8 +101,7 @@ class _BookAppointmentPatientScreenState
             },
           ),
           30.hSpace,
-          AvailableTimePatientWidget(
-            doctorResults: widget.doctorResults,
+          AvailableTimeWidget(
             availableTimes: availableTimes,
             onTimeSelected: (time) {
               setState(() {
@@ -114,20 +110,12 @@ class _BookAppointmentPatientScreenState
             },
             initialSelectedTime: selectedTime,
           ),
-          if (widget.isReschedule)
-            RescheduleAppointmentButton(
-              widget: widget,
-              selectedDate: selectedDate,
-              selectedTime: selectedTime,
-              availableTimes: availableTimes,
-            )
-          else
-            AddAppointmentButton(
-              widget: widget,
-              selectedDate: selectedDate,
-              selectedTime: selectedTime,
-              availableTimes: availableTimes,
-            ),
+          RescheduleAppointmentButton(
+            widget: widget,
+            selectedDate: selectedDate,
+            selectedTime: selectedTime,
+            availableTimes: availableTimes,
+          ),
         ],
       ),
     );
@@ -199,7 +187,7 @@ class AddAppointmentButton extends StatelessWidget {
     super.key,
   });
 
-  final BookAppointmentPatientScreen widget;
+  final RescaheduleBookAppointmentScreen widget;
   final DateTime selectedDate;
   final String? selectedTime;
   final List<String> availableTimes;
@@ -281,7 +269,7 @@ class RescheduleAppointmentButton extends StatelessWidget {
     super.key,
   });
 
-  final BookAppointmentPatientScreen widget;
+  final RescaheduleBookAppointmentScreen widget;
   final DateTime selectedDate;
   final String? selectedTime;
   final List<String> availableTimes;

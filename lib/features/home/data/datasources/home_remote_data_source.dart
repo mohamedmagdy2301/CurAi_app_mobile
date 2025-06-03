@@ -16,7 +16,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> getPopularDoctor() async {
-    final response = await dioConsumer.get(EndPoints.getAllDoctor);
+    final response = await dioConsumer
+        .get(EndPoints.getAllDoctor, queryParameters: {'page': 2});
 
     return response.fold(
       left,
