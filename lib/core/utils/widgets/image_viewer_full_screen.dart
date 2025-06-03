@@ -34,11 +34,11 @@ void showImageViewerFullScreen(
                   child: CustomCachedNetworkImage(
                     imgUrl: imageUrl,
                     width: context.H * 0.4,
-                    height: context.H * 0.4,
+                    height: context.H * 0.5,
                     loadingImgPadding: 60.sp,
                     errorIconSize: 60.sp,
-                  ).cornerRadiusWithClipRRect(12.r),
-                ).center(),
+                  ),
+                ).cornerRadiusWithClipRRect(12.r).center(),
                 Positioned(
                   top: 20,
                   right: 20,

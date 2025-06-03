@@ -75,11 +75,12 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
         10.hSpace,
         GridView.builder(
           itemCount: widget.availableTimes.length,
+          scrollDirection: Axis.horizontal,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
-            childAspectRatio: 1.6,
+            childAspectRatio: .9,
           ),
           itemBuilder: (context, index) {
             return InkWell(
@@ -104,7 +105,8 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
               ),
             );
           },
-        ).paddingSymmetric(horizontal: 15, vertical: 5).expand(),
+        ).expand(),
+        10.hSpace,
       ],
     ).expand();
   }
