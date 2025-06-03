@@ -216,8 +216,8 @@
   "add_history": "إضافة سجل",
   "view_history": "عرض السجل",
   "reservations_doctor": "حجوزات الطبيب",
-    "no_reservations": "لا يوجد حجوزات متاحة حتى الآن",
-
+  "no_reservations": "لا يوجد حجوزات متاحة حتى الآن",
+  "unpaid": "غير مدفوع",
   "you": "أنت",
   "now": "الآن"
 }

@@ -144,7 +144,7 @@ class ReservationsDoctorItemPatientCard extends StatelessWidget {
       child: AutoSizeText(
         isPaid
             ? context.translate(LangKeys.paided)
-            : context.translate(LangKeys.pending),
+            : context.translate(LangKeys.unpaid),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
