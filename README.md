@@ -83,6 +83,7 @@
 - **User Profile (Editable)**
 - **Appointment Booking For Patient**
 - **Appointment For Doctor**
+- **Reservations doctor**
 - **Emergency Department**
 - **Push Notifications**
 - **Integrat Payment(paymob)**
@@ -142,8 +143,11 @@
   - ✔️ Working times screen
   - ✔️ Bottom sheets for add/update
   - ✔️ Times cards
+  - ✔️ Reservations doctor
 - ✅ **API Integration**
   - ✔️ CRUD working times
+  - ✔️ Reservations doctor
+
 
 ### **AI Chatbot Integration**
 - ✅ **UI**
@@ -163,8 +167,7 @@
   - 🕓 History list
 - ✅ **API Integration**
   - ✔️ Fetch & update
-  - 🕓 Appointment history
-
+ 
 ### **Payment Integration**
 - ✅ **UI**
   - ✔️ Payment methods screen
