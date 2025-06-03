@@ -27,7 +27,9 @@ class ReservationsDoctorItemPatientCard extends StatelessWidget {
     return Card(
       margin: context.padding(vertical: 8, horizontal: 14),
       elevation: 0,
-      color: context.isDark ? Colors.black : Colors.white,
+      color: context.isDark
+          ? Colors.black
+          : const Color.fromARGB(255, 254, 251, 251),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       child: Column(
         children: [
@@ -107,7 +109,9 @@ class ReservationsDoctorItemPatientCard extends StatelessWidget {
               CustomButton(
                 title: LangKeys.viewHistory,
                 isHalf: true,
-                colorBackground: context.isDark ? Colors.black45 : Colors.white,
+                colorBackground: context.isDark
+                    ? Colors.black
+                    : const Color.fromARGB(255, 254, 251, 251),
                 colorBorder: context.primaryColor,
                 colorText: context.primaryColor,
                 onPressed: () {},

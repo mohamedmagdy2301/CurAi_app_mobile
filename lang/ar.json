@@ -218,6 +218,8 @@
   "reservations_doctor": "حجوزات الطبيب",
   "no_reservations": "لا يوجد حجوزات متاحة حتى الآن",
   "unpaid": "غير مدفوع",
+  "total_appointments": "إجمالي المواعيد",
+  "appointments_overview": "ملخص المواعيد",
   "you": "أنت",
   "now": "الآن"
 }

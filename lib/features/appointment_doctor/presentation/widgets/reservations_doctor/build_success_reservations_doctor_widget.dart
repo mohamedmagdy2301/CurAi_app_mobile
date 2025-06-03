@@ -9,6 +9,7 @@ import 'package:curai_app_mobile/features/appointment_doctor/data/models/reserva
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/reservations_doctor/reservations_doctor_date_header.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/reservations_doctor/reservations_doctor_patient_item_card.dart';
+import 'package:curai_app_mobile/features/profile/presentation/widgets/help_center/row_navigate_contact_us_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +33,7 @@ class _BuildSuccessReservationsDoctorWidgetState
     with SingleTickerProviderStateMixin {
   final _refreshController = RefreshController();
   final Set<String> _expandedDates = {};
+  int _touchedIndex = -1;
 
   Future<void> _onRefresh() async {
     try {
@@ -92,20 +94,7 @@ class _BuildSuccessReservationsDoctorWidgetState
         separatorBuilder: (_, __) => 16.hSpace,
         itemBuilder: (context, index) {
           if (index == 0) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildLegend(),
-                PieChart(
-                  PieChartData(
-                    sections: _buildPieChartSections(stats),
-                    centerSpaceRadius: 30,
-                    sectionsSpace: 3,
-                    borderData: FlBorderData(show: false),
-                  ),
-                ).withWidth(context.W * .25),
-              ],
-            ).withHeight(context.H * .25);
+            return _buildStatsSection(stats);
           }
 
           final date = sortedDates[index - 1];
@@ -136,9 +125,65 @@ class _BuildSuccessReservationsDoctorWidgetState
     );
   }
 
-  List<PieChartSectionData> _buildPieChartSections(Map<String, int> stats) {
+  Widget _buildStatsSection(Map<String, int> stats) {
+    return CustomExpansionTile(
+      title: context.translate(LangKeys.appointmentsOverview),
+      contentWidget: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildEnhancedLegend(stats).expand(flex: 2),
+          16.wSpace,
+          _buildEnhancedPieChart(stats).expand(flex: 3),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEnhancedPieChart(Map<String, int> stats) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: PieChart(
+        PieChartData(
+          pieTouchData: PieTouchData(
+            touchCallback: (FlTouchEvent event, pieTouchResponse) {
+              setState(() {
+                if (!event.isInterestedForInteractions ||
+                    pieTouchResponse == null ||
+                    pieTouchResponse.touchedSection == null) {
+                  _touchedIndex = -1;
+                  return;
+                }
+                _touchedIndex =
+                    pieTouchResponse.touchedSection!.touchedSectionIndex;
+              });
+            },
+          ),
+          borderData: FlBorderData(show: false),
+          sectionsSpace: 4,
+          centerSpaceRadius: 40.r,
+          sections: _buildEnhancedPieChartSections(stats),
+        ),
+      ),
+    );
+  }
+
+  List<PieChartSectionData> _buildEnhancedPieChartSections(
+    Map<String, int> stats,
+  ) {
     final total = stats['total']!;
-    if (total == 0) return [];
+    if (total == 0) {
+      return [
+        PieChartSectionData(
+          value: 1,
+          color: Colors.grey.shade300,
+          title: context.translate(LangKeys.noData),
+          radius: 60.r,
+          titleStyle: TextStyleApp.medium12().copyWith(
+            color: Colors.grey.shade600,
+          ),
+        ),
+      ];
+    }
 
     final pending = stats['pending']!;
     final paid = stats['paid']!;
@@ -147,47 +192,159 @@ class _BuildSuccessReservationsDoctorWidgetState
     final paidPercentage = ((paid / total) * 100).toStringAsFixed(1);
 
     return [
-      PieChartSectionData(
-        value: pending.toDouble(),
-        color: Colors.orange,
-        title: '$pendingPercentage%',
-        radius: 70.r,
-        titleStyle: TextStyleApp.semiBold14().copyWith(
-          color: Colors.white,
-        ),
-      ),
+      // Paid section
       PieChartSectionData(
         value: paid.toDouble(),
-        color: Colors.green,
-        title: '$paidPercentage%',
-        radius: 60.r,
+        color: const Color(0xFF4CAF50),
+        title:
+            _touchedIndex == 0 ? '$paid\n$paidPercentage%' : '$paidPercentage%',
+        radius: _touchedIndex == 0 ? 80.r : 70.r,
         titleStyle: TextStyleApp.semiBold14().copyWith(
           color: Colors.white,
+          fontSize: _touchedIndex == 0 ? 16.sp : 14.sp,
         ),
+        titlePositionPercentageOffset: 0.6,
+        badgeWidget: _touchedIndex == 0
+            ? _buildBadge(
+                Icons.check_circle,
+                const Color(0xFF4CAF50),
+              )
+            : null,
+        badgePositionPercentageOffset: 1.3,
+      ),
+      PieChartSectionData(
+        value: pending.toDouble(),
+        color: const Color(0xFFFF9800),
+        title: _touchedIndex == 1
+            ? '$pending\n$pendingPercentage%'
+            : '$pendingPercentage%',
+        radius: _touchedIndex == 1 ? 80.r : 70.r,
+        titleStyle: TextStyleApp.semiBold14().copyWith(
+          color: Colors.white,
+          fontSize: _touchedIndex == 1 ? 16.sp : 14.sp,
+        ),
+        titlePositionPercentageOffset: 0.6,
+        badgeWidget: _touchedIndex == 1
+            ? _buildBadge(
+                Icons.pending,
+                const Color(0xFFFF9800),
+              )
+            : null,
+        badgePositionPercentageOffset: 1.3,
       ),
     ];
   }
 
-  Widget _buildLegend() {
+  Widget _buildBadge(IconData icon, Color color) {
+    return Container(
+      width: 40.w,
+      height: 40.h,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: color.withAlpha(50),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Icon(
+        icon,
+        color: Colors.white,
+        size: 20.sp,
+      ),
+    );
+  }
+
+  Widget _buildEnhancedLegend(Map<String, int> stats) {
+    final total = stats['total']!;
+    final pending = stats['pending']!;
+    final paid = stats['paid']!;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 12.sp,
       children: [
-        _legendItem(context.translate(LangKeys.paided), Colors.green),
-        _legendItem(context.translate(LangKeys.unpaid), Colors.orange),
+        _enhancedLegendItem(
+          title: context.translate(LangKeys.totalAppointments),
+          count: total,
+          color: context.theme.primaryColor,
+          icon: Icons.calendar_today,
+        ),
+        16.hSpace,
+        _enhancedLegendItem(
+          title: context.translate(LangKeys.paided),
+          count: paid,
+          color: const Color(0xFF4CAF50),
+          icon: Icons.check_circle,
+        ),
+        16.hSpace,
+        _enhancedLegendItem(
+          title: context.translate(LangKeys.unpaid),
+          count: pending,
+          color: const Color(0xFFFF9800),
+          icon: Icons.pending,
+        ),
       ],
     );
   }
 
-  Widget _legendItem(String title, Color color) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(width: 12, height: 12, color: color),
-        const SizedBox(width: 4),
-        Text(title),
-      ],
+  Widget _enhancedLegendItem({
+    required String title,
+    required int count,
+    required Color color,
+    required IconData icon,
+  }) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 24.w,
+            height: 24.h,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              icon,
+              color: Colors.white,
+              size: 14.sp,
+            ),
+          ),
+          SizedBox(width: 8.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyleApp.medium12().copyWith(
+                    color: Colors.grey.shade600,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  count.toString(),
+                  style: TextStyleApp.bold16().copyWith(
+                    color: color,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
