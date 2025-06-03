@@ -215,6 +215,7 @@
   "add_history": "Add History",
   "view_history": "View History",
   "reservations_doctor": "Reservations Doctor",
+  "no_reservations":  "No reservations available yet",
   "you": "You",
   "now": "Now"
 }

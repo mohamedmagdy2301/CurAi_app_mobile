@@ -13,6 +13,8 @@ class LangKeys {
   static const String reservationsDoctor = 'reservations_doctor';
   static const String appointments = 'appointments';
 
+  static const String noReservations = 'no_reservations';
+
   static const String noAvailability = 'no_availability';
 
   static const String alreadyBooked = 'already_booked';
