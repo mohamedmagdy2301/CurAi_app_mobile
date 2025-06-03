@@ -1,4 +1,5 @@
 import 'package:curai_app_mobile/features/appointment_doctor/data/datasources/appointment_doctor_remote_data_source.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/data/models/appointment_booking_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/repositories/appointment_doctor_repo.dart';
 import 'package:dartz/dartz.dart';
@@ -74,6 +75,34 @@ class AppointmentDoctorRepoImpl extends AppointmentDoctorRepo {
       (failure) => left(failure.message),
       (responseData) {
         return right('');
+      },
+    );
+  }
+
+  @override
+  Future<Either<String, Map<String, List<AppointmentBookingDoctorModel>>>>
+      getAppointmentBookingDoctor() async {
+    final response = await remoteDataSource.getAppointmentBookingDoctor();
+
+    return response.fold(
+      (failure) => left(failure.message),
+      (responseData) {
+        final appointmentsByDate =
+            <String, List<AppointmentBookingDoctorModel>>{};
+
+        responseData.forEach(
+          (date, appointmentsJson) {
+            appointmentsByDate[date] = (appointmentsJson as List<dynamic>)
+                .map(
+                  (item) => AppointmentBookingDoctorModel.fromJson(
+                    item as Map<String, dynamic>,
+                  ),
+                )
+                .toList();
+          },
+        );
+
+        return right(appointmentsByDate);
       },
     );
   }
