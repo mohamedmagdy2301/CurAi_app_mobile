@@ -18,6 +18,8 @@ abstract class AppointmentDoctorRemoteDataSource {
     required int wordingTimeId,
     required Map<String, dynamic> data,
   });
+
+  Future<Either<Failure, Map<String, dynamic>>> getReservationsDoctor();
 }
 
 class AppointmentDoctorRemoteDataSourceImpl
@@ -72,6 +74,17 @@ class AppointmentDoctorRemoteDataSourceImpl
       body: data,
     );
 
+    return response.fold(
+      left,
+      (r) => right(r as Map<String, dynamic>),
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getReservationsDoctor() async {
+    final response = await dioConsumer.get(
+      EndPoints.getReservationsDoctor,
+    );
     return response.fold(
       left,
       (r) => right(r as Map<String, dynamic>),

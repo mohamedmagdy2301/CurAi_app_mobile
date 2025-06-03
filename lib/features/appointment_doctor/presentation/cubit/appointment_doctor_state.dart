@@ -55,3 +55,18 @@ class UpdateWorkingTimeDoctorFailure extends AppointmentDoctorState {
   const UpdateWorkingTimeDoctorFailure({required this.message});
   final String message;
 }
+
+//! Get Appointments Booking Doctor
+class GetReservationsDoctorLoading extends AppointmentDoctorState {}
+
+class GetReservationsDoctorEmpty extends AppointmentDoctorState {}
+
+class GetReservationsDoctorSuccess extends AppointmentDoctorState {
+  const GetReservationsDoctorSuccess({required this.appointments});
+  final Map<String, List<ReservationsDoctorModel>> appointments;
+}
+
+class GetReservationsDoctorFailure extends AppointmentDoctorState {
+  const GetReservationsDoctorFailure({required this.message});
+  final String message;
+}

@@ -1,5 +1,7 @@
+import 'package:curai_app_mobile/features/appointment_doctor/data/models/reservations_doctor_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/add_working_time_doctor_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_reservations_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_working_time_doctor_availble_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/remove_working_time_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/update_working_time_doctor_usecase.dart';
@@ -14,6 +16,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
     this._removeWorkingTimeDoctorUsecase,
     this._addWorkingTimeDoctorUsecase,
     this._updateWorkingTimeDoctorUsecase,
+    this._getReservationsDoctorUsecase,
   ) : super(AppointmentDoctorInitial());
 
   final GetWorkingTimeDoctorAvailableUsecase
@@ -21,6 +24,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
   final UpdateWorkingTimeDoctorUsecase _updateWorkingTimeDoctorUsecase;
   final AddWorkingTimeDoctorUsecase _addWorkingTimeDoctorUsecase;
   final RemoveWorkingTimeDoctorUsecase _removeWorkingTimeDoctorUsecase;
+  final GetReservationsDoctorUsecase _getReservationsDoctorUsecase;
   List<WorkingTimeDoctorAvailableModel> workingTimeList = [];
   void resetState() {
     if (isClosed) return;
@@ -124,6 +128,28 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       if (isClosed) return;
 
       emit(UpdateWorkingTimeDoctorSuccess());
+    });
+    resetState();
+  }
+
+  Future<void> getReservationsDoctor() async {
+    if (isClosed) return;
+    emit(GetReservationsDoctorLoading());
+
+    final reslute = await _getReservationsDoctorUsecase.call(null);
+
+    reslute.fold((message) {
+      if (isClosed) return;
+
+      emit(GetReservationsDoctorFailure(message: message));
+    }, (appointments) {
+      if (appointments.isEmpty) {
+        if (isClosed) return;
+        emit(GetReservationsDoctorEmpty());
+      } else {
+        if (isClosed) return;
+        emit(GetReservationsDoctorSuccess(appointments: appointments));
+      }
     });
     resetState();
   }

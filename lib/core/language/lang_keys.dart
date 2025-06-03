@@ -6,6 +6,16 @@ class LangKeys {
   static const String filter = 'filter';
   static const String patient = 'patient';
   static const String you = 'you';
+  static String schedule = 'schedule';
+  static String rescheduleSuccess = 'reschedule_success';
+  static String viewHistory = 'view_history';
+  static String addHistory = 'add_history';
+  static const String reservationsDoctor = 'reservations_doctor';
+  static const String appointments = 'appointments';
+
+  static const String noAvailability = 'no_availability';
+
+  static const String alreadyBooked = 'already_booked';
 
   // ! Emergency
   static const String emergencyDepartment = 'emergency_department';

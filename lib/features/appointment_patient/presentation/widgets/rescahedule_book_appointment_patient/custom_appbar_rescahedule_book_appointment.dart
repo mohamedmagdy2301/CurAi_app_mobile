@@ -5,13 +5,11 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:flutter/material.dart';
 
-class CustomAppbarBookAppointmentPatient extends StatelessWidget
+class CustomAppbarRescaheduleBookAppointment extends StatelessWidget
     implements PreferredSizeWidget {
-  const CustomAppbarBookAppointmentPatient({
-    required this.isReschedule,
+  const CustomAppbarRescaheduleBookAppointment({
     super.key,
   });
-  final bool isReschedule;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +17,7 @@ class CustomAppbarBookAppointmentPatient extends StatelessWidget
       elevation: 0,
       flexibleSpace: Container(color: context.backgroundColor),
       title: AutoSizeText(
-        context.translate(
-          isReschedule ? LangKeys.reschedule : LangKeys.bookAppointment,
-        ),
+        context.translate(LangKeys.reschedule),
         maxLines: 1,
       ),
       centerTitle: true,

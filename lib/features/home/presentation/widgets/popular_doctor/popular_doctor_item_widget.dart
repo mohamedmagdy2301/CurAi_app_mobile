@@ -70,52 +70,40 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: context.W * .55,
-                      child: AutoSizeText(
-                        '${context.translate(LangKeys.dr)} '
-                        '${widget.doctorResults.firstName?.capitalizeFirstChar} '
-                        '${widget.doctorResults.lastName?.capitalizeFirstChar}',
-                        maxLines: 1,
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleApp.bold22().copyWith(
-                          color: context.onPrimaryColor,
-                        ),
+                    AutoSizeText(
+                      '${context.translate(LangKeys.dr)} '
+                      '${widget.doctorResults.firstName?.capitalizeFirstChar} '
+                      '${widget.doctorResults.lastName?.capitalizeFirstChar}',
+                      maxLines: 1,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyleApp.semiBold22().copyWith(
+                        color: context.onPrimaryColor,
                       ),
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: context.W * .55,
-                          child: AutoSizeText(
-                            specializationName(
-                              widget.doctorResults.specialization ?? '',
-                              isArabic: context.isStateArabic,
-                            ),
-                            maxLines: 1,
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyleApp.medium16().copyWith(
-                              color: context.onPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: context.W * .55,
-                      child: AutoSizeText(
-                        '${widget.doctorResults.consultationPrice} '
-                        '${context.translate(LangKeys.egp)}',
-                        maxLines: 1,
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleApp.bold16().copyWith(
-                          color: context.onSecondaryColor,
-                        ),
+                    ).withWidth(context.W * .55),
+                    AutoSizeText(
+                      '${context.translate(LangKeys.consultationPrice)}: '
+                      '${widget.doctorResults.consultationPrice!.split('.')[0]} '
+                      '${context.translate(LangKeys.egp)}',
+                      maxLines: 1,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyleApp.medium16().copyWith(
+                        color: context.onSecondaryColor,
                       ),
-                    ),
+                    ).withWidth(context.W * .55),
+                    AutoSizeText(
+                      specializationName(
+                        widget.doctorResults.specialization ?? '',
+                        isArabic: context.isStateArabic,
+                      ),
+                      maxLines: 1,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyleApp.medium16().copyWith(
+                        color: context.onSecondaryColor,
+                      ),
+                    ).withWidth(context.W * .55),
                     RateingDoctorWidget(doctorResults: widget.doctorResults),
                   ],
                 ).paddingSymmetric(horizontal: 12, vertical: 5),
@@ -134,7 +122,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
             hoverColor: Colors.transparent,
             icon: Icon(
               isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-              size: 26.sp,
+              size: 30.sp,
               color: isFav
                   ? Colors.redAccent
                   : context.onSecondaryColor.withAlpha(70),

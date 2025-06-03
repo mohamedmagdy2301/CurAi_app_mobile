@@ -1,23 +1,17 @@
-import 'dart:io';
-
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
-import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
-import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/about_tap.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/custom_appbar_details_doctor.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/header_details_doctor_widget.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/location_tap.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/location_tap/location_tap.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/reviews_tap.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/schedule_tap/schedule_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,6 +29,7 @@ class DoctorDetailsScreen extends StatefulWidget {
 }
 
 class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
+  int selectedIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -48,14 +43,14 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: (getRole() == 'patient') ? 3 : 2,
       child: Scaffold(
         appBar: CustomAppBarDetailsDoctor(doctor: widget.doctorResults),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             HeaderDetailsDoctorWidget(doctorResults: widget.doctorResults),
-            20.hSpace,
+            10.hSpace,
             TabBar(
               labelColor: context.primaryColor,
               unselectedLabelColor: context.onPrimaryColor,
@@ -72,8 +67,14 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
               overlayColor: WidgetStateProperty.all(
                 context.primaryColor.withAlpha(25),
               ),
+              onTap: (value) {
+                setState(() {
+                  selectedIndex = value;
+                });
+              },
               tabs: [
-                Tab(text: context.translate(LangKeys.about)),
+                if (getRole() == 'patient')
+                  Tab(text: context.translate(LangKeys.schedule)),
                 Tab(text: context.translate(LangKeys.location)),
                 Tab(text: context.translate(LangKeys.reviews)),
               ],
@@ -81,44 +82,16 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  AboutTap(doctorResults: widget.doctorResults),
+                  if (getRole() == 'patient')
+                    ScheduleTap(doctorResults: widget.doctorResults),
                   LocationTap(doctorResults: widget.doctorResults),
                   ReviewsTap(doctorResults: widget.doctorResults),
                 ],
               ),
             ),
-            if (getRole() == 'patient')
-              BlocBuilder<AppointmentPatientCubit, AppointmentPatientState>(
-                builder: (context, state) {
-                  return CustomButton(
-                    title: state is! AppointmentPatientAvailableSuccess
-                        ? LangKeys.notAvailableToBook
-                        : LangKeys.bookAppointment,
-                    isLoading: state is AppointmentPatientAvailableLoading,
-                    colorBackground:
-                        state is! AppointmentPatientAvailableSuccess
-                            ? Colors.grey
-                            : context.primaryColor,
-                    onPressed: state is! AppointmentPatientAvailableSuccess
-                        ? () {}
-                        : () {
-                            context.pushNamed(
-                              Routes.bookAppointmentScreen,
-                              arguments: {
-                                'isReschedule': false,
-                                'doctorResults': widget.doctorResults,
-                                'appointmentAvailableModel': context
-                                    .read<AppointmentPatientCubit>()
-                                    .appointmentAvailableModel,
-                              },
-                            );
-                          },
-                  );
-                },
-              ).paddingOnly(bottom: Platform.isIOS ? 17 : 10),
           ],
         ),
-      ).paddingSymmetric(horizontal: 12, vertical: 5),
+      ).paddingSymmetric(horizontal: 10, vertical: 5),
     );
   }
 }

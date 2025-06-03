@@ -5,7 +5,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/shimmer_effect.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/flutter_map_builder.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/location_tap/flutter_map_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,7 +71,7 @@ class DoctorMapsWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.r),
               child: SizedBox(
-                height: context.H * .36,
+                height: context.H * .4,
                 width: double.infinity,
                 child: Image.asset(
                   'assets/images/loading.gif',

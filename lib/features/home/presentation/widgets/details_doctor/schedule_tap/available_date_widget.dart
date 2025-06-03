@@ -1,8 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, document_ignores
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
-    as int_ext;
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -11,8 +10,8 @@ import 'package:curai_app_mobile/features/appointment_patient/data/models/appoin
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DateSelectorHorizontalPatient extends StatefulWidget {
-  const DateSelectorHorizontalPatient({
+class AvailbleDatesWidget extends StatefulWidget {
+  const AvailbleDatesWidget({
     required this.onSelect,
     required this.selectedDate,
     required this.availableDates,
@@ -24,12 +23,10 @@ class DateSelectorHorizontalPatient extends StatefulWidget {
   final List<MergedDateAvailabilityForPatient> availableDates;
 
   @override
-  _DateSelectorHorizontalPatientState createState() =>
-      _DateSelectorHorizontalPatientState();
+  _AvailbleDatesWidgetState createState() => _AvailbleDatesWidgetState();
 }
 
-class _DateSelectorHorizontalPatientState
-    extends State<DateSelectorHorizontalPatient> {
+class _AvailbleDatesWidgetState extends State<AvailbleDatesWidget> {
   final ScrollController _scrollController = ScrollController();
   int selectedIndex = 0;
   List<MergedDateAvailabilityForPatient>? dates;
@@ -73,7 +70,7 @@ class _DateSelectorHorizontalPatientState
   }
 
   @override
-  void didUpdateWidget(covariant DateSelectorHorizontalPatient oldWidget) {
+  void didUpdateWidget(covariant AvailbleDatesWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.selectedDate != oldWidget.selectedDate) {

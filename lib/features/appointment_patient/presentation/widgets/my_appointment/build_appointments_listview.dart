@@ -2,7 +2,6 @@
 
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
-import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
@@ -12,18 +11,15 @@ import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/local_notification/local_notification_manager.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
-import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/my_appointment_patient/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/appointment_patient_card_widget.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/build_appointments_patient_empty_listview.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/my_appointment/my_appointment_patient_loading_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:toastification/toastification.dart';
@@ -58,16 +54,17 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
   }
 
   Future<void> _loadNotificationPreferences() async {
-    for (final appointment in widget.appointments) {
-      if (appointment.id != null) {
-        final isActive =
-            await di.sl<LocalNotificationService>().getNotificationStatus(
-                  id: appointment.id!,
-                );
-        isSwitchedMap[appointment.id!] = isActive;
+    setState(() async {
+      for (final appointment in widget.appointments) {
+        if (appointment.id != null) {
+          final isActive =
+              await di.sl<LocalNotificationService>().getNotificationStatus(
+                    id: appointment.id!,
+                  );
+          isSwitchedMap[appointment.id!] = isActive;
+        }
       }
-    }
-    setState(() {});
+    });
   }
 
   @override
@@ -181,41 +178,18 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
       isHalf: true,
       title: LangKeys.reschedule,
       onPressed: () async {
-        await AdaptiveDialogs.showOkCancelAlertDialog<bool>(
-          context: context,
-          title: context.translate(LangKeys.reschedule),
-          message: context.translate(LangKeys.rescheduleMessage),
-          onPressedOk: () async {
-            final cubit = context.read<AppointmentPatientCubit>();
+        // Update notification preference to off for this appointment
+        if (appointment.id != null) {
+          setState(() {
+            isSwitchedMap[appointment.id!] = false;
+          });
+        }
 
-            await cubit.getAppointmentPatientAvailable(
-              doctorId: appointment.doctorId!,
-            );
-            // Cancel existing notification if any
-            if (appointment.id != null) {
-              await di.sl<LocalNotificationService>().cancelNotificationById(
-                    appointment.id!,
-                  );
-            }
-
-            // Update notification preference to off for this appointment
-            if (appointment.id != null) {
-              setState(() {
-                isSwitchedMap[appointment.id!] = false;
-              });
-            }
-            if (cubit.state is AppointmentPatientAvailableSuccess &&
-                cubit.appointmentAvailableModel != null) {
-              await context.pushNamed(
-                Routes.bookAppointmentScreen,
-                arguments: {
-                  'isReschedule': true,
-                  'appointmentId': appointment.id,
-                  'doctorResults': doctorResults,
-                  'appointmentAvailableModel': cubit.appointmentAvailableModel,
-                },
-              );
-            }
+        await context.pushNamed(
+          Routes.rescheduleAppointmentScreen,
+          arguments: {
+            'doctorResults': doctorResults,
+            'appointment': appointment,
           },
         );
       },
@@ -262,10 +236,8 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
         });
 
         if (value) {
-          // Enable notification for this appointment
           await _scheduleNotificationForAppointment(appointment);
         } else {
-          // Cancel notification for this appointment
           if (appointment.id != null) {
             await di.sl<LocalNotificationService>().cancelNotificationById(
                   appointment.id!,
@@ -276,7 +248,6 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
     );
   }
 
-  // دالة مجدولة علشان تعمل إشعارات لموعد معين
   Future<void> _scheduleNotificationForAppointment(
     ResultsMyAppointmentPatient appointment,
   ) async {
