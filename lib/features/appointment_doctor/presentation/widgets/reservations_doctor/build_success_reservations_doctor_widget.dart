@@ -101,7 +101,7 @@ class _BuildSuccessReservationsDoctorWidgetState
           final isExpanded = _expandedDates.contains(date);
 
           return Container(
-            clipBehavior: Clip.antiAlias,
+            padding: EdgeInsets.only(bottom: !isExpanded ? 0 : 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(16.r),
@@ -137,6 +137,7 @@ class _BuildSuccessReservationsDoctorWidgetState
                   ...widget.appointments[date]!.map(
                     (appointment) => ReservationsDoctorItemPatientCard(
                       appointment: appointment,
+                      isExpanded: isExpanded,
                     ),
                   ),
                 ],

@@ -18,9 +18,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ReservationsDoctorItemPatientCard extends StatelessWidget {
   const ReservationsDoctorItemPatientCard({
     required this.appointment,
+    required this.isExpanded,
     super.key,
   });
   final ReservationsDoctorModel appointment;
+  final bool isExpanded;
 
   @override
   Widget build(BuildContext context) {
