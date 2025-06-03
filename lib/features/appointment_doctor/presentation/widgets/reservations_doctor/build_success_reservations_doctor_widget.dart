@@ -100,25 +100,48 @@ class _BuildSuccessReservationsDoctorWidgetState
           final date = sortedDates[index - 1];
           final isExpanded = _expandedDates.contains(date);
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                onTap: () => _toggleExpanded(date),
-                child: ReservationsDoctorDateHeader(
-                  date: date,
-                  appointmentsCount: widget.appointments[date]!.length,
-                ),
+          return Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.r),
+                topRight: Radius.circular(16.r),
+                bottomLeft: Radius.circular(16.r),
+                bottomRight: Radius.circular(16.r),
               ),
-              if (isExpanded) ...[
-                12.hSpace,
-                ...widget.appointments[date]!.map(
-                  (appointment) => ReservationsDoctorItemPatientCard(
-                    appointment: appointment,
+              color: Colors.transparent,
+              border: Border.all(
+                width: !isExpanded ? 0 : .6,
+                color: context.primaryColor,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InkWell(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.r),
+                    topRight: Radius.circular(16.r),
+                    bottomLeft: Radius.circular(isExpanded ? 0 : 16.r),
+                    bottomRight: Radius.circular(isExpanded ? 0 : 16.r),
+                  ),
+                  onTap: () => _toggleExpanded(date),
+                  child: ReservationsDoctorDateHeader(
+                    date: date,
+                    isExpanded: isExpanded,
+                    appointmentsCount: widget.appointments[date]!.length,
                   ),
                 ),
+                if (isExpanded) ...[
+                  12.hSpace,
+                  ...widget.appointments[date]!.map(
+                    (appointment) => ReservationsDoctorItemPatientCard(
+                      appointment: appointment,
+                    ),
+                  ),
+                ],
               ],
-            ],
+            ),
           );
         },
       ),

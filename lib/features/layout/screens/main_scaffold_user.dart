@@ -60,7 +60,7 @@ class MainScaffoldUser extends StatelessWidget {
               resizeToAvoidBottomInset: true,
               bottomNavigationBar: Builder(
                 builder: (context) {
-                  return currentIndex == 2
+                  return currentIndex == 2 && getRole() == 'patient'
                       ? const SizedBox.shrink()
                       : NavigationBar(
                           labelBehavior:
@@ -109,7 +109,7 @@ class MainScaffoldUser extends StatelessWidget {
         create: (context) => di.sl<SearchDoctorCubit>(),
         child: const SearchDoctorScreen(),
       ),
-      const ChatbotScreen(),
+      if (getRole() == 'patient') const ChatbotScreen(),
       if (getRole() == 'doctor') const WorkingTimeDoctorAvailableScreen(),
       if (getRole() == 'patient') const MyAppointmentPatientScreen(),
       const ProfileScreen(),
@@ -193,15 +193,16 @@ class MainScaffoldUser extends StatelessWidget {
         ),
         label: 'Search',
       ),
-      NavigationDestination(
-        icon: customIconNavBar(context, icon: CupertinoIcons.chat_bubble),
-        selectedIcon: customIconNavBar(
-          context,
-          isActive: true,
-          icon: CupertinoIcons.chat_bubble_fill,
+      if (getRole() == 'patient')
+        NavigationDestination(
+          icon: customIconNavBar(context, icon: CupertinoIcons.chat_bubble),
+          selectedIcon: customIconNavBar(
+            context,
+            isActive: true,
+            icon: CupertinoIcons.chat_bubble_fill,
+          ),
+          label: 'Chat',
         ),
-        label: 'Chat',
-      ),
       NavigationDestination(
         icon: customIconNavBar(
           context,

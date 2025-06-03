@@ -13,10 +13,12 @@ class ReservationsDoctorDateHeader extends StatelessWidget {
   const ReservationsDoctorDateHeader({
     required this.date,
     required this.appointmentsCount,
+    required this.isExpanded,
     super.key,
   });
   final String date;
   final int appointmentsCount;
+  final bool isExpanded;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,12 @@ class ReservationsDoctorDateHeader extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          topRight: Radius.circular(16.r),
+          bottomLeft: Radius.circular(isExpanded ? 0 : 16.r),
+          bottomRight: Radius.circular(isExpanded ? 0 : 16.r),
+        ),
         boxShadow: [
           BoxShadow(
             color: context.primaryColor.withAlpha(60),
