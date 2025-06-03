@@ -5,6 +5,7 @@ import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/screens/under_build_screen.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
+import 'package:curai_app_mobile/features/appointment_patient/data/models/my_appointment_patient/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/payment_appointment_patient_screen.dart';
@@ -110,7 +111,7 @@ class AppRoutes {
         return BaseRoute(page: const HelpCenterScreen());
       case Routes.rescheduleAppointmentScreen:
         if (arg is Map<String, dynamic>) {
-          final appointmentId = arg['appointmentId'] as int?;
+          final appointment = arg['appointment'] as ResultsMyAppointmentPatient;
           final doctorResults = arg['doctorResults'] as DoctorInfoModel?;
 
           if (doctorResults != null) {
@@ -118,7 +119,7 @@ class AppRoutes {
               page: BlocProvider<AppointmentPatientCubit>(
                 create: (context) => di.sl<AppointmentPatientCubit>(),
                 child: RescaheduleBookAppointmentScreen(
-                  appointmentId: appointmentId!,
+                  appointment: appointment,
                   doctorResults: doctorResults,
                 ),
               ),

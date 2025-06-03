@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart'
     as int_ext;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -6,13 +8,14 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
-import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/services/local_notification/local_notification_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
+import 'package:curai_app_mobile/features/appointment_patient/data/models/my_appointment_patient/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
@@ -26,12 +29,12 @@ class BuildSuccessRescheduleWidget extends StatefulWidget {
   const BuildSuccessRescheduleWidget({
     required this.appointmentAvailableModel,
     required this.doctorResults,
-    required this.appointmentId,
+    required this.appointment,
     super.key,
   });
 
   final AppointmentPatientAvailableModel appointmentAvailableModel;
-  final int appointmentId;
+  final ResultsMyAppointmentPatient appointment;
   final DoctorInfoModel doctorResults;
 
   @override
@@ -115,6 +118,7 @@ class _BuildSuccessRescheduleWidgetState
           builder: (context, state) {
             return CustomButton(
               title: LangKeys.reschedule,
+              isLoading: state is RescheduleAppointmentPatientLoading,
               onPressed: _rescheduleAppointment,
             ).paddingBottom(17);
           },
@@ -200,7 +204,7 @@ class _BuildSuccessRescheduleWidgetState
     );
 
     context.read<AppointmentPatientCubit>().rescheduleAppointmentPatient(
-          appointmentId: widget.appointmentId,
+          appointmentId: widget.appointment.id!,
           params: request,
         );
   }
@@ -221,32 +225,40 @@ class _BuildSuccessRescheduleWidgetState
     return originalMessage;
   }
 
-  void _handleReschedulingStateChanges(
+  Future<void> _handleReschedulingStateChanges(
     BuildContext context,
     AppointmentPatientState state,
-  ) {
+  ) async {
     switch (state) {
-      case ScheduleAppointmentPatientFailure():
+      case RescheduleAppointmentPatientFailure():
         context.pop();
         showMessage(
           context,
           message: _getErrorMessage(state.message),
           type: ToastificationType.error,
         );
-      case ScheduleAppointmentPatientSuccess():
+      case RescheduleAppointmentPatientSuccess():
         context.pop();
         showMessage(
           context,
-          message: context.isStateArabic
-              ? 'تم تغيير الموعد بنجاح'
-              : 'Appointment rescheduled successfully',
+          message: context.translate(LangKeys.rescheduleSuccess),
           type: ToastificationType.success,
         );
+        context.pop();
 
-        context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
-        context.read<AppointmentPatientCubit>().refreshMyAppointmentPatient();
-      case ScheduleAppointmentPatientLoading():
-        AdaptiveDialogs.showLoadingAlertDialog(
+        if (!context.mounted) return;
+        await context
+            .read<AppointmentPatientCubit>()
+            .refreshMyAppointmentPatient();
+
+        await di.sl<LocalNotificationService>().cancelNotificationById(
+              widget.appointment.id!,
+            );
+
+        if (!context.mounted) return;
+        context.pop();
+      case RescheduleAppointmentPatientLoading():
+        await AdaptiveDialogs.showLoadingAlertDialog(
           context: context,
           title: context.translate(LangKeys.reschedule),
         );

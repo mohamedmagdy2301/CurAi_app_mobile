@@ -54,16 +54,17 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
   }
 
   Future<void> _loadNotificationPreferences() async {
-    for (final appointment in widget.appointments) {
-      if (appointment.id != null) {
-        final isActive =
-            await di.sl<LocalNotificationService>().getNotificationStatus(
-                  id: appointment.id!,
-                );
-        isSwitchedMap[appointment.id!] = isActive;
+    setState(() async {
+      for (final appointment in widget.appointments) {
+        if (appointment.id != null) {
+          final isActive =
+              await di.sl<LocalNotificationService>().getNotificationStatus(
+                    id: appointment.id!,
+                  );
+          isSwitchedMap[appointment.id!] = isActive;
+        }
       }
-    }
-    setState(() {});
+    });
   }
 
   @override
@@ -177,30 +178,18 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
       isHalf: true,
       title: LangKeys.reschedule,
       onPressed: () async {
-        // final cubit = context.read<AppointmentPatientCubit>();
-
-        // await cubit.getAppointmentPatientAvailable(
-        //   doctorId: appointment.doctorId!,
-        // );
-        // // Cancel existing notification if any
-        // if (appointment.id != null) {
-        //   await di.sl<LocalNotificationService>().cancelNotificationById(
-        //         appointment.id!,
-        //       );
-        // }
-
-        // // Update notification preference to off for this appointment
-        // if (appointment.id != null) {
-        //   setState(() {
-        //     isSwitchedMap[appointment.id!] = false;
-        //   });
-        // }
+        // Update notification preference to off for this appointment
+        if (appointment.id != null) {
+          setState(() {
+            isSwitchedMap[appointment.id!] = false;
+          });
+        }
 
         await context.pushNamed(
           Routes.rescheduleAppointmentScreen,
           arguments: {
-            'appointmentId': appointment.id,
             'doctorResults': doctorResults,
+            'appointment': appointment,
           },
         );
       },
@@ -247,10 +236,8 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
         });
 
         if (value) {
-          // Enable notification for this appointment
           await _scheduleNotificationForAppointment(appointment);
         } else {
-          // Cancel notification for this appointment
           if (appointment.id != null) {
             await di.sl<LocalNotificationService>().cancelNotificationById(
                   appointment.id!,
@@ -261,7 +248,6 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
     );
   }
 
-  // دالة مجدولة علشان تعمل إشعارات لموعد معين
   Future<void> _scheduleNotificationForAppointment(
     ResultsMyAppointmentPatient appointment,
   ) async {

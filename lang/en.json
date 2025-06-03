@@ -210,6 +210,7 @@
   "no_availability": "There are no dates available",
   "already_booked": "This date is already booked.\nPlease choose another date",
   "schedule": "Schedule",
+  "reschedule_success": "The appointment has been successfully rescheduled.",
   "you": "You",
   "now": "Now"
 }

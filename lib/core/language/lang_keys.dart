@@ -7,6 +7,7 @@ class LangKeys {
   static const String patient = 'patient';
   static const String you = 'you';
   static String schedule = 'schedule';
+  static String rescheduleSuccess = 'reschedule_success';
 
   static const String noAvailability = 'no_availability';
 

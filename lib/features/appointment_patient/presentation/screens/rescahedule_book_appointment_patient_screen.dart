@@ -1,6 +1,7 @@
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
+import 'package:curai_app_mobile/features/appointment_patient/data/models/my_appointment_patient/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/rescahedule_book_appointment_patient/build_success_reschedule_widget.dart';
@@ -13,11 +14,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RescaheduleBookAppointmentScreen extends StatefulWidget {
   const RescaheduleBookAppointmentScreen({
     required this.doctorResults,
-    required this.appointmentId,
+    required this.appointment,
     super.key,
   });
   final DoctorInfoModel doctorResults;
-  final int appointmentId;
+  final ResultsMyAppointmentPatient appointment;
 
   @override
   State<RescaheduleBookAppointmentScreen> createState() =>
@@ -53,7 +54,7 @@ class _RescaheduleBookAppointmentScreenState
             return BuildSuccessRescheduleWidget(
               appointmentAvailableModel: state.appointmentAvailableModel,
               doctorResults: widget.doctorResults,
-              appointmentId: widget.appointmentId,
+              appointment: widget.appointment,
             );
           } else if (state is AppointmentPatientAvailableFailure) {
             return BuildErrorScheduleWidget(message: state.message);
