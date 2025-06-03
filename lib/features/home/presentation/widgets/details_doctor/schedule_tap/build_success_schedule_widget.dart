@@ -112,7 +112,10 @@ class _BuildSuccessScheduleWidgetState
           listener: _handleSchedulingStateChanges,
           builder: (context, state) {
             return CustomButton(
-              title: LangKeys.bookAppointment,
+              title: '${context.translate(LangKeys.bookAppointment)}  '
+                  '${widget.doctorResults.consultationPrice?.split('.')[0] ?? '0'} '
+                  '${context.translate(LangKeys.egp)}',
+              isNoLang: true,
               colorBackground: context.primaryColor,
               onPressed: _scheduleAppointment,
             ).paddingBottom(17);

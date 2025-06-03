@@ -9,7 +9,7 @@ import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_mode
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/custom_appbar_details_doctor.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/header_details_doctor_widget.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/location_tap.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/location_tap/location_tap.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/reviews_tap.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/schedule_tap/schedule_tap.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             HeaderDetailsDoctorWidget(doctorResults: widget.doctorResults),
-            20.hSpace,
+            10.hSpace,
             TabBar(
               labelColor: context.primaryColor,
               unselectedLabelColor: context.onPrimaryColor,
@@ -91,7 +91,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
             ),
           ],
         ),
-      ).paddingSymmetric(horizontal: 12, vertical: 5),
+      ).paddingSymmetric(horizontal: 10, vertical: 5),
     );
   }
 }

@@ -24,12 +24,11 @@ class _FlutterMapBuilderState extends State<FlutterMapBuilder> {
   @override
   Widget build(BuildContext context) {
     final getLoctionCubit = context.read<GetLoctionCubit>();
-    // final routeCubit = context.read<RouteCubit>();
     final markers = context.read<GetLoctionCubit>().markers;
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.r),
           child: FlutterMap(
             mapController: getLoctionCubit.mapController,
             options: MapOptions(
@@ -50,23 +49,6 @@ class _FlutterMapBuilderState extends State<FlutterMapBuilder> {
               MarkerLayer(
                 markers: markers,
               ),
-              // if (widget.points.isNotEmpty)
-              //   PolylineLayer(
-              //     polylines: [
-              //       Polyline(
-              //         points: widget.points,
-              //         strokeWidth: 5,
-              //         pattern: StrokePattern.dashed(segments: const [5, 5]),
-              //         gradientColors: [
-              //           Colors.blue.withAlpha(150),
-              //           Colors.red.withAlpha(150),
-              //         ],
-              //         color: Colors.blue,
-              //       ),
-              //     ],
-              //   )
-              // else
-              // const SizedBox(),
             ],
           ),
         ),
@@ -91,23 +73,6 @@ class _FlutterMapBuilderState extends State<FlutterMapBuilder> {
                 color: Colors.grey.shade700,
               ),
             ),
-            // IconButton(
-            //   onPressed: () {
-            //     routeCubit.getDestinationRoute(
-            //       context,
-            //       context.read<GetLoctionCubit>().currentLocation!,
-            //       const LatLng(30.564273, 30.99962),
-            //       context.read<GetLoctionCubit>().markers,
-            //       context.read<GetLoctionCubit>().mapController,
-            //       widget.doctorResults.profilePicture,
-            //     );
-            //   },
-            //   icon: Icon(
-            //     Icons.location_on,
-            //     size: 35.sp,
-            //     color: Colors.grey.shade700,
-            //   ),
-            // ),
           ],
         ),
       ],
