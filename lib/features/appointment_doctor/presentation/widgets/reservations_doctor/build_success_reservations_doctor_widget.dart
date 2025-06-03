@@ -63,24 +63,21 @@ class _BuildSuccessReservationsDoctorWidgetState
         padding: const EdgeInsets.all(16),
         itemCount: sortedDates.length,
         itemBuilder: (context, index) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildDateHeader(sortedDates[index]),
-              12.hSpace,
-              _buildAppointmentsList(
-                widget.appointments[sortedDates[index]]!,
-              ),
-            ],
+          return _buildDateExpansionTile(
+            sortedDates[index],
+            widget.appointments[sortedDates[index]]!,
           );
         },
       ),
     );
   }
 
-  Widget _buildDateHeader(String date) {
+  Widget _buildDateExpansionTile(
+    String date,
+    List<ReservationsDoctorModel> appointments,
+  ) {
     return Container(
-      padding: context.padding(horizontal: 20, vertical: 16),
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -102,44 +99,68 @@ class _BuildSuccessReservationsDoctorWidgetState
           ),
         ],
       ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: context.backgroundColor.withAlpha(70),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Icon(
-              Icons.calendar_month_rounded,
-              color: Colors.white,
-              size: 24.sp,
-            ),
-          ),
-          12.wSpace,
-          AutoSizeText(
-            date.toFullWithWeekdayTwoLine(context),
-            maxLines: 2,
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyleApp.semiBold18().copyWith(
-              color: Colors.white,
-            ),
-          ),
-          const Spacer(),
-          Container(
-            padding: context.padding(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: context.backgroundColor.withAlpha(60),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: AutoSizeText(
-              '${widget.appointments[date]!.length} ${context.translate(LangKeys.appointments)}',
-              style: TextStyleApp.medium12().copyWith(
+      child: ExpansionTile(
+        tilePadding: context.padding(horizontal: 20, vertical: 8),
+        childrenPadding: const EdgeInsets.only(bottom: 16),
+        backgroundColor: Colors.transparent, // خلفية شفافة عند التوسع
+        collapsedBackgroundColor: Colors.transparent, // خلفية شفافة عند الطي
+        iconColor: Colors.white,
+        collapsedIconColor: Colors.white,
+
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: context.backgroundColor.withAlpha(70),
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Icon(
+                Icons.calendar_month_rounded,
                 color: Colors.white,
+                size: 24.sp,
               ),
             ),
-          ),
+            12.wSpace,
+            Expanded(
+              child: AutoSizeText(
+                date.toFullWithWeekdayTwoLine(context),
+                maxLines: 2,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyleApp.semiBold18().copyWith(
+                  color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withAlpha(100),
+                      offset: const Offset(1, 1),
+                      blurRadius: 2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: context.padding(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: context.backgroundColor.withAlpha(60),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Colors.white.withAlpha(40),
+                ),
+              ),
+              child: AutoSizeText(
+                '${appointments.length} ${context.translate(LangKeys.appointments)}',
+                style: TextStyleApp.medium12().copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+        children: [
+          _buildAppointmentsList(appointments),
         ],
       ),
     );
