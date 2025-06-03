@@ -58,10 +58,7 @@ class AppointmentPatientCardWidget extends StatelessWidget {
             Row(
               children: [
                 AutoSizeText(
-                  appointment.appointmentDate?.toReadableDate(context) ??
-                      (context.isStateArabic
-                          ? 'تاريخ غير محدد'
-                          : 'Date not specified'),
+                  appointment.appointmentDate?.toReadableDate(context) ?? '',
                   style: TextStyleApp.semiBold18()
                       .copyWith(color: context.onPrimaryColor),
                 ),

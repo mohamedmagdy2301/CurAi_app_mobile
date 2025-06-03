@@ -109,7 +109,7 @@ class AppRoutes {
         return BaseRoute(page: const PrivacyPolicyScreen());
       case Routes.helpCenterScreen:
         return BaseRoute(page: const HelpCenterScreen());
-      case Routes.bookAppointmentScreen:
+      case Routes.rescheduleAppointmentScreen:
         if (arg is Map<String, dynamic>) {
           final appointmentId = arg['appointmentId'] as int?;
           final doctorResults = arg['doctorResults'] as DoctorInfoModel?;
