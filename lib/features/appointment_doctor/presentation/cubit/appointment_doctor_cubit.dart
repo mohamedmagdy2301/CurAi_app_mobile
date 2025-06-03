@@ -1,5 +1,7 @@
+import 'package:curai_app_mobile/features/appointment_doctor/data/models/appointment_booking_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/add_working_time_doctor_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_appointments_booking_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_working_time_doctor_availble_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/remove_working_time_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/update_working_time_doctor_usecase.dart';
@@ -14,6 +16,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
     this._removeWorkingTimeDoctorUsecase,
     this._addWorkingTimeDoctorUsecase,
     this._updateWorkingTimeDoctorUsecase,
+    this._getAppointmentsBookingDoctorUsecase,
   ) : super(AppointmentDoctorInitial());
 
   final GetWorkingTimeDoctorAvailableUsecase
@@ -21,6 +24,8 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
   final UpdateWorkingTimeDoctorUsecase _updateWorkingTimeDoctorUsecase;
   final AddWorkingTimeDoctorUsecase _addWorkingTimeDoctorUsecase;
   final RemoveWorkingTimeDoctorUsecase _removeWorkingTimeDoctorUsecase;
+  final GetAppointmentsBookingDoctorUsecase
+      _getAppointmentsBookingDoctorUsecase;
   List<WorkingTimeDoctorAvailableModel> workingTimeList = [];
   void resetState() {
     if (isClosed) return;
@@ -124,6 +129,28 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
       if (isClosed) return;
 
       emit(UpdateWorkingTimeDoctorSuccess());
+    });
+    resetState();
+  }
+
+  Future<void> getAppointmentsBookingDoctor() async {
+    if (isClosed) return;
+    emit(GetAppointmentsBookingDoctorLoading());
+
+    final reslute = await _getAppointmentsBookingDoctorUsecase.call(null);
+
+    reslute.fold((message) {
+      if (isClosed) return;
+
+      emit(GetAppointmentsBookingDoctorFailure(message: message));
+    }, (appointments) {
+      if (appointments.isEmpty) {
+        if (isClosed) return;
+        emit(GetAppointmentsBookingDoctorEmpty());
+      } else {
+        if (isClosed) return;
+        emit(GetAppointmentsBookingDoctorSuccess(appointments: appointments));
+      }
     });
     resetState();
   }

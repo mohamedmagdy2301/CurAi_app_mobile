@@ -81,7 +81,7 @@ class AppointmentDoctorRepoImpl extends AppointmentDoctorRepo {
 
   @override
   Future<Either<String, Map<String, List<AppointmentBookingDoctorModel>>>>
-      getAppointmentBookingDoctor() async {
+      getAppointmentsBookingDoctor() async {
     final response = await remoteDataSource.getAppointmentBookingDoctor();
 
     return response.fold(

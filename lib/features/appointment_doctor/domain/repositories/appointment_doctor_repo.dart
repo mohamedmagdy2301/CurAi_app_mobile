@@ -23,5 +23,5 @@ abstract class AppointmentDoctorRepo {
   });
 
   Future<Either<String, Map<String, List<AppointmentBookingDoctorModel>>>>
-      getAppointmentBookingDoctor();
+      getAppointmentsBookingDoctor();
 }
