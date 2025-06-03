@@ -7,7 +7,6 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
-import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
@@ -107,19 +106,18 @@ class _BuildSuccessScheduleWidgetState
             ),
           ],
         ).expand(),
-        if (getRole() == 'patient')
-          BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
-            listenWhen: _shouldListenForScheduling,
-            buildWhen: _shouldRebuildForScheduling,
-            listener: _handleSchedulingStateChanges,
-            builder: (context, state) {
-              return CustomButton(
-                title: LangKeys.bookAppointment,
-                colorBackground: context.primaryColor,
-                onPressed: _scheduleAppointment,
-              ).paddingBottom(17);
-            },
-          ),
+        BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
+          listenWhen: _shouldListenForScheduling,
+          buildWhen: _shouldListenForScheduling,
+          listener: _handleSchedulingStateChanges,
+          builder: (context, state) {
+            return CustomButton(
+              title: LangKeys.bookAppointment,
+              colorBackground: context.primaryColor,
+              onPressed: _scheduleAppointment,
+            ).paddingBottom(17);
+          },
+        ),
       ],
     );
   }
@@ -212,15 +210,6 @@ class _BuildSuccessScheduleWidgetState
     return current is ScheduleAppointmentPatientFailure ||
         current is ScheduleAppointmentPatientLoading ||
         current is ScheduleAppointmentPatientSuccess;
-  }
-
-  bool _shouldRebuildForScheduling(
-    AppointmentPatientState previous,
-    AppointmentPatientState current,
-  ) {
-    return current is ScheduleAppointmentPatientLoading ||
-        current is ScheduleAppointmentPatientSuccess ||
-        current is ScheduleAppointmentPatientFailure;
   }
 
   String _getErrorMessage(String originalMessage) {

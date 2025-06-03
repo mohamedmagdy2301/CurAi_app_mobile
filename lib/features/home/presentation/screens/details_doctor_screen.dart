@@ -43,7 +43,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: (getRole() == 'patient') ? 3 : 2,
       child: Scaffold(
         appBar: CustomAppBarDetailsDoctor(doctor: widget.doctorResults),
         body: Column(
@@ -73,7 +73,8 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                 });
               },
               tabs: [
-                Tab(text: context.translate(LangKeys.schedule)),
+                if (getRole() == 'patient')
+                  Tab(text: context.translate(LangKeys.schedule)),
                 Tab(text: context.translate(LangKeys.location)),
                 Tab(text: context.translate(LangKeys.reviews)),
               ],
@@ -81,7 +82,8 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  ScheduleTap(doctorResults: widget.doctorResults),
+                  if (getRole() == 'patient')
+                    ScheduleTap(doctorResults: widget.doctorResults),
                   LocationTap(doctorResults: widget.doctorResults),
                   ReviewsTap(doctorResults: widget.doctorResults),
                 ],
