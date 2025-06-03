@@ -3,6 +3,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
@@ -10,7 +11,9 @@ import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
+import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
+import 'package:curai_app_mobile/core/utils/widgets/image_full_screen.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,8 +30,14 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10.r),
+        InkWell(
+          borderRadius: BorderRadius.circular(20.r),
+          onTap: () {
+            showImageViewerFullScreen(
+              context,
+              imageUrl: doctorResults.profilePicture ?? '',
+            );
+          },
           child: CustomCachedNetworkImage(
             imgUrl:
                 doctorResults.profilePicture ?? AppImages.avatarOnlineDoctor,
@@ -36,7 +45,7 @@ class HeaderDetailsDoctorWidget extends StatelessWidget {
             height: context.H * 0.19,
             loadingImgPadding: 60.sp,
             errorIconSize: 60.sp,
-          ),
+          ).cornerRadiusWithClipRRect(20.r),
         ),
         10.wSpace,
         Column(
@@ -73,14 +82,36 @@ class DoctorDetailsHeader extends StatelessWidget {
     final infoWidgets = <Widget>[];
 
     if (doctorResults.bio != null) {
-      return AutoSizeText(
-        doctorResults.bio!,
-        maxLines: 4,
-        textAlign: TextAlign.start,
-        overflow: TextOverflow.ellipsis,
-        minFontSize: 16,
-        style: TextStyleApp.medium16().copyWith(
-          color: context.onSecondaryColor,
+      return InkWell(
+        focusColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        borderRadius: BorderRadius.circular(8.r),
+        onTap: () {
+          AdaptiveDialogs.showOkAlertDialog(
+            context: context,
+            title: context.translate(LangKeys.bio),
+            onPressed: () => context.pop(),
+            message: SingleChildScrollView(
+              child: Text(
+                doctorResults.bio!,
+                style: TextStyleApp.medium18().copyWith(
+                  color: context.onSecondaryColor,
+                ),
+              ),
+            ),
+          );
+        },
+        child: AutoSizeText(
+          doctorResults.bio!,
+          maxLines: 4,
+          textAlign: TextAlign.start,
+          overflow: TextOverflow.ellipsis,
+          minFontSize: 16,
+          style: TextStyleApp.medium16().copyWith(
+            color: context.onSecondaryColor,
+          ),
         ),
       );
     }
