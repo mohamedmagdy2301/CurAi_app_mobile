@@ -1,7 +1,7 @@
-import 'package:curai_app_mobile/features/appointment_doctor/data/models/appointment_booking_model.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/data/models/reservations_doctor_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/add_working_time_doctor_usecase.dart';
-import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_appointments_booking_doctor_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_reservations_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/get_working_time_doctor_availble_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/remove_working_time_doctor_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/usecases/update_working_time_doctor_usecase.dart';
@@ -16,7 +16,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
     this._removeWorkingTimeDoctorUsecase,
     this._addWorkingTimeDoctorUsecase,
     this._updateWorkingTimeDoctorUsecase,
-    this._getAppointmentsBookingDoctorUsecase,
+    this._getReservationsDoctorUsecase,
   ) : super(AppointmentDoctorInitial());
 
   final GetWorkingTimeDoctorAvailableUsecase
@@ -24,8 +24,7 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
   final UpdateWorkingTimeDoctorUsecase _updateWorkingTimeDoctorUsecase;
   final AddWorkingTimeDoctorUsecase _addWorkingTimeDoctorUsecase;
   final RemoveWorkingTimeDoctorUsecase _removeWorkingTimeDoctorUsecase;
-  final GetAppointmentsBookingDoctorUsecase
-      _getAppointmentsBookingDoctorUsecase;
+  final GetReservationsDoctorUsecase _getReservationsDoctorUsecase;
   List<WorkingTimeDoctorAvailableModel> workingTimeList = [];
   void resetState() {
     if (isClosed) return;
@@ -133,23 +132,23 @@ class AppointmentDoctorCubit extends Cubit<AppointmentDoctorState> {
     resetState();
   }
 
-  Future<void> getAppointmentsBookingDoctor() async {
+  Future<void> getReservationsDoctor() async {
     if (isClosed) return;
-    emit(GetAppointmentsBookingDoctorLoading());
+    emit(GetReservationsDoctorLoading());
 
-    final reslute = await _getAppointmentsBookingDoctorUsecase.call(null);
+    final reslute = await _getReservationsDoctorUsecase.call(null);
 
     reslute.fold((message) {
       if (isClosed) return;
 
-      emit(GetAppointmentsBookingDoctorFailure(message: message));
+      emit(GetReservationsDoctorFailure(message: message));
     }, (appointments) {
       if (appointments.isEmpty) {
         if (isClosed) return;
-        emit(GetAppointmentsBookingDoctorEmpty());
+        emit(GetReservationsDoctorEmpty());
       } else {
         if (isClosed) return;
-        emit(GetAppointmentsBookingDoctorSuccess(appointments: appointments));
+        emit(GetReservationsDoctorSuccess(appointments: appointments));
       }
     });
     resetState();

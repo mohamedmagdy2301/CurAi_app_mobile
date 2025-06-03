@@ -57,16 +57,16 @@ class UpdateWorkingTimeDoctorFailure extends AppointmentDoctorState {
 }
 
 //! Get Appointments Booking Doctor
-class GetAppointmentsBookingDoctorLoading extends AppointmentDoctorState {}
+class GetReservationsDoctorLoading extends AppointmentDoctorState {}
 
-class GetAppointmentsBookingDoctorEmpty extends AppointmentDoctorState {}
+class GetReservationsDoctorEmpty extends AppointmentDoctorState {}
 
-class GetAppointmentsBookingDoctorSuccess extends AppointmentDoctorState {
-  const GetAppointmentsBookingDoctorSuccess({required this.appointments});
-  final Map<String, List<AppointmentBookingDoctorModel>> appointments;
+class GetReservationsDoctorSuccess extends AppointmentDoctorState {
+  const GetReservationsDoctorSuccess({required this.appointments});
+  final Map<String, List<ReservationsDoctorModel>> appointments;
 }
 
-class GetAppointmentsBookingDoctorFailure extends AppointmentDoctorState {
-  const GetAppointmentsBookingDoctorFailure({required this.message});
+class GetReservationsDoctorFailure extends AppointmentDoctorState {
+  const GetReservationsDoctorFailure({required this.message});
   final String message;
 }

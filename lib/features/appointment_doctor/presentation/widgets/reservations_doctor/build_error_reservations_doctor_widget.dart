@@ -3,8 +3,8 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-class BuildErrorAppointmentsBookingDoctorWidget extends StatelessWidget {
-  const BuildErrorAppointmentsBookingDoctorWidget({
+class BuildErrorReservationsDoctorWidget extends StatelessWidget {
+  const BuildErrorReservationsDoctorWidget({
     required this.message,
     super.key,
   });

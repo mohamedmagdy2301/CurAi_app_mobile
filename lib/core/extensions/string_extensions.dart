@@ -50,6 +50,10 @@ extension StringExtension on String {
   String toFullWithWeekday(BuildContext context) =>
       _format('EEEE، d MMMM y', context);
 
+  /// Converts date to a format like "Monday, Nov 10, 2025" or "الاثنين، 10 نوفمبر 2025".
+  String toFullWithWeekdayTwoLine(BuildContext context) =>
+      _format('EEEE\nd MMMM y', context);
+
   /// Converts date to ISO-like format "2025-11-10".
   String toIsoLikeDate(BuildContext context) => _format('y-MM-dd', context);
 

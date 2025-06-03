@@ -1,5 +1,5 @@
-class AppointmentBookingDoctorModel {
-  AppointmentBookingDoctorModel({
+class ReservationsDoctorModel {
+  ReservationsDoctorModel({
     required this.id,
     required this.patient,
     required this.patientId,
@@ -12,8 +12,8 @@ class AppointmentBookingDoctorModel {
     required this.appointmentTime,
   });
 
-  factory AppointmentBookingDoctorModel.fromJson(Map<String, dynamic> json) {
-    return AppointmentBookingDoctorModel(
+  factory ReservationsDoctorModel.fromJson(Map<String, dynamic> json) {
+    return ReservationsDoctorModel(
       id: json['id'] as int,
       patient: json['patient'] as String,
       patientId: json['patient_id'] as int,
@@ -29,7 +29,7 @@ class AppointmentBookingDoctorModel {
   final int id;
   final String patient;
   final int patientId;
-  final String patientPicture;
+  final String? patientPicture;
   final String doctor;
   final int doctorId;
   final String status;

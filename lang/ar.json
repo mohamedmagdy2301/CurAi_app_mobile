@@ -212,6 +212,10 @@
   "already_booked": "هذا الموعد محجوز بالفعل.\nيرجى اختيار موعد اخر",
   "schedule": "الجدول",
   "reschedule_success": "تم اعادة جدولة الحجز بنجاح",
+  "appointments": "مواعيد",
+  "add_history": "إضافة سجل",
+  "view_history": "عرض السجل",
+  "reservations_doctor": "حجوزات الطبيب",
   "you": "أنت",
   "now": "الآن"
 }

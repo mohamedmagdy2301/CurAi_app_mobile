@@ -211,6 +211,10 @@
   "already_booked": "This date is already booked.\nPlease choose another date",
   "schedule": "Schedule",
   "reschedule_success": "The appointment has been successfully rescheduled.",
+  "appointments": "Appointments",
+  "add_history": "Add History",
+  "view_history": "View History",
+  "reservations_doctor": "Reservations Doctor",
   "you": "You",
   "now": "Now"
 }

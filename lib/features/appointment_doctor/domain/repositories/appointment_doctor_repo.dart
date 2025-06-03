@@ -1,4 +1,4 @@
-import 'package:curai_app_mobile/features/appointment_doctor/data/models/appointment_booking_model.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/data/models/reservations_doctor_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
 import 'package:dartz/dartz.dart';
 
@@ -22,6 +22,6 @@ abstract class AppointmentDoctorRepo {
     required String endTime,
   });
 
-  Future<Either<String, Map<String, List<AppointmentBookingDoctorModel>>>>
-      getAppointmentsBookingDoctor();
+  Future<Either<String, Map<String, List<ReservationsDoctorModel>>>>
+      getReservationsDoctor();
 }

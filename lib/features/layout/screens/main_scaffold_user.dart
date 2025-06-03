@@ -8,7 +8,7 @@ import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.da
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
-import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/appointments_booking_doctor_screen.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/reservations_doctor_screen.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/screens/working_time_doctor_availble_screen.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/screens/my_appointment_patient_screen.dart';
 import 'package:curai_app_mobile/features/chatbot/presentation/screens/chatbot_screen.dart';
@@ -98,7 +98,7 @@ class MainScaffoldUser extends StatelessWidget {
       if (getRole() == 'doctor')
         BlocProvider<AppointmentDoctorCubit>(
           create: (context) => di.sl<AppointmentDoctorCubit>(),
-          child: const AppointmentsBookingDoctorScreen(),
+          child: const ReservationsDoctorScreen(),
         ),
       if (getRole() == 'patient')
         BlocProvider<HomeCubit>(

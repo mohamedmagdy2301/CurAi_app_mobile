@@ -1,5 +1,5 @@
 import 'package:curai_app_mobile/features/appointment_doctor/data/datasources/appointment_doctor_remote_data_source.dart';
-import 'package:curai_app_mobile/features/appointment_doctor/data/models/appointment_booking_model.dart';
+import 'package:curai_app_mobile/features/appointment_doctor/data/models/reservations_doctor_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/working_time_doctor_available/working_time_doctor_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/domain/repositories/appointment_doctor_repo.dart';
 import 'package:dartz/dartz.dart';
@@ -80,21 +80,20 @@ class AppointmentDoctorRepoImpl extends AppointmentDoctorRepo {
   }
 
   @override
-  Future<Either<String, Map<String, List<AppointmentBookingDoctorModel>>>>
-      getAppointmentsBookingDoctor() async {
-    final response = await remoteDataSource.getAppointmentBookingDoctor();
+  Future<Either<String, Map<String, List<ReservationsDoctorModel>>>>
+      getReservationsDoctor() async {
+    final response = await remoteDataSource.getReservationsDoctor();
 
     return response.fold(
       (failure) => left(failure.message),
       (responseData) {
-        final appointmentsByDate =
-            <String, List<AppointmentBookingDoctorModel>>{};
+        final appointmentsByDate = <String, List<ReservationsDoctorModel>>{};
 
         responseData.forEach(
           (date, appointmentsJson) {
             appointmentsByDate[date] = (appointmentsJson as List<dynamic>)
                 .map(
-                  (item) => AppointmentBookingDoctorModel.fromJson(
+                  (item) => ReservationsDoctorModel.fromJson(
                     item as Map<String, dynamic>,
                   ),
                 )
