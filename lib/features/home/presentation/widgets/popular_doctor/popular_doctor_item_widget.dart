@@ -122,7 +122,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
             hoverColor: Colors.transparent,
             icon: Icon(
               isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-              size: 32.sp,
+              size: 30.sp,
               color: isFav
                   ? Colors.redAccent
                   : context.onSecondaryColor.withAlpha(70),
