@@ -38,7 +38,14 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () => _showAddNoteDialog(context),
+            onPressed: () => showDialog<void>(
+              context: context,
+              builder: (context) {
+                return DialogAddHistory(
+                  patientId: widget.patientId,
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -67,21 +74,17 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddNoteDialog(context),
+        onPressed: () => showDialog<void>(
+          context: context,
+          builder: (context) {
+            return DialogAddHistory(
+              patientId: widget.patientId,
+            );
+          },
+        ),
         backgroundColor: Colors.blue.shade700,
         child: const Icon(Icons.add, color: Colors.white),
       ),
-    );
-  }
-
-  void _showAddNoteDialog(BuildContext context) {
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return DialogAddHistory(
-          patientId: widget.patientId,
-        );
-      },
     );
   }
 }
