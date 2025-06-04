@@ -7,17 +7,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DialogAddHistory extends StatefulWidget {
   const DialogAddHistory({
     required this.patientId,
-    required this.noteController,
     super.key,
   });
   final int patientId;
-  final TextEditingController noteController;
 
   @override
   State<DialogAddHistory> createState() => _DialogAddHistoryState();
 }
 
 class _DialogAddHistoryState extends State<DialogAddHistory> {
+  final _noteController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -25,7 +25,7 @@ class _DialogAddHistoryState extends State<DialogAddHistory> {
       child: AlertDialog(
         title: const Text('إضافة ملاحظة جديدة'),
         content: TextField(
-          controller: widget.noteController,
+          controller: _noteController,
           maxLines: 4,
           decoration: InputDecoration(
             hintText: 'اكتب الملاحظة هنا...',
@@ -38,7 +38,7 @@ class _DialogAddHistoryState extends State<DialogAddHistory> {
           TextButton(
             onPressed: () {
               context.pop();
-              widget.noteController.clear();
+              _noteController.clear();
             },
             child: const Text('إلغاء'),
           ),
@@ -50,13 +50,13 @@ class _DialogAddHistoryState extends State<DialogAddHistory> {
                 onPressed: isLoading
                     ? null
                     : () {
-                        if (widget.noteController.text.trim().isNotEmpty) {
+                        if (_noteController.text.trim().isNotEmpty) {
                           context.read<PatientHistoryCubit>().addPatientHistory(
                                 patientId: widget.patientId,
-                                noteHistory: widget.noteController.text.trim(),
+                                noteHistory: _noteController.text.trim(),
                               );
                           context.pop();
-                          widget.noteController.clear();
+                          _noteController.clear();
                         }
                       },
                 style: ElevatedButton.styleFrom(

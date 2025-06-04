@@ -19,20 +19,12 @@ class PatientHistoryScreen extends StatefulWidget {
 }
 
 class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
-  final TextEditingController _noteController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
     context.read<PatientHistoryCubit>().getPatientHistory(
           patientId: widget.patientId,
         );
-  }
-
-  @override
-  void dispose() {
-    _noteController.dispose();
-    super.dispose();
   }
 
   @override
@@ -88,7 +80,6 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
       builder: (context) {
         return DialogAddHistory(
           patientId: widget.patientId,
-          noteController: _noteController,
         );
       },
     );
