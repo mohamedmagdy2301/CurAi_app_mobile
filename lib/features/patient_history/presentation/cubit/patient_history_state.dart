@@ -7,7 +7,7 @@ abstract class PatientHistoryState extends Equatable {
   List<Object> get props => [];
 }
 
-class PatientHistortInitial extends PatientHistoryState {}
+class PatientHistoryInitial extends PatientHistoryState {}
 
 // ! Add Patient History
 
