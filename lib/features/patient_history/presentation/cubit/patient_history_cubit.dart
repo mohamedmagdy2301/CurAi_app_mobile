@@ -6,9 +6,9 @@ import 'package:equatable/equatable.dart';
 
 part 'patient_history_state.dart';
 
-class HistoryCubit extends Cubit<HistoryState> {
-  HistoryCubit(this._getPatientHistoryUsecase, this._addPatientHistoryUsecase)
-      : super(HistoryInitial());
+class PatientHistort extends Cubit<PatientHistoryState> {
+  PatientHistort(this._getPatientHistoryUsecase, this._addPatientHistoryUsecase)
+      : super(PatientHistortInitial());
 
   final GetPatientHistoryUsecase _getPatientHistoryUsecase;
   final AddPatientHistoryUsecase _addPatientHistoryUsecase;

@@ -1,39 +1,39 @@
 part of 'patient_history_cubit.dart';
 
-abstract class HistoryState extends Equatable {
-  const HistoryState();
+abstract class PatientHistoryState extends Equatable {
+  const PatientHistoryState();
 
   @override
   List<Object> get props => [];
 }
 
-class HistoryInitial extends HistoryState {}
+class PatientHistortInitial extends PatientHistoryState {}
 
 // ! Add Patient History
 
-class AddPatientHistoryLoading extends HistoryState {}
+class AddPatientHistoryLoading extends PatientHistoryState {}
 
-class AddPatientHistorySuccess extends HistoryState {
+class AddPatientHistorySuccess extends PatientHistoryState {
   const AddPatientHistorySuccess();
 }
 
-class AddPatientHistoryError extends HistoryState {
+class AddPatientHistoryError extends PatientHistoryState {
   const AddPatientHistoryError({required this.message});
   final String message;
 }
 
 // ! Get Patient History
 
-class GetPatientHistoryLoading extends HistoryState {}
+class GetPatientHistoryLoading extends PatientHistoryState {}
 
-class GetPatientHistorySuccess extends HistoryState {
+class GetPatientHistorySuccess extends PatientHistoryState {
   const GetPatientHistorySuccess({required this.patientHistoryList});
   final List<PatientHistoryModel> patientHistoryList;
 }
 
-class GetPatientHistoryError extends HistoryState {
+class GetPatientHistoryError extends PatientHistoryState {
   const GetPatientHistoryError({required this.message});
   final String message;
 }
 
-class GetPatientHistoryEmpty extends HistoryState {}
+class GetPatientHistoryEmpty extends PatientHistoryState {}
