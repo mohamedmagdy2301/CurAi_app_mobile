@@ -50,19 +50,46 @@ class _BuildSuccessScheduleWidgetState
   }
 
   void _initializeDateTime() {
-    final mergedData = mergeAndSortByDate(widget.appointmentAvailableModel);
-    if (mergedData.isNotEmpty) {
-      _availableDates = mergedData.map((e) => e.date).toList();
-      _selectedDate = mergedData.first.date;
-      _availableTimes = mergedData.first.freeSlots;
+    final allMergedData = mergeAndSortByDate(widget.appointmentAvailableModel);
+
+    final filteredMergedData = allMergedData.where((e) {
+      final futureTimes = _filterFutureTimes(e.freeSlots, e.date);
+      return futureTimes.isNotEmpty;
+    }).toList();
+
+    if (filteredMergedData.isNotEmpty) {
+      _availableDates = filteredMergedData.map((e) => e.date).toList();
+      _selectedDate = filteredMergedData.first.date;
+
+      final filteredTimes =
+          _filterFutureTimes(filteredMergedData.first.freeSlots, _selectedDate);
+
+      _availableTimes = filteredTimes;
       _selectedTime = _availableTimes.isNotEmpty ? _availableTimes.first : null;
     }
   }
 
+  List<String> _filterFutureTimes(List<String> times, DateTime date) {
+    final now = DateTime.now();
+
+    return times.where((timeStr) {
+      final timeParts = timeStr.split(':');
+      final time = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        int.parse(timeParts[0]),
+        int.parse(timeParts[1]),
+      );
+      return time.isAfter(now);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final mergedData = mergeAndSortByDate(widget.appointmentAvailableModel);
-
+    final mergedData = mergeAndSortByDate(widget.appointmentAvailableModel)
+        .where((e) => _filterFutureTimes(e.freeSlots, e.date).isNotEmpty)
+        .toList();
     return Column(
       children: [
         Column(
@@ -167,7 +194,10 @@ class _BuildSuccessScheduleWidgetState
   }
 
   void _handleDateSelection(DateTime picked) {
-    final mergedData = mergeAndSortByDate(widget.appointmentAvailableModel);
+    final mergedData = mergeAndSortByDate(widget.appointmentAvailableModel)
+        .where((e) => _filterFutureTimes(e.freeSlots, e.date).isNotEmpty)
+        .toList();
+
     final matched = mergedData.firstWhere(
       (element) =>
           element.date.year == picked.year &&
@@ -183,9 +213,11 @@ class _BuildSuccessScheduleWidgetState
       ),
     );
 
+    final filteredTimes = _filterFutureTimes(matched.freeSlots, picked);
+
     setState(() {
       _selectedDate = picked;
-      _availableTimes = matched.freeSlots;
+      _availableTimes = filteredTimes;
       _selectedTime = _availableTimes.isNotEmpty ? _availableTimes.first : null;
     });
   }
