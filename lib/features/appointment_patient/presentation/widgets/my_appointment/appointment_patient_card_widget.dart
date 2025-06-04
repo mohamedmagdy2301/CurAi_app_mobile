@@ -19,7 +19,7 @@ import 'package:curai_app_mobile/features/appointment_patient/data/models/my_app
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/home/presentation/screens/details_doctor_screen.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/rateing_doctor_widget.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specialization_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -116,22 +116,52 @@ class AppointmentPatientCardWidget extends StatelessWidget {
         Row(
           children: [
             AutoSizeText(
-              doctorResults.specialization ?? '',
-              style: TextStyleApp.semiBold16()
-                  .copyWith(color: context.onSecondaryColor),
-            ).withWidth(context.W * .25),
+              '${context.translate(LangKeys.specialty)}: ',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.medium14().copyWith(
+                color: context.onPrimaryColor.withAlpha(140),
+              ),
+            ),
             AutoSizeText(
-              '${doctorResults.consultationPrice} '
-              '${context.translate(LangKeys.egp)}',
-              style: TextStyleApp.medium16()
-                  .copyWith(color: context.onSecondaryColor),
-            ).withWidth(context.W * .23),
+              specializationName(
+                doctorResults.specialization,
+                isArabic: context.isStateArabic,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.medium14().copyWith(
+                color: context.onSecondaryColor,
+              ),
+            ),
           ],
         ),
-        RateingDoctorWidget(
-          isToAppointmentScreen: true,
-          doctorResults: doctorResults,
+        Row(
+          children: [
+            AutoSizeText(
+              '${context.translate(LangKeys.consultationPrice)}: ',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.medium14().copyWith(
+                color: context.onPrimaryColor.withAlpha(140),
+              ),
+            ),
+            AutoSizeText(
+              '${doctorResults.consultationPrice!.split('.')[0]} '
+              '${context.translate(LangKeys.egp)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.medium14().copyWith(
+                color: context.onSecondaryColor,
+              ),
+            ),
+          ],
         ),
+
+        // RateingDoctorWidget(
+        //   isToAppointmentScreen: true,
+        //   doctorResults: doctorResults,
+        // ),
       ],
     );
   }
