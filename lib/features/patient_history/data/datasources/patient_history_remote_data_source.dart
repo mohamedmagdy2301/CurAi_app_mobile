@@ -4,7 +4,7 @@ import 'package:curai_app_mobile/core/api/failure.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class PatientHistoryRemoteDataSource {
-  Future<Either<Failure, List<Map<String, dynamic>>>> getPatientHistory({
+  Future<Either<Failure, List<dynamic>>> getPatientHistory({
     required int patientId,
   });
   Future<Either<Failure, Map<String, dynamic>>> addPatientHistory({
@@ -18,22 +18,6 @@ class PatientHistoryRemoteDataSourceImpl
   PatientHistoryRemoteDataSourceImpl({required this.dioConsumer});
   final DioConsumer dioConsumer;
 
-  Future<Either<Failure, Map<String, dynamic>>> getAppointmentPatientAvailable({
-    required int doctorId,
-  }) async {
-    final response = await dioConsumer.get(
-      EndPoints.getAppointmentAvailable,
-      queryParameters: {'doctor_id': doctorId},
-    );
-
-    return response.fold(
-      left,
-      (r) {
-        return right(r as Map<String, dynamic>);
-      },
-    );
-  }
-
   @override
   Future<Either<Failure, Map<String, dynamic>>> addPatientHistory({
     required int patientId,
@@ -41,7 +25,7 @@ class PatientHistoryRemoteDataSourceImpl
   }) async {
     final response = await dioConsumer.post(
       EndPoints.addHistory(patientId),
-      queryParameters: {'notes': noteHistory},
+      body: {'notes': noteHistory},
     );
 
     return response.fold(
@@ -53,7 +37,7 @@ class PatientHistoryRemoteDataSourceImpl
   }
 
   @override
-  Future<Either<Failure, List<Map<String, dynamic>>>> getPatientHistory({
+  Future<Either<Failure, List<dynamic>>> getPatientHistory({
     required int patientId,
   }) async {
     final response = await dioConsumer.get(
@@ -63,7 +47,7 @@ class PatientHistoryRemoteDataSourceImpl
     return response.fold(
       left,
       (r) {
-        return right(r as List<Map<String, dynamic>>);
+        return right(r as List<dynamic>);
       },
     );
   }

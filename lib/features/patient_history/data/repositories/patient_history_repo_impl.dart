@@ -39,7 +39,11 @@ class PatientHistoryRepoImpl extends PatientHistoryRepo {
       (responseData) {
         final patientHistoryList = <PatientHistoryModel>[];
         for (var i = 0; i < responseData.length; i++) {
-          patientHistoryList.add(PatientHistoryModel.fromJson(responseData[i]));
+          patientHistoryList.add(
+            PatientHistoryModel.fromJson(
+              responseData[i] as Map<String, dynamic>,
+            ),
+          );
         }
         return right(patientHistoryList);
       },
