@@ -49,11 +49,22 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.language_outlined,
               title: LangKeys.changeLanguage,
               onTap: () {
-                AdaptiveDialogs.showAlertDialogWithWidget(
+                showModalBottomSheet<void>(
                   context: context,
-                  title: context.translate(LangKeys.changeLanguage),
-                  widget: const LocalizeWidget(),
+                  backgroundColor: context.backgroundColor,
+                  barrierColor: context.onPrimaryColor.withAlpha(60),
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20.r)),
+                  ),
+                  builder: (_) => const EnhancedLocalizeWidget(),
                 );
+                // AdaptiveDialogs.showAlertDialogWithWidget(
+                //   context: context,
+                //   title: context.translate(LangKeys.changeLanguage),
+                //   widget: const EnhancedLocalizeWidget(),
+                // );
               },
             ),
             _buildDivider(context),
