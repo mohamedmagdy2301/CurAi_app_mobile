@@ -3,13 +3,13 @@ import 'package:curai_app_mobile/features/patient_history/domain/repositories/pa
 import 'package:dartz/dartz.dart';
 
 class GetPatientHistoryUsecase {
-  GetPatientHistoryUsecase({required this.patientHistoryRepo});
-  final PatientHistoryRepo patientHistoryRepo;
+  GetPatientHistoryUsecase({required this.repository});
+  final PatientHistoryRepo repository;
 
   Future<Either<String, List<PatientHistoryModel>>> call({
     required int patientId,
   }) async {
-    return patientHistoryRepo.getPatientHistory(
+    return repository.getPatientHistory(
       patientId: patientId,
     );
   }
