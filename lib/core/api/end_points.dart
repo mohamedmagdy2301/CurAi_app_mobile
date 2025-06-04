@@ -21,4 +21,8 @@ class EndPoints {
       '/doctor_panal_availabilities/appointments_by_day/';
 
   static const String getTopDoctor = '/api/top-doctors/';
+
+  static String addHistory(int id) => '/api/patients/$id/add-history/';
+
+  static String getHistory(int id) => '/api/patients/$id/history/';
 }
