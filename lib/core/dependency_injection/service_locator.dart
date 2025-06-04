@@ -4,6 +4,7 @@ import 'package:curai_app_mobile/core/dependency_injection/auth_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/chatbot_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/core_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/home_di.dart';
+import 'package:curai_app_mobile/core/dependency_injection/patient_history_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/reviews_di.dart';
 import 'package:curai_app_mobile/core/dependency_injection/search_di.dart';
 import 'package:get_it/get_it.dart';
@@ -36,4 +37,7 @@ Future<void> initializeServiceLocator() async {
 
   /// appointment doctor feature dependencies
   setupAppointmentDoctorDI();
+
+  /// patient history feature dependencies
+  setupPatientHistoryDI();
 }
