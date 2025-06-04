@@ -1,8 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:curai_app_mobile/features/patient_history/data/models/patient_history_model.dart';
 import 'package:curai_app_mobile/features/patient_history/domain/usecases/add_patient_history_usecase.dart';
 import 'package:curai_app_mobile/features/patient_history/domain/usecases/get_patient_history_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'patient_history_state.dart';
 
