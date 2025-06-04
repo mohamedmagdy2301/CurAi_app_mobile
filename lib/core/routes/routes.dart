@@ -28,4 +28,6 @@ class Routes {
   static const String emergencyDepartment = '/emergencyDepartment';
   static const String favoriteScreen = '/favoriteScreen';
   static const String paymentGatewayScreen = '/paymentGatewayScreen';
+
+  static const String patientHistoryScreen = '/patientHistoryScreen';
 }

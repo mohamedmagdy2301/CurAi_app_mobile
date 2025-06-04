@@ -26,6 +26,8 @@ import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/hom
 import 'package:curai_app_mobile/features/home/presentation/screens/doctor_speciality_screen.dart';
 import 'package:curai_app_mobile/features/layout/screens/main_scaffold_user.dart';
 import 'package:curai_app_mobile/features/onboarding/onboarding_screen.dart';
+import 'package:curai_app_mobile/features/patient_history/presentation/cubit/patient_history_cubit.dart';
+import 'package:curai_app_mobile/features/patient_history/presentation/screens/patient_history_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/favorites_doctor_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/help_center_screen.dart';
 import 'package:curai_app_mobile/features/profile/presentation/screens/privacy_policy_screen.dart';
@@ -127,6 +129,20 @@ class AppRoutes {
           } else {
             return BaseRoute(page: const PageUnderBuildScreen());
           }
+        }
+        return BaseRoute(page: const PageUnderBuildScreen());
+      case Routes.patientHistoryScreen:
+        if (arg is Map<String, dynamic>) {
+          final patientId = arg['patientId'] as int;
+
+          return BaseRoute(
+            page: BlocProvider<PatientHistoryCubit>(
+              create: (context) => di.sl<PatientHistoryCubit>(),
+              child: PatientHistoryScreen(
+                patientId: patientId,
+              ),
+            ),
+          );
         }
         return BaseRoute(page: const PageUnderBuildScreen());
 
