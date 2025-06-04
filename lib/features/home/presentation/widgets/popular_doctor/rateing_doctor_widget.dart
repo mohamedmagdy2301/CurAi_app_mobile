@@ -49,14 +49,14 @@ class _RateingDoctorWidgetState extends State<RateingDoctorWidget> {
               ),
               8.wSpace,
               AutoSizeText(
-                context.isStateArabic ? 'لا يوجد تقييمات' : 'No DoctorReviews',
+                context.isStateArabic ? 'لا يوجد تقييمات' : 'No Reviews',
                 style: TextStyleApp.regular14().copyWith(
                   color: context.onSecondaryColor.withAlpha(100),
                 ),
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-              ),
+              ).withWidth(context.W * .22),
             ],
           )
         : Row(

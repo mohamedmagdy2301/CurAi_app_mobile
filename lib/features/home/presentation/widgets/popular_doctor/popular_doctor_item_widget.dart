@@ -80,7 +80,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       style: TextStyleApp.semiBold22().copyWith(
                         color: context.onPrimaryColor,
                       ),
-                    ).withWidth(context.W * .55),
+                    ).withWidth(context.W * .52),
                     AutoSizeText(
                       '${context.translate(LangKeys.consultationPrice)}: '
                       '${widget.doctorResults.consultationPrice!.split('.')[0]} '
@@ -91,7 +91,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       style: TextStyleApp.medium16().copyWith(
                         color: context.onSecondaryColor,
                       ),
-                    ).withWidth(context.W * .55),
+                    ).withWidth(context.W * .54),
                     AutoSizeText(
                       specializationName(
                         widget.doctorResults.specialization ?? '',
