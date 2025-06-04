@@ -71,18 +71,19 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
             color: context.onPrimaryColor.withAlpha(180),
           ),
         ).paddingSymmetric(horizontal: 15),
-        10.hSpace,
+        20.hSpace,
         GridView.builder(
           itemCount: widget.availableTimes.length,
           scrollDirection: Axis.horizontal,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: .9,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            mainAxisExtent: 90,
           ),
           itemBuilder: (context, index) {
             return InkWell(
+              borderRadius: BorderRadius.circular(16.r),
               onTap: () => selectAvailableTime(widget.availableTimes[index]),
               child: Container(
                 decoration: BoxDecoration(
@@ -95,7 +96,7 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
                 child: AutoSizeText(
                   widget.availableTimes[index].toLocalizedTime(context),
                   maxLines: 1,
-                  style: TextStyleApp.medium18().copyWith(
+                  style: TextStyleApp.medium16().copyWith(
                     color: index == selectedIndex
                         ? Colors.white
                         : context.onSecondaryColor,
