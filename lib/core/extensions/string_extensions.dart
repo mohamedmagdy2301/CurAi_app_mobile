@@ -96,7 +96,7 @@ extension StringExtension on String {
   /// ```dart
   /// final formatted = "14:30".toLocalizedTime(context); // ٢:٣٠ م or 2:30 PM
   /// ```
-  String toLocalizedTime(BuildContext context) {
+  String toLocalizedTime(BuildContext context, {bool? isTwoLine}) {
     // Split the string by ':' to handle hour, minute, and optional second
     final parts = split(':');
 
@@ -117,8 +117,44 @@ extension StringExtension on String {
     // Determine the locale based on the context (Arabic or English)
     final locale = context.isStateArabic ? 'ar' : 'en';
 
-    // Return the formatted time (e.g., "2:30 PM" or "٢:٣٠ م")
-    return DateFormat('hh:mm a', locale).format(dateTime);
+    // Return the formatted time (e.g., "2:30 " or "٢:٣٠ م")
+    return DateFormat(isTwoLine ?? false ? 'hh:mm\na' : 'hh:mm a', locale)
+        .format(dateTime);
+  }
+
+  String toLocalizedTimeWordDay(BuildContext context, {bool? isTwoLine}) {
+    // Split the string by ':' to handle hour, minute, and optional second
+    final parts = split(':');
+
+    // Ensure at least hour and minute are present
+    if (parts.length < 2) return '';
+
+    final hour = int.tryParse(parts[0]) ?? 0;
+    final minute = int.tryParse(parts[1]) ?? 0;
+    final second = (parts.length == 3) ? int.tryParse(parts[2]) ?? 0 : 0;
+
+    // Get the current date and create a DateTime object with the provided time
+    final now = DateTime.now();
+    final dateTime =
+        DateTime(now.year, now.month, now.day, hour, minute, second);
+
+    // Determine the locale based on the context (Arabic or English)
+    final isArabic = context.isStateArabic;
+    final locale = isArabic ? 'ar' : 'en';
+
+    // Format the time without the period (AM/PM)
+    final timeFormat =
+        DateFormat(isTwoLine ?? false ? 'h:mm' : 'hh:mm', locale);
+    final formattedTime = timeFormat.format(dateTime);
+
+    // Decide full period string
+    final isAm = dateTime.hour < 12;
+    final period =
+        isArabic ? (isAm ? 'صباحًا' : 'مساءً') : (isAm ? 'Morning' : 'Night');
+
+    return isTwoLine ?? false
+        ? '$formattedTime\n$period'
+        : '$formattedTime $period';
   }
 
   // ============== Helper Methods ============== //

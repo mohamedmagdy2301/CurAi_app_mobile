@@ -71,7 +71,7 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
             color: context.onPrimaryColor.withAlpha(180),
           ),
         ).paddingSymmetric(horizontal: 15),
-        20.hSpace,
+        15.hSpace,
         GridView.builder(
           itemCount: widget.availableTimes.length,
           scrollDirection: Axis.horizontal,
@@ -94,9 +94,13 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
                 ),
                 alignment: Alignment.center,
                 child: AutoSizeText(
-                  widget.availableTimes[index].toLocalizedTime(context),
-                  maxLines: 1,
-                  style: TextStyleApp.medium16().copyWith(
+                  widget.availableTimes[index]
+                      .toLocalizedTimeWordDay(context, isTwoLine: true),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyleApp.medium(
+                    context.isStateArabic ? 16 : 14,
+                  ).copyWith(
                     color: index == selectedIndex
                         ? Colors.white
                         : context.onSecondaryColor,
@@ -106,7 +110,7 @@ class _AvailableTimeWidgetState extends State<AvailableTimeWidget> {
             );
           },
         ).expand(),
-        10.hSpace,
+        20.hSpace,
       ],
     ).expand();
   }

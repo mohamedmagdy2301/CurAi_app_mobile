@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/helper/to_arabic_number.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
@@ -104,12 +105,19 @@ class _AvailbleDatesWidgetState extends State<AvailbleDatesWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: context.H * 0.11,
+      height: context.H * 0.12,
       child: Row(
         children: [
           IconButton(
+            alignment: context.isStateArabic
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
             padding: EdgeInsets.zero,
-            icon: const Icon(Icons.chevron_left),
+            icon: Icon(
+              Icons.chevron_left,
+              size: 30.sp,
+              color: context.onPrimaryColor,
+            ),
             onPressed: goToPreviousDay,
           ),
           Expanded(
@@ -143,12 +151,13 @@ class _AvailbleDatesWidgetState extends State<AvailbleDatesWidget> {
 
                 final isSelected = index == selectedIndex;
 
-                return GestureDetector(
+                return InkWell(
+                  borderRadius: BorderRadius.circular(12.r),
                   onTap: () => selectDay(index),
                   child: Container(
                     key: _itemKeys[index],
-                    width: context.W * 0.165,
-                    margin: EdgeInsets.symmetric(horizontal: 6.w),
+                    padding: context.padding(horizontal: 6),
+                    margin: context.padding(horizontal: 6),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? context.primaryColor
@@ -158,35 +167,33 @@ class _AvailbleDatesWidgetState extends State<AvailbleDatesWidget> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: context.W * 0.15,
-                          child: AutoSizeText(
-                            context.isStateArabic ? weekdayAr : weekdayEn,
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyleApp.medium16().copyWith(
-                              color: isSelected
-                                  ? Colors.white
-                                  : context.onPrimaryColor.withAlpha(180),
-                            ),
+                        AutoSizeText(
+                          context.isStateArabic ? weekdayAr : weekdayEn,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyleApp.medium16().copyWith(
+                            color: isSelected
+                                ? Colors.white
+                                : context.onPrimaryColor.withAlpha(180),
                           ),
-                        ),
+                        ).withWidth(context.W * 0.15),
                         3.hSpace,
-                        SizedBox(
-                          width: context.W * 0.15,
-                          child: AutoSizeText(
-                            "${toArabicNumber(date.day.toString().padLeft(2, '0'))}/${toArabicNumber(date.month.toString().padLeft(2, '0'))}",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: TextStyleApp.medium16().copyWith(
-                              color: isSelected
-                                  ? Colors.white
-                                  : context.onPrimaryColor.withAlpha(180),
-                            ),
+                        AutoSizeText(
+                          context.isStateArabic
+                              ? "${toArabicNumber(date.day.toString().padLeft(2, '0'))}/${toArabicNumber(date.month.toString().padLeft(2, '0'))}"
+                              : "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: TextStyleApp.medium(
+                            context.isStateArabic ? 16 : 14,
+                          ).copyWith(
+                            color: isSelected
+                                ? Colors.white
+                                : context.onPrimaryColor.withAlpha(180),
                           ),
-                        ),
+                        ).withWidth(context.W * 0.15),
                       ],
                     ),
                   ),
@@ -196,7 +203,14 @@ class _AvailbleDatesWidgetState extends State<AvailbleDatesWidget> {
           ),
           IconButton(
             padding: EdgeInsets.zero,
-            icon: const Icon(Icons.chevron_right),
+            alignment: context.isStateArabic
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
+            icon: Icon(
+              Icons.chevron_right,
+              size: 30.sp,
+              color: context.onPrimaryColor,
+            ),
             onPressed: goToNextDay,
           ),
         ],

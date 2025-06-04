@@ -97,6 +97,9 @@ class DoctorDetailsHeader extends StatelessWidget {
             message: SingleChildScrollView(
               child: Text(
                 doctorResults.bio!,
+                textDirection: doctorResults.bio!.isArabicFormat
+                    ? TextDirection.rtl
+                    : TextDirection.ltr,
                 style: TextStyleApp.medium18().copyWith(
                   color: context.onSecondaryColor,
                 ),
@@ -110,6 +113,9 @@ class DoctorDetailsHeader extends StatelessWidget {
           textAlign: TextAlign.start,
           overflow: TextOverflow.ellipsis,
           minFontSize: 16,
+          textDirection: doctorResults.bio!.isArabicFormat
+              ? TextDirection.rtl
+              : TextDirection.ltr,
           style: TextStyleApp.medium16().copyWith(
             color: context.onSecondaryColor,
           ),
