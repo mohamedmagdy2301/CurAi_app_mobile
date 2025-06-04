@@ -45,7 +45,7 @@ class BuildAppointmentsList extends StatefulWidget {
 }
 
 class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
-  final Map<int, bool> isSwitchedMap = {};
+  Map<int, bool> isSwitchedMap = {};
 
   @override
   void initState() {
@@ -54,16 +54,20 @@ class _BuildAppointmentsListState extends State<BuildAppointmentsList> {
   }
 
   Future<void> _loadNotificationPreferences() async {
-    setState(() async {
-      for (final appointment in widget.appointments) {
-        if (appointment.id != null) {
-          final isActive =
-              await di.sl<LocalNotificationService>().getNotificationStatus(
-                    id: appointment.id!,
-                  );
-          isSwitchedMap[appointment.id!] = isActive;
-        }
+    final tempMap = <int, bool>{};
+
+    for (final appointment in widget.appointments) {
+      if (appointment.id != null) {
+        final isActive =
+            await di.sl<LocalNotificationService>().getNotificationStatus(
+                  id: appointment.id!,
+                );
+        tempMap[appointment.id!] = isActive;
       }
+    }
+
+    setState(() {
+      isSwitchedMap = tempMap;
     });
   }
 
