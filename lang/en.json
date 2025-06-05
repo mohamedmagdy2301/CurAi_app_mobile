@@ -228,5 +228,7 @@
   "history_patient": "History Patient",
   "write_note_here": "Write note here...",
   "statistics": "Statistics",
+  "no_history_description": "Click the + button to add a new note",
+  "no_history": "There is no history yet",
   "now": "Now"
 }

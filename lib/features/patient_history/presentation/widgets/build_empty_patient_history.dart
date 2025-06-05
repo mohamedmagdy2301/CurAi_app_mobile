@@ -1,5 +1,11 @@
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BuildEmptyPatientHistory extends StatelessWidget {
   const BuildEmptyPatientHistory({super.key});
@@ -10,27 +16,25 @@ class BuildEmptyPatientHistory extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(
-          Icons.history,
-          size: 80,
-          color: Colors.grey.shade400,
+          Icons.history_rounded,
+          size: 150.sp,
+          color: context.onSecondaryColor.withAlpha(80),
         ),
-        const SizedBox(height: 16),
+        20.hSpace,
         Text(
-          'لا يوجد تاريخ طبي',
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.grey.shade600,
-            fontWeight: FontWeight.w500,
+          context.translate(LangKeys.noHistory),
+          style: TextStyleApp.medium26().copyWith(
+            color: context.onSecondaryColor.withAlpha(100),
           ),
         ),
-        const SizedBox(height: 8),
+        12.hSpace,
         Text(
-          'اضغط على زر + لإضافة ملاحظة جديدة',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey.shade500,
+          context.translate(LangKeys.noHistoryDescription),
+          style: TextStyleApp.regular14().copyWith(
+            color: context.onSecondaryColor.withAlpha(100),
           ),
         ),
+        50.hSpace,
       ],
     ).center();
   }

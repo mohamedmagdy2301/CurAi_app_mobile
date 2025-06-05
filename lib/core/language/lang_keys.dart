@@ -15,6 +15,10 @@ class LangKeys {
 
   static const String loading = 'loading';
 
+  static const String noHistoryDescription = 'no_history_description';
+
+  static const String noHistory = 'no_history';
+
   static const String statistics = 'statistics';
 
   static const String addNewNote = 'add_new_note';
