@@ -71,7 +71,7 @@ class ReservationsDoctorDateHeader extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.start,
-            style: TextStyleApp.medium18().copyWith(
+            style: TextStyleApp.medium16().copyWith(
               color: Colors.white,
             ),
           ),

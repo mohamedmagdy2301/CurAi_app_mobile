@@ -1,13 +1,11 @@
-import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
-import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/cubit/appointment_doctor_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/reservations_doctor/build_empty_reservations_doctor_widget.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/reservations_doctor/build_error_reservations_doctor_widget.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/reservations_doctor/build_success_reservations_doctor_widget.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/presentation/widgets/reservations_doctor/custom_appbar_reservations_doctor.dart';
+import 'package:curai_app_mobile/features/patient_history/presentation/widgets/build_loading_patient_history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReservationsDoctorScreen extends StatefulWidget {
   const ReservationsDoctorScreen({super.key});
@@ -46,8 +44,7 @@ class _ReservationsDoctorScreenState extends State<ReservationsDoctorScreen> {
           } else if (state is GetReservationsDoctorEmpty) {
             return const BuildEmptyReservationsDoctorWidget();
           }
-
-          return CustomLoadingWidget(height: 70.h, width: 70.w).center();
+          return const BuildLoadingPatientHistory();
         },
       ),
     );

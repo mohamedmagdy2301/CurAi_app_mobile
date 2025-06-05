@@ -73,7 +73,7 @@ class _PatientHistoryItemWidgetState extends State<PatientHistoryItemWidget> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.blue.withOpacity(0.3),
+                color: Colors.blue.withAlpha(75),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
@@ -148,7 +148,7 @@ class _PatientHistoryItemWidgetState extends State<PatientHistoryItemWidget> {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.green.withOpacity(0.3),
+            color: Colors.green.withAlpha(75),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),

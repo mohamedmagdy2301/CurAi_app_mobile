@@ -151,7 +151,8 @@ class _BuildSuccessReservationsDoctorWidgetState
 
   Widget _buildStatsSection(Map<String, int> stats) {
     return CustomExpansionTile(
-      title: context.translate(LangKeys.appointmentsOverview),
+      title: context.translate(LangKeys.statistics),
+      leadingIcon: const Icon(Icons.pie_chart),
       contentWidget: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -325,9 +326,9 @@ class _BuildSuccessReservationsDoctorWidgetState
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha(25),
         borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color..withAlpha(75)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

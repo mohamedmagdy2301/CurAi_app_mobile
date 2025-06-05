@@ -67,7 +67,7 @@ class ReservationsDoctorItemPatientCard extends StatelessWidget {
                       appointment.patient,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyleApp.semiBold22().copyWith(
+                      style: TextStyleApp.medium22().copyWith(
                         color: context.onPrimaryColor,
                       ),
                     ),
@@ -95,6 +95,7 @@ class ReservationsDoctorItemPatientCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                    8.hSpace,
                   ],
                 ),
               ),

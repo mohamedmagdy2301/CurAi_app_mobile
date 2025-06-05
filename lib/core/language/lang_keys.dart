@@ -15,6 +15,8 @@ class LangKeys {
 
   static const String loading = 'loading';
 
+  static const String statistics = 'statistics';
+
   static const String addNewNote = 'add_new_note';
   static const String add = 'add';
   static const String notes = 'notes';
