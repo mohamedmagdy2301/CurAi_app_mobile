@@ -119,4 +119,19 @@ class AppointmentPatientRepoImpl extends AppointmentPatientRepo {
       },
     );
   }
+
+  @override
+  Future<Either<String, Map<String, dynamic>>> discountPayment({
+    required int points,
+  }) async {
+    final response = await remoteDataSource.discountPayment(
+      points: points,
+    );
+    return response.fold(
+      (failure) {
+        return left(failure.message);
+      },
+      right,
+    );
+  }
 }

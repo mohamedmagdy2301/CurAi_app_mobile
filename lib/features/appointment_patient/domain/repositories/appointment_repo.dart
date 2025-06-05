@@ -21,7 +21,9 @@ abstract class AppointmentPatientRepo {
       simulateAppointmentPayment({
     required int appointmentId,
   });
-
+  Future<Either<String, Map<String, dynamic>>> discountPayment({
+    required int points,
+  });
   Future<Either<String, MyAppointmentPatientModel>> getMyAppointmentPatient({
     required int page,
   });
