@@ -1,7 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api, document_ignores
 
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
@@ -10,6 +8,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
+import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/services/payment/paymob_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
@@ -40,11 +39,105 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
   final GlobalKey<_PaymentSelectionWidgetState> _paymentSelectionKey =
       PaymentSelectionWidget.globalKey;
   bool isLoading = false;
+  late int price;
+  late int bonus;
+
+  @override
+  void initState() {
+    super.initState();
+    final priceString = widget.doctorResults.consultationPrice ?? '0';
+    price = int.tryParse(priceString.split('.').first) ?? 0;
+    bonus = getBonusPoints() - 200;
+  }
+
+  int _calculateTotalPrice() {
+    final discount = bonus >= price ? price : bonus;
+    return price - discount;
+  }
+
+  int _remainingBonusPoints() {
+    final discount = bonus >= price ? price : bonus;
+    return bonus - discount;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const CustomAppbarPaymentAppointment(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AutoSizeText(
+              context.translate(LangKeys.appointmentsOverview),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.bold18().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
+            10.hSpace,
+            AutoSizeText(
+              '${context.translate(LangKeys.consultationPrice)}: $price '
+              '${context.translate(LangKeys.egp)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.regular16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
+            10.hSpace,
+            AutoSizeText(
+              'نقطة المكافأة: $bonus ${context.translate(LangKeys.egp)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.medium16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
+            10.hSpace,
+            AutoSizeText(
+              'نقطة المكافأة المتبقية: ${_remainingBonusPoints()} '
+              '${context.translate(LangKeys.egp)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.regular16().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
+            20.hSpace,
+            AutoSizeText(
+              'السعر النهائي: ${_calculateTotalPrice()} ${context.translate(LangKeys.egp)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.bold18().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
+            20.hSpace,
+            AutoSizeText(
+              context.translate(LangKeys.paymentMethod),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleApp.bold18().copyWith(
+                color: context.onPrimaryColor,
+              ),
+            ),
+            20.hSpace,
+            PaymentSelectionWidget(key: PaymentSelectionWidget.globalKey),
+            CustomButton(
+              title: LangKeys.payment,
+              isLoading: isLoading,
+              onPressed: _pay,
+            ),
+            10.hSpace,
+          ],
+        ).paddingSymmetric(horizontal: 15).paddingOnly(bottom: 17),
+      ),
+    );
+  }
 
   void _pay() {
-    final priceString = widget.doctorResults.consultationPrice ?? '0';
-    final price = int.tryParse(priceString.split('.').first) ?? 0;
-
     final selectedPayment = _paymentSelectionKey.currentState!.selectedPayment;
 
     switch (selectedPayment) {
@@ -53,7 +146,8 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
           isLoading = true;
         });
 
-        PaymobManager.getCreditCardPaymentKey(price).then((paymentKey) {
+        PaymobManager.getCreditCardPaymentKey(_calculateTotalPrice())
+            .then((paymentKey) {
           if (!mounted) return;
           context.pushNamed(
             Routes.paymentGatewayScreen,
@@ -82,87 +176,6 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
           ? 'قريبا سوف نضيف هذه الميزة في CurAi\nالآن يمكنك الدفع باستخدام بطاقة الائتمان'
           : 'This feature will be added soon in CurAi\nNow you can pay using Credit Card',
       type: ToastificationType.info,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppbarPaymentAppointment(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AutoSizeText(
-            context.translate(LangKeys.paymentMethod),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyleApp.bold18().copyWith(
-              color: context.onPrimaryColor,
-            ),
-          ),
-          20.hSpace,
-          PaymentSelectionWidget(key: PaymentSelectionWidget.globalKey),
-          const Spacer(),
-          CustomButton(
-            title: LangKeys.payment,
-            isLoading: isLoading,
-            onPressed: _pay,
-          ),
-          10.hSpace,
-          // BlocConsumer<AppointmentPatientCubit, AppointmentPatientState>(
-          //   listenWhen: (previous, current) =>
-          //       current is PaymentAppointmentFailure ||
-          //       current is PaymentAppointmentLoading ||
-          //       current is PaymentAppointmentSuccess,
-          //   buildWhen: (previous, current) =>
-          //       current is PaymentAppointmentLoading ||
-          //       current is PaymentAppointmentSuccess ||
-          //       current is PaymentAppointmentFailure,
-          //   listener: (context, state) {
-          //     if (state is PaymentAppointmentFailure) {
-          //       Navigator.pop(context);
-          //       showMessage(
-          //         context,
-          //         message: state.message,
-          //         type: ToastificationType.error,
-          //       );
-          //     } else if (state is PaymentAppointmentSuccess) {
-          //       Navigator.pop(context);
-          //       showMessage(
-          //         context,
-          //         message: context.isStateArabic
-          //             ? 'تم الدفع بنجاح'
-          //             : 'Payment successful',
-          //         type: ToastificationType.success,
-          //       );
-          //       context.pushNamedAndRemoveUntil(Routes.mainScaffoldUser);
-          //       context
-          //           .read<AppointmentPatientCubit>()
-          //           .refreshMyAppointmentPatient();
-          //     } else if (state is PaymentAppointmentLoading) {
-          //       AdaptiveDialogs.showLoadingAlertDialog(
-          //         context: context,
-          //         title: context.translate(LangKeys.login),
-          //       );
-          //     }
-          //   },
-          //   builder: (context, state) {
-          //     return CustomButton(
-          //       title: LangKeys.bookAppointment,
-          //       onPressed: () {
-          //         context
-          //             .read<AppointmentPatientCubit>()
-          //             .simulatePaymentAppointment(
-          //               appointmentId: widget.appointmentId,
-          //             );
-          //       },
-          //     );
-          //   },
-          // ),
-        ],
-      )
-          .paddingSymmetric(horizontal: 15)
-          .paddingOnly(bottom: Platform.isIOS ? 17 : 10),
     );
   }
 }
@@ -237,34 +250,34 @@ class _PaymentSelectionWidgetState extends State<PaymentSelectionWidget> {
           onChanged: (value) => setState(() => selectedPayment = value!),
         ).paddingOnly(bottom: 12),
         ...creditCards.map(_buildCardItem),
-        RadioListTile<String>(
-          fillColor: WidgetStateProperty.all(context.primaryColor),
-          title: AutoSizeText(
-            context.isStateArabic ? 'محفظة الدفع' : 'Wallet Payment',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyleApp.bold18().copyWith(
-              color: context.onPrimaryColor,
-            ),
-          ),
-          value: 'Wallet Payment',
-          groupValue: selectedPayment,
-          onChanged: (value) => setState(() => selectedPayment = value!),
-        ).paddingSymmetric(vertical: 8),
-        RadioListTile<String>(
-          fillColor: WidgetStateProperty.all(context.primaryColor),
-          title: AutoSizeText(
-            context.isStateArabic ? 'تحويل بنكي' : 'Bank Transfer',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyleApp.bold18().copyWith(
-              color: context.onPrimaryColor,
-            ),
-          ),
-          value: 'Bank Transfer',
-          groupValue: selectedPayment,
-          onChanged: (value) => setState(() => selectedPayment = value!),
-        ).paddingSymmetric(vertical: 8),
+        // RadioListTile<String>(
+        //   fillColor: WidgetStateProperty.all(context.primaryColor),
+        //   title: AutoSizeText(
+        //     context.isStateArabic ? 'محفظة الدفع' : 'Wallet Payment',
+        //     maxLines: 1,
+        //     overflow: TextOverflow.ellipsis,
+        //     style: TextStyleApp.bold18().copyWith(
+        //       color: context.onPrimaryColor,
+        //     ),
+        //   ),
+        //   value: 'Wallet Payment',
+        //   groupValue: selectedPayment,
+        //   onChanged: (value) => setState(() => selectedPayment = value!),
+        // ).paddingSymmetric(vertical: 8),
+        // RadioListTile<String>(
+        //   fillColor: WidgetStateProperty.all(context.primaryColor),
+        //   title: AutoSizeText(
+        //     context.isStateArabic ? 'تحويل بنكي' : 'Bank Transfer',
+        //     maxLines: 1,
+        //     overflow: TextOverflow.ellipsis,
+        //     style: TextStyleApp.bold18().copyWith(
+        //       color: context.onPrimaryColor,
+        //     ),
+        //   ),
+        //   value: 'Bank Transfer',
+        //   groupValue: selectedPayment,
+        //   onChanged: (value) => setState(() => selectedPayment = value!),
+        // ).paddingSymmetric(vertical: 8),
         RadioListTile<String>(
           fillColor: WidgetStateProperty.all(context.primaryColor),
           title: AutoSizeText(
