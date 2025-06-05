@@ -101,7 +101,9 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
         prefixIcon: widget.prefixIcon,
         labelText: widget.labelText,
         hintText: widget.hint ?? widget.labelText,
+        alignLabelWithHint: true,
       ),
+
       onFieldSubmitted: (value) {
         if (widget.textInputAction == TextInputAction.next &&
             widget.nextFocusNode != null) {

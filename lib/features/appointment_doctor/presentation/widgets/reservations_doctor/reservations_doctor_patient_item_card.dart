@@ -14,7 +14,7 @@ import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.
 import 'package:curai_app_mobile/core/utils/widgets/custom_divider.dart';
 import 'package:curai_app_mobile/core/utils/widgets/image_viewer_full_screen.dart';
 import 'package:curai_app_mobile/features/appointment_doctor/data/models/reservations_doctor_model.dart';
-import 'package:curai_app_mobile/features/patient_history/presentation/widgets/dialog_add_history.dart';
+import 'package:curai_app_mobile/features/patient_history/presentation/widgets/bottom_sheet_add_history_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -106,22 +106,6 @@ class ReservationsDoctorItemPatientCard extends StatelessWidget {
           Row(
             children: [
               CustomButton(
-                title: LangKeys.addHistory,
-                isHalf: true,
-                onPressed: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) {
-                      return BottomSheetAddHistory(
-                        patientId: appointment.patientId,
-                      );
-                    },
-                  );
-                },
-              ).expand(),
-              16.wSpace,
-              CustomButton(
                 title: LangKeys.viewHistory,
                 isHalf: true,
                 colorBackground: context.isDark
@@ -134,6 +118,23 @@ class ReservationsDoctorItemPatientCard extends StatelessWidget {
                     Routes.patientHistoryScreen,
                     arguments: {
                       'patientId': appointment.patientId,
+                    },
+                  );
+                },
+              ).expand(),
+              16.wSpace,
+              CustomButton(
+                title: LangKeys.addHistory,
+                isHalf: true,
+                colorBackground: context.primaryColor.withAlpha(140),
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) {
+                      return BottomSheetAddHistoryPatient(
+                        patientId: appointment.patientId,
+                      );
                     },
                   );
                 },

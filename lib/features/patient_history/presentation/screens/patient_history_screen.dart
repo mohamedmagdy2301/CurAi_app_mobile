@@ -38,7 +38,8 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
             current is GetPatientHistoryEmpty ||
             current is GetPatientHistoryLoading ||
             current is GetPatientHistorySuccess ||
-            current is GetPatientHistoryError,
+            current is GetPatientHistoryError ||
+            current is AddPatientHistorySuccess,
         builder: (context, state) {
           if (state is GetPatientHistoryLoading) {
             return const BuildLoadingPatientHistory();

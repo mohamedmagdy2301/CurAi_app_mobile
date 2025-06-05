@@ -5,7 +5,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
-import 'package:curai_app_mobile/features/patient_history/presentation/widgets/dialog_add_history.dart';
+import 'package:curai_app_mobile/features/patient_history/presentation/widgets/bottom_sheet_add_history_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -46,7 +46,7 @@ class CustomAppBarPatientHistory extends StatelessWidget
             context: context,
             isScrollControlled: true,
             builder: (context) {
-              return BottomSheetAddHistory(
+              return BottomSheetAddHistoryPatient(
                 patientId: patientId,
               );
             },

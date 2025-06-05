@@ -17,18 +17,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toastification/toastification.dart';
 
-class BottomSheetAddHistory extends StatefulWidget {
-  const BottomSheetAddHistory({
+class BottomSheetAddHistoryPatient extends StatefulWidget {
+  const BottomSheetAddHistoryPatient({
     required this.patientId,
     super.key,
   });
   final int patientId;
 
   @override
-  State<BottomSheetAddHistory> createState() => _BottomSheetAddHistoryState();
+  State<BottomSheetAddHistoryPatient> createState() =>
+      _BottomSheetAddHistoryPatientState();
 }
 
-class _BottomSheetAddHistoryState extends State<BottomSheetAddHistory> {
+class _BottomSheetAddHistoryPatientState
+    extends State<BottomSheetAddHistoryPatient> {
   final _noteController = TextEditingController();
 
   @override
@@ -71,9 +73,8 @@ class _BottomSheetAddHistoryState extends State<BottomSheetAddHistory> {
               ),
               20.hSpace,
               CustomTextFeild(
-                labelText: LangKeys.addNote,
-                isLable: false,
-                hint: LangKeys.writeNoteHere,
+                labelText: context.translate(LangKeys.addNote),
+                hint: context.translate(LangKeys.writeNoteHere),
                 controller: _noteController,
                 isValidator: false,
                 maxLines: 4,
