@@ -176,6 +176,7 @@
   - ✔️ Editable address doctor
   - ✔️ Editable bio doctor
   - ✔️ Favorite Doctors
+  - ✔️ Settings App
   - ✔️ Help center
   - ✔️ Policy & privacy 
 - ✅ **API Integration**
