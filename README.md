@@ -84,6 +84,7 @@
 - **Appointment Booking For Patient**
 - **Appointment For Doctor**
 - **Reservations doctor**
+- **History Patient**
 - **Emergency Department**
 - **Push Notifications**
 - **Integrat Payment(paymob)**
@@ -147,7 +148,14 @@
 - ✅ **API Integration**
   - ✔️ CRUD working times
   - ✔️ Reservations doctor
-
+ 
+### **History Patient**
+- ✅ **UI**
+  - ✔️ History Patient screen
+  - ✔️ Bottom sheets for add/cancel
+  - ✔️ Info notes card
+- ✅ **API Integration**
+  - ✔️ CRUD History Patient 
 
 ### **AI Chatbot Integration**
 - ✅ **UI**
@@ -164,9 +172,15 @@
 ### **User Profile**
 - ✅ **UI**
   - ✔️ Editable profile
-  - 🕓 History list
+  - ✔️ Editable address doctor
+  - ✔️ Editable bio doctor
+  - ✔️ Favorite Doctors
+  - ✔️ Help center
+  - ✔️ Policy & privacy 
 - ✅ **API Integration**
-  - ✔️ Fetch & update
+  - ✔️ Fetch & update profile
+  - ✔️ Fetch & update address doctor
+  - ✔️ Fetch & update bio doctor
  
 ### **Payment Integration**
 - ✅ **UI**
