@@ -109,10 +109,11 @@ class ReservationsDoctorItemPatientCard extends StatelessWidget {
                 title: LangKeys.addHistory,
                 isHalf: true,
                 onPressed: () {
-                  showDialog<void>(
+                  showModalBottomSheet<void>(
                     context: context,
+                    isScrollControlled: true,
                     builder: (context) {
-                      return DialogAddHistory(
+                      return BottomSheetAddHistory(
                         patientId: appointment.patientId,
                       );
                     },

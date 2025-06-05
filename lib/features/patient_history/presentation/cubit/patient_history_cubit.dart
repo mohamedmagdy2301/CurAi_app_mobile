@@ -39,6 +39,7 @@ class PatientHistoryCubit extends Cubit<PatientHistoryState> {
   }) async {
     if (isClosed) return;
     emit(AddPatientHistoryLoading());
+    await Future<void>.delayed(const Duration(milliseconds: 600));
 
     final result = await _addPatientHistoryUsecase.call(
       patientId: patientId,

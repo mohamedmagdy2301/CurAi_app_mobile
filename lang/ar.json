@@ -222,5 +222,10 @@
   "appointments_overview": "ملخص المواعيد",
   "loading": "جاري التحميل...",
   "you": "أنت",
+  "add_new_note":  "إضافة ملاحظة جديدة",
+  "add":  "إضافة",
+  "add_note":  "إضافة ملاحظة",
+  "history_patient":  "سجل المريض",
+  "write_note_here":  "كتابة ملاحظة هنا...",
   "now": "الآن"
 }

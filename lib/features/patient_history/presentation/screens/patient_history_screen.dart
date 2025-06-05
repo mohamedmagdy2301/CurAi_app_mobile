@@ -3,7 +3,7 @@ import 'package:curai_app_mobile/features/patient_history/presentation/widgets/b
 import 'package:curai_app_mobile/features/patient_history/presentation/widgets/build_error_patient_history.dart';
 import 'package:curai_app_mobile/features/patient_history/presentation/widgets/build_loading_patient_history.dart';
 import 'package:curai_app_mobile/features/patient_history/presentation/widgets/build_success_patient_history.dart';
-import 'package:curai_app_mobile/features/patient_history/presentation/widgets/dialog_add_history.dart';
+import 'package:curai_app_mobile/features/patient_history/presentation/widgets/custom_appbar_patient_history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,24 +30,8 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('تاريخ المريض'),
-        backgroundColor: Colors.blue.shade700,
-        foregroundColor: Colors.white,
-        elevation: 2,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => showDialog<void>(
-              context: context,
-              builder: (context) {
-                return DialogAddHistory(
-                  patientId: widget.patientId,
-                );
-              },
-            ),
-          ),
-        ],
+      appBar: CustomAppBarPatientHistory(
+        patientId: widget.patientId,
       ),
       body: BlocBuilder<PatientHistoryCubit, PatientHistoryState>(
         buildWhen: (previous, current) =>
@@ -72,18 +56,6 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
             return const BuildEmptyPatientHistory();
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog<void>(
-          context: context,
-          builder: (context) {
-            return DialogAddHistory(
-              patientId: widget.patientId,
-            );
-          },
-        ),
-        backgroundColor: Colors.blue.shade700,
-        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
