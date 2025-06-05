@@ -17,6 +17,7 @@ class LangKeys {
 
   static const String addNewNote = 'add_new_note';
   static const String add = 'add';
+  static const String notes = 'notes';
   static const String addNote = 'add_note';
   static const String writeNoteHere = 'write_note_here';
   static const String historyPatient = 'history_patient';

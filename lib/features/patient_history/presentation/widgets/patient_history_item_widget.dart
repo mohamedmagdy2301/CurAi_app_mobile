@@ -1,145 +1,260 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
+import 'package:curai_app_mobile/core/extensions/string_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/features/patient_history/data/models/patient_history_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PatientHistoryItemWidget extends StatelessWidget {
+class PatientHistoryItemWidget extends StatefulWidget {
   const PatientHistoryItemWidget({
     required this.history,
+    this.onTap,
     super.key,
   });
 
   final PatientHistoryModel history;
+  final VoidCallback? onTap;
 
   @override
+  State<PatientHistoryItemWidget> createState() =>
+      _PatientHistoryItemWidgetState();
+}
+
+class _PatientHistoryItemWidgetState extends State<PatientHistoryItemWidget> {
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      elevation: 3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+    return Container(
+      padding: context.padding(horizontal: 16, vertical: 16),
+      margin: EdgeInsets.only(bottom: 16.h),
+      decoration: BoxDecoration(
+        color: context.isDark
+            ? Colors.black
+            : const Color.fromARGB(255, 254, 251, 251),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: context.primaryColor.withAlpha(60),
+        ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header with doctor and patient info
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.blue.shade100,
-                  child: Icon(
-                    Icons.medical_services,
-                    color: Colors.blue.shade700,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'د. ${history.doctorUsername}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.blue.shade700,
-                        ),
-                      ),
-                      Text(
-                        'المريض: ${history.patientUsername}',
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.green.shade100,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    '#${history.id}',
-                    style: TextStyle(
-                      color: Colors.green.shade700,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHeader(),
+          12.hSpace,
+          _buildNotesSection(),
+          12.hSpace,
+          _buildFooter(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Row(
+      children: [
+        Container(
+          width: 56.w,
+          height: 56.h,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.blue.shade400,
+                Colors.blue.shade600,
               ],
             ),
-
-            const SizedBox(height: 16),
-
-            // Notes section
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade50,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.shade200),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.blue.withOpacity(0.3),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.note_alt,
-                        size: 16,
-                        color: Colors.grey.shade600,
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        'الملاحظات:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    history.notes ?? 'لا يوجد ملاحظات',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey.shade800,
-                      height: 1.4,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
-            // Date and time
+            ],
+          ),
+          child: Icon(
+            Icons.medical_services_rounded,
+            color: Colors.white,
+            size: 28.sp,
+          ),
+        ),
+        16.wSpace,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Row(
               children: [
                 Icon(
-                  Icons.access_time,
-                  size: 16,
-                  color: Colors.grey.shade500,
+                  Icons.person_rounded,
+                  size: 18.sp,
+                  color: context.primaryColor,
                 ),
-                const SizedBox(width: 6),
-                Text(
-                  history.createdAt,
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 13,
+                4.wSpace,
+                AutoSizeText(
+                  '${context.translate(LangKeys.dr)} ${widget.history.doctorUsername}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: TextStyleApp.bold16().copyWith(
+                    color: context.onPrimaryColor,
                   ),
+                ).flexible(),
+              ],
+            ),
+            4.hSpace,
+            Row(
+              children: [
+                Icon(
+                  Icons.sick_rounded,
+                  size: 14.sp,
+                  color: context.onSecondaryColor,
                 ),
+                4.wSpace,
+                AutoSizeText(
+                  '${context.translate(LangKeys.patient)}: ${widget.history.patientUsername}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: TextStyleApp.medium14().copyWith(
+                    color: context.onSecondaryColor,
+                  ),
+                ).flexible(),
               ],
             ),
           ],
+        ).expand(),
+        _buildIdBadge(),
+      ],
+    );
+  }
+
+  Widget _buildIdBadge() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.green.shade400,
+            Colors.green.shade600,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.green.withOpacity(0.3),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.tag_rounded,
+            size: 14,
+            color: Colors.white,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            '${widget.history.id}',
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNotesSection() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: context.onPrimaryColor.withAlpha(6),
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: context.onPrimaryColor.withAlpha(16),
         ),
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(6.sp),
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade100,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  Icons.note_alt_rounded,
+                  size: 16.sp,
+                  color: Colors.orange.shade700,
+                ),
+              ),
+              8.wSpace,
+              AutoSizeText(
+                '${context.translate(LangKeys.notes)}:',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyleApp.bold14().copyWith(
+                  color: context.onPrimaryColor,
+                ),
+              ),
+            ],
+          ),
+          10.hSpace,
+          AutoSizeText(
+            widget.history.notes!,
+            textDirection: widget.history.notes!.isArabicFormat
+                ? TextDirection.rtl
+                : TextDirection.ltr,
+            style: TextStyleApp.regular16().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ).withWidth(context.W * .8),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFooter() {
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.all(6.sp),
+          decoration: BoxDecoration(
+            color: context.primaryColor.withAlpha(50),
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Icon(
+            Icons.schedule_rounded,
+            size: 16.sp,
+            color: context.primaryColor,
+          ),
+        ),
+        10.wSpace,
+        AutoSizeText(
+          widget.history.createdAt.toDateWithTime12H(context),
+          maxLines: 1,
+          style: TextStyleApp.medium14().copyWith(
+            color: context.onSecondaryColor,
+          ),
+        ).expand(),
+      ],
     );
   }
 }

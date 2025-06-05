@@ -62,7 +62,9 @@ extension StringExtension on String {
 
   /// Converts date + time to readable format like "10 Nov 2025 at 12:30 PM" or "10 نوفمبر 2025 في 12:30 م".
   String toDateWithTime12H(BuildContext context, {String time = '12:30'}) =>
-      _formatWithTime("d MMM y 'at' h:mm a", time, context);
+      context.isStateArabic
+          ? _formatWithTime("d MMM y 'في الساعة' h:mm a", time, context)
+          : _formatWithTime("d MMM y 'at' h:mm a", time, context);
 
   /// Converts date + time to ISO-like 24-hour format "2025-11-10 14:00".
   String toIsoWithTime24H(BuildContext context, {String time = '14:00'}) =>
