@@ -18,7 +18,7 @@
   - [Doctor Search](#doctor-search)
   - [Appointment For Patient](#appointment-for-patient)
   - [Appointment For Doctor](#appointment-for-doctor)
-  - [History Patient](#history_patient)
+  - [History Patient](#history-patient)
   - [AI Chatbot Integration](#ai-chatbot-integration)
   - [User Profile](#user-profile)
   - [Payment Integration](#payment-integration)
