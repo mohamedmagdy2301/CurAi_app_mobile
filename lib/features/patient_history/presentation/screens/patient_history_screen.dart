@@ -45,7 +45,7 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
             return const BuildLoadingPatientHistory();
           } else if (state is GetPatientHistorySuccess) {
             return BuildSuccessPatientHistory(
-              histories: state.patientHistoryList,
+              histories: state.histories,
               patientId: widget.patientId,
             );
           } else if (state is GetPatientHistoryError) {

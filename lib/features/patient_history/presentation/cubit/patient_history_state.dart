@@ -27,8 +27,8 @@ class AddPatientHistoryError extends PatientHistoryState {
 class GetPatientHistoryLoading extends PatientHistoryState {}
 
 class GetPatientHistorySuccess extends PatientHistoryState {
-  const GetPatientHistorySuccess({required this.patientHistoryList});
-  final List<PatientHistoryModel> patientHistoryList;
+  const GetPatientHistorySuccess({required this.histories});
+  final List<PatientHistoryModel> histories;
 }
 
 class GetPatientHistoryError extends PatientHistoryState {

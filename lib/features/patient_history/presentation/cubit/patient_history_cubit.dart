@@ -26,9 +26,14 @@ class PatientHistoryCubit extends Cubit<PatientHistoryState> {
         if (isClosed) return;
         emit(GetPatientHistoryError(message: failure));
       },
-      (patientHistoryList) {
-        if (isClosed) return;
-        emit(GetPatientHistorySuccess(patientHistoryList: patientHistoryList));
+      (histories) {
+        if (histories.isEmpty) {
+          if (isClosed) return;
+          emit(GetPatientHistoryEmpty());
+        } else {
+          if (isClosed) return;
+          emit(GetPatientHistorySuccess(histories: histories));
+        }
       },
     );
   }

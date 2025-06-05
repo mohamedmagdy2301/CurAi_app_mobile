@@ -22,7 +22,10 @@ class BuildEmptyScheduleWidget extends StatelessWidget {
           AppImagesSvg.calendar,
           width: 200.w,
           height: 200.h,
-          color: context.onSecondaryColor.withAlpha(50),
+          colorFilter: ColorFilter.mode(
+            context.onSecondaryColor.withAlpha(50),
+            BlendMode.srcIn,
+          ),
         ),
         20.hSpace,
         AutoSizeText(
