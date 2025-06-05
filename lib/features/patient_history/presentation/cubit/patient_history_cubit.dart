@@ -32,7 +32,8 @@ class PatientHistoryCubit extends Cubit<PatientHistoryState> {
           emit(GetPatientHistoryEmpty());
         } else {
           if (isClosed) return;
-          emit(GetPatientHistorySuccess(histories: histories));
+          emit(
+              GetPatientHistorySuccess(histories: histories.reversed.toList()));
         }
       },
     );

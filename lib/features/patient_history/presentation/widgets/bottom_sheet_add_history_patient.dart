@@ -7,6 +7,7 @@ import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.d
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_text_feild.dart';
@@ -105,11 +106,11 @@ class _BottomSheetAddHistoryPatientState
                         );
                       }
                       if (state is AddPatientHistorySuccess) {
-                        context.read<PatientHistoryCubit>().getPatientHistory(
-                              patientId: widget.patientId,
-                            );
-                        context.pop();
                         _noteController.clear();
+                        context.pushReplacementNamed(
+                          Routes.patientHistoryScreen,
+                          arguments: {'patientId': widget.patientId},
+                        );
                       }
                     },
                     builder: (context, state) {
