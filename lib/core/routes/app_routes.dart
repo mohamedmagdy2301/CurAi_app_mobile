@@ -54,6 +54,7 @@ class AppRoutes {
           final paymentToken = arg['paymentToken'] as String?;
           final appointmentId = arg['appointmentId'] as int;
           final discountApplied = arg['discountApplied'] as int;
+          final isDiscountEnabled = arg['isDiscountEnabled'] as bool;
           return BaseRoute(
             page: BlocProvider(
               create: (context) => di.sl<AppointmentPatientCubit>(),
@@ -61,6 +62,7 @@ class AppRoutes {
                 paymentToken: paymentToken ?? '',
                 appointmentId: appointmentId,
                 discountApplied: discountApplied,
+                isDiscountEnabled: isDiscountEnabled,
               ),
             ),
           );

@@ -1,8 +1,13 @@
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
+    as di;
+import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
+import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/appointment_patient_available/appointment_patient_available_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/my_appointment_patient/my_appointment_patient_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/data/models/schedule_appointment_patient/schedule_appointment_patient_request.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/delete_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/discount_payment_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/get_appointment_available_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/get_my_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/payment_appointment_patient_usecase.dart';
@@ -21,6 +26,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
     this._getDoctorByIdUsecase,
     this._deleteAppointmentPatientUsecase,
     this._rescheduleAppointmentPatientUsecase,
+    this._discountPaymentUsecase,
   ) : super(AppointmentPatientInitial());
 
   final GetAppointmentPatientAvailableUsecase _getAppointmentAvailableUsecase;
@@ -31,6 +37,7 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
   final GetMyAppointmentPatientUsecase _getMyAppointmentPatientUsecase;
   final GetDoctorByIdUsecase _getDoctorByIdUsecase;
   final DeleteAppointmentPatientUsecase _deleteAppointmentPatientUsecase;
+  final DiscountPaymentUsecase _discountPaymentUsecase;
 
   List<MergedDateAvailabilityForPatient> dates = [];
   List<ResultsMyAppointmentPatient> pendingAppointments = [];
@@ -127,9 +134,36 @@ class AppointmentPatientCubit extends Cubit<AppointmentPatientState> {
         emit(PaymentAppointmentFailure(message: errMessage));
       },
       (resulte) {
+        di.sl<CacheDataManager>().removeData(key: SharedPrefKey.keyBonusPoints);
+        di.sl<CacheDataManager>().setData(
+              key: SharedPrefKey.keyBonusPoints,
+              value: resulte.newBonus,
+            );
+        if (isClosed) return;
+        emit(PaymentAppointmentSuccess(paymentAppointmentModel: resulte));
+      },
+    );
+  }
+
+  Future<void> discountPaymentAppointment({required int point}) async {
+    if (isClosed) return;
+    emit(DiscountPaymentLoading());
+    final result = await _discountPaymentUsecase.call(point);
+
+    result.fold(
+      (errMessage) {
         if (isClosed) return;
 
-        emit(PaymentAppointmentSuccess(paymentAppointmentModel: resulte));
+        emit(DiscountPaymentFailure(message: errMessage));
+      },
+      (resulte) {
+        di.sl<CacheDataManager>().removeData(key: SharedPrefKey.keyBonusPoints);
+        di.sl<CacheDataManager>().setData(
+              key: SharedPrefKey.keyBonusPoints,
+              value: resulte['remaining_bonus'],
+            );
+        if (isClosed) return;
+        emit(DiscountPaymentSuccess());
       },
     );
   }

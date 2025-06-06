@@ -4,6 +4,7 @@ import 'package:curai_app_mobile/core/extensions/localization_context_extansions
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/payment/end_points_payment.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -13,7 +14,6 @@ import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_state.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/payment_cubit/payment_patient_cubit.dart';
-import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/payment_appointment/custom_appbar_payment_appointment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -25,11 +25,13 @@ class PaymentGatewayScreen extends StatefulWidget {
     required this.paymentToken,
     required this.appointmentId,
     required this.discountApplied,
+    required this.isDiscountEnabled,
     super.key,
   });
   final String paymentToken;
   final int appointmentId;
   final int discountApplied;
+  final bool isDiscountEnabled;
 
   @override
   State<PaymentGatewayScreen> createState() => _PaymentGatewayScreenState();
@@ -65,7 +67,7 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppbarPaymentAppointment(),
+      // appBar: const CustomAppbarPaymentAppointment(),
       body: BlocBuilder<PaymentCubit, PaymentState>(
         bloc: _paymentCubit,
         builder: (context, state) {
@@ -98,6 +100,25 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
                       final currentState = appointmentCubit.state;
 
                       if (currentState is PaymentAppointmentSuccess) {
+                        if (widget.isDiscountEnabled) {
+                          await appointmentCubit.discountPaymentAppointment(
+                            point: widget.discountApplied,
+                          );
+
+                          final discountState = appointmentCubit.state;
+
+                          if (discountState is DiscountPaymentFailure) {
+                            if (!context.mounted) return;
+                            showMessage(
+                              context,
+                              message: discountState.message,
+                              type: ToastificationType.error,
+                            );
+                            if (context.mounted) context.pop();
+                            return;
+                          }
+                        }
+
                         if (!context.mounted) return;
                         await context.pushNamed(Routes.mainScaffoldUser);
                       } else if (currentState is PaymentAppointmentFailure) {
@@ -120,7 +141,22 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
                 },
               ),
               if (state.status == PaymentStatus.loading)
-                const CustomLoadingWidget(height: 60, width: 60).center(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomLoadingWidget(height: 40.h, width: 40.w),
+                    24.hSpace,
+                    AutoSizeText(
+                      context.translate(LangKeys.loading),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyleApp.medium16().copyWith(
+                        color: context.onSecondaryColor,
+                      ),
+                    ),
+                  ],
+                ).center(),
             ],
           );
         },

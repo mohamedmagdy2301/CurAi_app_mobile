@@ -60,6 +60,18 @@ class PaymentAppointmentFailure extends AppointmentPatientState {
   final String message;
 }
 
+//! Discount Payment
+class DiscountPaymentLoading extends AppointmentPatientState {}
+
+class DiscountPaymentSuccess extends AppointmentPatientState {
+  DiscountPaymentSuccess();
+}
+
+class DiscountPaymentFailure extends AppointmentPatientState {
+  DiscountPaymentFailure({required this.message});
+  final String message;
+}
+
 //! Get My Appointment Patient
 class GetMyAppointmentPatientLoading extends AppointmentPatientState {}
 

@@ -84,6 +84,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
             arguments: {
               'paymentToken': paymentKey,
               'appointmentId': widget.appointmentId,
+              'isDiscountEnabled': isDiscountEnabled,
               'discountApplied': isDiscountEnabled ? _getAppliedDiscount() : 0,
             },
           );
