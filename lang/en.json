@@ -230,5 +230,12 @@
   "statistics": "Statistics",
   "no_history_description": "Click the + button to add a new note",
   "no_history": "There is no history yet",
+  "use_of_reward_points_info": "The reward points will be automatically deducted from the total amount",
+  "use_of_reward_points": "Use Reward Points",
+  "remaining_points": "Remaining Points",
+  "the_reward_points_available": "The reward points available",
+  "applied_discount": "Applied Discount",
+  "discount": "Discount",
+  "required_price": "Total Price",
   "now": "Now"
 }

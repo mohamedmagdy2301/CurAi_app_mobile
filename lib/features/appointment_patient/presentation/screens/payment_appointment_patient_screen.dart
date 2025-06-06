@@ -11,7 +11,10 @@ import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
 import 'package:curai_app_mobile/core/services/payment/paymob_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/helper/to_arabic_number.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
+import 'package:curai_app_mobile/core/utils/widgets/custom_divider.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/widgets/payment_appointment/custom_appbar_payment_appointment.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +40,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
   String selectedPayment = 'Credit Card';
 
   bool isLoading = false;
-  bool isDiscountEnabled = true;
+  bool isDiscountEnabled = false;
   late int price;
   late int bonus;
 
@@ -46,7 +49,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     super.initState();
     final priceString = widget.doctorResults.consultationPrice ?? '0';
     price = int.tryParse(priceString.split('.').first) ?? 0;
-    bonus = getBonusPoints() - 200;
+    bonus = getBonusPoints();
   }
 
   int _calculateTotalPrice() {
@@ -123,21 +126,23 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: context.backgroundColor,
+        color: context.isDark
+            ? const Color.fromARGB(255, 32, 32, 32)
+            : const Color.fromARGB(255, 248, 248, 248),
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.r),
-          topRight: Radius.circular(20.r),
+          topLeft: Radius.circular(30.r),
+          topRight: Radius.circular(30.r),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, -5),
+            color: context.onPrimaryColor.withAlpha(20),
+            blurRadius: 10,
+            offset: const Offset(0, -3),
           ),
         ],
         border: Border(
           top: BorderSide(
-            color: context.primaryColor.withOpacity(0.1),
+            color: context.primaryColor.withAlpha(25),
           ),
         ),
       ),
@@ -145,76 +150,37 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
         20.w,
         20.h,
         20.w,
-        MediaQuery.of(context).padding.bottom + 20.h,
+        context.paddingOf.bottom + 20.h,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // مؤشر السحب
           Container(
-            width: 40.w,
-            height: 4.h,
+            height: 3.5.h,
+            width: 70.w,
+            margin: EdgeInsets.only(bottom: 12.h),
             decoration: BoxDecoration(
-              color: context.primaryColor.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(2.r),
+              color: context.onSecondaryColor.withAlpha(160),
+              borderRadius: BorderRadius.circular(2),
             ),
-          ),
-          16.hSpace,
+          ).center(),
           _buildDiscountToggleCard(),
-
           16.hSpace,
-
           _buildCompactPriceDetails(),
-
           20.hSpace,
-
-          // زر الدفع
-          SizedBox(
-            width: double.infinity,
-            height: 56.h,
-            child: ElevatedButton(
-              onPressed: isLoading ? null : _submitPayment,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: context.primaryColor,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                elevation: 0,
-              ),
-              child: isLoading
-                  ? SizedBox(
-                      height: 20.h,
-                      width: 20.w,
-                      child: const CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.payment_rounded,
-                          size: 20.w,
-                        ),
-                        8.wSpace,
-                        AutoSizeText(
-                          selectedPayment,
-                          style: TextStyleApp.bold16().copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        8.wSpace,
-                        AutoSizeText(
-                          '${_calculateTotalPrice()} ${context.translate(LangKeys.egp)}',
-                          style: TextStyleApp.bold16().copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
+          CustomButton(
+            title: LangKeys.payment,
+            isLoading: isLoading,
+            isRegular: true,
+            icon: Icon(
+              selectedPayment == 'Credit Card'
+                  ? CupertinoIcons.creditcard
+                  : selectedPayment == 'Wallet'
+                      ? Icons.wallet
+                      : Icons.monetization_on_outlined,
+              size: 20.w,
             ),
+            onPressed: _submitPayment,
           ),
         ],
       ),
@@ -226,51 +192,47 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: context.primaryColor.withOpacity(0.05),
+        color: context.primaryColor.withAlpha(9),
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: context.primaryColor.withOpacity(0.1),
+          color: context.primaryColor.withAlpha(20),
         ),
       ),
       child: Column(
         children: [
-          // السعر الأساسي والخصم في صف واحد
           Row(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AutoSizeText(
-                      context.translate(LangKeys.consultationPrice),
-                      style: TextStyleApp.regular14().copyWith(
-                        color: context.onSecondaryColor,
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    context.translate(LangKeys.consultationPrice),
+                    style: TextStyleApp.regular16().copyWith(
+                      color: context.onSecondaryColor,
                     ),
-                    4.hSpace,
-                    AutoSizeText(
-                      '$price ${context.translate(LangKeys.egp)}',
-                      style: TextStyleApp.bold16().copyWith(
-                        color: context.onPrimaryColor,
-                        decoration:
-                            isDiscountEnabled && _getAppliedDiscount() > 0
-                                ? TextDecoration.lineThrough
-                                : null,
-                      ),
+                  ),
+                  AutoSizeText(
+                    '${context.isStateArabic ? toArabicNumber(price.toString()) : price} '
+                    '${context.translate(LangKeys.egp)}',
+                    style: TextStyleApp.bold16().copyWith(
+                      color: context.primaryColor,
+                      decoration: isDiscountEnabled && _getAppliedDiscount() > 0
+                          ? TextDecoration.lineThrough
+                          : null,
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                ],
+              ).expand(),
               if (isDiscountEnabled && _getAppliedDiscount() > 0) ...[
                 16.wSpace,
                 Container(
                   padding:
                       EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
+                    color: Colors.green.withAlpha(25),
                     borderRadius: BorderRadius.circular(20.r),
                     border: Border.all(
-                      color: Colors.green.withOpacity(0.2),
+                      color: Colors.green.withAlpha(50),
                     ),
                   ),
                   child: Row(
@@ -283,7 +245,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                       ),
                       4.wSpace,
                       AutoSizeText(
-                        'خصم ${_getAppliedDiscount()}',
+                        '${context.translate(LangKeys.discount)} ${_getAppliedDiscount()}',
                         style: TextStyleApp.bold12().copyWith(
                           color: Colors.green,
                         ),
@@ -294,41 +256,37 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
               ],
             ],
           ),
-
-          if (isDiscountEnabled && _getAppliedDiscount() > 0) ...[
-            12.hSpace,
-            Container(
-              height: 1,
-              color: context.primaryColor.withOpacity(0.1),
-            ),
-            12.hSpace,
-          ],
-
-          // السعر النهائي
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AutoSizeText(
-                'المبلغ المطلوب',
-                style: TextStyleApp.bold16().copyWith(
-                  color: context.onPrimaryColor,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                decoration: BoxDecoration(
-                  color: context.primaryColor,
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: AutoSizeText(
-                  '${_calculateTotalPrice()} ${context.translate(LangKeys.egp)}',
+          12.hSpace,
+          if (isDiscountEnabled && _calculateTotalPrice() != 0)
+            const CustomDivider(),
+          if (isDiscountEnabled && _calculateTotalPrice() != 0) 12.hSpace,
+          if (isDiscountEnabled && _calculateTotalPrice() != 0)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AutoSizeText(
+                  context.translate(LangKeys.requiredPrice),
                   style: TextStyleApp.bold16().copyWith(
-                    color: Colors.white,
+                    color: context.onPrimaryColor,
                   ),
                 ),
-              ),
-            ],
-          ),
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                  decoration: BoxDecoration(
+                    color: context.primaryColor.withAlpha(150),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: AutoSizeText(
+                    '${context.isStateArabic ? toArabicNumber(_calculateTotalPrice().toString()) : _calculateTotalPrice()} '
+                    '${context.translate(LangKeys.egp)}',
+                    style: TextStyleApp.bold16().copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );
@@ -345,12 +303,12 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
           color: isDiscountEnabled
-              ? context.primaryColor.withOpacity(0.3)
-              : context.primaryColor.withOpacity(0.1),
+              ? context.primaryColor.withAlpha(75)
+              : context.primaryColor.withAlpha(25),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: context.onPrimaryColor.withAlpha(12),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -367,36 +325,36 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                 size: 24.w,
               ),
               12.wSpace,
-              Expanded(
-                child: AutoSizeText(
-                  'استخدام نقاط المكافأة',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyleApp.bold16().copyWith(
-                    color: context.onPrimaryColor,
-                  ),
+              AutoSizeText(
+                context.translate(LangKeys.useOfRewardPoints),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyleApp.bold16().copyWith(
+                  color: context.onPrimaryColor,
                 ),
-              ),
+              ).expand(),
               Switch.adaptive(
                 value: isDiscountEnabled,
+                activeColor: context.primaryColor,
+                inactiveTrackColor: context.onSecondaryColor.withAlpha(50),
+                thumbColor: WidgetStateProperty.all(Colors.white),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 onChanged: (value) {
                   setState(() {
                     isDiscountEnabled = value;
                   });
                 },
-                activeColor: context.primaryColor,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             ],
           ),
           12.hSpace,
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+            padding: context.padding(horizontal: 13, vertical: 10),
             decoration: BoxDecoration(
               color: isDiscountEnabled
-                  ? context.primaryColor.withOpacity(0.1)
-                  : Colors.grey.withOpacity(0.1),
+                  ? context.primaryColor.withAlpha(20)
+                  : context.onSecondaryColor.withAlpha(15),
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Column(
@@ -405,13 +363,14 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AutoSizeText(
-                      'نقاط المكافأة المتاحة',
+                      context.translate(LangKeys.theRewardPointsAvailable),
                       style: TextStyleApp.regular14().copyWith(
                         color: context.onSecondaryColor,
                       ),
-                    ),
+                    ).expand(),
                     AutoSizeText(
-                      '$bonus ${context.translate(LangKeys.egp)}',
+                      '${context.isStateArabic ? toArabicNumber(bonus.toString()) : bonus} '
+                      '${context.translate(LangKeys.egp)}',
                       style: TextStyleApp.medium14().copyWith(
                         color: context.primaryColor,
                       ),
@@ -424,13 +383,14 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AutoSizeText(
-                        'الخصم المطبق',
+                        context.translate(LangKeys.appliedDiscount),
                         style: TextStyleApp.regular14().copyWith(
                           color: context.onSecondaryColor,
                         ),
-                      ),
+                      ).expand(),
                       AutoSizeText(
-                        '${_getAppliedDiscount()} ${context.translate(LangKeys.egp)}',
+                        '${context.isStateArabic ? toArabicNumber(_getAppliedDiscount().toString()) : _getAppliedDiscount()} '
+                        '${context.translate(LangKeys.egp)}',
                         style: TextStyleApp.medium14().copyWith(
                           color: Colors.green,
                         ),
@@ -442,13 +402,14 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AutoSizeText(
-                        'النقاط المتبقية',
+                        context.translate(LangKeys.remainingPoints),
                         style: TextStyleApp.regular14().copyWith(
                           color: context.onSecondaryColor,
                         ),
-                      ),
+                      ).expand(),
                       AutoSizeText(
-                        '${_remainingBonusPoints()} ${context.translate(LangKeys.egp)}',
+                        '${context.isStateArabic ? toArabicNumber(_remainingBonusPoints().toString()) : _remainingBonusPoints()} '
+                        '${context.translate(LangKeys.egp)}',
                         style: TextStyleApp.medium14().copyWith(
                           color: context.onPrimaryColor,
                         ),
@@ -465,18 +426,16 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
               children: [
                 Icon(
                   Icons.info_outline_rounded,
-                  color: Colors.blue,
+                  color: context.primaryColor,
                   size: 16.w,
                 ),
                 6.wSpace,
-                Expanded(
-                  child: AutoSizeText(
-                    'سيتم خصم نقاط المكافأة تلقائياً من إجمالي المبلغ',
-                    style: TextStyleApp.regular12().copyWith(
-                      color: Colors.blue,
-                    ),
+                AutoSizeText(
+                  context.translate(LangKeys.useOfRewardPointsInfo),
+                  style: TextStyleApp.regular12().copyWith(
+                    color: context.primaryColor,
                   ),
-                ),
+                ).expand(),
               ],
             ),
           ],
@@ -485,7 +444,6 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     );
   }
 
-// ! ----------------------------------------------------------------
   void _submitPayment() {
     switch (selectedPayment) {
       case 'Credit Card':
@@ -511,7 +469,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
         });
       case 'Cash':
         _showInfoDialog();
-      case 'ًWallet':
+      case 'Wallet':
         _showInfoDialog();
     }
   }
