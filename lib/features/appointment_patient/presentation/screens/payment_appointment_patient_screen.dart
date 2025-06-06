@@ -49,7 +49,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     super.initState();
     final priceString = widget.doctorResults.consultationPrice ?? '0';
     price = int.tryParse(priceString.split('.').first) ?? 0;
-    bonus = getBonusPoints();
+    bonus = getBonusPoints() - 200;
   }
 
   int _calculateTotalPrice() {
@@ -74,20 +74,20 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     return Scaffold(
       appBar: const CustomAppbarPaymentAppointment(),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          AutoSizeText(
+            context.translate(LangKeys.paymentMethod),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyleApp.bold18().copyWith(
+              color: context.onPrimaryColor,
+            ),
+          ).paddingSymmetric(horizontal: 15, vertical: 2),
           SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AutoSizeText(
-                  context.translate(LangKeys.paymentMethod),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyleApp.bold18().copyWith(
-                    color: context.onPrimaryColor,
-                  ),
-                ),
-                15.hSpace,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
