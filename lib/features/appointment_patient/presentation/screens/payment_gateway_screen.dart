@@ -152,7 +152,7 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyleApp.medium16().copyWith(
-                        color: context.onSecondaryColor,
+                        color: Colors.grey,
                       ),
                     ),
                   ],
