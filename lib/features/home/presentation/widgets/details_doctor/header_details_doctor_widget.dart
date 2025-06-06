@@ -10,6 +10,7 @@ import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
+import 'package:curai_app_mobile/core/utils/helper/to_arabic_number.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
@@ -164,7 +165,7 @@ class DoctorDetailsHeader extends StatelessWidget {
               ),
             ),
             AutoSizeText(
-              '${doctorResults.consultationPrice!.split('.')[0]} '
+              '${context.isStateArabic ? toArabicNumber(doctorResults.consultationPrice!.split('.')[0]) : doctorResults.consultationPrice!.split('.')[0]} '
               '${context.translate(LangKeys.egp)}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

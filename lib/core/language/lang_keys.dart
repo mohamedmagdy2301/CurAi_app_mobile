@@ -12,8 +12,16 @@ class LangKeys {
   static String addHistory = 'add_history';
   static const String reservationsDoctor = 'reservations_doctor';
   static const String appointments = 'appointments';
-
   static const String loading = 'loading';
+
+  static const String useOfRewardPointsInfo = 'use_of_reward_points_info';
+  static const String remainingPoints = 'remaining_points';
+  static const String appliedDiscount = 'applied_discount';
+  static const String theRewardPointsAvailable = 'the_reward_points_available';
+  static const String useOfRewardPoints = 'use_of_reward_points';
+
+  static const String discount = 'discount';
+  static const String requiredPrice = 'required_price';
 
   static const String noHistoryDescription = 'no_history_description';
 

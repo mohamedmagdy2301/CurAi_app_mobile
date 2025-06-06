@@ -25,4 +25,6 @@ class EndPoints {
   static String addHistory(int id) => '/api/patients/$id/add-history/';
 
   static String getHistory(int id) => '/api/patients/$id/history/';
+
+  static const String discountPayment = '/generate-temporary-coupon/';
 }

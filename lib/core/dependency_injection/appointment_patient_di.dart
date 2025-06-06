@@ -4,6 +4,7 @@ import 'package:curai_app_mobile/features/appointment_patient/data/datasources/a
 import 'package:curai_app_mobile/features/appointment_patient/data/repositories/appointment_patient_repo_impl.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/repositories/appointment_repo.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/delete_appointment_patient_usecase.dart';
+import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/discount_payment_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/get_appointment_available_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/get_my_appointment_patient_usecase.dart';
 import 'package:curai_app_mobile/features/appointment_patient/domain/usecases/payment_appointment_patient_usecase.dart';
@@ -24,6 +25,7 @@ void setupAppointmentPatinetDI() {
         sl<GetDoctorByIdUsecase>(),
         sl<DeleteAppointmentPatientUsecase>(),
         sl<RescheduleAppointmentPatientUsecase>(),
+        sl<DiscountPaymentUsecase>(),
       ),
     )
 
@@ -45,6 +47,9 @@ void setupAppointmentPatinetDI() {
     )
     ..registerLazySingleton(
       () => RescheduleAppointmentPatientUsecase(repository: sl()),
+    )
+    ..registerLazySingleton(
+      () => DiscountPaymentUsecase(repository: sl()),
     )
     //! Repository
     ..registerLazySingleton<AppointmentPatientRepo>(

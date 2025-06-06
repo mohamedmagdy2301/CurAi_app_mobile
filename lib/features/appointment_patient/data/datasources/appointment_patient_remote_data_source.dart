@@ -28,6 +28,9 @@ abstract class AppointmentPatientRemoteDataSource {
     required ScheduleAppointmentPatientRequest
         scheduleAppointmentPatientRequest,
   });
+  Future<Either<Failure, Map<String, dynamic>>> discountPayment({
+    required int points,
+  });
 }
 
 class AppointmentPatientRemoteDataSourceImpl
@@ -130,6 +133,22 @@ class AppointmentPatientRemoteDataSourceImpl
     final response = await dioConsumer.put(
       '${EndPoints.appointmentPatient}/$appointmentId/',
       body: scheduleAppointmentPatientRequest.toJson(),
+    );
+    return response.fold(
+      left,
+      (r) {
+        return right(r as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> discountPayment({
+    required int points,
+  }) async {
+    final response = await dioConsumer.post(
+      EndPoints.discountPayment,
+      body: {'points': points.toString()},
     );
     return response.fold(
       left,

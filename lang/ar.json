@@ -229,7 +229,14 @@
   "history_patient": "سجل المريض",
   "write_note_here": "كتابة ملاحظة هنا...",
   "statistics": "الإحصاءات",
-  "no_history_description":  "قم بالضغط على زر + لإضافة ملاحظة جديدة",
-  "no_history":  "لا يوجد سجل حتى الآن",
+  "no_history_description": "قم بالضغط على زر + لإضافة ملاحظة جديدة",
+  "no_history": "لا يوجد سجل حتى الآن",
+  "use_of_reward_points_info": "سيتم خصم نقاط المكافأة تلقائياً من إجمالي المبلغ",
+  "use_of_reward_points": "استخدام نقاط المكافأة",
+  "remaining_points": "نقاط المكافأة المتبقية",
+  "the_reward_points_available": "نقاط المكافأة المتوفرة",
+  "applied_discount": "تم تطبيق الخصم",
+  "discount": "خصم",
+  "required_price": "المبلغ المطلوب",  
   "now": "الآن"
 }
