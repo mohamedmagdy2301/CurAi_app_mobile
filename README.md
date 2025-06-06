@@ -89,6 +89,7 @@
 - **Emergency Department**
 - **Push Notifications**
 - **Integrat Payment(paymob)**
+- **Discount Price**
 - **Chatbot translate Text-to-speech**
 - **Chatbot translate-message**
 - **Chatbot message copy-to-clipboard**
