@@ -43,7 +43,7 @@ class ImageDoctorWidget extends StatelessWidget {
               imgUrl:
                   doctorResults.profilePicture ?? AppImages.avatarOnlineDoctor,
               width: context.W * 0.25,
-              height: context.isTablet ? context.H * 0.18 : context.H * 0.155,
+              height: context.isTablet ? context.H * 0.18 : context.H * 0.16,
               loadingImgPadding: 50.w,
               errorIconSize: 50.sp,
             ),

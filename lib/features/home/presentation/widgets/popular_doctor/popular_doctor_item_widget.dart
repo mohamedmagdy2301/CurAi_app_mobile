@@ -8,6 +8,7 @@ import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
+import 'package:curai_app_mobile/core/utils/helper/to_arabic_number.dart';
 import 'package:curai_app_mobile/core/utils/models/doctor_model/doctor_info_model.dart';
 import 'package:curai_app_mobile/features/appointment_patient/presentation/cubit/appointment_patient_cubit/appointment_patient_cubit.dart';
 import 'package:curai_app_mobile/features/home/data/models/favorite_doctor_model/favorite_doctor.dart';
@@ -83,7 +84,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                     ).withWidth(context.W * .52),
                     AutoSizeText(
                       '${context.translate(LangKeys.consultationPrice)}: '
-                      '${widget.doctorResults.consultationPrice!.split('.')[0]} '
+                      '${context.isStateArabic ? toArabicNumber(widget.doctorResults.consultationPrice!.split('.')[0]) : widget.doctorResults.consultationPrice!.split('.')[0]} '
                       '${context.translate(LangKeys.egp)}',
                       maxLines: 1,
                       textAlign: TextAlign.start,
@@ -112,7 +113,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
           ),
         ).paddingSymmetric(horizontal: 18, vertical: 8),
         Positioned(
-          top: 0.h,
+          top: 6.h,
           right: context.isStateArabic ? null : 16.w,
           left: context.isStateArabic ? 16.w : null,
           child: IconButton(
