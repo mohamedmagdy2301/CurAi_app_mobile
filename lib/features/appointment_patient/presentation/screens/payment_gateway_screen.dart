@@ -24,10 +24,12 @@ class PaymentGatewayScreen extends StatefulWidget {
   const PaymentGatewayScreen({
     required this.paymentToken,
     required this.appointmentId,
+    required this.discountApplied,
     super.key,
   });
   final String paymentToken;
   final int appointmentId;
+  final int discountApplied;
 
   @override
   State<PaymentGatewayScreen> createState() => _PaymentGatewayScreenState();

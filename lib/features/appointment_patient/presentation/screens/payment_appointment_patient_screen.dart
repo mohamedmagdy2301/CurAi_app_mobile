@@ -49,7 +49,7 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     super.initState();
     final priceString = widget.doctorResults.consultationPrice ?? '0';
     price = int.tryParse(priceString.split('.').first) ?? 0;
-    bonus = getBonusPoints() - 200;
+    bonus = getBonusPoints();
   }
 
   int _calculateTotalPrice() {
@@ -67,6 +67,35 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
     if (!isDiscountEnabled) return bonus;
     final discount = bonus >= price ? price : bonus;
     return bonus - discount;
+  }
+
+  void _submitPayment() {
+    switch (selectedPayment) {
+      case 'Credit Card':
+        setState(() {
+          isLoading = true;
+        });
+
+        PaymobManager.getCreditCardPaymentKey(_calculateTotalPrice())
+            .then((paymentKey) {
+          if (!mounted) return;
+          context.pushNamed(
+            Routes.paymentGatewayScreen,
+            arguments: {
+              'paymentToken': paymentKey,
+              'appointmentId': widget.appointmentId,
+              'discountApplied': isDiscountEnabled ? _getAppliedDiscount() : 0,
+            },
+          );
+          setState(() {
+            isLoading = false;
+          });
+        });
+      case 'Cash':
+        _showInfoDialog();
+      case 'Wallet':
+        _showInfoDialog();
+    }
   }
 
   @override
@@ -442,36 +471,6 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
         ],
       ),
     );
-  }
-
-  void _submitPayment() {
-    switch (selectedPayment) {
-      case 'Credit Card':
-        setState(() {
-          isLoading = true;
-        });
-
-        PaymobManager.getCreditCardPaymentKey(_calculateTotalPrice())
-            .then((paymentKey) {
-          if (!mounted) return;
-          context.pushNamed(
-            Routes.paymentGatewayScreen,
-            arguments: {
-              'paymentToken': paymentKey,
-              'appointmentId': widget.appointmentId,
-              'discountApplied': isDiscountEnabled ? _getAppliedDiscount() : 0,
-              'bonusPointsUsed': isDiscountEnabled ? _getAppliedDiscount() : 0,
-            },
-          );
-          setState(() {
-            isLoading = false;
-          });
-        });
-      case 'Cash':
-        _showInfoDialog();
-      case 'Wallet':
-        _showInfoDialog();
-    }
   }
 
   void _showInfoDialog() {
