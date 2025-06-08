@@ -54,6 +54,7 @@
 [![Text-to-speech](https://img.shields.io/badge/Text_to_speech-flutter__tts-9C27B0.svg)](https://pub.dev/packages/flutter_tts)
 [![Translation](https://img.shields.io/badge/Translation-translator-green.svg)](https://pub.dev/packages/translator)
 [![Sentry](https://img.shields.io/badge/Crash%20%26%20Error-Sentry-orange.svg)](https://sentry.io)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/mohamedmagdy2301/CurAi_app_mobile)
 
 ---
 
