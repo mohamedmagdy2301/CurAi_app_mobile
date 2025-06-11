@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
@@ -28,18 +28,19 @@ class TopDoctorListviewWidget extends StatelessWidget {
       builder: (context, state) {
         if (state is GetTopDoctorSuccess) {
           final doctorsList = state.doctorResults;
-
-          return SizedBox(
-            height: context.H * 0.28,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: context.padding(horizontal: 10),
-              itemCount: doctorsList.length,
-              separatorBuilder: (context, index) => 12.wSpace,
-              itemBuilder: (context, index) {
-                return TopDoctorItemWidget(doctorsList: doctorsList[index]);
-              },
+          return CarouselSlider.builder(
+            options: CarouselOptions(
+              height: context.H * 0.28,
+              viewportFraction: 0.45,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 2),
+              enlargeCenterPage: true,
             ),
+            itemCount: doctorsList.length,
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) {
+              return TopDoctorItemWidget(doctorsList: doctorsList[itemIndex]);
+            },
           );
         } else if (state is GetTopDoctorFailure) {
           return Text(
@@ -50,23 +51,26 @@ class TopDoctorListviewWidget extends StatelessWidget {
             ),
           ).center().paddingSymmetric(vertical: 45);
         }
-        return SizedBox(
-          height: context.H * 0.28,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: context.padding(horizontal: 10),
-            itemCount: doctorsListDome.length,
-            separatorBuilder: (context, index) => 12.wSpace,
-            itemBuilder: (context, index) {
-              return Skeletonizer(
-                effect: shimmerEffect(context),
-                child: TopDoctorItemWidget(
-                  isLoading: true,
-                  doctorsList: doctorsListDome[index],
-                ),
-              );
-            },
+
+        return CarouselSlider.builder(
+          options: CarouselOptions(
+            height: context.H * 0.28,
+            viewportFraction: 0.45,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 2),
+            enlargeCenterPage: true,
           ),
+          itemCount: doctorsListDome.length,
+          itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) {
+            return Skeletonizer(
+              effect: shimmerEffect(context),
+              child: TopDoctorItemWidget(
+                isLoading: true,
+                doctorsList: doctorsListDome[itemIndex],
+              ),
+            );
+          },
         );
       },
     );

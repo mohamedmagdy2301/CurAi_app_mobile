@@ -150,14 +150,13 @@ class _CuraiAppState extends State<CuraiApp> {
             ),
             initial: savedThemeMode,
             builder: (theme, darkTheme) => BlocProvider(
-              create: (context) => di.sl<FavoritesCubit>(),
+              create: (context) => di.sl<FavoritesCubit>()..init(),
               child: MaterialApp(
                 navigatorKey: di.sl<GlobalKey<NavigatorState>>(),
                 theme: theme,
                 darkTheme: darkTheme,
                 debugShowCheckedModeBanner: di.sl<AppEnvironment>().debugMode,
                 builder: (context, child) {
-                  // Ensure child is properly wrapped before setup
                   if (child == null) return const SizedBox.shrink();
                   return setupConnectivityWidget(child);
                 },

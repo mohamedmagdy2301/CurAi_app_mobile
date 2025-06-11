@@ -39,28 +39,29 @@ class TopDoctorItemWidget extends StatelessWidget {
         ),
       ),
       borderRadius: BorderRadius.circular(10.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (isLoading ?? false)
-            Container(
-              width: context.H * 0.21,
-              height: context.H * 0.19,
-              color: context.onSecondaryColor,
-            ).cornerRadiusWithClipRRect(15)
-          else
-            CustomCachedNetworkImage(
-              imgUrl:
-                  doctorsList.profilePicture ?? AppImages.avatarOnlineDoctor,
-              width: context.H * 0.21,
-              height: context.H * 0.19,
-              loadingImgPadding: 80.w,
-              errorIconSize: 50.sp,
-            ).cornerRadiusWithClipRRect(15),
-          10.hSpace,
-          SizedBox(
-            width: context.W * .39,
-            child: AutoSizeText(
+      child: SizedBox(
+        height: context.H * 0.28,
+        width: context.W * 0.4,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (isLoading ?? false)
+              Container(
+                width: context.H * 0.21,
+                height: context.H * 0.19,
+                color: context.onSecondaryColor,
+              ).cornerRadiusWithClipRRect(15)
+            else
+              CustomCachedNetworkImage(
+                imgUrl:
+                    doctorsList.profilePicture ?? AppImages.avatarOnlineDoctor,
+                width: context.H * 0.21,
+                height: context.H * 0.19,
+                loadingImgPadding: 80.w,
+                errorIconSize: 50.sp,
+              ).cornerRadiusWithClipRRect(15),
+            10.hSpace,
+            AutoSizeText(
               '${context.translate(LangKeys.dr)} '
               '${doctorsList.firstName?.capitalizeFirstChar} '
               '${doctorsList.lastName?.capitalizeFirstChar}',
@@ -70,11 +71,8 @@ class TopDoctorItemWidget extends StatelessWidget {
               style: TextStyleApp.extraBold18().copyWith(
                 color: context.onPrimaryColor,
               ),
-            ),
-          ),
-          SizedBox(
-            width: context.W * .3,
-            child: AutoSizeText(
+            ).expand(),
+            AutoSizeText(
               specializationName(
                 doctorsList.specialization ?? '',
                 isArabic: context.isStateArabic,
@@ -85,9 +83,9 @@ class TopDoctorItemWidget extends StatelessWidget {
               style: TextStyleApp.medium16().copyWith(
                 color: context.onSecondaryColor,
               ),
-            ),
-          ),
-        ],
+            ).expand(),
+          ],
+        ),
       ),
     );
   }

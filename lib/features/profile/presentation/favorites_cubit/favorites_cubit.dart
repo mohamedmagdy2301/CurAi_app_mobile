@@ -4,21 +4,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
 class FavoritesCubit extends Cubit<List<DoctorInfoModel>> {
-  FavoritesCubit({required this.userId}) : super([]) {
-    _init();
-  }
+  FavoritesCubit({required this.userId}) : super([]);
 
   final int userId;
   late Box<FavoriteDoctor> _box;
+  bool _isInitialized = false;
 
   String get _boxName => 'favoriteDoctors_$userId';
 
-  Future<void> _init() async {
+  Future<void> init() async {
     _box = await Hive.openBox<FavoriteDoctor>(_boxName);
+    _isInitialized = true;
     loadFavorites();
   }
 
   void loadFavorites() {
+    if (!_isInitialized || !_box.isOpen) return;
     final favorites = _box.values.map((e) => e.toDoctorInfoModel()).toList();
     emit(favorites);
   }

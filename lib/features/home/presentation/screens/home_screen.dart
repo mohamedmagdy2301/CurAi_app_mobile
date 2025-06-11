@@ -12,6 +12,7 @@ import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specializations_home_widget_listview.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/banner_emergency_home_widget.dart';
+import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/banner_home_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/custom_appbar_home.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/title_section.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/popular_doctor/doctor_home_widget_listview.dart';
@@ -75,12 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
           slivers: [
             SliverToBoxAdapter(child: 10.hSpace),
             const CustomAppBarHome(),
-            // SliverToBoxAdapter(child: const BannerHomeWidget().center()),
-            // SliverToBoxAdapter(child: 5.hSpace),
-            if (getRole() == 'patient')
-              SliverToBoxAdapter(
-                child: const BannerEmergencyHomeWidget().center(),
+            SliverToBoxAdapter(child: const BannerHomeWidget().center()),
+            SliverToBoxAdapter(child: 5.hSpace),
+            SliverToBoxAdapter(
+              child: const BannerEmergencyHomeWidget().center(),
+            ),
+            SliverToBoxAdapter(child: 7.hSpace),
+            SliverToBoxAdapter(
+              child: TitleSectionWidget(
+                title: context.translate(LangKeys.topDoctors),
+                onPressed: () => context.read<NavigationCubit>().updateIndex(1),
               ),
+            ),
+            SliverToBoxAdapter(child: context.isTablet ? 25.hSpace : 10.hSpace),
+            const SliverToBoxAdapter(child: TopDoctorListviewWidget()),
             SliverToBoxAdapter(child: 7.hSpace),
             SliverToBoxAdapter(
               child: TitleSectionWidget(
@@ -90,16 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SliverToBoxAdapter(child: context.isTablet ? 25.hSpace : 5.hSpace),
             const SliverToBoxAdapter(child: SpecializationsListViewHome()),
-            SliverToBoxAdapter(child: 7.hSpace),
-            SliverToBoxAdapter(
-              child: TitleSectionWidget(
-                title: context.translate(LangKeys.topDoctors),
-                onPressed: () => context.read<NavigationCubit>().updateIndex(1),
-              ),
-            ),
-
-            SliverToBoxAdapter(child: context.isTablet ? 25.hSpace : 10.hSpace),
-            const SliverToBoxAdapter(child: TopDoctorListviewWidget()),
             SliverToBoxAdapter(child: 5.hSpace),
             SliverToBoxAdapter(
               child: TitleSectionWidget(

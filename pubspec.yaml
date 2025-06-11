@@ -10,6 +10,7 @@ dependencies:
   adaptive_theme: 
   auto_size_text: 
   cached_network_image: 
+  carousel_slider: ^5.1.1
   collection: ^1.19.1
   connectivity_plus:
   cupertino_icons:
