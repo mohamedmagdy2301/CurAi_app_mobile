@@ -37,9 +37,17 @@ class HomeCubit extends Cubit<HomeState> {
       },
       (data) {
         if (isClosed) return;
+
+        final filteredDoctors = _filterValidDoctors(data)
+          ..sort((a, b) {
+            final aRating = a.avgRating ?? 0.0;
+            final bRating = b.avgRating ?? 0.0;
+            return bRating.compareTo(aRating);
+          });
+
         emit(
           GetPopularDoctorSuccess(
-            doctorResults: _filterValidDoctors(data),
+            doctorResults: filteredDoctors,
           ),
         );
       },
