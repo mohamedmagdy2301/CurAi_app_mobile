@@ -128,7 +128,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
       iAmBotMessage = MessageBubbleModel(
         messageText:
-            'أنا مساعدك الطبي ، هنا لمساعدتك في توجيهك للتخصص المناسب.',
+            'أنا هنا لدعمك من خلال تحليل أعراضك وتوجيهك إلى الطبيب المختص المناسب. لكن تذكر أنني لا أُغني عن استشارة الطبيب.',
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -146,7 +146,7 @@ class ChatBotCubit extends Cubit<ChatBotState> {
       );
       iAmBotMessage = MessageBubbleModel(
         messageText:
-            "I'm here to help analyze your symptoms and guide you to the right specialty.",
+            "I'm here to support you by analyzing your symptoms and guiding you to the right specialist. Please remember, I’m not a substitute for a doctor.",
         date: DateTime.now(),
         sender: SenderType.bot,
       );
@@ -203,7 +203,10 @@ class ChatBotCubit extends Cubit<ChatBotState> {
     }
 
     removeLoadingMessage();
-    response.fold(addErrorMessage, handleDiagnosisResponse);
+    response.fold(
+      (message) => addErrorMessage(message, isArabic: isArabic),
+      handleDiagnosisResponse,
+    );
   }
 
   /// Add loading message
@@ -247,14 +250,21 @@ class ChatBotCubit extends Cubit<ChatBotState> {
   }
 
   /// Add error message
-  void addErrorMessage(String errorMessage) {
+  void addErrorMessage(String errorMessage, {required bool isArabic}) {
     final errorMessageModel = MessageBubbleModel(
       messageText: errorMessage,
       date: DateTime.now(),
       sender: SenderType.bot,
     );
+    final tryAgainMessage = MessageBubbleModel(
+      messageText:
+          isArabic ? 'يرجى المحاولة مرة أخرى.😊' : 'Please try again.😊',
+      date: DateTime.now(),
+      sender: SenderType.bot,
+    );
     removeLoadingMessage();
-    messagesList.insert(0, errorMessageModel);
+    addMessage(errorMessageModel);
+    addMessage(tryAgainMessage);
     if (isClosed) return;
     emit(
       ChatBotDone(messagesList: List.from(messagesList)),

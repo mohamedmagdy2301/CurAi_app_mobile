@@ -58,10 +58,8 @@ class _BuildYourProfileScreenState extends State<BuildYourProfileScreen> {
         SizedBox(height: 24.h),
         Text(
           context.translate(LangKeys.loading),
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w500,
-            color: Colors.grey[600],
+          style: TextStyleApp.medium14().copyWith(
+            color: context.onSecondaryColor,
           ),
         ),
       ],

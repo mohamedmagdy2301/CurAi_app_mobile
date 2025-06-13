@@ -1,6 +1,9 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
+import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
+import 'package:curai_app_mobile/core/language/lang_keys.dart';
+import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/helper/overlay_manager.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
@@ -12,6 +15,7 @@ import 'package:curai_app_mobile/features/chatbot/presentation/widgets/chat_bubb
 import 'package:curai_app_mobile/features/chatbot/presentation/widgets/message_input_chatbot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 class BodyChatbot extends StatefulWidget {
@@ -65,8 +69,22 @@ class _BodyChatbotState extends State<BodyChatbot> {
                 current is ChatBotDone,
             builder: (context, state) {
               if (state is ChatInitLoading) {
-                return const CustomLoadingWidget(height: 50, width: 50)
-                    .expand();
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CustomLoadingWidget(
+                      width: 40,
+                      height: 40,
+                    ),
+                    SizedBox(height: 24.h),
+                    Text(
+                      context.translate(LangKeys.loading),
+                      style: TextStyleApp.medium14().copyWith(
+                        color: context.onSecondaryColor,
+                      ),
+                    ),
+                  ],
+                ).center().expand();
               }
               return Expanded(
                 child: Padding(
