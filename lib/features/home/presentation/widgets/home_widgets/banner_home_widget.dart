@@ -57,7 +57,7 @@ class BannerHomeWidget extends StatelessWidget {
                 height: context.H * 0.1,
                 child: AutoSizeText(
                   context.translate(LangKeys.bannerBookHome),
-                  style: TextStyleApp.bold24().copyWith(
+                  style: TextStyleApp.semiBold24().copyWith(
                     height: 1.6,
                     color: context.backgroundColor,
                   ),
@@ -68,12 +68,12 @@ class BannerHomeWidget extends StatelessWidget {
               right: context.isStateArabic ? 18.w : null,
               bottom: 10.h,
               left: context.isStateArabic ? null : 18.w,
-              width: context.W * 0.4,
               child: InkWell(
                 onTap: () => context.pushNamed(Routes.emergencyDepartment),
                 child: Container(
+                  width: context.W * 0.35,
                   height: context.H * 0.05,
-                  padding: context.padding(horizontal: 5),
+                  padding: context.padding(horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50.r),
                     color: context.backgroundColor,

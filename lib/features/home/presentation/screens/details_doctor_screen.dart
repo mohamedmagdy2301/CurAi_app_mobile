@@ -1,3 +1,4 @@
+import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart';
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart';
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
@@ -12,6 +13,7 @@ import 'package:curai_app_mobile/features/home/presentation/widgets/details_doct
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/location_tap/location_tap.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/reviews_tap.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/details_doctor/schedule_tap/schedule_tap.dart';
+import 'package:curai_app_mobile/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -85,7 +87,10 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                   if (getRole() == 'patient')
                     ScheduleTap(doctorResults: widget.doctorResults),
                   LocationTap(doctorResults: widget.doctorResults),
-                  ReviewsTap(doctorResults: widget.doctorResults),
+                  BlocProvider<ReviewsCubit>(
+                    create: (context) => sl<ReviewsCubit>(),
+                    child: ReviewsTap(doctorResults: widget.doctorResults),
+                  ),
                 ],
               ),
             ),
