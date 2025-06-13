@@ -75,21 +75,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: context.W * .65,
-                  child: AutoSizeText(
-                    getRole() == 'patient'
-                        ? getFullName().capitalizeFirstChar
-                        : '${context.translate(LangKeys.dr)}. '
-                            '${getFullName().capitalizeFirstChar}',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyleApp.extraBold26().copyWith(
-                      color: context.primaryColor,
+                if (getRole() == 'patient')
+                  SizedBox(
+                    width: context.W * .65,
+                    child: AutoSizeText(
+                      getFullName().capitalizeFirstChar,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyleApp.extraBold26().copyWith(
+                        color: context.primaryColor,
+                      ),
                     ),
-                  ),
-                ),
+                  )
+                else
+                  const SizedBox(),
               ],
             ).paddingSymmetric(horizontal: 12, vertical: 5),
             RowNavigateProfileWidget(
@@ -172,6 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             _buildDivider(context),
             const LogoutWidget(),
+            20.hSpace,
           ],
         ).center(),
       ).paddingSymmetric(horizontal: context.isLandscape ? 100 : 0),
