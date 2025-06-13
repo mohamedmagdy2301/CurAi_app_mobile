@@ -13,6 +13,7 @@ import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dar
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_settings.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_expansion_tile_card.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/localize_widget.dart';
@@ -21,6 +22,7 @@ import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navig
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -36,7 +38,15 @@ class SettingsScreen extends StatelessWidget {
             RowNavigateProfileWidget(
               icon: CupertinoIcons.bell,
               title: LangKeys.notificationSettings,
-              onTap: () {},
+              onTap: () {
+                showMessage(
+                  context,
+                  message: context.isStateArabic
+                      ? 'قريبا سوف نضيف هذه الميزة في CurAi'
+                      : 'This feature will be added soon in CurAi',
+                  type: ToastificationType.info,
+                );
+              },
             ),
             _buildDivider(context),
             RowNavigateProfileWidget(
@@ -122,6 +132,15 @@ class SettingsScreen extends StatelessWidget {
                   context: context,
                   title: context.translate(LangKeys.deleteAccount),
                   message: context.translate(LangKeys.deleteAccountMessage),
+                  onPressedOk: () {
+                    showMessage(
+                      context,
+                      message: context.isStateArabic
+                          ? 'قريبا سوف نضيف هذه الميزة في CurAi'
+                          : 'This feature will be added soon in CurAi',
+                      type: ToastificationType.info,
+                    );
+                  },
                 );
               },
             ),

@@ -13,12 +13,14 @@ import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.da
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/styles/images/app_images.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_cached_network_image.dart';
+import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/auth/presentation/widgets/logout_widget.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/custom_appbar_profile.dart';
 import 'package:curai_app_mobile/features/profile/presentation/widgets/row_navigate_profile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -132,7 +134,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               RowNavigateProfileWidget(
                 icon: Icons.payment,
                 title: LangKeys.paymentMethod,
-                onTap: () {},
+                onTap: () {
+                  showMessage(
+                    context,
+                    message: context.isStateArabic
+                        ? 'قريبا سوف نضيف هذه الميزة في CurAi'
+                        : 'This feature will be added soon in CurAi',
+                    type: ToastificationType.info,
+                  );
+                },
               ),
             _buildDivider(context),
             RowNavigateProfileWidget(
