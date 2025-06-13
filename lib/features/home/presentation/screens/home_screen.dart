@@ -11,7 +11,6 @@ import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.da
 import 'package:curai_app_mobile/core/utils/widgets/custom_refreah_header.dart';
 import 'package:curai_app_mobile/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/doctor_speciality/specializations_home_widget_listview.dart';
-import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/banner_emergency_home_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/banner_home_widget.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/custom_appbar_home.dart';
 import 'package:curai_app_mobile/features/home/presentation/widgets/home_widgets/title_section.dart';
@@ -77,10 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverToBoxAdapter(child: 10.hSpace),
             const CustomAppBarHome(),
             SliverToBoxAdapter(child: const BannerHomeWidget().center()),
-            SliverToBoxAdapter(child: 5.hSpace),
-            SliverToBoxAdapter(
-              child: const BannerEmergencyHomeWidget().center(),
-            ),
+            // SliverToBoxAdapter(child: 5.hSpace),
+            // SliverToBoxAdapter(
+            //   child: const BannerEmergencyHomeWidget().center(),
+            // ),
             SliverToBoxAdapter(child: 7.hSpace),
             SliverToBoxAdapter(
               child: TitleSectionWidget(

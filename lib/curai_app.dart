@@ -15,6 +15,7 @@ import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.da
 import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dart';
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/styles/colors/app_colors.dart';
+import 'package:curai_app_mobile/core/styles/images/asset_preloader_helper.dart';
 import 'package:curai_app_mobile/core/styles/themes/app_theme_data.dart';
 import 'package:curai_app_mobile/core/utils/helper/build_app_connectivity_controller.dart';
 import 'package:curai_app_mobile/core/utils/widgets/custom_loading_widget.dart';
@@ -43,6 +44,7 @@ class _CuraiAppState extends State<CuraiApp> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadAppSettings();
+      AssetImagePreloader.preloadAssetsBannar(context);
     });
   }
 

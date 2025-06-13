@@ -8,6 +8,7 @@ class AppImages {
   static const String onboarding3 = '$images/onboarding_doctor_3.png';
   static const String onboarding4 = '$images/onboarding_doctor_4.png';
   static const String doctorInBanner = '$images/doctor_banner.png';
+  static const String doctorInBanner2 = '$images/doctor_banner2.png';
   static const String loading = '$images/loading.gif';
   static const String avatarOnlinePatient =
       'https://avatar.iran.liara.run/public/4';

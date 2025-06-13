@@ -133,6 +133,7 @@ class LangKeys {
   static const String doctorDetails = 'doctor_details';
   static const String popularDoctor = 'popular_doctor';
   static const String noData = 'no_data';
+  static const String toEmergency = 'to_emergency';
 
 //! Specialties
   static const String specialty = 'specialty';

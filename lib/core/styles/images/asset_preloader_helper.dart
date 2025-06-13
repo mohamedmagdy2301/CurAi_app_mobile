@@ -39,6 +39,19 @@ class AssetImagePreloader {
     }
   }
 
+  static Future<void> preloadAssetsBannar(
+    BuildContext context,
+  ) async {
+    final assetPaths = <String>[
+      AppImages.doctorInBanner,
+      AppImages.doctorInBanner2,
+    ];
+
+    for (final path in assetPaths) {
+      await precacheImage(AssetImage(path), context);
+    }
+  }
+
   static void removeOnboardingImagesFromCache() {
     final images = [
       AppImages.onboarding1,
