@@ -205,25 +205,24 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         maxLines: 1,
       ),
       actions: [
-        IconButton(
-          onPressed: isChanged
-              ? () {
-                  AdaptiveDialogs.showOkCancelAlertDialog<bool>(
-                    context: context,
-                    title: context.translate(LangKeys.updateProfile),
-                    message: context.translate(LangKeys.updateProfileMessage),
-                    onPressedOk: _updateProfileOnTap,
-                  );
-                }
-              : null,
-          icon: Icon(
-            Icons.check,
-            size: 35.sp,
-            color: isChanged
-                ? Colors.green
-                : context.onPrimaryColor.withAlpha(100),
-          ),
-        ),
+        if (isChanged)
+          IconButton(
+            onPressed: () {
+              AdaptiveDialogs.showOkCancelAlertDialog<bool>(
+                context: context,
+                title: context.translate(LangKeys.updateProfile),
+                message: context.translate(LangKeys.updateProfileMessage),
+                onPressedOk: _updateProfileOnTap,
+              );
+            },
+            icon: Icon(
+              Icons.check,
+              size: 30.sp,
+              color: Colors.green,
+            ),
+          )
+        else
+          const SizedBox(),
       ],
     );
   }
