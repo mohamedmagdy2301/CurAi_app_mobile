@@ -94,6 +94,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
   void _updateProfileOnTap() {
     final ProfileRequest profileRequest;
+
     if (getRole() == 'doctor') {
       profileRequest = ProfileRequest(
         username: _userNameController.text.trim(),
