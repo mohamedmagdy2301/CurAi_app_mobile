@@ -1,7 +1,6 @@
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as int_ex;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
-import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +80,6 @@ class CustomTextFeildEditProfile extends StatelessWidget {
           ),
         ),
       ],
-    ).paddingSymmetric(horizontal: 20);
+    );
   }
 }

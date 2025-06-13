@@ -1,12 +1,12 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:curai_app_mobile/core/dependency_injection/service_locator.dart'
     as di;
 import 'package:curai_app_mobile/core/extensions/int_extensions.dart' as int_ex;
 import 'package:curai_app_mobile/core/extensions/localization_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/navigation_context_extansions.dart';
 import 'package:curai_app_mobile/core/extensions/theme_context_extensions.dart';
-import 'package:curai_app_mobile/core/extensions/widget_extensions.dart';
 import 'package:curai_app_mobile/core/language/lang_keys.dart';
 import 'package:curai_app_mobile/core/routes/routes.dart';
 import 'package:curai_app_mobile/core/services/local_storage/menage_user_data.dart';
@@ -14,7 +14,6 @@ import 'package:curai_app_mobile/core/services/local_storage/shared_pref_key.dar
 import 'package:curai_app_mobile/core/services/local_storage/shared_preferences_manager.dart';
 import 'package:curai_app_mobile/core/styles/fonts/app_text_style.dart';
 import 'package:curai_app_mobile/core/utils/widgets/adaptive_dialogs/adaptive_dialogs.dart';
-import 'package:curai_app_mobile/core/utils/widgets/custom_button.dart';
 import 'package:curai_app_mobile/core/utils/widgets/sankbar/snackbar_helper.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_model.dart';
 import 'package:curai_app_mobile/features/auth/data/models/profile/profile_request.dart';
@@ -64,7 +63,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     _lastNameController.text = widget.profileModel.lastName ?? '';
     _phoneController.text = widget.profileModel.phoneNumber ?? '';
     _consultationPriceController.text =
-        widget.profileModel.consultationPrice ?? '';
+        widget.profileModel.consultationPrice?.split('.').first ?? '';
     _yourAgeController.text = widget.profileModel.age?.toString() ?? '';
     selectedGender = widget.profileModel.gender;
     selectedSpecialization = widget.profileModel.specialization;
@@ -94,7 +93,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   }
 
   void _updateProfileOnTap() {
-    context.pop();
     final ProfileRequest profileRequest;
     if (getRole() == 'doctor') {
       profileRequest = ProfileRequest(
@@ -126,139 +124,221 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 12.h,
-        children: [
-          4.hSpace,
-          ImageProfileWidget(
-            imageFile: imageFile,
-            isEdit: true,
-            imageUrl: widget.profileModel.profilePicture,
-            onTap: () async {
-              xFilePhoto = await imagePicker.pickImage(
-                source: ImageSource.gallery,
-              );
-              if (xFilePhoto != null) {
-                setState(() {
-                  imageFile = File(xFilePhoto!.path);
-                  imageUrl = imageFile!.path;
-                  checkIfChanged();
-                });
-              }
-            },
-          ),
-          CustomTextFeildEditProfile(
-            title: LangKeys.userName,
-            keyboardType: TextInputType.emailAddress,
-            controller: _userNameController,
-          ),
-          CustomTextFeildEditProfile(
-            title: LangKeys.firstName,
-            keyboardType: TextInputType.name,
-            controller: _firstNameController,
-          ),
-          CustomTextFeildEditProfile(
-            title: LangKeys.lastName,
-            keyboardType: TextInputType.name,
-            controller: _lastNameController,
-          ),
-          CustomTextFeildEditProfile(
-            title: LangKeys.yourAge,
-            keyboardType: TextInputType.number,
-            controller: _yourAgeController,
-            suffixIcon: InkWell(
-              onTap: () => _showYearPicker(context),
-              child: const Icon(CupertinoIcons.calendar),
-            ),
-          ),
-          _buildSelectGender(context),
-          if (getRole() == 'doctor')
-            CustomTextFeildEditProfile(
-              title: LangKeys.consultationPrice,
-              keyboardType: TextInputType.number,
-              controller: _consultationPriceController,
-            ),
-          if (getRole() == 'doctor') _buildSelectSpecilization(context),
-          CustomTextFeildEditProfile(
-            title: LangKeys.phone,
-            keyboardType: TextInputType.phone,
-            controller: _phoneController,
-            maxLenght: 11,
-          ),
-          BlocConsumer<AuthCubit, AuthState>(
-            listenWhen: (previous, current) =>
-                current is EditProfileSuccess ||
-                current is EditProfileError ||
-                current is EditProfileLoading,
-            buildWhen: (previous, current) =>
-                current is EditProfileSuccess ||
-                current is EditProfileError ||
-                current is EditProfileLoading,
-            listener: (context, state) {
-              if (state is EditProfileSuccess) {
-                context.pop();
-                showMessage(
-                  context,
-                  type: ToastificationType.success,
-                  message: context.isStateArabic
-                      ? 'تم تحديث الملف الشخصي بنجاح'
-                      : 'Profile updated successfully',
-                );
+    return Scaffold(
+      backgroundColor: context.backgroundColor,
+      appBar: _buildCustomAppBar(context),
+      body: BlocConsumer<AuthCubit, AuthState>(
+        listenWhen: (previous, current) =>
+            current is EditProfileSuccess ||
+            current is EditProfileError ||
+            current is EditProfileLoading,
+        listener: (context, state) {
+          if (state is EditProfileSuccess) {
+            context.pop();
+            showMessage(
+              context,
+              type: ToastificationType.success,
+              message: context.isStateArabic
+                  ? 'تم تحديث الملف الشخصي بنجاح'
+                  : 'Profile updated successfully',
+            );
 
-                di.sl<CacheDataManager>()
-                  ..removeData(key: SharedPrefKey.keyFullName)
-                  ..removeData(key: SharedPrefKey.keyProfilePicture)
-                  ..setData(
-                    key: SharedPrefKey.keyProfilePicture,
-                    value:
-                        imageFile?.path ?? widget.profileModel.profilePicture,
-                  )
-                  ..setData(
-                    key: SharedPrefKey.keyFullName,
-                    value: '${_firstNameController.text} '
-                        '${_lastNameController.text}',
-                  );
-                context.pushReplacementNamed(Routes.mainScaffoldUser);
-                context.read<AuthCubit>().clearState();
-              }
-              if (state is EditProfileError) {
-                context.pop();
-                showMessage(
-                  context,
-                  type: ToastificationType.error,
-                  message: state.message,
-                );
-                context.read<AuthCubit>().clearState();
-              }
-              if (state is EditProfileLoading) {
-                AdaptiveDialogs.showLoadingAlertDialog(
-                  context: context,
-                  title: context.translate(LangKeys.editProfile),
-                );
-              }
-            },
-            builder: (context, state) {
-              return CustomButton(
-                title: LangKeys.updateProfile,
-                colorBackground: isChanged ? context.primaryColor : Colors.grey,
-                onPressed: isChanged
-                    ? () {
-                        AdaptiveDialogs.showOkCancelAlertDialog<bool>(
-                          context: context,
-                          title: context.translate(LangKeys.updateProfile),
-                          message:
-                              context.translate(LangKeys.updateProfileMessage),
-                          onPressedOk: _updateProfileOnTap,
-                        );
-                      }
-                    : () {},
+            di.sl<CacheDataManager>()
+              ..removeData(key: SharedPrefKey.keyFullName)
+              ..removeData(key: SharedPrefKey.keyProfilePicture)
+              ..setData(
+                key: SharedPrefKey.keyProfilePicture,
+                value: imageFile?.path ?? widget.profileModel.profilePicture,
+              )
+              ..setData(
+                key: SharedPrefKey.keyFullName,
+                value: '${_firstNameController.text} '
+                    '${_lastNameController.text}',
               );
-            },
-          ).paddingSymmetric(horizontal: 20, vertical: 10),
-        ],
-      ).center(),
+            context.pushReplacementNamed(Routes.mainScaffoldUser);
+            context.read<AuthCubit>().clearState();
+          }
+          if (state is EditProfileError) {
+            context.pop();
+            showMessage(
+              context,
+              type: ToastificationType.error,
+              message: state.message,
+            );
+            context.read<AuthCubit>().clearState();
+          }
+          if (state is EditProfileLoading) {
+            AdaptiveDialogs.showLoadingAlertDialog(
+              context: context,
+              title: context.translate(LangKeys.editProfile),
+            );
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+            child: Column(
+              children: [
+                _buildProfileImageSection(),
+                24.hSpace,
+                _buildPersonalInfoSection(),
+                if (getRole() == 'doctor') ...[
+                  24.hSpace,
+                  _buildDoctorSpecificSection(),
+                ],
+                24.hSpace,
+                _buildContactInfoSection(),
+                20.hSpace,
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildCustomAppBar(BuildContext context) {
+    return AppBar(
+      flexibleSpace: Container(color: context.backgroundColor),
+      title: AutoSizeText(
+        context.translate(LangKeys.editProfile),
+        maxLines: 1,
+      ),
+      actions: [
+        IconButton(
+          onPressed: isChanged
+              ? () {
+                  AdaptiveDialogs.showOkCancelAlertDialog<bool>(
+                    context: context,
+                    title: context.translate(LangKeys.updateProfile),
+                    message: context.translate(LangKeys.updateProfileMessage),
+                    onPressedOk: _updateProfileOnTap,
+                  );
+                }
+              : null,
+          icon: Icon(
+            Icons.check,
+            size: 35.sp,
+            color: isChanged
+                ? Colors.green
+                : context.onPrimaryColor.withAlpha(100),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProfileImageSection() {
+    return ImageProfileWidget(
+      imageFile: imageFile,
+      isEdit: true,
+      imageUrl: widget.profileModel.profilePicture,
+      onTap: () async {
+        xFilePhoto = await imagePicker.pickImage(
+          source: ImageSource.gallery,
+        );
+        if (xFilePhoto != null) {
+          setState(() {
+            imageFile = File(xFilePhoto!.path);
+            imageUrl = imageFile!.path;
+            checkIfChanged();
+          });
+        }
+      },
+    );
+  }
+
+  Widget _buildPersonalInfoSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.isStateArabic ? 'معلومات شخصية' : 'Personal Information',
+          style: TextStyleApp.semiBold16().copyWith(
+            color: context.onPrimaryColor,
+          ),
+        ),
+        16.hSpace,
+        CustomTextFeildEditProfile(
+          title: LangKeys.userName,
+          keyboardType: TextInputType.emailAddress,
+          controller: _userNameController,
+        ),
+        12.hSpace,
+        CustomTextFeildEditProfile(
+          title: LangKeys.firstName,
+          keyboardType: TextInputType.name,
+          controller: _firstNameController,
+        ),
+        CustomTextFeildEditProfile(
+          title: LangKeys.lastName,
+          keyboardType: TextInputType.name,
+          controller: _lastNameController,
+        ),
+        12.hSpace,
+        Row(
+          children: [
+            Expanded(
+              child: CustomTextFeildEditProfile(
+                title: LangKeys.yourAge,
+                keyboardType: TextInputType.number,
+                controller: _yourAgeController,
+                suffixIcon: InkWell(
+                  onTap: () => _showYearPicker(context),
+                  child: const Icon(CupertinoIcons.calendar),
+                ),
+              ),
+            ),
+            12.wSpace,
+            Expanded(child: _buildSelectGender(context)),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDoctorSpecificSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.isStateArabic
+              ? 'المعلومات المهنية'
+              : 'Professional Information',
+          style: TextStyleApp.semiBold16().copyWith(
+            color: context.onPrimaryColor,
+          ),
+        ),
+        16.hSpace,
+        _buildSelectSpecilization(context),
+        12.hSpace,
+        CustomTextFeildEditProfile(
+          title: LangKeys.consultationPrice,
+          keyboardType: TextInputType.number,
+          controller: _consultationPriceController,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContactInfoSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.isStateArabic ? 'معلومات الاتصال' : 'Contact Information',
+          style: TextStyleApp.semiBold16().copyWith(
+            color: context.onPrimaryColor,
+          ),
+        ),
+        16.hSpace,
+        CustomTextFeildEditProfile(
+          title: LangKeys.phone,
+          keyboardType: TextInputType.phone,
+          controller: _phoneController,
+          maxLenght: 11,
+        ),
+      ],
     );
   }
 
@@ -274,9 +354,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         ),
         8.hSpace,
         Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 16.w,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(
@@ -288,18 +366,18 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               isExpanded: true,
               borderRadius: BorderRadius.circular(8.r),
               elevation: 0,
-              style: TextStyleApp.regular16().copyWith(
+              style: TextStyleApp.regular14().copyWith(
                 color: context.onPrimaryColor,
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                size: 30.sp,
+                size: 24.sp,
                 color: context.primaryColor,
               ),
               value: selectedGender,
               hint: Text(
                 context.translate(LangKeys.gender),
-                style: TextStyleApp.regular16().copyWith(
+                style: TextStyleApp.regular14().copyWith(
                   color: context.primaryColor,
                 ),
               ),
@@ -308,7 +386,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   value: 'male',
                   child: Text(
                     context.translate(LangKeys.male),
-                    style: TextStyleApp.regular16().copyWith(
+                    style: TextStyleApp.regular14().copyWith(
                       color: context.onPrimaryColor,
                     ),
                   ),
@@ -317,7 +395,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   value: 'female',
                   child: Text(
                     context.translate(LangKeys.female),
-                    style: TextStyleApp.regular16().copyWith(
+                    style: TextStyleApp.regular14().copyWith(
                       color: context.onPrimaryColor,
                     ),
                   ),
@@ -333,7 +411,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           ),
         ),
       ],
-    ).paddingSymmetric(horizontal: 20);
+    );
   }
 
   Widget _buildSelectSpecilization(BuildContext context) {
@@ -348,9 +426,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         ),
         8.hSpace,
         Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 16.w,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(
@@ -362,33 +438,21 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               isExpanded: true,
               borderRadius: BorderRadius.circular(8.r),
               elevation: 0,
-              style: TextStyleApp.regular16().copyWith(
+              style: TextStyleApp.regular14().copyWith(
                 color: context.onPrimaryColor,
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                size: 30.sp,
+                size: 24.sp,
                 color: context.primaryColor,
               ),
               value: selectedSpecialization,
-              hint: selectedSpecialization == null
-                  ? Text(
-                      context.translate(LangKeys.medicalSpecialization),
-                      style: TextStyleApp.regular16().copyWith(
-                        color: context.primaryColor,
-                      ),
-                    )
-                  : Text(
-                      specializationName(
-                        specializationsList.firstWhere(
-                          (element) => element['id'] == selectedSpecialization,
-                        )['name'] as String,
-                        isArabic: context.isStateArabic,
-                      ),
-                      style: TextStyleApp.regular16().copyWith(
-                        color: context.onPrimaryColor,
-                      ),
-                    ),
+              hint: Text(
+                context.translate(LangKeys.medicalSpecialization),
+                style: TextStyleApp.regular14().copyWith(
+                  color: context.primaryColor,
+                ),
+              ),
               items: specializationsList
                   .map(
                     (spec) => DropdownMenuItem<int>(
@@ -398,7 +462,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                           spec['name'] as String,
                           isArabic: context.isStateArabic,
                         ),
-                        style: TextStyleApp.regular16().copyWith(
+                        style: TextStyleApp.regular14().copyWith(
                           color: context.onPrimaryColor,
                         ),
                       ),
@@ -415,7 +479,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           ),
         ),
       ],
-    ).paddingSymmetric(horizontal: 20);
+    );
   }
 
   void _showYearPicker(BuildContext context) {
@@ -423,35 +487,53 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
     showModalBottomSheet<void>(
       context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+      ),
       builder: (BuildContext builder) {
-        return SizedBox(
+        return Container(
           height: context.H * 0.4,
+          padding: EdgeInsets.all(16.w),
           child: Column(
             children: [
-              10.hSpace,
-              Align(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                  icon: const Icon(Icons.check),
-                  iconSize: 30.sp,
-                  color: context.primaryColor,
-                  constraints: BoxConstraints.tight(
-                    Size(context.W * 0.1, context.W * 0.1),
-                  ),
-                  onPressed: () {
-                    final birthYear = selectedDate.year;
-                    final age = DateTime.now().year - birthYear;
-                    _yourAgeController.text = age.toString();
-                    context.pop();
-                  },
-                ).paddingSymmetric(horizontal: 15.w),
+              Container(
+                width: 40.w,
+                height: 4.h,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2.r),
+                ),
               ),
-              5.hSpace,
+              16.hSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    context.translate(LangKeys.birthDate),
+                    style: TextStyleApp.semiBold16().copyWith(
+                      color: context.onPrimaryColor,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.check,
+                      color: context.primaryColor,
+                      size: 24.sp,
+                    ),
+                    onPressed: () {
+                      final birthYear = selectedDate.year;
+                      final age = DateTime.now().year - birthYear;
+                      _yourAgeController.text = age.toString();
+                      context.pop();
+                    },
+                  ),
+                ],
+              ),
               Expanded(
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   initialDateTime: DateTime(2000),
-                  maximumDate: DateTime(DateTime.now().year - 24),
+                  maximumDate: DateTime(DateTime.now().year - 18),
                   minimumDate: DateTime(DateTime.now().year - 120),
                   onDateTimeChanged: (DateTime date) {
                     setState(() {
@@ -460,7 +542,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   },
                 ),
               ),
-              10.hSpace,
             ],
           ),
         );
