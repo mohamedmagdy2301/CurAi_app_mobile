@@ -92,9 +92,9 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
             isLoading = false;
           });
         });
-      case 'Cash':
+      case 'Bank transfer':
         _showInfoDialog();
-      case 'Wallet':
+      case 'Mobile wallet':
         _showInfoDialog();
     }
   }
@@ -130,15 +130,18 @@ class _PaymentAppointmentScreenState extends State<PaymentAppointmentScreen> {
                     ),
                     10.hSpace,
                     _buildPaymentOption(
-                      value: 'Wallet',
-                      title:
-                          context.isStateArabic ? 'محفظة الكترونية' : 'Wallet',
+                      value: 'Mobile wallet',
+                      title: context.isStateArabic
+                          ? 'محفظة الكترونية'
+                          : 'Mobile wallet',
                       icon: Icons.wallet,
                     ),
                     10.hSpace,
                     _buildPaymentOption(
-                      value: 'Cash',
-                      title: context.isStateArabic ? 'نقداً' : 'Cash',
+                      value: 'Bank transfer',
+                      title: context.isStateArabic
+                          ? 'تحويل بنكي'
+                          : 'Bank transfer',
                       icon: Icons.monetization_on_outlined,
                     ),
                   ],
