@@ -30,12 +30,16 @@ class _FilterDoctorSpecialityState extends State<FilterDoctorSpeciality> {
 
   void filterList(String query) {
     setState(() {
-      filteredDoctorSpecialityList = widget.specializationsList
-          .where(
-            (element) =>
-                element.name.toLowerCase().contains(query.toLowerCase()),
-          )
-          .toList();
+      filteredDoctorSpecialityList =
+          widget.specializationsList.where((element) {
+        final englishName = element.name.toLowerCase();
+        final searchQuery = query.toLowerCase();
+
+        final arabicName = specializationsArabic[element.name] ?? '';
+
+        return englishName.contains(searchQuery) ||
+            arabicName.contains(searchQuery);
+      }).toList();
     });
   }
 

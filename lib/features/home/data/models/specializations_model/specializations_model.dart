@@ -33,6 +33,21 @@ class SpecializationsModel {
   final int doctorCount;
 }
 
+const specializationsArabic = {
+  'Allergist': 'أخصائي حساسية',
+  'Andrologists': 'أطباء أمراض الذكورة',
+  'Anesthesiologist': 'طبيب تخدير',
+  'Audiologist': 'أخصائي سمعيات',
+  'Cardiologist': 'طبيب قلب',
+  'Dentist': 'طبيب أسنان',
+  'Gynecologist': 'طبيبة نساء وتوليد',
+  'Internists': 'طبيب باطنية',
+  'Orthopedist': 'طبيب عظام',
+  'Pediatrician': 'طبيب أطفال',
+  'Surgeon': 'جراح',
+  'Neurologist': 'طبيب اعصاب',
+};
+
 final List<Map<String, dynamic>> specializationsList = [
   {
     'id': 2,
