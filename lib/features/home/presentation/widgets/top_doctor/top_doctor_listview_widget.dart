@@ -30,7 +30,7 @@ class TopDoctorListviewWidget extends StatelessWidget {
           final doctorsList = state.doctorResults;
           return CarouselSlider.builder(
             options: CarouselOptions(
-              height: context.H * 0.28,
+              height: context.H * 0.3,
               viewportFraction: 0.45,
               autoPlay: true,
               autoPlayInterval: const Duration(seconds: 2),
@@ -54,7 +54,7 @@ class TopDoctorListviewWidget extends StatelessWidget {
 
         return CarouselSlider.builder(
           options: CarouselOptions(
-            height: context.H * 0.28,
+            height: context.H * 0.3,
             viewportFraction: 0.45,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 2),

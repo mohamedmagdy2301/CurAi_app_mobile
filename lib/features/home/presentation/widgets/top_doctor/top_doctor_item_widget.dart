@@ -71,7 +71,7 @@ class TopDoctorItemWidget extends StatelessWidget {
               style: TextStyleApp.extraBold18().copyWith(
                 color: context.onPrimaryColor,
               ),
-            ).expand(),
+            ).flexible(),
             AutoSizeText(
               specializationName(
                 doctorsList.specialization ?? '',
@@ -83,7 +83,7 @@ class TopDoctorItemWidget extends StatelessWidget {
               style: TextStyleApp.medium16().copyWith(
                 color: context.onSecondaryColor,
               ),
-            ).expand(),
+            ).flexible(),
           ],
         ),
       ),
